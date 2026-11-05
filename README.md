@@ -1,5 +1,7 @@
 # SmartLLM
 
+> **Status: Work in progress (active R&D).** Stages 0–3 (donor selection, byte-exact architecture verification across 131 shards, native Windows CUDA `sm_89` toolchain, and the 12-task offline evaluation harness with `Gyro-M` reference runs) are complete. Stages 4–7 (calibration dataset assembly, layer-streamed REAP `512 → 205` expert pruning, and `IQ3_XXS` / `IQ3_S` GGUF quantization) are actively in development.
+
 Streaming REAP expert pruning (`512 → 205` experts per layer) and `llama.cpp` quantization of
 `Qwen/Qwen3.8-Flash-Next` (`qwen4_exp`, 360 GB BF16) to fit a multimodal bilingual (EN/RU)
 Design Engineer & Full-Stack Web model onto a single consumer laptop GPU (RTX 4080 Laptop,
@@ -7,8 +9,7 @@ Design Engineer & Full-Stack Web model onto a single consumer laptop GPU (RTX 40
 
 Not a wrapper around an API and not a toy notebook: the byte-level tensor verification, the
 12-task headless browser and TypeScript evaluation harness (`eval/suite/`), and the baseline
-runs across six model configurations below are finished and reproducible offline. Where the
-pruning pass itself is still in progress, this file says so rather than leaving you to find out.
+runs across six model configurations below are finished and reproducible offline.
 
 <p align="center">
   <img src="docs/assets/pipeline.svg" alt="SmartLLM Streaming MoE Surgery and Quantization Pipeline" width="100%">
@@ -155,6 +156,7 @@ node eval\suite\test_dag_runner.mjs eval\suite\ref\dag_reference.ts
 | **4** | Stratified multimodal calibration dataset (`PremiumWebStudio-Calib.jsonl`, 320 prompts) | **NEXT** | [`docs/DATA.md`](docs/DATA.md) |
 | **5–6** | Layer-streamed REAP observer pilot (3 layers) & full 48-layer pruning (`512 → 205`) | **TODO** | [`research/step5_6_layer_shard_schedule.json`](research/step5_6_layer_shard_schedule.json) |
 | **7–8** | Mainline `llama.cpp` `imatrix` + `IQ3_XXS` / `IQ3_S` GGUF + `mmproj` & post-surgery eval | **TODO** | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), [`docs/DATA.md`](docs/DATA.md) |
+| **9–10** | Standalone launcher, MCP bridge (`llama-server --mmap` + CSP hook + Playwright loop) & release | **TODO** | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
 
 ---
 
@@ -172,10 +174,9 @@ node eval\suite\test_dag_runner.mjs eval\suite\ref\dag_reference.ts
 
 ---
 
-## Licence
+## License
 
-There is deliberately none. This repository is published as an engineering portfolio to be read,
-audited, and evaluated — you retain no rights to redistribute or redeploy this code as your own
-product without explicit permission.
+Open-source under the **[Apache License 2.0](LICENSE)** (matching upstream `Qwen/Qwen3.8-Flash-Next`
+and `CerebrasResearch/reap`).
 
 Questions, or something here that looks wrong: **hello@vkvstudio.com**.
