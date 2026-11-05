@@ -1,0 +1,24 @@
+/*
+  Content-Security-Policy: default-src 'none'; style-src 'sha256-lsbtEI3wXwvpAbvg/xWmjmqn3QOqydWG8NX1ytgCnaA=' 'unsafe-hashes' 'sha256-Dm5fUHctFLe3z0FLij4+Ltu0Q2jH4fSTrkSvyF5kjj4='; script-src 'sha256-f79yuxd9QsnDAPMl0B1TxB2MY+nlMTINHGum/X/bGNk=' 'sha256-oBOuPwoQSOZLboH7y1Hwr2y3D31ossxN3w6HBJyJ7TA='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+  X-Frame-Options: DENY
+
+/*.html
+  Content-Type: text/html; charset=utf-8
+  Cache-Control: public, max-age=3600, s-maxage=86400
+
+/*.css
+  Content-Type: text/css; charset=utf-8
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Content-Type: application/javascript; charset=utf-8
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Content-Type: image/svg+xml
+  Cache-Control: public, max-age=31536000, immutable

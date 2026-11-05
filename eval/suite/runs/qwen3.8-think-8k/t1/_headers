@@ -1,0 +1,8 @@
+/*
+  Content-Security-Policy: default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-x4CUkvDJ5I/Z2utPI1u/drykvJhIVBAX49S/a9jWa8c=' 'sha256-CXrmR8Ivp3FsNY5Y7pV5kS6fG/nVl1Yt0Ba6GlryI6M=' 'sha256-ZVfnq/MOxndJL7B85Z0e/Lr6d+AaFI0g7+JVODxTLnc=' 'sha256-35MqGtgFCLNsV2dDZJZcQExLu7nTyMe+eJdPkVxUEOY=' 'sha256-wYK/8jqIJiVlQvU23HK51lw+EY8/TOMcX9zQW0IBJAs=' 'sha256-mJKWymhlss5bjCRws7z4L0VQlUix1O5VoBymbAYJkGk=' 'sha256-cNg2964hAJnTax2gfRBxZP0k705TytcZoa3G3ORNMXM='; script-src 'self' 'sha256-VfriphROJH/zvF9tsitiv1BImQlum0ImJ/9BmH1GBTw=' 'sha256-zlA5zIl4q/KfRnPp6XmKm/CU1MqyWIqkcdpFa19Okgc='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  X-Frame-Options: DENY

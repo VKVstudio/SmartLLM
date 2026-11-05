@@ -1,0 +1,1676 @@
+{
+  "qwen3.8-no-think": {
+    "t1": {
+      "csp": {
+        "orig_had_meta_csp": false,
+        "orig_meta_csp": "",
+        "orig_has_unsafe_inline": false,
+        "postprocessed_meta_csp": "default-src 'none'; style-src 'sha256-5JKXuStfgG4PcupAegvSN1n4u+rvUE7DsixQIXsn17s=' 'unsafe-hashes' 'sha256-q3nqK4VzeI/SowYCYQ/tCfo056B/JMutuSpzbJbHczk='; script-src 'sha256-rAfzYAboKnjRiUt3C9A8SrfA/abTyjDTXSAF1dhU+dY=' 'sha256-3LFuy/+J2gzCcovOQnjrAffoNy8KwKYIOhTO9LFr5to='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'",
+        "postprocessed_hashes_count": 4
+      },
+      "external_urls_in_attrs": [
+        "https://thermotech-eng.example/"
+      ],
+      "json_ld": {
+        "blocks_count": 1,
+        "valid_json": true,
+        "graph_types": [
+          "Organization",
+          "WebSite",
+          "BreadcrumbList",
+          "ItemList",
+          "Product",
+          "Product",
+          "Product",
+          "FAQPage"
+        ],
+        "faq_questions": [],
+        "has_all_4_types": true,
+        "product_count": 3,
+        "faq_count": 5,
+        "faq_verbatim_check": [
+          {
+            "q": "What output range do THERMOTECH boilers cover?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Which fuels can the units burn?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "How are the boilers certified?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "What does a typical lead time look like?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Do you provide commissioning and service support?",
+            "q_in_html": true,
+            "a_in_html": true
+          }
+        ],
+        "faq_all_verbatim": true
+      },
+      "_headers": {
+        "exists": true,
+        "raw": "/*\n  Content-Security-Policy: default-src 'none'; style-src 'sha256-5JKXuStfgG4PcupAegvSN1n4u+rvUE7DsixQIXsn17s=' 'unsafe-hashes' 'sha256-q3nqK4VzeI/SowYCYQ/tCfo056B/JMutuSpzbJbHczk='; script-src 'sha256-rAfzYAboKnjRiUt3C9A8SrfA/abTyjDTXSAF1dhU+dY=' 'sha256-3LFuy/+J2gzCcovOQnjrAffoNy8KwKYIOhTO9LFr5to='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'\n  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()\n  Cross-Origin-Opener-Policy: same-origin\n  Cross-Origin-Resource-Policy: same-origin\n  X-Frame-Options: DENY\n  X-XSS-Protection: 0\n  Cache-Control: public, max-age=0, must-revalidate\n  Link: <https://thermotech-eng.example/>; rel=\"canonical\"\n\n/index.html\n  Content-Security-Policy: default-src 'none'; style-src 'sha256-5JKXuStfgG4PcupAegvSN1n4u+rvUE7DsixQIXsn17s=' 'unsafe-hashes' 'sha256-q3nqK4VzeI/SowYCYQ/tCfo056B/JMutuSpzbJbHczk='; script-src 'sha256-rAfzYAboKnjRiUt3C9A8SrfA/abTyjDTXSAF1dhU+dY=' 'sha256-3LFuy/+J2gzCcovOQnjrAffoNy8KwKYIOhTO9LFr5to='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'\n  Cache-Control: public, max-age=0, must-revalidate\n\n/llms.txt\n  Content-Type: text/plain; charset=utf-8\n  Cache-Control: public, max-age=3600\n\n/robots.txt\n  Content-Type: text/plain; charset=utf-8\n  Cache-Control: public, max-age=3600",
+        "has_route_rule": true,
+        "checks": {
+          "Content-Security-Policy": true,
+          "frame-ancestors 'none'": true,
+          "Strict-Transport-Security": true,
+          "X-Content-Type-Options": true,
+          "Referrer-Policy": true,
+          "Permissions-Policy": true,
+          "Cross-Origin-Opener-Policy": true
+        },
+        "passed_count": 7,
+        "all_passed": true
+      },
+      "llms_txt": {
+        "exists": true,
+        "has_h1": true,
+        "has_blockquote": true,
+        "has_h2_sections": true,
+        "has_markdown_links": false
+      },
+      "robots_txt": {
+        "exists": true,
+        "has_user_agent": true,
+        "has_allow_or_disallow": true
+      },
+      "semantics_a11y": {
+        "h1_count": 1,
+        "landmarks": [
+          "article",
+          "aside",
+          "figure",
+          "footer",
+          "header",
+          "main",
+          "nav",
+          "section"
+        ],
+        "img_count": 0,
+        "imgs_with_alt": 0,
+        "svg_count": 12,
+        "inputs_count": 6,
+        "inputs_labeled": [
+          {
+            "id": "f-name",
+            "name": "name",
+            "labeled": true
+          },
+          {
+            "id": "f-email",
+            "name": "email",
+            "labeled": true
+          },
+          {
+            "id": "f-phone",
+            "name": "phone",
+            "labeled": true
+          },
+          {
+            "id": "f-company",
+            "name": "company",
+            "labeled": true
+          },
+          {
+            "id": "f-model",
+            "name": "model",
+            "labeled": true
+          },
+          {
+            "id": "f-msg",
+            "name": "message",
+            "labeled": true
+          }
+        ],
+        "all_inputs_labeled": true,
+        "prefers_reduced_motion": true
+      },
+      "oklch_tokens": {
+        "--bg": {
+          "raw": "oklch(0.16 0.012 260)",
+          "L": 0.16,
+          "C": 0.012,
+          "H": 260.0,
+          "luminance": 0.0041
+        },
+        "--surface": {
+          "raw": "oklch(0.20 0.014 260)",
+          "L": 0.2,
+          "C": 0.014,
+          "H": 260.0,
+          "luminance": 0.008
+        },
+        "--surface-2": {
+          "raw": "oklch(0.24 0.016 260)",
+          "L": 0.24,
+          "C": 0.016,
+          "H": 260.0,
+          "luminance": 0.0138
+        },
+        "--line": {
+          "raw": "oklch(0.28 0.016 260)",
+          "L": 0.28,
+          "C": 0.016,
+          "H": 260.0,
+          "luminance": 0.022
+        },
+        "--grid": {
+          "raw": "oklch(0.28 0.016 260)",
+          "L": 0.28,
+          "C": 0.016,
+          "H": 260.0,
+          "luminance": 0.022
+        },
+        "--ink": {
+          "raw": "oklch(0.97 0.005 260)",
+          "L": 0.97,
+          "C": 0.005,
+          "H": 260.0,
+          "luminance": 0.9128
+        },
+        "--ink-dim": {
+          "raw": "oklch(0.80 0.012 260)",
+          "L": 0.8,
+          "C": 0.012,
+          "H": 260.0,
+          "luminance": 0.5122
+        },
+        "--ink-faint": {
+          "raw": "oklch(0.62 0.016 260)",
+          "L": 0.62,
+          "C": 0.016,
+          "H": 260.0,
+          "luminance": 0.2384
+        },
+        "--accent": {
+          "raw": "oklch(0.68 0.19 45)",
+          "L": 0.68,
+          "C": 0.19,
+          "H": 45.0,
+          "luminance": 0.2891
+        },
+        "--accent-ink": {
+          "raw": "oklch(0.98 0.006 45)",
+          "L": 0.98,
+          "C": 0.006,
+          "H": 45.0,
+          "luminance": 0.9398
+        },
+        "--accent-deep": {
+          "raw": "oklch(0.55 0.18 45)",
+          "L": 0.55,
+          "C": 0.18,
+          "H": 45.0,
+          "luminance": 0.1514
+        },
+        "--ok": {
+          "raw": "oklch(0.72 0.15 150)",
+          "L": 0.72,
+          "C": 0.15,
+          "H": 150.0,
+          "luminance": 0.3994
+        },
+        "--warn": {
+          "raw": "oklch(0.70 0.16 85)",
+          "L": 0.7,
+          "C": 0.16,
+          "H": 85.0,
+          "luminance": 0.3397
+        },
+        "--danger": {
+          "raw": "oklch(0.62 0.20 25)",
+          "L": 0.62,
+          "C": 0.2,
+          "H": 25.0,
+          "luminance": 0.2116
+        }
+      },
+      "contrasts": {
+        "--ink on --bg": 17.8,
+        "--ink on --surface": 16.6,
+        "--ink on --surface-2": 15.09,
+        "--ink-dim on --bg": 10.39,
+        "--ink-dim on --surface": 9.69,
+        "--ink-dim on --surface-2": 8.81,
+        "--ink-faint on --bg": 5.33,
+        "--ink-faint on --surface": 4.97,
+        "--ink-faint on --surface-2": 4.52,
+        "--accent on --bg": 6.27,
+        "--accent on --surface": 5.85,
+        "--accent on --surface-2": 5.32,
+        "--accent-ink on --bg": 18.3,
+        "--accent-ink on --surface": 17.07,
+        "--accent-ink on --surface-2": 15.51,
+        "--accent-deep on --bg": 3.72,
+        "--accent-deep on --surface": 3.47,
+        "--accent-deep on --surface-2": 3.16
+      },
+      "canon": {
+        "oklch_token_count": 14,
+        "has_signal_orange_068_019_45": true,
+        "has_blueprint_grid_2a2e35_or_1px": true,
+        "has_jetbrains_mono": true,
+        "has_ibm_plex_sans": true,
+        "has_external_font_cdn": false
+      }
+    },
+    "t2": {
+      "csp": {
+        "orig_had_meta_csp": false,
+        "orig_meta_csp": "",
+        "orig_has_unsafe_inline": false,
+        "postprocessed_meta_csp": "",
+        "postprocessed_hashes_count": 0
+      },
+      "external_urls_in_attrs": [
+        "https://picsum.photos/seed/vkv-agent-infrastructure-panel/900/506",
+        "https://picsum.photos/seed/vkv-conversation-desk-books/760/475",
+        "https://picsum.photos/seed/vkv-agent-infrastructure-panel/760/475",
+        "https://picsum.photos/seed/vkv-search-loupe-cards/760/475"
+      ],
+      "json_ld": {
+        "blocks_count": 0,
+        "valid_json": false,
+        "graph_types": [],
+        "faq_questions": []
+      },
+      "_headers": {
+        "exists": false
+      },
+      "llms_txt": {
+        "exists": false
+      },
+      "robots_txt": {
+        "exists": false
+      },
+      "semantics_a11y": {
+        "h1_count": 1,
+        "landmarks": [
+          "article",
+          "aside",
+          "figure",
+          "footer",
+          "header",
+          "main",
+          "nav",
+          "section"
+        ],
+        "img_count": 4,
+        "imgs_with_alt": 4,
+        "svg_count": 3,
+        "inputs_count": 2,
+        "inputs_labeled": [
+          {
+            "id": null,
+            "name": null,
+            "labeled": true
+          },
+          {
+            "id": "q",
+            "name": null,
+            "labeled": true
+          }
+        ],
+        "all_inputs_labeled": true,
+        "prefers_reduced_motion": false
+      },
+      "oklch_tokens": {
+        "--bg": {
+          "raw": "oklch(95% 0.012 90)",
+          "L": 0.95,
+          "C": 0.012,
+          "H": 90.0,
+          "luminance": 0.8577
+        },
+        "--surface": {
+          "raw": "oklch(97.5% 0.008 90)",
+          "L": 0.975,
+          "C": 0.008,
+          "H": 90.0,
+          "luminance": 0.9271
+        },
+        "--card": {
+          "raw": "oklch(96.5% 0.014 100)",
+          "L": 0.965,
+          "C": 0.014,
+          "H": 100.0,
+          "luminance": 0.8999
+        },
+        "--ink": {
+          "raw": "oklch(23% 0.03 220)",
+          "L": 0.23,
+          "C": 0.03,
+          "H": 220.0,
+          "luminance": 0.0126
+        },
+        "--muted": {
+          "raw": "oklch(46% 0.02 220)",
+          "L": 0.46,
+          "C": 0.02,
+          "H": 220.0,
+          "luminance": 0.0984
+        },
+        "--faint": {
+          "raw": "oklch(60% 0.015 200)",
+          "L": 0.6,
+          "C": 0.015,
+          "H": 200.0,
+          "luminance": 0.2179
+        },
+        "--teal": {
+          "raw": "oklch(48% 0.09 190)",
+          "L": 0.48,
+          "C": 0.09,
+          "H": 190.0,
+          "luminance": 0.1201
+        },
+        "--teal-deep": {
+          "raw": "oklch(40% 0.08 190)",
+          "L": 0.4,
+          "C": 0.08,
+          "H": 190.0,
+          "luminance": 0.0707
+        },
+        "--line": {
+          "raw": "oklch(87% 0.012 90)",
+          "L": 0.87,
+          "C": 0.012,
+          "H": 90.0,
+          "luminance": 0.6588
+        },
+        "--line-strong": {
+          "raw": "oklch(80% 0.015 90)",
+          "L": 0.8,
+          "C": 0.015,
+          "H": 90.0,
+          "luminance": 0.5123
+        }
+      },
+      "contrasts": {
+        "--ink on --bg": 14.5,
+        "--ink on --surface": 15.61,
+        "--ink on --card": 15.17,
+        "--muted on --bg": 6.12,
+        "--muted on --surface": 6.58,
+        "--muted on --card": 6.4
+      },
+      "canon": {
+        "oklch_token_count": 10,
+        "has_responsive_media": true,
+        "prefers_reduced_motion": false
+      }
+    },
+    "t3": {
+      "csp": {
+        "orig_had_meta_csp": true,
+        "orig_meta_csp": "default-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests; script-src 'sha256-+3lGhZv7QmBqY0g9r4HcUkPjNfTnD6xVdFpKwXbJyA0='; style-src 'sha256-j8S/6OZM3aEoIzL1eR9CtWuYh7NqB4vXsPmD0kL2gF8='; img-src 'self' data:; font-src 'self'; connect-src 'none'; manifest-src 'self'; worker-src 'none'; media-src 'none'; child-src 'none'; frame-src 'none'; trusted-types none; require-trusted-types-for 'script'; report-to csp-endpoint;",
+        "orig_has_unsafe_inline": false,
+        "postprocessed_meta_csp": "default-src 'none'; style-src 'sha256-w21bruwiCpebvgePxjxJDRHU5jwtkXgFufP3PAWQUng=' 'unsafe-hashes' 'sha256-NXTqLL8/I59UmOnV7tNjFWxURPt85KaZpa7nT1w/lDE='; script-src 'sha256-yIZ14g0Eq3S1ATAPw9ql/epQQmNiFaor7NjypKrQ0nE=' 'sha256-sWszSj80EniC9MZdlyQ43hNSpzbswxlfhqAnqzSovPY='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'",
+        "postprocessed_hashes_count": 4
+      },
+      "external_urls_in_attrs": [
+        "https://severnaya-manufaktura.ru/"
+      ],
+      "json_ld": {
+        "blocks_count": 1,
+        "valid_json": true,
+        "graph_types": [
+          "Organization",
+          "Product",
+          "Product",
+          "Product",
+          "FAQPage",
+          "BreadcrumbList"
+        ],
+        "faq_questions": [],
+        "has_all_4_types": true,
+        "product_count": 3,
+        "faq_count": 5,
+        "faq_verbatim_check": [
+          {
+            "q": "Из какого дерева вы делаете мебель?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Какие соединения вы используете?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Сколько времени занимает изготовление?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Есть ли гарантия и доставка?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Можно ли заказать индивидуальный размер или отделку?",
+            "q_in_html": true,
+            "a_in_html": true
+          }
+        ],
+        "faq_all_verbatim": true
+      },
+      "_headers": {
+        "exists": true,
+        "raw": "# Cloudflare Pages security headers (mirrors the meta CSP policy).\n# NOTE: keep the script-src/style-src SHA-256 hashes identical to those in index.html.\n/*\n  Content-Security-Policy: default-src 'none'; style-src 'sha256-w21bruwiCpebvgePxjxJDRHU5jwtkXgFufP3PAWQUng=' 'unsafe-hashes' 'sha256-NXTqLL8/I59UmOnV7tNjFWxURPt85KaZpa7nT1w/lDE='; script-src 'sha256-yIZ14g0Eq3S1ATAPw9ql/epQQmNiFaor7NjypKrQ0nE=' 'sha256-sWszSj80EniC9MZdlyQ43hNSpzbswxlfhqAnqzSovPY='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'\n  Report-To: {\"group\":\"csp-endpoint\",\"max_age\":31536000,\"endpoints\":[{\"url\":\"/csp-report\"}],\"include_subdomains\":true}\n  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()\n  Cross-Origin-Opener-Policy: same-origin",
+        "has_route_rule": true,
+        "checks": {
+          "Content-Security-Policy": true,
+          "frame-ancestors 'none'": true,
+          "Strict-Transport-Security": true,
+          "X-Content-Type-Options": true,
+          "Referrer-Policy": true,
+          "Permissions-Policy": true,
+          "Cross-Origin-Opener-Policy": true
+        },
+        "passed_count": 7,
+        "all_passed": true
+      },
+      "llms_txt": {
+        "exists": true,
+        "has_h1": true,
+        "has_blockquote": true,
+        "has_h2_sections": true,
+        "has_markdown_links": true
+      },
+      "robots_txt": {
+        "exists": true,
+        "has_user_agent": true,
+        "has_allow_or_disallow": true
+      },
+      "semantics_a11y": {
+        "h1_count": 1,
+        "landmarks": [
+          "article",
+          "figure",
+          "footer",
+          "header",
+          "main",
+          "nav",
+          "section"
+        ],
+        "img_count": 0,
+        "imgs_with_alt": 0,
+        "svg_count": 6,
+        "inputs_count": 6,
+        "inputs_labeled": [
+          {
+            "id": "name",
+            "name": "name",
+            "labeled": true
+          },
+          {
+            "id": "phone",
+            "name": "phone",
+            "labeled": true
+          },
+          {
+            "id": "email",
+            "name": "email",
+            "labeled": true
+          },
+          {
+            "id": "interest",
+            "name": "interest",
+            "labeled": true
+          },
+          {
+            "id": "message",
+            "name": "message",
+            "labeled": true
+          },
+          {
+            "id": "consent",
+            "name": "consent",
+            "labeled": false
+          }
+        ],
+        "all_inputs_labeled": false,
+        "prefers_reduced_motion": true
+      },
+      "oklch_tokens": {
+        "--bg": {
+          "raw": "oklch(0.95 0.01 85)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 85.0,
+          "luminance": 0.8574
+        },
+        "--surface": {
+          "raw": "oklch(0.975 0.008 85)",
+          "L": 0.975,
+          "C": 0.008,
+          "H": 85.0,
+          "luminance": 0.9269
+        },
+        "--surface-sunk": {
+          "raw": "oklch(0.93 0.012 85)",
+          "L": 0.93,
+          "C": 0.012,
+          "H": 85.0,
+          "luminance": 0.8044
+        },
+        "--ink": {
+          "raw": "oklch(0.24 0.02 65)",
+          "L": 0.24,
+          "C": 0.02,
+          "H": 65.0,
+          "luminance": 0.0137
+        },
+        "--ink-soft": {
+          "raw": "oklch(0.40 0.02 65)",
+          "L": 0.4,
+          "C": 0.02,
+          "H": 65.0,
+          "luminance": 0.0635
+        },
+        "--line": {
+          "raw": "oklch(0.82 0.015 85)",
+          "L": 0.82,
+          "C": 0.015,
+          "H": 85.0,
+          "luminance": 0.5514
+        },
+        "--line-strong": {
+          "raw": "oklch(0.70 0.02 80)",
+          "L": 0.7,
+          "C": 0.02,
+          "H": 80.0,
+          "luminance": 0.3426
+        },
+        "--accent": {
+          "raw": "oklch(0.46 0.09 62)",
+          "L": 0.46,
+          "C": 0.09,
+          "H": 62.0,
+          "luminance": 0.0936
+        },
+        "--accent-deep": {
+          "raw": "oklch(0.34 0.08 60)",
+          "L": 0.34,
+          "C": 0.08,
+          "H": 60.0,
+          "luminance": 0.0373
+        },
+        "--on-accent": {
+          "raw": "oklch(0.98 0.006 85)",
+          "L": 0.98,
+          "C": 0.006,
+          "H": 85.0,
+          "luminance": 0.9412
+        },
+        "--focus": {
+          "raw": "oklch(0.46 0.09 62)",
+          "L": 0.46,
+          "C": 0.09,
+          "H": 62.0,
+          "luminance": 0.0936
+        }
+      },
+      "contrasts": {
+        "--ink on --bg": 14.24,
+        "--ink on --surface": 15.34,
+        "--ink on --surface-sunk": 13.41,
+        "--ink-soft on --bg": 7.99,
+        "--ink-soft on --surface": 8.61,
+        "--ink-soft on --surface-sunk": 7.53,
+        "--accent on --bg": 6.32,
+        "--accent on --surface": 6.8,
+        "--accent on --surface-sunk": 5.95,
+        "--accent-deep on --bg": 10.39,
+        "--accent-deep on --surface": 11.19,
+        "--accent-deep on --surface-sunk": 9.79,
+        "--on-accent on --bg": 1.09,
+        "--on-accent on --surface": 1.01,
+        "--on-accent on --surface-sunk": 1.16
+      },
+      "canon": {
+        "oklch_token_count": 11,
+        "has_warm_bg_095_001_85": true,
+        "has_clamp_4rem_10vw_12rem": true,
+        "has_cormorant_or_playfair": true,
+        "has_external_font_cdn": false
+      }
+    }
+  },
+  "qwen3.8-think-8k": {
+    "t1": {
+      "csp": {
+        "orig_had_meta_csp": true,
+        "orig_meta_csp": "default-src 'none'; style-src 'sha256-3kZ9m7VxQ2pR8sT4uY6wA0bC1dE2fG3hI4jK5lM6nO7pQ=='; script-src 'sha256-9aB8cD7eF6gH5iJ4kL3mN2oP1qR0sT9uV8wX7yZ6aB5cD=='; img-src 'self' data:; form-action 'none'; base-uri 'self'",
+        "orig_has_unsafe_inline": false,
+        "postprocessed_meta_csp": "default-src 'none'; style-src 'sha256-x4CUkvDJ5I/Z2utPI1u/drykvJhIVBAX49S/a9jWa8c=' 'unsafe-hashes' 'sha256-35MqGtgFCLNsV2dDZJZcQExLu7nTyMe+eJdPkVxUEOY=' 'sha256-CXrmR8Ivp3FsNY5Y7pV5kS6fG/nVl1Yt0Ba6GlryI6M=' 'sha256-ZVfnq/MOxndJL7B85Z0e/Lr6d+AaFI0g7+JVODxTLnc=' 'sha256-cNg2964hAJnTax2gfRBxZP0k705TytcZoa3G3ORNMXM=' 'sha256-mJKWymhlss5bjCRws7z4L0VQlUix1O5VoBymbAYJkGk=' 'sha256-wYK/8jqIJiVlQvU23HK51lw+EY8/TOMcX9zQW0IBJAs=' data:; script-src 'sha256-VfriphROJH/zvF9tsitiv1BImQlum0ImJ/9BmH1GBTw=' 'sha256-zlA5zIl4q/KfRnPp6XmKm/CU1MqyWIqkcdpFa19Okgc='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'",
+        "postprocessed_hashes_count": 9
+      },
+      "external_urls_in_attrs": [
+        "https://thermotech.example/"
+      ],
+      "json_ld": {
+        "blocks_count": 1,
+        "valid_json": true,
+        "graph_types": [
+          "Organization",
+          "Product",
+          "Product",
+          "Product",
+          "FAQPage",
+          "BreadcrumbList"
+        ],
+        "faq_questions": [],
+        "has_all_4_types": true,
+        "product_count": 3,
+        "faq_count": 5,
+        "faq_verbatim_check": [
+          {
+            "q": "What output range do THERMOTECH boilers cover?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Which fuels are supported?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "How long is the lead time from order to commissioning?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Are the boilers certified for the EU and CIS markets?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "What warranty and service coverage is included?",
+            "q_in_html": true,
+            "a_in_html": true
+          }
+        ],
+        "faq_all_verbatim": true
+      },
+      "_headers": {
+        "exists": true,
+        "raw": "/*\n  Content-Security-Policy: default-src 'none'; style-src 'sha256-x4CUkvDJ5I/Z2utPI1u/drykvJhIVBAX49S/a9jWa8c=' 'unsafe-hashes' 'sha256-35MqGtgFCLNsV2dDZJZcQExLu7nTyMe+eJdPkVxUEOY=' 'sha256-CXrmR8Ivp3FsNY5Y7pV5kS6fG/nVl1Yt0Ba6GlryI6M=' 'sha256-ZVfnq/MOxndJL7B85Z0e/Lr6d+AaFI0g7+JVODxTLnc=' 'sha256-cNg2964hAJnTax2gfRBxZP0k705TytcZoa3G3ORNMXM=' 'sha256-mJKWymhlss5bjCRws7z4L0VQlUix1O5VoBymbAYJkGk=' 'sha256-wYK/8jqIJiVlQvU23HK51lw+EY8/TOMcX9zQW0IBJAs=' data:; script-src 'sha256-VfriphROJH/zvF9tsitiv1BImQlum0ImJ/9BmH1GBTw=' 'sha256-zlA5zIl4q/KfRnPp6XmKm/CU1MqyWIqkcdpFa19Okgc='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'\n  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()\n  Cross-Origin-Opener-Policy: same-origin\n  X-Frame-Options: DENY",
+        "has_route_rule": true,
+        "checks": {
+          "Content-Security-Policy": true,
+          "frame-ancestors 'none'": true,
+          "Strict-Transport-Security": true,
+          "X-Content-Type-Options": true,
+          "Referrer-Policy": true,
+          "Permissions-Policy": true,
+          "Cross-Origin-Opener-Policy": true
+        },
+        "passed_count": 7,
+        "all_passed": true
+      },
+      "llms_txt": {
+        "exists": true,
+        "has_h1": true,
+        "has_blockquote": true,
+        "has_h2_sections": true,
+        "has_markdown_links": true
+      },
+      "robots_txt": {
+        "exists": true,
+        "has_user_agent": true,
+        "has_allow_or_disallow": true
+      },
+      "semantics_a11y": {
+        "h1_count": 1,
+        "landmarks": [
+          "footer",
+          "header",
+          "main",
+          "nav",
+          "section"
+        ],
+        "img_count": 0,
+        "imgs_with_alt": 0,
+        "svg_count": 9,
+        "inputs_count": 5,
+        "inputs_labeled": [
+          {
+            "id": "name",
+            "name": "name",
+            "labeled": true
+          },
+          {
+            "id": "company",
+            "name": "company",
+            "labeled": true
+          },
+          {
+            "id": "email",
+            "name": "email",
+            "labeled": true
+          },
+          {
+            "id": "model",
+            "name": "model",
+            "labeled": true
+          },
+          {
+            "id": "msg",
+            "name": "msg",
+            "labeled": true
+          }
+        ],
+        "all_inputs_labeled": true,
+        "prefers_reduced_motion": true
+      },
+      "oklch_tokens": {
+        "--bg": {
+          "raw": "oklch(0.14 0.012 255)",
+          "L": 0.14,
+          "C": 0.012,
+          "H": 255.0,
+          "luminance": 0.0028
+        },
+        "--bg-2": {
+          "raw": "oklch(0.17 0.014 255)",
+          "L": 0.17,
+          "C": 0.014,
+          "H": 255.0,
+          "luminance": 0.0049
+        },
+        "--grid": {
+          "raw": "oklch(0.28 0.015 250)",
+          "L": 0.28,
+          "C": 0.015,
+          "H": 250.0,
+          "luminance": 0.022
+        },
+        "--line": {
+          "raw": "oklch(0.32 0.015 250)",
+          "L": 0.32,
+          "C": 0.015,
+          "H": 250.0,
+          "luminance": 0.0329
+        },
+        "--ink": {
+          "raw": "oklch(0.96 0.008 250)",
+          "L": 0.96,
+          "C": 0.008,
+          "H": 250.0,
+          "luminance": 0.8854
+        },
+        "--muted": {
+          "raw": "oklch(0.78 0.012 250)",
+          "L": 0.78,
+          "C": 0.012,
+          "H": 250.0,
+          "luminance": 0.4752
+        },
+        "--dim": {
+          "raw": "oklch(0.68 0.012 250)",
+          "L": 0.68,
+          "C": 0.012,
+          "H": 250.0,
+          "luminance": 0.3149
+        },
+        "--accent": {
+          "raw": "oklch(0.68 0.19 45)",
+          "L": 0.68,
+          "C": 0.19,
+          "H": 45.0,
+          "luminance": 0.2891
+        },
+        "--accent-dim": {
+          "raw": "oklch(0.55 0.17 45)",
+          "L": 0.55,
+          "C": 0.17,
+          "H": 45.0,
+          "luminance": 0.152
+        },
+        "--ok": {
+          "raw": "oklch(0.78 0.16 150)",
+          "L": 0.78,
+          "C": 0.16,
+          "H": 150.0,
+          "luminance": 0.5074
+        },
+        "--warn": {
+          "raw": "oklch(0.72 0.17 80)",
+          "L": 0.72,
+          "C": 0.17,
+          "H": 80.0,
+          "luminance": 0.3668
+        },
+        "--err": {
+          "raw": "oklch(0.66 0.2 20)",
+          "L": 0.66,
+          "C": 0.2,
+          "H": 20.0,
+          "luminance": 0.2565
+        }
+      },
+      "contrasts": {
+        "--ink on --bg": 17.72,
+        "--ink on --bg-2": 17.04,
+        "--muted on --bg": 9.95,
+        "--muted on --bg-2": 9.57,
+        "--dim on --bg": 6.91,
+        "--dim on --bg-2": 6.65,
+        "--accent on --bg": 6.42,
+        "--accent on --bg-2": 6.18,
+        "--accent-dim on --bg": 3.83,
+        "--accent-dim on --bg-2": 3.68
+      },
+      "canon": {
+        "oklch_token_count": 12,
+        "has_signal_orange_068_019_45": true,
+        "has_blueprint_grid_2a2e35_or_1px": true,
+        "has_jetbrains_mono": true,
+        "has_ibm_plex_sans": true,
+        "has_external_font_cdn": false
+      }
+    },
+    "t2": {
+      "csp": {
+        "orig_had_meta_csp": false,
+        "orig_meta_csp": "",
+        "orig_has_unsafe_inline": false,
+        "postprocessed_meta_csp": "",
+        "postprocessed_hashes_count": 0
+      },
+      "external_urls_in_attrs": [],
+      "json_ld": {
+        "blocks_count": 0,
+        "valid_json": false,
+        "graph_types": [],
+        "faq_questions": []
+      },
+      "_headers": {
+        "exists": false
+      },
+      "llms_txt": {
+        "exists": false
+      },
+      "robots_txt": {
+        "exists": false
+      },
+      "semantics_a11y": {
+        "h1_count": 1,
+        "landmarks": [
+          "article",
+          "aside",
+          "footer",
+          "header",
+          "main",
+          "nav",
+          "section"
+        ],
+        "img_count": 0,
+        "imgs_with_alt": 0,
+        "svg_count": 7,
+        "inputs_count": 3,
+        "inputs_labeled": [
+          {
+            "id": null,
+            "name": null,
+            "labeled": false
+          },
+          {
+            "id": null,
+            "name": null,
+            "labeled": true
+          },
+          {
+            "id": "q",
+            "name": null,
+            "labeled": true
+          }
+        ],
+        "all_inputs_labeled": false,
+        "prefers_reduced_motion": false
+      },
+      "oklch_tokens": {
+        "--bg": {
+          "raw": "oklch(0.965 0.012 92)",
+          "L": 0.965,
+          "C": 0.012,
+          "H": 92.0,
+          "luminance": 0.8992
+        },
+        "--bg-2": {
+          "raw": "oklch(0.94 0.014 92)",
+          "L": 0.94,
+          "C": 0.014,
+          "H": 92.0,
+          "luminance": 0.8312
+        },
+        "--card": {
+          "raw": "oklch(0.985 0.006 92)",
+          "L": 0.985,
+          "C": 0.006,
+          "H": 92.0,
+          "luminance": 0.956
+        },
+        "--ink": {
+          "raw": "oklch(0.24 0.02 250)",
+          "L": 0.24,
+          "C": 0.02,
+          "H": 250.0,
+          "luminance": 0.0139
+        },
+        "--muted": {
+          "raw": "oklch(0.46 0.015 250)",
+          "L": 0.46,
+          "C": 0.015,
+          "H": 250.0,
+          "luminance": 0.0976
+        },
+        "--faint": {
+          "raw": "oklch(0.58 0.012 250)",
+          "L": 0.58,
+          "C": 0.012,
+          "H": 250.0,
+          "luminance": 0.1955
+        },
+        "--line": {
+          "raw": "oklch(0.86 0.012 92)",
+          "L": 0.86,
+          "C": 0.012,
+          "H": 92.0,
+          "luminance": 0.6365
+        },
+        "--line-2": {
+          "raw": "oklch(0.8 0.012 92)",
+          "L": 0.8,
+          "C": 0.012,
+          "H": 92.0,
+          "luminance": 0.5124
+        },
+        "--accent": {
+          "raw": "oklch(0.52 0.11 182)",
+          "L": 0.52,
+          "C": 0.11,
+          "H": 182.0,
+          "luminance": 0.1571
+        },
+        "--accent-deep": {
+          "raw": "oklch(0.42 0.11 182)",
+          "L": 0.42,
+          "C": 0.11,
+          "H": 182.0,
+          "luminance": 0.0882
+        },
+        "--accent-text": {
+          "raw": "oklch(0.4 0.1 182)",
+          "L": 0.4,
+          "C": 0.1,
+          "H": 182.0,
+          "luminance": 0.0751
+        }
+      },
+      "contrasts": {
+        "--ink on --bg": 14.85,
+        "--ink on --bg-2": 13.79,
+        "--ink on --card": 15.74,
+        "--muted on --bg": 6.43,
+        "--muted on --bg-2": 5.97,
+        "--muted on --card": 6.82,
+        "--accent on --bg": 4.58,
+        "--accent on --bg-2": 4.25,
+        "--accent on --card": 4.86,
+        "--accent-deep on --bg": 6.87,
+        "--accent-deep on --bg-2": 6.38,
+        "--accent-deep on --card": 7.28,
+        "--accent-text on --bg": 7.59,
+        "--accent-text on --bg-2": 7.04,
+        "--accent-text on --card": 8.04
+      },
+      "canon": {
+        "oklch_token_count": 11,
+        "has_responsive_media": true,
+        "prefers_reduced_motion": false
+      }
+    },
+    "t3": {
+      "csp": {
+        "orig_had_meta_csp": true,
+        "orig_meta_csp": "default-src 'self'; script-src 'sha256-3RkZ4kqFvGx7hPmN2bTqW9sYdLcE6jH0aXvBmKpRfQ='; style-src 'sha256-7GhN2mKpRfQ3RkZ4kqFvGx7hPmN2bTqW9sYdLcE6jH0='; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
+        "orig_has_unsafe_inline": false,
+        "postprocessed_meta_csp": "default-src 'none'; style-src 'sha256-lsbtEI3wXwvpAbvg/xWmjmqn3QOqydWG8NX1ytgCnaA=' 'unsafe-hashes' 'sha256-Dm5fUHctFLe3z0FLij4+Ltu0Q2jH4fSTrkSvyF5kjj4='; script-src 'sha256-f79yuxd9QsnDAPMl0B1TxB2MY+nlMTINHGum/X/bGNk=' 'sha256-oBOuPwoQSOZLboH7y1Hwr2y3D31ossxN3w6HBJyJ7TA='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'",
+        "postprocessed_hashes_count": 4
+      },
+      "external_urls_in_attrs": [
+        "https://severnaya-manufaktura.ru/"
+      ],
+      "json_ld": {
+        "blocks_count": 1,
+        "valid_json": true,
+        "graph_types": [
+          "Organization",
+          "Product",
+          "Product",
+          "Product",
+          "FAQPage",
+          "BreadcrumbList"
+        ],
+        "faq_questions": [],
+        "has_all_4_types": true,
+        "product_count": 3,
+        "faq_count": 5,
+        "faq_verbatim_check": [
+          {
+            "q": "Какой дуб вы используете и откуда он поступает?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Почему вы используете соединения шип-паз и ласточкин хвост вместо клея и саморезов?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Какой срок изготовления и можно ли внести индивидуальные изменения?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Как ухаживать за мебелью из массива дуба с масляной пропиткой?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Вы доставляете по России? Как осуществляется сборка на месте?",
+            "q_in_html": true,
+            "a_in_html": true
+          }
+        ],
+        "faq_all_verbatim": true
+      },
+      "_headers": {
+        "exists": true,
+        "raw": "/*\n  Content-Security-Policy: default-src 'none'; style-src 'sha256-lsbtEI3wXwvpAbvg/xWmjmqn3QOqydWG8NX1ytgCnaA=' 'unsafe-hashes' 'sha256-Dm5fUHctFLe3z0FLij4+Ltu0Q2jH4fSTrkSvyF5kjj4='; script-src 'sha256-f79yuxd9QsnDAPMl0B1TxB2MY+nlMTINHGum/X/bGNk=' 'sha256-oBOuPwoQSOZLboH7y1Hwr2y3D31ossxN3w6HBJyJ7TA='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'\n  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()\n  Cross-Origin-Opener-Policy: same-origin\n  X-Frame-Options: DENY\n\n/*.html\n  Content-Type: text/html; charset=utf-8\n  Cache-Control: public, max-age=3600, s-maxage=86400\n\n/*.css\n  Content-Type: text/css; charset=utf-8\n  Cache-Control: public, max-age=31536000, immutable\n\n/*.js\n  Content-Type: application/javascript; charset=utf-8\n  Cache-Control: public, max-age=31536000, immutable\n\n/*.svg\n  Content-Type: image/svg+xml\n  Cache-Control: public, max-age=31536000, immutable",
+        "has_route_rule": true,
+        "checks": {
+          "Content-Security-Policy": true,
+          "frame-ancestors 'none'": true,
+          "Strict-Transport-Security": true,
+          "X-Content-Type-Options": true,
+          "Referrer-Policy": true,
+          "Permissions-Policy": true,
+          "Cross-Origin-Opener-Policy": true
+        },
+        "passed_count": 7,
+        "all_passed": true
+      },
+      "llms_txt": {
+        "exists": true,
+        "has_h1": true,
+        "has_blockquote": true,
+        "has_h2_sections": true,
+        "has_markdown_links": false
+      },
+      "robots_txt": {
+        "exists": true,
+        "has_user_agent": true,
+        "has_allow_or_disallow": true
+      },
+      "semantics_a11y": {
+        "h1_count": 1,
+        "landmarks": [
+          "footer",
+          "header",
+          "main",
+          "nav",
+          "section"
+        ],
+        "img_count": 0,
+        "imgs_with_alt": 0,
+        "svg_count": 1,
+        "inputs_count": 5,
+        "inputs_labeled": [
+          {
+            "id": "f-name",
+            "name": "name",
+            "labeled": true
+          },
+          {
+            "id": "f-email",
+            "name": "email",
+            "labeled": true
+          },
+          {
+            "id": "f-phone",
+            "name": "phone",
+            "labeled": true
+          },
+          {
+            "id": "f-product",
+            "name": "product",
+            "labeled": true
+          },
+          {
+            "id": "f-message",
+            "name": "message",
+            "labeled": true
+          }
+        ],
+        "all_inputs_labeled": true,
+        "prefers_reduced_motion": true
+      },
+      "oklch_tokens": {
+        "--clr-bg": {
+          "raw": "oklch(0.95 0.01 85)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 85.0,
+          "luminance": 0.8574
+        },
+        "--clr-bg-alt": {
+          "raw": "oklch(0.92 0.012 85)",
+          "L": 0.92,
+          "C": 0.012,
+          "H": 85.0,
+          "luminance": 0.7787
+        },
+        "--clr-text": {
+          "raw": "oklch(0.22 0.02 60)",
+          "L": 0.22,
+          "C": 0.02,
+          "H": 60.0,
+          "luminance": 0.0105
+        },
+        "--clr-text-muted": {
+          "raw": "oklch(0.45 0.02 70)",
+          "L": 0.45,
+          "C": 0.02,
+          "H": 70.0,
+          "luminance": 0.0907
+        },
+        "--clr-accent": {
+          "raw": "oklch(0.48 0.07 62)",
+          "L": 0.48,
+          "C": 0.07,
+          "H": 62.0,
+          "luminance": 0.1076
+        },
+        "--clr-accent-hover": {
+          "raw": "oklch(0.38 0.07 62)",
+          "L": 0.38,
+          "C": 0.07,
+          "H": 62.0,
+          "luminance": 0.0529
+        },
+        "--clr-border": {
+          "raw": "oklch(0.78 0.015 80)",
+          "L": 0.78,
+          "C": 0.015,
+          "H": 80.0,
+          "luminance": 0.4742
+        },
+        "--clr-border-strong": {
+          "raw": "oklch(0.55 0.02 70)",
+          "L": 0.55,
+          "C": 0.02,
+          "H": 70.0,
+          "luminance": 0.1657
+        },
+        "--clr-surface": {
+          "raw": "oklch(0.90 0.01 82)",
+          "L": 0.9,
+          "C": 0.01,
+          "H": 82.0,
+          "luminance": 0.7288
+        },
+        "--clr-success": {
+          "raw": "oklch(0.45 0.12 145)",
+          "L": 0.45,
+          "C": 0.12,
+          "H": 145.0,
+          "luminance": 0.0987
+        },
+        "--clr-error": {
+          "raw": "oklch(0.45 0.15 25)",
+          "L": 0.45,
+          "C": 0.15,
+          "H": 25.0,
+          "luminance": 0.0806
+        }
+      },
+      "contrasts": {
+        "--clr-text on --clr-bg": 15.0,
+        "--clr-text on --clr-bg-alt": 13.7,
+        "--clr-text on --clr-surface": 12.87,
+        "--clr-text-muted on --clr-bg": 6.45,
+        "--clr-text-muted on --clr-bg-alt": 5.89,
+        "--clr-text-muted on --clr-surface": 5.54,
+        "--clr-accent on --clr-bg": 5.76,
+        "--clr-accent on --clr-bg-alt": 5.26,
+        "--clr-accent on --clr-surface": 4.94,
+        "--clr-accent-hover on --clr-bg": 8.82,
+        "--clr-accent-hover on --clr-bg-alt": 8.05,
+        "--clr-accent-hover on --clr-surface": 7.57
+      },
+      "canon": {
+        "oklch_token_count": 11,
+        "has_warm_bg_095_001_85": true,
+        "has_clamp_4rem_10vw_12rem": true,
+        "has_cormorant_or_playfair": true,
+        "has_external_font_cdn": false
+      }
+    }
+  },
+  "qwen3.6-35b-a3b": {
+    "t1": {
+      "csp": {
+        "orig_had_meta_csp": true,
+        "orig_meta_csp": "default-src 'self'; script-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-8Kx9v2Lm3pQr7tYw1zN4bC6dE8fG0hI2jK4lM6nO8pQ='; style-src 'sha256-9Lm4nO6pQ8rT2sU4vW6xY8zA0bC2dE4fG6hI8jK0lM2n='; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none';",
+        "orig_has_unsafe_inline": false,
+        "postprocessed_meta_csp": "default-src 'none'; style-src 'sha256-kOiiAsayqHTJgWFJAW80u9gF27tXqtDBu6zLYIcj5zk=' 'unsafe-hashes' 'sha256-5K9q6K67vmXKMhTvxR5EO8thnzGutMC6u+qT75Jht/0=' 'sha256-8v7LNNytOR7qMD1ZKI6y7NBpITaKUYVwL1nEjqfaayY=' 'sha256-GVnJ8CYQLLo65GHTnoumDgIdqKGvOnsfVT2n5gbBm4k=' 'sha256-HxMJT8X4mciyeE2oDvO08C4Uaz0W6txUAoMRae6cQfU=' 'sha256-WMoL/3B/Ya24YlNsxKrw0MmKS4b75C+JwdpXIlCOMog=' 'sha256-fqHyNCxxyaeYUTpwtQdMqRrkRJVNEOKEKMlB6aCz+M8=' 'sha256-jYqY2OlQ9N2P9Dx9NfK5dU6ci4HrGmMay9bbyUf9T5M=' 'sha256-m04cCjUVu+CNh5rqpj7ebiYAOXlydq26OqGblOseWG4=' 'sha256-mUMS1egGFh40Y1W0WhsguVYIUL+kdIiqP4HrGz/R2Vg=' 'sha256-nZNzFMCrxs1o+roiFKfUnSqNbxWIM2K6zAIOg+pJmbs=' 'sha256-v7hYYigOBrT3nXEQQ4sp73cuvArxHf3NW7u9kOIQk3U=' 'sha256-vVGG4J+wjBUw/ts+bh4buMScny0RJhdnY0+0z2Sobns='; script-src 'sha256-RcSKRO2PsxI2zgq8zyOL6wmmW2ke+myWFnBkTcTUt4Y=' 'sha256-bRyz2sZi2WkS6eCtpd0m5zjxX5ShYIJZI1zMZolNzDM='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'",
+        "postprocessed_hashes_count": 15
+      },
+      "external_urls_in_attrs": [
+        "https://thermotech.engineering/"
+      ],
+      "json_ld": {
+        "blocks_count": 1,
+        "valid_json": true,
+        "graph_types": [
+          "Organization",
+          "Product",
+          "Product",
+          "Product",
+          "FAQPage",
+          "BreadcrumbList"
+        ],
+        "faq_questions": [],
+        "has_all_4_types": true,
+        "product_count": 3,
+        "faq_count": 5,
+        "faq_verbatim_check": [
+          {
+            "q": "What is the maximum thermal output of your boilers?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Are your boilers compliant with international safety standards?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "What fuel types can your boilers operate on?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "What is the typical lead time for delivery and installation?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Do you provide remote monitoring and maintenance support?",
+            "q_in_html": true,
+            "a_in_html": true
+          }
+        ],
+        "faq_all_verbatim": true
+      },
+      "_headers": {
+        "exists": true,
+        "raw": "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()\n  Cross-Origin-Opener-Policy: same-origin\n  Cross-Origin-Resource-Policy: same-origin\n  Cache-Control: public, max-age=31536000, immutable\n  Content-Security-Policy: default-src 'none'; style-src 'sha256-kOiiAsayqHTJgWFJAW80u9gF27tXqtDBu6zLYIcj5zk=' 'unsafe-hashes' 'sha256-5K9q6K67vmXKMhTvxR5EO8thnzGutMC6u+qT75Jht/0=' 'sha256-8v7LNNytOR7qMD1ZKI6y7NBpITaKUYVwL1nEjqfaayY=' 'sha256-GVnJ8CYQLLo65GHTnoumDgIdqKGvOnsfVT2n5gbBm4k=' 'sha256-HxMJT8X4mciyeE2oDvO08C4Uaz0W6txUAoMRae6cQfU=' 'sha256-WMoL/3B/Ya24YlNsxKrw0MmKS4b75C+JwdpXIlCOMog=' 'sha256-fqHyNCxxyaeYUTpwtQdMqRrkRJVNEOKEKMlB6aCz+M8=' 'sha256-jYqY2OlQ9N2P9Dx9NfK5dU6ci4HrGmMay9bbyUf9T5M=' 'sha256-m04cCjUVu+CNh5rqpj7ebiYAOXlydq26OqGblOseWG4=' 'sha256-mUMS1egGFh40Y1W0WhsguVYIUL+kdIiqP4HrGz/R2Vg=' 'sha256-nZNzFMCrxs1o+roiFKfUnSqNbxWIM2K6zAIOg+pJmbs=' 'sha256-v7hYYigOBrT3nXEQQ4sp73cuvArxHf3NW7u9kOIQk3U=' 'sha256-vVGG4J+wjBUw/ts+bh4buMScny0RJhdnY0+0z2Sobns='; script-src 'sha256-RcSKRO2PsxI2zgq8zyOL6wmmW2ke+myWFnBkTcTUt4Y=' 'sha256-bRyz2sZi2WkS6eCtpd0m5zjxX5ShYIJZI1zMZolNzDM='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'\n  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload",
+        "has_route_rule": true,
+        "checks": {
+          "Content-Security-Policy": true,
+          "frame-ancestors 'none'": true,
+          "Strict-Transport-Security": true,
+          "X-Content-Type-Options": true,
+          "Referrer-Policy": true,
+          "Permissions-Policy": true,
+          "Cross-Origin-Opener-Policy": true
+        },
+        "passed_count": 7,
+        "all_passed": true
+      },
+      "llms_txt": {
+        "exists": true,
+        "has_h1": false,
+        "has_blockquote": false,
+        "has_h2_sections": true,
+        "has_markdown_links": false
+      },
+      "robots_txt": {
+        "exists": true,
+        "has_user_agent": true,
+        "has_allow_or_disallow": true
+      },
+      "semantics_a11y": {
+        "h1_count": 1,
+        "landmarks": [
+          "footer",
+          "header",
+          "main",
+          "nav",
+          "section"
+        ],
+        "img_count": 0,
+        "imgs_with_alt": 0,
+        "svg_count": 1,
+        "inputs_count": 4,
+        "inputs_labeled": [
+          {
+            "id": "name",
+            "name": "name",
+            "labeled": true
+          },
+          {
+            "id": "company",
+            "name": "company",
+            "labeled": true
+          },
+          {
+            "id": "email",
+            "name": "email",
+            "labeled": true
+          },
+          {
+            "id": "message",
+            "name": "message",
+            "labeled": true
+          }
+        ],
+        "all_inputs_labeled": true,
+        "prefers_reduced_motion": true
+      },
+      "oklch_tokens": {
+        "--bg": {
+          "raw": "oklch(0.15 0.02 260)",
+          "L": 0.15,
+          "C": 0.02,
+          "H": 260.0,
+          "luminance": 0.0034
+        },
+        "--surface": {
+          "raw": "oklch(0.20 0.02 260)",
+          "L": 0.2,
+          "C": 0.02,
+          "H": 260.0,
+          "luminance": 0.008
+        },
+        "--text": {
+          "raw": "oklch(0.95 0.01 260)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 260.0,
+          "luminance": 0.8576
+        },
+        "--text-muted": {
+          "raw": "oklch(0.80 0.02 260)",
+          "L": 0.8,
+          "C": 0.02,
+          "H": 260.0,
+          "luminance": 0.5123
+        },
+        "--accent": {
+          "raw": "oklch(0.68 0.19 45)",
+          "L": 0.68,
+          "C": 0.19,
+          "H": 45.0,
+          "luminance": 0.2891
+        }
+      },
+      "contrasts": {
+        "--text on --bg": 17.0,
+        "--text on --surface": 15.65,
+        "--text-muted on --bg": 10.53,
+        "--text-muted on --surface": 9.69,
+        "--accent on --bg": 6.35,
+        "--accent on --surface": 5.85
+      },
+      "canon": {
+        "oklch_token_count": 5,
+        "has_signal_orange_068_019_45": true,
+        "has_blueprint_grid_2a2e35_or_1px": true,
+        "has_jetbrains_mono": true,
+        "has_ibm_plex_sans": true,
+        "has_external_font_cdn": false
+      }
+    },
+    "t2": {
+      "csp": {
+        "orig_had_meta_csp": false,
+        "orig_meta_csp": "",
+        "orig_has_unsafe_inline": false,
+        "postprocessed_meta_csp": "",
+        "postprocessed_hashes_count": 0
+      },
+      "external_urls_in_attrs": [],
+      "json_ld": {
+        "blocks_count": 0,
+        "valid_json": false,
+        "graph_types": [],
+        "faq_questions": []
+      },
+      "_headers": {
+        "exists": false
+      },
+      "llms_txt": {
+        "exists": false
+      },
+      "robots_txt": {
+        "exists": false
+      },
+      "semantics_a11y": {
+        "h1_count": 1,
+        "landmarks": [
+          "article",
+          "aside",
+          "footer",
+          "header",
+          "main",
+          "nav",
+          "section"
+        ],
+        "img_count": 0,
+        "imgs_with_alt": 0,
+        "svg_count": 2,
+        "inputs_count": 1,
+        "inputs_labeled": [
+          {
+            "id": null,
+            "name": null,
+            "labeled": false
+          }
+        ],
+        "all_inputs_labeled": false,
+        "prefers_reduced_motion": false
+      },
+      "oklch_tokens": {},
+      "contrasts": {},
+      "canon": {
+        "oklch_token_count": 0,
+        "has_responsive_media": true,
+        "prefers_reduced_motion": false
+      }
+    },
+    "t3": {
+      "csp": {
+        "orig_had_meta_csp": true,
+        "orig_meta_csp": "default-src 'self'; style-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeR+/5FIPuQUmRBMd8='; script-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeR+/5FIPuQUmRBMd8='; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
+        "orig_has_unsafe_inline": false,
+        "postprocessed_meta_csp": "default-src 'none'; style-src 'sha256-Fd6LNMF/LLPzcthlLkY9DLXW8BHc1lusMSlJguAtwKQ=' 'unsafe-hashes' 'sha256-8Y0tUJoB3woFTaCRV0HUvzGfa4oAb9POznyt3+OX29c=' 'sha256-98eJ5nxPH90B4L4pTH7900OIK8LHXjazWDLtxncLS3g=' 'sha256-FxhUYK01MhcIvQ9qmHmyKDpGnt8gPFFG5baKXIq1o1I=' 'sha256-HE0/bKzqu2oGO0Sk5XGNO9rGVJgNNE8Gyqpa68Q5u+0=' 'sha256-KdwpbP98suJa7CXfrGuGPYNkMFomxoAQzbfiNTIGl5o=' 'sha256-M74WJfv51Cejc2458us0f3jENtdt2yDe7/daKqiWdUA=' 'sha256-PtMYyVqRfFICsreTgqHmnrA572xGvyF8V519+4ppvKY=' 'sha256-Z1GnEXKnRupEn8wJhmPR/HW5PlSgtaFUQHpV37dpr7k=' 'sha256-a5kuKYbQck8Bt5e6a9NMjdazYH0pUV5ZT+mM/KoWM10=' 'sha256-cexsl8eNa6Jh2I9NGUW+R7/i8KNWT7HAxhW+2iuFiLc=' 'sha256-ln8xhaiS0SqqWR17Dfz/WjHM10xKfhOsHzA3vXRBJXM=' 'sha256-mhQcNI31sk3i4s7X4Ys38+qHowR206th5poYwfdc/Fc=' 'sha256-zfn9ODoB4nV/mqvyVLHsX1iKv/PI7J284+lfXeCNGVA='; script-src 'sha256-wfKs2rmfp3fNYbBaPxRpHoT0PSRNHHFzzLgn7EowIxs=' 'sha256-IDrcBODwkT6A+mr2eZ0+JBxbLMbPD3l961vMJcfxzt0='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'",
+        "postprocessed_hashes_count": 16
+      },
+      "external_urls_in_attrs": [
+        "https://example.com/"
+      ],
+      "json_ld": {
+        "blocks_count": 1,
+        "valid_json": true,
+        "graph_types": [
+          "Organization",
+          "BreadcrumbList",
+          "Product",
+          "Product",
+          "Product",
+          "FAQPage"
+        ],
+        "faq_questions": [],
+        "has_all_4_types": true,
+        "product_count": 3,
+        "faq_count": 5,
+        "faq_verbatim_check": [
+          {
+            "q": "Как ухаживать за дубовой мебелью?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Сколько времени занимает изготовление?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Можно ли заказать реставрацию?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Доставляете ли вы в регионы?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Какие гарантии предоставляются?",
+            "q_in_html": true,
+            "a_in_html": true
+          }
+        ],
+        "faq_all_verbatim": true
+      },
+      "_headers": {
+        "exists": true,
+        "raw": "/*\n  Content-Security-Policy: default-src 'none'; style-src 'sha256-Fd6LNMF/LLPzcthlLkY9DLXW8BHc1lusMSlJguAtwKQ=' 'unsafe-hashes' 'sha256-8Y0tUJoB3woFTaCRV0HUvzGfa4oAb9POznyt3+OX29c=' 'sha256-98eJ5nxPH90B4L4pTH7900OIK8LHXjazWDLtxncLS3g=' 'sha256-FxhUYK01MhcIvQ9qmHmyKDpGnt8gPFFG5baKXIq1o1I=' 'sha256-HE0/bKzqu2oGO0Sk5XGNO9rGVJgNNE8Gyqpa68Q5u+0=' 'sha256-KdwpbP98suJa7CXfrGuGPYNkMFomxoAQzbfiNTIGl5o=' 'sha256-M74WJfv51Cejc2458us0f3jENtdt2yDe7/daKqiWdUA=' 'sha256-PtMYyVqRfFICsreTgqHmnrA572xGvyF8V519+4ppvKY=' 'sha256-Z1GnEXKnRupEn8wJhmPR/HW5PlSgtaFUQHpV37dpr7k=' 'sha256-a5kuKYbQck8Bt5e6a9NMjdazYH0pUV5ZT+mM/KoWM10=' 'sha256-cexsl8eNa6Jh2I9NGUW+R7/i8KNWT7HAxhW+2iuFiLc=' 'sha256-ln8xhaiS0SqqWR17Dfz/WjHM10xKfhOsHzA3vXRBJXM=' 'sha256-mhQcNI31sk3i4s7X4Ys38+qHowR206th5poYwfdc/Fc=' 'sha256-zfn9ODoB4nV/mqvyVLHsX1iKv/PI7J284+lfXeCNGVA='; script-src 'sha256-wfKs2rmfp3fNYbBaPxRpHoT0PSRNHHFzzLgn7EowIxs=' 'sha256-IDrcBODwkT6A+mr2eZ0+JBxbLMbPD3l961vMJcfxzt0='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'\n  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Cross-Origin-Opener-Policy: same-origin\n  Cross-Origin-Resource-Policy: same-origin",
+        "has_route_rule": true,
+        "checks": {
+          "Content-Security-Policy": true,
+          "frame-ancestors 'none'": true,
+          "Strict-Transport-Security": true,
+          "X-Content-Type-Options": true,
+          "Referrer-Policy": true,
+          "Permissions-Policy": true,
+          "Cross-Origin-Opener-Policy": true
+        },
+        "passed_count": 7,
+        "all_passed": true
+      },
+      "llms_txt": {
+        "exists": true,
+        "has_h1": true,
+        "has_blockquote": false,
+        "has_h2_sections": true,
+        "has_markdown_links": false
+      },
+      "robots_txt": {
+        "exists": true,
+        "has_user_agent": true,
+        "has_allow_or_disallow": true
+      },
+      "semantics_a11y": {
+        "h1_count": 1,
+        "landmarks": [
+          "footer",
+          "header",
+          "main",
+          "nav",
+          "section"
+        ],
+        "img_count": 0,
+        "imgs_with_alt": 0,
+        "svg_count": 1,
+        "inputs_count": 3,
+        "inputs_labeled": [
+          {
+            "id": "name",
+            "name": "name",
+            "labeled": true
+          },
+          {
+            "id": "email",
+            "name": "email",
+            "labeled": true
+          },
+          {
+            "id": "message",
+            "name": "message",
+            "labeled": true
+          }
+        ],
+        "all_inputs_labeled": true,
+        "prefers_reduced_motion": true
+      },
+      "oklch_tokens": {
+        "--bg": {
+          "raw": "oklch(0.95 0.01 85)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 85.0,
+          "luminance": 0.8574
+        },
+        "--text": {
+          "raw": "oklch(0.25 0.02 85)",
+          "L": 0.25,
+          "C": 0.02,
+          "H": 85.0,
+          "luminance": 0.0156
+        },
+        "--accent": {
+          "raw": "oklch(0.65 0.08 85)",
+          "L": 0.65,
+          "C": 0.08,
+          "H": 85.0,
+          "luminance": 0.2734
+        },
+        "--surface": {
+          "raw": "oklch(0.90 0.01 85)",
+          "L": 0.9,
+          "C": 0.01,
+          "H": 85.0,
+          "luminance": 0.729
+        },
+        "--border": {
+          "raw": "oklch(0.80 0.01 85)",
+          "L": 0.8,
+          "C": 0.01,
+          "H": 85.0,
+          "luminance": 0.512
+        }
+      },
+      "contrasts": {
+        "--text on --bg": 13.83,
+        "--text on --surface": 11.88,
+        "--accent on --bg": 2.81,
+        "--accent on --surface": 2.41
+      },
+      "canon": {
+        "oklch_token_count": 5,
+        "has_warm_bg_095_001_85": true,
+        "has_clamp_4rem_10vw_12rem": true,
+        "has_cormorant_or_playfair": true,
+        "has_external_font_cdn": false
+      }
+    }
+  }
+}

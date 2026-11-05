@@ -1,0 +1,8 @@
+/*
+  Content-Security-Policy: default-src 'none'; style-src 'sha256-3kZ9m7VxQ2pR8sT4uY6wA0bC1dE2fG3hI4jK5lM6nO7pQ=='; script-src 'sha256-9aB8cD7eF6gH5iJ4kL3mN2oP1qR0sT9uV8wX7yZ6aB5cD=='; img-src 'self' data:; form-action 'none'; base-uri 'self'; frame-ancestors 'none'
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  X-Frame-Options: DENY

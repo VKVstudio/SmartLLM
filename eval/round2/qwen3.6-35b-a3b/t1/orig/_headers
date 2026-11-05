@@ -1,0 +1,9 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Security-Policy: default-src 'self'; script-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-8Kx9v2Lm3pQr7tYw1zN4bC6dE8fG0hI2jK4lM6nO8pQ='; style-src 'sha256-9Lm4nO6pQ8rT2sU4vW6xY8zA0bC2dE4fG6hI8jK0lM2n='; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none';
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload

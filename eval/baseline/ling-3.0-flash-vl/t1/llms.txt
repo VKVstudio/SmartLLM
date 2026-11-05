@@ -1,0 +1,28 @@
+# THERMOTECH ENGINEERING
+Manufacturer of industrial hot-water and steam boilers (5–25 MW).
+
+## Primary Contact
+- Email: info@thermotech-engineering.com
+- Phone: +1 (555) 0142-555
+- Address: 1200 Industrial Boulevard, Building 7, Moscow, 142000, Russia
+
+## Products
+- TH-500: Hot-water boiler, 5–8 MW, 0.6–1.6 MPa, 94.5% efficiency
+- TH-1200: Steam boiler, 12–18 MW, 0.8–2.5 MPa, 92.8% efficiency
+- TH-2500: Steam boiler, 20–25 MW, 1.0–3.2 MPa, 91.5% efficiency
+
+## Certifications
+- ISO 9001:2015
+- GOST R
+- CE Marking (PED 2014/68/EU)
+- ASME U-Stamp
+
+## Technical Resources
+- Boiler circuit schematic: available at /schematic
+- Product specifications table: available at /products
+- FAQ: available at /faq
+
+## Support
+- Technical Hotline: +1 (555) 0142-556 (24/7)
+- Response time: 48 hours for standard inquiries
+- On-site commissioning included with delivery

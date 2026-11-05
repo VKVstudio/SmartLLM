@@ -1,0 +1,41 @@
+# THERMOTECH ENGINEERING
+
+> Manufacturer of industrial hot-water and steam boilers rated 5–25 MW. ISO 9001 / ISO 14001 / ISO 45001 certified, GOST R and CE (PED 2014/68/EU, EN 12953) compliant. Field commissioning and 24/7 remote diagnostics.
+
+## Product line
+
+- TT-5000 — Fire-tube hot-water boiler, 5 MW, 10 bar / 110 °C, 93.5% efficiency, natural gas / diesel, 14 t.
+- TT-12000 — Water-tube steam boiler, 12 MW, 25 bar / 220 °C, 92.8% efficiency, gas / light oil, 38 t.
+- TT-25000 — Water-tube multi-fuel steam boiler, 25 MW, 40 bar / 280 °C, 94.2% efficiency, 92 t.
+
+## Certifications
+
+- ISO 9001:2015 (quality management)
+- ISO 14001 (environmental management)
+- ISO 45001 (occupational health & safety)
+- GOST R 52637 (CIS pressure equipment)
+- EN 12953 / PED 2014/68/EU (CE marking)
+- ASME S / U (optional stamping)
+
+## FAQ
+
+- What output range do THERMOTECH boilers cover? Packaged hot-water and steam boilers from 5 MW to 25 MW; custom configurations on request.
+- Which fuels are supported? Natural gas and light diesel oil standard; TT-25000 accepts heavy fuel oil, associated petroleum gas and biomass syngas.
+- How long is the lead time? 16–22 weeks (TT-5000), 22–28 weeks (TT-12000), 32–40 weeks (TT-25000); commissioning adds 2–4 weeks.
+- Are the boilers certified for the EU and CIS markets? Yes — CE under PED 2014/68/EU, EN 12953, GOST R; ASME optional.
+- What warranty and service coverage is included? 24-month warranty from commissioning, extendable to 48 months; 24/7 remote diagnostics with 24-hour on-site response in covered regions.
+
+## Contact
+
+- Email: sales@thermotech.example
+- Phone: +00 000 000 0000
+- Address: Industrial Zone B, Plant 4
+
+## Optional
+
+- [Home](https://thermotech.example/)
+- [Products](https://thermotech.example/#products)
+- [Schematic](https://thermotech.example/#schematic)
+- [Certifications](https://thermotech.example/#certs)
+- [FAQ](https://thermotech.example/#faq)
+- [Contact](https://thermotech.example/#contact)

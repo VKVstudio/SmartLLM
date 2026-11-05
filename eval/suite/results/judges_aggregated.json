@@ -1,0 +1,678 @@
+{
+  "judge_1_id": "judge_1",
+  "judge_2_id": "judge_2",
+  "discrepancy_threshold": 2.0,
+  "discrepancies": [
+    {
+      "model": "gyro-m-local",
+      "task": "t4",
+      "criterion": "copy",
+      "judge_1": 5.5,
+      "judge_2": 8.0,
+      "diff": 2.5
+    }
+  ],
+  "models": {
+    "gyro-m-local": {
+      "t1": {
+        "judge_1": {
+          "canon": 9.5,
+          "design": 9.0,
+          "copy": 9.5,
+          "ru": null,
+          "overall": 9.33,
+          "strengths": "Flawless adherence to Industrial B2B canon with custom blueprint grid, crisp SVG boiler schematic, 100/100 Lighthouse scores, and verbatim JSON-LD FAQPage matching.",
+          "weaknesses": "Generation hit the 20k token limit at the very end of _headers, leaving a repetitive Permissions-Policy loop and missing the Cross-Origin-Opener-Policy header."
+        },
+        "judge_2": {
+          "canon": 9.5,
+          "design": 9.5,
+          "copy": 9.5,
+          "ru": null,
+          "overall": 9.5,
+          "strengths": "Authentic industrial aesthetic with precise OKLCH palette, functional responsive layout, detailed SVG schematic, and flawless metadata.",
+          "weaknesses": "Missing Cross-Origin-Opener-Policy in the _headers configuration."
+        },
+        "mean": {
+          "canon": 9.5,
+          "design": 9.25,
+          "copy": 9.5,
+          "ru": null,
+          "overall": 9.41
+        },
+        "diffs": {
+          "canon": 0.0,
+          "design": 0.5,
+          "copy": 0.0,
+          "ru": null,
+          "overall": 0.17
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t10": {
+        "judge_1": {
+          "canon": 9.0,
+          "design": 8.5,
+          "copy": 9.0,
+          "ru": 9.5,
+          "overall": 9.0,
+          "strengths": "Outstanding Russian engineering execution with interactive FFT harmonics visualization, deep GOST ISO 10816 domain copy, and complete verbatim JSON-LD.",
+          "weaknesses": "Generation reached the 24k token limit at the tail of the inline script, leaving companion files omitted and causing a minor 2px horizontal overflow on mobile."
+        },
+        "judge_2": {
+          "canon": 8.5,
+          "design": 8.0,
+          "copy": 8.5,
+          "ru": 9.0,
+          "overall": 8.5,
+          "strengths": "Rich, authentic Russian technical copy with sophisticated dark-mode styling, complex SVG spectrum visualization, and full semantic structure.",
+          "weaknesses": "Hit the output token limit causing truncation of the inline script, suffered minor mobile horizontal overflow, and omitted secondary files."
+        },
+        "mean": {
+          "canon": 8.75,
+          "design": 8.25,
+          "copy": 8.75,
+          "ru": 9.25,
+          "overall": 8.75
+        },
+        "diffs": {
+          "canon": 0.5,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": 0.5,
+          "overall": 0.5
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t11": {
+        "judge_1": {
+          "canon": 0.5,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": null,
+          "overall": 0.5,
+          "strengths": "None, as generation terminated before emitting any document body or styling.",
+          "weaknesses": "Looped indefinitely on a CSP script hash placeholder string filled with trailing zeros, terminating prematurely without body markup, canvas visualizer, or accompanying files."
+        },
+        "judge_2": {
+          "canon": 0.0,
+          "design": 0.0,
+          "copy": 0.0,
+          "ru": null,
+          "overall": 0.0,
+          "strengths": "Correctly set up the initial document headers and viewport configuration.",
+          "weaknesses": "Encountered a degenerate placeholder loop in the CSP meta tag that exhausted generation tokens, leaving an empty body and missing auxiliary files."
+        },
+        "mean": {
+          "canon": 0.25,
+          "design": 0.25,
+          "copy": 0.25,
+          "ru": null,
+          "overall": 0.25
+        },
+        "diffs": {
+          "canon": 0.5,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": null,
+          "overall": 0.5
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t12": {
+        "judge_1": {
+          "canon": 9.5,
+          "design": 9.5,
+          "copy": 9.0,
+          "ru": null,
+          "overall": 9.33,
+          "strengths": "Nearly pixel-perfect visual recreation of the reference telemetry interface and Swiss pricing matrix with impeccable responsive mobile collapse and zero CLS.",
+          "weaknesses": "Minor transcription inaccuracies in button text ('3264-LD' instead of 'JSON-LD') and quantization labels ('IQ1_S' instead of 'IQ3_S')."
+        },
+        "judge_2": {
+          "canon": 9.5,
+          "design": 9.5,
+          "copy": 9.0,
+          "ru": null,
+          "overall": 9.33,
+          "strengths": "Near-pixel-perfect recreation of the reference screenshot's dark telemetry theme, card hierarchy, typography, and responsive grid.",
+          "weaknesses": "Minor textual discrepancies compared to the reference image, such as '3264-LD' instead of 'JSON-LD'."
+        },
+        "mean": {
+          "canon": 9.5,
+          "design": 9.5,
+          "copy": 9.0,
+          "ru": null,
+          "overall": 9.33
+        },
+        "diffs": {
+          "canon": 0.0,
+          "design": 0.0,
+          "copy": 0.0,
+          "ru": null,
+          "overall": 0.0
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t2": {
+        "judge_1": {
+          "canon": 9.0,
+          "design": 8.5,
+          "copy": 8.5,
+          "ru": null,
+          "overall": 8.67,
+          "strengths": "Highly authentic recreation of the reference editorial palette, orbital wireframe hero graphic, dual-column briefing grid, and responsive typography down to 375px.",
+          "weaknesses": "Missed the top-right hero floating audit card from the reference image and substituted editorial photography with stylized SVG coffee and flute motifs."
+        },
+        "judge_2": {
+          "canon": 8.0,
+          "design": 7.5,
+          "copy": 7.5,
+          "ru": null,
+          "overall": 7.67,
+          "strengths": "Faithfully replicates the multi-column editorial composition, typography hierarchy, and overall warm color palette from the reference image.",
+          "weaknesses": "Omitted the prominent hero callout card, replaced the photo assets with simplistic SVG drawings, and hallucinated brand names."
+        },
+        "mean": {
+          "canon": 8.5,
+          "design": 8.0,
+          "copy": 8.0,
+          "ru": null,
+          "overall": 8.17
+        },
+        "diffs": {
+          "canon": 1.0,
+          "design": 1.0,
+          "copy": 1.0,
+          "ru": null,
+          "overall": 1.0
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t3": {
+        "judge_1": {
+          "canon": 8.5,
+          "design": 7.5,
+          "copy": 9.0,
+          "ru": 9.0,
+          "overall": 8.5,
+          "strengths": "Exemplary Luxury Minimalism aesthetic with authentic Russian woodworking terminology, complete SVG joinery schematics, 100/100 Lighthouse scores, and verbatim JSON-LD FAQPage integration.",
+          "weaknesses": "On desktop viewports, the oversized 96px serif H1 lacks CSS hyphenation, causing the long word 'архитектурных' to overflow its grid column and collide with the adjacent hero illustration card."
+        },
+        "judge_2": {
+          "canon": 8.5,
+          "design": 7.0,
+          "copy": 9.5,
+          "ru": 9.5,
+          "overall": 8.63,
+          "strengths": "Refined Luxury Minimalism styling with elegant typography, authentic Russian joinery terminology, full JSON-LD schema integration, and clean responsive layout.",
+          "weaknesses": "The oversized H1 heading on desktop overflows its grid column, causing the long word 'архитектурных' to clip behind the hero graphic."
+        },
+        "mean": {
+          "canon": 8.5,
+          "design": 7.25,
+          "copy": 9.25,
+          "ru": 9.25,
+          "overall": 8.57
+        },
+        "diffs": {
+          "canon": 0.0,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": 0.5,
+          "overall": 0.13
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t4": {
+        "judge_1": {
+          "canon": 5.5,
+          "design": 5.0,
+          "copy": 5.5,
+          "ru": null,
+          "overall": 5.33,
+          "strengths": "Clean export signatures and type definitions with zero explicit any, featuring working cycle detection and input validation that pass 5 unit tests.",
+          "weaknesses": "Fails strict compilation with TS2683 ('this' has implicit any) and hangs in an infinite synchronous busy-wait loop on all multi-node executions due to evaluating ready.size on an Array."
+        },
+        "judge_2": {
+          "canon": 5.5,
+          "design": 3.5,
+          "copy": 8.0,
+          "ru": null,
+          "overall": 5.67,
+          "strengths": "Exhaustive type signatures matching the specification without using 'any', along with robust error class definitions.",
+          "weaknesses": "Fails TypeScript strict compilation due to unbound 'this' in helper function and hangs on execution tests due to checking array size rather than length."
+        },
+        "mean": {
+          "canon": 5.5,
+          "design": 4.25,
+          "copy": 6.75,
+          "ru": null,
+          "overall": 5.5
+        },
+        "diffs": {
+          "canon": 0.0,
+          "design": 1.5,
+          "copy": 2.5,
+          "ru": null,
+          "overall": 0.34
+        },
+        "discrepancy_flagged": true,
+        "flagged_criteria": [
+          {
+            "criterion": "copy",
+            "judge_1": 5.5,
+            "judge_2": 8.0,
+            "diff": 2.5
+          }
+        ]
+      },
+      "t5": {
+        "judge_1": {
+          "canon": 0.5,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": null,
+          "overall": 0.5,
+          "strengths": "None, as generation terminated before emitting any meaningful page markup or content.",
+          "weaknesses": "Trapped in a catastrophic base64 CSP hash repetition loop that consumed 24,000 tokens inside the meta tag, resulting in a blank page with zero body content or accompanying files."
+        },
+        "judge_2": {
+          "canon": 0.0,
+          "design": 0.0,
+          "copy": 0.0,
+          "ru": null,
+          "overall": 0.0,
+          "strengths": "Initial HTML head structure and CSP definition attempt adhered to security requirements before failure.",
+          "weaknesses": "Generation collapsed into an infinite repetition loop within the CSP meta tag hash, leaving an empty body and missing auxiliary files."
+        },
+        "mean": {
+          "canon": 0.25,
+          "design": 0.25,
+          "copy": 0.25,
+          "ru": null,
+          "overall": 0.25
+        },
+        "diffs": {
+          "canon": 0.5,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": null,
+          "overall": 0.5
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t6": {
+        "judge_1": {
+          "canon": 7.5,
+          "design": 7.0,
+          "copy": 6.5,
+          "ru": null,
+          "overall": 7.0,
+          "strengths": "High-craft High-Tech SaaS Dark Mode interface featuring a 6-cell architectural Bento grid with bespoke SVG schematics and an interactive VRAM sizing calculator.",
+          "weaknesses": "WebGL2 shader crashed on GLSL compilation due to a vector dimension mismatch, and output was truncated at 24k tokens mid-FAQ, omitting the form, footer, and companion files."
+        },
+        "judge_2": {
+          "canon": 7.0,
+          "design": 6.0,
+          "copy": 6.5,
+          "ru": null,
+          "overall": 6.5,
+          "strengths": "Impressive high-tech dark mode presentation with intricate SVG diagrams, rich domain copy, and functional pricing/sizing calculators.",
+          "weaknesses": "Exceeded token limit resulting in truncation at the FAQ section with missing companion files, alongside a syntax error in the WebGL shader."
+        },
+        "mean": {
+          "canon": 7.25,
+          "design": 6.5,
+          "copy": 6.5,
+          "ru": null,
+          "overall": 6.75
+        },
+        "diffs": {
+          "canon": 0.5,
+          "design": 1.0,
+          "copy": 0.0,
+          "ru": null,
+          "overall": 0.5
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t7": {
+        "judge_1": {
+          "canon": 0.5,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": 0.5,
+          "overall": 0.5,
+          "strengths": "None, as generation terminated inside the head tag without producing page structure.",
+          "weaknesses": "Infinite base64 CSP hash repetition loop exhausted the 24,000 token limit inside the meta tag, producing an unclosed head and a totally blank render."
+        },
+        "judge_2": {
+          "canon": 0.0,
+          "design": 0.0,
+          "copy": 0.0,
+          "ru": 0.0,
+          "overall": 0.0,
+          "strengths": "Correctly initiated the required document structure and UTF-8 charset declaration.",
+          "weaknesses": "Succumbed to a repetitive token loop inside the CSP meta tag hash, resulting in a blank document and no supplementary files."
+        },
+        "mean": {
+          "canon": 0.25,
+          "design": 0.25,
+          "copy": 0.25,
+          "ru": 0.25,
+          "overall": 0.25
+        },
+        "diffs": {
+          "canon": 0.5,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": 0.5,
+          "overall": 0.5
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t8": {
+        "judge_1": {
+          "canon": 0.5,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": 0.5,
+          "overall": 0.5,
+          "strengths": "None, as no readable content or design elements were emitted before generation halted.",
+          "weaknesses": "Aborted inside a repetitive base64 CSP hash sequence within the meta tag, leaving an empty document with zero body markup, styling, or Russian editorial copy."
+        },
+        "judge_2": {
+          "canon": 0.0,
+          "design": 0.0,
+          "copy": 1.0,
+          "ru": 1.0,
+          "overall": 0.5,
+          "strengths": "Included rich metadata, title, and article tags in Russian before generation failure.",
+          "weaknesses": "Suffered a catastrophic base64 encoding loop in the JSON-LD script tag, terminating prematurely without rendering any body content."
+        },
+        "mean": {
+          "canon": 0.25,
+          "design": 0.25,
+          "copy": 0.75,
+          "ru": 0.75,
+          "overall": 0.5
+        },
+        "diffs": {
+          "canon": 0.5,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": 0.5,
+          "overall": 0.0
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t9": {
+        "judge_1": {
+          "canon": 8.0,
+          "design": 7.5,
+          "copy": 6.5,
+          "ru": null,
+          "overall": 7.33,
+          "strengths": "Excellent coordinated multi-file system with a comprehensive design manifest in DESIGN.md, clean OKLCH tokens, and a functional flight coverage calculator in app.js.",
+          "weaknesses": "Truncated at 24k tokens while drawing the sensor SVG schematic, omitting the FAQ, contact form, JSON-LD, zimage_prompts.json, llms.txt, and _headers."
+        },
+        "judge_2": {
+          "canon": 7.5,
+          "design": 6.5,
+          "copy": 6.5,
+          "ru": null,
+          "overall": 6.83,
+          "strengths": "Outstanding comprehensive DESIGN.md system, clean standalone tokens.css, and well-designed interactive telemetry filter.",
+          "weaknesses": "Exceeded token budget causing truncation midway through the SVG diagram in index.html, preventing generation of zimage_prompts.json and server headers."
+        },
+        "mean": {
+          "canon": 7.75,
+          "design": 7.0,
+          "copy": 6.5,
+          "ru": null,
+          "overall": 7.08
+        },
+        "diffs": {
+          "canon": 0.5,
+          "design": 1.0,
+          "copy": 0.0,
+          "ru": null,
+          "overall": 0.5
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      }
+    },
+    "qwen3.8-no-think": {
+      "t1": {
+        "judge_1": {
+          "canon": 9.0,
+          "design": 8.5,
+          "copy": 9.0,
+          "ru": null,
+          "overall": 8.83,
+          "strengths": "Clean industrial engineering dark UI with extensive spec tables, working inline SVG circuit diagram, and full JSON-LD schema with verbatim FAQ entries.",
+          "weaknesses": "Omitted the required strict <meta http-equiv='Content-Security-Policy'> tag in raw output (relying on postprocessor repair) and had slightly lower accessibility markup fidelity."
+        },
+        "judge_2": {
+          "canon": 9.0,
+          "design": 9.0,
+          "copy": 9.5,
+          "ru": null,
+          "overall": 9.17,
+          "strengths": "Clean blueprint styling with complete responsive layout on desktop and mobile (overflowX: false), detailed boiler engineering specifications, and 12 inline SVG elements.",
+          "weaknesses": "Omitted the required strict CSP meta tag in raw model output (had to be injected by postprocessor), and accessibility score is slightly reduced (90) due to color contrast on secondary labels."
+        },
+        "mean": {
+          "canon": 9.0,
+          "design": 8.75,
+          "copy": 9.25,
+          "ru": null,
+          "overall": 9.0
+        },
+        "diffs": {
+          "canon": 0.0,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": null,
+          "overall": 0.34
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t2": {
+        "judge_1": {
+          "canon": 6.0,
+          "design": 5.5,
+          "copy": 9.0,
+          "ru": null,
+          "overall": 6.83,
+          "strengths": "Accurately captured the typography, color palette, and multi-column grid layout of the reference editorial page.",
+          "weaknesses": "Violated the strict zero-external-requests requirement by embedding external picsum.photos URLs, causing broken image slots in sidebar cards and injecting an irrelevant pug photo into a serious editorial layout."
+        },
+        "judge_2": {
+          "canon": 6.5,
+          "design": 6.0,
+          "copy": 9.5,
+          "ru": null,
+          "overall": 7.33,
+          "strengths": "Accurate copy recreation across all article titles, tags, and editorial rule sections, with well-structured OKLCH design tokens in :root.",
+          "weaknesses": "Violated the strict 'no external requests' requirement by hotlinking Picsum photos (which loaded unrelated dog images and left cards 1 and 3 blank), and hero decorative SVG rings clash directly across the main headline text on mobile."
+        },
+        "mean": {
+          "canon": 6.25,
+          "design": 5.75,
+          "copy": 9.25,
+          "ru": null,
+          "overall": 7.08
+        },
+        "diffs": {
+          "canon": 0.5,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": null,
+          "overall": 0.5
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t3": {
+        "judge_1": {
+          "canon": 7.0,
+          "design": 4.0,
+          "copy": 9.0,
+          "ru": 9.0,
+          "overall": 7.25,
+          "strengths": "Well-crafted Russian copy with authentic solid-oak woodworking terminology and full GOST/FSC compliance references.",
+          "weaknesses": "Critical progressive enhancement defect: .reveal { opacity: 0 } with negative rootMargin IntersectionObserver left the entire body below the hero completely invisible in full-page desktop screenshots, alongside missing OpenGraph title/description tags."
+        },
+        "judge_2": {
+          "canon": 8.0,
+          "design": 5.0,
+          "copy": 9.0,
+          "ru": 9.0,
+          "overall": 7.75,
+          "strengths": "Natural Russian cabinetry terminology («царга», «шип-паз», «ласточкин хвост», «клин») and solid semantic HTML structure in the underlying markup.",
+          "weaknesses": "Defective progressive enhancement: wrapping every main section in .reveal { opacity: 0; } caused almost the entire page (products, schematics, certs, FAQ, form) to render completely blank/invisible in non-scrolled captures, plus missing og:title and og:description meta tags."
+        },
+        "mean": {
+          "canon": 7.5,
+          "design": 4.5,
+          "copy": 9.0,
+          "ru": 9.0,
+          "overall": 7.5
+        },
+        "diffs": {
+          "canon": 1.0,
+          "design": 1.0,
+          "copy": 0.0,
+          "ru": 0.0,
+          "overall": 0.5
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      }
+    },
+    "qwen3.8-think-8k": {
+      "t1": {
+        "judge_1": {
+          "canon": 10.0,
+          "design": 9.5,
+          "copy": 9.5,
+          "ru": null,
+          "overall": 9.67,
+          "strengths": "Exemplary Industrial B2B aesthetic with authentic blueprint grid and signal orange OKLCH tokens; features a bespoke multi-component inline SVG boiler circuit schematic and 100% verbatim JSON-LD FAQPage alignment.",
+          "weaknesses": "Minor visual density in the technical specification table on smaller desktop viewports, though handled cleanly with horizontal scroll wrapping."
+        },
+        "judge_2": {
+          "canon": 10.0,
+          "design": 9.5,
+          "copy": 9.5,
+          "ru": null,
+          "overall": 9.67,
+          "strengths": "Flawless Industrial B2B Engineering execution with blueprint grid (#2A2E35), system font fallbacks, exact OKLCH tokens, and an exceptional multi-element inline SVG boiler circuit schematic.",
+          "weaknesses": "Minor: FAQ accordion lacks expanded aria-controls relationships, and contact form submission relies on client-only simulation."
+        },
+        "mean": {
+          "canon": 10.0,
+          "design": 9.5,
+          "copy": 9.5,
+          "ru": null,
+          "overall": 9.67
+        },
+        "diffs": {
+          "canon": 0.0,
+          "design": 0.0,
+          "copy": 0.0,
+          "ru": null,
+          "overall": 0.0
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t2": {
+        "judge_1": {
+          "canon": 9.5,
+          "design": 9.5,
+          "copy": 9.5,
+          "ru": null,
+          "overall": 9.5,
+          "strengths": "Near pixel-perfect structural and typographic match to the reference screenshot, smartly substituting external photo dependencies with self-contained inline SVGs while maintaining zero horizontal overflow on mobile.",
+          "weaknesses": "Inline SVG vector replacements for editorial photos are geometric abstractions rather than photographic renders, though compliant with strict zero-external-network constraints."
+        },
+        "judge_2": {
+          "canon": 9.5,
+          "design": 9.0,
+          "copy": 10.0,
+          "ru": null,
+          "overall": 9.5,
+          "strengths": "Superb fidelity to VKVstudio.pro layout with exact typography hierarchy, orbital lines, and bespoke inline SVG vector illustrations cleverly replacing external photos while maintaining zero network requests.",
+          "weaknesses": "Minor visual density variation in the search input styling and slightly simplified SVG approximations of the hardware patch panel."
+        },
+        "mean": {
+          "canon": 9.5,
+          "design": 9.25,
+          "copy": 9.75,
+          "ru": null,
+          "overall": 9.5
+        },
+        "diffs": {
+          "canon": 0.0,
+          "design": 0.5,
+          "copy": 0.5,
+          "ru": null,
+          "overall": 0.0
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      },
+      "t3": {
+        "judge_1": {
+          "canon": 9.5,
+          "design": 8.5,
+          "copy": 9.5,
+          "ru": 9.5,
+          "overall": 9.25,
+          "strengths": "Impeccable Luxury Minimalism aesthetic with generous whitespace, classical serif typography, authentic Russian joinery terminology, and a detailed technical SVG mortise-and-tenon schematic.",
+          "weaknesses": "Introduced a slight 1px horizontal overflow on 375px mobile viewports (scrollWidth 376px vs clientWidth 375px), requiring a minor overflow-x or padding tweak."
+        },
+        "judge_2": {
+          "canon": 9.5,
+          "design": 8.0,
+          "copy": 9.5,
+          "ru": 9.5,
+          "overall": 9.13,
+          "strengths": "Exquisite Luxury Minimalism typography and generous whitespace with authentic Russian joinery copy, bespoke mortise-and-tenon/dovetail SVG schematic, and 100% verbatim FAQPage JSON-LD.",
+          "weaknesses": "The catalog table triggers a 1px horizontal scroll overflow on 375px mobile (scrollWidth 376px vs clientWidth 375px) due to section padding constraints."
+        },
+        "mean": {
+          "canon": 9.5,
+          "design": 8.25,
+          "copy": 9.5,
+          "ru": 9.5,
+          "overall": 9.19
+        },
+        "diffs": {
+          "canon": 0.0,
+          "design": 0.5,
+          "copy": 0.0,
+          "ru": 0.0,
+          "overall": 0.12
+        },
+        "discrepancy_flagged": false,
+        "flagged_criteria": []
+      }
+    }
+  }
+}

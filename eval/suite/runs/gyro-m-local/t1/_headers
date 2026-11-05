@@ -1,0 +1,6 @@
+/*
+  Content-Security-Policy: default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-f8fG4UQxFsfEGHfEd426oda0NuCYB5r+6W/2Psa+0Vg=' 'sha256-sZGPBEtStjhaBNuXRBAg3dI5j7a3DLwX1b9XmlgwC9U=' 'sha256-5WGK7UeEf0ArHKhMFhdgpbfZnKiZiIGv1x5nW1x8B2U=' 'sha256-7poypFXTUhkl9hnMWCBEDT1qyRIgu92i5qkJKXdSw2c=' 'sha256-UThYskA/+OmQhgO/Tohf12mGvoBAii+rnS82WD4O3B8=' 'sha256-jYQpkDCaJDAtvSwWgwYbFjrHZ9PxLzGKxSOL6bb0/qw='; script-src 'self' 'sha256-qYy+ZyJhcrGwhA12qszZ2ufHV8UsX7Z8jHsAWpdDG70=' 'sha256-yuHh1LFldYiT2gRBtSy3k4PcXiqM5dxm6zXlLiY8eDA='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=(), interest-cohort=(), interest-cohort=(), interest-cohort=(), interest-cohort=(), interest-cohort=(), interest-cohort=(), interest-cohort=(), interest-cohort=(), interest-cohort=(), interest-cohort=(), interest-cohort=(), interest-cohort=(),

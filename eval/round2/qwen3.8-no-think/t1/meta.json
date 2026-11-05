@@ -1,0 +1,73 @@
+{
+  "config_slug": "qwen3.8-no-think",
+  "model_id": "qwen/qwen3.8-flash",
+  "hugging_face_id": "Qwen/Qwen3.8-Flash-Next",
+  "task": "t1",
+  "provider": "Alibaba",
+  "precision": "unknown (Alibaba cloud native)",
+  "temperature": 0.6,
+  "max_tokens": 32000,
+  "reasoning_config": {
+    "enabled": false
+  },
+  "price_input_per_1m_usd": 0.15,
+  "price_output_per_1m_usd": 0.47,
+  "finish_reason": "stop",
+  "native_finish_reason": "stop",
+  "truncated": false,
+  "elapsed_sec": 219.59,
+  "usage": {
+    "prompt_tokens": 475,
+    "completion_tokens": 19931,
+    "reasoning_tokens": 0,
+    "content_tokens": 19931,
+    "total_tokens": 20406,
+    "cost_usd": 0.009404516,
+    "calculated_cost_usd": 0.009439,
+    "raw_usage": {
+      "prompt_tokens": 475,
+      "completion_tokens": 19931,
+      "total_tokens": 20406,
+      "cost": 0.009404516,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 256,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.009404516,
+        "upstream_inference_prompt_cost": 3.6946e-05,
+        "upstream_inference_completions_cost": 0.00936757
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "content_chars": 64359,
+  "reasoning_chars": 0,
+  "extracted_files": [
+    "index.html",
+    "llms.txt",
+    "robots.txt",
+    "_headers"
+  ],
+  "csp_postprocessor": {
+    "postprocessed": true,
+    "has_meta_csp": false,
+    "injected_style_hashes": [
+      "'sha256-5JKXuStfgG4PcupAegvSN1n4u+rvUE7DsixQIXsn17s='"
+    ],
+    "injected_script_hashes": [
+      "'sha256-rAfzYAboKnjRiUt3C9A8SrfA/abTyjDTXSAF1dhU+dY='",
+      "'sha256-3LFuy/+J2gzCcovOQnjrAffoNy8KwKYIOhTO9LFr5to='"
+    ],
+    "uses_data_css": false,
+    "uses_data_js": false
+  },
+  "openrouter_id": "gen-1792846018-xDTHNtGmg2VRNkGeXjb4"
+}

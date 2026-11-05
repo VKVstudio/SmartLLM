@@ -1,0 +1,67 @@
+{
+  "config_slug": "qwen3.6-35b-a3b",
+  "model_id": "qwen/qwen3.6-35b-a3b",
+  "hugging_face_id": "Qwen/Qwen3.6-35B-A3B",
+  "task": "t2",
+  "provider": "DeepInfra",
+  "precision": "fp8",
+  "temperature": 0.6,
+  "max_tokens": 32000,
+  "reasoning_config": {
+    "enabled": true
+  },
+  "price_input_per_1m_usd": 0.1,
+  "price_output_per_1m_usd": 0.95,
+  "finish_reason": "stop",
+  "native_finish_reason": "stop",
+  "truncated": false,
+  "elapsed_sec": 89.85,
+  "usage": {
+    "prompt_tokens": 1059,
+    "completion_tokens": 6905,
+    "reasoning_tokens": 562,
+    "content_tokens": 6343,
+    "total_tokens": 7964,
+    "cost_usd": 0.00666565,
+    "calculated_cost_usd": 0.006666,
+    "raw_usage": {
+      "prompt_tokens": 1059,
+      "completion_tokens": 6905,
+      "total_tokens": 7964,
+      "cost": 0.00666565,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.00666565,
+        "upstream_inference_prompt_cost": 0.0001059,
+        "upstream_inference_completions_cost": 0.00655975
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 562,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "content_chars": 24520,
+  "reasoning_chars": 2207,
+  "extracted_files": [
+    "index.html"
+  ],
+  "csp_postprocessor": {
+    "postprocessed": true,
+    "has_meta_csp": false,
+    "injected_style_hashes": [
+      "'sha256-jQWQ+HJYFDF2/Lc8W5G2uzTq3ZreNoWg/TpAErQHWio='"
+    ],
+    "injected_script_hashes": [],
+    "uses_data_css": false,
+    "uses_data_js": false
+  },
+  "openrouter_id": "gen-1792846018-zJFEtR8iA9Sck7AcCtkB"
+}

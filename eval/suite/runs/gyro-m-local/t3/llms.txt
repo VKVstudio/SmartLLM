@@ -1,0 +1,72 @@
+# Северная Мануфактура
+
+> Бутик-производитель мебели из массива дуба: обеденные столы, шкафы и архитектурная столярная продукция.
+
+## Company
+- Organization: Северная Мануфактура
+- Type: boutique solid oak furniture manufacturer
+- Products: dining tables, cabinetry, architectural joinery
+- Materials: solid oak, FSC-sourced timber
+- Joinery: mortise-and-tenon, dovetail
+- Certifications: FSC Chain of Custody, GOST compliance and internal engineering tolerances
+- Location: Saint Petersburg, Russia
+- Contact: hello@severnaya-manufactura.example, +7 (812) 000-00-00
+
+## Flagship products
+### Nordic 2400
+- Type: dining table
+- Material: solid oak, full-width lamellas
+- Dimensions: 240 × 95 × 76 cm
+- Joinery: mortise-and-tenon with through wedges
+- Finish: hard-wax oil
+- Lead time: 10–12 weeks
+- Price: from 390,000 RUB
+
+### Baltic Cabinet
+- Type: cabinet / case furniture
+- Material: solid oak frame and fronts
+- Dimensions: 180 × 55 × 220 cm
+- Joinery: dovetail and mortise-and-tenon
+- Finish: matte oil, hand sanding
+- Lead time: 12–16 weeks
+- Price: from 620,000 RUB
+
+### Karelian Joinery
+- Type: architectural joinery panel
+- Material: stabilized solid oak lamellas
+- Dimensions: 120 × 3 × 240 cm
+- Joinery: mortise-and-tenon and dovetail
+- Finish: tinted oil with protective wax
+- Lead time: 8–10 weeks
+- Price: from 280,000 RUB
+
+## FAQ
+### Какая древесина используется в производстве?
+Мы используем массив дуба из ответственных источников с сертификатом FSC. Основная база — карельский и архангельский дуб, а также отобранные партии из Ленинградской области.
+
+### Как обрабатывается столешница?
+Столешница собирается из массивных ламелей и покрывается маслом с твердым воском. Допускается восстановление локальных повреждений без демонтажа изделия.
+
+### Сколько занимает изготовление?
+Срок изготовления составляет от 10 до 16 недель в зависимости от сложности модели, сушки, стабильности массива и графика покраски.
+
+### Можно ли изменить размеры и отделку?
+Да. Все три базовые модели адаптируются по длине, высоте, типу фасадов и отделке. Для нестандартных размеров требуется инженерная проверка.
+
+### Как происходит доставка и сборка?
+Доставка выполняется в специализированной упаковке. Сборка на месте включена для изделий свыше 160 см в Санкт-Петербурге и Ленобласти, а для остальных регионов согласовывается отдельно.
+
+## Technical
+- Single-page landing
+- Vanilla HTML/CSS/JS only
+- No external font CDNs
+- No stock photos of people
+- Semantic HTML5
+- Accessibility: keyboard accessible, prefers-reduced-motion respected
+- Performance: critical CSS inline, CLS 0 with explicit sizes and aspect-ratio
+- Security: strict CSP with SHA-256 hashes for inline script and style
+
+## SEO
+- Canonical: https://severnaya-manufactura.example/
+- Language: ru
+- JSON-LD @graph: Organization, Product, FAQPage, BreadcrumbList, WebSite

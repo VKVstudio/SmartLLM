@@ -1,0 +1,141 @@
+:root {
+  /* Core laboratory surface */
+  --color-bone: oklch(0.97 0.008 95);
+  --color-bone-soft: oklch(0.94 0.010 92);
+  --color-bone-strong: oklch(0.91 0.012 90);
+  --color-bone-inset: oklch(0.88 0.012 88);
+
+  /* Carbon ink */
+  --color-ink: oklch(0.14 0.015 255);
+  --color-ink-muted: oklch(0.36 0.020 255);
+  --color-ink-faint: oklch(0.50 0.022 255);
+
+  /* Forest telemetry accent */
+  --color-forest: oklch(0.45 0.14 155);
+  --color-forest-ink: oklch(0.30 0.11 155);
+  --color-forest-deep: oklch(0.22 0.09 155);
+  --color-forest-soft: oklch(0.88 0.055 155);
+
+  /* Signal amber accent */
+  --color-signal: oklch(0.66 0.17 65);
+  --color-signal-ink: oklch(0.36 0.15 65);
+  --color-signal-deep: oklch(0.28 0.13 65);
+  --color-signal-soft: oklch(0.92 0.070 75);
+
+  /* Semantic tokens */
+  --surface-page: var(--color-bone);
+  --surface-panel: var(--color-bone);
+  --surface-subtle: var(--color-bone-soft);
+  --surface-inset: var(--color-bone-inset);
+  --border-default: var(--color-bone-strong);
+  --border-strong: var(--color-ink);
+  --border-accent: var(--color-forest);
+  --border-signal: var(--color-signal);
+
+  --text-primary: var(--color-ink);
+  --text-secondary: var(--color-ink-muted);
+  --text-accent: var(--color-forest-ink);
+  --text-signal: var(--color-signal-ink);
+  --text-inverse: var(--color-bone);
+
+  --focus-ring: var(--color-forest-ink);
+  --status-ok: var(--color-forest-ink);
+  --status-warn: var(--color-signal-ink);
+  --status-error: var(--color-signal-deep);
+
+  /* Spacing scale */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 48px;
+  --space-9: 64px;
+  --space-10: 80px;
+  --space-11: 96px;
+  --space-12: 128px;
+
+  /* Typography */
+  --font-ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  --text-2xs: 0.75rem;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.125rem;
+  --text-md: 1.25rem;
+  --text-lg: 1.5rem;
+  --text-xl: 1.875rem;
+  --text-2xl: 2.375rem;
+  --text-3xl: 3rem;
+  --text-4xl: 3.75rem;
+
+  --line-ui: 1.55;
+  --line-heading: 1.1;
+  --line-display: 1.05;
+  --line-telemetry: 1.25;
+
+  --tracking-tight: -0.025em;
+  --tracking-normal: -0.01em;
+  --tracking-wide: 0.08em;
+  --tracking-mono: 0.02em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Layout */
+  --container-max: 1280px;
+  --reading-max: 72ch;
+  --grid-gutter: var(--space-5);
+  --grid-columns: 12;
+  --grid-column-gap: var(--space-5);
+
+  /* Borders and radii */
+  --border-width: 1px;
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  /* Motion */
+  --transition-fast: 120ms ease-out;
+  --transition-base: 180ms ease-out;
+
+  /* Shadows */
+  --shadow-none: none;
+  --shadow-inset: inset 0 0 0 1px var(--color-bone-strong);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --grid-gutter: var(--space-6);
+    --grid-column-gap: var(--space-6);
+  }
+}
+
+@media (min-width: 960px) {
+  :root {
+    --grid-gutter: var(--space-7);
+    --grid-column-gap: var(--space-7);
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --grid-gutter: var(--space-8);
+    --grid-column-gap: var(--space-8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+  }
+}

@@ -1,0 +1,8 @@
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Cross-Origin-Opener-Policy: same-origin
+  Content-Security-Policy: default-src 'none'; script-src 'sha256-COMPUTE_FROM_FINAL_SCRIPT_CONTENT_BASE64'; style-src 'sha256-COMPUTE_FROM_FINAL_STYLE_CONTENT_BASE64'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'
+  X-Frame-Options: DENY

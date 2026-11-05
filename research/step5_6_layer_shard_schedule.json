@@ -1,0 +1,1471 @@
+{
+  "source_url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next/resolve/main/model.safetensors.index.json",
+  "total_size_bytes": 359999963128.0,
+  "total_shards": 131,
+  "total_tensors": 1658,
+  "unit_tensor_counts": {
+    "layer_00": 24,
+    "layer_01": 24,
+    "layer_02": 24,
+    "layer_03": 24,
+    "layer_04": 24,
+    "layer_05": 24,
+    "layer_06": 24,
+    "layer_07": 24,
+    "layer_08": 24,
+    "layer_09": 24,
+    "layer_10": 24,
+    "layer_11": 24,
+    "layer_12": 24,
+    "layer_13": 24,
+    "layer_14": 24,
+    "layer_15": 24,
+    "layer_16": 24,
+    "layer_17": 24,
+    "layer_18": 24,
+    "layer_19": 24,
+    "layer_20": 24,
+    "layer_21": 24,
+    "layer_22": 24,
+    "layer_23": 24,
+    "layer_24": 24,
+    "layer_25": 24,
+    "layer_26": 24,
+    "layer_27": 24,
+    "layer_28": 24,
+    "layer_29": 24,
+    "layer_30": 24,
+    "layer_31": 24,
+    "layer_32": 24,
+    "layer_33": 24,
+    "layer_34": 24,
+    "layer_35": 24,
+    "layer_36": 24,
+    "layer_37": 24,
+    "layer_38": 24,
+    "layer_39": 24,
+    "layer_40": 24,
+    "layer_41": 24,
+    "layer_42": 24,
+    "layer_43": 24,
+    "layer_44": 24,
+    "layer_45": 24,
+    "layer_46": 24,
+    "layer_47": 24,
+    "mtp": 31,
+    "ple_layer_1": 137,
+    "root": 5,
+    "visual": 333
+  },
+  "root_tensors": {
+    "lm_head.weight": "model-00131-of-00131.safetensors",
+    "model.language_model.embed_tokens.weight": "model-00130-of-00131.safetensors",
+    "model.language_model.hyper_connection_mixer.hc_norm.weight": "model-00001-of-00131.safetensors",
+    "model.language_model.hyper_connection_mixer.input_mix_weight_down.weight": "model-00001-of-00131.safetensors",
+    "model.language_model.hyper_connection_mixer.input_mix_weight_up.weight": "model-00001-of-00131.safetensors"
+  },
+  "visual_shard": "model-00001-of-00131.safetensors",
+  "visual_tensor_count": 333,
+  "ple_shard_range": "model-00005-of-00131.safetensors .. model-00037-of-00131.safetensors",
+  "ple_tensor_count": 137,
+  "mtp_tensors_by_shard": {
+    "model-00037-of-00131.safetensors": [
+      "mtp.hyper_connection_mixer.hc_norm.weight"
+    ],
+    "model-00041-of-00131.safetensors": [
+      "mtp.hyper_connection_mixer.input_mix_weight_down.weight"
+    ],
+    "model-00043-of-00131.safetensors": [
+      "mtp.hyper_connection_mixer.input_mix_weight_up.weight"
+    ],
+    "model-00047-of-00131.safetensors": [
+      "mtp.layers.0.attn_hyper_connection.block_inject_weight.weight"
+    ],
+    "model-00049-of-00131.safetensors": [
+      "mtp.layers.0.attn_hyper_connection.hc_norm.weight"
+    ],
+    "model-00053-of-00131.safetensors": [
+      "mtp.layers.0.attn_hyper_connection.input_mix_weight_down.weight"
+    ],
+    "model-00057-of-00131.safetensors": [
+      "mtp.layers.0.attn_hyper_connection.input_mix_weight_up.weight"
+    ],
+    "model-00060-of-00131.safetensors": [
+      "mtp.layers.0.mlp.experts.gate_up_proj"
+    ],
+    "model-00062-of-00131.safetensors": [
+      "mtp.layers.0.mlp.experts.down_proj"
+    ],
+    "model-00066-of-00131.safetensors": [
+      "mtp.layers.0.mlp.gate.weight"
+    ],
+    "model-00070-of-00131.safetensors": [
+      "mtp.layers.0.mlp.shared_expert_gate.weight"
+    ],
+    "model-00072-of-00131.safetensors": [
+      "mtp.layers.0.mlp.shared_expert.gate_proj.weight",
+      "mtp.layers.0.mlp.shared_expert.up_proj.weight"
+    ],
+    "model-00076-of-00131.safetensors": [
+      "mtp.layers.0.mlp.shared_expert.down_proj.weight"
+    ],
+    "model-00078-of-00131.safetensors": [
+      "mtp.layers.0.mlp_hyper_connection.block_inject_weight.weight"
+    ],
+    "model-00082-of-00131.safetensors": [
+      "mtp.layers.0.mlp_hyper_connection.hc_norm.weight"
+    ],
+    "model-00086-of-00131.safetensors": [
+      "mtp.layers.0.mlp_hyper_connection.input_mix_weight_down.weight"
+    ],
+    "model-00088-of-00131.safetensors": [
+      "mtp.layers.0.mlp_hyper_connection.input_mix_weight_up.weight"
+    ],
+    "model-00090-of-00131.safetensors": [
+      "mtp.layers.0.self_attn.indexer.index_qk_proj.weight"
+    ],
+    "model-00094-of-00131.safetensors": [
+      "mtp.layers.0.self_attn.indexer.k_layernorm.weight"
+    ],
+    "model-00100-of-00131.safetensors": [
+      "mtp.layers.0.self_attn.indexer.q_layernorm.weight"
+    ],
+    "model-00102-of-00131.safetensors": [
+      "mtp.layers.0.self_attn.k_norm.weight"
+    ],
+    "model-00106-of-00131.safetensors": [
+      "mtp.layers.0.self_attn.o_proj.weight"
+    ],
+    "model-00108-of-00131.safetensors": [
+      "mtp.layers.0.self_attn.k_proj.weight",
+      "mtp.layers.0.self_attn.q_proj.weight",
+      "mtp.layers.0.self_attn.v_proj.weight"
+    ],
+    "model-00112-of-00131.safetensors": [
+      "mtp.layers.0.self_attn.q_norm.weight"
+    ],
+    "model-00114-of-00131.safetensors": [
+      "mtp.pre_fc_norm_embedding.weight"
+    ],
+    "model-00118-of-00131.safetensors": [
+      "mtp.pre_fc_norm_hidden.weight"
+    ],
+    "model-00120-of-00131.safetensors": [
+      "mtp.fc_embedding.weight"
+    ],
+    "model-00124-of-00131.safetensors": [
+      "mtp.fc_hidden.weight"
+    ]
+  },
+  "layers_0_to_47": [
+    {
+      "layer_idx": 0,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00001-of-00131.safetensors",
+        "model-00002-of-00131.safetensors",
+        "model-00003-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00002-of-00131.safetensors",
+      "down_proj_shard": "model-00003-of-00131.safetensors",
+      "router_gate_shard": "model-00003-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00001-of-00131.safetensors": [
+          "root",
+          "visual"
+        ],
+        "model-00003-of-00131.safetensors": [
+          "layer_01"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00001-of-00131.safetensors",
+        "model-00002-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 1,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": true,
+      "tensor_count": 24,
+      "shards": [
+        "model-00003-of-00131.safetensors",
+        "model-00004-of-00131.safetensors",
+        "model-00005-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00004-of-00131.safetensors",
+      "down_proj_shard": "model-00005-of-00131.safetensors",
+      "router_gate_shard": "model-00005-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00003-of-00131.safetensors": [
+          "layer_00"
+        ],
+        "model-00005-of-00131.safetensors": [
+          "ple_layer_1"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00003-of-00131.safetensors",
+        "model-00004-of-00131.safetensors",
+        "model-00005-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 2,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00057-of-00131.safetensors",
+        "model-00058-of-00131.safetensors",
+        "model-00059-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00058-of-00131.safetensors",
+      "down_proj_shard": "model-00059-of-00131.safetensors",
+      "router_gate_shard": "model-00059-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00057-of-00131.safetensors": [
+          "layer_19",
+          "mtp"
+        ],
+        "model-00059-of-00131.safetensors": [
+          "layer_20"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00058-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 3,
+      "attn_type": "full_attention (QSA)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00080-of-00131.safetensors",
+        "model-00081-of-00131.safetensors",
+        "model-00082-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00081-of-00131.safetensors",
+      "down_proj_shard": "model-00082-of-00131.safetensors",
+      "router_gate_shard": "model-00082-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00080-of-00131.safetensors": [
+          "layer_29"
+        ],
+        "model-00082-of-00131.safetensors": [
+          "layer_30",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00081-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 4,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00102-of-00131.safetensors",
+        "model-00103-of-00131.safetensors",
+        "model-00104-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00103-of-00131.safetensors",
+      "down_proj_shard": "model-00104-of-00131.safetensors",
+      "router_gate_shard": "model-00104-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00102-of-00131.safetensors": [
+          "layer_39",
+          "mtp"
+        ],
+        "model-00104-of-00131.safetensors": [
+          "layer_40"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00103-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 5,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00120-of-00131.safetensors",
+        "model-00121-of-00131.safetensors",
+        "model-00122-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00121-of-00131.safetensors",
+      "down_proj_shard": "model-00122-of-00131.safetensors",
+      "router_gate_shard": "model-00122-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00120-of-00131.safetensors": [
+          "layer_47",
+          "mtp"
+        ],
+        "model-00122-of-00131.safetensors": [
+          "layer_06"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00121-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 6,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00122-of-00131.safetensors",
+        "model-00123-of-00131.safetensors",
+        "model-00124-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00123-of-00131.safetensors",
+      "down_proj_shard": "model-00124-of-00131.safetensors",
+      "router_gate_shard": "model-00124-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00122-of-00131.safetensors": [
+          "layer_05"
+        ],
+        "model-00124-of-00131.safetensors": [
+          "layer_07",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00122-of-00131.safetensors",
+        "model-00123-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 7,
+      "attn_type": "full_attention (QSA)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00124-of-00131.safetensors",
+        "model-00125-of-00131.safetensors",
+        "model-00126-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00125-of-00131.safetensors",
+      "down_proj_shard": "model-00126-of-00131.safetensors",
+      "router_gate_shard": "model-00126-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00124-of-00131.safetensors": [
+          "layer_06",
+          "mtp"
+        ],
+        "model-00126-of-00131.safetensors": [
+          "layer_08"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00124-of-00131.safetensors",
+        "model-00125-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 8,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00126-of-00131.safetensors",
+        "model-00127-of-00131.safetensors",
+        "model-00128-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00127-of-00131.safetensors",
+      "down_proj_shard": "model-00128-of-00131.safetensors",
+      "router_gate_shard": "model-00128-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00126-of-00131.safetensors": [
+          "layer_07"
+        ],
+        "model-00128-of-00131.safetensors": [
+          "layer_09"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00126-of-00131.safetensors",
+        "model-00127-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 9,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00128-of-00131.safetensors",
+        "model-00129-of-00131.safetensors",
+        "model-00130-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00129-of-00131.safetensors",
+      "down_proj_shard": "model-00130-of-00131.safetensors",
+      "router_gate_shard": "model-00130-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00128-of-00131.safetensors": [
+          "layer_08"
+        ],
+        "model-00130-of-00131.safetensors": [
+          "root"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00128-of-00131.safetensors",
+        "model-00129-of-00131.safetensors",
+        "model-00130-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 10,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00037-of-00131.safetensors",
+        "model-00038-of-00131.safetensors",
+        "model-00039-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00038-of-00131.safetensors",
+      "down_proj_shard": "model-00039-of-00131.safetensors",
+      "router_gate_shard": "model-00039-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00037-of-00131.safetensors": [
+          "mtp",
+          "ple_layer_1"
+        ],
+        "model-00039-of-00131.safetensors": [
+          "layer_11"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00037-of-00131.safetensors",
+        "model-00038-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 11,
+      "attn_type": "full_attention (QSA)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00039-of-00131.safetensors",
+        "model-00040-of-00131.safetensors",
+        "model-00041-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00040-of-00131.safetensors",
+      "down_proj_shard": "model-00041-of-00131.safetensors",
+      "router_gate_shard": "model-00041-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00039-of-00131.safetensors": [
+          "layer_10"
+        ],
+        "model-00041-of-00131.safetensors": [
+          "layer_12",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00039-of-00131.safetensors",
+        "model-00040-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 12,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00041-of-00131.safetensors",
+        "model-00042-of-00131.safetensors",
+        "model-00043-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00042-of-00131.safetensors",
+      "down_proj_shard": "model-00043-of-00131.safetensors",
+      "router_gate_shard": "model-00043-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00041-of-00131.safetensors": [
+          "layer_11",
+          "mtp"
+        ],
+        "model-00043-of-00131.safetensors": [
+          "layer_13",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00041-of-00131.safetensors",
+        "model-00042-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 13,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00043-of-00131.safetensors",
+        "model-00044-of-00131.safetensors",
+        "model-00045-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00044-of-00131.safetensors",
+      "down_proj_shard": "model-00045-of-00131.safetensors",
+      "router_gate_shard": "model-00045-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00043-of-00131.safetensors": [
+          "layer_12",
+          "mtp"
+        ],
+        "model-00045-of-00131.safetensors": [
+          "layer_14"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00043-of-00131.safetensors",
+        "model-00044-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 14,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00045-of-00131.safetensors",
+        "model-00046-of-00131.safetensors",
+        "model-00047-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00046-of-00131.safetensors",
+      "down_proj_shard": "model-00047-of-00131.safetensors",
+      "router_gate_shard": "model-00047-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00045-of-00131.safetensors": [
+          "layer_13"
+        ],
+        "model-00047-of-00131.safetensors": [
+          "layer_15",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00045-of-00131.safetensors",
+        "model-00046-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 15,
+      "attn_type": "full_attention (QSA)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00047-of-00131.safetensors",
+        "model-00048-of-00131.safetensors",
+        "model-00049-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00048-of-00131.safetensors",
+      "down_proj_shard": "model-00049-of-00131.safetensors",
+      "router_gate_shard": "model-00049-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00047-of-00131.safetensors": [
+          "layer_14",
+          "mtp"
+        ],
+        "model-00049-of-00131.safetensors": [
+          "layer_16",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00047-of-00131.safetensors",
+        "model-00048-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 16,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00049-of-00131.safetensors",
+        "model-00050-of-00131.safetensors",
+        "model-00051-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00050-of-00131.safetensors",
+      "down_proj_shard": "model-00051-of-00131.safetensors",
+      "router_gate_shard": "model-00051-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00049-of-00131.safetensors": [
+          "layer_15",
+          "mtp"
+        ],
+        "model-00051-of-00131.safetensors": [
+          "layer_17"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00049-of-00131.safetensors",
+        "model-00050-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 17,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00051-of-00131.safetensors",
+        "model-00052-of-00131.safetensors",
+        "model-00053-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00052-of-00131.safetensors",
+      "down_proj_shard": "model-00053-of-00131.safetensors",
+      "router_gate_shard": "model-00053-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00051-of-00131.safetensors": [
+          "layer_16"
+        ],
+        "model-00053-of-00131.safetensors": [
+          "layer_18",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00051-of-00131.safetensors",
+        "model-00052-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 18,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00053-of-00131.safetensors",
+        "model-00054-of-00131.safetensors",
+        "model-00055-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00054-of-00131.safetensors",
+      "down_proj_shard": "model-00055-of-00131.safetensors",
+      "router_gate_shard": "model-00055-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00053-of-00131.safetensors": [
+          "layer_17",
+          "mtp"
+        ],
+        "model-00055-of-00131.safetensors": [
+          "layer_19"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00053-of-00131.safetensors",
+        "model-00054-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 19,
+      "attn_type": "full_attention (QSA)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00055-of-00131.safetensors",
+        "model-00056-of-00131.safetensors",
+        "model-00057-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00056-of-00131.safetensors",
+      "down_proj_shard": "model-00057-of-00131.safetensors",
+      "router_gate_shard": "model-00057-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00055-of-00131.safetensors": [
+          "layer_18"
+        ],
+        "model-00057-of-00131.safetensors": [
+          "layer_02",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00055-of-00131.safetensors",
+        "model-00056-of-00131.safetensors",
+        "model-00057-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 20,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00059-of-00131.safetensors",
+        "model-00060-of-00131.safetensors",
+        "model-00061-of-00131.safetensors",
+        "model-00062-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00061-of-00131.safetensors",
+      "down_proj_shard": "model-00062-of-00131.safetensors",
+      "router_gate_shard": "model-00062-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00059-of-00131.safetensors": [
+          "layer_02"
+        ],
+        "model-00060-of-00131.safetensors": [
+          "mtp"
+        ],
+        "model-00062-of-00131.safetensors": [
+          "layer_21",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00059-of-00131.safetensors",
+        "model-00060-of-00131.safetensors",
+        "model-00061-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 21,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00062-of-00131.safetensors",
+        "model-00063-of-00131.safetensors",
+        "model-00064-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00063-of-00131.safetensors",
+      "down_proj_shard": "model-00064-of-00131.safetensors",
+      "router_gate_shard": "model-00064-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00062-of-00131.safetensors": [
+          "layer_20",
+          "mtp"
+        ],
+        "model-00064-of-00131.safetensors": [
+          "layer_22"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00062-of-00131.safetensors",
+        "model-00063-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 22,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00064-of-00131.safetensors",
+        "model-00065-of-00131.safetensors",
+        "model-00066-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00065-of-00131.safetensors",
+      "down_proj_shard": "model-00066-of-00131.safetensors",
+      "router_gate_shard": "model-00066-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00064-of-00131.safetensors": [
+          "layer_21"
+        ],
+        "model-00066-of-00131.safetensors": [
+          "layer_23",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00064-of-00131.safetensors",
+        "model-00065-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 23,
+      "attn_type": "full_attention (QSA)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00066-of-00131.safetensors",
+        "model-00067-of-00131.safetensors",
+        "model-00068-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00067-of-00131.safetensors",
+      "down_proj_shard": "model-00068-of-00131.safetensors",
+      "router_gate_shard": "model-00068-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00066-of-00131.safetensors": [
+          "layer_22",
+          "mtp"
+        ],
+        "model-00068-of-00131.safetensors": [
+          "layer_24"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00066-of-00131.safetensors",
+        "model-00067-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 24,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00068-of-00131.safetensors",
+        "model-00069-of-00131.safetensors",
+        "model-00070-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00069-of-00131.safetensors",
+      "down_proj_shard": "model-00070-of-00131.safetensors",
+      "router_gate_shard": "model-00070-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00068-of-00131.safetensors": [
+          "layer_23"
+        ],
+        "model-00070-of-00131.safetensors": [
+          "layer_25",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00068-of-00131.safetensors",
+        "model-00069-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 25,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00070-of-00131.safetensors",
+        "model-00071-of-00131.safetensors",
+        "model-00072-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00071-of-00131.safetensors",
+      "down_proj_shard": "model-00072-of-00131.safetensors",
+      "router_gate_shard": "model-00072-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00070-of-00131.safetensors": [
+          "layer_24",
+          "mtp"
+        ],
+        "model-00072-of-00131.safetensors": [
+          "layer_26",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00070-of-00131.safetensors",
+        "model-00071-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 26,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00072-of-00131.safetensors",
+        "model-00073-of-00131.safetensors",
+        "model-00074-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00073-of-00131.safetensors",
+      "down_proj_shard": "model-00074-of-00131.safetensors",
+      "router_gate_shard": "model-00074-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00072-of-00131.safetensors": [
+          "layer_25",
+          "mtp"
+        ],
+        "model-00074-of-00131.safetensors": [
+          "layer_27"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00072-of-00131.safetensors",
+        "model-00073-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 27,
+      "attn_type": "full_attention (QSA)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00074-of-00131.safetensors",
+        "model-00075-of-00131.safetensors",
+        "model-00076-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00075-of-00131.safetensors",
+      "down_proj_shard": "model-00076-of-00131.safetensors",
+      "router_gate_shard": "model-00076-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00074-of-00131.safetensors": [
+          "layer_26"
+        ],
+        "model-00076-of-00131.safetensors": [
+          "layer_28",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00074-of-00131.safetensors",
+        "model-00075-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 28,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00076-of-00131.safetensors",
+        "model-00077-of-00131.safetensors",
+        "model-00078-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00077-of-00131.safetensors",
+      "down_proj_shard": "model-00078-of-00131.safetensors",
+      "router_gate_shard": "model-00078-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00076-of-00131.safetensors": [
+          "layer_27",
+          "mtp"
+        ],
+        "model-00078-of-00131.safetensors": [
+          "layer_29",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00076-of-00131.safetensors",
+        "model-00077-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 29,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00078-of-00131.safetensors",
+        "model-00079-of-00131.safetensors",
+        "model-00080-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00079-of-00131.safetensors",
+      "down_proj_shard": "model-00080-of-00131.safetensors",
+      "router_gate_shard": "model-00080-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00078-of-00131.safetensors": [
+          "layer_28",
+          "mtp"
+        ],
+        "model-00080-of-00131.safetensors": [
+          "layer_03"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00078-of-00131.safetensors",
+        "model-00079-of-00131.safetensors",
+        "model-00080-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 30,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00082-of-00131.safetensors",
+        "model-00083-of-00131.safetensors",
+        "model-00084-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00083-of-00131.safetensors",
+      "down_proj_shard": "model-00084-of-00131.safetensors",
+      "router_gate_shard": "model-00084-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00082-of-00131.safetensors": [
+          "layer_03",
+          "mtp"
+        ],
+        "model-00084-of-00131.safetensors": [
+          "layer_31"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00082-of-00131.safetensors",
+        "model-00083-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 31,
+      "attn_type": "full_attention (QSA)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00084-of-00131.safetensors",
+        "model-00085-of-00131.safetensors",
+        "model-00086-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00085-of-00131.safetensors",
+      "down_proj_shard": "model-00086-of-00131.safetensors",
+      "router_gate_shard": "model-00086-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00084-of-00131.safetensors": [
+          "layer_30"
+        ],
+        "model-00086-of-00131.safetensors": [
+          "layer_32",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00084-of-00131.safetensors",
+        "model-00085-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 32,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00086-of-00131.safetensors",
+        "model-00087-of-00131.safetensors",
+        "model-00088-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00087-of-00131.safetensors",
+      "down_proj_shard": "model-00088-of-00131.safetensors",
+      "router_gate_shard": "model-00088-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00086-of-00131.safetensors": [
+          "layer_31",
+          "mtp"
+        ],
+        "model-00088-of-00131.safetensors": [
+          "layer_33",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00086-of-00131.safetensors",
+        "model-00087-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 33,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00088-of-00131.safetensors",
+        "model-00089-of-00131.safetensors",
+        "model-00090-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00089-of-00131.safetensors",
+      "down_proj_shard": "model-00090-of-00131.safetensors",
+      "router_gate_shard": "model-00090-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00088-of-00131.safetensors": [
+          "layer_32",
+          "mtp"
+        ],
+        "model-00090-of-00131.safetensors": [
+          "layer_34",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00088-of-00131.safetensors",
+        "model-00089-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 34,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00090-of-00131.safetensors",
+        "model-00091-of-00131.safetensors",
+        "model-00092-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00091-of-00131.safetensors",
+      "down_proj_shard": "model-00092-of-00131.safetensors",
+      "router_gate_shard": "model-00092-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00090-of-00131.safetensors": [
+          "layer_33",
+          "mtp"
+        ],
+        "model-00092-of-00131.safetensors": [
+          "layer_35"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00090-of-00131.safetensors",
+        "model-00091-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 35,
+      "attn_type": "full_attention (QSA)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00092-of-00131.safetensors",
+        "model-00093-of-00131.safetensors",
+        "model-00094-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00093-of-00131.safetensors",
+      "down_proj_shard": "model-00094-of-00131.safetensors",
+      "router_gate_shard": "model-00094-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00092-of-00131.safetensors": [
+          "layer_34"
+        ],
+        "model-00094-of-00131.safetensors": [
+          "layer_36",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00092-of-00131.safetensors",
+        "model-00093-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 36,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00094-of-00131.safetensors",
+        "model-00095-of-00131.safetensors",
+        "model-00096-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00095-of-00131.safetensors",
+      "down_proj_shard": "model-00096-of-00131.safetensors",
+      "router_gate_shard": "model-00096-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00094-of-00131.safetensors": [
+          "layer_35",
+          "mtp"
+        ],
+        "model-00096-of-00131.safetensors": [
+          "layer_37"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00094-of-00131.safetensors",
+        "model-00095-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 37,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00096-of-00131.safetensors",
+        "model-00097-of-00131.safetensors",
+        "model-00098-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00097-of-00131.safetensors",
+      "down_proj_shard": "model-00098-of-00131.safetensors",
+      "router_gate_shard": "model-00098-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00096-of-00131.safetensors": [
+          "layer_36"
+        ],
+        "model-00098-of-00131.safetensors": [
+          "layer_38"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00096-of-00131.safetensors",
+        "model-00097-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 38,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00098-of-00131.safetensors",
+        "model-00099-of-00131.safetensors",
+        "model-00100-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00099-of-00131.safetensors",
+      "down_proj_shard": "model-00100-of-00131.safetensors",
+      "router_gate_shard": "model-00100-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00098-of-00131.safetensors": [
+          "layer_37"
+        ],
+        "model-00100-of-00131.safetensors": [
+          "layer_39",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00098-of-00131.safetensors",
+        "model-00099-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 39,
+      "attn_type": "full_attention (QSA)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00100-of-00131.safetensors",
+        "model-00101-of-00131.safetensors",
+        "model-00102-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00101-of-00131.safetensors",
+      "down_proj_shard": "model-00102-of-00131.safetensors",
+      "router_gate_shard": "model-00102-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00100-of-00131.safetensors": [
+          "layer_38",
+          "mtp"
+        ],
+        "model-00102-of-00131.safetensors": [
+          "layer_04",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00100-of-00131.safetensors",
+        "model-00101-of-00131.safetensors",
+        "model-00102-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 40,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00104-of-00131.safetensors",
+        "model-00105-of-00131.safetensors",
+        "model-00106-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00105-of-00131.safetensors",
+      "down_proj_shard": "model-00106-of-00131.safetensors",
+      "router_gate_shard": "model-00106-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00104-of-00131.safetensors": [
+          "layer_04"
+        ],
+        "model-00106-of-00131.safetensors": [
+          "layer_41",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00104-of-00131.safetensors",
+        "model-00105-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 41,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00106-of-00131.safetensors",
+        "model-00107-of-00131.safetensors",
+        "model-00108-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00107-of-00131.safetensors",
+      "down_proj_shard": "model-00108-of-00131.safetensors",
+      "router_gate_shard": "model-00108-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00106-of-00131.safetensors": [
+          "layer_40",
+          "mtp"
+        ],
+        "model-00108-of-00131.safetensors": [
+          "layer_42",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00106-of-00131.safetensors",
+        "model-00107-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 42,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00108-of-00131.safetensors",
+        "model-00109-of-00131.safetensors",
+        "model-00110-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00109-of-00131.safetensors",
+      "down_proj_shard": "model-00110-of-00131.safetensors",
+      "router_gate_shard": "model-00110-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00108-of-00131.safetensors": [
+          "layer_41",
+          "mtp"
+        ],
+        "model-00110-of-00131.safetensors": [
+          "layer_43"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00108-of-00131.safetensors",
+        "model-00109-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 43,
+      "attn_type": "full_attention (QSA)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00110-of-00131.safetensors",
+        "model-00111-of-00131.safetensors",
+        "model-00112-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00111-of-00131.safetensors",
+      "down_proj_shard": "model-00112-of-00131.safetensors",
+      "router_gate_shard": "model-00112-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00110-of-00131.safetensors": [
+          "layer_42"
+        ],
+        "model-00112-of-00131.safetensors": [
+          "layer_44",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00110-of-00131.safetensors",
+        "model-00111-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 44,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00112-of-00131.safetensors",
+        "model-00113-of-00131.safetensors",
+        "model-00114-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00113-of-00131.safetensors",
+      "down_proj_shard": "model-00114-of-00131.safetensors",
+      "router_gate_shard": "model-00114-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00112-of-00131.safetensors": [
+          "layer_43",
+          "mtp"
+        ],
+        "model-00114-of-00131.safetensors": [
+          "layer_45",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00112-of-00131.safetensors",
+        "model-00113-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 45,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00114-of-00131.safetensors",
+        "model-00115-of-00131.safetensors",
+        "model-00116-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00115-of-00131.safetensors",
+      "down_proj_shard": "model-00116-of-00131.safetensors",
+      "router_gate_shard": "model-00116-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00114-of-00131.safetensors": [
+          "layer_44",
+          "mtp"
+        ],
+        "model-00116-of-00131.safetensors": [
+          "layer_46"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00114-of-00131.safetensors",
+        "model-00115-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 46,
+      "attn_type": "linear_attention (GDN)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00116-of-00131.safetensors",
+        "model-00117-of-00131.safetensors",
+        "model-00118-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00117-of-00131.safetensors",
+      "down_proj_shard": "model-00118-of-00131.safetensors",
+      "router_gate_shard": "model-00118-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00116-of-00131.safetensors": [
+          "layer_45"
+        ],
+        "model-00118-of-00131.safetensors": [
+          "layer_47",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00116-of-00131.safetensors",
+        "model-00117-of-00131.safetensors"
+      ]
+    },
+    {
+      "layer_idx": 47,
+      "attn_type": "full_attention (QSA)",
+      "has_ple": false,
+      "tensor_count": 24,
+      "shards": [
+        "model-00118-of-00131.safetensors",
+        "model-00119-of-00131.safetensors",
+        "model-00120-of-00131.safetensors"
+      ],
+      "gate_up_proj_shard": "model-00119-of-00131.safetensors",
+      "down_proj_shard": "model-00120-of-00131.safetensors",
+      "router_gate_shard": "model-00120-of-00131.safetensors",
+      "shared_shards_with_other_units": {
+        "model-00118-of-00131.safetensors": [
+          "layer_46",
+          "mtp"
+        ],
+        "model-00120-of-00131.safetensors": [
+          "layer_05",
+          "mtp"
+        ]
+      },
+      "shards_reaching_last_layer_0_47": [
+        "model-00118-of-00131.safetensors",
+        "model-00119-of-00131.safetensors",
+        "model-00120-of-00131.safetensors"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,389 @@
+{
+  "t1": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 3591,
+      "overflowX": false,
+      "bodyBg": "oklch(0.14 0.012 230)",
+      "bodyColor": "oklch(0.98 0.004 230)",
+      "h1Text": "Industrial hot-water and steam boilers engineered for continuous operation.",
+      "h1FontSize": "72px",
+      "cls": 0,
+      "lcpMs": 368
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 5551,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "seoRawFileMode": 80,
+      "cls": 0,
+      "lcpMs": 368
+    }
+  },
+  "t2": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 3223,
+      "overflowX": false,
+      "bodyBg": "oklch(0.945 0.018 92)",
+      "bodyColor": "oklch(0.27 0.035 155)",
+      "h1Text": "When the story changes,\nwhat should you do?",
+      "h1FontSize": "70.4px",
+      "cls": 0,
+      "lcpMs": 312
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 4150,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 60,
+      "seoRawFileMode": 60,
+      "cls": 0,
+      "lcpMs": 312
+    }
+  },
+  "t3": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 5732,
+      "overflowX": false,
+      "bodyBg": "oklch(0.95 0.01 85)",
+      "bodyColor": "oklch(0.16 0.015 85)",
+      "h1Text": "Мебель из массива дуба для архитектурных интерьеров",
+      "h1FontSize": "96px",
+      "cls": 0,
+      "lcpMs": 308
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 6224,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "seoRawFileMode": 80,
+      "cls": 0,
+      "lcpMs": 308
+    }
+  },
+  "t5": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "overflowX": false,
+      "bodyBg": "rgba(0, 0, 0, 0)",
+      "bodyColor": "rgb(0, 0, 0)",
+      "h1Text": null,
+      "h1FontSize": null,
+      "cls": 0,
+      "lcpMs": 0
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 812,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 77,
+      "bestPractices": 100,
+      "seo": 40,
+      "seoRawFileMode": 40,
+      "cls": 0,
+      "lcpMs": 0
+    }
+  },
+  "t6": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 3497,
+      "overflowX": false,
+      "bodyBg": "oklch(0.13 0.02 260)",
+      "bodyColor": "oklch(0.95 0.01 250)",
+      "h1Text": "Low-latency MoE inference across sovereign GPU and NVMe fabrics.",
+      "h1FontSize": "74px",
+      "cls": 0,
+      "lcpMs": 440
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 6702,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [
+      "WebGL2 init failed: Error: ERROR: 0:79: '=' : dimension mismatch\nERROR: 0:79: '=' : cannot convert from 'highp float' to 'highp 2-component vector of float'\nERROR: 0:80: 'mix' : no matching overloaded function found\n\u0000\n    at compile (file:///D:/projects/SmartLLM/eval/suite/runs/gyro-m-local/t6/index.html:664:17)\n    at initWebGL (file:///D:/projects/SmartLLM/eval/suite/runs/gyro-m-local/t6/index.html:672:34)\n    at initCanvas (file:///D:/projects/SmartLLM/eval/suite/runs/gyro-m-local/t6/index.html:781:21)\n    at HTMLDocument.<anonymous> (file:///D:/projects/SmartLLM/eval/suite/runs/gyro-m-local/t6/index.html:797:7)"
+    ],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 80,
+      "seoRawFileMode": 80,
+      "cls": 0,
+      "lcpMs": 440
+    }
+  },
+  "t7": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "overflowX": false,
+      "bodyBg": "rgba(0, 0, 0, 0)",
+      "bodyColor": "rgb(0, 0, 0)",
+      "h1Text": null,
+      "h1FontSize": null,
+      "cls": 0,
+      "lcpMs": 0
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 812,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 77,
+      "bestPractices": 100,
+      "seo": 40,
+      "seoRawFileMode": 40,
+      "cls": 0,
+      "lcpMs": 0
+    }
+  },
+  "t8": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "overflowX": false,
+      "bodyBg": "rgba(0, 0, 0, 0)",
+      "bodyColor": "rgb(0, 0, 0)",
+      "h1Text": null,
+      "h1FontSize": null,
+      "cls": 0,
+      "lcpMs": 0
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 812,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 93,
+      "bestPractices": 100,
+      "seo": 80,
+      "seoRawFileMode": 80,
+      "cls": 0,
+      "lcpMs": 0
+    }
+  },
+  "t9": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 5141,
+      "overflowX": false,
+      "bodyBg": "oklch(0.97 0.008 95)",
+      "bodyColor": "oklch(0.14 0.015 255)",
+      "h1Text": "Autonomous coverage for environmental and precision-agriculture missions.",
+      "h1FontSize": "57.6px",
+      "cls": 0,
+      "lcpMs": 292
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 6769,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 80,
+      "seoRawFileMode": 80,
+      "cls": 0,
+      "lcpMs": 292
+    }
+  },
+  "t10": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 5779,
+      "overflowX": false,
+      "bodyBg": "oklch(0.14 0.02 255)",
+      "bodyColor": "oklch(0.95 0.01 250)",
+      "h1Text": "КОНТУР-СПЕКТР: инженерная платформа предиктивной аналитики для газотурбинных и компрессорных агрегатов",
+      "h1FontSize": "68px",
+      "cls": 0,
+      "lcpMs": 368
+    },
+    "mobile": {
+      "scrollWidth": 377,
+      "clientWidth": 375,
+      "scrollHeight": 11002,
+      "overflowX": true
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 80,
+      "seoRawFileMode": 80,
+      "cls": 0,
+      "lcpMs": 368
+    }
+  },
+  "t11": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "overflowX": false,
+      "bodyBg": "rgba(0, 0, 0, 0)",
+      "bodyColor": "rgb(0, 0, 0)",
+      "h1Text": null,
+      "h1FontSize": null,
+      "cls": 0,
+      "lcpMs": 0
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 812,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 77,
+      "bestPractices": 100,
+      "seo": 40,
+      "seoRawFileMode": 40,
+      "cls": 0,
+      "lcpMs": 0
+    }
+  },
+  "t12": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "overflowX": false,
+      "bodyBg": "oklch(0.135 0.014 255)",
+      "bodyColor": "oklch(0.975 0.006 250)",
+      "h1Text": "Sub-Millisecond Tensor Routing for Sovereign AI Clusters",
+      "h1FontSize": "34.4px",
+      "cls": 0,
+      "lcpMs": 264
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 1863,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 60,
+      "seoRawFileMode": 60,
+      "cls": 0,
+      "lcpMs": 264
+    }
+  }
+}

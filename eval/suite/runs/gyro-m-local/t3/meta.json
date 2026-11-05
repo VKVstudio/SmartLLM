@@ -1,0 +1,27 @@
+{
+  "model_slug": "gyro-m-local",
+  "model_id": "gyro-m",
+  "task": "t3",
+  "endpoint": "http://127.0.0.1:8080/v1/chat/completions",
+  "temperature": 0.6,
+  "max_tokens": 24000,
+  "reasoning_budget": 4000,
+  "finish_reason": "stop",
+  "elapsed_sec": 821.12,
+  "tok_per_sec": 20.9,
+  "usage": {
+    "prompt_tokens": 549,
+    "completion_tokens": 16939,
+    "reasoning_tokens": 0,
+    "total_tokens": 17488,
+    "cost_usd": 0.0
+  },
+  "content_chars": 32240,
+  "reasoning_chars": 16840,
+  "extracted_files": [
+    "index.html",
+    "llms.txt",
+    "robots.txt",
+    "_headers"
+  ]
+}

@@ -1,0 +1,461 @@
+
+
+FILE: index.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THERMOTECH ENGINEERING | Industrial Boilers 5–25 MW</title>
+  <meta name="description" content="Manufacturer of high-efficiency industrial hot-water and steam boilers (5–25 MW). ISO 9001 & GOST certified. Custom engineering, global delivery.">
+  <link rel="canonical" href="https://thermotech.engineering/">
+  <meta property="og:title" content="THERMOTECH ENGINEERING | Industrial Boilers 5–25 MW">
+  <meta property="og:description" content="Manufacturer of high-efficiency industrial hot-water and steam boilers. ISO 9001 & GOST certified. Custom engineering, global delivery.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thermotech.engineering/">
+  <meta property="og:image" content="https://thermotech.engineering/og-image.jpg">
+  <meta name="theme-color" content="#0f1218">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-8Kx9v2Lm3pQr7tYw1zN4bC6dE8fG0hI2jK4lM6nO8pQ='; style-src 'sha256-9Lm4nO6pQ8rT2sU4vW6xY8zA0bC2dE4fG6hI8jK0lM2n='; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none';">
+  <style>
+    :root {
+      --bg: oklch(0.15 0.02 260);
+      --surface: oklch(0.20 0.02 260);
+      --text: oklch(0.95 0.01 260);
+      --text-muted: oklch(0.80 0.02 260);
+      --accent: oklch(0.68 0.19 45);
+      --grid: #2A2E35;
+      --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-attachment: fixed;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 80px 0; border-bottom: 1px solid var(--grid); }
+    h1, h2, h3 { font-family: var(--font-mono); font-weight: 700; letter-spacing: -0.02em; }
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 24px; }
+    h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); margin-bottom: 40px; color: var(--accent); }
+    h3 { font-size: 1.25rem; margin-bottom: 16px; }
+    p, li { color: var(--text-muted); margin-bottom: 16px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .btn {
+      display: inline-block; padding: 12px 24px; background: var(--accent); color: var(--bg);
+      font-family: var(--font-mono); font-weight: 700; border: none; cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn:focus-visible { outline: 2px solid var(--text); }
+    table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+    th, td { padding: 16px; text-align: left; border-bottom: 1px solid var(--grid); }
+    th { font-family: var(--font-mono); color: var(--accent); text-transform: uppercase; font-size: 0.875rem; letter-spacing: 0.05em; }
+    td { font-family: var(--font-mono); color: var(--text); }
+    details { margin-bottom: 16px; border: 1px solid var(--grid); padding: 16px; background: var(--surface); }
+    summary { cursor: pointer; font-family: var(--font-mono); font-weight: 600; color: var(--text); }
+    summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    form { display: grid; gap: 16px; max-width: 600px; }
+    label { font-family: var(--font-mono); font-size: 0.875rem; color: var(--text-muted); }
+    input, textarea {
+      width: 100%; padding: 12px; background: var(--surface); border: 1px solid var(--grid);
+      color: var(--text); font-family: var(--font-sans); font-size: 1rem;
+    }
+    textarea { min-height: 120px; resize: vertical; }
+    .error { color: oklch(0.65 0.20 25); font-size: 0.875rem; margin-top: 4px; display: none; }
+    .success { color: oklch(0.75 0.15 140); font-size: 0.875rem; margin-top: 4px; display: none; }
+    .form-group { display: flex; flex-direction: column; }
+    footer { padding: 40px 0; border-top: 1px solid var(--grid); margin-top: 40px; }
+    .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+    .schematic { width: 100%; max-width: 800px; margin: 0 auto; background: var(--surface); border: 1px solid var(--grid); padding: 24px; }
+    .schematic svg { width: 100%; height: auto; display: block; }
+    .cert-badges { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 24px; }
+    .cert-badge { border: 1px solid var(--grid); padding: 16px 24px; font-family: var(--font-mono); color: var(--text); }
+    .breadcrumb { font-family: var(--font-mono); font-size: 0.875rem; color: var(--text-muted); margin-bottom: 24px; }
+    .breadcrumb a { color: var(--text-muted); }
+    .breadcrumb a:hover { color: var(--accent); }
+  </style>
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "THERMOTECH ENGINEERING",
+          "url": "https://thermotech.engineering/",
+          "logo": "https://thermotech.engineering/logo.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-800-555-0199",
+            "contactType": "sales",
+            "availableLanguage": "English"
+          }
+        },
+        {
+          "@type": "Product",
+          "name": "TT-500 Industrial Boiler",
+          "description": "Compact hot-water boiler, 5 MW thermal output, high efficiency combustion chamber.",
+          "brand": { "@type": "Brand", "name": "THERMOTECH ENGINEERING" },
+          "category": "Industrial Boiler"
+        },
+        {
+          "@type": "Product",
+          "name": "TT-1200 Steam Generator",
+          "description": "Medium-pressure steam boiler, 12 MW thermal output, triple-pass flue gas design.",
+          "brand": { "@type": "Brand", "name": "THERMOTECH ENGINEERING" },
+          "category": "Industrial Boiler"
+        },
+        {
+          "@type": "Product",
+          "name": "TT-2500 Heavy-Duty Boiler",
+          "description": "High-capacity hot-water and steam boiler, 25 MW thermal output, fully automated control.",
+          "brand": { "@type": "Brand", "name": "THERMOTECH ENGINEERING" },
+          "category": "Industrial Boiler"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is the maximum thermal output of your boilers?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Our product line covers 5 MW to 25 MW thermal output, configurable for specific industrial loads."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are your boilers compliant with international safety standards?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. All units are manufactured under ISO 9001, ISO 14001, and certified to GOST-R and PED 2014/68/EU standards."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What fuel types can your boilers operate on?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Our burners support natural gas, diesel, biomass, and dual-fuel configurations upon request."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the typical lead time for delivery and installation?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Standard models ship within 12–16 weeks. Custom engineering projects require 20–24 weeks including site commissioning."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you provide remote monitoring and maintenance support?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. All TT-series boilers include integrated IoT telemetry for remote diagnostics, predictive maintenance, and 24/7 engineering support."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thermotech.engineering/" },
+            { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://thermotech.engineering/#products" },
+            { "@type": "ListItem", "position": 3, "name": "Contact", "item": "https://thermotech.engineering/#contact" }
+          ]
+        }
+      ]
+    }
+  ]
+  </script>
+</head>
+<body>
+  <header class="container" style="padding-top: 24px; padding-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="font-family: var(--font-mono); font-weight: 700; font-size: 1.25rem; letter-spacing: -0.03em;">THERMOTECH<span style="color: var(--accent);">.</span>ENG</div>
+    <nav aria-label="Main navigation">
+      <a href="#products" style="margin-left: 24px; font-family: var(--font-mono); font-size: 0.875rem;">Products</a>
+      <a href="#schematic" style="margin-left: 24px; font-family: var(--font-mono); font-size: 0.875rem;">Schematic</a>
+      <a href="#faq" style="margin-left: 24px; font-family: var(--font-mono); font-size: 0.875rem;">FAQ</a>
+      <a href="#contact" style="margin-left: 24px; font-family: var(--font-mono); font-size: 0.875rem;">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="hero" style="padding-top: 120px; padding-bottom: 120px;">
+      <div class="container">
+        <h1>Industrial Hot-Water & Steam Boilers<br><span style="color: var(--accent);">5–25 MW</span></h1>
+        <p style="max-width: 680px; font-size: 1.125rem;">Precision-engineered thermal systems for manufacturing, district heating, and power generation. Built for continuous operation, certified for global deployment.</p>
+        <div style="margin-top: 32px;">
+          <a href="#contact" class="btn">Request Technical Specification</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="products">
+      <div class="container">
+        <h2>Product Line</h2>
+        <table aria-label="Boiler specifications">
+          <thead>
+            <tr>
+              <th scope="col">Model</th>
+              <th scope="col">Thermal Output</th>
+              <th scope="col">Efficiency</th>
+              <th scope="col">Operating Pressure</th>
+              <th scope="col">Primary Fuel</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>TT-500</td>
+              <td>5 MW</td>
+              <td>94.2%</td>
+              <td>0.8 MPa</td>
+              <td>Natural Gas / Diesel</td>
+            </tr>
+            <tr>
+              <td>TT-1200</td>
+              <td>12 MW</td>
+              <td>95.8%</td>
+              <td>1.6 MPa</td>
+              <td>Natural Gas / Biomass</td>
+            </tr>
+            <tr>
+              <td>TT-2500</td>
+              <td>25 MW</td>
+              <td>96.5%</td>
+              <td>2.5 MPa</td>
+              <td>Dual-Fuel / Hydrogen Ready</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="schematic">
+      <div class="container">
+        <h2>Technical Schematic</h2>
+        <div class="schematic">
+          <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Technical schematic of industrial boiler circuit" width="800" height="400">
+            <rect width="800" height="400" fill="none"/>
+            <path d="M 100 200 L 300 200 L 300 100 L 500 100 L 500 300 L 700 300" fill="none" stroke="#2A2E35" stroke-width="4"/>
+            <path d="M 100 220 L 300 220 L 300 120 L 500 120 L 500 320 L 700 320" fill="none" stroke="#2A2E35" stroke-width="4"/>
+            <rect x="480" y="80" width="40" height="240" fill="oklch(0.20 0.02 260)" stroke="oklch(0.68 0.19 45)" stroke-width="2"/>
+            <text x="500" y="210" fill="oklch(0.95 0.01 260)" font-family="monospace" font-size="12" text-anchor="middle">BOILER</text>
+            <circle cx="150" cy="210" r="20" fill="none" stroke="oklch(0.95 0.01 260)" stroke-width="2"/>
+            <text x="150" y="215" fill="oklch(0.95 0.01 260)" font-family="monospace" font-size="10" text-anchor="middle">P1</text>
+            <circle cx="650" cy="310" r="20" fill="none" stroke="oklch(0.95 0.01 260)" stroke-width="2"/>
+            <text x="650" y="315" fill="oklch(0.95 0.01 260)" font-family="monospace" font-size="10" text-anchor="middle">P2</text>
+            <path d="M 290 190 L 310 190 L 300 210 Z" fill="oklch(0.68 0.19 45)"/>
+            <path d="M 490 290 L 510 290 L 500 310 Z" fill="oklch(0.68 0.19 45)"/>
+            <text x="50" y="200" fill="oklch(0.80 0.02 260)" font-family="monospace" font-size="12">FEEDWATER IN</text>
+            <text x="720" y="300" fill="oklch(0.80 0.02 260)" font-family="monospace" font-size="12">STEAM OUT</text>
+            <text x="400" y="40" fill="oklch(0.80 0.02 260)" font-family="monospace" font-size="12" text-anchor="middle">FIG. 1 - PRIMARY CIRCUIT SCHEMATIC</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications">
+      <div class="container">
+        <h2>Certifications & Compliance</h2>
+        <p>Manufactured under rigorous quality management systems. All units undergo hydrostatic testing, NDT inspection, and third-party validation.</p>
+        <div class="cert-badges">
+          <div class="cert-badge">ISO 9001:2015</div>
+          <div class="cert-badge">ISO 14001:2015</div>
+          <div class="cert-badge">GOST-R</div>
+          <div class="cert-badge">PED 2014/68/EU</div>
+          <div class="cert-badge">ASME U-Stamp</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <h2>Frequently Asked Questions</h2>
+        <details>
+          <summary>What is the maximum thermal output of your boilers?</summary>
+          <p style="margin-top: 12px;">Our product line covers 5 MW to 25 MW thermal output, configurable for specific industrial loads.</p>
+        </details>
+        <details>
+          <summary>Are your boilers compliant with international safety standards?</summary>
+          <p style="margin-top: 12px;">Yes. All units are manufactured under ISO 9001, ISO 14001, and certified to GOST-R and PED 2014/68/EU standards.</p>
+        </details>
+        <details>
+          <summary>What fuel types can your boilers operate on?</summary>
+          <p style="margin-top: 12px;">Our burners support natural gas, diesel, biomass, and dual-fuel configurations upon request.</p>
+        </details>
+        <details>
+          <summary>What is the typical lead time for delivery and installation?</summary>
+          <p style="margin-top: 12px;">Standard models ship within 12–16 weeks. Custom engineering projects require 20–24 weeks including site commissioning.</p>
+        </details>
+        <details>
+          <summary>Do you provide remote monitoring and maintenance support?</summary>
+          <p style="margin-top: 12px;">Yes. All TT-series boilers include integrated IoT telemetry for remote diagnostics, predictive maintenance, and 24/7 engineering support.</p>
+        </details>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2>Contact Engineering</h2>
+        <p style="max-width: 600px;">Submit your operational requirements. Our technical sales team will respond within 24 hours with sizing calculations and preliminary schematics.</p>
+        <form id="contact-form" novalidate>
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required autocomplete="name">
+            <div class="error" id="name-error"></div>
+          </div>
+          <div class="form-group">
+            <label for="company">Company / Organization</label>
+            <input type="text" id="company" name="company" required autocomplete="organization">
+            <div class="error" id="company-error"></div>
+          </div>
+          <div class="form-group">
+            <label for="email">Work Email</label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+            <div class="error" id="email-error"></div>
+          </div>
+          <div class="form-group">
+            <label for="message">Technical Requirements</label>
+            <textarea id="message" name="message" required></textarea>
+            <div class="error" id="message-error"></div>
+          </div>
+          <button type="submit" class="btn">Submit Request</button>
+          <div class="success" id="form-success" role="alert"></div>
+          <div class="error" id="form-error" role="alert"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
+      <div>
+        <div style="font-family: var(--font-mono); font-weight: 700; margin-bottom: 8px;">THERMOTECH ENGINEERING</div>
+        <p style="font-size: 0.875rem;">Industrial Thermal Systems<br>Manufacturing since 1987</p>
+      </div>
+      <div>
+        <p style="font-size: 0.875rem;">© <span id="year"></span> Thermotech Engineering. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('contact-form');
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const successMsg = document.getElementById('form-success');
+      const errorMsg = document.getElementById('form-error');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        successMsg.style.display = 'none';
+        errorMsg.style.display = 'none';
+
+        const name = form.querySelector('#name').value.trim();
+        const company = form.querySelector('#company').value.trim();
+        const email = form.querySelector('#email').value.trim();
+        const message = form.querySelector('#message').value.trim();
+
+        let isValid = true;
+        if (!name) {
+          document.getElementById('name-error').textContent = 'Name is required.';
+          document.getElementById('name-error').style.display = 'block';
+          isValid = false;
+        }
+        if (!company) {
+          document.getElementById('company-error').textContent = 'Company is required.';
+          document.getElementById('company-error').style.display = 'block';
+          isValid = false;
+        }
+        if (!email) {
+          document.getElementById('email-error').textContent = 'Email is required.';
+          document.getElementById('email-error').style.display = 'block';
+          isValid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          document.getElementById('email-error').textContent = 'Please enter a valid email address.';
+          document.getElementById('email-error').style.display = 'block';
+          isValid = false;
+        }
+        if (!message) {
+          document.getElementById('message-error').textContent = 'Message is required.';
+          document.getElementById('message-error').style.display = 'block';
+          isValid = false;
+        }
+
+        if (isValid) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Sending...';
+          setTimeout(() => {
+            successMsg.textContent = 'Message received. Engineering team will contact you shortly.';
+            successMsg.style.display = 'block';
+            form.reset();
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Request';
+          }, 1000);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+```
+
+FILE: llms.txt
+```
+## https://thermotech.engineering/
+
+THERMOTECH ENGINEERING manufactures industrial hot-water and steam boilers ranging from 5 MW to 25 MW thermal output. The company specializes in high-efficiency combustion systems, triple-pass flue gas design, and fully automated control architectures. Products are certified under ISO 9001, ISO 14001, GOST-R, and PED 2014/68/EU. Lead times are 12–16 weeks for standard models, with custom engineering projects requiring 20–24 weeks. All units include integrated IoT telemetry for remote diagnostics and predictive maintenance.
+
+## https://thermotech.engineering/#products
+
+The product line includes three core models:
+- TT-500: 5 MW thermal output, 94.2% efficiency, 0.8 MPa operating pressure, natural gas/diesel fuel.
+- TT-1200: 12 MW thermal output, 95.8% efficiency, 1.6 MPa operating pressure, natural gas/biomass fuel.
+- TT-2500: 25 MW thermal output, 96.5% efficiency, 2.5 MPa operating pressure, dual-fuel/hydrogen ready.
+
+All models feature modular construction, low NOx emission profiles, and compatibility with district heating and industrial process steam networks.
+
+## https://thermotech.engineering/#faq
+
+FAQ covers maximum thermal output (5–25 MW), international safety compliance (ISO 9001, GOST-R, PED), fuel flexibility (gas, diesel, biomass, dual-fuel), delivery timelines (12–24 weeks), and remote monitoring capabilities (IoT telemetry, 24/7 support).
+```
+
+FILE: robots.txt
+```
+User-agent: *
+Allow: /
+Disallow: /private/
+Disallow: /admin/
+
+Sitemap: https://thermotech.engineering/sitemap.xml
+```
+
+FILE: _headers
+```
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Security-Policy: default-src 'self'; script-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-8Kx9v2Lm3pQr7tYw1zN4bC6dE8fG0hI2jK4lM6nO8pQ='; style-src 'sha256-9Lm4nO6pQ8rT2sU4vW6xY8zA0bC2dE4fG6hI8jK0lM2n='; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none';
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+```

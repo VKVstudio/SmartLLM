@@ -1,0 +1,605 @@
+FILE: index.html
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VKVstudio.pro — When the story changes, what should you do?</title>
+<style>
+  :root{
+    --bg:        oklch(0.965 0.012 95);
+    --bg-2:      oklch(0.932 0.016 95);
+    --surface:   oklch(0.992 0.006 95);
+    --surface-2: oklch(0.975 0.010 95);
+    --ink:       oklch(0.26 0.022 250);
+    --ink-soft:  oklch(0.42 0.018 250);
+    --muted:     oklch(0.52 0.014 250);
+    --line:      oklch(0.885 0.014 95);
+    --line-soft: oklch(0.915 0.012 95);
+    --accent:      oklch(0.55 0.115 178);
+    --accent-deep: oklch(0.46 0.105 178);
+    --accent-ink:  oklch(0.40 0.095 178);
+    --on-accent:   oklch(0.99 0.004 95);
+
+    --font-display: "Helvetica Neue", Helvetica, "Segoe UI", Arial, system-ui, sans-serif;
+    --font-body: "Helvetica Neue", Helvetica, "Segoe UI", Arial, system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+    --maxw: 1280px;
+    --pad: clamp(20px, 5vw, 64px);
+    --radius: 4px;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  button,input,select{font:inherit;color:inherit;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad);}
+
+  .mono{font-family:var(--font-mono);}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.72rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--accent-ink);
+  }
+  .tag{
+    font-family:var(--font-mono);
+    font-size:.7rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:sticky;top:0;z-index:50;
+    background:color-mix(in oklab, var(--bg) 86%, transparent);
+    backdrop-filter:saturate(140%) blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;align-items:center;gap:24px;
+    min-height:64px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;}
+  .brand .mark{width:30px;height:22px;flex:none;}
+  .brand b{font-size:1.02rem;}
+  .brand .pro{color:var(--accent-deep);}
+  nav.main{display:flex;gap:26px;margin-left:18px;}
+  nav.main a{
+    font-size:.86rem;color:var(--ink-soft);
+    padding:6px 2px;border-bottom:1px solid transparent;
+    transition:color .15s, border-color .15s;
+  }
+  nav.main a:hover{color:var(--ink);border-color:var(--accent);}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:18px;}
+  .pause{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--ink-soft);}
+  .pause input{width:14px;height:14px;accent-color:var(--accent-deep);}
+  .theme{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--ink-soft);}
+  .theme select{
+    background:var(--surface);border:1px solid var(--line);border-radius:3px;
+    padding:5px 8px;font-size:.78rem;color:var(--ink);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;overflow:hidden;padding-block:clamp(48px,8vw,96px);}
+  .orbit{
+    position:absolute;top:50%;right:-6%;transform:translateY(-50%);
+    width:min(760px,90vw);height:min(760px,90vw);
+    pointer-events:none;opacity:.55;
+  }
+  .orbit circle{fill:none;stroke:var(--line);stroke-width:1;}
+  .orbit .dot{fill:var(--accent-deep);}
+  .hero-grid{
+    position:relative;
+    display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(2.6rem,6.4vw,5.1rem);
+    line-height:.98;
+    letter-spacing:-.025em;
+    margin:18px 0 22px;
+  }
+  .hero h1 .teal{color:var(--accent-deep);}
+  .hero .lede{
+    max-width:46ch;color:var(--ink-soft);font-size:1.05rem;line-height:1.6;margin:0 0 30px;
+  }
+  .actions{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:34px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 22px;border-radius:var(--radius);
+    font-size:.92rem;font-weight:600;letter-spacing:.01em;
+    border:1px solid transparent;cursor:pointer;
+    transition:transform .12s, background .15s, border-color .15s;
+  }
+  .btn .arw{font-family:var(--font-mono);}
+  .btn-primary{background:var(--accent-deep);color:var(--on-accent);}
+  .btn-primary:hover{background:var(--accent-ink);transform:translateY(-1px);}
+  .btn-ghost{background:var(--surface);color:var(--ink);border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--accent-deep);transform:translateY(-1px);}
+  .byline{font-family:var(--font-mono);font-size:.72rem;color:var(--muted);letter-spacing:.04em;}
+
+  /* hero card */
+  .proof{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 26px 22px;
+    box-shadow:0 24px 60px -36px color-mix(in oklab, var(--ink) 35%, transparent);
+  }
+  .proof::before{
+    content:"";position:absolute;top:-1px;right:-1px;width:64px;height:3px;background:var(--accent-deep);
+  }
+  .proof .row{display:flex;justify-content:space-between;align-items:center;gap:12px;}
+  .proof .dot-label{display:flex;align-items:center;gap:8px;}
+  .proof .dot-label i{width:7px;height:7px;border-radius:50%;background:var(--accent-deep);display:inline-block;}
+  .proof h2{
+    font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;
+    font-size:clamp(1.5rem,2.6vw,2rem);line-height:1.1;margin:22px 0 14px;
+  }
+  .proof p{color:var(--ink-soft);font-size:.95rem;margin:0 0 24px;}
+  .proof .div{height:1px;background:var(--line);margin-bottom:18px;}
+  .proof .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;}
+  .proof .foot b{font-family:var(--font-display);font-size:1.15rem;letter-spacing:-.01em;line-height:1.1;}
+  .link-mono{font-family:var(--font-mono);font-size:.74rem;color:var(--accent-ink);text-decoration:underline;text-underline-offset:3px;}
+  .service-note{
+    position:relative;text-align:right;margin-top:30px;
+    font-family:var(--font-mono);font-size:.72rem;color:var(--muted);letter-spacing:.04em;
+  }
+
+  /* ---------- Briefing desk ---------- */
+  .desk{padding-block:clamp(40px,6vw,72px);}
+  .desk-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:48px;}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:24px;
+  }
+  .section-head h2{font-family:var(--font-display);font-weight:700;font-size:1.15rem;letter-spacing:-.01em;margin:0;}
+
+  .search-label{font-family:var(--font-mono);font-size:.74rem;color:var(--ink-soft);margin-bottom:8px;display:block;}
+  .search{display:flex;gap:10px;}
+  .search input{
+    flex:1;background:var(--surface);border:1px solid var(--line);border-radius:3px;
+    padding:12px 14px;font-size:.92rem;
+  }
+  .search input:focus{outline:2px solid var(--accent-deep);outline-offset:1px;}
+  .search button{
+    background:var(--accent-deep);color:var(--on-accent);border:none;border-radius:3px;
+    padding:0 20px;font-size:.86rem;font-weight:600;cursor:pointer;
+  }
+  .search button:hover{background:var(--accent-ink);}
+  .search-help{font-family:var(--font-mono);font-size:.72rem;color:var(--muted);margin-top:10px;}
+
+  .feature{
+    margin-top:30px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+    box-shadow:0 30px 70px -50px color-mix(in oklab, var(--ink) 40%, transparent);
+  }
+  .feature .media{position:relative;aspect-ratio:16/8.4;background:var(--surface-2);}
+  .feature .media svg{width:100%;height:100%;}
+  .media .overlay{
+    position:absolute;left:18px;bottom:14px;
+    font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    color:oklch(0.98 0.005 95);text-shadow:0 1px 6px color-mix(in oklab, var(--ink) 60%, transparent);
+  }
+  .feature .body{padding:26px 28px 24px;}
+  .meta-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;}
+  .meta-row .left{font-size:.86rem;}
+  .meta-row .left b{font-weight:700;}
+  .meta-row .left span{font-family:var(--font-mono);font-size:.78rem;color:var(--muted);}
+  .feature h3{
+    font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;
+    font-size:clamp(1.5rem,3vw,2.15rem);line-height:1.12;margin:0 0 14px;
+  }
+  .feature p{color:var(--ink-soft);margin:0 0 22px;max-width:62ch;}
+  .feature .foot{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:16px;}
+  .feature .foot .by{font-family:var(--font-mono);font-size:.74rem;color:var(--muted);}
+  .read{font-family:var(--font-mono);font-size:.78rem;color:var(--accent-ink);}
+  .read:hover{text-decoration:underline;text-underline-offset:3px;}
+
+  /* read next */
+  .next-list{display:flex;flex-direction:column;gap:24px;}
+  .mini{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .mini .media{aspect-ratio:16/8.6;background:var(--surface-2);}
+  .mini .media svg{width:100%;height:100%;}
+  .mini .body{padding:18px 18px 16px;}
+  .mini .meta-row{margin-bottom:10px;}
+  .mini h3{font-family:var(--font-display);font-weight:700;letter-spacing:-.015em;font-size:1.18rem;line-height:1.18;margin:0 0 10px;}
+  .mini p{font-size:.86rem;color:var(--ink-soft);margin:0 0 16px;}
+  .mini .foot{border-top:1px solid var(--line);padding-top:12px;}
+  .disclaimer{font-size:.82rem;color:var(--muted);margin-top:18px;max-width:42ch;}
+
+  /* ---------- Editorial rule ---------- */
+  .rule{border-top:1px solid var(--line);padding-block:clamp(48px,7vw,84px);}
+  .rule-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:start;}
+  .rule h2{
+    font-family:var(--font-display);font-weight:700;letter-spacing:-.025em;
+    font-size:clamp(2rem,4.4vw,3.1rem);line-height:1.02;margin:16px 0 18px;
+  }
+  .rule h2 .teal{color:var(--accent-deep);}
+  .rule .sub{color:var(--ink-soft);max-width:34ch;margin:0 0 26px;}
+  .rule-link{font-family:var(--font-mono);font-size:.82rem;color:var(--accent-ink);}
+  .rule-link:hover{text-decoration:underline;text-underline-offset:3px;}
+  .steps{display:flex;flex-direction:column;}
+  .step{
+    display:grid;grid-template-columns:42px 1fr 1.2fr;gap:18px;align-items:baseline;
+    padding:20px 0;border-top:1px solid var(--line);
+  }
+  .step:last-child{border-bottom:1px solid var(--line);}
+  .step .num{font-family:var(--font-mono);font-size:.78rem;color:var(--muted);}
+  .step .t{font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:-.01em;}
+  .step .d{font-size:.9rem;color:var(--ink-soft);}
+
+  /* ---------- Footer ---------- */
+  footer.site{background:var(--bg-2);border-top:1px solid var(--line);}
+  .foot-grid{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-block:30px;}
+  .foot-brand{display:flex;align-items:center;gap:12px;}
+  .foot-brand .name{font-weight:700;letter-spacing:-.01em;}
+  .foot-brand .ed{font-family:var(--font-mono);font-size:.72rem;color:var(--muted);display:block;margin-top:2px;}
+  .foot-links{display:flex;gap:26px;flex-wrap:wrap;}
+  .foot-links a{font-size:.82rem;color:var(--ink-soft);}
+  .foot-links a:hover{color:var(--ink);}
+
+  /* motion */
+  @keyframes pulse{0%,100%{opacity:.35;}50%{opacity:1;}}
+  .orbit .dot{animation:pulse 3.4s ease-in-out infinite;}
+  .orbit .dot.d2{animation-delay:1.2s;}
+  body.paused .orbit .dot{animation:none;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1000px){
+    .hero-grid{grid-template-columns:1fr;gap:36px;}
+    .desk-grid{grid-template-columns:1fr;gap:40px;}
+    .rule-grid{grid-template-columns:1fr;gap:36px;}
+    .orbit{display:none;}
+  }
+  @media (max-width:760px){
+    nav.main{display:none;}
+    .theme{display:none;}
+    .step{grid-template-columns:34px 1fr;gap:10px 14px;}
+    .step .d{grid-column:2;}
+  }
+  @media (max-width:480px){
+    .nav-right{gap:12px;}
+    .pause span{display:none;}
+    .actions .btn{flex:1 1 100%;justify-content:space-between;}
+    .section-head{flex-direction:column;align-items:flex-start;gap:6px;}
+    .meta-row{flex-direction:column;align-items:flex-start;gap:4px;}
+    .feature .foot,.proof .foot{flex-direction:column;align-items:flex-start;gap:10px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#" aria-label="VKVstudio.pro home">
+      <svg class="mark" viewBox="0 0 30 22" fill="none" aria-hidden="true">
+        <path d="M15 2 L28 20 L2 20 Z" stroke="var(--accent-deep)" stroke-width="1.4"/>
+        <path d="M6 14 H24" stroke="var(--accent-deep)" stroke-width="1.4"/>
+        <circle cx="15" cy="14" r="1.6" fill="var(--accent-deep)"/>
+      </svg>
+      <span><b>VKVstudio<span class="pro">.pro</span></b></span>
+    </a>
+    <nav class="main" aria-label="Primary">
+      <a href="#">Briefings</a>
+      <a href="#">The method</a>
+      <a href="#">Studio</a>
+      <a href="#">Services <span class="mono">↗</span></a>
+    </nav>
+    <div class="nav-right">
+      <label class="pause"><input type="checkbox" id="pauseMotion"><span>Pause motion</span></label>
+      <label class="theme">Theme
+        <select id="themeSelect" aria-label="Colour theme">
+          <option value="light" selected>System</option>
+          <option value="light2">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </label>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <svg class="orbit" viewBox="0 0 760 760" aria-hidden="true">
+    <circle cx="380" cy="380" r="300"/>
+    <circle cx="380" cy="380" r="210"/>
+    <circle class="dot" cx="120" cy="170" r="4"/>
+    <circle class="dot d2" cx="210" cy="250" r="3.4"/>
+  </svg>
+  <div class="wrap hero-grid">
+    <div class="hero-left">
+      <p class="eyebrow">— EU &amp; UK · AI / SEARCH / WEB</p>
+      <h1>When the story changes, <span class="teal">what should you do?</span></h1>
+      <p class="lede">A small editorial desk for consequential digital decisions. I read the source, show what was tested, and say what remains uncertain.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#">Read the lead briefing <span class="arw">↗</span></a>
+        <a class="btn btn-ghost" href="#">How the work is checked <span class="arw">↗</span></a>
+      </div>
+      <p class="byline">Written and edited by Valerii Karpov · VKV Studio</p>
+    </div>
+
+    <div class="hero-right">
+      <article class="proof">
+        <div class="row">
+          <span class="dot-label eyebrow"><i></i>For a real business decision</span>
+          <span class="tag">01 / 01</span>
+        </div>
+        <h2>What can your own site prove?</h2>
+        <p>A briefing explains the issue. A scoped VKV Studio audit applies the same discipline to your business and gives you a plan.</p>
+        <div class="div"></div>
+        <div class="foot">
+          <b>Start with a<br>baseline</b>
+          <a class="link-mono" href="#">View audit<br>scope ↗</a>
+        </div>
+      </article>
+      <p class="service-note">Commercial services live on vkvstudio.com.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BRIEFING DESK ================= -->
+<section class="desk">
+  <div class="wrap desk-grid">
+
+    <!-- LEFT -->
+    <div>
+      <div class="section-head">
+        <h2>The briefing desk</h2>
+        <span class="tag">01 / Lead story</span>
+      </div>
+
+      <label class="search-label" for="q">Search briefings</label>
+      <form class="search" onsubmit="return false;">
+        <input id="q" type="search" placeholder="" aria-label="Search briefings">
+        <button type="submit">Search</button>
+      </form>
+      <p class="search-help">Search titles, introductions and topics. An empty search shows all briefings.</p>
+
+      <article class="feature">
+        <div class="media">
+          <!-- metallic jack panel illustration -->
+          <svg viewBox="0 0 800 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="beige" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="oklch(0.92 0.02 85)"/>
+                <stop offset="1" stop-color="oklch(0.84 0.025 80)"/>
+              </linearGradient>
+              <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="oklch(0.93 0.01 90)"/>
+                <stop offset=".45" stop-color="oklch(0.78 0.015 90)"/>
+                <stop offset=".55" stop-color="oklch(0.7 0.02 88)"/>
+                <stop offset="1" stop-color="oklch(0.86 0.012 90)"/>
+              </linearGradient>
+              <radialGradient id="hole" cx=".4" cy=".35" r=".8">
+                <stop offset="0" stop-color="oklch(0.3 0.02 90)"/>
+                <stop offset="1" stop-color="oklch(0.12 0.01 90)"/>
+              </radialGradient>
+              <linearGradient id="cableA" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="oklch(0.8 0.02 85)"/><stop offset="1" stop-color="oklch(0.62 0.02 85)"/>
+              </linearGradient>
+              <linearGradient id="cableB" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="oklch(0.5 0.01 250)"/><stop offset="1" stop-color="oklch(0.34 0.01 250)"/>
+              </linearGradient>
+            </defs>
+            <rect width="800" height="420" fill="url(#beige)"/>
+            <ellipse cx="420" cy="300" rx="320" ry="40" fill="oklch(0.6 0.02 80 / .25)"/>
+            <!-- left bowl -->
+            <path d="M20 150 q70 90 150 0 q-75 70 -150 0Z" fill="oklch(0.88 0.02 85)" stroke="oklch(0.7 0.02 85)"/>
+            <!-- metallic bar -->
+            <rect x="150" y="150" width="640" height="120" rx="10" fill="url(#metal)" stroke="oklch(0.6 0.02 90)"/>
+            <!-- jacks -->
+            <g>
+              <circle cx="245" cy="210" r="22" fill="url(#hole)"/><circle cx="245" cy="210" r="22" fill="none" stroke="oklch(0.55 0.02 90)" stroke-width="3"/>
+              <circle cx="320" cy="210" r="22" fill="url(#hole)"/><circle cx="320" cy="210" r="22" fill="none" stroke="oklch(0.55 0.02 90)" stroke-width="3"/>
+              <circle cx="395" cy="210" r="22" fill="url(#hole)"/><circle cx="395" cy="210" r="22" fill="none" stroke="oklch(0.55 0.02 90)" stroke-width="3"/>
+              <circle cx="470" cy="210" r="22" fill="url(#hole)"/><circle cx="470" cy="210" r="22" fill="none" stroke="oklch(0.55 0.02 90)" stroke-width="3"/>
+              <circle cx="545" cy="210" r="22" fill="url(#hole)"/><circle cx="545" cy="210" r="22" fill="none" stroke="oklch(0.55 0.02 90)" stroke-width="3"/>
+              <circle cx="700" cy="210" r="22" fill="url(#hole)"/><circle cx="700" cy="210" r="22" fill="none" stroke="oklch(0.55 0.02 90)" stroke-width="3"/>
+            </g>
+            <!-- plugged connector -->
+            <rect x="600" y="150" width="60" height="120" rx="6" fill="oklch(0.95 0.005 95 / .35)" stroke="oklch(0.7 0.01 95)"/>
+            <rect x="618" y="196" width="24" height="28" rx="3" fill="oklch(0.7 0.02 90)"/>
+            <circle cx="630" cy="210" r="4" fill="var(--accent)"/>
+            <!-- cables -->
+            <path d="M630 224 C 600 300, 470 330, 360 380" stroke="url(#cableB)" stroke-width="9" fill="none" stroke-linecap="round"/>
+            <path d="M150 300 C 230 300, 250 290, 300 285" stroke="url(#cableA)" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <path d="M150 330 C 250 330, 280 320, 350 312" stroke="url(#cableB)" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <path d="M150 360 C 260 360, 300 350, 380 340" stroke="url(#cableA)" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <circle cx="300" cy="285" r="6" fill="oklch(0.6 0.02 85)"/>
+            <circle cx="350" cy="312" r="6" fill="oklch(0.4 0.01 250)"/>
+            <circle cx="380" cy="340" r="6" fill="oklch(0.6 0.02 85)"/>
+            <!-- tick marks -->
+            <g stroke="oklch(0.98 0.005 95 / .5)" stroke-width="1">
+              <line x1="22" y1="120" x2="22" y2="200"/><line x1="34" y1="120" x2="34" y2="200"/>
+            </g>
+          </svg>
+          <span class="overlay">Signal / Evidence / Decision</span>
+        </div>
+        <div class="body">
+          <div class="meta-row">
+            <span class="left"><b>Update</b> <span>· AI agents</span></span>
+            <span class="tag">Event 2026-09-10</span>
+          </div>
+          <h3>Agent infrastructure got easier. Delegation still needs a boundary.</h3>
+          <p>OpenAI's September 10 public beta manages parts of an agent workflow. A buyer still needs to define the task, permitted actions, data boundary and acceptance test.</p>
+          <div class="foot">
+            <span class="by">By Valerii Karpov</span>
+            <a class="read" href="#">Read the briefing ↗</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- RIGHT -->
+    <aside>
+      <div class="section-head">
+        <h2>Read next</h2>
+        <a class="tag link-mono" style="text-transform:uppercase" href="#">All briefings ↗</a>
+      </div>
+
+      <div class="next-list">
+        <article class="mini">
+          <div class="media">
+            <svg viewBox="0 0 400 215" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="400" height="215" fill="url(#beige)"/>
+              <path d="M40 0 q30 60 10 90 q-30 -20 -20 -60Z" fill="oklch(0.45 0.06 150)"/>
+              <path d="M70 10 q40 40 30 80 q-40 -10 -40 -50Z" fill="oklch(0.5 0.07 150)"/>
+              <rect x="150" y="120" width="120" height="40" rx="3" fill="oklch(0.95 0.01 90)" stroke="oklch(0.75 0.02 85)"/>
+              <rect x="250" y="100" width="110" height="60" rx="3" fill="oklch(0.92 0.02 80)" stroke="oklch(0.7 0.03 70)"/>
+              <rect x="345" y="70" width="34" height="60" rx="4" fill="oklch(0.97 0.005 95 / .6)" stroke="oklch(0.8 0.01 95)"/>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="meta-row">
+              <span class="left"><b>Update</b> <span>· AI commerce</span></span>
+              <span class="tag">Event 2026-09-16</span>
+            </div>
+            <h3>A conversation after an ad is still an ad.</h3>
+            <p>OpenAI is testing Sponsored Agents with select US advertisers while expanding ChatGPT Ads internationally. Paid brand conversations and independent answers are different channels.</p>
+            <div class="foot"><a class="read" href="#">Read briefing ↗</a></div>
+          </div>
+        </article>
+
+        <article class="mini">
+          <div class="media">
+            <svg viewBox="0 0 400 215" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="400" height="215" fill="url(#beige)"/>
+              <path d="M10 70 q50 70 110 0 q-55 55 -110 0Z" fill="oklch(0.88 0.02 85)" stroke="oklch(0.7 0.02 85)"/>
+              <rect x="120" y="70" width="270" height="64" rx="6" fill="url(#metal)" stroke="oklch(0.6 0.02 90)"/>
+              <circle cx="180" cy="102" r="12" fill="url(#hole)"/><circle cx="230" cy="102" r="12" fill="url(#hole)"/>
+              <circle cx="280" cy="102" r="12" fill="url(#hole)"/><circle cx="330" cy="102" r="12" fill="url(#hole)"/>
+              <rect x="300" y="70" width="34" height="64" rx="4" fill="oklch(0.95 0.005 95 / .35)" stroke="oklch(0.7 0.01 95)"/>
+              <circle cx="317" cy="102" r="3" fill="var(--accent)"/>
+              <path d="M0 160 C 80 160, 120 150, 170 145" stroke="url(#cableA)" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M0 180 C 90 180, 140 168, 200 160" stroke="url(#cableB)" stroke-width="6" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="meta-row">
+              <span class="left"><b>Update</b> <span>· AI agents</span></span>
+              <span class="tag">Event 2026-09-10</span>
+            </div>
+            <h3>Agent infrastructure got easier. Delegation still needs a boundary.</h3>
+            <p>OpenAI's September 10 public beta manages parts of an agent workflow. A buyer still needs to define the task, permitted actions, data boundary and acceptance test.</p>
+            <div class="foot"><a class="read" href="#">Read briefing ↗</a></div>
+          </div>
+        </article>
+
+        <article class="mini">
+          <div class="media">
+            <svg viewBox="0 0 400 215" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="400" height="215" fill="url(#beige)"/>
+              <g fill="oklch(0.96 0.01 90)" stroke="oklch(0.78 0.015 85)">
+                <rect x="120" y="40" width="55" height="40" transform="rotate(-8 147 60)"/>
+                <rect x="190" y="50" width="55" height="40" transform="rotate(6 217 70)"/>
+                <rect x="260" y="40" width="55" height="40" transform="rotate(-5 287 60)"/>
+                <rect x="150" y="100" width="55" height="40" transform="rotate(8 177 120)"/>
+                <rect x="225" y="105" width="55" height="40" transform="rotate(-6 252 125)"/>
+                <rect x="300" y="95" width="55" height="40" transform="rotate(5 327 115)"/>
+              </g>
+              <circle cx="235" cy="110" r="46" fill="oklch(0.97 0.005 95 / .35)" stroke="oklch(0.55 0.02 90)" stroke-width="4"/>
+              <line x1="268" y1="143" x2="300" y2="175" stroke="oklch(0.55 0.02 90)" stroke-width="6" stroke-linecap="round"/>
+              <line x1="350" y1="150" x2="372" y2="185" stroke="oklch(0.4 0.05 60)" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="meta-row">
+              <span class="left"><b>Update</b> <span>· AI search</span></span>
+              <span class="tag">Global rollout 2026-08-31</span>
+            </div>
+            <h3>AI Search now has a clearer baseline. It still needs a business question.</h3>
+            <p>Google expanded Search Console insights and site-owner controls on August 31. Here is what the new view can answer—and what it cannot.</p>
+            <div class="foot"><a class="read" href="#">Read briefing ↗</a></div>
+          </div>
+        </article>
+      </div>
+
+      <p class="disclaimer">Each briefing names its sources, the status of our own checks and what the evidence cannot establish.</p>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ================= EDITORIAL RULE ================= -->
+<section class="rule">
+  <div class="wrap rule-grid">
+    <div>
+      <p class="eyebrow">The editorial rule</p>
+      <h2>Show the work.<br><span class="teal">Then make it useful.</span></h2>
+      <p class="sub">The conclusion comes early. The underlying evidence stays in reach.</p>
+      <a class="rule-link" href="#">Read the complete method ↗</a>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="num">01</span>
+        <span class="t">Original source</span>
+        <span class="d">A primary document or a link to the work itself.</span>
+      </div>
+      <div class="step">
+        <span class="num">02</span>
+        <span class="t">Our check</span>
+        <span class="d">A test with conditions, or a clear “not tested”.</span>
+      </div>
+      <div class="step">
+        <span class="num">03</span>
+        <span class="t">Decision</span>
+        <span class="d">What matters now, what can wait, and for whom.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site">
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <svg class="mark" width="30" height="22" viewBox="0 0 30 22" fill="none" aria-hidden="true">
+        <path d="M15 2 L28 20 L2 20 Z" stroke="var(--accent-deep)" stroke-width="1.4"/>
+        <path d="M6 14 H24" stroke="var(--accent-deep)" stroke-width="1.4"/>
+        <circle cx="15" cy="14" r="1.6" fill="var(--accent-deep)"/>
+      </svg>
+      <span>
+        <span class="name">VKVstudio.pro</span>
+        <span class="ed">Edited by Valerii Karpov</span>
+      </span>
+    </div>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="#">Editorial method</a>
+      <a href="#">About the studio</a>
+      <a href="#">Privacy and browser storage</a>
+      <a href="#">Services on vkvstudio.com <span class="mono">↗</span></a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Pause motion
+  document.getElementById('pauseMotion').addEventListener('change', function(e){
+    document.body.classList.toggle('paused', e.target.checked);
+  });
+  // Theme select (visual stub; keeps light default to match design)
+  document.getElementById('themeSelect').addEventListener('change', function(e){
+    document.documentElement.setAttribute('data-theme', e.target.value === 'dark' ? 'dark' : 'light');
+  });
+</script>
+</body>
+</html>

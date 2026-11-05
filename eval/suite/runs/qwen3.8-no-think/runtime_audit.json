@@ -1,0 +1,158 @@
+{
+  "t1": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 6712,
+      "overflowX": false,
+      "bodyBg": "oklch(0.16 0.012 260)",
+      "bodyColor": "oklch(0.97 0.005 260)",
+      "h1Text": "Hot-water & steam boilers,\n5–25 MW, built as packaged units.",
+      "h1FontSize": "64px",
+      "cls": 0,
+      "lcpMs": 328
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 8387,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 90,
+      "bestPractices": 100,
+      "seo": 100,
+      "seoRawFileMode": 80,
+      "cls": 0,
+      "lcpMs": 328
+    }
+  },
+  "t2": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1538,
+      "clientWidth": 1440,
+      "scrollHeight": 4061,
+      "overflowX": true,
+      "bodyBg": "oklch(0.95 0.012 90)",
+      "bodyColor": "oklch(0.23 0.03 220)",
+      "h1Text": "When the story changes, what should you do?",
+      "h1FontSize": "73.6px",
+      "cls": 0,
+      "lcpMs": 348
+    },
+    "mobile": {
+      "scrollWidth": 922,
+      "clientWidth": 375,
+      "scrollHeight": 5772,
+      "overflowX": true
+    },
+    "consoleErrors": [
+      "Loading the image 'https://picsum.photos/seed/vkv-agent-infrastructure-panel/900/506' violates the following Content Security Policy directive: \"img-src 'self' data: blob:\". The action has been blocked.",
+      "Loading the image 'https://picsum.photos/seed/vkv-conversation-desk-books/760/475' violates the following Content Security Policy directive: \"img-src 'self' data: blob:\". The action has been blocked.",
+      "Loading the image 'https://picsum.photos/seed/vkv-agent-infrastructure-panel/760/475' violates the following Content Security Policy directive: \"img-src 'self' data: blob:\". The action has been blocked.",
+      "Loading the image 'https://picsum.photos/seed/vkv-search-loupe-cards/760/475' violates the following Content Security Policy directive: \"img-src 'self' data: blob:\". The action has been blocked.",
+      "Loading the image 'https://picsum.photos/seed/vkv-agent-infrastructure-panel/900/506' violates the following Content Security Policy directive: \"img-src 'self' data: blob:\". The action has been blocked.",
+      "Loading the image 'https://picsum.photos/seed/vkv-conversation-desk-books/760/475' violates the following Content Security Policy directive: \"img-src 'self' data: blob:\". The action has been blocked.",
+      "Loading the image 'https://picsum.photos/seed/vkv-agent-infrastructure-panel/760/475' violates the following Content Security Policy directive: \"img-src 'self' data: blob:\". The action has been blocked.",
+      "Loading the image 'https://picsum.photos/seed/vkv-search-loupe-cards/760/475' violates the following Content Security Policy directive: \"img-src 'self' data: blob:\". The action has been blocked."
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [
+      "https://picsum.photos/seed/vkv-agent-infrastructure-panel/900/506",
+      "https://picsum.photos/seed/vkv-conversation-desk-books/760/475",
+      "https://picsum.photos/seed/vkv-agent-infrastructure-panel/760/475",
+      "https://picsum.photos/seed/vkv-search-loupe-cards/760/475",
+      "https://picsum.photos/seed/vkv-agent-infrastructure-panel/900/506",
+      "https://picsum.photos/seed/vkv-conversation-desk-books/760/475",
+      "https://picsum.photos/seed/vkv-agent-infrastructure-panel/760/475",
+      "https://picsum.photos/seed/vkv-search-loupe-cards/760/475"
+    ],
+    "failedRequests": [
+      {
+        "url": "https://picsum.photos/seed/vkv-agent-infrastructure-panel/900/506",
+        "reason": "csp"
+      },
+      {
+        "url": "https://picsum.photos/seed/vkv-conversation-desk-books/760/475",
+        "reason": "csp"
+      },
+      {
+        "url": "https://picsum.photos/seed/vkv-agent-infrastructure-panel/760/475",
+        "reason": "csp"
+      },
+      {
+        "url": "https://picsum.photos/seed/vkv-search-loupe-cards/760/475",
+        "reason": "csp"
+      },
+      {
+        "url": "https://picsum.photos/seed/vkv-agent-infrastructure-panel/900/506",
+        "reason": "csp"
+      },
+      {
+        "url": "https://picsum.photos/seed/vkv-conversation-desk-books/760/475",
+        "reason": "csp"
+      },
+      {
+        "url": "https://picsum.photos/seed/vkv-agent-infrastructure-panel/760/475",
+        "reason": "csp"
+      },
+      {
+        "url": "https://picsum.photos/seed/vkv-search-loupe-cards/760/475",
+        "reason": "csp"
+      }
+    ],
+    "lighthouse": {
+      "performance": 90,
+      "accessibility": 97,
+      "bestPractices": 100,
+      "seo": 67,
+      "seoRawFileMode": 67,
+      "cls": 0,
+      "lcpMs": 348
+    }
+  },
+  "t3": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 7486,
+      "overflowX": false,
+      "bodyBg": "oklch(0.95 0.01 85)",
+      "bodyColor": "oklch(0.24 0.02 65)",
+      "h1Text": "Мебель из цельного\nдуба, собранная\nна честных соединениях",
+      "h1FontSize": "88px",
+      "cls": 0,
+      "lcpMs": 288
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 8296,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 99,
+      "bestPractices": 100,
+      "seo": 100,
+      "seoRawFileMode": 80,
+      "cls": 0,
+      "lcpMs": 288
+    }
+  }
+}

@@ -1,0 +1,1645 @@
+{
+  "t1": {
+    "task_id": "t1",
+    "category": "web_landing",
+    "language": "en",
+    "canon": "Industrial B2B Engineering",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 48586
+      },
+      "llms.txt": {
+        "exists": true,
+        "size_bytes": 2419
+      },
+      "robots.txt": {
+        "exists": true,
+        "size_bytes": 71
+      },
+      "_headers": {
+        "exists": true,
+        "size_bytes": 1148
+      }
+    },
+    "all_required_files_present": true,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [
+      "https://thermotech.example/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "has_og_title": true,
+      "has_og_description": true
+    },
+    "json_ld": {
+      "blocks_count": 1,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "BreadcrumbList",
+        "Product",
+        "Product",
+        "Product",
+        "FAQPage"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "faq_count": 5
+    },
+    "_headers": {
+      "exists": true,
+      "all_passed": false,
+      "has_route_rule": true,
+      "checks": {
+        "Content-Security-Policy": true,
+        "frame-ancestors 'none'": true,
+        "Strict-Transport-Security": true,
+        "X-Content-Type-Options": true,
+        "Referrer-Policy": true,
+        "Permissions-Policy": true,
+        "Cross-Origin-Opener-Policy": false
+      }
+    },
+    "llms_txt": {
+      "exists": true,
+      "has_h1": true,
+      "has_blockquote": true,
+      "has_h2_sections": true
+    },
+    "semantics": {
+      "h1_count": 1,
+      "landmarks": [
+        "figure",
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 1,
+      "canvas_count": 0,
+      "form_inputs_count": 7,
+      "form_inputs_labeled": 7,
+      "has_prefers_reduced_motion": true
+    },
+    "oklch": {
+      "token_count": 15,
+      "max_contrast_pair": 18.79,
+      "passes_aaa_7_to_1": true,
+      "tokens": {
+        "--bg": {
+          "raw": "oklch(0.14 0.012 230)",
+          "L": 0.14,
+          "C": 0.012,
+          "H": 230.0,
+          "luminance": 0.0028
+        },
+        "--bg-2": {
+          "raw": "oklch(0.17 0.014 230)",
+          "L": 0.17,
+          "C": 0.014,
+          "H": 230.0,
+          "luminance": 0.005
+        },
+        "--surface": {
+          "raw": "oklch(0.19 0.016 230)",
+          "L": 0.19,
+          "C": 0.016,
+          "H": 230.0,
+          "luminance": 0.007
+        },
+        "--surface-2": {
+          "raw": "oklch(0.22 0.018 230)",
+          "L": 0.22,
+          "C": 0.018,
+          "H": 230.0,
+          "luminance": 0.0108
+        },
+        "--text": {
+          "raw": "oklch(0.98 0.004 230)",
+          "L": 0.98,
+          "C": 0.004,
+          "H": 230.0,
+          "luminance": 0.942
+        },
+        "--text-muted": {
+          "raw": "oklch(0.82 0.012 230)",
+          "L": 0.82,
+          "C": 0.012,
+          "H": 230.0,
+          "luminance": 0.5531
+        },
+        "--text-soft": {
+          "raw": "oklch(0.70 0.014 230)",
+          "L": 0.7,
+          "C": 0.014,
+          "H": 230.0,
+          "luminance": 0.3445
+        },
+        "--border": {
+          "raw": "oklch(0.36 0.02 230)",
+          "L": 0.36,
+          "C": 0.02,
+          "H": 230.0,
+          "luminance": 0.0472
+        },
+        "--border-strong": {
+          "raw": "oklch(0.46 0.02 230)",
+          "L": 0.46,
+          "C": 0.02,
+          "H": 230.0,
+          "luminance": 0.0982
+        },
+        "--accent": {
+          "raw": "oklch(0.68 0.19 45)",
+          "L": 0.68,
+          "C": 0.19,
+          "H": 45.0,
+          "luminance": 0.2891
+        },
+        "--accent-hover": {
+          "raw": "oklch(0.74 0.20 45)",
+          "L": 0.74,
+          "C": 0.2,
+          "H": 45.0,
+          "luminance": 0.3472
+        },
+        "--accent-ink": {
+          "raw": "oklch(0.16 0.02 45)",
+          "L": 0.16,
+          "C": 0.02,
+          "H": 45.0,
+          "luminance": 0.004
+        },
+        "--danger": {
+          "raw": "oklch(0.70 0.18 25)",
+          "L": 0.7,
+          "C": 0.18,
+          "H": 25.0,
+          "luminance": 0.3127
+        },
+        "--success": {
+          "raw": "oklch(0.78 0.16 155)",
+          "L": 0.78,
+          "C": 0.16,
+          "H": 155.0,
+          "luminance": 0.509
+        },
+        "--focus": {
+          "raw": "oklch(0.82 0.14 200)",
+          "L": 0.82,
+          "C": 0.14,
+          "H": 200.0,
+          "luminance": 0.5838
+        }
+      }
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": true,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 5,
+      "computed_script_hashes_count": 2,
+      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-f8fG4UQxFsfEGHfEd426oda0NuCYB5r+6W/2Psa+0Vg=' 'sha256-sZGPBEtStjhaBNuXRBAg3dI5j7a3DLwX1b9XmlgwC9U=' 'sha256-5WGK7UeEf0ArHKhMFhdgpbfZnKiZiIGv1x5nW1x8B2U=' 'sha256-7poypFXTUhkl9hnMWCBEDT1qyRIgu92i5qkJKXdSw2c=' 'sha256-UThYskA/+OmQhgO/Tohf12mGvoBAii+rnS82WD4O3B8=' 'sha256-jYQpkDCaJDAtvSwWgwYbFjrHZ9PxLzGKxSOL6bb0/qw='; script-src 'self' 'sha256-qYy+ZyJhcrGwhA12qszZ2ufHV8UsX7Z8jHsAWpdDG70=' 'sha256-yuHh1LFldYiT2gRBtSy3k4PcXiqM5dxm6zXlLiY8eDA='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t2": {
+    "task_id": "t2",
+    "category": "vision_to_code",
+    "language": "en",
+    "canon": "Editorial / Studio Light",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 22923
+      }
+    },
+    "all_required_files_present": true,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": false,
+      "has_canonical": false,
+      "has_og_title": false,
+      "has_og_description": false
+    },
+    "semantics": {
+      "h1_count": 1,
+      "landmarks": [
+        "article",
+        "aside",
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 9,
+      "canvas_count": 0,
+      "form_inputs_count": 0,
+      "form_inputs_labeled": 0,
+      "has_prefers_reduced_motion": false
+    },
+    "oklch": {
+      "token_count": 11,
+      "max_contrast_pair": 13.33,
+      "passes_aaa_7_to_1": true,
+      "tokens": {
+        "--bg": {
+          "raw": "oklch(0.945 0.018 92)",
+          "L": 0.945,
+          "C": 0.018,
+          "H": 92.0,
+          "luminance": 0.8446
+        },
+        "--bg-alt": {
+          "raw": "oklch(0.925 0.022 88)",
+          "L": 0.925,
+          "C": 0.022,
+          "H": 88.0,
+          "luminance": 0.7918
+        },
+        "--bg-card": {
+          "raw": "oklch(0.962 0.012 92)",
+          "L": 0.962,
+          "C": 0.012,
+          "H": 92.0,
+          "luminance": 0.8908
+        },
+        "--ink": {
+          "raw": "oklch(0.27 0.035 155)",
+          "L": 0.27,
+          "C": 0.035,
+          "H": 155.0,
+          "luminance": 0.0206
+        },
+        "--ink-mute": {
+          "raw": "oklch(0.38 0.02 155)",
+          "L": 0.38,
+          "C": 0.02,
+          "H": 155.0,
+          "luminance": 0.0559
+        },
+        "--line": {
+          "raw": "oklch(0.84 0.015 95)",
+          "L": 0.84,
+          "C": 0.015,
+          "H": 95.0,
+          "luminance": 0.5934
+        },
+        "--line-soft": {
+          "raw": "oklch(0.88 0.012 95)",
+          "L": 0.88,
+          "C": 0.012,
+          "H": 95.0,
+          "luminance": 0.6821
+        },
+        "--accent": {
+          "raw": "oklch(0.52 0.105 168)",
+          "L": 0.52,
+          "C": 0.105,
+          "H": 168.0,
+          "luminance": 0.1515
+        },
+        "--accent-ink": {
+          "raw": "oklch(0.42 0.09 162)",
+          "L": 0.42,
+          "C": 0.09,
+          "H": 162.0,
+          "luminance": 0.08
+        },
+        "--btn": {
+          "raw": "oklch(0.34 0.075 160)",
+          "L": 0.34,
+          "C": 0.075,
+          "H": 160.0,
+          "luminance": 0.0425
+        },
+        "--chip": {
+          "raw": "oklch(0.46 0.09 172)",
+          "L": 0.46,
+          "C": 0.09,
+          "H": 172.0,
+          "luminance": 0.1049
+        }
+      }
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": false,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 2,
+      "computed_script_hashes_count": 0,
+      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-mNpceO/WhkLGl9PrhjO+CzTZwJM+xfI8onD5jRnzc9Y=' 'sha256-p3trxylQtsyLV8RTlQ9hLC4+k1kwM9wFCZHa/gIiAxI=' 'sha256-0LFnhhlHXWXMFUJzX4zFSZDTx/jme+kCDlah7hnh8MA='; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t3": {
+    "task_id": "t3",
+    "category": "web_landing",
+    "language": "ru",
+    "canon": "Luxury Minimalism",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 31505
+      },
+      "llms.txt": {
+        "exists": true,
+        "size_bytes": 3778
+      },
+      "robots.txt": {
+        "exists": true,
+        "size_bytes": 82
+      },
+      "_headers": {
+        "exists": true,
+        "size_bytes": 679
+      }
+    },
+    "all_required_files_present": true,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [
+      "https://severnaya-manufactura.example/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "has_og_title": true,
+      "has_og_description": true
+    },
+    "json_ld": {
+      "blocks_count": 1,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Product",
+        "Product",
+        "Product",
+        "FAQPage"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "faq_count": 5
+    },
+    "_headers": {
+      "exists": true,
+      "all_passed": true,
+      "has_route_rule": true,
+      "checks": {
+        "Content-Security-Policy": true,
+        "frame-ancestors 'none'": true,
+        "Strict-Transport-Security": true,
+        "X-Content-Type-Options": true,
+        "Referrer-Policy": true,
+        "Permissions-Policy": true,
+        "Cross-Origin-Opener-Policy": true
+      }
+    },
+    "llms_txt": {
+      "exists": true,
+      "has_h1": true,
+      "has_blockquote": true,
+      "has_h2_sections": true
+    },
+    "semantics": {
+      "h1_count": 1,
+      "landmarks": [
+        "article",
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 2,
+      "canvas_count": 0,
+      "form_inputs_count": 6,
+      "form_inputs_labeled": 6,
+      "has_prefers_reduced_motion": true
+    },
+    "oklch": {
+      "token_count": 7,
+      "max_contrast_pair": 18.32,
+      "passes_aaa_7_to_1": true,
+      "tokens": {
+        "--bg": {
+          "raw": "oklch(0.95 0.01 85)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 85.0,
+          "luminance": 0.8574
+        },
+        "--surface": {
+          "raw": "oklch(0.98 0.005 85)",
+          "L": 0.98,
+          "C": 0.005,
+          "H": 85.0,
+          "luminance": 0.9412
+        },
+        "--ink": {
+          "raw": "oklch(0.16 0.015 85)",
+          "L": 0.16,
+          "C": 0.015,
+          "H": 85.0,
+          "luminance": 0.0041
+        },
+        "--muted": {
+          "raw": "oklch(0.45 0.02 85)",
+          "L": 0.45,
+          "C": 0.02,
+          "H": 85.0,
+          "luminance": 0.0911
+        },
+        "--line": {
+          "raw": "oklch(0.78 0.02 85)",
+          "L": 0.78,
+          "C": 0.02,
+          "H": 85.0,
+          "luminance": 0.4745
+        },
+        "--accent": {
+          "raw": "oklch(0.42 0.07 65)",
+          "L": 0.42,
+          "C": 0.07,
+          "H": 65.0,
+          "luminance": 0.072
+        },
+        "--focus": {
+          "raw": "oklch(0.30 0.08 65)",
+          "L": 0.3,
+          "C": 0.08,
+          "H": 65.0,
+          "luminance": 0.0258
+        }
+      }
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": true,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 1,
+      "computed_script_hashes_count": 1,
+      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-g+xO71pQPe7LY/5GEauBcnkujiYhor6kCFJg4smNo1M=' 'sha256-aqNNdDLnnrDOnTNdkJpYlAxKVJtLt9CtFLklmInuUAE='; script-src 'self' 'sha256-IwBwItXqD9sEDkiQ3F6IsjH5i6p/0y+0DeJp61qnpPk='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t4": {
+    "task_id": "t4",
+    "category": "typescript_coding",
+    "language": "en",
+    "canon": "General Coding (TypeScript Strict)",
+    "required_files": {
+      "dag.ts": {
+        "exists": true,
+        "size_bytes": 16464
+      }
+    },
+    "all_required_files_present": true,
+    "typescript_eval": {
+      "tsc_strict_passed": false,
+      "tsc_exit_code": 2,
+      "tsc_diagnostics": "eval/suite/runs/gyro-m-local/t4/dag.ts(405,20): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.",
+      "explicit_any_count": 0,
+      "compiled_js_exists": true,
+      "tests_passed": 5,
+      "tests_total": 12,
+      "results": [
+        {
+          "id": 1,
+          "name": "Empty graph validate and execute",
+          "passed": true,
+          "durationMs": 2.07
+        },
+        {
+          "id": 2,
+          "name": "Linear chain topological order and result propagation",
+          "passed": false,
+          "durationMs": 3000,
+          "error": "Timed out after 3000ms (infinite synchronous loop or unresolved Promise)"
+        },
+        {
+          "id": 3,
+          "name": "Diamond dependency single execution and fan-in",
+          "passed": false,
+          "durationMs": 3000,
+          "error": "Timed out after 3000ms (infinite synchronous loop or unresolved Promise)"
+        },
+        {
+          "id": 4,
+          "name": "3-node cycle throws DAGCycleError with cycle array",
+          "passed": true,
+          "durationMs": 2.34
+        },
+        {
+          "id": 5,
+          "name": "Self-dependency cycle A -> A throws DAGCycleError",
+          "passed": true,
+          "durationMs": 2.09
+        },
+        {
+          "id": 6,
+          "name": "Missing dependency throws DAGValidationError",
+          "passed": true,
+          "durationMs": 1.58
+        },
+        {
+          "id": 7,
+          "name": "Duplicate node registration throws DAGValidationError",
+          "passed": true,
+          "durationMs": 5.02
+        },
+        {
+          "id": 8,
+          "name": "Bounded maxConcurrency=2 never exceeds 2 simultaneous tasks",
+          "passed": false,
+          "durationMs": 3000,
+          "error": "Timed out after 3000ms (infinite synchronous loop or unresolved Promise)"
+        },
+        {
+          "id": 9,
+          "name": "Flaky task succeeds on retry and records attempts count",
+          "passed": false,
+          "durationMs": 3000,
+          "error": "Timed out after 3000ms (infinite synchronous loop or unresolved Promise)"
+        },
+        {
+          "id": 10,
+          "name": "Failed node skips transitive dependents while independent branch finishes",
+          "passed": false,
+          "durationMs": 3000,
+          "error": "Timed out after 3000ms (infinite synchronous loop or unresolved Promise)"
+        },
+        {
+          "id": 11,
+          "name": "AbortSignal cancels unstarted downstream tasks",
+          "passed": false,
+          "durationMs": 3000,
+          "error": "Timed out after 3000ms (infinite synchronous loop or unresolved Promise)"
+        },
+        {
+          "id": 12,
+          "name": "Shared context passed to nodes and durationMs >= 0 recorded",
+          "passed": false,
+          "durationMs": 3000,
+          "error": "Timed out after 3000ms (infinite synchronous loop or unresolved Promise)"
+        }
+      ]
+    }
+  },
+  "t5": {
+    "task_id": "t5",
+    "category": "web_landing",
+    "language": "en",
+    "canon": "Swiss Typographic Grid",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 20414
+      },
+      "llms.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "robots.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "_headers": {
+        "exists": false,
+        "size_bytes": 0
+      }
+    },
+    "all_required_files_present": false,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [],
+    "seo_meta": {
+      "has_title": false,
+      "has_description": false,
+      "has_canonical": false,
+      "has_og_title": false,
+      "has_og_description": false
+    },
+    "json_ld": {
+      "blocks_count": 0,
+      "valid_json": false,
+      "graph_types": [],
+      "faq_all_verbatim": false
+    },
+    "_headers": {
+      "exists": false,
+      "all_passed": false
+    },
+    "llms_txt": {
+      "exists": false
+    },
+    "semantics": {
+      "h1_count": 0,
+      "landmarks": [],
+      "svg_count": 0,
+      "canvas_count": 0,
+      "form_inputs_count": 0,
+      "form_inputs_labeled": 0,
+      "has_prefers_reduced_motion": false
+    },
+    "oklch": {
+      "token_count": 0,
+      "max_contrast_pair": 0.0,
+      "passes_aaa_7_to_1": false,
+      "tokens": {}
+    },
+    "task_specific": {
+      "has_subgrid": false,
+      "has_tabular_nums": false
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": false,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 0,
+      "computed_inline_style_attr_hashes_count": 0,
+      "computed_script_hashes_count": 0,
+      "injected_meta_csp": "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t6": {
+    "task_id": "t6",
+    "category": "web_landing",
+    "language": "en",
+    "canon": "High-Tech SaaS Dark Mode",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 61180
+      },
+      "llms.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "robots.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "_headers": {
+        "exists": false,
+        "size_bytes": 0
+      }
+    },
+    "all_required_files_present": false,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [
+      "https://vortexcompute.example/index.html"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "has_og_title": true,
+      "has_og_description": true
+    },
+    "json_ld": {
+      "blocks_count": 1,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "Product",
+        "Product",
+        "Product",
+        "FAQPage",
+        "BreadcrumbList"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "faq_count": 5
+    },
+    "_headers": {
+      "exists": false,
+      "all_passed": false
+    },
+    "llms_txt": {
+      "exists": false
+    },
+    "semantics": {
+      "h1_count": 1,
+      "landmarks": [
+        "article",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 7,
+      "canvas_count": 1,
+      "form_inputs_count": 5,
+      "form_inputs_labeled": 5,
+      "has_prefers_reduced_motion": true
+    },
+    "oklch": {
+      "token_count": 11,
+      "max_contrast_pair": 17.4,
+      "passes_aaa_7_to_1": true,
+      "tokens": {
+        "--obsidian": {
+          "raw": "oklch(0.13 0.02 260)",
+          "L": 0.13,
+          "C": 0.02,
+          "H": 260.0,
+          "luminance": 0.0022
+        },
+        "--surface": {
+          "raw": "oklch(0.18 0.02 260)",
+          "L": 0.18,
+          "C": 0.02,
+          "H": 260.0,
+          "luminance": 0.0058
+        },
+        "--surface-2": {
+          "raw": "oklch(0.21 0.025 260)",
+          "L": 0.21,
+          "C": 0.025,
+          "H": 260.0,
+          "luminance": 0.0092
+        },
+        "--hairline": {
+          "raw": "oklch(0.28 0.03 260)",
+          "L": 0.28,
+          "C": 0.03,
+          "H": 260.0,
+          "luminance": 0.0219
+        },
+        "--hairline-strong": {
+          "raw": "oklch(0.36 0.04 260)",
+          "L": 0.36,
+          "C": 0.04,
+          "H": 260.0,
+          "luminance": 0.0466
+        },
+        "--alabaster": {
+          "raw": "oklch(0.95 0.01 250)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 250.0,
+          "luminance": 0.8582
+        },
+        "--muted": {
+          "raw": "oklch(0.78 0.02 250)",
+          "L": 0.78,
+          "C": 0.02,
+          "H": 250.0,
+          "luminance": 0.4756
+        },
+        "--cyan": {
+          "raw": "oklch(0.76 0.15 195)",
+          "L": 0.76,
+          "C": 0.15,
+          "H": 195.0,
+          "luminance": 0.4833
+        },
+        "--emerald": {
+          "raw": "oklch(0.72 0.17 155)",
+          "L": 0.72,
+          "C": 0.17,
+          "H": 155.0,
+          "luminance": 0.4044
+        },
+        "--danger": {
+          "raw": "oklch(0.78 0.14 25)",
+          "L": 0.78,
+          "C": 0.14,
+          "H": 25.0,
+          "luminance": 0.4347
+        },
+        "--amber": {
+          "raw": "oklch(0.82 0.12 90)",
+          "L": 0.82,
+          "C": 0.12,
+          "H": 90.0,
+          "luminance": 0.5506
+        }
+      }
+    },
+    "task_specific": {
+      "has_canvas": true,
+      "has_webgl_or_shader": true
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 1,
+      "computed_script_hashes_count": 2,
+      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-tk2unTQd4aCGuPkxO/jI2jAmuqXEc3ajzhWCgZCEM5U=' 'sha256-QFDSFDz4ZRW08ReaLbvQQKTZk1cdfx1Tv1g6tX9Be8U='; script-src 'self' 'sha256-3VhnDDDbhaxii/uqYGL2wD2w6DGnjLvk25a5YZlIE58=' 'sha256-KLJy7oU713UcBCk1faghyrxwfXbSwb4Pztqwy3rA9Pk='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t7": {
+    "task_id": "t7",
+    "category": "web_landing",
+    "language": "ru",
+    "canon": "Neo-Brutalism",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 20420
+      },
+      "llms.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "robots.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "_headers": {
+        "exists": false,
+        "size_bytes": 0
+      }
+    },
+    "all_required_files_present": false,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [],
+    "seo_meta": {
+      "has_title": false,
+      "has_description": false,
+      "has_canonical": false,
+      "has_og_title": false,
+      "has_og_description": false
+    },
+    "json_ld": {
+      "blocks_count": 0,
+      "valid_json": false,
+      "graph_types": [],
+      "faq_all_verbatim": false
+    },
+    "_headers": {
+      "exists": false,
+      "all_passed": false
+    },
+    "llms_txt": {
+      "exists": false
+    },
+    "semantics": {
+      "h1_count": 0,
+      "landmarks": [],
+      "svg_count": 0,
+      "canvas_count": 0,
+      "form_inputs_count": 0,
+      "form_inputs_labeled": 0,
+      "has_prefers_reduced_motion": false
+    },
+    "oklch": {
+      "token_count": 0,
+      "max_contrast_pair": 0.0,
+      "passes_aaa_7_to_1": false,
+      "tokens": {}
+    },
+    "task_specific": {
+      "has_hard_offset_shadow": false,
+      "has_interactive_calc": false
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": false,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 0,
+      "computed_inline_style_attr_hashes_count": 0,
+      "computed_script_hashes_count": 0,
+      "injected_meta_csp": "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t8": {
+    "task_id": "t8",
+    "category": "web_landing",
+    "language": "ru",
+    "canon": "Editorial",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 16580
+      },
+      "llms.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "robots.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "_headers": {
+        "exists": false,
+        "size_bytes": 0
+      }
+    },
+    "all_required_files_present": false,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [
+      "https://example.org/arhiv-tehnologiy/issue-14/euv-13-5-nm/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "has_og_title": true,
+      "has_og_description": true
+    },
+    "json_ld": {
+      "blocks_count": 0,
+      "valid_json": false,
+      "graph_types": [],
+      "faq_all_verbatim": false
+    },
+    "_headers": {
+      "exists": false,
+      "all_passed": false
+    },
+    "llms_txt": {
+      "exists": false
+    },
+    "semantics": {
+      "h1_count": 0,
+      "landmarks": [],
+      "svg_count": 0,
+      "canvas_count": 0,
+      "form_inputs_count": 0,
+      "form_inputs_labeled": 0,
+      "has_prefers_reduced_motion": false
+    },
+    "oklch": {
+      "token_count": 0,
+      "max_contrast_pair": 0.0,
+      "passes_aaa_7_to_1": false,
+      "tokens": {}
+    },
+    "task_specific": {
+      "has_container_query": false,
+      "has_subgrid": false,
+      "has_dropcap": false
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": false,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 0,
+      "computed_inline_style_attr_hashes_count": 0,
+      "computed_script_hashes_count": 0,
+      "injected_meta_csp": "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t9": {
+    "task_id": "t9",
+    "category": "agentic_multifile",
+    "language": "en",
+    "canon": "Swiss Typographic Grid",
+    "required_files": {
+      "DESIGN.md": {
+        "exists": true,
+        "size_bytes": 8525
+      },
+      "tokens.css": {
+        "exists": true,
+        "size_bytes": 3468
+      },
+      "app.js": {
+        "exists": true,
+        "size_bytes": 13987
+      },
+      "index.html": {
+        "exists": true,
+        "size_bytes": 38891
+      },
+      "zimage_prompts.json": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "llms.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "_headers": {
+        "exists": false,
+        "size_bytes": 0
+      }
+    },
+    "all_required_files_present": false,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": false,
+      "has_og_title": false,
+      "has_og_description": false
+    },
+    "json_ld": {
+      "blocks_count": 0,
+      "valid_json": false,
+      "graph_types": [],
+      "faq_all_verbatim": false
+    },
+    "_headers": {
+      "exists": false,
+      "all_passed": false
+    },
+    "llms_txt": {
+      "exists": false
+    },
+    "semantics": {
+      "h1_count": 1,
+      "landmarks": [
+        "article",
+        "aside",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 1,
+      "canvas_count": 0,
+      "form_inputs_count": 7,
+      "form_inputs_labeled": 7,
+      "has_prefers_reduced_motion": true
+    },
+    "oklch": {
+      "token_count": 15,
+      "max_contrast_pair": 18.24,
+      "passes_aaa_7_to_1": true,
+      "tokens": {
+        "--color-bone": {
+          "raw": "oklch(0.97 0.008 95)",
+          "L": 0.97,
+          "C": 0.008,
+          "H": 95.0,
+          "luminance": 0.9132
+        },
+        "--color-bone-soft": {
+          "raw": "oklch(0.94 0.010 92)",
+          "L": 0.94,
+          "C": 0.01,
+          "H": 92.0,
+          "luminance": 0.831
+        },
+        "--color-bone-strong": {
+          "raw": "oklch(0.91 0.012 90)",
+          "L": 0.91,
+          "C": 0.012,
+          "H": 90.0,
+          "luminance": 0.7539
+        },
+        "--color-bone-inset": {
+          "raw": "oklch(0.88 0.012 88)",
+          "L": 0.88,
+          "C": 0.012,
+          "H": 88.0,
+          "luminance": 0.6817
+        },
+        "--color-ink": {
+          "raw": "oklch(0.14 0.015 255)",
+          "L": 0.14,
+          "C": 0.015,
+          "H": 255.0,
+          "luminance": 0.0028
+        },
+        "--color-ink-muted": {
+          "raw": "oklch(0.36 0.020 255)",
+          "L": 0.36,
+          "C": 0.02,
+          "H": 255.0,
+          "luminance": 0.0468
+        },
+        "--color-ink-faint": {
+          "raw": "oklch(0.50 0.022 255)",
+          "L": 0.5,
+          "C": 0.022,
+          "H": 255.0,
+          "luminance": 0.1253
+        },
+        "--color-forest": {
+          "raw": "oklch(0.45 0.14 155)",
+          "L": 0.45,
+          "C": 0.14,
+          "H": 155.0,
+          "luminance": 0.1057
+        },
+        "--color-forest-ink": {
+          "raw": "oklch(0.30 0.11 155)",
+          "L": 0.3,
+          "C": 0.11,
+          "H": 155.0,
+          "luminance": 0.033
+        },
+        "--color-forest-deep": {
+          "raw": "oklch(0.22 0.09 155)",
+          "L": 0.22,
+          "C": 0.09,
+          "H": 155.0,
+          "luminance": 0.0135
+        },
+        "--color-forest-soft": {
+          "raw": "oklch(0.88 0.055 155)",
+          "L": 0.88,
+          "C": 0.055,
+          "H": 155.0,
+          "luminance": 0.6968
+        },
+        "--color-signal": {
+          "raw": "oklch(0.66 0.17 65)",
+          "L": 0.66,
+          "C": 0.17,
+          "H": 65.0,
+          "luminance": 0.2751
+        },
+        "--color-signal-ink": {
+          "raw": "oklch(0.36 0.15 65)",
+          "L": 0.36,
+          "C": 0.15,
+          "H": 65.0,
+          "luminance": 0.0436
+        },
+        "--color-signal-deep": {
+          "raw": "oklch(0.28 0.13 65)",
+          "L": 0.28,
+          "C": 0.13,
+          "H": 65.0,
+          "luminance": 0.0203
+        },
+        "--color-signal-soft": {
+          "raw": "oklch(0.92 0.070 75)",
+          "L": 0.92,
+          "C": 0.07,
+          "H": 75.0,
+          "luminance": 0.7706
+        }
+      }
+    },
+    "task_specific": {
+      "zimage_json_valid": false,
+      "zimage_prompts_count": 0,
+      "zimage_exact_text_verified": false
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": true,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 2,
+      "computed_inline_style_attr_hashes_count": 1,
+      "computed_script_hashes_count": 0,
+      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-rNHL+EsGq/HRiLa3Yyz/DdxlNiRoQfKW4nFNlsQutV0=' 'sha256-EUVwELef1l6TeRTepLe5PuYOl0B5pOFkyhwpVM1P15E=' 'sha256-CTQvbdFtFE6MeCJ594NkHv1xZMdfYY76mEMKj0umGEQ='; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t10": {
+    "task_id": "t10",
+    "category": "web_landing",
+    "language": "ru",
+    "canon": "High-Tech SaaS Dark Mode",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 70541
+      },
+      "llms.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "robots.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "_headers": {
+        "exists": false,
+        "size_bytes": 0
+      }
+    },
+    "all_required_files_present": false,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [
+      "https://contour-spectrum.example/index.html"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "has_og_title": true,
+      "has_og_description": true
+    },
+    "json_ld": {
+      "blocks_count": 1,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "Product",
+        "Product",
+        "Product",
+        "FAQPage",
+        "BreadcrumbList"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "faq_count": 5
+    },
+    "_headers": {
+      "exists": false,
+      "all_passed": false
+    },
+    "llms_txt": {
+      "exists": false
+    },
+    "semantics": {
+      "h1_count": 1,
+      "landmarks": [
+        "article",
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 2,
+      "canvas_count": 0,
+      "form_inputs_count": 10,
+      "form_inputs_labeled": 10,
+      "has_prefers_reduced_motion": true
+    },
+    "oklch": {
+      "token_count": 12,
+      "max_contrast_pair": 17.23,
+      "passes_aaa_7_to_1": true,
+      "tokens": {
+        "--obsidian": {
+          "raw": "oklch(0.14 0.02 255)",
+          "L": 0.14,
+          "C": 0.02,
+          "H": 255.0,
+          "luminance": 0.0027
+        },
+        "--panel": {
+          "raw": "oklch(0.19 0.02 255)",
+          "L": 0.19,
+          "C": 0.02,
+          "H": 255.0,
+          "luminance": 0.0069
+        },
+        "--panel-2": {
+          "raw": "oklch(0.17 0.02 255)",
+          "L": 0.17,
+          "C": 0.02,
+          "H": 255.0,
+          "luminance": 0.0049
+        },
+        "--line": {
+          "raw": "oklch(0.28 0.03 255)",
+          "L": 0.28,
+          "C": 0.03,
+          "H": 255.0,
+          "luminance": 0.022
+        },
+        "--line-strong": {
+          "raw": "oklch(0.34 0.04 255)",
+          "L": 0.34,
+          "C": 0.04,
+          "H": 255.0,
+          "luminance": 0.0394
+        },
+        "--text": {
+          "raw": "oklch(0.95 0.01 250)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 250.0,
+          "luminance": 0.8582
+        },
+        "--muted": {
+          "raw": "oklch(0.78 0.02 250)",
+          "L": 0.78,
+          "C": 0.02,
+          "H": 250.0,
+          "luminance": 0.4756
+        },
+        "--dim": {
+          "raw": "oklch(0.62 0.02 250)",
+          "L": 0.62,
+          "C": 0.02,
+          "H": 250.0,
+          "luminance": 0.239
+        },
+        "--teal": {
+          "raw": "oklch(0.76 0.14 195)",
+          "L": 0.76,
+          "C": 0.14,
+          "H": 195.0,
+          "luminance": 0.4747
+        },
+        "--teal-dark": {
+          "raw": "oklch(0.56 0.11 195)",
+          "L": 0.56,
+          "C": 0.11,
+          "H": 195.0,
+          "luminance": 0.1931
+        },
+        "--amber": {
+          "raw": "oklch(0.75 0.16 75)",
+          "L": 0.75,
+          "C": 0.16,
+          "H": 75.0,
+          "luminance": 0.4108
+        },
+        "--danger": {
+          "raw": "oklch(0.72 0.18 17)",
+          "L": 0.72,
+          "C": 0.18,
+          "H": 17.0,
+          "luminance": 0.3362
+        }
+      }
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 0,
+      "computed_script_hashes_count": 2,
+      "injected_meta_csp": "default-src 'none'; style-src 'self' 'sha256-+5vk2bjRLMfSSUFmbEGRkDlyN5K4b+EMU7lj2GlOfBw='; script-src 'self' 'sha256-7OkTZctzCAsbxBaoiftMHNTE0cg83MH4avqoy/RQjVs=' 'sha256-FMDiC/9EUJp/fNDJMZC7YYgdbifM1YDwGpEoioc7QrA='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t11": {
+    "task_id": "t11",
+    "category": "web_landing",
+    "language": "en",
+    "canon": "Industrial B2B Engineering",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 749
+      },
+      "llms.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "robots.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "_headers": {
+        "exists": false,
+        "size_bytes": 0
+      }
+    },
+    "all_required_files_present": false,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [],
+    "seo_meta": {
+      "has_title": false,
+      "has_description": false,
+      "has_canonical": false,
+      "has_og_title": false,
+      "has_og_description": false
+    },
+    "json_ld": {
+      "blocks_count": 0,
+      "valid_json": false,
+      "graph_types": [],
+      "faq_all_verbatim": false
+    },
+    "_headers": {
+      "exists": false,
+      "all_passed": false
+    },
+    "llms_txt": {
+      "exists": false
+    },
+    "semantics": {
+      "h1_count": 0,
+      "landmarks": [],
+      "svg_count": 0,
+      "canvas_count": 0,
+      "form_inputs_count": 0,
+      "form_inputs_labeled": 0,
+      "has_prefers_reduced_motion": false
+    },
+    "oklch": {
+      "token_count": 0,
+      "max_contrast_pair": 0.0,
+      "passes_aaa_7_to_1": false,
+      "tokens": {}
+    },
+    "task_specific": {
+      "has_canvas": false,
+      "has_kinematics_js": false
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": false,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 0,
+      "computed_inline_style_attr_hashes_count": 0,
+      "computed_script_hashes_count": 0,
+      "injected_meta_csp": "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t12": {
+    "task_id": "t12",
+    "category": "vision_to_code",
+    "language": "en",
+    "canon": "High-Tech SaaS Dark Mode / Swiss Grid",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 10348
+      }
+    },
+    "all_required_files_present": true,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": false,
+      "has_canonical": false,
+      "has_og_title": false,
+      "has_og_description": false
+    },
+    "semantics": {
+      "h1_count": 1,
+      "landmarks": [
+        "article",
+        "header",
+        "main",
+        "section"
+      ],
+      "svg_count": 0,
+      "canvas_count": 0,
+      "form_inputs_count": 0,
+      "form_inputs_labeled": 0,
+      "has_prefers_reduced_motion": false
+    },
+    "oklch": {
+      "token_count": 11,
+      "max_contrast_pair": 18.62,
+      "passes_aaa_7_to_1": true,
+      "tokens": {
+        "--bg": {
+          "raw": "oklch(0.135 0.014 255)",
+          "L": 0.135,
+          "C": 0.014,
+          "H": 255.0,
+          "luminance": 0.0025
+        },
+        "--panel": {
+          "raw": "oklch(0.175 0.018 255)",
+          "L": 0.175,
+          "C": 0.018,
+          "H": 255.0,
+          "luminance": 0.0054
+        },
+        "--panel-2": {
+          "raw": "oklch(0.205 0.020 255)",
+          "L": 0.205,
+          "C": 0.02,
+          "H": 255.0,
+          "luminance": 0.0086
+        },
+        "--border": {
+          "raw": "oklch(0.285 0.022 255)",
+          "L": 0.285,
+          "C": 0.022,
+          "H": 255.0,
+          "luminance": 0.0232
+        },
+        "--border-2": {
+          "raw": "oklch(0.335 0.026 255)",
+          "L": 0.335,
+          "C": 0.026,
+          "H": 255.0,
+          "luminance": 0.0377
+        },
+        "--text-hi": {
+          "raw": "oklch(0.975 0.006 250)",
+          "L": 0.975,
+          "C": 0.006,
+          "H": 250.0,
+          "luminance": 0.9274
+        },
+        "--text-mid": {
+          "raw": "oklch(0.720 0.022 250)",
+          "L": 0.72,
+          "C": 0.022,
+          "H": 250.0,
+          "luminance": 0.3742
+        },
+        "--text-low": {
+          "raw": "oklch(0.630 0.022 250)",
+          "L": 0.63,
+          "C": 0.022,
+          "H": 250.0,
+          "luminance": 0.2508
+        },
+        "--cyan": {
+          "raw": "oklch(0.820 0.130 205)",
+          "L": 0.82,
+          "C": 0.13,
+          "H": 205.0,
+          "luminance": 0.5793
+        },
+        "--cyan-deep": {
+          "raw": "oklch(0.740 0.140 205)",
+          "L": 0.74,
+          "C": 0.14,
+          "H": 205.0,
+          "luminance": 0.4381
+        },
+        "--green": {
+          "raw": "oklch(0.800 0.170 150)",
+          "L": 0.8,
+          "C": 0.17,
+          "H": 150.0,
+          "luminance": 0.5486
+        }
+      }
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": false,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 0,
+      "computed_script_hashes_count": 0,
+      "injected_meta_csp": "default-src 'none'; style-src 'self' 'sha256-2keWBZkVUhHrZlOSNQqD3JbAfplv66Kr9C1p2qUKedo='; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "t1": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 3833,
+      "overflowX": false,
+      "bodyBg": "oklch(0.14 0.012 255)",
+      "bodyColor": "oklch(0.96 0.008 250)",
+      "h1Text": "HOT-WATER & STEAM GENERATION ENGINEERED FOR CONTINUOUS DUTY.",
+      "h1FontSize": "64px",
+      "cls": 0,
+      "lcpMs": 320
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 4775,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 99,
+      "bestPractices": 100,
+      "seo": 100,
+      "seoRawFileMode": 80,
+      "cls": 0,
+      "lcpMs": 320
+    }
+  },
+  "t2": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 3043,
+      "overflowX": false,
+      "bodyBg": "oklch(0.965 0.012 92)",
+      "bodyColor": "oklch(0.24 0.02 250)",
+      "h1Text": "When the story changes, what should you do?",
+      "h1FontSize": "73.6px",
+      "cls": 0,
+      "lcpMs": 316
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 4586,
+      "overflowX": false
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 93,
+      "bestPractices": 100,
+      "seo": 60,
+      "seoRawFileMode": 60,
+      "cls": 0,
+      "lcpMs": 316
+    }
+  },
+  "t3": {
+    "mode": "file-snapshot",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 5029,
+      "overflowX": false,
+      "bodyBg": "oklch(0.95 0.01 85)",
+      "bodyColor": "oklch(0.22 0.02 60)",
+      "h1Text": "Северная Мануфактура",
+      "h1FontSize": "67.2px",
+      "cls": 0,
+      "lcpMs": 268
+    },
+    "mobile": {
+      "scrollWidth": 376,
+      "clientWidth": 375,
+      "scrollHeight": 4347,
+      "overflowX": true
+    },
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "seoRawFileMode": 80,
+      "cls": 0,
+      "lcpMs": 268
+    }
+  }
+}

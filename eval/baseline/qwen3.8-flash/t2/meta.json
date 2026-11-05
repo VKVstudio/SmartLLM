@@ -1,0 +1,53 @@
+{
+  "model_id": "qwen/qwen3.8-flash",
+  "hugging_face_id": "Qwen/Qwen3.8-Flash-Next",
+  "model_slug": "qwen3.8-flash",
+  "task": "t2",
+  "provider": "Alibaba",
+  "precision": "unknown (Alibaba cloud native)",
+  "temperature": 0.6,
+  "max_tokens": 32000,
+  "price_input_per_1m_usd": 0.15,
+  "price_output_per_1m_usd": 0.47,
+  "finish_reason": "stop",
+  "native_finish_reason": "stop",
+  "truncated": false,
+  "elapsed_sec": 103.81,
+  "usage": {
+    "prompt_tokens": 2694,
+    "completion_tokens": 14062,
+    "reasoning_tokens": 3285,
+    "total_tokens": 16756,
+    "cost_usd": 0.00701324,
+    "calculated_cost_usd": 0.007013,
+    "raw_usage": {
+      "prompt_tokens": 2694,
+      "completion_tokens": 14062,
+      "total_tokens": 16756,
+      "cost": 0.00701324,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.00701324,
+        "upstream_inference_prompt_cost": 0.0004041,
+        "upstream_inference_completions_cost": 0.00660914
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 3285,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "content_chars": 29313,
+  "reasoning_chars": 12054,
+  "extracted_files": [
+    "index.html"
+  ],
+  "openrouter_id": "gen-1792803243-KrZMIj44RRB6wxYpq4mh"
+}

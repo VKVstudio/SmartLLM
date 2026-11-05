@@ -1,0 +1,546 @@
+{
+  "t1": {
+    "task_id": "t1",
+    "category": "web_landing",
+    "language": "en",
+    "canon": "Industrial B2B Engineering",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 33278
+      },
+      "llms.txt": {
+        "exists": true,
+        "size_bytes": 1990
+      },
+      "robots.txt": {
+        "exists": true,
+        "size_bytes": 203
+      },
+      "_headers": {
+        "exists": true,
+        "size_bytes": 1027
+      }
+    },
+    "all_required_files_present": true,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [
+      "https://thermotech.example/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "has_og_title": true,
+      "has_og_description": true
+    },
+    "json_ld": {
+      "blocks_count": 1,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "Product",
+        "Product",
+        "Product",
+        "FAQPage",
+        "BreadcrumbList"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "faq_count": 5
+    },
+    "_headers": {
+      "exists": true,
+      "all_passed": true,
+      "has_route_rule": true,
+      "checks": {
+        "Content-Security-Policy": true,
+        "frame-ancestors 'none'": true,
+        "Strict-Transport-Security": true,
+        "X-Content-Type-Options": true,
+        "Referrer-Policy": true,
+        "Permissions-Policy": true,
+        "Cross-Origin-Opener-Policy": true
+      }
+    },
+    "llms_txt": {
+      "exists": true,
+      "has_h1": true,
+      "has_blockquote": true,
+      "has_h2_sections": true
+    },
+    "semantics": {
+      "h1_count": 1,
+      "landmarks": [
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 9,
+      "canvas_count": 0,
+      "form_inputs_count": 5,
+      "form_inputs_labeled": 5,
+      "has_prefers_reduced_motion": true
+    },
+    "oklch": {
+      "token_count": 12,
+      "max_contrast_pair": 17.72,
+      "passes_aaa_7_to_1": true,
+      "tokens": {
+        "--bg": {
+          "raw": "oklch(0.14 0.012 255)",
+          "L": 0.14,
+          "C": 0.012,
+          "H": 255.0,
+          "luminance": 0.0028
+        },
+        "--bg-2": {
+          "raw": "oklch(0.17 0.014 255)",
+          "L": 0.17,
+          "C": 0.014,
+          "H": 255.0,
+          "luminance": 0.0049
+        },
+        "--grid": {
+          "raw": "oklch(0.28 0.015 250)",
+          "L": 0.28,
+          "C": 0.015,
+          "H": 250.0,
+          "luminance": 0.022
+        },
+        "--line": {
+          "raw": "oklch(0.32 0.015 250)",
+          "L": 0.32,
+          "C": 0.015,
+          "H": 250.0,
+          "luminance": 0.0329
+        },
+        "--ink": {
+          "raw": "oklch(0.96 0.008 250)",
+          "L": 0.96,
+          "C": 0.008,
+          "H": 250.0,
+          "luminance": 0.8854
+        },
+        "--muted": {
+          "raw": "oklch(0.78 0.012 250)",
+          "L": 0.78,
+          "C": 0.012,
+          "H": 250.0,
+          "luminance": 0.4752
+        },
+        "--dim": {
+          "raw": "oklch(0.68 0.012 250)",
+          "L": 0.68,
+          "C": 0.012,
+          "H": 250.0,
+          "luminance": 0.3149
+        },
+        "--accent": {
+          "raw": "oklch(0.68 0.19 45)",
+          "L": 0.68,
+          "C": 0.19,
+          "H": 45.0,
+          "luminance": 0.2891
+        },
+        "--accent-dim": {
+          "raw": "oklch(0.55 0.17 45)",
+          "L": 0.55,
+          "C": 0.17,
+          "H": 45.0,
+          "luminance": 0.152
+        },
+        "--ok": {
+          "raw": "oklch(0.78 0.16 150)",
+          "L": 0.78,
+          "C": 0.16,
+          "H": 150.0,
+          "luminance": 0.5074
+        },
+        "--warn": {
+          "raw": "oklch(0.72 0.17 80)",
+          "L": 0.72,
+          "C": 0.17,
+          "H": 80.0,
+          "luminance": 0.3668
+        },
+        "--err": {
+          "raw": "oklch(0.66 0.2 20)",
+          "L": 0.66,
+          "C": 0.2,
+          "H": 20.0,
+          "luminance": 0.2565
+        }
+      }
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": true,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 6,
+      "computed_script_hashes_count": 2,
+      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-x4CUkvDJ5I/Z2utPI1u/drykvJhIVBAX49S/a9jWa8c=' 'sha256-CXrmR8Ivp3FsNY5Y7pV5kS6fG/nVl1Yt0Ba6GlryI6M=' 'sha256-ZVfnq/MOxndJL7B85Z0e/Lr6d+AaFI0g7+JVODxTLnc=' 'sha256-35MqGtgFCLNsV2dDZJZcQExLu7nTyMe+eJdPkVxUEOY=' 'sha256-wYK/8jqIJiVlQvU23HK51lw+EY8/TOMcX9zQW0IBJAs=' 'sha256-mJKWymhlss5bjCRws7z4L0VQlUix1O5VoBymbAYJkGk=' 'sha256-cNg2964hAJnTax2gfRBxZP0k705TytcZoa3G3ORNMXM='; script-src 'self' 'sha256-VfriphROJH/zvF9tsitiv1BImQlum0ImJ/9BmH1GBTw=' 'sha256-zlA5zIl4q/KfRnPp6XmKm/CU1MqyWIqkcdpFa19Okgc='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t2": {
+    "task_id": "t2",
+    "category": "vision_to_code",
+    "language": "en",
+    "canon": "Editorial / Studio Light",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 22127
+      }
+    },
+    "all_required_files_present": true,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": false,
+      "has_canonical": false,
+      "has_og_title": false,
+      "has_og_description": false
+    },
+    "semantics": {
+      "h1_count": 1,
+      "landmarks": [
+        "article",
+        "aside",
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 7,
+      "canvas_count": 0,
+      "form_inputs_count": 3,
+      "form_inputs_labeled": 2,
+      "has_prefers_reduced_motion": false
+    },
+    "oklch": {
+      "token_count": 11,
+      "max_contrast_pair": 15.74,
+      "passes_aaa_7_to_1": true,
+      "tokens": {
+        "--bg": {
+          "raw": "oklch(0.965 0.012 92)",
+          "L": 0.965,
+          "C": 0.012,
+          "H": 92.0,
+          "luminance": 0.8992
+        },
+        "--bg-2": {
+          "raw": "oklch(0.94 0.014 92)",
+          "L": 0.94,
+          "C": 0.014,
+          "H": 92.0,
+          "luminance": 0.8312
+        },
+        "--card": {
+          "raw": "oklch(0.985 0.006 92)",
+          "L": 0.985,
+          "C": 0.006,
+          "H": 92.0,
+          "luminance": 0.956
+        },
+        "--ink": {
+          "raw": "oklch(0.24 0.02 250)",
+          "L": 0.24,
+          "C": 0.02,
+          "H": 250.0,
+          "luminance": 0.0139
+        },
+        "--muted": {
+          "raw": "oklch(0.46 0.015 250)",
+          "L": 0.46,
+          "C": 0.015,
+          "H": 250.0,
+          "luminance": 0.0976
+        },
+        "--faint": {
+          "raw": "oklch(0.58 0.012 250)",
+          "L": 0.58,
+          "C": 0.012,
+          "H": 250.0,
+          "luminance": 0.1955
+        },
+        "--line": {
+          "raw": "oklch(0.86 0.012 92)",
+          "L": 0.86,
+          "C": 0.012,
+          "H": 92.0,
+          "luminance": 0.6365
+        },
+        "--line-2": {
+          "raw": "oklch(0.8 0.012 92)",
+          "L": 0.8,
+          "C": 0.012,
+          "H": 92.0,
+          "luminance": 0.5124
+        },
+        "--accent": {
+          "raw": "oklch(0.52 0.11 182)",
+          "L": 0.52,
+          "C": 0.11,
+          "H": 182.0,
+          "luminance": 0.1571
+        },
+        "--accent-deep": {
+          "raw": "oklch(0.42 0.11 182)",
+          "L": 0.42,
+          "C": 0.11,
+          "H": 182.0,
+          "luminance": 0.0882
+        },
+        "--accent-text": {
+          "raw": "oklch(0.4 0.1 182)",
+          "L": 0.4,
+          "C": 0.1,
+          "H": 182.0,
+          "luminance": 0.0751
+        }
+      }
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": false,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 2,
+      "computed_script_hashes_count": 0,
+      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-JGerfEIjsSZVAnU+/tZuLfE/4ws/ek4nRf6HDhrjlKs=' 'sha256-uE5LS6pWtOWHwd/bgHMAhr7hq2leS08GOFNcKvlaMC4=' 'sha256-EpRRn8UTeRTYku6zLrvPMbhfG04OfGpeku3jtDP/CLc='; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t3": {
+    "task_id": "t3",
+    "category": "web_landing",
+    "language": "ru",
+    "canon": "Luxury Minimalism",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 42802
+      },
+      "llms.txt": {
+        "exists": true,
+        "size_bytes": 3160
+      },
+      "robots.txt": {
+        "exists": true,
+        "size_bytes": 282
+      },
+      "_headers": {
+        "exists": true,
+        "size_bytes": 1167
+      }
+    },
+    "all_required_files_present": true,
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true
+    },
+    "external_urls_in_attrs": [
+      "https://severnaya-manufaktura.ru/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "has_og_title": true,
+      "has_og_description": true
+    },
+    "json_ld": {
+      "blocks_count": 1,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "Product",
+        "Product",
+        "Product",
+        "FAQPage",
+        "BreadcrumbList"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "faq_count": 5
+    },
+    "_headers": {
+      "exists": true,
+      "all_passed": true,
+      "has_route_rule": true,
+      "checks": {
+        "Content-Security-Policy": true,
+        "frame-ancestors 'none'": true,
+        "Strict-Transport-Security": true,
+        "X-Content-Type-Options": true,
+        "Referrer-Policy": true,
+        "Permissions-Policy": true,
+        "Cross-Origin-Opener-Policy": true
+      }
+    },
+    "llms_txt": {
+      "exists": true,
+      "has_h1": true,
+      "has_blockquote": true,
+      "has_h2_sections": true
+    },
+    "semantics": {
+      "h1_count": 1,
+      "landmarks": [
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 1,
+      "canvas_count": 0,
+      "form_inputs_count": 5,
+      "form_inputs_labeled": 5,
+      "has_prefers_reduced_motion": true
+    },
+    "oklch": {
+      "token_count": 11,
+      "max_contrast_pair": 15.0,
+      "passes_aaa_7_to_1": true,
+      "tokens": {
+        "--clr-bg": {
+          "raw": "oklch(0.95 0.01 85)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 85.0,
+          "luminance": 0.8574
+        },
+        "--clr-bg-alt": {
+          "raw": "oklch(0.92 0.012 85)",
+          "L": 0.92,
+          "C": 0.012,
+          "H": 85.0,
+          "luminance": 0.7787
+        },
+        "--clr-text": {
+          "raw": "oklch(0.22 0.02 60)",
+          "L": 0.22,
+          "C": 0.02,
+          "H": 60.0,
+          "luminance": 0.0105
+        },
+        "--clr-text-muted": {
+          "raw": "oklch(0.45 0.02 70)",
+          "L": 0.45,
+          "C": 0.02,
+          "H": 70.0,
+          "luminance": 0.0907
+        },
+        "--clr-accent": {
+          "raw": "oklch(0.48 0.07 62)",
+          "L": 0.48,
+          "C": 0.07,
+          "H": 62.0,
+          "luminance": 0.1076
+        },
+        "--clr-accent-hover": {
+          "raw": "oklch(0.38 0.07 62)",
+          "L": 0.38,
+          "C": 0.07,
+          "H": 62.0,
+          "luminance": 0.0529
+        },
+        "--clr-border": {
+          "raw": "oklch(0.78 0.015 80)",
+          "L": 0.78,
+          "C": 0.015,
+          "H": 80.0,
+          "luminance": 0.4742
+        },
+        "--clr-border-strong": {
+          "raw": "oklch(0.55 0.02 70)",
+          "L": 0.55,
+          "C": 0.02,
+          "H": 70.0,
+          "luminance": 0.1657
+        },
+        "--clr-surface": {
+          "raw": "oklch(0.90 0.01 82)",
+          "L": 0.9,
+          "C": 0.01,
+          "H": 82.0,
+          "luminance": 0.7288
+        },
+        "--clr-success": {
+          "raw": "oklch(0.45 0.12 145)",
+          "L": 0.45,
+          "C": 0.12,
+          "H": 145.0,
+          "luminance": 0.0987
+        },
+        "--clr-error": {
+          "raw": "oklch(0.45 0.15 25)",
+          "L": 0.45,
+          "C": 0.15,
+          "H": 25.0,
+          "luminance": 0.0806
+        }
+      }
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "headers_patched": true,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 1,
+      "computed_script_hashes_count": 2,
+      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-lsbtEI3wXwvpAbvg/xWmjmqn3QOqydWG8NX1ytgCnaA=' 'sha256-Dm5fUHctFLe3z0FLij4+Ltu0Q2jH4fSTrkSvyF5kjj4='; script-src 'self' 'sha256-f79yuxd9QsnDAPMl0B1TxB2MY+nlMTINHGum/X/bGNk=' 'sha256-oBOuPwoQSOZLboH7y1Hwr2y3D31ossxN3w6HBJyJ7TA='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "t4": {
+    "status": "missing"
+  },
+  "t5": {
+    "status": "missing"
+  },
+  "t6": {
+    "status": "missing"
+  },
+  "t7": {
+    "status": "missing"
+  },
+  "t8": {
+    "status": "missing"
+  },
+  "t9": {
+    "status": "missing"
+  },
+  "t10": {
+    "status": "missing"
+  },
+  "t11": {
+    "status": "missing"
+  },
+  "t12": {
+    "status": "missing"
+  }
+}

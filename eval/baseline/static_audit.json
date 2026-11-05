@@ -1,0 +1,783 @@
+{
+  "qwen3.8-flash": {
+    "t1": {
+      "csp": {
+        "has_meta_csp": true,
+        "meta_csp": "default-src 'none'; script-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-9E2Zk4v6vQw1s4s2v3x4y5z6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c=' 'data:'; style-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c=' 'data:'; img-src data:; font-src 'none'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; media-src 'none'; frame-src 'none'; manifest-src 'none'; worker-src 'none'; upgrade-insecure-requests",
+        "has_unsafe_inline": false,
+        "policy_hashes": [
+          "sha256-1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c=",
+          "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+          "sha256-9E2Zk4v6vQw1s4s2v3x4y5z6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c="
+        ],
+        "style_hashes": [
+          {
+            "index": 0,
+            "len": 11001,
+            "sha256_exact": "sha256-YzAC58nxnCyG0thPEFNym2lDwNr6TWz9jEqGDNs1MPg=",
+            "sha256_stripped": "sha256-YzAC58nxnCyG0thPEFNym2lDwNr6TWz9jEqGDNs1MPg=",
+            "matched_exact": false,
+            "matched_stripped": false
+          },
+          {
+            "index": 1,
+            "len": 0,
+            "sha256_exact": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+            "sha256_stripped": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+            "matched_exact": true,
+            "matched_stripped": true
+          }
+        ],
+        "script_hashes": [
+          {
+            "index": 0,
+            "type": "application/ld+json",
+            "len": 9415,
+            "sha256_exact": "sha256-JjWWhAxwp9o6+XnaSmUGkVJAKzzRmhzvFocazZ70/4k=",
+            "sha256_stripped": "sha256-TLtx1IayDWTgVc85tUcdroeeppTljAnfeO013uSnSGI=",
+            "matched_exact": false,
+            "matched_stripped": false
+          },
+          {
+            "index": 1,
+            "type": "text/javascript",
+            "len": 0,
+            "sha256_exact": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+            "sha256_stripped": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+            "matched_exact": true,
+            "matched_stripped": true
+          }
+        ]
+      },
+      "external_urls_in_attrs": [
+        "https://thermotech.example/"
+      ],
+      "json_ld": {
+        "blocks_count": 1,
+        "valid_json": true,
+        "graph_types": [
+          "Organization",
+          "WebSite",
+          "BreadcrumbList",
+          "Product",
+          "Product",
+          "Product",
+          "FAQPage"
+        ],
+        "faq_questions": [],
+        "has_all_4_types": true,
+        "product_count": 3,
+        "faq_verbatim_check": [
+          {
+            "q": "What output range do Thermotech boilers cover?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Can the boilers operate on fuels other than natural gas?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "What automation and control systems are supplied?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Which codes and certifications are covered?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "What site information is needed for a quotation?",
+            "q_in_html": true,
+            "a_in_html": true
+          }
+        ],
+        "faq_all_verbatim": true
+      },
+      "_headers": {
+        "exists": true,
+        "raw": "/*\n  Content-Security-Policy: default-src 'none'; script-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-9E2Zk4v6vQw1s4s2v3x4y5z6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c=' 'data:'; style-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c=' 'data:'; img-src data:; font-src 'none'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; media-src 'none'; frame-src 'none'; manifest-src 'none'; worker-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests\n  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()\n  Cross-Origin-Opener-Policy: same-origin",
+        "has_route_rule": true,
+        "checks": {
+          "Content-Security-Policy": true,
+          "frame-ancestors 'none'": true,
+          "Strict-Transport-Security": true,
+          "X-Content-Type-Options": true,
+          "Referrer-Policy": true,
+          "Permissions-Policy": true,
+          "Cross-Origin-Opener-Policy": true
+        },
+        "all_passed": true
+      },
+      "llms_txt": {
+        "exists": true,
+        "has_h1": true,
+        "has_blockquote": true,
+        "has_h2_sections": true,
+        "has_markdown_links": false
+      },
+      "robots_txt": {
+        "exists": true,
+        "has_user_agent": true,
+        "has_allow_or_disallow": true
+      },
+      "semantics_a11y": {
+        "h1_count": 1,
+        "landmarks": [
+          "article",
+          "aside",
+          "footer",
+          "header",
+          "main",
+          "section"
+        ],
+        "img_count": 0,
+        "imgs_with_alt": 0,
+        "svg_count": 2,
+        "inputs_count": 7,
+        "inputs_labeled": [
+          {
+            "id": "name",
+            "name": "name",
+            "labeled": true
+          },
+          {
+            "id": "company",
+            "name": "company",
+            "labeled": true
+          },
+          {
+            "id": "email",
+            "name": "email",
+            "labeled": true
+          },
+          {
+            "id": "phone",
+            "name": "phone",
+            "labeled": true
+          },
+          {
+            "id": "model",
+            "name": "model",
+            "labeled": true
+          },
+          {
+            "id": "output",
+            "name": "output",
+            "labeled": true
+          },
+          {
+            "id": "message",
+            "name": "message",
+            "labeled": true
+          }
+        ],
+        "prefers_reduced_motion": true
+      },
+      "oklch_tokens": {
+        "--bg": {
+          "raw": "oklch(0.15 0.01 250)",
+          "L": 0.15,
+          "C": 0.01,
+          "H": 250.0,
+          "luminance": 0.0034
+        },
+        "--bg-soft": {
+          "raw": "oklch(0.18 0.012 250)",
+          "L": 0.18,
+          "C": 0.012,
+          "H": 250.0,
+          "luminance": 0.0059
+        },
+        "--panel": {
+          "raw": "oklch(0.20 0.014 250)",
+          "L": 0.2,
+          "C": 0.014,
+          "H": 250.0,
+          "luminance": 0.008
+        },
+        "--line": {
+          "raw": "oklch(0.32 0.015 250)",
+          "L": 0.32,
+          "C": 0.015,
+          "H": 250.0,
+          "luminance": 0.0329
+        },
+        "--grid": {
+          "raw": "oklch(0.235 0.011 253)",
+          "L": 0.235,
+          "C": 0.011,
+          "H": 253.0,
+          "luminance": 0.013
+        },
+        "--text": {
+          "raw": "oklch(0.95 0.01 250)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 250.0,
+          "luminance": 0.8582
+        },
+        "--muted": {
+          "raw": "oklch(0.82 0.015 250)",
+          "L": 0.82,
+          "C": 0.015,
+          "H": 250.0,
+          "luminance": 0.5523
+        },
+        "--accent": {
+          "raw": "oklch(0.68 0.19 45)",
+          "L": 0.68,
+          "C": 0.19,
+          "H": 45.0,
+          "luminance": 0.2891
+        },
+        "--accent-text": {
+          "raw": "oklch(0.82 0.16 45)",
+          "L": 0.82,
+          "C": 0.16,
+          "H": 45.0,
+          "luminance": 0.4717
+        },
+        "--on-accent": {
+          "raw": "oklch(0.15 0.01 250)",
+          "L": 0.15,
+          "C": 0.01,
+          "H": 250.0,
+          "luminance": 0.0034
+        },
+        "--success": {
+          "raw": "oklch(0.86 0.17 145)",
+          "L": 0.86,
+          "C": 0.17,
+          "H": 145.0,
+          "luminance": 0.6759
+        },
+        "--error": {
+          "raw": "oklch(0.78 0.17 25)",
+          "L": 0.78,
+          "C": 0.17,
+          "H": 25.0,
+          "luminance": 0.3997
+        }
+      },
+      "contrasts": {
+        "--text on --bg": 17.01,
+        "--text on --bg-soft": 16.25,
+        "--text on --panel": 15.66,
+        "--muted on --bg": 11.28,
+        "--muted on --bg-soft": 10.77,
+        "--muted on --panel": 10.38,
+        "--accent on --bg": 6.35,
+        "--accent-text on --bg": 9.77,
+        "--accent-text on --panel": 8.99,
+        "--on-accent on --accent": 6.35
+      },
+      "canon": {
+        "oklch_token_count": 12,
+        "has_signal_orange_068_019_45": true,
+        "has_blueprint_grid_2a2e35_or_1px": true,
+        "has_jetbrains_mono": true,
+        "has_ibm_plex_sans": true,
+        "has_external_font_cdn": false
+      }
+    },
+    "t2": {
+      "h1_count": 1,
+      "landmarks": [
+        "article",
+        "aside",
+        "footer",
+        "header",
+        "nav",
+        "section"
+      ],
+      "oklch_token_count": 13,
+      "oklch_tokens": {
+        "--bg": {
+          "raw": "oklch(0.965 0.012 95)",
+          "L": 0.965,
+          "C": 0.012,
+          "H": 95.0,
+          "luminance": 0.8994
+        },
+        "--bg-2": {
+          "raw": "oklch(0.932 0.016 95)",
+          "L": 0.932,
+          "C": 0.016,
+          "H": 95.0,
+          "luminance": 0.8105
+        },
+        "--surface": {
+          "raw": "oklch(0.992 0.006 95)",
+          "L": 0.992,
+          "C": 0.006,
+          "H": 95.0,
+          "luminance": 0.9766
+        },
+        "--surface-2": {
+          "raw": "oklch(0.975 0.010 95)",
+          "L": 0.975,
+          "C": 0.01,
+          "H": 95.0,
+          "luminance": 0.9275
+        },
+        "--ink": {
+          "raw": "oklch(0.26 0.022 250)",
+          "L": 0.26,
+          "C": 0.022,
+          "H": 250.0,
+          "luminance": 0.0177
+        },
+        "--ink-soft": {
+          "raw": "oklch(0.42 0.018 250)",
+          "L": 0.42,
+          "C": 0.018,
+          "H": 250.0,
+          "luminance": 0.0743
+        },
+        "--muted": {
+          "raw": "oklch(0.52 0.014 250)",
+          "L": 0.52,
+          "C": 0.014,
+          "H": 250.0,
+          "luminance": 0.1409
+        },
+        "--line": {
+          "raw": "oklch(0.885 0.014 95)",
+          "L": 0.885,
+          "C": 0.014,
+          "H": 95.0,
+          "luminance": 0.6939
+        },
+        "--line-soft": {
+          "raw": "oklch(0.915 0.012 95)",
+          "L": 0.915,
+          "C": 0.012,
+          "H": 95.0,
+          "luminance": 0.7667
+        },
+        "--accent": {
+          "raw": "oklch(0.55 0.115 178)",
+          "L": 0.55,
+          "C": 0.115,
+          "H": 178.0,
+          "luminance": 0.1843
+        },
+        "--accent-deep": {
+          "raw": "oklch(0.46 0.105 178)",
+          "L": 0.46,
+          "C": 0.105,
+          "H": 178.0,
+          "luminance": 0.1106
+        },
+        "--accent-ink": {
+          "raw": "oklch(0.40 0.095 178)",
+          "L": 0.4,
+          "C": 0.095,
+          "H": 178.0,
+          "luminance": 0.0735
+        },
+        "--on-accent": {
+          "raw": "oklch(0.99 0.004 95)",
+          "L": 0.99,
+          "C": 0.004,
+          "H": 95.0,
+          "luminance": 0.9706
+        }
+      },
+      "contrasts": {
+        "--ink on --bg": 14.02,
+        "--ink on --surface": 15.16,
+        "--ink-soft on --bg": 7.64,
+        "--ink-soft on --surface": 8.26,
+        "--muted on --bg": 4.97,
+        "--accent-ink on --bg": 7.69,
+        "--on-accent on --accent": 4.36,
+        "--on-accent on --accent-deep": 6.35,
+        "--accent on --bg": 4.05
+      },
+      "has_responsive_375_or_media": true,
+      "prefers_reduced_motion": false,
+      "external_urls": []
+    }
+  },
+  "ling-3.0-flash-vl": {
+    "t1": {
+      "csp": {
+        "has_meta_csp": true,
+        "meta_csp": "default-src 'none'; script-src 'sha256-COMPUTE_FROM_FINAL_SCRIPT_CONTENT_BASE64'; style-src 'sha256-COMPUTE_FROM_FINAL_STYLE_CONTENT_BASE64'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
+        "has_unsafe_inline": false,
+        "policy_hashes": [
+          "sha256-COMPUTE"
+        ],
+        "style_hashes": [
+          {
+            "index": 0,
+            "len": 13055,
+            "sha256_exact": "sha256-4oeOwCjU8iiUxMpGQ70ZtgjVS+s+/mCi4gu0EPzW2zE=",
+            "sha256_stripped": "sha256-Wpb+HIyfLNMAhw4HveXiZdoOyT6gXXHx8cnD4aoOR30=",
+            "matched_exact": false,
+            "matched_stripped": false
+          }
+        ],
+        "script_hashes": [
+          {
+            "index": 0,
+            "type": "application/ld+json",
+            "len": 4151,
+            "sha256_exact": "sha256-SJu4o/WoN+hTphit+JMP8SPvpywbw9xO+2DCCKAYLxM=",
+            "sha256_stripped": "sha256-qXGzrbkAU8YEuvyNilROov/JwqrdKjf43HpE6c+deWg=",
+            "matched_exact": false,
+            "matched_stripped": false
+          },
+          {
+            "index": 1,
+            "type": "text/javascript",
+            "len": 2161,
+            "sha256_exact": "sha256-NEUBR3hyTRsk+NQicrnq5Y0rBT6+eVqikTo0XqbrC1s=",
+            "sha256_stripped": "sha256-abDVYfXwf4hBQdwWKnx6VjY81u/uCK+BhWLWFIV9zJA=",
+            "matched_exact": false,
+            "matched_stripped": false
+          }
+        ]
+      },
+      "external_urls_in_attrs": [
+        "https://thermotech-engineering.com/"
+      ],
+      "json_ld": {
+        "blocks_count": 1,
+        "valid_json": true,
+        "graph_types": [
+          "Organization",
+          "Product",
+          "Product",
+          "Product",
+          "FAQPage",
+          "BreadcrumbList"
+        ],
+        "faq_questions": [],
+        "has_all_4_types": true,
+        "product_count": 3,
+        "faq_verbatim_check": [
+          {
+            "q": "What is the typical delivery time for a THERMOTECH boiler?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Can THERMOTECH boilers operate on alternative fuels?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "What certifications do your boilers carry?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "Do you provide on-site commissioning support?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "What is the warranty coverage?",
+            "q_in_html": true,
+            "a_in_html": true
+          },
+          {
+            "q": "What is the minimum order quantity?",
+            "q_in_html": true,
+            "a_in_html": true
+          }
+        ],
+        "faq_all_verbatim": true
+      },
+      "_headers": {
+        "exists": true,
+        "raw": "/*\n  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: geolocation=(), microphone=(), camera=()\n  Cross-Origin-Opener-Policy: same-origin\n  Content-Security-Policy: default-src 'none'; script-src 'sha256-COMPUTE_FROM_FINAL_SCRIPT_CONTENT_BASE64'; style-src 'sha256-COMPUTE_FROM_FINAL_STYLE_CONTENT_BASE64'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'\n  X-Frame-Options: DENY",
+        "has_route_rule": true,
+        "checks": {
+          "Content-Security-Policy": true,
+          "frame-ancestors 'none'": true,
+          "Strict-Transport-Security": true,
+          "X-Content-Type-Options": true,
+          "Referrer-Policy": true,
+          "Permissions-Policy": true,
+          "Cross-Origin-Opener-Policy": true
+        },
+        "all_passed": true
+      },
+      "llms_txt": {
+        "exists": true,
+        "has_h1": true,
+        "has_blockquote": false,
+        "has_h2_sections": true,
+        "has_markdown_links": false
+      },
+      "robots_txt": {
+        "exists": true,
+        "has_user_agent": true,
+        "has_allow_or_disallow": true
+      },
+      "semantics_a11y": {
+        "h1_count": 1,
+        "landmarks": [
+          "footer",
+          "header",
+          "main",
+          "nav",
+          "section"
+        ],
+        "img_count": 0,
+        "imgs_with_alt": 0,
+        "svg_count": 2,
+        "inputs_count": 5,
+        "inputs_labeled": [
+          {
+            "id": "f-name",
+            "name": "name",
+            "labeled": true
+          },
+          {
+            "id": "f-email",
+            "name": "email",
+            "labeled": true
+          },
+          {
+            "id": "f-company",
+            "name": "company",
+            "labeled": true
+          },
+          {
+            "id": "f-interest",
+            "name": "interest",
+            "labeled": true
+          },
+          {
+            "id": "f-message",
+            "name": "message",
+            "labeled": true
+          }
+        ],
+        "prefers_reduced_motion": true
+      },
+      "oklch_tokens": {
+        "--c-accent": {
+          "raw": "oklch(0.68 0.19 45)",
+          "L": 0.68,
+          "C": 0.19,
+          "H": 45.0,
+          "luminance": 0.2891
+        },
+        "--c-accent-dark": {
+          "raw": "oklch(0.52 0.15 45)",
+          "L": 0.52,
+          "C": 0.15,
+          "H": 45.0,
+          "luminance": 0.1289
+        },
+        "--c-accent-light": {
+          "raw": "oklch(0.82 0.15 45)",
+          "L": 0.82,
+          "C": 0.15,
+          "H": 45.0,
+          "luminance": 0.4836
+        },
+        "--c-accent-bg": {
+          "raw": "oklch(0.94 0.04 55)",
+          "L": 0.94,
+          "C": 0.04,
+          "H": 55.0,
+          "luminance": 0.819
+        },
+        "--c-bg": {
+          "raw": "oklch(0.975 0.006 260)",
+          "L": 0.975,
+          "C": 0.006,
+          "H": 260.0,
+          "luminance": 0.927
+        },
+        "--c-surface": {
+          "raw": "oklch(1 0 0)",
+          "L": 1.0,
+          "C": 0.0,
+          "H": 0.0,
+          "luminance": 1.0
+        },
+        "--c-surface-alt": {
+          "raw": "oklch(0.945 0.005 260)",
+          "L": 0.945,
+          "C": 0.005,
+          "H": 260.0,
+          "luminance": 0.844
+        },
+        "--c-text": {
+          "raw": "oklch(0.2 0.01 260)",
+          "L": 0.2,
+          "C": 0.01,
+          "H": 260.0,
+          "luminance": 0.008
+        },
+        "--c-text-muted": {
+          "raw": "oklch(0.35 0.01 260)",
+          "L": 0.35,
+          "C": 0.01,
+          "H": 260.0,
+          "luminance": 0.0429
+        },
+        "--c-border": {
+          "raw": "oklch(0.82 0.004 260)",
+          "L": 0.82,
+          "C": 0.004,
+          "H": 260.0,
+          "luminance": 0.5514
+        },
+        "--c-footer-bg": {
+          "raw": "oklch(0.18 0.01 260)",
+          "L": 0.18,
+          "C": 0.01,
+          "H": 260.0,
+          "luminance": 0.0058
+        },
+        "--c-footer-text": {
+          "raw": "oklch(0.85 0.006 260)",
+          "L": 0.85,
+          "C": 0.006,
+          "H": 260.0,
+          "luminance": 0.6142
+        }
+      },
+      "contrasts": {
+        "--c-text on --c-bg": 16.84,
+        "--c-text on --c-surface": 18.1,
+        "--c-text-muted on --c-bg": 10.52,
+        "--c-text-muted on --c-surface": 11.3,
+        "--c-accent-dark on --c-bg": 5.46,
+        "--c-accent-dark on --c-surface": 5.87,
+        "--c-accent on --c-bg": 2.88,
+        "--c-footer-text on --c-footer-bg": 11.9
+      },
+      "canon": {
+        "oklch_token_count": 12,
+        "has_signal_orange_068_019_45": true,
+        "has_blueprint_grid_2a2e35_or_1px": true,
+        "has_jetbrains_mono": true,
+        "has_ibm_plex_sans": true,
+        "has_external_font_cdn": false
+      }
+    },
+    "t2": {
+      "h1_count": 1,
+      "landmarks": [
+        "article",
+        "aside",
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "oklch_token_count": 12,
+      "oklch_tokens": {
+        "--bg": {
+          "raw": "oklch(96.5% 0.012 85)",
+          "L": 0.965,
+          "C": 0.012,
+          "H": 85.0,
+          "luminance": 0.8986
+        },
+        "--bg-card": {
+          "raw": "oklch(98% 0.008 85)",
+          "L": 0.98,
+          "C": 0.008,
+          "H": 85.0,
+          "luminance": 0.9412
+        },
+        "--bg-dark": {
+          "raw": "oklch(93% 0.01 85)",
+          "L": 0.93,
+          "C": 0.01,
+          "H": 85.0,
+          "luminance": 0.8044
+        },
+        "--text": {
+          "raw": "oklch(18% 0.02 80)",
+          "L": 0.18,
+          "C": 0.02,
+          "H": 80.0,
+          "luminance": 0.0058
+        },
+        "--text-muted": {
+          "raw": "oklch(42% 0.015 80)",
+          "L": 0.42,
+          "C": 0.015,
+          "H": 80.0,
+          "luminance": 0.074
+        },
+        "--accent": {
+          "raw": "oklch(42% 0.12 155)",
+          "L": 0.42,
+          "C": 0.12,
+          "H": 155.0,
+          "luminance": 0.0838
+        },
+        "--accent-hover": {
+          "raw": "oklch(38% 0.14 155)",
+          "L": 0.38,
+          "C": 0.14,
+          "H": 155.0,
+          "luminance": 0.0672
+        },
+        "--btn-bg": {
+          "raw": "oklch(28% 0.06 150)",
+          "L": 0.28,
+          "C": 0.06,
+          "H": 150.0,
+          "luminance": 0.0235
+        },
+        "--btn-text": {
+          "raw": "oklch(97% 0.01 85)",
+          "L": 0.97,
+          "C": 0.01,
+          "H": 85.0,
+          "luminance": 0.9127
+        },
+        "--border": {
+          "raw": "oklch(88% 0.01 85)",
+          "L": 0.88,
+          "C": 0.01,
+          "H": 85.0,
+          "luminance": 0.6815
+        },
+        "--border-strong": {
+          "raw": "oklch(78% 0.015 85)",
+          "L": 0.78,
+          "C": 0.015,
+          "H": 85.0,
+          "luminance": 0.4745
+        },
+        "--teal-text": {
+          "raw": "oklch(42% 0.1 155)",
+          "L": 0.42,
+          "C": 0.1,
+          "H": 155.0,
+          "luminance": 0.0803
+        }
+      },
+      "contrasts": {
+        "--text on --bg": 17.0,
+        "--text on --bg-card": 17.76,
+        "--text-muted on --bg": 7.65,
+        "--text-muted on --bg-card": 7.99,
+        "--accent on --bg": 7.09,
+        "--teal-text on --bg": 7.28,
+        "--btn-text on --btn-bg": 13.1
+      },
+      "has_responsive_375_or_media": true,
+      "prefers_reduced_motion": false,
+      "external_urls": []
+    }
+  }
+}

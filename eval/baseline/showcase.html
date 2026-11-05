@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>SmartLLM Baseline — Визуальное сравнение T1 и T2</title>
+<style>
+  body { margin: 0; padding: 24px; background: #111418; color: #eceff4; font-family: system-ui, -apple-system, sans-serif; }
+  h1, h2, h3 { margin: 0 0 12px; }
+  h1 { font-size: 24px; margin-bottom: 24px; }
+  h2 { font-size: 18px; margin-top: 32px; padding-bottom: 8px; border-bottom: 1px solid #2a2e35; color: #ff8833; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; }
+  .card { background: #181c22; border: 1px solid #2a2e35; border-radius: 8px; padding: 14px; }
+  .card h3 { font-size: 14px; font-family: monospace; color: #9aa5b4; margin-bottom: 10px; }
+  .card img { width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid #2a2e35; }
+</style>
+</head>
+<body>
+  <h1>SmartLLM — Сравнение рендеров Qwen3.8-Flash vs Ling-3.0-Flash-VL</h1>
+
+  <h2>1. Задача T1 (THERMOTECH ENGINEERING) — Реальная вёрстка моделей (первый экран 1440×900)</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>qwen/qwen3.8-flash — T1 (тёмный канон Industrial B2B Engineering)</h3>
+      <img src="qwen3.8-flash/t1/shot-desktop-styled.png" alt="Qwen T1 Hero">
+    </div>
+    <div class="card">
+      <h3>inclusionai/ling-3.0-flash-vl — T1 (светлый фон)</h3>
+      <img src="ling-3.0-flash-vl/t1/shot-desktop-styled.png" alt="Ling T1 Hero">
+    </div>
+  </div>
+
+  <h2>2. Задача T1 — Полные страницы (fullPage)</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>qwen/qwen3.8-flash — T1 Full Page</h3>
+      <img src="qwen3.8-flash/t1/shot-desktop-full-styled.png" alt="Qwen T1 Full">
+    </div>
+    <div class="card">
+      <h3>inclusionai/ling-3.0-flash-vl — T1 Full Page</h3>
+      <img src="ling-3.0-flash-vl/t1/shot-desktop-full-styled.png" alt="Ling T1 Full">
+    </div>
+  </div>
+
+  <h2>3. Задача T1 — Как открываются «из коробки» (браузер заблокировал CSS из-за ошибки в CSP)</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>qwen/qwen3.8-flash — T1 Raw CSP ('data:' в кавычках)</h3>
+      <img src="qwen3.8-flash/t1/shot-desktop.png" alt="Qwen T1 Raw">
+    </div>
+    <div class="card">
+      <h3>inclusionai/ling-3.0-flash-vl — T1 Raw CSP (заглушка sha256-COMPUTE_...)</h3>
+      <img src="ling-3.0-flash-vl/t1/shot-desktop.png" alt="Ling T1 Raw">
+    </div>
+  </div>
+
+  <h2>4. Задача T2 (VKVstudio.pro по скриншоту) — Референс vs Qwen (SVG-формы) vs Ling (градиенты)</h2>
+  <div class="grid-3">
+    <div class="card">
+      <h3>Оригинал (ref/t2.png)</h3>
+      <img src="ref/t2.png" alt="Ref T2">
+    </div>
+    <div class="card">
+      <h3>qwen/qwen3.8-flash — T2 (SVG-иллюстрации)</h3>
+      <img src="qwen3.8-flash/t2/shot-desktop-full.png" alt="Qwen T2 Full">
+    </div>
+    <div class="card">
+      <h3>inclusionai/ling-3.0-flash-vl — T2 (CSS-градиенты)</h3>
+      <img src="ling-3.0-flash-vl/t2/shot-desktop-full.png" alt="Ling T2 Full">
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,430 @@
+FILE: index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writ&amp;Loop — Briefings</title>
+<style>
+  :root{
+    --bg:        oklch(0.945 0.018 92);
+    --bg-alt:    oklch(0.925 0.022 88);
+    --bg-card:   oklch(0.962 0.012 92);
+    --ink:       oklch(0.27 0.035 155);
+    --ink-mute:  oklch(0.38 0.02 155);
+    --line:      oklch(0.84 0.015 95);
+    --line-soft: oklch(0.88 0.012 95);
+    --accent:    oklch(0.52 0.105 168);
+    --accent-ink:oklch(0.42 0.09 162);
+    --btn:       oklch(0.34 0.075 160);
+    --chip:      oklch(0.46 0.09 172);
+    --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+    --font-body: ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Courier New", monospace;
+    --max: 1200px;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--font-body); font-size:15px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent-ink); outline-offset:3px; border-radius:2px; }
+  img,svg{ display:block; max-width:100%; }
+
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 clamp(18px,4vw,48px); }
+
+  .mono{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-mute); }
+  .rule{ border:0; border-top:1px solid var(--line); margin:0; }
+
+  /* ---------- Header ---------- */
+  .site-head{ padding:22px 0 18px; }
+  .head-row{ display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  .brand{ display:flex; align-items:center; gap:9px; font-family:var(--font-display); font-weight:700; font-size:15px; letter-spacing:.01em; }
+  .brand svg{ width:26px; height:16px; }
+  .nav{ display:flex; gap:22px; }
+  .nav a{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-mute); padding:4px 0; }
+  .nav a[aria-current]{ color:var(--ink); }
+  .nav a:hover{ color:var(--ink); }
+  .head-right{ display:flex; align-items:center; gap:18px; }
+  .icon-btn{ display:flex; align-items:center; gap:8px; background:none; border:0; cursor:pointer; color:var(--ink-mute); font:inherit; font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:4px 2px; }
+  .icon-btn svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.6; }
+  .burger{ display:flex; flex-direction:column; gap:3px; }
+  .burger span{ width:14px; height:1.5px; background:currentColor; }
+
+  /* ---------- Hero ---------- */
+  .hero{ position:relative; overflow:hidden; padding:56px 0 46px; }
+  .hero-bg{ position:absolute; inset:0; pointer-events:none; }
+  .hero-bg svg{ width:100%; height:100%; }
+  .hero-inner{ position:relative; max-width:640px; }
+  .kicker{ display:flex; align-items:center; gap:10px; margin-bottom:26px; }
+  .kicker::before{ content:""; width:26px; height:1px; background:var(--ink-mute); }
+  h1{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(2.5rem, 6.2vw, 4.4rem); line-height:1.04;
+    letter-spacing:-0.015em; margin:0 0 26px;
+  }
+  h1 .gr{ color:var(--accent); }
+  .lede{ max-width:520px; color:var(--ink-mute); margin:0 0 30px; }
+  .cta-row{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:34px; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:.06em; text-transform:uppercase; padding:12px 20px; border-radius:2px; }
+  .btn-solid{ background:var(--btn); color:oklch(0.985 0.01 92); }
+  .btn-solid:hover{ background:oklch(0.28 0.07 160); }
+  .btn-line{ border:1px solid var(--ink); color:var(--ink); }
+  .btn-line:hover{ background:var(--bg-alt); }
+  .hero-foot{ font-size:12px; color:var(--ink-mute); }
+
+  .strip{ border-top:1px solid var(--line); }
+  .strip .wrap{ display:flex; justify-content:flex-end; padding-top:14px; padding-bottom:14px; }
+
+  /* ---------- Briefing desk / Read next ---------- */
+  .desk{ padding:56px 0 70px; }
+  .desk-grid{ display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,1fr); gap:clamp(32px,6vw,88px); }
+
+  .desk-label{ font-family:var(--font-display); font-style:italic; font-size:14px; color:var(--accent-ink); margin:0 0 10px; }
+  .desk-top{ display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-bottom:16px; }
+  .desk-lead{ margin:0 0 22px; max-width:560px; }
+  .search-chip{ background:var(--chip); color:oklch(0.985 0.01 92); border:0; font:inherit; font-size:12px; letter-spacing:.05em; padding:8px 16px; border-radius:2px; cursor:pointer; }
+  .search-chip:hover{ background:oklch(0.4 0.09 172); }
+
+  .photo{ background:var(--bg-card); border:1px solid var(--line-soft); border-radius:3px; overflow:hidden; }
+  .photo svg{ width:100%; height:auto; }
+  .hero-photo{ margin-bottom:26px; }
+
+  .meta-row{ display:flex; flex-wrap:wrap; gap:10px 18px; align-items:baseline; margin:22px 0 12px; }
+  .meta-row .tag{ color:var(--accent-ink); }
+  h2{ font-family:var(--font-display); font-weight:700; letter-spacing:-0.01em; line-height:1.15; margin:0 0 14px; }
+  .desk h2{ font-size:clamp(1.5rem,2.6vw,1.9rem); }
+  .desk-body{ color:var(--ink-mute); margin:0 0 22px; max-width:560px; }
+  .byline{ color:var(--ink-mute); font-size:12px; margin-bottom:18px; }
+  .link-arrow{ display:inline-flex; align-items:center; gap:7px; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink); }
+  .link-arrow:hover{ color:var(--accent-ink); }
+
+  .next-head{ display:flex; justify-content:space-between; align-items:baseline; gap:14px; margin-bottom:26px; }
+  .next-head h2{ font-size:16px; }
+  .all-link{ color:var(--accent-ink); font-size:11px; letter-spacing:.09em; text-transform:uppercase; }
+
+  .next-list{ display:flex; flex-direction:column; gap:34px; }
+  .next-item .photo{ margin-bottom:14px; }
+  .next-item h3{ font-family:var(--font-display); font-weight:700; font-size:16px; line-height:1.25; margin:0 0 8px; }
+  .next-item p{ color:var(--ink-mute); font-size:13px; margin:0 0 12px; }
+  .next-item .link-arrow{ font-size:11px; }
+  .next-note{ margin-top:34px; color:var(--ink-mute); font-size:12px; max-width:420px; }
+
+  /* ---------- Editorial rule ---------- */
+  .rule-sec{ background:var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .rule-grid{ display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:clamp(32px,6vw,90px); padding:64px 0 70px; }
+  .rule h2{ font-size:clamp(1.9rem,4vw,2.7rem); margin:14px 0 18px; }
+  .rule h2 .gr{ color:var(--accent); }
+  .rule p{ color:var(--ink-mute); max-width:420px; margin:0 0 22px; }
+
+  .steps{ display:flex; flex-direction:column; }
+  .step{ display:grid; grid-template-columns:34px 150px 1fr; gap:16px; align-items:center; padding:16px 0; border-top:1px solid var(--line); }
+  .step:last-child{ border-bottom:1px solid var(--line); }
+  .step .num{ font-family:var(--font-mono); font-size:11px; color:var(--ink-mute); }
+  .step .t{ font-family:var(--font-display); font-weight:700; font-size:14px; }
+  .step .d{ font-size:12px; color:var(--ink-mute); text-align:right; }
+
+  /* ---------- Footer ---------- */
+  .site-foot{ padding:26px 0 34px; }
+  .foot-row{ display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+  .foot-brand{ display:flex; align-items:center; gap:9px; }
+  .foot-brand .mono{ font-size:11px; }
+  .foot-links{ display:flex; flex-wrap:wrap; gap:16px; }
+  .foot-links a{ font-size:11px; letter-spacing:.05em; color:var(--ink-mute); }
+  .foot-links a:hover{ color:var(--ink); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:960px){
+    .desk-grid{ grid-template-columns:1fr; }
+    .rule-grid{ grid-template-columns:1fr; }
+    .step .d{ text-align:left; }
+  }
+  @media (max-width:760px){
+    .nav{ display:none; }
+    .step{ grid-template-columns:30px 1fr; }
+    .step .d{ grid-column:2; }
+  }
+  @media (max-width:420px){
+    .cta-row{ flex-direction:column; align-items:flex-start; }
+    .btn{ width:100%; justify-content:flex-start; }
+    .foot-row{ flex-direction:column; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap head-row">
+    <a class="brand" href="#" aria-label="Writ&Loop home">
+      <svg viewBox="0 0 26 16" aria-hidden="true">
+        <circle cx="9" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <circle cx="17" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      </svg>
+      Writ&amp;Loop
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#" aria-current="page">Briefings</a>
+      <a href="#">The method</a>
+      <a href="#">Notes</a>
+      <a href="#">Services</a>
+    </nav>
+    <div class="head-right">
+      <button class="icon-btn" aria-label="Search">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>
+        <span>Search</span>
+      </button>
+      <button class="icon-btn" aria-label="Menu">
+        <span>Menu</span>
+        <span class="burger" aria-hidden="true"><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <svg viewBox="0 0 1400 560" preserveAspectRatio="xMidYMid slice">
+        <g fill="none" stroke="oklch(0.83 0.02 110)" stroke-width="1">
+          <circle cx="1050" cy="180" r="120"/>
+          <circle cx="1050" cy="180" r="210"/>
+          <circle cx="1050" cy="180" r="320"/>
+          <circle cx="1050" cy="180" r="450"/>
+        </g>
+        <g fill="oklch(0.62 0.06 165)">
+          <circle cx="720" cy="70" r="2.5"/>
+          <circle cx="840" cy="150" r="2.5"/>
+          <circle cx="610" cy="120" r="2"/>
+          <circle cx="930" cy="60" r="2"/>
+        </g>
+        <g stroke="oklch(0.62 0.06 165)" stroke-width="1.2">
+          <path d="M860 240 l10 0 M865 235 l0 10"/>
+          <path d="M690 190 l8 0 M694 186 l0 8"/>
+        </g>
+      </svg>
+    </div>
+    <div class="wrap">
+      <div class="hero-inner">
+        <p class="kicker mono">01 &amp; 04 / Quality / Writ&amp;Loop</p>
+        <h1>When the story changes,<br><span class="gr">what</span> should you do?</h1>
+        <p class="lede">A small editorial desk for consequential digital decisions. I read the source, show what was tested, and say what remains uncertain.</p>
+        <div class="cta-row">
+          <a class="btn btn-solid" href="#">Read the lead briefing <span aria-hidden="true">→</span></a>
+          <a class="btn btn-line" href="#">How the work is checked <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="hero-foot">Written and edited by Maren Kessler · Writ&amp;Loop Studio</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap"><span class="mono">Editorial service · live on oversized one</span></div>
+  </div>
+
+  <!-- Briefing desk + Read next -->
+  <section class="desk">
+    <div class="wrap desk-grid">
+
+      <article>
+        <p class="desk-label">The briefing desk</p>
+        <p class="desk-label" style="color:var(--ink); font-style:italic;">Maren Writ&amp;loop</p>
+        <div class="desk-top">
+          <span class="mono">02 / Live from</span>
+        </div>
+        <p class="desk-lead">Search totals, contradictions and traps. We apply search alone as briefing. <button class="search-chip">Search</button></p>
+
+        <div class="photo hero-photo">
+          <svg viewBox="0 0 820 470" role="img" aria-label="Abstract photograph of a machined metal rail with bolt holes">
+            <defs>
+              <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="oklch(0.78 0.03 220)"/>
+                <stop offset="0.5" stop-color="oklch(0.66 0.04 230)"/>
+                <stop offset="1" stop-color="oklch(0.52 0.05 235)"/>
+              </linearGradient>
+              <linearGradient id="steel2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="oklch(0.85 0.02 210)"/>
+                <stop offset="1" stop-color="oklch(0.6 0.04 225)"/>
+              </linearGradient>
+            </defs>
+            <rect width="820" height="470" fill="oklch(0.87 0.03 215)"/>
+            <rect width="820" height="470" fill="oklch(0.8 0.04 210)" opacity="0.5"/>
+            <g transform="rotate(-24 410 240)">
+              <rect x="60" y="150" width="720" height="150" rx="10" fill="url(#steel)"/>
+              <rect x="60" y="150" width="720" height="34" rx="10" fill="url(#steel2)" opacity="0.7"/>
+              <g fill="oklch(0.35 0.05 230)">
+                <circle cx="150" cy="225" r="26"/><circle cx="250" cy="225" r="26"/>
+                <circle cx="350" cy="225" r="26"/><circle cx="450" cy="225" r="26"/>
+                <circle cx="550" cy="225" r="26"/><circle cx="650" cy="225" r="26"/>
+              </g>
+              <g fill="oklch(0.55 0.05 230)">
+                <circle cx="150" cy="218" r="26" opacity="0.35"/><circle cx="250" cy="218" r="26" opacity="0.35"/>
+                <circle cx="350" cy="218" r="26" opacity="0.35"/><circle cx="450" cy="218" r="26" opacity="0.35"/>
+                <circle cx="550" cy="218" r="26" opacity="0.35"/><circle cx="650" cy="218" r="26" opacity="0.35"/>
+              </g>
+            </g>
+            <g transform="rotate(38 410 240)">
+              <rect x="120" y="300" width="640" height="16" rx="8" fill="oklch(0.72 0.05 75)"/>
+              <ellipse cx="150" cy="308" rx="26" ry="14" fill="oklch(0.8 0.06 80)"/>
+              <ellipse cx="720" cy="308" rx="26" ry="14" fill="oklch(0.8 0.06 80)"/>
+            </g>
+            <rect x="0" y="380" width="820" height="90" fill="oklch(0.75 0.04 215)" opacity="0.6"/>
+          </svg>
+        </div>
+
+        <div class="meta-row">
+          <span class="mono">Source:</span>
+          <span class="mono tag">AI agents</span>
+          <span class="mono">Start 2026-04-05</span>
+        </div>
+        <h2>Agent infrastructure got easier. Delegation still needs a boundary.</h2>
+        <p class="desk-body">OpenAI's September 10 public beta manages parts of an agent workflow. A layer still needs to define task boundaries, action boundaries and acceptance tests.</p>
+        <p class="byline">By Maren Vester</p>
+        <a class="link-arrow" href="#">Read the briefing <span aria-hidden="true">→</span></a>
+      </article>
+
+      <aside aria-labelledby="readnext">
+        <div class="next-head">
+          <h2 id="readnext">Read next</h2>
+          <a class="all-link" href="#">All briefings <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="next-list">
+          <article class="next-item">
+            <div class="photo">
+              <svg viewBox="0 0 400 230" role="img" aria-label="Abstract top-down photo of an empty ceramic cup">
+                <rect width="400" height="230" fill="oklch(0.86 0.03 75)"/>
+                <ellipse cx="200" cy="150" rx="120" ry="40" fill="oklch(0.78 0.03 75)"/>
+                <circle cx="200" cy="110" r="72" fill="oklch(0.93 0.02 85)"/>
+                <circle cx="200" cy="110" r="58" fill="oklch(0.88 0.03 80)"/>
+                <circle cx="200" cy="110" r="44" fill="oklch(0.95 0.015 88)"/>
+                <path d="M272 96 q34 6 0 30" fill="none" stroke="oklch(0.82 0.03 80)" stroke-width="10"/>
+              </svg>
+            </div>
+            <div class="meta-row" style="margin:0 0 10px;">
+              <span class="mono">Start 2026-04-04</span>
+              <span class="mono tag">02 coverage</span>
+            </div>
+            <h3>A conversation after an ad is still an ad.</h3>
+            <p>OpenAI is testing Sponsored Agents with agents. 5.3 customers also as “Sponsored ChatGPT”. The conversation. The same measurement and independent answers are different elements.</p>
+            <a class="link-arrow" href="#">Read briefing <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="next-item">
+            <div class="photo">
+              <svg viewBox="0 0 400 230" role="img" aria-label="Abstract photo of coffee with crema being poured">
+                <rect width="400" height="230" fill="oklch(0.83 0.04 70)"/>
+                <circle cx="200" cy="120" r="86" fill="oklch(0.62 0.07 55)"/>
+                <circle cx="200" cy="120" r="86" fill="none" stroke="oklch(0.5 0.06 45)" stroke-width="6"/>
+                <path d="M150 90 q60 -30 110 20 q-40 40 -110 10 q-20 -20 0 -30z" fill="oklch(0.85 0.07 80)" opacity="0.85"/>
+                <ellipse cx="200" cy="120" rx="34" ry="20" fill="oklch(0.72 0.08 65)" opacity="0.7"/>
+              </svg>
+            </div>
+            <div class="meta-row" style="margin:0 0 10px;">
+              <span class="mono">Start 2026-04-03</span>
+              <span class="mono tag">01 agents</span>
+            </div>
+            <h3>Agent infrastructure got easier. Delegation still needs a boundary.</h3>
+            <p>OpenAI's September 10 public beta manages parts of an agent workflow. A layer still needs to define task boundaries, action boundaries and acceptance tests.</p>
+            <a class="link-arrow" href="#">Read briefing <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="next-item">
+            <div class="photo">
+              <svg viewBox="0 0 400 230" role="img" aria-label="Abstract photo of coffee beans beside a cup">
+                <rect width="400" height="230" fill="oklch(0.84 0.035 72)"/>
+                <g fill="oklch(0.42 0.07 45)">
+                  <ellipse cx="90" cy="150" rx="22" ry="13" transform="rotate(-25 90 150)"/>
+                  <ellipse cx="130" cy="170" rx="22" ry="13" transform="rotate(15 130 170)"/>
+                  <ellipse cx="170" cy="150" rx="22" ry="13" transform="rotate(-40 170 150)"/>
+                  <ellipse cx="110" cy="120" rx="20" ry="12" transform="rotate(30 110 120)"/>
+                  <ellipse cx="150" cy="110" rx="20" ry="12" transform="rotate(-10 150 110)"/>
+                </g>
+                <circle cx="280" cy="115" r="70" fill="oklch(0.9 0.02 85)"/>
+                <circle cx="280" cy="115" r="52" fill="oklch(0.55 0.06 50)"/>
+                <circle cx="280" cy="115" r="52" fill="none" stroke="oklch(0.8 0.03 80)" stroke-width="8"/>
+              </svg>
+            </div>
+            <div class="meta-row" style="margin:0 0 10px;">
+              <span class="mono">Start 2026-04-02</span>
+              <span class="mono tag">03 notes</span>
+            </div>
+            <h3>Agent infrastructure got easier. Delegation still needs a boundary.</h3>
+            <p>OpenAI's September 10 public beta manages parts of an agent workflow. A layer still needs to define task boundaries, action boundaries and acceptance tests.</p>
+            <a class="link-arrow" href="#">Read briefing <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="next-item">
+            <div class="photo">
+              <svg viewBox="0 0 400 230" role="img" aria-label="Abstract photo of a coffee cup on a saucer">
+                <rect width="400" height="230" fill="oklch(0.87 0.02 80)"/>
+                <ellipse cx="200" cy="180" rx="130" ry="34" fill="oklch(0.8 0.02 80)"/>
+                <ellipse cx="200" cy="176" rx="100" ry="24" fill="oklch(0.9 0.015 85)"/>
+                <circle cx="200" cy="110" r="66" fill="oklch(0.55 0.06 55)"/>
+                <circle cx="200" cy="110" r="66" fill="none" stroke="oklch(0.92 0.02 85)" stroke-width="10"/>
+                <path d="M266 92 q30 8 0 26" fill="none" stroke="oklch(0.92 0.02 85)" stroke-width="10"/>
+              </svg>
+            </div>
+            <div class="meta-row" style="margin:0 0 10px;">
+              <span class="mono">Source:</span>
+              <span class="mono">AI Search</span>
+              <span class="mono tag">EU&RL 2026-04-01</span>
+            </div>
+            <h3>At Search row has a clearer baseline. It still needs a baseline question.</h3>
+            <p>Google searched Search Console insights and site-level metrics. A search still needs to define a clear case answer and what it cannot.</p>
+            <a class="link-arrow" href="#">Read briefing <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
+
+        <p class="next-note">Each briefing keeps its source, the status of our own checks and what the missing counts available.</p>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- Editorial rule -->
+  <section class="rule-sec">
+    <div class="wrap rule-grid rule">
+      <div>
+        <p class="mono">The editorial rule</p>
+        <h2>Show the work.<br><span class="gr">Then make it useful.</span></h2>
+        <p>The conclusion comes early. The underlying evidence stays in reach.</p>
+        <a class="link-arrow" href="#">Read the complete method <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="num">01</span><span class="t">Original source</span><span class="d">A briefing discarded an idea in the lead itself.</span></div>
+        <div class="step"><span class="num">02</span><span class="t">Our check</span><span class="d">It adds our conditions, in a clear “not found”.</span></div>
+        <div class="step"><span class="num">03</span><span class="t">Decision</span><span class="d">What actions make sense, what risks and what options.</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-row">
+    <div class="foot-brand">
+      <svg viewBox="0 0 26 16" width="24" height="15" aria-hidden="true">
+        <circle cx="9" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <circle cx="17" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      </svg>
+      <span class="mono">Writ&amp;Loop · Editorial by Maren Kessler</span>
+    </div>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="#">Editorial service</a>
+      <a href="#">About the studio</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms and privacy</a>
+      <a href="#">Services</a>
+      <a href="#">AI disclosure and use</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

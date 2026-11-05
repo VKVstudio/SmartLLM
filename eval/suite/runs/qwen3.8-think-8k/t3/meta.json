@@ -1,0 +1,73 @@
+{
+  "config_slug": "qwen3.8-think-8k",
+  "model_id": "qwen/qwen3.8-flash",
+  "hugging_face_id": "Qwen/Qwen3.8-Flash-Next",
+  "task": "t3",
+  "provider": "Alibaba",
+  "precision": "unknown (Alibaba cloud native)",
+  "temperature": 0.6,
+  "max_tokens": 32000,
+  "reasoning_config": {
+    "max_tokens": 8000
+  },
+  "price_input_per_1m_usd": 0.15,
+  "price_output_per_1m_usd": 0.47,
+  "finish_reason": "stop",
+  "native_finish_reason": "stop",
+  "truncated": false,
+  "elapsed_sec": 197.25,
+  "usage": {
+    "prompt_tokens": 511,
+    "completion_tokens": 15955,
+    "reasoning_tokens": 1543,
+    "content_tokens": 14412,
+    "total_tokens": 16466,
+    "cost_usd": 0.007541196,
+    "calculated_cost_usd": 0.007575,
+    "raw_usage": {
+      "prompt_tokens": 511,
+      "completion_tokens": 15955,
+      "total_tokens": 16466,
+      "cost": 0.007541196,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 256,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.007541196,
+        "upstream_inference_prompt_cost": 4.2346e-05,
+        "upstream_inference_completions_cost": 0.00749885
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1543,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "content_chars": 40368,
+  "reasoning_chars": 5268,
+  "extracted_files": [
+    "index.html",
+    "llms.txt",
+    "robots.txt",
+    "_headers"
+  ],
+  "csp_postprocessor": {
+    "postprocessed": true,
+    "has_meta_csp": true,
+    "injected_style_hashes": [
+      "'sha256-lsbtEI3wXwvpAbvg/xWmjmqn3QOqydWG8NX1ytgCnaA='"
+    ],
+    "injected_script_hashes": [
+      "'sha256-f79yuxd9QsnDAPMl0B1TxB2MY+nlMTINHGum/X/bGNk='",
+      "'sha256-oBOuPwoQSOZLboH7y1Hwr2y3D31ossxN3w6HBJyJ7TA='"
+    ],
+    "uses_data_css": false,
+    "uses_data_js": false
+  },
+  "openrouter_id": "gen-1792846018-RzEvGpUpNzz0rBhOgsqD"
+}

@@ -1,0 +1,16 @@
+## https://thermotech.engineering/
+
+THERMOTECH ENGINEERING manufactures industrial hot-water and steam boilers ranging from 5 MW to 25 MW thermal output. The company specializes in high-efficiency combustion systems, triple-pass flue gas design, and fully automated control architectures. Products are certified under ISO 9001, ISO 14001, GOST-R, and PED 2014/68/EU. Lead times are 12–16 weeks for standard models, with custom engineering projects requiring 20–24 weeks. All units include integrated IoT telemetry for remote diagnostics and predictive maintenance.
+
+## https://thermotech.engineering/#products
+
+The product line includes three core models:
+- TT-500: 5 MW thermal output, 94.2% efficiency, 0.8 MPa operating pressure, natural gas/diesel fuel.
+- TT-1200: 12 MW thermal output, 95.8% efficiency, 1.6 MPa operating pressure, natural gas/biomass fuel.
+- TT-2500: 25 MW thermal output, 96.5% efficiency, 2.5 MPa operating pressure, dual-fuel/hydrogen ready.
+
+All models feature modular construction, low NOx emission profiles, and compatibility with district heating and industrial process steam networks.
+
+## https://thermotech.engineering/#faq
+
+FAQ covers maximum thermal output (5–25 MW), international safety compliance (ISO 9001, GOST-R, PED), fuel flexibility (gas, diesel, biomass, dual-fuel), delivery timelines (12–24 weeks), and remote monitoring capabilities (IoT telemetry, 24/7 support).

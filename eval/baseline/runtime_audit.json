@@ -1,0 +1,241 @@
+[
+  {
+    "slug": "qwen3.8-flash",
+    "task": "t1",
+    "exists": true,
+    "consoleErrors": [
+      "The source list for the Content Security Policy directive 'script-src' contains an invalid source: ''sha256-9E2Zk4v6vQw1s4s2v3x4y5z6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c=''. It will be ignored.",
+      "The source list for the Content Security Policy directive 'script-src' contains an invalid source: ''data:''. It will be ignored.",
+      "The source list for the Content Security Policy directive 'style-src' contains an invalid source: ''data:''. It will be ignored.",
+      "Loading the stylesheet 'data:text/css;charset=utf-8,:root%7B--bg:oklch(0.15%200.01%20250);--bg-soft:oklch(0.18%200.012%20250);--panel:oklch(0.20%200.014%20250);--line:oklch(0.32%200.015%20250);--grid:oklch(0.235%200.011%20253);--text:oklch(0.95%200.01%20250);--muted:oklch(0.82%200.015%20250);--accent:oklch(0.68%200.19%2045);--accent-soft:oklch(0.68%200.19%2045%20/%200.14);--accent-text:oklch(0.82%200.16%2045);--on-accent:oklch(0.15%200.01%20250);--success:oklch(0.86%200.17%20145);--error:oklch(0.78%200.17%2025);--mono:%22JetBrain...grid-template-columns:1fr%7D.cert-grid%7Bgrid-template-columns:repeat(2,minmax(0,1fr))%7D.footer-grid%7Bgrid-template-columns:1fr%7D%7D@media%20(max-width:768px)%7B.topbar-inner%7Bmin-height:64px%7D.top-note%7Bdisplay:none%7D.spec-strip%7Bgrid-template-columns:1fr%7D.form-row%7Bgrid-template-columns:1fr%7D.cert-grid%7Bgrid-template-columns:1fr%7D%7D@media%20(prefers-reduced-motion:reduce)%7Bhtml%7Bscroll-behavior:auto%7D.btn,.faq-item%20summary%3Aafter%7Btransition:none%7D.btn:hover%7Btransform:none%7D%7D' violates the following Content Security Policy directive: \"style-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c=' 'data:'\". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked."
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "requestedUrls": [
+      "/index.html",
+      "/index.html",
+      "/index.html"
+    ],
+    "mobileOverflow": {
+      "clientWidth": 375,
+      "scrollWidth": 749,
+      "hasHorizontalScroll": true
+    },
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 96,
+      "bestPractices": 93,
+      "seo": 92,
+      "cls": 0,
+      "lcp_ms": 975,
+      "tbt_ms": 0,
+      "failedAudits": {
+        "performance": [],
+        "accessibility": [
+          {
+            "id": "target-size",
+            "title": "Touch targets do not have sufficient size or spacing.",
+            "score": 0
+          }
+        ],
+        "best-practices": [
+          {
+            "id": "errors-in-console",
+            "title": "Browser errors were logged to the console",
+            "score": 0
+          },
+          {
+            "id": "inspector-issues",
+            "title": "Issues were logged in the `Issues` panel in Chrome Devtools",
+            "score": 0
+          }
+        ],
+        "seo": [
+          {
+            "id": "robots-txt",
+            "title": "robots.txt is not valid",
+            "score": 0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "slug": "qwen3.8-flash",
+    "task": "t2",
+    "exists": true,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "requestedUrls": [
+      "/index.html",
+      "/favicon.ico",
+      "/index.html",
+      "/index.html",
+      "/favicon.ico",
+      "/robots.txt"
+    ],
+    "mobileOverflow": {
+      "clientWidth": 375,
+      "scrollWidth": 375,
+      "hasHorizontalScroll": false
+    },
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 95,
+      "bestPractices": 96,
+      "seo": 90,
+      "cls": 0,
+      "lcp_ms": 901,
+      "tbt_ms": 0,
+      "failedAudits": {
+        "performance": [],
+        "accessibility": [
+          {
+            "id": "label",
+            "title": "Form elements do not have associated labels",
+            "score": 0
+          }
+        ],
+        "best-practices": [
+          {
+            "id": "errors-in-console",
+            "title": "Browser errors were logged to the console",
+            "score": 0
+          }
+        ],
+        "seo": [
+          {
+            "id": "meta-description",
+            "title": "Document does not have a meta description",
+            "score": 0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "slug": "ling-3.0-flash-vl",
+    "task": "t1",
+    "exists": true,
+    "consoleErrors": [
+      "The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "Applying inline style violates the following Content Security Policy directive 'style-src 'sha256-COMPUTE_FROM_FINAL_STYLE_CONTENT_BASE64''. Either the 'unsafe-inline' keyword, a hash ('sha256-4oeOwCjU8iiUxMpGQ70ZtgjVS+s+/mCi4gu0EPzW2zE='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'sha256-COMPUTE_FROM_FINAL_SCRIPT_CONTENT_BASE64''. Either the 'unsafe-inline' keyword, a hash ('sha256-NEUBR3hyTRsk+NQicrnq5Y0rBT6+eVqikTo0XqbrC1s='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "requestedUrls": [
+      "/index.html",
+      "/favicon.ico",
+      "/index.html",
+      "/index.html",
+      "/favicon.ico",
+      "/robots.txt"
+    ],
+    "mobileOverflow": {
+      "clientWidth": 375,
+      "scrollWidth": 625,
+      "hasHorizontalScroll": true
+    },
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 97,
+      "bestPractices": 93,
+      "seo": 100,
+      "cls": 0,
+      "lcp_ms": 1050,
+      "tbt_ms": 0,
+      "failedAudits": {
+        "performance": [],
+        "accessibility": [
+          {
+            "id": "target-size",
+            "title": "Touch targets do not have sufficient size or spacing.",
+            "score": 0
+          }
+        ],
+        "best-practices": [
+          {
+            "id": "errors-in-console",
+            "title": "Browser errors were logged to the console",
+            "score": 0
+          },
+          {
+            "id": "inspector-issues",
+            "title": "Issues were logged in the `Issues` panel in Chrome Devtools",
+            "score": 0
+          }
+        ],
+        "seo": []
+      }
+    }
+  },
+  {
+    "slug": "ling-3.0-flash-vl",
+    "task": "t2",
+    "exists": true,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "badResponses": [],
+    "requestedUrls": [
+      "/index.html",
+      "/favicon.ico",
+      "/index.html",
+      "/index.html",
+      "/favicon.ico",
+      "/robots.txt"
+    ],
+    "mobileOverflow": {
+      "clientWidth": 375,
+      "scrollWidth": 375,
+      "hasHorizontalScroll": false
+    },
+    "lighthouse": {
+      "performance": 100,
+      "accessibility": 98,
+      "bestPractices": 96,
+      "seo": 90,
+      "cls": 0,
+      "lcp_ms": 901,
+      "tbt_ms": 0,
+      "failedAudits": {
+        "performance": [],
+        "accessibility": [
+          {
+            "id": "heading-order",
+            "title": "Heading elements are not in a sequentially-descending order",
+            "score": 0
+          }
+        ],
+        "best-practices": [
+          {
+            "id": "errors-in-console",
+            "title": "Browser errors were logged to the console",
+            "score": 0
+          }
+        ],
+        "seo": [
+          {
+            "id": "meta-description",
+            "title": "Document does not have a meta description",
+            "score": 0
+          }
+        ]
+      }
+    }
+  }
+]

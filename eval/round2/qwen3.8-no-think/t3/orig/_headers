@@ -1,0 +1,10 @@
+# Cloudflare Pages security headers (mirrors the meta CSP policy).
+# NOTE: keep the script-src/style-src SHA-256 hashes identical to those in index.html.
+/*
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests; script-src 'sha256-+3lGhZv7QmBqY0g9r4HcUkPjNfTnD6xVdFpKwXbJyA0='; style-src 'sha256-j8S/6OZM3aEoIzL1eR9CtWuYh7NqB4vXsPmD0kL2gF8='; img-src 'self' data:; font-src 'self'; connect-src 'none'; manifest-src 'self'; worker-src 'none'; media-src 'none'; child-src 'none'; frame-src 'none'; trusted-types none; require-trusted-types-for 'script'; report-to csp-endpoint;
+  Report-To: {"group":"csp-endpoint","max_age":31536000,"endpoints":[{"url":"/csp-report"}],"include_subdomains":true}
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin

@@ -1,0 +1,75 @@
+# THERMOTECH ENGINEERING
+
+> Manufacturer of industrial hot-water and steam boilers rated 5–25 MW. Water-tube and fire-tube designs, ISO 9001 / ISO 45001 certified, GOST conformity. Packaged units for district heating, process plants and combined-heat-and-power.
+
+## Company
+- Name: THERMOTECH ENGINEERING
+- Founded: 1998
+- Headquarters: Proizvodstvennaya str., 14, 454047 Chelyabinsk, Russia
+- Sales email: sales@thermotech-eng.example
+- Service email: service@thermotech-eng.example
+- Phone: +7 (351) 000-00-00
+
+## Products
+### TT-HW-05 — Hot-water boiler
+- Output: 5 MW
+- Design pressure: 1.6 MPa
+- Working fluid: 115 / 70 °C (supply / return)
+- Net efficiency: 94 %
+- Fuels: Natural gas, Diesel, Light fuel oil
+- Combustion control: Modulating burner, 25–100 % turndown
+- Feedwater: Single-stage deaerator + feed pump
+- Automation: PLC, Modbus TCP / BACnet
+- Footprint: 6.4 × 3.2 m
+- Dry weight: ≈ 18 t
+- Certification: ISO 9001, ISO 45001, GOST conformity
+
+### TT-HW-12 — Hot-water boiler
+- Output: 12 MW
+- Design pressure: 2.5 MPa
+- Working fluid: 150 / 70 °C (supply / return)
+- Net efficiency: 95 %
+- Fuels: Natural gas, Diesel, Heavy fuel oil, Biomass
+- Combustion control: Modulating burner, 20–100 % turndown
+- Feedwater: Dual-stage deaerator + redundant feed pumps
+- Automation: PLC, Modbus TCP / BACnet
+- Footprint: 9.2 × 4.1 m
+- Dry weight: ≈ 34 t
+- Certification: ISO 9001, ISO 45001, GOST conformity
+
+### TT-ST-25 — Steam boiler
+- Output: 25 MW
+- Design pressure: 3.9 MPa
+- Working fluid: 3.9 MPa / 450 °C superheated steam
+- Net efficiency: 96 %
+- Fuels: Natural gas, Heavy fuel oil, Coal, Biomass
+- Combustion control: Modulating burner, 20–100 % turndown
+- Feedwater: Deaerator + variable-speed feed pump + economizer
+- Automation: PLC, Modbus TCP / BACnet
+- Footprint: 14.0 × 6.0 m
+- Dry weight: ≈ 72 t
+- Certification: ISO 9001, ISO 45001, GOST conformity
+
+## Certifications
+- ISO 9001 — Quality management system
+- ISO 45001 — Occupational health & safety management
+- GOST conformity — Pressure-equipment declarations, hydrostatic test certificates
+- EN 12953 / EN 12952 — Shell/fire-tube and water-tube construction standards (design basis)
+
+## FAQ
+- Q: What output range do THERMOTECH boilers cover?
+  A: Our standard product line spans 5 to 25 MW of thermal output across three models: the TT-HW-05 (5 MW), the TT-HW-12 (12 MW) and the TT-ST-25 (25 MW). Each model is engineered as a fully packaged unit rather than a field-assembled plant, which shortens delivery time and simplifies commissioning.
+- Q: Which fuels can the units burn?
+  A: Every model ships with a modulating burner sized for natural gas or light fuel oil. The TT-HW-12 and TT-ST-25 can additionally be configured for diesel, heavy fuel oil or biomass. Fuel selection is fixed at order time because it drives burner sizing, flue-gas treatment and automation logic.
+- Q: How are the boilers certified?
+  A: Manufacturing runs under an ISO 9001 quality-management system and an ISO 45001 occupational-health-and-safety system. Units intended for markets that require national standards are supplied with GOST conformity documentation, including pressure-equipment declarations and hydrostatic test certificates.
+- Q: What does a typical lead time look like?
+  A: Standard configurations ship in 12 to 16 weeks from a confirmed purchase order. Non-standard builds — custom pressures, alternative fuels or special automation — typically add four to six weeks. We confirm a firm date during the quotation stage.
+- Q: Do you provide commissioning and service support?
+  A: Yes. Every supply includes remote commissioning guidance, on-site start-up assistance on request, operator training and a two-year warranty covering parts and labour. A spare-parts catalogue and a priority response contract are available for the full service life of the unit.
+
+## Optional
+- Canonical URL: https://thermotech-eng.example/
+- Language: en
+- Lead time: 12–16 weeks (standard configuration)
+- Warranty: 2 years, parts and labour

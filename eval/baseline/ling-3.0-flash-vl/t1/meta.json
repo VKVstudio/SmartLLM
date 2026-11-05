@@ -1,0 +1,56 @@
+{
+  "model_id": "inclusionai/ling-3.0-flash-vl",
+  "hugging_face_id": "inclusionAI/Ling-3.0-flash-VL",
+  "model_slug": "ling-3.0-flash-vl",
+  "task": "t1",
+  "provider": "DeepInfra",
+  "precision": "fp16",
+  "temperature": 0.6,
+  "max_tokens": 32000,
+  "price_input_per_1m_usd": 0.06,
+  "price_output_per_1m_usd": 0.18,
+  "finish_reason": "stop",
+  "native_finish_reason": "stop",
+  "truncated": false,
+  "elapsed_sec": 335.88,
+  "usage": {
+    "prompt_tokens": 483,
+    "completion_tokens": 29306,
+    "reasoning_tokens": 10841,
+    "total_tokens": 29789,
+    "cost_usd": 0.00530406,
+    "calculated_cost_usd": 0.005304,
+    "raw_usage": {
+      "prompt_tokens": 483,
+      "completion_tokens": 29306,
+      "total_tokens": 29789,
+      "cost": 0.00530406,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.00530406,
+        "upstream_inference_prompt_cost": 2.898e-05,
+        "upstream_inference_completions_cost": 0.00527508
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 10841,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "content_chars": 51820,
+  "reasoning_chars": 42278,
+  "extracted_files": [
+    "index.html",
+    "llms.txt",
+    "robots.txt",
+    "_headers"
+  ],
+  "openrouter_id": "gen-1792841518-rBzkTr7LkFjqFrO6hmRM"
+}

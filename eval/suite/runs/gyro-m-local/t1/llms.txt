@@ -1,0 +1,23 @@
+# Thermotech Engineering
+
+> Thermotech Engineering manufactures industrial hot-water and steam boilers from 5 to 25 MW for district heating, process steam, industrial utilities, and combined heat systems.
+
+## Core
+- [Home](https://thermotech.example/): Industrial hot-water and steam boiler manufacturing capability.
+- [Product line](https://thermotech.example/#product-line): Three boiler models with technical specifications.
+- [Boiler circuit](https://thermotech.example/#boiler-circuit): Inline schematic of fuel, burner, boiler vessel, feedwater, flue gas, and control systems.
+- [Certifications](https://thermotech.example/#certifications): ISO and GOST compliance documentation.
+- [FAQ](https://thermotech.example/#faq): Five engineering questions and answers.
+- [Contact](https://thermotech.example/#contact): Client-side contact form with no backend submission.
+
+## Product models
+- TT-5 Hot-Water Boiler: 5 MW thermal output, 105/70 °C design temperature, 10 bar design pressure, natural gas or light oil fuel, 94–96% nominal efficiency.
+- TT-12 Steam Boiler: 12 MW thermal output, 184 °C design temperature, 16 bar design pressure, natural gas, biogas, or light oil fuel, 92–95% nominal efficiency.
+- TT-25 High-Pressure Steam Boiler: 25 MW thermal output, 223 °C design temperature, 25 bar design pressure, natural gas, biomass, or waste heat fuel, 90–94% nominal efficiency.
+
+## FAQ
+- What fuel options are available for Thermotech boilers? Thermotech boilers can be configured for natural gas, light oil, biogas, biomass, or waste-heat recovery depending on the model and site requirements.
+- What is the typical lead time for manufacturing? Standard production lead time is 12 to 24 weeks after final engineering approval, depending on model, pressure class, and delivery scope.
+- Can Thermotech supply complete boiler-house packages? Yes. We supply complete packages including burner, control panel, feedwater system, flue gas path, insulation, piping interfaces, and commissioning support.
+- How are emissions and combustion compliance handled? Combustion settings are tuned for site-specific fuel quality and local emission limits. We provide burner documentation, test reports, and compliance support.
+- What maintenance access is provided? Models include removable front covers, tube access points, inspection ports, and service clearances compatible with standard boiler-house maintenance.

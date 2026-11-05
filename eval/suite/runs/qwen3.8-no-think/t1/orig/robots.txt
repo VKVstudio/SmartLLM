@@ -1,0 +1,8 @@
+# THERMOTECH ENGINEERING — robots.txt
+User-agent: *
+Allow: /
+
+# Machine-readable context for LLM crawlers
+# See llms.txt for structured product/company data.
+
+Sitemap: https://thermotech-eng.example/sitemap.xml

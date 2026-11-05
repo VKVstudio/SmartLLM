@@ -1,0 +1,205 @@
+{
+  "version": "1.0.0",
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "THERMOTECH ENGINEERING — Industrial Boiler B2B Landing",
+      "language": "en",
+      "modality": "text",
+      "canon": "Industrial B2B Engineering",
+      "category": "web_landing",
+      "unchanged_from_round2": true,
+      "required_files": [
+        "index.html",
+        "llms.txt",
+        "robots.txt",
+        "_headers"
+      ],
+      "system_prompt": "You are a senior front-end engineer and designer. Output only the requested files, each in its own fenced code block preceded by a line `FILE: <name>`. No explanations.",
+      "prompt": "Build a production-ready single-page landing for THERMOTECH ENGINEERING — a manufacturer of industrial hot-water and steam boilers (5–25 MW). Language: English. Design canon: Industrial B2B Engineering — 1px blueprint grid #2A2E35, JetBrains Mono + IBM Plex Sans (system fallbacks, no external font CDNs), signal orange accent oklch(0.68 0.19 45), all colors as OKLCH design tokens in :root. No purple gradients, no centered 3-card template, no stock photos of people.\nSections: hero, product line table (3 boiler models with specs), technical inline SVG schematic of the boiler circuit, certifications (ISO/GOST), FAQ (5 Q&A), contact form (no backend, client-side validation only), footer.\nRequirements:\n- Vanilla HTML/CSS/JS only, no frameworks, no external requests at all.\n- Semantic HTML5, one h1, ARIA where needed, text contrast ≥ 7:1, keyboard accessible, prefers-reduced-motion respected.\n- Performance: CLS 0 (explicit sizes / aspect-ratio), critical CSS inline, no render-blocking resources.\n- SEO/GEO: title, meta description, canonical, Open Graph; JSON-LD @graph with Organization, Product (for each model), FAQPage (must match visible FAQ verbatim), BreadcrumbList; llms.txt per llmstxt.org format; robots.txt.\n- Security: strict CSP in a meta tag using sha256 hashes for every inline script and style (no 'unsafe-inline'), plus a Cloudflare Pages `_headers` file with CSP (same policy + frame-ancestors 'none'), HSTS (max-age=63072000; includeSubDomains; preload), X-Content-Type-Options, Referrer-Policy, Permissions-Policy, Cross-Origin-Opener-Policy.\nFiles: index.html, llms.txt, robots.txt, _headers."
+    },
+    {
+      "id": "t2",
+      "title": "VKVstudio.pro Editorial Layout — Vision-to-Code #1",
+      "language": "en",
+      "modality": "vision",
+      "ref_image": "ref/t2.png",
+      "canon": "Editorial / Studio Light",
+      "category": "vision_to_code",
+      "unchanged_from_round2": true,
+      "required_files": [
+        "index.html"
+      ],
+      "system_prompt": "You are a senior front-end engineer and designer. Output only the requested files, each in its own fenced code block preceded by a line `FILE: <name>`. No explanations.",
+      "prompt": "Recreate this screenshot as a single self-contained index.html (inline CSS, no external requests, no frameworks). Match layout, spacing, typography hierarchy and colors as closely as possible; use OKLCH tokens in :root. Semantic HTML5, responsive down to 375px, contrast ≥ 7:1 where the design allows. Files: index.html."
+    },
+    {
+      "id": "t3",
+      "title": "Северная Мануфактура — Архитектурное бюро и столярная мануфактура",
+      "language": "ru",
+      "modality": "text",
+      "canon": "Luxury Minimalism",
+      "category": "web_landing",
+      "unchanged_from_round2": true,
+      "required_files": [
+        "index.html",
+        "llms.txt",
+        "robots.txt",
+        "_headers"
+      ],
+      "system_prompt": "You are a senior front-end engineer and designer. Output only the requested files, each in its own fenced code block preceded by a line `FILE: <name>`. No explanations.",
+      "prompt": "Build a production-ready single-page landing for «Северная Мануфактура» — a boutique manufacturer of solid oak furniture (dining tables, cabinetry, architectural joinery). Language: Russian. Design canon: Luxury Minimalism — generous whitespace padding clamp(4rem, 10vw, 12rem), antiqua Cormorant Garamond / Playfair Display + clean sans-serif (system fallbacks, no external font CDNs), warm muted tones oklch(0.95 0.01 85), all colors as OKLCH design tokens in :root. No purple gradients, no centered 3-card template, no stock photos of people.\nSections: hero, product line table (3 flagship solid oak models with specs), technical inline SVG schematic of the joinery assembly (mortise-and-tenon / dovetail cross-section), certifications (FSC/GOST), FAQ (5 Q&A in Russian), contact form (no backend, client-side validation only), footer.\nRequirements:\n- Vanilla HTML/CSS/JS only, no frameworks, no external requests at all.\n- Semantic HTML5, one h1, ARIA where needed, text contrast ≥ 7:1, keyboard accessible, prefers-reduced-motion respected.\n- Performance: CLS 0 (explicit sizes / aspect-ratio), critical CSS inline, no render-blocking resources.\n- SEO/GEO: title, meta description, canonical, Open Graph; JSON-LD @graph with Organization, Product (for each model), FAQPage (must match visible FAQ verbatim), BreadcrumbList; llms.txt per llmstxt.org format; robots.txt.\n- Security: strict CSP in a meta tag using sha256 hashes for every inline script and style (no 'unsafe-inline'), plus a Cloudflare Pages `_headers` file with CSP (same policy + frame-ancestors 'none'), HSTS (max-age=63072000; includeSubDomains; preload), X-Content-Type-Options, Referrer-Policy, Permissions-Policy, Cross-Origin-Opener-Policy.\nFiles: index.html, llms.txt, robots.txt, _headers."
+    },
+    {
+      "id": "t4",
+      "title": "TypeScript Async DAG Task Scheduler & Executor (Strict tsc + 12 Unit Tests)",
+      "language": "en",
+      "modality": "text",
+      "canon": "General Coding (TypeScript Strict)",
+      "category": "typescript_coding",
+      "unchanged_from_round2": false,
+      "required_files": [
+        "dag.ts"
+      ],
+      "system_prompt": "You are a principal TypeScript systems engineer. Output only the requested file in its own fenced code block preceded by a line `FILE: dag.ts`. No explanations.",
+      "prompt": "Implement a production-grade, zero-dependency TypeScript module `dag.ts` for executing Directed Acyclic Graphs (DAGs) of asynchronous tasks with strict static typing.\nLanguage: English (TypeScript, strict mode, target ES2022).\nOutput format: Preceded by `FILE: dag.ts`, output a single fenced `typescript` code block.\n\nRequired Exports & Signatures in `dag.ts`:\n1. `export type NodeStatus = \"completed\" | \"failed\" | \"skipped\" | \"cancelled\";`\n2. `export interface TaskNode<TContext = Record<string, unknown>, TResult = unknown>`:\n   - `id: string`\n   - `deps: readonly string[]` (IDs of upstream nodes that must complete before this node starts)\n   - `run: (ctx: { readonly results: ReadonlyMap<string, unknown>; readonly context: TContext; readonly signal: AbortSignal }) => Promise<TResult> | TResult`\n   - `retries?: number` (number of retry attempts on error, default 0)\n   - `retryDelayMs?: number` (base exponential backoff delay in ms: `retryDelayMs * (2 ** attempt)`, default 0)\n3. `export interface NodeExecutionReport<TResult = unknown>`:\n   - `id: string`\n   - `status: NodeStatus`\n   - `attempts: number`\n   - `durationMs: number`\n   - `result?: TResult`\n   - `error?: Error`\n4. `export interface DAGExecutionOptions<TContext = Record<string, unknown>>`:\n   - `maxConcurrency?: number` (positive integer bounding simultaneous active `run` calls; default `Infinity`)\n   - `context?: TContext`\n   - `signal?: AbortSignal`\n5. `export class DAGCycleError extends Error`:\n   - `readonly cycle: readonly string[]` (ordered list of node IDs forming the cycle, e.g. `[\"A\", \"B\", \"C\", \"A\"]`)\n6. `export class DAGValidationError extends Error` (thrown on duplicate node IDs, missing dependency IDs, or invalid `maxConcurrency <= 0`).\n7. `export class DAGExecutor<TContext = Record<string, unknown>>`:\n   - `addNode<TResult>(node: TaskNode<TContext, TResult>): this` (throws `DAGValidationError` if `node.id` is already registered)\n   - `validate(): string[]`:\n     - Throws `DAGValidationError` if any dependency ID in `deps` does not exist in registered nodes.\n     - Throws `DAGCycleError` (with `cycle` array) if a cycle exists (including self-dependency `A -> A`).\n     - Returns a deterministic topological ordering of node IDs (`string[]`).\n   - `execute(options?: DAGExecutionOptions<TContext>): Promise<Map<string, NodeExecutionReport>>`:\n     - Validates the graph first (`validate()`).\n     - Executes nodes respecting all dependencies (`deps`) and bounding simultaneous in-flight tasks to `maxConcurrency`.\n     - If a node throws/rejects, retries up to `node.retries ?? 0` times with delay `(node.retryDelayMs ?? 0) * (2 ** attempt)` (where `attempt` is 0-indexed for the first retry).\n     - If a node still fails after all retries, its status is `\"failed\"` (with `error` populated), and all transitive downstream dependents of that node must NOT execute and must be recorded with `status: \"skipped\"` and `attempts: 0`. Independent branches not depending on the failed node must continue to completion.\n     - If `options?.signal` is already aborted or aborts during execution, any unstarted nodes must be recorded with `status: \"cancelled\"` and `attempts: 0`.\n     - Returns a `Map<string, NodeExecutionReport>` containing an entry for every registered node.\n\nConstraints:\n- Must compile cleanly with `tsc --noEmit --strict --target ES2022` with zero external npm packages.\n- Do not use `any` (use `unknown` and generics).\nFiles: dag.ts."
+    },
+    {
+      "id": "t5",
+      "title": "HELVETICA KINETIC LAB — Swiss Typographic Grid & Kinetic Acoustics",
+      "language": "en",
+      "modality": "text",
+      "canon": "Swiss Typographic Grid",
+      "category": "web_landing",
+      "unchanged_from_round2": false,
+      "required_files": [
+        "index.html",
+        "llms.txt",
+        "robots.txt",
+        "_headers"
+      ],
+      "system_prompt": "You are a senior front-end engineer and designer. Output only the requested files, each in its own fenced code block preceded by a line `FILE: <name>`. No explanations.",
+      "prompt": "Build a production-ready single-page landing for HELVETICA KINETIC LAB — a Zurich-based institute for architectural acoustics, vibration metrology, and spatial sound engineering. Language: English.\nDesign canon: Swiss Typographic Grid — Josef Müller-Brockmann asymmetric modular grid (12-column CSS Grid + CSS Subgrid for card alignment), exposed 1px structural hairlines (`oklch(0.22 0.01 260)`), stark warm-white paper background (`oklch(0.975 0.005 85)`), deep carbon ink (`oklch(0.13 0.01 260)`), and International Swiss Red signal accent (`oklch(0.56 0.22 27)`). All colors defined as OKLCH tokens in `:root`. System neo-grotesque typography (`Inter`, `Helvetica Neue`, `Arial`, monospace tabular numerals `font-variant-numeric: tabular-nums`), oversized typographic scale (`clamp()`), zero purple gradients, zero stock photos.\nSections:\n1. Asymmetric Swiss Grid Hero with oversized index numerals (`01`–`04`), live acoustic reverberation RT60 readout, and kinetic typography reveal.\n2. Interactive Acoustic Frequency & Reverberation Calculator (room volume m³, surface absorption coefficient α, target RT60, live inline SVG Bode/decay curve that updates on slider/input change).\n3. Metrology Chambers & Services Spec Matrix (3 chambers: Anechoic ISO 3745, Reverberation ISO 354, Laser Doppler Vibrometry) using CSS `subgrid`.\n4. Choreography & Scroll-driven Timeline section (self-contained vanilla JS kinetic timeline controller with play/pause/scrub and `prefers-reduced-motion` support; no external CDN requests).\n5. FAQ (5 technical Q&A on ISO 3382, RT60, STI, and structural decoupling) and calibration booking form (client-side validation).\n6. Footer with Zurich coordinates and ISO accreditation metadata.\nRequirements:\n- Vanilla HTML/CSS/JS only, zero external network requests.\n- Semantic HTML5, exactly one `h1`, ARIA labels, primary text contrast ≥ 7:1, keyboard accessible, `prefers-reduced-motion` respected.\n- Performance: CLS 0, explicit `width`/`height` or `aspect-ratio` on all visual elements.\n- SEO/GEO: title, meta description, canonical, Open Graph; JSON-LD `@graph` with `Organization`, `Product` (for the 3 metrology chambers/services), `FAQPage` (matching visible FAQ verbatim), `BreadcrumbList`; `llms.txt`; `robots.txt`.\n- Security: strict CSP in `<meta>` using `sha256-...` hashes (no `'unsafe-inline'`), plus Cloudflare Pages `_headers` with CSP (`frame-ancestors 'none'`), HSTS (`max-age=63072000; includeSubDomains; preload`), `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`.\nFiles: index.html, llms.txt, robots.txt, _headers."
+    },
+    {
+      "id": "t6",
+      "title": "VORTEX COMPUTE — High-Tech SaaS Dark Mode + WebGL/GLSL Shader & Bento Grid",
+      "language": "en",
+      "modality": "text",
+      "canon": "High-Tech SaaS Dark Mode",
+      "category": "web_landing",
+      "unchanged_from_round2": false,
+      "required_files": [
+        "index.html",
+        "llms.txt",
+        "robots.txt",
+        "_headers"
+      ],
+      "system_prompt": "You are a senior front-end engineer and designer. Output only the requested files, each in its own fenced code block preceded by a line `FILE: <name>`. No explanations.",
+      "prompt": "Build a production-ready single-page product portal for VORTEX COMPUTE — a sovereign distributed GPU & NVMe-over-Fabrics inference engine for low-latency MoE models. Language: English.\nDesign canon: High-Tech SaaS Dark Mode — deep obsidian canvas (`oklch(0.13 0.02 260)`), elevated dark slate surfaces (`oklch(0.18 0.02 260)`), hairline specular borders (`oklch(0.28 0.03 260)`), high-contrast crisp alabaster text (`oklch(0.95 0.01 250)`), and electric cyan/emerald telemetry accents (`oklch(0.76 0.15 195)` and `oklch(0.72 0.17 155)`). All colors as OKLCH tokens in `:root`. No purple-blue AI-slop gradients, no generic 3-card centered template.\nSections:\n1. Hero with an interactive, self-contained **WebGL / GLSL Shader Canvas** (`<canvas>` running a custom GLSL fragment/vertex shader or WebGL2 tensor-routing field with graceful 2D canvas fallback if WebGL context is unavailable in headless mode, plus FPS/token-latency telemetry overlay).\n2. 6-Cell Asymmetric Bento Grid showcasing architecture pillars (RDMA Tensor Sharding, Speculative Tree Verification, NVMe Page-Cache Pinning, Zero-Copy KV Ring, Deterministic Quantization, Hardware Enclave Isolation) with inline technical SVG diagrams.\n3. Interactive VRAM & Throughput Sizing Calculator (model active params, total MoE params, quant bpw, PCIe generation, batch size -> live calculation of VRAM GB, RAM GB, and estimated tok/s).\n4. Benchmark Comparison Table (3 deployment tiers: Edge Node 8GB, Workstation 12GB, Rack Pod 8xGPU) with tabular monospace metrics.\n5. FAQ (5 deep engineering Q&A) and cluster provisioning request form (client-side validation).\n6. Footer.\nRequirements:\n- Vanilla HTML/CSS/JS only, zero external network requests (WebGL shader written inline in JS).\n- Semantic HTML5, one `h1`, ARIA attributes, primary text contrast ≥ 7:1, `prefers-reduced-motion` pauses shader animation automatically.\n- Performance: CLS 0, explicit canvas dimensions.\n- SEO/GEO: title, meta description, canonical, Open Graph; JSON-LD `@graph` with `Organization`, `Product` (for the 3 deployment tiers), `FAQPage` (matching visible FAQ verbatim), `BreadcrumbList`; `llms.txt`; `robots.txt`.\n- Security: strict CSP in `<meta>` with `sha256-...` hashes (no `'unsafe-inline'`), plus Cloudflare Pages `_headers` with all 7 security headers.\nFiles: index.html, llms.txt, robots.txt, _headers."
+    },
+    {
+      "id": "t7",
+      "title": "ЦЕХ №4 — Нео-брутализм и калькулятор 5-осевой ЧПУ-металлообработки",
+      "language": "ru",
+      "modality": "text",
+      "canon": "Neo-Brutalism",
+      "category": "web_landing",
+      "unchanged_from_round2": false,
+      "required_files": [
+        "index.html",
+        "llms.txt",
+        "robots.txt",
+        "_headers"
+      ],
+      "system_prompt": "You are a senior front-end engineer and designer. Output only the requested files, each in its own fenced code block preceded by a line `FILE: <name>`. No explanations.",
+      "prompt": "Создай готовый к продакшену одностраничный лендинг для «ЦЕХ №4» — уральского бюро промышленного прототипирования, 5-осевой ЧПУ-металлообработки (титан, инконель, закалённые стали) и мелкосерийного литья под давлением (Екатеринбург). Язык: русский.\nДизайн-канон: Neo-Brutalism — открытая конструктивистская геометрия, жёсткие рамки `2px solid oklch(0.14 0.01 260)`, смещённые плоские тени без размытия (`4px 4px 0px oklch(0.14 0.01 260)`), плотный технический фон тёплого крафта/известняка (`oklch(0.94 0.03 90)`), контрастный угольный текст (`oklch(0.14 0.01 260)`), индустриальный сигнально-жёлтый (`oklch(0.86 0.16 90)`) и киноварный (`oklch(0.58 0.21 30)`) акценты в плашках с чёрным текстом. Все цвета — строго через OKLCH-токены в `:root`. Никаких фиолетовых градиентов, скруглённых «пушистых» карточек, стоковых фото и англицизмов-калек.\nСекции:\n1. Бруталистский Hero с паспортом производства (допуски по ГОСТ 25346 / IT6, шероховатость Ra 0.4, габариты до 1200×800×600 мм) и векторным изометрическим чертежом фрезеруемой крыльчатки турбины (inline SVG с размерными цепями).\n2. Интерактивный калькулятор стоимости и сроков партии (выбор сплава: ВТ6 титан / 12Х18Н10Т / Д16Т / 40Х; квалитет точности IT6–IT10; размер партии 1–500 шт.; расчёт массы заготовки, машино-часов и цены в рублях без перезагрузки страницы).\n3. Таблица станочного парка и технологических переделов (3 комплекса: 5-осевой фрезерный центр, электроэрозионный проволочный станок, вакуумное литьё в силикон и ТПА) с реальными инженерными характеристиками.\n4. Контроль качества (КИМ Carl Zeiss, рентгеноскопия, паспорта плавки).\n5. FAQ (5 конкретных вопросов и ответов для главных инженеров и отдела снабжения) и форма заявки на расчёт по STEP/IGES-модели (клиентская валидация).\n6. Подвал с реквизитами.\nТребования:\n- Только ванильный HTML/CSS/JS, 0 внешних сетевых запросов.\n- Семантический HTML5, ровно один `h1`, ARIA-разметка, контраст основного текста ≥ 7:1, полная клавиатурная доступность, учёт `prefers-reduced-motion`.\n- Производительность: CLS 0, явные размеры всех SVG и блоков.\n- SEO/GEO: `title`, `meta description`, `canonical`, Open Graph; JSON-LD `@graph` с `Organization`, `Product` (для 3 технологических комплексов/услуг), `FAQPage` (дословное совпадение с видимым FAQ), `BreadcrumbList`; `llms.txt`; `robots.txt`.\n- Безопасность: строгий CSP в `<meta>` на `sha256-...` хэшах (без `'unsafe-inline'`) и файл Cloudflare Pages `_headers` со всеми 7 обязательными заголовками безопасности.\nФайлы: index.html, llms.txt, robots.txt, _headers."
+    },
+    {
+      "id": "t8",
+      "title": "АРХИВ ТЕХНОЛОГИЙ — Журнальная вёрстка (Editorial, Subgrid, Container Queries)",
+      "language": "ru",
+      "modality": "text",
+      "canon": "Editorial",
+      "category": "web_landing",
+      "unchanged_from_round2": false,
+      "required_files": [
+        "index.html",
+        "llms.txt",
+        "robots.txt",
+        "_headers"
+      ],
+      "system_prompt": "You are a senior front-end engineer and designer. Output only the requested files, each in its own fenced code block preceded by a line `FILE: <name>`. No explanations.",
+      "prompt": "Создай готовый к продакшену одностраничный лонгрид-спецвыпуск инженерного альманаха «АРХИВ ТЕХНОЛОГИЙ» (Выпуск №14: «Экстремальная ультрафиолетовая литография (EUV 13.5 нм): оптика Цейсса, оловянная плазма и предел кремниевых транзисторов»). Язык: русский.\nДизайн-канон: Editorial — многоколоночная журнальная вёрстка на CSS Grid, `subgrid` и `@container` (Container Queries), выразительная буквица (`::first-letter`), классическая антиква для заголовков и чёткий гротеск/моноширинный шрифт для выносок и формул (системные фоллбэки без внешних CDN), тёплая бумага верже (`oklch(0.96 0.015 80)`), глубокие типографские чернила (`oklch(0.16 0.02 50)`), карминный редакционный акцент (`oklch(0.48 0.18 25)`). Все цвета — через OKLCH-токены в `:root`. Безупречный научно-инженерный русский язык без воды и машинных штампов.\nСекции:\n1. Журнальная обложка выпуска (номер, дата, редакционный лид, оглавление с якорями и индикатором прогресса чтения).\n2. Многоколоночный лонгрид с буквицей, боковыми маргиналиями (`<aside>`) и детальнейшей инлайновой SVG-схемой оптического тракта EUV-сканера (капля олова 50 кГц, CO₂-лазер, коллекторное зеркало Брэгга Mo/Si, маска-ретикл, проекционная оптика с числовой апертурой High-NA 0.55).\n3. Сравнительная таблица поколений литографии (3 техпроцесса: DUV ArFi 193 нм, Low-NA EUV 0.33, High-NA EUV 0.55) с разрешением, плотностью транзисторов и числом масок.\n4. Интерактивный калькулятор критерия Рэлея (`CD = k1 * λ / NA` и глубина резкости `DOF = k2 * λ / NA²`) с наглядной перестройкой SVG-профиля пучка.\n5. FAQ (5 глубоких вопросов и ответов по физике EUV и полупроводниковому производству) и форма подписки на печатный альманах / заказа корпоративного дайджеста (клиентская валидация).\n6. Редакционный подвал (выходные данные, ISSN).\nТребования:\n- Только ванильный HTML/CSS/JS, использование `@container` и CSS Grid/Subgrid, 0 внешних запросов.\n- Семантический HTML5 (`article`, `header`, `main`, `section`, `aside`, `figure`, `footer`), один `h1`, контраст текста ≥ 7:1, `prefers-reduced-motion`.\n- Производительность: CLS 0.\n- SEO/GEO: `title`, `meta description`, `canonical`, Open Graph; JSON-LD `@graph` с `Organization`, `Product` (для 3 поколений сканеров/изданий из таблицы), `FAQPage` (дословное совпадение с видимым FAQ), `BreadcrumbList`; `llms.txt`; `robots.txt`.\n- Безопасность: строгий CSP в `<meta>` с `sha256-...` хэшами (без `'unsafe-inline'`) и файл `_headers` (7 заголовков).\nФайлы: index.html, llms.txt, robots.txt, _headers."
+    },
+    {
+      "id": "t9",
+      "title": "AETHERIA BIO-ROBOTICS — Agentic Multi-File App + Z-Image-Turbo Art-Direction",
+      "language": "en",
+      "modality": "text",
+      "canon": "Swiss Typographic Grid",
+      "category": "agentic_multifile",
+      "unchanged_from_round2": false,
+      "required_files": [
+        "DESIGN.md",
+        "tokens.css",
+        "app.js",
+        "index.html",
+        "zimage_prompts.json",
+        "llms.txt",
+        "_headers"
+      ],
+      "system_prompt": "You are a senior front-end engineer and designer. Output only the requested files, each in its own fenced code block preceded by a line `FILE: <name>`. No explanations.",
+      "prompt": "Execute a multi-file agentic web-engineering & art-direction build for AETHERIA BIO-ROBOTICS — an autonomous environmental & precision-agriculture drone platform. Language: English.\nDesign canon: Swiss Typographic Grid meets High-Tech Telemetry (light laboratory bone surface `oklch(0.97 0.008 95)`, carbon ink `oklch(0.14 0.015 255)`, forest telemetry accent `oklch(0.45 0.14 155)`, signal amber `oklch(0.66 0.17 65)`).\nYou must output 7 coordinated files, each preceded by `FILE: <name>`:\n1. `FILE: DESIGN.md` — Architectural & design-system manifest specifying the OKLCH color tokens, contrast ratios (≥ 7:1), modular grid rules, typography scale, and component invariants.\n2. `FILE: tokens.css` — Standalone CSS custom properties file defining all `:root` `oklch(...)` tokens, spacing scale, and typography variables.\n3. `FILE: app.js` — Standalone ES6 JavaScript module implementing:\n   - Live flight-path coverage calculator (field area hectares, swath width m, cruise speed m/s, battery capacity Wh -> flight time, battery swaps, waypoint count),\n   - Interactive telemetry filter for the 3 drone platforms (`AETHER-X4 Multispectral`, `AETHER-H8 Heavy Lidar`, `AETHER-S2 Soil Probe`),\n   - Client-side validation for the fleet deployment inquiry form.\n4. `FILE: index.html` — Complete semantic HTML5 application linking/inlining the design system and interactive mission planner (note: also include the `:root` OKLCH tokens and core script fallback or link `./tokens.css` and `./app.js` cleanly so the page renders standalone with zero external HTTP requests), inline SVG multispectral sensor schematic, 3-drone comparison table, 5 FAQ items, JSON-LD `@graph` (`Organization`, `Product`×3, `FAQPage` matching visible FAQ verbatim, `BreadcrumbList`), and strict `<meta http-equiv=\"Content-Security-Policy\">`.\n5. `FILE: zimage_prompts.json` — Valid JSON array of 3 structured prompts for the `Z-Image-Turbo` (6B S3-DiT) image generator (`id`, `target_section`, `aspect_ratio`, `steps`: 9, `prompt`, `exact_text_in_frame`). Each `prompt` must be 300–800 characters of photorealistic industrial art direction and MUST specify exact readable English typography in quotes matching `exact_text_in_frame` (e.g. `\"AETHERIA X4 | MULTISPECTRAL RTK\"`, `\"LIDAR PAYLOAD 128-CH | IP67\"`, `\"TELEMETRY LINK ACTIVE 2.4 GHZ\"`).\n6. `FILE: llms.txt` — llmstxt.org formatted documentation (`# H1`, `> summary`, `## sections`).\n7. `FILE: _headers` — Cloudflare Pages security headers (`/*`, CSP with `frame-ancestors 'none'`, HSTS `max-age=63072000; includeSubDomains; preload`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`).\nFiles: DESIGN.md, tokens.css, app.js, index.html, zimage_prompts.json, llms.txt, _headers."
+    },
+    {
+      "id": "t10",
+      "title": "КОНТУР-СПЕКТР — Вибродиагностика турбоагрегатов (High-Tech SaaS Dark RU)",
+      "language": "ru",
+      "modality": "text",
+      "canon": "High-Tech SaaS Dark Mode",
+      "category": "web_landing",
+      "unchanged_from_round2": false,
+      "required_files": [
+        "index.html",
+        "llms.txt",
+        "robots.txt",
+        "_headers"
+      ],
+      "system_prompt": "You are a senior front-end engineer and designer. Output only the requested files, each in its own fenced code block preceded by a line `FILE: <name>`. No explanations.",
+      "prompt": "Создай готовый к продакшену одностраничный B2B-портал для «КОНТУР-СПЕКТР» — российской инженерной платформы непрерывной вибродиагностики, вейвлет-анализа и предиктивной аналитики газотурбинных и компрессорных агрегатов. Язык: русский.\nДизайн-канон: High-Tech SaaS Dark Mode — глубокий графитово-обсидиановый фон (`oklch(0.14 0.02 255)`), панели телеметрии (`oklch(0.19 0.02 255)`), тонкие 1px координатные линии (`oklch(0.28 0.03 255)`), высококонтрастный светлый текст (`oklch(0.95 0.01 250)`), бирюзовый (`oklch(0.76 0.14 195)`) и янтарный (`oklch(0.75 0.16 75)`) индикаторы гармоник. Все цвета — через OKLCH-токены в `:root`. Никаких фиолетовых градиентов, «ИИ-мыла» и маркетинговой воды.\nСекции:\n1. Hero с живой панелью состояния турбоагрегата (СКЗ виброскорости мм/с по ГОСТ ИСО 10816-3, температура подшипников, прогноз остаточного ресурса RUL) и интерактивной инлайновой SVG-спектрограммой БПФ (FFT 1X, 2X, 3X гармоники с переключением режимов: «Норма», «Дисбаланс ротора», «Дефект наружного кольца подшипника»).\n2. Bento-сетка архитектуры комплекса (пьезоэлектрические акселерометры IEPE до 25 кГц, краевой контроллер с АЦП 24 бит, нейросетевой детектор аномалий без облака, интеграция по Modbus TCP / OPC UA в АСУ ТП).\n3. Спецификация 3 комплектов поставки (`Спектр-М8` на 8 каналов, `Спектр-М32` для турбогенераторов, `Спектр-Взрыв` Ex ia для нефтехимии).\n4. Интерактивный калькулятор предотвращённого ущерба от внепланового останова (мощность агрегата МВт, стоимость часа простоя, число агрегатов -> расчёт окупаемости системы).\n5. FAQ (5 предметных инженерных вопросов и ответов по ГОСТ ИСО 10816, частоте дискретизации, искрозащите и локальному развёртыванию) и форма запроса опросного листа (клиентская валидация).\n6. Подвал.\nТребования:\n- Только ванильный HTML/CSS/JS, 0 внешних сетевых запросов.\n- Семантический HTML5, один `h1`, ARIA-атрибуты, контраст текста ≥ 7:1, `prefers-reduced-motion`.\n- Производительность: CLS 0.\n- SEO/GEO: `title`, `meta description`, `canonical`, Open Graph; JSON-LD `@graph` с `Organization`, `Product` (3 комплекта поставки), `FAQPage` (дословное совпадение с видимым FAQ), `BreadcrumbList`; `llms.txt`; `robots.txt`.\n- Безопасность: строгий CSP в `<meta>` на `sha256-...` хэшах (без `'unsafe-inline'`) и файл `_headers` (7 заголовков).\nФайлы: index.html, llms.txt, robots.txt, _headers."
+    },
+    {
+      "id": "t11",
+      "title": "KRONOS PRECISION GEARWORKS — 3D/Canvas Kinematics & Industrial B2B",
+      "language": "en",
+      "modality": "text",
+      "canon": "Industrial B2B Engineering",
+      "category": "web_landing",
+      "unchanged_from_round2": false,
+      "required_files": [
+        "index.html",
+        "llms.txt",
+        "robots.txt",
+        "_headers"
+      ],
+      "system_prompt": "You are a senior front-end engineer and designer. Output only the requested files, each in its own fenced code block preceded by a line `FILE: <name>`. No explanations.",
+      "prompt": "Build a production-ready single-page engineering portal for KRONOS PRECISION GEARWORKS — a manufacturer of zero-backlash strain-wave (harmonic) drives and planetary actuators for surgical and industrial robotics. Language: English.\nDesign canon: Industrial B2B Engineering — dark anodized slate background (`oklch(0.15 0.015 250)`), 1px CAD blueprint grid (`oklch(0.24 0.02 250)`), precision titanium white text (`oklch(0.95 0.01 250)`), and high-visibility signal orange/amber accents (`oklch(0.70 0.18 50)`). All colors as OKLCH tokens in `:root`. Monospace technical data (`JetBrains Mono` / `IBM Plex Mono` system stack), zero purple gradients, zero stock photos.\nSections:\n1. Hero with an interactive **3D / Procedural Canvas Kinematics Visualizer** (`<canvas>` rendering an interactive animated planetary/strain-wave gear mesh with live sliders for Reduction Ratio `50:1`–`160:1`, Input RPM `500`–`6000`, and Load Torque Nm, computing live Output RPM, Torsional Stiffness Nm/arcmin, and Efficiency %).\n2. Technical Cross-Section & Torque-Speed Envelope (detailed inline SVG cutaway of flexspline, circular spline, and wave generator + SVG torque-speed operating zone chart).\n3. Actuator Series Specification Table (3 series: `KRG-14 Micro Surgical`, `KRG-25 Cobot Joint`, `KRG-40 Heavy Palletizer`) with backlash `< 0.5 arcmin`, repeatable peak torque, hollow-shaft bore diameter, and mass.\n4. Quality & Life-Testing Compliance (ISO 9001, AGMA 2001, cleanroom class ISO 5 lubrication).\n5. FAQ (5 mechanical engineering Q&A on torsional hysteresis, ratcheting torque, cross-roller bearings, and life L10h calculation) and CAD STEP download / engineering consultation form (client-side validation).\n6. Footer.\nRequirements:\n- Vanilla HTML/CSS/JS only, zero external network requests.\n- Semantic HTML5, one `h1`, ARIA attributes, primary text contrast ≥ 7:1, `prefers-reduced-motion` respected.\n- Performance: CLS 0, explicit dimensions on all `<canvas>` and `<svg>` elements.\n- SEO/GEO: title, meta description, canonical, Open Graph; JSON-LD `@graph` with `Organization`, `Product` (for the 3 actuator series), `FAQPage` (matching visible FAQ verbatim), `BreadcrumbList`; `llms.txt`; `robots.txt`.\n- Security: strict CSP in `<meta>` with `sha256-...` hashes (no `'unsafe-inline'`), plus Cloudflare Pages `_headers` with all 7 security headers.\nFiles: index.html, llms.txt, robots.txt, _headers."
+    },
+    {
+      "id": "t12",
+      "title": "Dark Telemetry & Swiss Pricing Matrix — Vision-to-Code #2",
+      "language": "en",
+      "modality": "vision",
+      "ref_image": "ref/t12.png",
+      "canon": "High-Tech SaaS Dark Mode / Swiss Grid",
+      "category": "vision_to_code",
+      "unchanged_from_round2": false,
+      "required_files": [
+        "index.html"
+      ],
+      "system_prompt": "You are a senior front-end engineer and designer. Output only the requested files, each in its own fenced code block preceded by a line `FILE: <name>`. No explanations.",
+      "prompt": "Recreate this screenshot as a single self-contained index.html (inline CSS, no external requests, no frameworks). Match layout, dark-mode surface hierarchy, spacing, typography scale, tabular metrics, and colors as closely as possible; use OKLCH tokens in :root. Semantic HTML5, responsive down to 375px, primary text contrast >= 7:1. Files: index.html."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+# Local Agent Configurations, Checkpoints, Step Reports & Raw Dumps (kept on disk, excluded from public Git)
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+GEMINI.md
+.claude/
+.agent/
+.agents/
+.claude-migration-backup/
+HANDOFF.md
+PLAN.md
+PROMPT_NEXT_SESSION.md
+модели_на_выбор.md
+.system/
+SmartLLM_concept.md
+reports/
+research/skeptics/
+research/experts_primary_dossier.md
+research/facts_verified.md
+research/step2_environment.md
+research/surgery_feasibility.md
+research/recon_raw.json
+research/recon_part2.json
+research/recon_surgery.py
+research/recon_surgery_part2.py
+research/step1_raw/
+research/step2_raw/
+research/step3_raw/
+research/step4_raw/
+scripts/step1_*.py
+scripts/step2_apply_r1_fixes.py
+scripts/step2_build_doc.py
+scripts/step2_check_compilers.py
+scripts/step2_check_llama_releases.py
+scripts/step2_env_audit.py
+scripts/step2_finalize_done.py
+scripts/step2_setup_llama_bins.py
+scripts/step3_audit_existing.py
+scripts/step3_create_tasks.py
+scripts/fetch_dossier_primary_sources.py
+scripts/generate_experts_dossier.py
+
+# Python & Environments
+.venv/
+__pycache__/
+*.py[cod]
+
+# Heavy Models, Weights, Calibration Data & Binaries
+models/
+data/calib/*.jsonl
+data/calib/*.parquet
+research/step4_raw/tokenizer/
+tools/llama.cpp/
+tools/*.exe
+tools/*.zip
+
+# Eval Temp & Build Outputs
+.tsc_out/
+eval/**/lighthouse.json
+
+# Secrets & Private Docs
+.env*
+.secrets/
+tokens.env
+bank_docs/

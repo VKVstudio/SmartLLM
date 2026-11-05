@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://severnaya-manufactura.example/sitemap.xml

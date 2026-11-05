@@ -1,0 +1,74 @@
+# THERMOTECH ENGINEERING
+
+> THERMOTECH ENGINEERING is a manufacturer of industrial hot-water and steam boilers rated from 5 MW to 25 MW for district heating, process heat, utility steam, and boiler-room retrofit projects. The standard product line includes TM-5, TM-12, and TM-25 platforms with PLC/HMI control, pressure-part documentation, and ISO/GOST conformity support.
+
+## Core capabilities
+
+- Industrial hot-water boilers: 5 MW to 25 MW thermal output.
+- Industrial steam boilers: 5 MW to 25 MW thermal output.
+- Fuels: natural gas, light oil, dual-fuel, and alternative-fuel configurations where applicable.
+- Design pressure: representative range 1.0 MPa to 2.5 MPa.
+- Design temperature: representative range 150 °C to 250 °C.
+- Automation: PLC, HMI, burner management, flame safeguard, alarm annunciation, DCS integration.
+- Documentation: material certificates, welding records, pressure-test reports, conformity declarations.
+
+## Standard product line
+
+### TM-5 Hot-Water Boiler
+- Thermal output: 5 MW
+- Medium: hot water
+- Representative design pressure: 1.0 MPa
+- Representative design temperature: 150 °C
+- Representative efficiency: 93% net HHV
+- Representative NOx: ≤ 80 mg/Nm³
+- Automation: PLC + HMI
+
+### TM-12 Steam Boiler
+- Thermal output: 12 MW
+- Medium: steam
+- Representative design pressure: 1.6 MPa
+- Representative design temperature: 200 °C
+- Representative efficiency: 94% net HHV
+- Representative NOx: ≤ 70 mg/Nm³
+- Automation: PLC + HMI + remote diagnostics
+
+### TM-25 Hot-Water / Steam Boiler
+- Thermal output: 25 MW
+- Medium: hot water / steam
+- Representative design pressure: 2.5 MPa
+- Representative design temperature: 250 °C
+- Representative efficiency: 95% net HHV
+- Representative NOx: ≤ 60 mg/Nm³
+- Automation: PLC + HMI + DCS integration
+
+## Certifications and documentation
+
+- ISO 9001 quality management support.
+- ISO 14001 environmental management support.
+- ISO 45001 occupational health and safety management support.
+- GOST conformity assessment documentation for applicable markets.
+- Pressure-equipment documentation packages by project scope.
+
+## FAQ
+
+### What output range do Thermotech boilers cover?
+The standard product line covers 5 MW, 12 MW, and 25 MW thermal output. Custom variants can be engineered for adjacent duties when the required pressure, temperature, fuel, and site constraints are compatible with the base design.
+
+### Can the boilers operate on fuels other than natural gas?
+Yes. The standard burners are configured for natural gas or light oil. Dual-fuel and alternative-fuel configurations can be specified with the appropriate burner, control, and safety package.
+
+### What automation and control systems are supplied?
+Each boiler is delivered with PLC-based control, local HMI, safety interlocks, and standard communication interfaces. DCS integration, remote diagnostics, and advanced load-management packages are available on request.
+
+### Which codes and certifications are covered?
+Design, fabrication, and testing can be executed to ISO, GOST, and applicable national pressure-equipment requirements. Documentation packages include material certificates, welding records, pressure-test reports, and conformity declarations.
+
+### What site information is needed for a quotation?
+Please provide required duty, medium, pressure and temperature, fuel availability, ambient conditions, water quality, electrical supply, installation constraints, and any local regulatory requirements.
+
+## Contact
+
+- Sales: sales@thermotech.example
+- Engineering: engineering@thermotech.example
+- Phone: +1 555 014 7722
+- Address: 1400 Boiler Works Road, Cleveland, OH 44116, United States

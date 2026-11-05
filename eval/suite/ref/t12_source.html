@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QUANTUM-GRID // Edge Telemetry & Compute Matrix</title>
+<style>
+  :root {
+    --bg-base: oklch(0.13 0.018 258);
+    --bg-panel: oklch(0.17 0.02 258);
+    --bg-elevated: oklch(0.21 0.022 258);
+    --border-hairline: oklch(0.28 0.025 258);
+    --text-primary: oklch(0.95 0.01 250);
+    --text-secondary: oklch(0.76 0.018 252);
+    --accent-cyan: oklch(0.77 0.14 196);
+    --accent-amber: oklch(0.78 0.16 75);
+    --accent-emerald: oklch(0.75 0.16 152);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.45;
+    padding: 28px 36px;
+  }
+  .mono {
+    font-family: "JetBrains Mono", "IBM Plex Mono", Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border-hairline);
+    margin-bottom: 24px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    font-size: 0.95rem;
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-hairline);
+    color: var(--accent-emerald);
+    font-size: 0.78rem;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 20px;
+    margin-bottom: 22px;
+  }
+  .panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-hairline);
+    padding: 24px;
+  }
+  .eyebrow {
+    color: var(--accent-cyan);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 2.15rem;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .lead {
+    color: var(--text-secondary);
+    font-size: 0.96rem;
+    max-width: 58ch;
+    margin-bottom: 20px;
+  }
+  .cta-row {
+    display: flex;
+    gap: 12px;
+  }
+  .btn-primary {
+    background: var(--accent-cyan);
+    color: var(--bg-base);
+    font-weight: 700;
+    padding: 10px 18px;
+    border: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+  }
+  .btn-ghost {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border-hairline);
+    padding: 10px 18px;
+    font-size: 0.85rem;
+  }
+  .kpi-matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .kpi-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-hairline);
+    padding: 14px 16px;
+  }
+  .kpi-label {
+    color: var(--text-secondary);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .kpi-val {
+    font-size: 1.55rem;
+    font-weight: 700;
+    margin-top: 6px;
+    color: var(--text-primary);
+  }
+  .kpi-delta {
+    font-size: 0.75rem;
+    color: var(--accent-emerald);
+    margin-top: 4px;
+  }
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .tier-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--border-hairline);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+  .tier-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .tier-price {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+  }
+  .spec-list {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+  .spec-list li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed var(--border-hairline);
+    padding-bottom: 6px;
+  }
+  .spec-list span:last-child {
+    color: var(--text-primary);
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="brand mono">
+      <span>[QG-09]</span>
+      <span>QUANTUM-GRID TELEMETRY FABRIC</span>
+    </div>
+    <div class="status-pill mono">● CLUSTER HEALTH: 99.998% | P99 LATENCY: 1.42 ms</div>
+  </header>
+  <main>
+    <section class="hero-grid">
+      <div class="panel">
+        <div class="eyebrow mono">SWISS GRID // DETERMINISTIC COMPUTE ENGINE</div>
+        <h1>Sub-Millisecond Tensor Routing for Sovereign AI Clusters</h1>
+        <p class="lead">Zero-jitter NVMe-over-Fabrics paging paired with hardware-enforced isolation. Inspect live expert utilization, memory bandwidth, and thermal envelopes in real time.</p>
+        <div class="cta-row">
+          <button class="btn-primary mono">DEPLOY NODE SPEC</button>
+          <button class="btn-ghost mono">INSPECT TOPOLOGY (JSON-LD)</button>
+        </div>
+      </div>
+      <div class="panel kpi-matrix">
+        <div class="kpi-card">
+          <div class="kpi-label mono">ACTIVE THROUGHPUT</div>
+          <div class="kpi-val mono">48.6 tok/s</div>
+          <div class="kpi-delta mono">▲ +14.2% vs baseline</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label mono">VRAM FOOTPRINT</div>
+          <div class="kpi-val mono">6.52 GiB</div>
+          <div class="kpi-delta mono" style="color: var(--accent-cyan);">budget: 8.00 GiB</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label mono">EXPERT CACHE HIT</div>
+          <div class="kpi-val mono">98.4%</div>
+          <div class="kpi-delta mono">205 / 512 routed</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label mono">PCIE 4.0 X16 DMA</div>
+          <div class="kpi-val mono">0.38 s</div>
+          <div class="kpi-delta mono" style="color: var(--accent-amber);">zero swap stalls</div>
+        </div>
+      </div>
+    </section>
+    <section class="tiers-grid">
+      <article class="panel">
+        <div class="tier-header">
+          <span class="tier-name">EDGE NODE // E-08</span>
+          <span class="tier-price mono">$0.12 / hr</span>
+        </div>
+        <ul class="spec-list mono">
+          <li><span>VRAM Allocation</span><span>8 GiB GDDR6</span></li>
+          <li><span>System DDR5 Pool</span><span>32 GiB Dual-Ch</span></li>
+          <li><span>Active Experts</span><span>10 / 205 per tok</span></li>
+          <li><span>Quantization</span><span>IQ3_XXS + imatrix</span></li>
+        </ul>
+      </article>
+      <article class="panel" style="border-color: var(--accent-cyan);">
+        <div class="tier-header">
+          <span class="tier-name">WORKSTATION // W-12</span>
+          <span class="tier-price mono">$0.24 / hr</span>
+        </div>
+        <ul class="spec-list mono">
+          <li><span>VRAM Allocation</span><span>12 GiB RTX 4080</span></li>
+          <li><span>System DDR5 Pool</span><span>32 GiB DDR5-5600</span></li>
+          <li><span>Active Experts</span><span>10 / 205 per tok</span></li>
+          <li><span>Quantization</span><span>IQ3_S + Q8_0 KV</span></li>
+        </ul>
+      </article>
+      <article class="panel">
+        <div class="tier-header">
+          <span class="tier-name">SOVEREIGN POD // S-64</span>
+          <span class="tier-price mono">$1.40 / hr</span>
+        </div>
+        <ul class="spec-list mono">
+          <li><span>VRAM Allocation</span><span>64 GiB Multi-GPU</span></li>
+          <li><span>System DDR5 Pool</span><span>256 GiB OCTA-Ch</span></li>
+          <li><span>Active Experts</span><span>10 / 512 Full MoE</span></li>
+          <li><span>Quantization</span><span>BF16 / Q6_K</span></li>
+        </ul>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

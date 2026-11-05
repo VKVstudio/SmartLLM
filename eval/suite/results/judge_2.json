@@ -1,0 +1,175 @@
+{
+  "judge_id": "judge_2",
+  "subagent_conversation_id": "460d6fe0-54c2-42b9-b197-911947ebc15f",
+  "model": "gemini-3.8-flash",
+  "evaluations": {
+    "qwen3.8-think-8k": {
+      "t1": {
+        "canon": 10.0,
+        "design": 9.5,
+        "copy": 9.5,
+        "ru": null,
+        "overall": 9.67,
+        "strengths": "Flawless Industrial B2B Engineering execution with blueprint grid (#2A2E35), system font fallbacks, exact OKLCH tokens, and an exceptional multi-element inline SVG boiler circuit schematic.",
+        "weaknesses": "Minor: FAQ accordion lacks expanded aria-controls relationships, and contact form submission relies on client-only simulation."
+      },
+      "t2": {
+        "canon": 9.5,
+        "design": 9.0,
+        "copy": 10.0,
+        "ru": null,
+        "overall": 9.5,
+        "strengths": "Superb fidelity to VKVstudio.pro layout with exact typography hierarchy, orbital lines, and bespoke inline SVG vector illustrations cleverly replacing external photos while maintaining zero network requests.",
+        "weaknesses": "Minor visual density variation in the search input styling and slightly simplified SVG approximations of the hardware patch panel."
+      },
+      "t3": {
+        "canon": 9.5,
+        "design": 8.0,
+        "copy": 9.5,
+        "ru": 9.5,
+        "overall": 9.13,
+        "strengths": "Exquisite Luxury Minimalism typography and generous whitespace with authentic Russian joinery copy, bespoke mortise-and-tenon/dovetail SVG schematic, and 100% verbatim FAQPage JSON-LD.",
+        "weaknesses": "The catalog table triggers a 1px horizontal scroll overflow on 375px mobile (scrollWidth 376px vs clientWidth 375px) due to section padding constraints."
+      }
+    },
+    "qwen3.8-no-think": {
+      "t1": {
+        "canon": 9.0,
+        "design": 9.0,
+        "copy": 9.5,
+        "ru": null,
+        "overall": 9.17,
+        "strengths": "Clean blueprint styling with complete responsive layout on desktop and mobile (overflowX: false), detailed boiler engineering specifications, and 12 inline SVG elements.",
+        "weaknesses": "Omitted the required strict CSP meta tag in raw model output (had to be injected by postprocessor), and accessibility score is slightly reduced (90) due to color contrast on secondary labels."
+      },
+      "t2": {
+        "canon": 6.5,
+        "design": 6.0,
+        "copy": 9.5,
+        "ru": null,
+        "overall": 7.33,
+        "strengths": "Accurate copy recreation across all article titles, tags, and editorial rule sections, with well-structured OKLCH design tokens in :root.",
+        "weaknesses": "Violated the strict 'no external requests' requirement by hotlinking Picsum photos (which loaded unrelated dog images and left cards 1 and 3 blank), and hero decorative SVG rings clash directly across the main headline text on mobile."
+      },
+      "t3": {
+        "canon": 8.0,
+        "design": 5.0,
+        "copy": 9.0,
+        "ru": 9.0,
+        "overall": 7.75,
+        "strengths": "Natural Russian cabinetry terminology («царга», «шип-паз», «ласточкин хвост», «клин») and solid semantic HTML structure in the underlying markup.",
+        "weaknesses": "Defective progressive enhancement: wrapping every main section in .reveal { opacity: 0; } caused almost the entire page (products, schematics, certs, FAQ, form) to render completely blank/invisible in non-scrolled captures, plus missing og:title and og:description meta tags."
+      }
+    },
+    "gyro-m-local": {
+      "t1": {
+        "canon": 9.5,
+        "design": 9.5,
+        "copy": 9.5,
+        "ru": null,
+        "overall": 9.5,
+        "strengths": "Authentic industrial aesthetic with precise OKLCH palette, functional responsive layout, detailed SVG schematic, and flawless metadata.",
+        "weaknesses": "Missing Cross-Origin-Opener-Policy in the _headers configuration."
+      },
+      "t2": {
+        "canon": 8.0,
+        "design": 7.5,
+        "copy": 7.5,
+        "ru": null,
+        "overall": 7.67,
+        "strengths": "Faithfully replicates the multi-column editorial composition, typography hierarchy, and overall warm color palette from the reference image.",
+        "weaknesses": "Omitted the prominent hero callout card, replaced the photo assets with simplistic SVG drawings, and hallucinated brand names."
+      },
+      "t3": {
+        "canon": 8.5,
+        "design": 7.0,
+        "copy": 9.5,
+        "ru": 9.5,
+        "overall": 8.63,
+        "strengths": "Refined Luxury Minimalism styling with elegant typography, authentic Russian joinery terminology, full JSON-LD schema integration, and clean responsive layout.",
+        "weaknesses": "The oversized H1 heading on desktop overflows its grid column, causing the long word 'архитектурных' to clip behind the hero graphic."
+      },
+      "t4": {
+        "canon": 5.5,
+        "design": 3.5,
+        "copy": 8.0,
+        "ru": null,
+        "overall": 5.67,
+        "strengths": "Exhaustive type signatures matching the specification without using 'any', along with robust error class definitions.",
+        "weaknesses": "Fails TypeScript strict compilation due to unbound 'this' in helper function and hangs on execution tests due to checking array size rather than length."
+      },
+      "t5": {
+        "canon": 0.0,
+        "design": 0.0,
+        "copy": 0.0,
+        "ru": null,
+        "overall": 0.0,
+        "strengths": "Initial HTML head structure and CSP definition attempt adhered to security requirements before failure.",
+        "weaknesses": "Generation collapsed into an infinite repetition loop within the CSP meta tag hash, leaving an empty body and missing auxiliary files."
+      },
+      "t6": {
+        "canon": 7.0,
+        "design": 6.0,
+        "copy": 6.5,
+        "ru": null,
+        "overall": 6.5,
+        "strengths": "Impressive high-tech dark mode presentation with intricate SVG diagrams, rich domain copy, and functional pricing/sizing calculators.",
+        "weaknesses": "Exceeded token limit resulting in truncation at the FAQ section with missing companion files, alongside a syntax error in the WebGL shader."
+      },
+      "t7": {
+        "canon": 0.0,
+        "design": 0.0,
+        "copy": 0.0,
+        "ru": 0.0,
+        "overall": 0.0,
+        "strengths": "Correctly initiated the required document structure and UTF-8 charset declaration.",
+        "weaknesses": "Succumbed to a repetitive token loop inside the CSP meta tag hash, resulting in a blank document and no supplementary files."
+      },
+      "t8": {
+        "canon": 0.0,
+        "design": 0.0,
+        "copy": 1.0,
+        "ru": 1.0,
+        "overall": 0.5,
+        "strengths": "Included rich metadata, title, and article tags in Russian before generation failure.",
+        "weaknesses": "Suffered a catastrophic base64 encoding loop in the JSON-LD script tag, terminating prematurely without rendering any body content."
+      },
+      "t9": {
+        "canon": 7.5,
+        "design": 6.5,
+        "copy": 6.5,
+        "ru": null,
+        "overall": 6.83,
+        "strengths": "Outstanding comprehensive DESIGN.md system, clean standalone tokens.css, and well-designed interactive telemetry filter.",
+        "weaknesses": "Exceeded token budget causing truncation midway through the SVG diagram in index.html, preventing generation of zimage_prompts.json and server headers."
+      },
+      "t10": {
+        "canon": 8.5,
+        "design": 8.0,
+        "copy": 8.5,
+        "ru": 9.0,
+        "overall": 8.5,
+        "strengths": "Rich, authentic Russian technical copy with sophisticated dark-mode styling, complex SVG spectrum visualization, and full semantic structure.",
+        "weaknesses": "Hit the output token limit causing truncation of the inline script, suffered minor mobile horizontal overflow, and omitted secondary files."
+      },
+      "t11": {
+        "canon": 0.0,
+        "design": 0.0,
+        "copy": 0.0,
+        "ru": null,
+        "overall": 0.0,
+        "strengths": "Correctly set up the initial document headers and viewport configuration.",
+        "weaknesses": "Encountered a degenerate placeholder loop in the CSP meta tag that exhausted generation tokens, leaving an empty body and missing auxiliary files."
+      },
+      "t12": {
+        "canon": 9.5,
+        "design": 9.5,
+        "copy": 9.0,
+        "ru": null,
+        "overall": 9.33,
+        "strengths": "Near-pixel-perfect recreation of the reference screenshot's dark telemetry theme, card hierarchy, typography, and responsive grid.",
+        "weaknesses": "Minor textual discrepancies compared to the reference image, such as '3264-LD' instead of 'JSON-LD'."
+      }
+    }
+  }
+}

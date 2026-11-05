@@ -1,0 +1,124 @@
+[
+  {
+    "model_id": "inclusionai/ling-3.0-flash-vl",
+    "model_slug": "ling-3.0-flash-vl",
+    "task": "t1",
+    "status": "http_error",
+    "http_code": 429,
+    "error": "{\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"inclusionai/ling-3.0-flash-vl is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations\",\"provider_name\":\"DeepInfra\",\"is_byok\":false,\"provider_error_code\":\"engine_overloaded\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hint\":\"Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to another provider with provider routing: https://openrouter.ai/docs/features/provider-routing\"}},\"user_id\":\"user_30mTbszbrNjZ1oM5RKDPoHcc5SW\"}",
+    "elapsed_sec": 1.16
+  },
+  {
+    "model_id": "inclusionai/ling-3.0-flash-vl",
+    "model_slug": "ling-3.0-flash-vl",
+    "task": "t2",
+    "status": "http_error",
+    "http_code": 429,
+    "error": "{\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"inclusionai/ling-3.0-flash-vl is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations\",\"provider_name\":\"DeepInfra\",\"is_byok\":false,\"provider_error_code\":\"engine_overloaded\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hint\":\"Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to another provider with provider routing: https://openrouter.ai/docs/features/provider-routing\"}},\"user_id\":\"user_30mTbszbrNjZ1oM5RKDPoHcc5SW\"}",
+    "elapsed_sec": 1.3
+  },
+  {
+    "model_id": "qwen/qwen3.8-flash",
+    "hugging_face_id": "Qwen/Qwen3.8-Flash-Next",
+    "model_slug": "qwen3.8-flash",
+    "task": "t2",
+    "provider": "Alibaba",
+    "precision": "unknown (Alibaba cloud native)",
+    "temperature": 0.6,
+    "max_tokens": 32000,
+    "price_input_per_1m_usd": 0.15,
+    "price_output_per_1m_usd": 0.47,
+    "finish_reason": "stop",
+    "native_finish_reason": "stop",
+    "truncated": false,
+    "elapsed_sec": 103.81,
+    "usage": {
+      "prompt_tokens": 2694,
+      "completion_tokens": 14062,
+      "reasoning_tokens": 3285,
+      "total_tokens": 16756,
+      "cost_usd": 0.00701324,
+      "calculated_cost_usd": 0.007013,
+      "raw_usage": {
+        "prompt_tokens": 2694,
+        "completion_tokens": 14062,
+        "total_tokens": 16756,
+        "cost": 0.00701324,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00701324,
+          "upstream_inference_prompt_cost": 0.0004041,
+          "upstream_inference_completions_cost": 0.00660914
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3285,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      }
+    },
+    "content_chars": 29313,
+    "reasoning_chars": 12054,
+    "extracted_files": [],
+    "openrouter_id": "gen-1792803243-KrZMIj44RRB6wxYpq4mh"
+  },
+  {
+    "model_id": "qwen/qwen3.8-flash",
+    "hugging_face_id": "Qwen/Qwen3.8-Flash-Next",
+    "model_slug": "qwen3.8-flash",
+    "task": "t1",
+    "provider": "Alibaba",
+    "precision": "unknown (Alibaba cloud native)",
+    "temperature": 0.6,
+    "max_tokens": 32000,
+    "price_input_per_1m_usd": 0.15,
+    "price_output_per_1m_usd": 0.47,
+    "finish_reason": "length",
+    "native_finish_reason": "length",
+    "truncated": true,
+    "elapsed_sec": 522.52,
+    "usage": {
+      "prompt_tokens": 511,
+      "completion_tokens": 59550,
+      "reasoning_tokens": 55104,
+      "total_tokens": 60061,
+      "cost_usd": 0.02806515,
+      "calculated_cost_usd": 0.028065,
+      "raw_usage": {
+        "prompt_tokens": 511,
+        "completion_tokens": 59550,
+        "total_tokens": 60061,
+        "cost": 0.02806515,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.02806515,
+          "upstream_inference_prompt_cost": 7.665e-05,
+          "upstream_inference_completions_cost": 0.0279885
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 55104,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      }
+    },
+    "content_chars": 12360,
+    "reasoning_chars": 92485,
+    "extracted_files": [
+      "index.html"
+    ],
+    "openrouter_id": "gen-1792803243-ec4EWRX2qW6umRotRrZA"
+  }
+]
