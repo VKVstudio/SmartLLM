@@ -1,0 +1,868 @@
+diff --git a/common/arg.cpp b/common/arg.cpp
+index e6d6450..28bb169 100644
+--- a/common/arg.cpp
++++ b/common/arg.cpp
+@@ -2723,14 +2723,26 @@ common_params_context common_params_parser_init(common_params & params, llama_ex
+         "on-demand reading of certain tensors, for example per-layer embeddings (default: auto)\n"
+         "- on: read the rows of such tensors from disk on demand instead of keeping them resident (requires mmap)\n"
+         "- auto: on, but only for tensors larger than 4 GiB\n"
++        "- direct: read rows directly via unbuffered O_DIRECT pread with 0 B mmap residency\n"
+         "- off: always keep them resident",
+         [](common_params & params, const std::string & value) {
+-            /**/ if (value == "on")   { params.lazy_mode = LLAMA_LAZY_MODE_ON;   }
+-            else if (value == "auto") { params.lazy_mode = LLAMA_LAZY_MODE_AUTO; }
+-            else if (value == "off")  { params.lazy_mode = LLAMA_LAZY_MODE_OFF;  }
++            /**/ if (value == "on")     { params.lazy_mode = LLAMA_LAZY_MODE_ON;     }
++            else if (value == "auto")   { params.lazy_mode = LLAMA_LAZY_MODE_AUTO;   }
++            else if (value == "direct") { params.lazy_mode = LLAMA_LAZY_MODE_DIRECT; }
++            else if (value == "off")    { params.lazy_mode = LLAMA_LAZY_MODE_OFF;    }
+             else { throw std::invalid_argument("invalid value"); }
+         }
+     ).set_env("LLAMA_ARG_LAZY_MODE"));
++    add_opt(common_arg(
++        {"--ple-io"}, "MODE",
++        "alias for per-layer embedding I/O mode (direct|mmap|ram)",
++        [](common_params & params, const std::string & value) {
++            /**/ if (value == "direct" || value == "disk") { params.lazy_mode = LLAMA_LAZY_MODE_DIRECT; }
++            else if (value == "mmap")                      { params.lazy_mode = LLAMA_LAZY_MODE_ON;     }
++            else if (value == "ram"    || value == "off")  { params.lazy_mode = LLAMA_LAZY_MODE_OFF;    }
++            else { throw std::invalid_argument("invalid value"); }
++        }
++    ).set_env("LLAMA_ARG_PLE_IO"));
+     add_opt(common_arg(
+         {"--numa"}, "TYPE",
+         "attempt optimizations that help on some NUMA systems\n"
+diff --git a/include/llama.h b/include/llama.h
+index ae54e66..5e06c76 100644
+--- a/include/llama.h
++++ b/include/llama.h
+@@ -217,9 +217,10 @@ extern "C" {
+     LLAMA_API enum llama_load_mode llama_load_mode_from_str(const char * str);
+ 
+     enum llama_lazy_mode {
+-        LLAMA_LAZY_MODE_OFF  = 0, // always read the whole tensor up front
+-        LLAMA_LAZY_MODE_AUTO = 1, // lazy only for marked tensors larger than 4 GiB (requires mmap)
+-        LLAMA_LAZY_MODE_ON   = 2, // read the rows of tensors marked by the arch on demand (requires mmap)
++        LLAMA_LAZY_MODE_OFF    = 0, // always read the whole tensor up front
++        LLAMA_LAZY_MODE_AUTO   = 1, // lazy only for marked tensors larger than 4 GiB (requires mmap)
++        LLAMA_LAZY_MODE_ON     = 2, // read the rows of tensors marked by the arch on demand (requires mmap)
++        LLAMA_LAZY_MODE_DIRECT = 3, // read the rows directly from disk via O_DIRECT pread without mmap residency
+     };
+ 
+     enum llama_context_type {
+diff --git a/src/llama-mmap.cpp b/src/llama-mmap.cpp
+index 4d1cd31..8e7f141 100644
+--- a/src/llama-mmap.cpp
++++ b/src/llama-mmap.cpp
+@@ -10,6 +10,10 @@
+ #include <stdexcept>
+ #include <cerrno>
+ #include <algorithm>
++#include <atomic>
++#include <condition_variable>
++#include <mutex>
++#include <thread>
+ 
+ #ifdef __has_include
+     #if __has_include(<unistd.h>)
+@@ -84,7 +88,7 @@ struct llama_file::impl {
+         return ret;
+     }
+ 
+-    impl(const char * fname, const char * mode, [[maybe_unused]] const bool use_direct_io = false) {
++    impl(const char * fname, const char * mode, [[maybe_unused]] const bool use_direct_io = false) : fname(fname) {
+         fp = ggml_fopen(fname, mode);
+         if (fp == NULL) {
+             throw std::runtime_error(format("failed to open %s: %s", fname, strerror(errno)));
+@@ -95,7 +99,7 @@ struct llama_file::impl {
+         seek(0, SEEK_SET);
+     }
+ 
+-    impl(FILE * file) : owns_fp(false) {
++    impl(FILE * file) : fname("(file*)"), owns_fp(false) {
+         fp = file;
+         fp_win32 = (HANDLE) _get_osfhandle(_fileno(fp));
+         seek(0, SEEK_END);
+@@ -395,7 +399,6 @@ struct llama_file::impl {
+         }
+     }
+     int fd = -1;
+-    std::string fname;
+ #endif
+ 
+     size_t read_alignment() const {
+@@ -403,6 +406,7 @@ struct llama_file::impl {
+     }
+ 
+     size_t alignment = 1;
++    std::string fname;
+ 
+     FILE * fp{};
+     size_t size{};
+@@ -418,6 +422,7 @@ llama_file::~llama_file() = default;
+ 
+ size_t llama_file::tell() const { return pimpl->tell(); }
+ size_t llama_file::size() const { return pimpl->size; }
++const char * llama_file::fname() const { return pimpl->fname.c_str(); }
+ 
+ size_t llama_file::read_alignment() const { return pimpl->read_alignment(); }
+ bool llama_file::has_direct_io() const { return pimpl->has_direct_io(); }
+@@ -914,3 +919,376 @@ void llama_prefetch(llama_memory_ranges mr) {
+ size_t llama_path_max() {
+     return PATH_MAX;
+ }
++
++// llama_ple_direct_reader
++
++struct llama_ple_direct_reader::impl {
++    static constexpr size_t CHUNK_REQS = 512;
++    static constexpr size_t MAX_SLOTS  = CHUNK_REQS * 2;
++    static constexpr size_t N_WORKERS  = 8;
++
++    struct io_run {
++        uint64_t file_off;
++        size_t   buf_off;
++        size_t   byte_len;
++    };
++
++    std::string fname;
++    size_t      data_offset = 0;
++    size_t      file_size   = 0;
++    ggml_type   row_type    = GGML_TYPE_F32;
++    int64_t     n_cols      = 0;
++    int64_t     n_rows      = 0;
++    size_t      row_bytes   = 0;
++    size_t      align_bytes = 4096;
++    bool        no_alloc    = false;
++    bool        unbuffered  = false;
++
++    const ggml_type_traits * traits = nullptr;
++
++#if defined(_WIN32)
++    HANDLE hFile = INVALID_HANDLE_VALUE;
++#else
++    int fd = -1;
++#endif
++
++    uint8_t * dma_buf = nullptr;
++
++    mutable std::mutex              call_mtx;
++    mutable std::vector<uint64_t>   needed_blks;
++    mutable std::vector<io_run>     runs;
++
++    mutable std::mutex              pool_mtx;
++    mutable std::condition_variable cv_start;
++    mutable std::condition_variable cv_done;
++    mutable std::vector<std::thread> workers;
++    mutable std::atomic<size_t>     next_run{0};
++    mutable size_t                  active_workers = 0;
++    mutable uint64_t                epoch          = 0;
++    mutable bool                    stop_pool      = false;
++    mutable std::string             worker_err;
++
++    impl(const char * fname_in, size_t offset_in, ggml_type type_in, int64_t cols_in, int64_t rows_in, bool no_alloc_in)
++        : fname(fname_in ? fname_in : ""),
++          data_offset(offset_in),
++          row_type(type_in),
++          n_cols(cols_in),
++          n_rows(rows_in),
++          row_bytes(ggml_row_size(type_in, cols_in)),
++          no_alloc(no_alloc_in),
++          traits(ggml_get_type_traits(type_in)) {
++        if (!traits || !traits->to_float) {
++            throw std::runtime_error(format("llama_ple_direct_reader: unsupported type %s", ggml_type_name(row_type)));
++        }
++        if (no_alloc) {
++            return;
++        }
++        if (fname.empty() || fname == "(file*)") {
++            throw std::runtime_error("llama_ple_direct_reader requires a file path");
++        }
++
++#if defined(_WIN32)
++        int wlen = MultiByteToWideChar(CP_UTF8, 0, fname.c_str(), -1, nullptr, 0);
++        std::wstring wpath(wlen > 0 ? wlen : 1, L'\0');
++        if (wlen > 0) {
++            MultiByteToWideChar(CP_UTF8, 0, fname.c_str(), -1, wpath.data(), wlen);
++        }
++        hFile = CreateFileW(wpath.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr,
++                            OPEN_EXISTING, FILE_FLAG_NO_BUFFERING | FILE_FLAG_RANDOM_ACCESS, nullptr);
++        if (hFile != INVALID_HANDLE_VALUE) {
++            unbuffered = true;
++        } else {
++            hFile = CreateFileW(wpath.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr,
++                                OPEN_EXISTING, FILE_FLAG_RANDOM_ACCESS, nullptr);
++            if (hFile == INVALID_HANDLE_VALUE) {
++                throw std::runtime_error(format("llama_ple_direct_reader: CreateFileW failed for '%s'", fname.c_str()));
++            }
++        }
++        LARGE_INTEGER li_sz{};
++        if (!GetFileSizeEx(hFile, &li_sz)) {
++            CloseHandle(hFile);
++            hFile = INVALID_HANDLE_VALUE;
++            throw std::runtime_error("llama_ple_direct_reader: GetFileSizeEx failed");
++        }
++        file_size = (size_t) li_sz.QuadPart;
++        align_bytes = 4096;
++        dma_buf = static_cast<uint8_t *>(_aligned_malloc(MAX_SLOTS * align_bytes, align_bytes));
++        if (!dma_buf) {
++            CloseHandle(hFile);
++            hFile = INVALID_HANDLE_VALUE;
++            throw std::runtime_error("llama_ple_direct_reader: _aligned_malloc failed");
++        }
++#else
++#if defined(__linux__) && defined(O_DIRECT)
++        fd = ::open(fname.c_str(), O_RDONLY | O_DIRECT | O_CLOEXEC);
++        if (fd != -1) {
++            unbuffered = true;
++        }
++#endif
++        if (fd == -1) {
++            fd = ::open(fname.c_str(), O_RDONLY | O_CLOEXEC);
++            if (fd == -1) {
++                throw std::runtime_error(format("llama_ple_direct_reader: open('%s') failed: %s", fname.c_str(), strerror(errno)));
++            }
++            unbuffered = false;
++        }
++
++        struct stat st{};
++        if (::fstat(fd, &st) != 0) {
++            ::close(fd);
++            fd = -1;
++            throw std::runtime_error(format("llama_ple_direct_reader: fstat failed: %s", strerror(errno)));
++        }
++        file_size = (size_t) st.st_size;
++        size_t blk = st.st_blksize > 0 ? (size_t) st.st_blksize : 4096;
++        align_bytes = 4096;
++        while (align_bytes < blk) {
++            align_bytes <<= 1;
++        }
++
++        void * raw = nullptr;
++        if (posix_memalign(&raw, align_bytes, MAX_SLOTS * align_bytes) != 0 || !raw) {
++            ::close(fd);
++            fd = -1;
++            throw std::runtime_error("llama_ple_direct_reader: posix_memalign failed");
++        }
++        dma_buf = static_cast<uint8_t *>(raw);
++
++#if defined(__linux__)
++        if (unbuffered) {
++            const uint64_t probe_off = (uint64_t) data_offset & ~((uint64_t) align_bytes - 1);
++            const ssize_t pr = ::pread(fd, dma_buf, align_bytes, (off_t) probe_off);
++            if (pr < 0 && (errno == EINVAL || errno == EOPNOTSUPP)) {
++                ::close(fd);
++                fd = ::open(fname.c_str(), O_RDONLY | O_CLOEXEC);
++                if (fd == -1) {
++                    free(dma_buf);
++                    dma_buf = nullptr;
++                    throw std::runtime_error(format("llama_ple_direct_reader: fallback open failed: %s", strerror(errno)));
++                }
++                unbuffered = false;
++            }
++        }
++        if (!unbuffered) {
++            (void) posix_fadvise(fd, (off_t) data_offset, (off_t) (row_bytes * (size_t) n_rows), POSIX_FADV_RANDOM);
++        }
++#endif
++#endif
++
++        needed_blks.reserve(MAX_SLOTS);
++        runs.reserve(MAX_SLOTS);
++
++        workers.reserve(N_WORKERS);
++        for (size_t w = 0; w < N_WORKERS; ++w) {
++            workers.emplace_back([this]() { worker_loop(); });
++        }
++
++        LLAMA_LOG_INFO("[PLE-DIRECT] opened '%s' (offset=%zu, rows=%lld, row_bytes=%zu, align=%zu, unbuffered=%d, 0 B mmap RSS)\n",
++                       fname.c_str(), data_offset, (long long) n_rows, row_bytes, align_bytes, (int) unbuffered);
++    }
++
++    ~impl() {
++        if (!workers.empty()) {
++            {
++                std::lock_guard<std::mutex> lk(pool_mtx);
++                stop_pool = true;
++                epoch++;
++            }
++            cv_start.notify_all();
++            for (auto & th : workers) {
++                if (th.joinable()) {
++                    th.join();
++                }
++            }
++        }
++#if defined(_WIN32)
++        if (dma_buf) {
++            _aligned_free(dma_buf);
++            dma_buf = nullptr;
++        }
++        if (hFile != INVALID_HANDLE_VALUE) {
++            CloseHandle(hFile);
++            hFile = INVALID_HANDLE_VALUE;
++        }
++#else
++        if (dma_buf) {
++            free(dma_buf);
++            dma_buf = nullptr;
++        }
++        if (fd != -1) {
++            ::close(fd);
++            fd = -1;
++        }
++#endif
++    }
++
++    void exec_run(const io_run & r) const {
++#if defined(_WIN32)
++        OVERLAPPED ov{};
++        ov.Offset     = (DWORD) (r.file_off & 0xffffffffull);
++        ov.OffsetHigh = (DWORD) (r.file_off >> 32);
++        DWORD got = 0;
++        if (!ReadFile(hFile, dma_buf + r.buf_off, (DWORD) r.byte_len, &got, &ov)) {
++            throw std::runtime_error(format("llama_ple_direct_reader: ReadFile failed (%lu)", (unsigned long) GetLastError()));
++        }
++        if (got < r.byte_len) {
++            std::memset(dma_buf + r.buf_off + got, 0, r.byte_len - got);
++        }
++#else
++        size_t done = 0;
++        while (done < r.byte_len) {
++            const ssize_t ret = ::pread(fd, dma_buf + r.buf_off + done, r.byte_len - done, (off_t) (r.file_off + done));
++            if (ret < 0) {
++                if (errno == EINTR) {
++                    continue;
++                }
++                throw std::runtime_error(format("llama_ple_direct_reader: pread failed at %llu: %s",
++                                                (unsigned long long) (r.file_off + done), strerror(errno)));
++            }
++            if (ret == 0) {
++                std::memset(dma_buf + r.buf_off + done, 0, r.byte_len - done);
++                break;
++            }
++            done += (size_t) ret;
++        }
++#if defined(__linux__)
++        if (!unbuffered) {
++            (void) posix_fadvise(fd, (off_t) r.file_off, (off_t) r.byte_len, POSIX_FADV_DONTNEED);
++        }
++#endif
++#endif
++    }
++
++    void worker_loop() const {
++        uint64_t seen_epoch = 0;
++        for (;;) {
++            {
++                std::unique_lock<std::mutex> lk(pool_mtx);
++                cv_start.wait(lk, [&]() { return stop_pool || epoch != seen_epoch; });
++                if (stop_pool) {
++                    return;
++                }
++                seen_epoch = epoch;
++            }
++
++            for (;;) {
++                const size_t idx = next_run.fetch_add(1, std::memory_order_relaxed);
++                if (idx >= runs.size()) {
++                    break;
++                }
++                try {
++                    exec_run(runs[idx]);
++                } catch (const std::exception & e) {
++                    std::lock_guard<std::mutex> lk(pool_mtx);
++                    if (worker_err.empty()) {
++                        worker_err = e.what();
++                    }
++                }
++            }
++
++            {
++                std::lock_guard<std::mutex> lk(pool_mtx);
++                if (--active_workers == 0) {
++                    cv_done.notify_one();
++                }
++            }
++        }
++    }
++
++    void gather_rows_f32(const int32_t * row_ids, size_t n_req, float * dst_f32) const {
++        if (n_req == 0 || no_alloc) {
++            return;
++        }
++        std::lock_guard<std::mutex> lk(call_mtx);
++
++        for (size_t base = 0; base < n_req; base += CHUNK_REQS) {
++            const size_t chunk_n = std::min(CHUNK_REQS, n_req - base);
++            needed_blks.clear();
++
++            for (size_t k = 0; k < chunk_n; ++k) {
++                const int32_t r = row_ids[base + k];
++                GGML_ASSERT(r >= 0 && r < n_rows);
++                const uint64_t byte_off = (uint64_t) data_offset + (uint64_t) r * row_bytes;
++                const uint64_t blk0     = byte_off / align_bytes;
++                const uint64_t blk1     = (byte_off + row_bytes - 1) / align_bytes;
++                needed_blks.push_back(blk0);
++                if (blk1 != blk0) {
++                    needed_blks.push_back(blk1);
++                }
++            }
++
++            std::sort(needed_blks.begin(), needed_blks.end());
++            needed_blks.erase(std::unique(needed_blks.begin(), needed_blks.end()), needed_blks.end());
++            GGML_ASSERT(needed_blks.size() <= MAX_SLOTS);
++
++            runs.clear();
++            for (size_t s = 0; s < needed_blks.size(); ) {
++                size_t m = 1;
++                while (s + m < needed_blks.size() && m < 16 && needed_blks[s + m] == needed_blks[s] + m) {
++                    ++m;
++                }
++                runs.push_back({
++                    /* .file_off = */ needed_blks[s] * (uint64_t) align_bytes,
++                    /* .buf_off  = */ s * align_bytes,
++                    /* .byte_len = */ m * align_bytes,
++                });
++                s += m;
++            }
++
++            if (runs.size() <= 2 || workers.empty()) {
++                for (const auto & r : runs) {
++                    exec_run(r);
++                }
++            } else {
++                {
++                    std::lock_guard<std::mutex> plk(pool_mtx);
++                    next_run.store(0, std::memory_order_relaxed);
++                    active_workers = workers.size();
++                    worker_err.clear();
++                    epoch++;
++                }
++                cv_start.notify_all();
++                {
++                    std::unique_lock<std::mutex> plk(pool_mtx);
++                    cv_done.wait(plk, [&]() { return active_workers == 0; });
++                    if (!worker_err.empty()) {
++                        throw std::runtime_error(worker_err);
++                    }
++                }
++            }
++
++            for (size_t k = 0; k < chunk_n; ++k) {
++                const int32_t  r        = row_ids[base + k];
++                const uint64_t byte_off = (uint64_t) data_offset + (uint64_t) r * row_bytes;
++                const uint64_t blk0     = byte_off / align_bytes;
++                const uint64_t blk1     = (byte_off + row_bytes - 1) / align_bytes;
++                const auto     it       = std::lower_bound(needed_blks.begin(), needed_blks.end(), blk0);
++                const size_t   s0       = (size_t) (it - needed_blks.begin());
++                GGML_ASSERT(blk1 == blk0 || (s0 + 1 < needed_blks.size() && needed_blks[s0 + 1] == blk1));
++
++                const size_t    in_blk  = (size_t) (byte_off - blk0 * align_bytes);
++                const uint8_t * row_ptr = dma_buf + s0 * align_bytes + in_blk;
++                traits->to_float(row_ptr, dst_f32 + (base + k) * (size_t) n_cols, n_cols);
++            }
++        }
++    }
++};
++
++llama_ple_direct_reader::llama_ple_direct_reader(
++        const char * fname,
++        size_t       data_offset,
++        ggml_type    row_type,
++        int64_t      n_cols,
++        int64_t      n_rows,
++        bool         no_alloc)
++    : pimpl(std::make_unique<impl>(fname, data_offset, row_type, n_cols, n_rows, no_alloc)) {}
++
++llama_ple_direct_reader::~llama_ple_direct_reader() = default;
++
++void llama_ple_direct_reader::gather_rows_f32(const int32_t * row_ids, size_t n_req, float * dst_f32) const {
++    pimpl->gather_rows_f32(row_ids, n_req, dst_f32);
++}
++
++size_t llama_ple_direct_reader::nbytes() const {
++    return pimpl->row_bytes * (size_t) pimpl->n_rows;
++}
+diff --git a/src/llama-mmap.h b/src/llama-mmap.h
+index 6c6393d..9bc542e 100644
+--- a/src/llama-mmap.h
++++ b/src/llama-mmap.h
+@@ -1,5 +1,7 @@
+ #pragma once
+ 
++#include "ggml.h"
++
+ #include <cstdint>
+ #include <memory>
+ #include <utility>
+@@ -12,6 +14,7 @@
+ struct llama_file;
+ struct llama_mmap;
+ struct llama_mlock;
++struct llama_ple_direct_reader;
+ 
+ using llama_files  = std::vector<std::unique_ptr<llama_file>>;
+ using llama_mmaps  = std::vector<std::unique_ptr<llama_mmap>>;
+@@ -24,6 +27,7 @@ struct llama_file {
+ 
+     size_t tell() const;
+     size_t size() const;
++    const char * fname() const;
+ 
+     int file_id() const; // fileno overload
+ 
+@@ -89,4 +93,27 @@ using llama_memory_ranges = std::vector<llama_memory_range>;
+ // Prefetch the host pages covering these memory ranges.
+ void llama_prefetch(llama_memory_ranges mr);
+ 
++// Zero-RSS direct NVMe row reader for large embedding tables (e.g. per_layer_token_embd.weight)
++struct llama_ple_direct_reader {
++    llama_ple_direct_reader(
++        const char * fname,
++        size_t       data_offset,
++        ggml_type    row_type,
++        int64_t      n_cols,
++        int64_t      n_rows,
++        bool         no_alloc = false);
++    ~llama_ple_direct_reader();
++
++    llama_ple_direct_reader(const llama_ple_direct_reader &) = delete;
++    llama_ple_direct_reader & operator=(const llama_ple_direct_reader &) = delete;
++
++    void gather_rows_f32(const int32_t * row_ids, size_t n_req, float * dst_f32) const;
++
++    size_t nbytes() const;
++
++private:
++    struct impl;
++    std::unique_ptr<impl> pimpl;
++};
++
+ size_t llama_path_max();
+diff --git a/src/llama-model-loader.cpp b/src/llama-model-loader.cpp
+index a963f24..36fe48d 100644
+--- a/src/llama-model-loader.cpp
++++ b/src/llama-model-loader.cpp
+@@ -15,6 +15,10 @@
+ #include <regex>
+ #include <unordered_set>
+ 
++#if defined(__linux__)
++#include <fcntl.h>
++#endif
++
+ static const size_t kiB = 1024;
+ static const size_t MiB = 1024*kiB;
+ static const size_t GiB = 1024*MiB;
+@@ -1102,7 +1106,7 @@ bool llama_model_loader::lazy_read::add(const std::string & name, const ggml_ten
+ 
+     // do not lazy-read small tensors, it has significant overhead and is not worth it
+     constexpr size_t auto_min_size = 4ull * 1024 * 1024 * 1024;
+-    if (mode != LLAMA_LAZY_MODE_ON && ggml_nbytes(t) <= auto_min_size) {
++    if (mode != LLAMA_LAZY_MODE_ON && mode != LLAMA_LAZY_MODE_DIRECT && ggml_nbytes(t) <= auto_min_size) {
+         return false;
+     }
+ 
+@@ -1417,45 +1421,6 @@ void llama_model_loader::done_getting_tensors(bool partial) const {
+     }
+ }
+ 
+-void llama_model_loader::init_mappings(bool prefetch, llama_mlocks * mlock_mmaps) {
+-    // note: read_lazy also requires mmap; this condition make sure it's usable even when --load-mode is not set to mmap
+-    if (use_mmap || lazy.any()) {
+-        mappings.reserve(files.size());
+-        mmaps_used.reserve(files.size());
+-        for (uint32_t idx = 0; idx < files.size(); idx++) {
+-            const auto & file = files[idx];
+-
+-            bool is_numa = false;
+-
+-            auto * dev = ggml_backend_dev_by_type(GGML_BACKEND_DEVICE_TYPE_CPU);
+-            if (dev) {
+-                auto * reg = ggml_backend_dev_backend_reg(dev);
+-                auto * is_numa_fn = (decltype(ggml_is_numa) *) ggml_backend_reg_get_proc_address(reg, "ggml_backend_cpu_is_numa");
+-                if (is_numa_fn) {
+-                    is_numa = is_numa_fn();
+-                }
+-            }
+-
+-            const size_t prefetch_size = prefetch && use_mmap ? -1 : 0;
+-
+-            std::unique_ptr<llama_mmap> mapping = std::make_unique<llama_mmap>(file.get(), prefetch_size, is_numa,
+-                    lazy.for_file(idx));
+-            mmaps_used.emplace_back(mapping->size(), 0);
+-            if (mlock_mmaps) {
+-                std::unique_ptr<llama_mlock> mlock_mmap(new llama_mlock());
+-                mlock_mmap->init(mapping->addr());
+-                mlock_mmaps->emplace_back(std::move(mlock_mmap));
+-            }
+-            mappings.emplace_back(std::move(mapping));
+-        }
+-    }
+-
+-    // compute the total size of all tensors for progress reporting
+-    for (const auto & it : weights_map) {
+-        size_data += ggml_nbytes(it.second.tensor);
+-    }
+-}
+-
+ using mapping_ranges = std::vector<llama_model_loader::mapping_range>;
+ 
+ // merge a list of [first, last) ranges into a sorted, non-overlapping list
+@@ -1497,6 +1462,70 @@ static mapping_ranges sub_ranges(const mapping_ranges & a, const mapping_ranges
+     return res;
+ }
+ 
++void llama_model_loader::init_mappings(bool prefetch, llama_mlocks * mlock_mmaps) {
++    // note: read_lazy also requires mmap; this condition make sure it's usable even when --load-mode is not set to mmap
++    if (use_mmap || lazy.any()) {
++        mappings.reserve(files.size());
++        mmaps_used.reserve(files.size());
++        for (uint32_t idx = 0; idx < files.size(); idx++) {
++            const auto & file = files[idx];
++
++            bool is_numa = false;
++
++            auto * dev = ggml_backend_dev_by_type(GGML_BACKEND_DEVICE_TYPE_CPU);
++            if (dev) {
++                auto * reg = ggml_backend_dev_backend_reg(dev);
++                auto * is_numa_fn = (decltype(ggml_is_numa) *) ggml_backend_reg_get_proc_address(reg, "ggml_backend_cpu_is_numa");
++                if (is_numa_fn) {
++                    is_numa = is_numa_fn();
++                }
++            }
++
++            const size_t prefetch_size = prefetch && use_mmap ? -1 : 0;
++
++            mapping_ranges unmap_mr;
++            llama_mmap::ranges exclude_ranges = lazy.for_file(idx);
++            if (lazy.direct_bytes > 0 && !no_alloc) {
++                mapping_ranges host_mr;
++                for (const auto & [ckey, cptr] : ctx_map) {
++                    if (!cptr || (!ckey.lazy && !ggml_backend_buft_is_host(ckey.buft))) {
++                        continue;
++                    }
++                    for (ggml_tensor * t = ggml_get_first_tensor(cptr.get()); t; t = ggml_get_next_tensor(cptr.get(), t)) {
++                        const auto * w = get_weight(ggml_get_name(t));
++                        if (w && w->idx == idx) {
++                            host_mr.push_back({ w->offs, w->offs + ggml_nbytes(t) });
++                        }
++                    }
++                }
++                unmap_mr = sub_ranges({{ 0, file->size() }}, merge_ranges(std::move(host_mr)));
++                for (const auto & r : unmap_mr) {
++                    exclude_ranges.emplace_back(r.first, r.last);
++                }
++            }
++
++            std::unique_ptr<llama_mmap> mapping = std::make_unique<llama_mmap>(file.get(), prefetch_size, is_numa,
++                    exclude_ranges);
++            for (const auto & r : unmap_mr) {
++                mapping->unmap_fragment(r.first, r.last);
++            }
++            mmaps_used.emplace_back(mapping->size(), 0);
++            if (mlock_mmaps) {
++                std::unique_ptr<llama_mlock> mlock_mmap(new llama_mlock());
++                mlock_mmap->init(mapping->addr());
++                mlock_mmaps->emplace_back(std::move(mlock_mmap));
++            }
++            mappings.emplace_back(std::move(mapping));
++        }
++    }
++
++    // compute the total size of all tensors for progress reporting
++    for (const auto & it : weights_map) {
++        size_data += ggml_nbytes(it.second.tensor);
++    }
++    size_data -= std::min(size_data, lazy.direct_bytes);
++}
++
+ std::vector<llama_model_loader::mapping_range> llama_model_loader::get_mapping_ranges(uint32_t idx, ggml_context * ctx) const {
+     GGML_ASSERT(idx < mappings.size());
+ 
+@@ -1592,7 +1621,7 @@ bool llama_model_loader::load_all_data(
+     std::vector<void *> host_ptrs;
+     size_t buffer_idx = 0; // buffer to use for async loads
+     ggml_backend_t upload_backend = [&](const char * func) -> ggml_backend_t {
+-        if (use_mmap || check_tensors) {
++        if ((use_mmap && lazy.direct_bytes == 0) || check_tensors) {
+             return nullptr;
+         }
+         // When not using mmaped io use async uploads from pinned memory to GPU memory.
+@@ -1705,7 +1734,8 @@ bool llama_model_loader::load_all_data(
+ 
+         size_t n_size = ggml_nbytes(cur);
+ 
+-        const bool from_mapping = use_mmap || lazy.has(cur);
++        const bool is_non_host_direct = (lazy.direct_bytes > 0) && cur->buffer != nullptr && !ggml_backend_buffer_is_host(cur->buffer);
++        const bool from_mapping = (use_mmap && !is_non_host_direct) || lazy.has(cur);
+ 
+         if (from_mapping) {
+             const auto & mapping = mappings.at(weight->idx);
+@@ -1818,6 +1848,16 @@ bool llama_model_loader::load_all_data(
+                         throw std::runtime_error(format("tensor '%s' has invalid data", ggml_get_name(cur)));
+                     }
+                 }
++#if defined(__linux__)
++                if (is_non_host_direct && file->file_id() >= 0) {
++                    constexpr size_t k_page = 4096;
++                    const size_t fadv_start = (weight->offs + k_page - 1) & ~(k_page - 1);
++                    const size_t fadv_end   = (weight->offs + n_size) & ~(k_page - 1);
++                    if (fadv_end > fadv_start) {
++                        (void) posix_fadvise(file->file_id(), (off_t) fadv_start, (off_t) (fadv_end - fadv_start), POSIX_FADV_DONTNEED);
++                    }
++                }
++#endif
+             }
+         }
+ 
+@@ -1850,7 +1890,7 @@ bool llama_model_loader::load_all_data(
+     // check if this is the last call and do final cleanup
+     if (size_done >= size_data) {
+         // unmap offloaded tensors and metadata
+-        if (use_mmap) {
++        if (use_mmap && lazy.direct_bytes == 0) {
+             for (uint32_t idx = 0; idx < mappings.size(); idx++) {
+                 const auto & mmap_used = mmaps_used.at(idx);
+                 auto & mapping = mappings.at(idx);
+diff --git a/src/llama-model-loader.h b/src/llama-model-loader.h
+index ed59079..789c876 100644
+--- a/src/llama-model-loader.h
++++ b/src/llama-model-loader.h
+@@ -107,11 +107,19 @@ struct llama_model_loader {
+             return it == ranges.end() ? none : it->second;
+         }
+ 
++        void add_direct(uint32_t idx, size_t first, size_t last) {
++            direct_ranges[idx].emplace_back(first, last);
++            direct_bytes += (last - first);
++        }
++
+         // lazy tensors are gathered on the host, so no offload setting applies to them
+         static ggml_backend_buffer_type_t buft();
+ 
++        size_t direct_bytes = 0;
++
+     private:
+         std::map<uint32_t, llama_mmap::ranges> ranges;
++        std::map<uint32_t, llama_mmap::ranges> direct_ranges;
+         std::set<std::string>                  tensors;
+     } lazy;
+ 
+diff --git a/src/llama-model.h b/src/llama-model.h
+index 222238e..a5bb048 100644
+--- a/src/llama-model.h
++++ b/src/llama-model.h
+@@ -5,6 +5,7 @@
+ #include "llama-graph.h"
+ #include "llama-hparams.h"
+ #include "llama-memory.h"
++#include "llama-mmap.h"
+ #include "llama-vocab.h"
+ 
+ #include <map>
+@@ -782,6 +783,7 @@ struct llama_model {
+     struct ggml_tensor * altup_proj           = nullptr;
+     struct ggml_tensor * altup_unembd_proj    = nullptr;
+     struct ggml_tensor * per_layer_tok_embd   = nullptr;
++    std::unique_ptr<llama_ple_direct_reader> ple_direct_reader;
+ 
+     struct ggml_tensor * hc_head_norm = nullptr;
+     struct ggml_tensor * hc_head_down = nullptr;
+diff --git a/src/models/qwen4exp.cpp b/src/models/qwen4exp.cpp
+index c3e2b01..fa6c77e 100644
+--- a/src/models/qwen4exp.cpp
++++ b/src/models/qwen4exp.cpp
+@@ -205,7 +205,8 @@ void llama_model_qwen4exp::load_arch_tensors(llama_model_loader & ml) {
+ 
+         // the converter pads the table; a model synthesised from metadata has no tensor to ask
+         const std::string ple_name = tn(LLM_TENSOR_PER_LAYER_TOKEN_EMBD, "weight").str();
+-        if (const auto * ple_w = ml.get_weight(ple_name.c_str())) {
++        const auto * ple_w = ml.get_weight(ple_name.c_str());
++        if (ple_w) {
+             if (ple_w->tensor->ne[1] < ple_rows) {
+                 throw std::runtime_error(format("%s has %" PRId64 " rows, too few for the PLE head ranges (%" PRId64 ")",
+                                                 ple_name.c_str(), ple_w->tensor->ne[1], ple_rows));
+@@ -213,8 +214,22 @@ void llama_model_qwen4exp::load_arch_tensors(llama_model_loader & ml) {
+             ple_rows = ple_w->tensor->ne[1];
+         }
+ 
+-        per_layer_tok_embd = create_tensor(tn(LLM_TENSOR_PER_LAYER_TOKEN_EMBD, "weight"),
+-                                           { hparams.ple_head_dim, ple_rows }, TENSOR_READ_LAZY);
++        if (ml.lazy.mode == LLAMA_LAZY_MODE_DIRECT && ple_w && !ml.files.empty()) {
++            const size_t ple_bytes = ggml_nbytes(ple_w->tensor);
++            ple_direct_reader = std::make_unique<llama_ple_direct_reader>(
++                ml.files.at(ple_w->idx)->fname(),
++                ple_w->offs,
++                ple_w->tensor->type,
++                hparams.ple_head_dim,
++                ple_rows,
++                ml.no_alloc);
++            ml.lazy.add_direct(ple_w->idx, ple_w->offs, ple_w->offs + ple_bytes);
++            ml.n_created++;
++            per_layer_tok_embd = nullptr;
++        } else {
++            per_layer_tok_embd = create_tensor(tn(LLM_TENSOR_PER_LAYER_TOKEN_EMBD, "weight"),
++                                               { hparams.ple_head_dim, ple_rows }, TENSOR_READ_LAZY);
++        }
+     }
+ 
+     auto load_block = [&](int il, int flags) {
+@@ -1306,10 +1321,15 @@ public:
+ 
+     bool can_reuse(const llm_graph_params & params) override {
+         mctx = static_cast<const llama_memory_hybrid_idx_context *>(params.mctx)->get_attn();
+-        return rows->ne[0] == (int64_t) model.hparams.ple_n_heads * params.ubatch.n_tokens;
++        const int64_t expected = (int64_t) model.hparams.ple_n_heads * params.ubatch.n_tokens;
++        if (embd_direct != nullptr) {
++            return embd_direct->ne[1] == expected;
++        }
++        return rows->ne[0] == expected;
+     }
+ 
+-    ggml_tensor * rows = nullptr;   // I32 [ple_n_heads * n_tokens]
++    ggml_tensor * rows        = nullptr; // I32 [ple_n_heads * n_tokens]
++    ggml_tensor * embd_direct = nullptr; // F32 [ple_head_dim, ple_n_heads * n_tokens]
+ 
+     const llama_model & model;
+ 
+@@ -1318,6 +1338,7 @@ public:
+ 
+     // scratch, reused across set_input() calls
+     std::vector<llama_token> prev;
++    std::vector<float>       embd_scratch;
+ };
+ 
+ void llm_graph_input_qwen4exp_ple::set_input(const llama_ubatch * ubatch) {
+@@ -1381,6 +1402,14 @@ void llm_graph_input_qwen4exp_ple::set_input(const llama_ubatch * ubatch) {
+         }
+     }
+ 
++    if (embd_direct != nullptr) {
++        GGML_ASSERT(model.ple_direct_reader != nullptr);
++        embd_scratch.resize((size_t) hparams.ple_head_dim * idx.size());
++        model.ple_direct_reader->gather_rows_f32(idx.data(), idx.size(), embd_scratch.data());
++        ggml_backend_tensor_set(embd_direct, embd_scratch.data(), 0, embd_scratch.size() * sizeof(float));
++        return;
++    }
++
+     {
+         ggml_tensor * ple = model.per_layer_tok_embd;
+ 
+@@ -1456,6 +1485,15 @@ ggml_tensor * llama_model_qwen4exp::graph::build_inp_ple(
+     // the attention cells see every ubatch regardless of the layer types
+     auto ple_inp = std::make_unique<llm_graph_input_qwen4exp_ple>(model, mctx_hyb->get_attn());
+ 
++    if (model.ple_direct_reader != nullptr) {
++        ple_inp->embd_direct = ggml_new_tensor_2d(ctx0, GGML_TYPE_F32, hparams.ple_head_dim, n_heads * n_tokens);
++        ggml_set_input(ple_inp->embd_direct);
++        ggml_tensor * emb = ggml_reshape_2d(ctx0, ple_inp->embd_direct, hparams.ple_head_dim * n_heads, n_tokens);
++        res->add_input(std::move(ple_inp));
++        cb(emb, "ple_embd", -1);
++        return emb;
++    }
++
+     ple_inp->rows = ggml_new_tensor_1d(ctx0, GGML_TYPE_I32, n_heads * n_tokens);
+     ggml_set_input(ple_inp->rows);
+     ggml_tensor * rows = ple_inp->rows;

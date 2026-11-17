@@ -1,0 +1,6 @@
+# robots.txt — Thermotech Engineering
+
+User-agent: *
+Allow: /
+
+Sitemap: https://thermotech.example/sitemap.xml

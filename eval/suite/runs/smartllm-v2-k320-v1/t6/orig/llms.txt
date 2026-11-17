@@ -1,0 +1,37 @@
+# VORTEX COMPUTE
+
+> Sovereign distributed GPU & NVMe-over-Fabrics inference engine for low-latency MoE models.
+
+## Overview
+VORTEX COMPUTE is a sovereign distributed inference engine that shards tensors across GPU nodes over RDMA fabric, verifies speculative token trees, pins hot page-cache to remote NVMe namespaces, keeps KV state in a zero-copy ring, applies deterministic quantization, and isolates every node in hardware enclaves. No external network dependency for inference.
+
+## Architecture Pillars
+- RDMA Tensor Sharding: tensors split across GPU nodes, transferred over RDMA without host-CPU staging.
+- Speculative Tree Verification: draft model proposes token trees; target validates in one pass and accepts valid prefix.
+- NVMe Page-Cache Pinning: hot pages pinned to remote NVMe namespaces, kept resident for repeated expert lookups.
+- Zero-Copy KV Ring: shard metadata and KV state resident in pinned NVMe pages, resolved against the fabric.
+- Deterministic Quantization: fixed bits-per-weight for reproducible, auditable outputs.
+- Hardware Enclave Isolation: enclave-per-node isolation; assets, KV state, and telemetry stay inside the boundary.
+
+## Deployment Tiers
+- Edge Node 8GB (edge-8gb): 8 GB VRAM, 1,240 tok/s, 1.8 ms P99, batch 8, 1 enclave.
+- Workstation 12GB (workstation-12gb): 12 GB VRAM, 3,480 tok/s, 0.9 ms P99, batch 24, 2 enclaves.
+- Rack Pod 8xGPU (rack-pod-8xgpu): 64 GB VRAM, 18,600 tok/s, 0.42 ms P99, batch 64, 64 enclaves.
+
+## Sizing Calculator Inputs
+- Active parameters (B)
+- Total MoE parameters (B)
+- Bits per weight (bpw)
+- PCIe generation (4/5/6)
+- Batch size
+
+## FAQ
+- How does RDMA tensor sharding reduce inference latency?
+- What is speculative tree verification and why does it help MoE models?
+- How does NVMe page-cache pinning work over the fabric?
+- Is the deployment sovereign and hardware-enclave isolated?
+- Which deployment tier should I choose for my MoE workload?
+
+## Notes
+- Single-page product portal. No external network requests. WebGL shader with 2D canvas fallback.
+- Strict CSP enforced via meta tag and Cloudflare Pages _headers.

@@ -1,0 +1,52 @@
+{
+  "schema": 2,
+  "product": "SmartLLM Studio",
+  "version": "0.0.1-beta",
+  "license_spdx": "FSL-1.1-ALv2",
+  "license_change_date": "2028-11-16",
+  "telemetry": false,
+  "update_check": false,
+  "author": {
+    "name": "VKVstudio",
+    "url": "https://vkvstudio.com",
+    "github": "https://github.com/VKVstudio"
+  },
+  "support": {
+    "mode": "free_launch",
+    "default_usd": 0,
+    "suggested_usd": [0, 5, 15, 40],
+    "donate_url": "https://github.com/VKVstudio/.github/blob/main/DONATE.md",
+    "links": [
+      {"id": "vkvstudio_donate", "lang": "en", "url": "https://github.com/VKVstudio/.github/blob/main/DONATE.md"},
+      {"id": "vkvstudio_github", "lang": "en", "url": "https://github.com/VKVstudio"},
+      {"id": "vkvstudio_web", "lang": "en", "url": "https://vkvstudio.com"}
+    ],
+    "crypto_wallets": [
+      {
+        "id": "trc20",
+        "network": "USDT · TRX (Tron TRC-20, Recommended)",
+        "address": "TCe57bLA4KBqcPc3ApKauE4VHLd3WqW1WT"
+      },
+      {
+        "id": "ton",
+        "network": "USDT · TON (TON network, Recommended)",
+        "address": "UQAEvC5puI21Z5OtPTo6SilVWtElgyZXvH8VIHLLKGxRL4AO"
+      },
+      {
+        "id": "evm",
+        "network": "USDT · USDC · ETH (EVM: Ethereum, Arbitrum, Base, Optimism, Polygon, BSC)",
+        "address": "0xdcE037bdF1c580A98D58815C508F7B4d7f7c4603"
+      },
+      {
+        "id": "btc",
+        "network": "BTC (Bitcoin Native SegWit)",
+        "address": "bc1q6nvqcw53r36w9gsjw429d6v3reshjr0pn8frrm"
+      }
+    ],
+    "prompt": {
+      "first_run_card": false,
+      "max_cards_per_version": 1,
+      "dismiss_forever": true
+    }
+  }
+}

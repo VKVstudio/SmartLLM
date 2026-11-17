@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /consult
+
+Sitemap: https://www.kronosgearworks.example/sitemap.xml

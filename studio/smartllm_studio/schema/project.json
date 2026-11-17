@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SmartLLM Studio ProjectDraft Schema v2",
+  "type": "object",
+  "required": ["id", "name", "goal", "languages", "canon_id", "stack", "motion", "routes", "seo", "ai_crawlers"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "revision": {"type": "integer", "minimum": 1},
+    "name": {"type": "string"},
+    "audience": {"type": "string"},
+    "goal": {"type": "string", "maxLength": 2000},
+    "tone_formality": {"type": "integer", "minimum": 0, "maximum": 100},
+    "tone_energy": {"type": "integer", "minimum": 0, "maximum": 100},
+    "languages": {"type": "string", "enum": ["en", "ru", "en+ru"]},
+    "canon_id": {"type": "string"},
+    "compare_canon_id": {"type": "string"},
+    "stack": {"type": "string", "enum": ["html5", "astro", "vite_ts", "nextjs", "sveltekit"]},
+    "motion": {"type": "string", "enum": ["gsap_scrolltrigger", "gsap_flip", "compositor_css", "reduced_motion_instant"]},
+    "output_dir": {"type": "string"},
+    "logo": {
+      "type": "object",
+      "properties": {
+        "filename": {"type": "string"},
+        "relpath": {"type": "string"},
+        "favicon_relpath": {"type": "string"},
+        "swatches": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "zimage_direction": {
+      "type": "object",
+      "properties": {
+        "style_chip": {"type": "string"},
+        "mood": {"type": "string"},
+        "aspect_ratio": {"type": "string"},
+        "selected_variant": {"type": "integer", "minimum": 0, "maximum": 3}
+      }
+    },
+    "routes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["slug", "title", "bricks"],
+        "properties": {
+          "slug": {"type": "string"},
+          "title": {"type": "string"},
+          "bricks": {"type": "array", "items": {"type": "string"}},
+          "copy_en": {"type": "object"},
+          "copy_ru": {"type": "object"}
+        }
+      }
+    },
+    "seo": {
+      "type": "object",
+      "properties": {
+        "base_url": {"type": "string"},
+        "title": {"type": "string"},
+        "description": {"type": "string"},
+        "schema_type": {"type": "string", "enum": ["Organization", "LocalBusiness", "Product", "SoftwareApplication"]},
+        "llms_txt_enabled": {"type": "boolean"},
+        "faqs": {"type": "array"}
+      }
+    },
+    "geo": {
+      "type": "object",
+      "properties": {
+        "author": {"type": "string"},
+        "expertise": {"type": "string"},
+        "last_updated": {"type": "string"},
+        "facts": {"type": "array"}
+      }
+    },
+    "ai_crawlers": {
+      "type": "object",
+      "properties": {
+        "GPTBot": {"type": "boolean"},
+        "OAI-SearchBot": {"type": "boolean"},
+        "ClaudeBot": {"type": "boolean"},
+        "PerplexityBot": {"type": "boolean"},
+        "Google-Extended": {"type": "boolean"},
+        "Applebot-Extended": {"type": "boolean"},
+        "CCBot": {"type": "boolean"},
+        "Bytespider": {"type": "boolean"}
+      }
+    }
+  }
+}

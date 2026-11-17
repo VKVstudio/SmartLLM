@@ -1,0 +1,1101 @@
+FILE: index.html
+```html
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>КБ «Северный Горизонт» / NORDIC HORIZON ARCHIVE — арктическая инженерия клеёной древесины: CLT, LVLP, гнутоклеёные арки и полярные станции</title>
+<meta name="description" content="Конструкторское бюро «Северный Горизонт» — большепролётные деревянные конструкции CLT/LVLP, гнутоклеёные арки 18–96 м, акустические концертные залы и полярные станции в снеговых районах I–VIII по СП 20.13330. Инженерный калькулятор, сравнение конструктивных систем, двуязычный FAQ.">
+<link rel="canonical" href="https://nordic-horizon.example/">
+<link rel="alternate" hreflang="ru" href="https://nordic-horizon.example/ru/">
+<link rel="alternate" hreflang="en" href="https://nordic-horizon.example/en/">
+<link rel="alternate" hreflang="x-default" href="https://nordic-horizon.example/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NORDIC HORIZON ARCHIVE">
+<meta property="og:title" content="NORDIC HORIZON ARCHIVE — High-Latitude Timber Engineering">
+<meta property="og:description" content="Cross-laminated mass timber under polar loads: CLT/LVLP panels, glued-laminated arches 18–96 m, acoustic concert halls and autonomous polar stations.">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:url" content="https://nordic-horizon.example/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NORDIC HORIZON ARCHIVE — High-Latitude Timber Engineering">
+<meta name="twitter:description" content="CLT/LVLP mass timber under polar loads: glued-laminated arches, acoustic halls, autonomous polar stations.">
+<meta name="theme-color" content="oklch(0.965 0.012 82)">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-__CSP_SCRIPT__'; style-src 'self' 'sha256-__CSP_STYLE__'; img-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; manifest-src 'self'; require-trusted-types-for 'script'">
+<link rel="alternate" type="application/ld+json" href="/ld.json">
+<style>
+/* ==========================================================================
+   NORDIC HORIZON ARCHIVE — Editorial + Swiss Architectural Grid
+   Design tokens: OKLCH. 12-column grid + subgrid. @container queries.
+   Contrast: ink-primary on paper ≈ 13:1 (AAA). Zero 100vh. Zero Tailwind.
+   ========================================================================== */
+:root{
+  --bg-paper: oklch(0.965 0.012 82);
+  --surface-card: oklch(0.935 0.016 80);
+  --ink-primary: oklch(0.15 0.018 50);
+  --ink-muted: oklch(0.32 0.02 50);
+  --border-hairline: oklch(0.24 0.015 50);
+  --accent-carmine: oklch(0.48 0.18 26);
+  --accent-pine: oklch(0.38 0.09 160);
+  --font-serif: Georgia, "Times New Roman", "PT Serif", serif;
+  --font-grotesque: "Inter", system-ui, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --gutter: clamp(1rem, 2.4vw, 1.5rem);
+  --rule: 1px solid var(--border-hairline);
+  --header-h: 4.5rem;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  max-width: 100%;
+  overflow-x: clip;
+  scroll-padding-top: 5rem; /* WCAG 2.2 SC 2.4.11 — sticky header offset */
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  max-width: 100%;
+  overflow-x: clip;
+  margin: 0;
+  background: var(--bg-paper);
+  color: var(--ink-primary);
+  font-family: var(--font-grotesque);
+  font-size: 1rem;
+  line-height: 1.55;
+  font-variant-numeric: tabular-nums;
+}
+svg, canvas, img { max-width: 100%; height: auto; }
+.skip-link {
+  position: absolute; left: 0; top: 0; z-index: 100;
+  padding: .75rem 1.25rem; background: var(--surface-card);
+  border-block-end: 2px solid var(--accent-carmine);
+  transform: translateY(-100%);
+}
+.skip-link:focus-visible { transform: translateY(0); }
+:focus-visible { outline: 2px solid var(--accent-carmine); outline-offset: 3px; }
+
+/* ---------- Layout shell ---------- */
+.shell {
+  width: min(100%, 1440px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+.col-2 { grid-column: span 2; } .col-3 { grid-column: span 3; }
+.col-4 { grid-column: span 4; } .col-5 { grid-column: span 5; }
+.col-6 { grid-column: span 6; } .col-7 { grid-column: span 7; }
+.col-8 { grid-column: span 8; } .col-12 { grid-column: span 12; }
+.subgrid { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; }
+
+/* ---------- Sticky header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--bg-paper);
+  border-block-end: var(--rule);
+  min-height: var(--header-h);
+}
+.header-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .75rem;
+  min-height: var(--header-h);
+}
+.brand {
+  font-family: var(--font-serif);
+  font-size: 1.25rem; font-weight: 700; letter-spacing: .02em;
+  text-decoration: none; color: var(--ink-primary);
+  margin-inline-end: auto;
+}
+.brand .en { display: block; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .14em; color: var(--ink-muted); }
+.nav-links { display: flex; flex-wrap: wrap; gap: .25rem; }
+.nav-links a {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 44px; min-height: 44px; padding: .35rem .75rem;
+  font-size: .82rem; letter-spacing: .06em; text-transform: uppercase;
+  text-decoration: none; color: var(--ink-muted);
+  border-block-end: 2px solid transparent;
+}
+.nav-links a:hover, .nav-links a:focus-visible { color: var(--ink-primary); border-block-end-color: var(--accent-carmine); }
+.lang-switch { display: flex; flex-wrap: wrap; gap: .25rem; }
+.lang-btn {
+  min-width: 44px; min-height: 44px;
+  font-family: var(--font-mono); font-size: .78rem; letter-spacing: .08em;
+  color: var(--ink-muted); background: transparent;
+  border: var(--rule); cursor: pointer;
+}
+.lang-btn[aria-pressed="true"] {
+  background: var(--ink-primary); color: var(--bg-paper); border-color: var(--ink-primary);
+}
+
+/* ---------- Language visibility ---------- */
+html[data-lang="ru"] .lang-en { display: none; }
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="parallel"] .lang-ru,
+html[data-lang="parallel"] .lang-en { display: block; }
+html[data-lang="parallel"] .lang-en {
+  border-inline-start: 2px solid var(--accent-pine);
+  padding-inline-start: var(--gutter);
+}
+
+/* ---------- Typography ---------- */
+h1, h2, h3, .serif { font-family: var(--font-serif); font-weight: 700; }
+h1 { font-size: clamp(2rem, 5.2vw, 4.2rem); line-height: 1.08; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.4rem, 3vw, 2.2rem); line-height: 1.15; }
+h3 { font-size: 1.1rem; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.eyebrow {
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--accent-carmine);
+}
+.lede { font-size: clamp(1.05rem, 1.8vw, 1.35rem); color: var(--ink-muted); }
+.dropcap::first-letter {
+  font-family: var(--font-serif); font-size: 3.4em; line-height: .82;
+  float: inline-start; margin-block-start: .06em; margin-inline-end: .12em;
+  color: var(--accent-carmine); font-weight: 700;
+}
+.rule-hairline { border-block-end: var(--rule); }
+.rule-double { border-block-end: 3px double var(--border-hairline); }
+
+/* ---------- Hero ---------- */
+.hero {
+  min-height: 100svh; /* fallback */
+  min-height: 100dvh;
+  container-type: inline-size;
+  container-name: hero;
+  align-content: center;
+  padding-block: 3rem 4rem;
+}
+.hero-manifesto { grid-column: span 7; }
+.hero-manifesto blockquote {
+  margin: 1.5rem 0 0; padding: 0;
+  font-family: var(--font-serif); font-style: italic;
+  font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+  border-inline-start: 3px solid var(--accent-carmine);
+  padding-inline-start: 1.25rem;
+}
+.hero-visual { grid-column: span 5; }
+.hero-figure { margin: 0; }
+.hero-figure img { aspect-ratio: 1 / 1; background: var(--surface-card); border: var(--rule); }
+.hero-figure figcaption {
+  font-family: var(--font-mono); font-size: .72rem; color: var(--ink-muted);
+  padding-block-start: .5rem;
+}
+.hero-drawing { margin-block-end: 1.5rem; }
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  font-family: var(--font-mono); font-size: .72rem; color: var(--ink-muted);
+  border-block-start: var(--rule); padding-block-start: .75rem;
+}
+@container hero (max-width: 720px) {
+  .hero-manifesto, .hero-visual { grid-column: span 12; }
+}
+
+/* ---------- Gallery ---------- */
+.section { padding-block: 3.5rem; container-type: inline-size; }
+.section-head { margin-block-end: 2rem; }
+.gallery { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: var(--gutter); }
+.gallery figure {
+  margin: 0; background: var(--surface-card); border: var(--rule);
+  padding: 1rem; container-type: inline-size; container-name: card;
+}
+.gallery figure:nth-of-type(1) { grid-column: span 5; }
+.gallery figure:nth-of-type(2) { grid-column: span 4; }
+.gallery figure:nth-of-type(3) { grid-column: span 4; }
+.gallery img { aspect-ratio: 1 / 1; background: var(--bg-paper); }
+.gallery figcaption {
+  font-family: var(--font-mono); font-size: .74rem; color: var(--ink-muted);
+  padding-block-start: .75rem;
+}
+@container card (max-width: 380px) {
+  .gallery figcaption { font-size: .68rem; }
+}
+@container (max-width: 760px) {
+  .gallery figure { grid-column: span 12; }
+}
+
+/* ---------- Calculator ---------- */
+.calc { background: var(--surface-card); border: var(--rule); padding: var(--gutter); }
+.calc-grid {
+  display: grid; grid-template-columns: repeat(12, minmax(0,1fr));
+  gap: var(--gutter);
+}
+.calc-inputs { grid-column: span 7; }
+.calc-output { grid-column: span 5; }
+.field { margin-block-end: 1.25rem; }
+.field label {
+  display: block; font-family: var(--font-mono); font-size: .74rem;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted);
+  margin-block-end: .5rem;
+}
+.field input[type="range"] { inline-size: 100%; min-block-size: 24px; accent-color: var(--accent-carmine); }
+.field input[type="number"], .field select {
+  inline-size: 100%; min-block-size: 44px; padding: .5rem .75rem;
+  font-family: var(--font-mono); font-size: 1rem; color: var(--ink-primary);
+  background: var(--bg-paper); border: var(--rule);
+}
+.field .range-readout { font-family: var(--font-mono); color: var(--accent-carmine); }
+.calc-readout {
+  display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .75rem;
+  font-family: var(--font-mono); font-size: .82rem;
+}
+.readout-item { border-block-start: var(--rule); padding-block-start: .5rem; }
+.readout-item .val { font-size: 1.35rem; color: var(--ink-primary); }
+.readout-item .unit { color: var(--ink-muted); }
+.calc-note { font-size: .72rem; color: var(--ink-muted); margin-block-start: 1rem; }
+@container (max-width: 720px) {
+  .calc-inputs, .calc-output { grid-column: span 12; }
+}
+
+/* ---------- Comparison table ---------- */
+.table-wrap { overflow-x: auto; overscroll-behavior-inline: contain; border: var(--rule); background: var(--bg-paper); }
+table {
+  inline-size: 100%; min-inline-size: 640px; border-collapse: collapse;
+  font-family: var(--font-mono); font-size: .82rem; font-variant-numeric: tabular-nums;
+}
+th, td { padding: .75rem 1rem; border-block-end: var(--rule); text-align: start; vertical-align: top; }
+thead th {
+  background: var(--ink-primary); color: var(--bg-paper);
+  font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+}
+tbody tr:nth-child(even) { background: oklch(0.93 0.014 82); }
+td.metric { color: var(--accent-carmine); }
+td.dim { color: var(--ink-muted); }
+
+/* ---------- FAQ ---------- */
+.faq-item { border-block-end: var(--rule); padding-block: 1.25rem; }
+.faq-item h3 { margin: 0 0 .75rem; }
+.faq-item p { margin: 0; color: var(--ink-muted); }
+html[data-lang="parallel"] .faq-item .lang-en { margin-block-start: 1rem; }
+
+/* ---------- Order form ---------- */
+.order-form { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: var(--gutter); }
+.order-form .field { grid-column: span 6; margin-block-end: 0; }
+.order-form .field-wide { grid-column: span 12; }
+.order-form .field.is-invalid input,
+.order-form .field.is-invalid select,
+.order-form .field.is-invalid textarea { border-color: var(--accent-carmine); }
+.field-error { display: none; font-family: var(--font-mono); font-size: .72rem; color: var(--accent-carmine); margin-block-start: .4rem; }
+.field.is-invalid .field-error { display: block; }
+.form-status { grid-column: span 12; font-family: var(--font-mono); font-size: .82rem; color: var(--accent-pine); }
+.form-status.is-hidden { display: none; }
+.btn-submit {
+  min-inline-size: 44px; min-block-size: 44px; padding: .75rem 1.5rem;
+  font-family: var(--font-mono); font-size: .85rem; letter-spacing: .08em;
+  background: var(--ink-primary); color: var(--bg-paper); border: none; cursor: pointer;
+}
+.btn-submit:hover { background: var(--accent-carmine); }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--ink-primary); color: var(--bg-paper);
+  padding-block: 3rem; margin-block-start: 3rem;
+}
+.footer-grid { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: var(--gutter); }
+.footer-col { grid-column: span 4; }
+.site-footer a { color: var(--bg-paper); }
+.site-footer .mono { font-size: .74rem; color: oklch(0.75 0.015 82); }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://nordic-horizon.example/#org",
+      "name": "КБ «Северный Горизонт» / NORDIC HORIZON ARCHIVE",
+      "alternateName": "NORDIC HORIZON ARCHIVE",
+      "url": "https://nordic-horizon.example/",
+      "description": "Арктическое конструкторское бюро большепролётных деревянных конструкций: CLT/LVLP-панели, гнутоклеёные арки, акустические концертные залы и полярные станции.",
+      "areaServed": ["RU", "EN"],
+      "knowsAbout": ["CLT", "LVLP", "glulam arches", "polar engineering", "acoustic design", "GOST 33124-2019", "EN 16351", "SP 20.13330"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://nordic-horizon.example/#site",
+      "url": "https://nordic-horizon.example/",
+      "name": "NORDIC HORIZON ARCHIVE",
+      "inLanguage": ["ru", "en"],
+      "publisher": { "@id": "https://nordic-horizon.example/#org" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://nordic-horizon.example/#webpage",
+      "url": "https://nordic-horizon.example/",
+      "name": "Архитектура высоких широт: клеёная древесина против экстремальных ветровых и снеговых нагрузок",
+      "inLanguage": "ru",
+      "isPartOf": { "@id": "https://nordic-horizon.example/#site" },
+      "about": { "@id": "https://nordic-horizon.example/#org" }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://nordic-horizon.example/#product-gkd",
+      "name": "ГКД-Арктика 72м / GKDA-72 Arctic Lattice Arch",
+      "description": "Гнутоклеёная решётчатая арка пролётом 72 м для снеговых районов I–VIII по СП 20.13330.",
+      "brand": { "@id": "https://nordic-horizon.example/#org" },
+      "category": "Glued-laminated lattice arch"
+    },
+    {
+      "@type": "Product",
+      "@id": "https://nordic-horizon.example/#product-clt-hall",
+      "name": "CLT-Акустик Зал / CLT-Acoustic Hall",
+      "description": "CLT-оболочка концертного зала с целевым RT60 1.4 с и коэффициентом звукопоглощения NRC 0.95.",
+      "brand": { "@id": "https://nordic-horizon.example/#org" },
+      "category": "Acoustic mass-timber shell"
+    },
+    {
+      "@type": "Product",
+      "@id": "https://nordic-horizon.example/#product-pole-module",
+      "name": "Модуль-Полюс Автономный / Pole Module Autonomous",
+      "description": "Автономный модуль полярной станции с CLT-панелями 160 мм и резервом по ветровой нагрузке 180 км/ч.",
+      "brand": { "@id": "https://nordic-horizon.example/#org" },
+      "category": "Autonomous polar station module"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://nordic-horizon.example/#breadcrumbs",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://nordic-horizon.example/" },
+        { "@type": "ListItem", "position": 2, "name": "Конструктивные системы", "item": "https://nordic-horizon.example/#systems" },
+        { "@type": "ListItem", "position": 3, "name": "FAQ", "item": "https://nordic-horizon.example/#faq" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://nordic-horizon.example/#faq-ru",
+      "inLanguage": "ru",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Как обеспечивается огнестойкость CLT-конструкций до R90/REI60?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Многослойная CLT-панель обугливается предсказуемо: скорость карбонизации ≈ 0,7 мм/мин. Расчёт по ГОСТ 33124-2019 и EN 1924-2 закладывает запас сечения на весь срок службы, поэтому узел сохраняет несущую способность R90 и целостность/теплоизоляцию REI60. Скрытые полые камеры и лабиринтные пазы замедляют прогрев внутренних слоёв."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как CLT ведёт себя при влажностных деформациях и циклических изменениях влажности?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Древесина реагирует на влажность линейно: разбухание/усыхание поперёк волокон ~0,2 % на каждые 5 % изменения MC. Проектные допуски влажности 8–12 %, вентиляционные зазоры 20–40 мм и лабиринтные пазы компенсаторов снимают напряжения. В полярных условиях цикл влажности стабилен, деформации остаются в пределах расчётных."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Соответствуют ли панели ГОСТ 33124-2019 и EN 16351?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да. Все панели CLT и LVLP выпускаются и маркируются по ГОСТ 33124-2019, а экспортные партии сертифицируются по EN 16351 (CLT) и EN 16351-2. Испытания на изгиб, сдвиг слоёв и класс прочности выполняются в собственной лаборатории; паспорт партии содержит значения E-модуля, плотности и влажности."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как рассчитывается время реверберации RT60 в концертных залах?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "RT60 рассчитывается по объёму зала, площади поглощения и распределению отражающих/поглощающих поверхностей. Целевые значения: 1,4–1,8 с для симфонической музыки, 1,0–1,2 с для лекций. Деревянная оболочка CLT отражает низкие частоты, акустические baffles из LVLP поглощают средние и высокие; расчёт ведётся по ISO 354 и СП 51.13330."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как бюро работает с экстремальными снеговыми и ветровыми нагрузками районов I–VIII?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Проектирование ведётся по СП 20.13330-2016: снеговые районы I–VIII (50–320 кг/м²) и ветровые районы I–VI. Гнутоклеёные арки сечением 600–900 мм закладываются с коэффициентом запаса 1,6–2,0, узлы дубелируются стальными стержнями, а фундаменты выводятся ниже глубины промерзания с анкеровкой от ветрового отрыва."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://nordic-horizon.example/#faq-en",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How is fire resistance up to R90/REI60 ensured for CLT structures?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "CLT chars predictably: charring rate ≈ 0.7 mm/min. Cross-section is calculated per GOST 33124-2019 and EN 1924-2 with a reserve for the full service life, so the node keeps load-bearing capacity R90 and integrity/insulation REI60. Hidden hollow cavities and labyrinth grooves slow heating of inner layers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does CLT behave under moisture deformation and cyclic humidity changes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Wood responds linearly to humidity: swelling/shrinkage across the grain ~0.2 % per 5 % change in MC. Design moisture tolerance 8–12 %, ventilation gaps 20–40 mm and labyrinth compensator grooves relieve stress. In polar conditions the humidity cycle is stable and deformations stay within calculated limits."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do panels comply with GOST 33124-2019 and EN 16351?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. All CLT and LVLP panels are produced and labeled per GOST 33124-2019; export batches are certified per EN 16351 (CLT) and EN 16351-2. Bending, layer shear and strength-class tests run in our own lab; the batch passport records E-modulus, density and moisture values."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is reverberation time RT60 calculated for concert halls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "RT60 is calculated from hall volume, absorption area and the distribution of reflecting/absorbing surfaces. Targets: 1.4–1.8 s for symphonic music, 1.0–1.2 s for lectures. The CLT shell reflects low frequencies, LVLP acoustic baffles absorb mid and high; the calculation follows ISO 354 and SP 51.13330."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the bureau handle extreme snow and wind loads of zones I–VIII?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Design follows SP 20.13330-2016: snow zones I–VIII (50–320 kg/m²) and wind zones I–VI. Glulam arches of 600–900 mm section are laid with a safety factor 1.6–2.0, nodes are dowelled with steel rods, and foundations are set below frost depth with anchoring against wind uplift."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти к содержимому / Skip to content</a>
+
+<header class="site-header" id="top">
+  <div class="shell header-bar">
+    <a class="brand" href="#top" aria-label="КБ Северный Горизонт — на главную">
+      КБ «Северный Горизонт»
+      <span class="en">NORDIC HORIZON ARCHIVE</span>
+    </a>
+    <nav class="nav-links" aria-label="Основная навигация">
+      <a href="#hero">Манифест<span class="lang-en"> Manifesto</span></a>
+      <a href="#gallery">Галерея<span class="lang-en"> Gallery</span></a>
+      <a href="#calculator">Калькулятор<span class="lang-en"> Calculator</span></a>
+      <a href="#systems">Системы<span class="lang-en"> Systems</span></a>
+      <a href="#faq">FAQ<span class="lang-en"> FAQ</span></a>
+      <a href="#order">Заказать альбом<span class="lang-en"> Order the album</span></a>
+    </nav>
+    <div class="lang-switch" role="group" aria-label="Переключатель языка">
+      <button class="lang-btn" type="button" data-lang-mode="ru" aria-pressed="true">RU</button>
+      <button class="lang-btn" type="button" data-lang-mode="en" aria-pressed="false">EN</button>
+      <button class="lang-btn" type="button" data-lang-mode="parallel" aria-pressed="false">RU+EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===== 1. Editorial Hero ===== -->
+  <section id="hero" class="hero grid-12 shell" aria-labelledby="hero-title">
+    <div class="hero-manifesto">
+      <p class="eyebrow">Редакционный манифест — Issue 01 / Arctic Timber Engineering</p>
+      <h1 id="hero-title" lang="ru">Архитектура высоких широт: клеёная древесина против экстремальных ветровых и снеговых нагрузок</h1>
+      <p class="lede lang-ru">Мы проектируем большепролётные оболочки из CLT и LVLP-панелей там, где сталь уступает морозу, а бетон трескается от ветровой нагрузки. Гнутоклеёные арки, дубелированные узлы и акустические залы — это инженерия, доведённая до предела широты.</p>
+      <blockquote lang="ru">«Архитектура высоких широт — это не стиль, а расчёт: клеёная древесина против экстремальных ветровых и снеговых нагрузок» — Северный Горизонт</blockquote>
+      <div lang="en">
+        <p class="eyebrow">Editorial Manifesto — Issue 01 / High-Latitude Timber Engineering</p>
+        <h2>High-Latitude Timber Engineering: Cross-Laminated Mass Timber Under Polar Loads</h2>
+        <p class="lede">We design long-span CLT and LVLP shells where steel yields to frost and concrete cracks under wind load. Glulam arches, dowelled nodes and acoustic halls are engineering taken to the latitude limit.</p>
+        <blockquote>“High-latitude architecture is not a style but a calculation: cross-laminated mass timber against extreme wind and snow loads” — Nordic Horizon</blockquote>
+      </div>
+      <div class="hero-meta">
+        <span>Пролёты 18–96 м / Spans 18–96 m</span>
+        <span>Снеговые районы I–VIII / Snow zones I–VIII</span>
+        <span>CLT / LVLP / Glulam</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg class="hero-drawing" viewBox="0 0 600 480" role="img" aria-labelledby="svg-title svg-desc" style="border: var(--rule); background: var(--surface-card);">
+        <title id="svg-title">Чертеж узла сопряжения CLT-купола</title>
+        <desc id="svg-desc">Инженерный чертёж: гнутоклеёная арка CLT-купола, стальной дубель, размерные линии и маркировка NORDIC HORIZON | CLT-72M</desc>
+        <g fill="none" stroke="var(--border-hairline)" stroke-width="1">
+          <path d="M60 380 L60 120" />
+          <path d="M540 380 L540 120" />
+          <path d="M60 120 Q300 40 540 120" stroke="var(--accent-pine)" stroke-width="2.5" />
+          <path d="M60 150 Q300 70 540 150" stroke="var(--accent-pine)" stroke-width="2.5" />
+          <path d="M60 180 Q300 100 540 180" stroke="var(--accent-pine)" stroke-width="2.5" />
+          <circle cx="300" cy="40" r="9" fill="var(--accent-carmine)" stroke="var(--ink-primary)" />
+          <path d="M300 40 L300 120" stroke="var(--accent-carmine)" stroke-dasharray="6 4" />
+          <path d="M60 380 L540 380" stroke-dasharray="8 6" />
+          <path d="M60 390 L60 410 M540 390 L540 410" />
+          <path d="M60 400 L540 400" />
+        </g>
+        <g font-family="var(--font-mono)" font-size="13" fill="var(--ink-muted)">
+          <text x="70" y="420">SPAN 72.0 m</text>
+          <text x="470" y="420">SPAN 72.0 m</text>
+          <text x="252" y="30">NORDIC HORIZON | CLT-72M</text>
+          <text x="70" y="112">SUPPORT A</text>
+          <text x="470" y="112">SUPPORT B</text>
+          <text x="255" y="58">DOWEL Ø32</text>
+          <text x="70" y="200">SNOW ZONE IV · 150 kg/m²</text>
+        </g>
+      </svg>
+      <figure class="hero-figure" data-zimage-id="hero_polar_pavilion">
+        <img src="assets/zimage_01.png" width="1024" height="1024" alt="Полярный павильон Северного Горизонта: гнутоклеёная CLT-арка пролётом 72 м в снеговом районе IV, заснеженный ландшафт, инженерный чертёж на шильде NORDIC HORIZON | CLT-72M" decoding="async">
+        <figcaption>Z-Image 01 · hero_polar_pavilion · 1024×1024 · seed 471209</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 2. Редакционная галерея ===== -->
+  <section id="gallery" class="section shell" aria-labelledby="gallery-title">
+    <div class="section-head subgrid">
+      <div class="col-8">
+        <p class="eyebrow">Редакционная галерея / Editorial Gallery</p>
+        <h2 id="gallery-title" lang="ru">Узел, оболочка, акустика: три среза инженерии</h2>
+        <p class="lede lang-ru">Каждый кадр — часть производственного цикла: от узла сопряжения до акустических baffles концертного зала. Изображения генерируются последовательным Z-Image конвейером (stable-diffusion.cpp, q8_0).</p>
+      </div>
+      <div class="col-4" lang="en">
+        <p class="eyebrow">Editorial Gallery</p>
+        <h2>Node, shell, acoustics: three cuts of engineering</h2>
+        <p class="lede">Every frame is part of the production cycle: from the joint node to the concert-hall acoustic baffles. Images are rendered by the sequential Z-Image pipeline (stable-diffusion.cpp, q8_0).</p>
+      </div>
+    </div>
+    <div class="gallery">
+      <figure data-zimage-id="hero_polar_pavilion">
+        <img src="assets/zimage_01.png" width="1024" height="1024" alt="Полярный павильон: CLT-купол над заснеженной равниной, маркировка NORDIC HORIZON | CLT-72M" decoding="async">
+        <figcaption>01 — Полярный павильон / Polar Pavilion · CLT-72M · 1024×1024</figcaption>
+      </figure>
+      <figure data-zimage-id="joinery_steel_dowel_node">
+        <img src="assets/zimage_02.png" width="1024" height="1024" alt="Узел сопряжения гнутоклеёной балки со стальным дубелем, шильда ISO-16351 GLULAM NODE" decoding="async">
+        <figcaption>02 — Узел сопряжения / Joinery Node · ISO-16351 GLULAM · 1024×1024</figcaption>
+      </figure>
+      <figure data-zimage-id="concert_acoustic_baffles">
+        <img src="assets/zimage_03.png" width="1024" height="1024" alt="Акустические baffles из LVLP в концертном зале, маркировка ACOUSTIC HALL | RT60 1.4S" decoding="async">
+        <figcaption>03 — Акустические baffles / Acoustic Baffles · RT60 1.4 s · 1024×1024</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 3. Инженерный калькулятор ===== -->
+  <section id="calculator" class="section shell" aria-labelledby="calc-title">
+    <div class="section-head subgrid">
+      <div class="col-8">
+        <p class="eyebrow">Инженерный калькулятор / Engineering Calculator</p>
+        <h2 id="calc-title" lang="ru">Расчёт пролёта, снеговой нагрузки, CLT, акустики и углерода</h2>
+        <p class="lede lang-ru">Ориентировочная модель: пролёт арки 18–96 м, снеговой район I–VIII по СП 20.13330, толщина CLT-панели, NRC, RT60 и углеродный след. Значения обновляются мгновенно, без перезагрузки страницы.</p>
+      </div>
+      <div class="col-4" lang="en">
+        <p class="eyebrow">Engineering Calculator</p>
+        <h2>Span, snow load, CLT, acoustics and carbon</h2>
+        <p class="lede">Indicative model: arch span 18–96 m, snow zone I–VIII per SP 20.13330, CLT panel thickness, NRC, RT60 and carbon footprint. Values update instantly, no page reload.</p>
+      </div>
+    </div>
+    <div class="calc subgrid">
+      <form class="calc-inputs" id="calc-form" aria-describedby="calc-note">
+        <div class="field">
+          <label for="span-range">Пролёт арки, м / Arch span, m</label>
+          <input type="range" id="span-range" name="span" min="18" max="96" step="1" value="72" aria-describedby="span-readout">
+          <output class="range-readout mono" id="span-readout" for="span-range">72 м / m</output>
+        </div>
+        <div class="field">
+          <label for="snow-zone">Снеговой район по СП 20.13330 / Snow zone per SP 20.13330</label>
+          <select id="snow-zone" name="snow">
+            <option value="1">I — 50 кг/м²</option>
+            <option value="2">II — 70 кг/м²</option>
+            <option value="3">III — 110 кг/м²</option>
+            <option value="4" selected>IV — 150 кг/м²</option>
+            <option value="5">V — 190 кг/м²</option>
+            <option value="6">VI — 230 кг/м²</option>
+            <option value="7">VII — 280 кг/м²</option>
+            <option value="8">VIII — 320 кг/м²</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="clt-thickness">Толщина CLT-панели, мм / CLT panel thickness, mm</label>
+          <input type="number" id="clt-thickness" name="clt" min="20" max="320" step="1" value="160" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="hall-volume">Объём зала, м³ / Hall volume, m³</label>
+          <input type="number" id="hall-volume" name="volume" min="2000" max="20000" step="100" value="8000" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="nrc">Коэффициент звукопоглощения NRC / Absorption coefficient NRC</label>
+          <select id="nrc" name="nrc">
+            <option value="0.6">0.60</option>
+            <option value="0.8" selected>0.80</option>
+            <option value="0.95">0.95</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="rt60">Целевое RT60, с / Target RT60, s</label>
+          <input type="number" id="rt60" name="rt60" min="0.8" max="2.4" step="0.1" value="1.4" inputmode="decimal">
+        </div>
+      </form>
+      <div class="calc-output" id="calc-output" role="region" aria-live="polite" aria-label="Результаты расчёта">
+        <div class="calc-readout">
+          <div class="readout-item"><span class="unit">Сечение балки / Beam section</span><br><span class="val" id="out-beam">900 × 320</span> <span class="unit">мм / mm</span></div>
+          <div class="readout-item"><span class="unit">Провисание / Deflection L/250</span><br><span class="val" id="out-defl">288</span> <span class="unit">мм / mm</span></div>
+          <div class="readout-item"><span class="unit">Снеговая нагрузка / Snow load</span><br><span class="val" id="out-snow">108</span> <span class="unit">kN</span></div>
+          <div class="readout-item"><span class="unit">Запас прочности / Safety factor</span><br><span class="val" id="out-safety">1.85</span></div>
+          <div class="readout-item"><span class="unit">Площадь поглощения / Absorption area</span><br><span class="val" id="out-abs">142</span> <span class="unit">m²</span></div>
+          <div class="readout-item"><span class="unit">Углерод / Carbon stored</span><br><span class="val" id="out-carbon">21.5</span> <span class="unit">t CO₂</span></div>
+        </div>
+        <p class="calc-note" id="calc-note">Ориентировочный расчёт для предпроектной оценки. Формулы: глубина балки span/10, провисание L/250, поглощение NRC × объём, углерод 1.6 t CO₂/м³ древесины.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. Сравнительная таблица ===== -->
+  <section id="systems" class="section shell" aria-labelledby="systems-title">
+    <div class="section-head subgrid">
+      <div class="col-8">
+        <p class="eyebrow">Сравнение конструктивных систем / System Comparison</p>
+        <h2 id="systems-title" lang="ru">Три системы: ГКД-Арктика 72м, CLT-Акустик Зал, Модуль-Полюс</h2>
+      </div>
+      <div class="col-4" lang="en">
+        <p class="eyebrow">System Comparison</p>
+        <h2>Three systems: GKDA-72, CLT-Acoustic Hall, Pole Module</h2>
+      </div>
+    </div>
+    <div class="table-wrap" lang="ru">
+      <table>
+        <caption class="visually-hidden">Сравнение конструктивных систем бюро «Северный Горизонт»</caption>
+        <thead>
+          <tr>
+            <th scope="col">Система</th>
+            <th scope="col">Пролёт / пролётность</th>
+            <th scope="col">CLT / LVLP</th>
+            <th scope="col">Снеговой район</th>
+            <th scope="col">RT60 / NRC</th>
+            <th scope="col">Огнестойкость</th>
+            <th scope="col">Углерод, t CO₂</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">ГКД-Арктика 72м</th>
+            <td class="metric">72 м</td>
+            <td>CLT 160 мм + LVLP 40 мм</td>
+            <td>I–IV</td>
+            <td class="dim">— / —</td>
+            <td>R90 / REI60</td>
+            <td class="metric">21.5</td>
+          </tr>
+          <tr>
+            <th scope="row">CLT-Акустик Зал</th>
+            <td class="metric">36 м</td>
+            <td>CLT 120 мм + LVLP baffles</td>
+            <td>II–III</td>
+            <td class="metric">1.4 с / 0.95</td>
+            <td>R60 / REI30</td>
+            <td class="metric">14.8</td>
+          </tr>
+          <tr>
+            <th scope="row">Модуль-Полюс Автономный</th>
+            <td class="metric">18 м</td>
+            <td>CLT 200 мм, LVLP 60 мм</td>
+            <td>VII–VIII</td>
+            <td class="dim">— / 0.60</td>
+            <td>R90 / REI60</td>
+            <td class="metric">9.4</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-wrap" lang="en">
+      <table>
+        <caption class="visually-hidden">System comparison — Nordic Horizon Archive</caption>
+        <thead>
+          <tr>
+            <th scope="col">System</th>
+            <th scope="col">Span</th>
+            <th scope="col">CLT / LVLP</th>
+            <th scope="col">Snow zone</th>
+            <th scope="col">RT60 / NRC</th>
+            <th scope="col">Fire rating</th>
+            <th scope="col">Carbon, t CO₂</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">GKDA-72 Arctic</th>
+            <td class="metric">72 m</td>
+            <td>CLT 160 mm + LVLP 40 mm</td>
+            <td>I–IV</td>
+            <td class="dim">— / —</td>
+            <td>R90 / REI60</td>
+            <td class="metric">21.5</td>
+          </tr>
+          <tr>
+            <th scope="row">CLT-Acoustic Hall</th>
+            <td class="metric">36 m</td>
+            <td>CLT 120 mm + LVLP baffles</td>
+            <td>II–III</td>
+            <td class="metric">1.4 s / 0.95</td>
+            <td>R60 / REI30</td>
+            <td class="metric">14.8</td>
+          </tr>
+          <tr>
+            <th scope="row">Pole Module Autonomous</th>
+            <td class="metric">18 m</td>
+            <td>CLT 200 mm, LVLP 60 mm</td>
+            <td>VII–VIII</td>
+            <td class="dim">— / 0.60</td>
+            <td>R90 / REI60</td>
+            <td class="metric">9.4</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== 5. FAQ + форма заказа ===== -->
+  <section id="faq" class="section shell" aria-labelledby="faq-title">
+    <div class="section-head subgrid">
+      <div class="col-8">
+        <p class="eyebrow">Частые вопросы / Frequently Asked Questions</p>
+        <h2 id="faq-title" lang="ru">Огнестойкость, влажность, стандарты, акустика и нагрузки</h2>
+      </div>
+      <div class="col-4" lang="en">
+        <p class="eyebrow">FAQ</p>
+        <h2>Fire resistance, moisture, standards, acoustics and loads</h2>
+      </div>
+    </div>
+    <div class="subgrid col-12">
+      <div class="faq-item col-6" lang="ru">
+        <h3>Как обеспечивается огнестойкость CLT-конструкций до R90/REI60?</h3>
+        <p>Многослойная CLT-панель обугливается предсказуемо: скорость карбонизации ≈ 0,7 мм/мин. Расчёт по ГОСТ 33124-2019 и EN 1924-2 закладывает запас сечения на весь срок службы, поэтому узел сохраняет несущую способность R90 и целостность/теплоизоляцию REI60. Скрытые полые камеры и лабиринтные пазы замедляют прогрев внутренних слоёв.</p>
+      </div>
+      <div class="faq-item col-6" lang="en">
+        <h3>How is fire resistance up to R90/REI60 ensured for CLT structures?</h3>
+        <p>CLT chars predictably: charring rate ≈ 0.7 mm/min. Cross-section is calculated per GOST 33124-2019 and EN 1924-2 with a reserve for the full service life, so the node keeps load-bearing capacity R90 and integrity/insulation REI60. Hidden hollow cavities and labyrinth grooves slow heating of inner layers.</p>
+      </div>
+      <div class="faq-item col-6" lang="ru">
+        <h3>Как CLT ведёт себя при влажностных деформациях и циклических изменениях влажности?</h3>
+        <p>Древесина реагирует на влажность линейно: разбухание/усыхание поперёк волокон ~0,2 % на каждые 5 % изменения MC. Проектные допуски влажности 8–12 %, вентиляционные зазоры 20–40 мм и лабиринтные пазы компенсаторов снимают напряжения. В полярных условиях цикл влажности стабилен, деформации остаются в пределах расчётных.</p>
+      </div>
+      <div class="faq-item col-6" lang="en">
+        <h3>How does CLT behave under moisture deformation and cyclic humidity changes?</h3>
+        <p>Wood responds linearly to humidity: swelling/shrinkage across the grain ~0.2 % per 5 % change in MC. Design moisture tolerance 8–12 %, ventilation gaps 20–40 mm and labyrinth compensator grooves relieve stress. In polar conditions the humidity cycle is stable and deformations stay within calculated limits.</p>
+      </div>
+      <div class="faq-item col-6" lang="ru">
+        <h3>Соответствуют ли панели ГОСТ 33124-2019 и EN 16351?</h3>
+        <p>Да. Все панели CLT и LVLP выпускаются и маркируются по ГОСТ 33124-2019, а экспортные партии сертифицируются по EN 16351 (CLT) и EN 16351-2. Испытания на изгиб, сдвиг слоёв и класс прочности выполняются в собственной лаборатории; паспорт партии содержит значения E-модуля, плотности и влажности.</p>
+      </div>
+      <div class="faq-item col-6" lang="en">
+        <h3>Do panels comply with GOST 33124-2019 and EN 16351?</h3>
+        <p>Yes. All CLT and LVLP panels are produced and labeled per GOST 33124-2019; export batches are certified per EN 16351 (CLT) and EN 16351-2. Bending, layer shear and strength-class tests run in our own lab; the batch passport records E-modulus, density and moisture values.</p>
+      </div>
+      <div class="faq-item col-6" lang="ru">
+        <h3>Как рассчитывается время реверберации RT60 в концертных залах?</h3>
+        <p>RT60 рассчитывается по объёму зала, площади поглощения и распределению отражающих/поглощающих поверхностей. Целевые значения: 1,4–1,8 с для симфонической музыки, 1,0–1,2 с для лекций. Деревянная оболочка CLT отражает низкие частоты, акустические baffles из LVLP поглощают средние и высокие; расчёт ведётся по ISO 354 и СП 51.13330.</p>
+      </div>
+      <div class="faq-item col-6" lang="en">
+        <h3>How is reverberation time RT60 calculated for concert halls?</h3>
+        <p>RT60 is calculated from hall volume, absorption area and the distribution of reflecting/absorbing surfaces. Targets: 1.4–1.8 s for symphonic music, 1.0–1.2 s for lectures. The CLT shell reflects low frequencies, LVLP acoustic baffles absorb mid and high; the calculation follows ISO 354 and SP 51.13330.</p>
+      </div>
+      <div class="faq-item col-6" lang="ru">
+        <h3>Как бюро работает с экстремальными снеговыми и ветровыми нагрузками районов I–VIII?</h3>
+        <p>Проектирование ведётся по СП 20.13330-2016: снеговые районы I–VIII (50–320 кг/м²) и ветровые районы I–VI. Гнутоклеёные арки сечением 600–900 мм закладываются с коэффициентом запаса 1.6–2.0, узлы дубелируются стальными стержнями, а фундаменты выводятся ниже глубины промерзания с анкеровкой от ветрового отрыва.</p>
+      </div>
+      <div class="faq-item col-6" lang="en">
+        <h3>How does the bureau handle extreme snow and wind loads of zones I–VIII?</h3>
+        <p>Design follows SP 20.13330-2016: snow zones I–VIII (50–320 kg/m²) and wind zones I–VI. Glulam arches of 600–900 mm section are laid with a safety factor 1.6–2.0, nodes are dowelled with steel rods, and foundations are set below frost depth with anchoring against wind uplift.</p>
+      </div>
+    </div>
+
+    <div class="section-head subgrid" id="order">
+      <div class="col-8">
+        <p class="eyebrow">Заказ альбома технических решений / Order the Technical Solutions Album</p>
+        <h2 lang="ru">Получить альбом решений «Северный Горизонт»</h2>
+      </div>
+      <div class="col-4" lang="en">
+        <p class="eyebrow">Order the Technical Solutions Album</p>
+        <h2>Request the Nordic Horizon solutions album</h2>
+      </div>
+    </div>
+    <form class="order-form subgrid col-12" id="order-form" novalidate>
+      <div class="field col-6">
+        <label for="f-name">Имя / Name</label>
+        <input type="text" id="f-name" name="name" autocomplete="name" required>
+        <p class="field-error" id="err-name">Укажите имя / Please enter your name</p>
+      </div>
+      <div class="field col-6">
+        <label for="f-org">Организация / Organization</label>
+        <input type="text" id="f-org" name="org" autocomplete="organization" required>
+        <p class="field-error" id="err-org">Укажите организацию / Please enter your organization</p>
+      </div>
+      <div class="field col-6">
+        <label for="f-email">Электронная почта / Email</label>
+        <input type="email" id="f-email" name="email" autocomplete="email" required>
+        <p class="field-error" id="err-email">Некорректный e-mail / Invalid email address</p>
+      </div>
+      <div class="field col-6">
+        <label for="f-system">Интересующая система / System of interest</label>
+        <select id="f-system" name="system" required>
+          <option value="">— выберите / select —</option>
+          <option value="gkda72">ГКД-Арктика 72м / GKDA-72 Arctic</option>
+          <option value="clt-hall">CLT-Акустик Зал / CLT-Acoustic Hall</option>
+          <option value="pole-module">Модуль-Полюс Автономный / Pole Module Autonomous</option>
+        </select>
+        <p class="field-error" id="err-system">Выберите систему / Please select a system</p>
+      </div>
+      <div class="field field-wide col-12">
+        <label for="f-message">Комментарий / Comment</label>
+        <textarea id="f-message" name="message" rows="4"></textarea>
+      </div>
+      <div class="col-12">
+        <button class="btn-submit" type="submit">Отправить заявку / Submit request</button>
+      </div>
+      <p class="form-status is-hidden" id="form-status" role="status"></p>
+    </form>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div class="footer-col">
+      <p class="mono">NORDIC HORIZON ARCHIVE</p>
+      <p class="mono">КБ «Северный Горизонт» · 2024–2026</p>
+      <p class="mono">Арктическая инженерия клеёной древесины</p>
+    </div>
+    <div class="footer-col">
+      <p class="mono">Контакты / Contacts</p>
+      <p class="mono">press@nordic-horizon.example</p>
+      <p class="mono">projects@nordic-horizon.example</p>
+    </div>
+    <div class="footer-col">
+      <p class="mono">Стандарты / Standards</p>
+      <p class="mono">ГОСТ 33124-2019 · EN 16351 · СП 20.13330-2016</p>
+      <p class="mono">ISO 354 · EN 1924-2 · ISO 16351</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  /* Language switcher — no reload */
+  var langButtons = document.querySelectorAll(".lang-btn");
+  langButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var mode = btn.getAttribute("data-lang-mode");
+      document.documentElement.setAttribute("data-lang", mode);
+      langButtons.forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+      btn.setAttribute("aria-pressed", "true");
+    });
+  });
+
+  /* Calculator */
+  var spanRange = document.getElementById("span-range");
+  var spanReadout = document.getElementById("span-readout");
+  var snowZone = document.getElementById("snow-zone");
+  var clt = document.getElementById("clt-thickness");
+  var volume = document.getElementById("hall-volume");
+  var nrc = document.getElementById("nrc");
+  var rt60 = document.getElementById("rt60");
+  var outBeam = document.getElementById("out-beam");
+  var outDefl = document.getElementById("out-defl");
+  var outSnow = document.getElementById("out-snow");
+  var outSafety = document.getElementById("out-safety");
+  var outAbs = document.getElementById("out-abs");
+  var outCarbon = document.getElementById("out-carbon");
+  var SNOW = { 1: 50, 2: 70, 3: 110, 4: 150, 5: 190, 6: 230, 7: 280, 8: 320 };
+
+  function num(el, fallback) {
+    var v = parseFloat(el.value);
+    return Number.isFinite(v) ? v : fallback;
+  }
+  function recalc() {
+    var span = Math.min(18, Math.max(96, num(spanRange, 72)));
+    var zone = SNOW[snowZone.value] || 150;
+    var panel = Math.min(20, Math.max(320, num(clt, 160)));
+    var vol = Math.min(2000, Math.max(20000, num(volume, 8000)));
+    var nrcVal = parseFloat(nrc.value) || 0.8;
+    var rt = Math.min(0.8, Math.max(2.4, num(rt60, 1.4)));
+    var depth = Math.round(span * 100);
+    var width = Math.round(panel * 2);
+    var defl = Math.round(span * 1000 / 250);
+    var snowKN = Math.round((span * 12 * zone) / 1000);
+    var safety = (depth > 600 ? 1.85 : 1.6).toFixed(2);
+    var absArea = Math.round((vol / nrcVal) / 100);
+    var beamVol = (depth / 1000) * (width / 1000) * span;
+    var carbon = (beamVol * 1.6).toFixed(1);
+    spanReadout.textContent = span + " м / m";
+    outBeam.textContent = depth + " × " + width;
+    outDefl.textContent = defl;
+    outSnow.textContent = snowKN;
+    outSafety.textContent = safety;
+    outAbs.textContent = absArea;
+    outCarbon.textContent = carbon;
+  }
+  [spanRange, snowZone, clt, volume, nrc, rt60].forEach(function (el) {
+    el.addEventListener("input", recalc);
+    el.addEventListener("change", recalc);
+  });
+  recalc();
+
+  /* Order form validation */
+  var form = document.getElementById("order-form");
+  var status = document.getElementById("form-status");
+  var fields = ["f-name", "f-org", "f-email", "f-system"];
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var ok = true;
+    fields.forEach(function (id) {
+      var input = document.getElementById(id);
+      var wrap = input.parentElement;
+      var valid = input.checkValidity() && input.value.trim() !== "";
+      if (id === "f-email") { valid = valid && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(input.value.trim()); }
+      wrap.classList.toggle("is-invalid", !valid);
+      if (!valid) ok = false;
+    });
+    if (ok) {
+      status.classList.remove("is-hidden");
+      status.textContent = "Заявка принята. Альбом технических решений будет отправлен на указанный e-mail. / Request accepted. The technical solutions album will be sent to your email.";
+    } else {
+      status.classList.remove("is-hidden");
+      status.textContent = "Проверьте поля формы. / Please check the form fields.";
+    }
+  });
+})();
+</script>
+</body>
+</html>
+```
+
+FILE: zimage_prompts.json
+```json
+{
+  "pipeline": "sequential_sd_cpp_zimage",
+  "model": "beyond_reality_z_image_3.0_fp8.safetensors",
+  "quant_type": "q8_0",
+  "vae_tiling": true,
+  "prompts": [
+    {
+      "id": "hero_polar_pavilion",
+      "target_section": "hero",
+      "output_path": "assets/zimage_01.png",
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "steps": 9,
+      "cfg_scale": 1.0,
+      "seed": 471209,
+      "exact_text_in_frame": "NORDIC HORIZON | CLT-72M",
+      "prompt": "Photorealistic architectural photograph of an arctic polar pavilion with a cross-laminated CLT dome arch spanning 72 meters over a snow-covered plain at dusk, soft diffused polar light, frosted timber surface, steel dowel connectors visible at the crown, a technical nameplate reading \"NORDIC HORIZON | CLT-72M\" mounted on the support column, editorial Swiss-grid composition, muted warm paper tones with deep ink shadows, fine grain, 8k detail, no people, no neon",
+      "negative_prompt": "blurry, low contrast, watermark, deformed text, neon purple glow"
+    },
+    {
+      "id": "joinery_steel_dowel_node",
+      "target_section": "gallery",
+      "output_path": "assets/zimage_02.png",
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "steps": 9,
+      "cfg_scale": 1.0,
+      "seed": 830417,
+      "exact_text_in_frame": "ISO-16351 GLULAM NODE",
+      "prompt": "Macro photorealistic detail of a glued-laminated glulam beam joint with a steel dowel rod Ø32 passing through laminated timber layers, visible glue line and lamination grain, a stamped metal label reading \"ISO-16351 GLULAM NODE" engraved on the connector plate, cool workshop lighting, shallow depth of field, engineering drawing aesthetic, warm timber tones against deep ink background, precise edges, no clutter",
+      "negative_prompt": "blurry, low contrast, watermark, deformed text, neon purple glow"
+    },
+    {
+      "id": "concert_acoustic_baffles",
+      "target_section": "gallery",
+      "output_path": "assets/zimage_03.png",
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "steps": 9,
+      "cfg_scale": 1.0,
+      "seed": 261905,
+      "exact_text_in_frame": "ACOUSTIC HALL | RT60 1.4S",
+      "prompt": "Photorealistic interior of a concert hall with LVLP acoustic baffles suspended beneath a CLT timber shell ceiling, warm diffused lighting, wood grain texture, perforated absorber panels, a signage plate reading \"ACOUSTIC HALL | RT60 1.4S" on the wall, editorial architectural photography, balanced composition, muted paper palette with carmine accents, high detail, empty hall, no people",
+      "negative_prompt": "blurry, low contrast, watermark, deformed text, neon purple glow"
+    }
+  ]
+}
+```
+
+FILE: llms.txt
+```text
+# llms.txt — NORDIC HORIZON ARCHIVE / КБ «Северный Горизонт»
+# https://nordic-horizon.example/llms.txt
+# Стандарт llmstxt.org
+
+# NORDIC HORIZON ARCHIVE — КБ «Северный Горизонт»
+> Арктическое конструкторское бюро большепролётных деревянных конструкций: CLT/LVLP-панели,
+> гнутоклеёные арки 18–96 м, акустические концертные залы и автономные полярные станции.
+> Проектирование по СП 20.13330-2016 (снеговые районы I–VIII), ГОСТ 33124-2019, EN 16351, EN 1924-2.
+> Языки: русский (основной) и английский (параллельные редакционные блоки).
+
+## Основные разделы / Key sections
+- [Манифест / Manifesto](https://nordic-horizon.example/#hero): «Архитектура высоких широт: клеёная древесина против экстремальных ветровых и снеговых нагрузок» / "High-Latitude Timber Engineering: Cross-Laminated Mass Timber Under Polar Loads".
+- [Редакционная галерея / Editorial Gallery](https://nordic-horizon.example/#gallery): узел сопряжения, CLT-купол, акустические baffles.
+- [Инженерный калькулятор / Engineering Calculator](https://nordic-horizon.example/#calculator): пролёт 18–96 м, снеговой район I–VIII, CLT мм, NRC, RT60, углеродный след.
+- [Сравнение систем / System Comparison](https://nordic-horizon.example/#systems): ГКД-Арктика 72м, CLT-Акустик Зал, Модуль-Полюс Автономный.
+- [FAQ](https://nordic-horizon.example/#faq): 5 двуязычных пар вопросов/ответов (огнестойкость R90/REI60, влажность, ГОСТ 33124 / EN 16351, RT60, нагрузки).
+
+## Конструктивные системы / Systems
+- ГКД-Арктика 72м / GKDA-72 Arctic Lattice Arch — пролёт 72 м, снеговые районы I–IV, R90/REI60.
+- CLT-Акустик Зал / CLT-Acoustic Hall — пролёт 36 м, RT60 1.4 с, NRC 0.95.
+- Модуль-Полюс Автономный / Pole Module Autonomous — пролёт 18 м, снеговые районы VII–VIII.
+
+## Стандарты / Standards
+- ГОСТ 33124-2019, EN 16351, EN 1924-2, СП 20.13330-2016, СП 51.13330, ISO 354.
+
+## Промпт-конвейер / Image pipeline
+- Последовательный Z-Image (stable-diffusion.cpp, q8_0): hero_polar_pavilion, joinery_steel_dowel_node, concert_acoustic_baffles.
+
+## Контакт / Contact
+- press@nordic-horizon.example · projects@nordic-horizon.example
+```
+
+FILE: robots.txt
+```text
+# robots.txt — NORDIC HORIZON ARCHIVE / КБ «Северный Горизонт»
+# https://nordic-horizon.example/robots.txt
+
+# --- AI search crawlers (разрешены) ---
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# --- AI training crawlers (запрещены) ---
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+# --- Поисковые системы ---
+User-agent: *
+Allow: /
+Disallow: /assets/
+
+Sitemap: https://nordic-horizon.example/sitemap.xml
+```
+
+FILE: _headers
+```text
+# Cloudflare Pages headers
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-__CSP_SCRIPT__'; style-src 'self' 'sha256-__CSP_STYLE__'; img-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; manifest-src 'self'; require-trusted-types-for 'script'
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Resource-Policy: same-origin
+```

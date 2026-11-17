@@ -23,21 +23,55 @@
       }
     },
     "all_required_files_present": true,
-    "csp": {
-      "has_meta_csp": true,
-      "has_unsafe_inline": false,
-      "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/qwen3.8-no-think/t1/orig/index.html",
+      "raw_meta_csp_present": false,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": false,
+      "raw_scripts_covered": false,
+      "raw_headers_csp": {
+        "present": true,
+        "has_unsafe_inline": false,
+        "has_object_src_none": true,
+        "has_trusted_types": false,
+        "has_frame_ancestors_none": true
+      }
     },
-    "external_urls_in_attrs": [
+    "csp": {
+      "has_meta_csp": false,
+      "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": false,
+      "all_script_hashes_matched": false,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 3,
+      "raw_csp_passed": false
+    },
+    "external_urls_in_attrs": [],
+    "informational_urls": [
       "https://thermotech-eng.example/"
     ],
     "seo_meta": {
       "has_title": true,
       "has_description": true,
       "has_canonical": true,
+      "canonical_href": "https://thermotech-eng.example/",
       "has_og_title": true,
-      "has_og_description": true
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "json_ld": {
       "blocks_count": 1,
@@ -55,12 +89,46 @@
       "faq_all_verbatim": true,
       "has_all_4_types": true,
       "product_count": 3,
-      "faq_count": 5
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "What output range do THERMOTECH boilers cover?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Which fuels can the units burn?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "How are the boilers certified?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "What does a typical lead time look like?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Do you provide commissioning and service support?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
     },
     "_headers": {
       "exists": true,
       "all_passed": true,
       "has_route_rule": true,
+      "routes_found": [
+        "/*",
+        "/index.html",
+        "/llms.txt",
+        "/robots.txt"
+      ],
       "checks": {
         "Content-Security-Policy": true,
         "frame-ancestors 'none'": true,
@@ -69,7 +137,40 @@
         "Referrer-Policy": true,
         "Permissions-Policy": true,
         "Cross-Origin-Opener-Policy": true
+      },
+      "hsts_details": {
+        "present": true,
+        "max_age": 63072000,
+        "has_include_subdomains": true,
+        "has_preload": true,
+        "passed": true
+      },
+      "cross_origin_isolation": {
+        "coop": "same-origin",
+        "coep": "",
+        "corp": "same-origin",
+        "coop_same_origin": true,
+        "coep_valid": false,
+        "corp_valid": true,
+        "full_isolation_passed": false
+      },
+      "csp_details": {
+        "has_object_src_none": true,
+        "has_require_trusted_types": false,
+        "has_unsafe_inline": false
       }
+    },
+    "robots_txt": {
+      "exists": true,
+      "valid_syntax": true,
+      "user_agents": [
+        "*"
+      ],
+      "has_wildcard_agent": true,
+      "ai_training_bots_mentioned": [],
+      "ai_search_bots_mentioned": [],
+      "has_ai_crawler_policy": false,
+      "has_sitemap": true
     },
     "llms_txt": {
       "exists": true,
@@ -78,6 +179,7 @@
       "has_h2_sections": true
     },
     "semantics": {
+      "html_lang": "en",
       "h1_count": 1,
       "landmarks": [
         "article",
@@ -93,12 +195,39 @@
       "canvas_count": 0,
       "form_inputs_count": 6,
       "form_inputs_labeled": 6,
-      "has_prefers_reduced_motion": true
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 14,
       "max_contrast_pair": 18.3,
+      "max_contrast_ratio_est": 18.3,
+      "semantic_text_bg_contrast": 17.8,
+      "semantic_bg_fg_min_contrast": 17.8,
+      "min_muted_bg_contrast": null,
       "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--bg vs --ink": 17.8,
+        "--surface vs --ink": 16.6,
+        "--surface-2 vs --ink": 15.09
+      },
       "tokens": {
         "--bg": {
           "raw": "oklch(0.16 0.012 260)",
@@ -175,7 +304,7 @@
           "L": 0.55,
           "C": 0.18,
           "H": 45.0,
-          "luminance": 0.1514
+          "luminance": 0.1526
         },
         "--ok": {
           "raw": "oklch(0.72 0.15 150)",
@@ -189,7 +318,7 @@
           "L": 0.7,
           "C": 0.16,
           "H": 85.0,
-          "luminance": 0.3397
+          "luminance": 0.3388
         },
         "--danger": {
           "raw": "oklch(0.62 0.20 25)",
@@ -200,15 +329,50 @@
         }
       }
     },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 7006,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 22,
+      "em_dash_per_100w": 1.71,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 22,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": false,
       "raw_has_unsafe_inline": false,
-      "headers_patched": true,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "headers_patched": false,
       "computed_style_block_hashes_count": 1,
       "computed_inline_style_attr_hashes_count": 1,
-      "computed_script_hashes_count": 2,
-      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-5JKXuStfgG4PcupAegvSN1n4u+rvUE7DsixQIXsn17s=' 'sha256-q3nqK4VzeI/SowYCYQ/tCfo056B/JMutuSpzbJbHczk='; script-src 'self' 'sha256-rAfzYAboKnjRiUt3C9A8SrfA/abTyjDTXSAF1dhU+dY=' 'sha256-3LFuy/+J2gzCcovOQnjrAffoNy8KwKYIOhTO9LFr5to='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "computed_script_hashes_count": 1,
+      "patched_meta_csp": ""
     }
   },
   "t2": {
@@ -223,11 +387,32 @@
       }
     },
     "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/qwen3.8-no-think/t2/orig/index.html",
+      "raw_meta_csp_present": false,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": false,
+      "raw_scripts_covered": false
+    },
     "csp": {
-      "has_meta_csp": true,
+      "has_meta_csp": false,
       "has_unsafe_inline": false,
-      "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": false,
+      "all_script_hashes_matched": false,
+      "inline_event_handlers_count": 1,
+      "js_style_mutations_count": 1,
+      "raw_csp_passed": false
     },
     "external_urls_in_attrs": [
       "https://picsum.photos/seed/vkv-agent-infrastructure-panel/900/506",
@@ -235,14 +420,21 @@
       "https://picsum.photos/seed/vkv-agent-infrastructure-panel/760/475",
       "https://picsum.photos/seed/vkv-search-loupe-cards/760/475"
     ],
+    "informational_urls": [],
     "seo_meta": {
       "has_title": true,
       "has_description": false,
       "has_canonical": false,
+      "canonical_href": null,
       "has_og_title": false,
-      "has_og_description": false
+      "has_og_description": false,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "semantics": {
+      "html_lang": "en",
       "h1_count": 1,
       "landmarks": [
         "article",
@@ -258,12 +450,39 @@
       "canvas_count": 0,
       "form_inputs_count": 2,
       "form_inputs_labeled": 2,
-      "has_prefers_reduced_motion": false
+      "has_prefers_reduced_motion": false,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 10,
       "max_contrast_pair": 15.61,
+      "max_contrast_ratio_est": 15.61,
+      "semantic_text_bg_contrast": 15.61,
+      "semantic_bg_fg_min_contrast": 15.61,
+      "min_muted_bg_contrast": 6.12,
       "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--bg vs --ink": 14.5,
+        "--surface vs --ink": 15.61,
+        "--card vs --ink": 15.17
+      },
       "tokens": {
         "--bg": {
           "raw": "oklch(95% 0.012 90)",
@@ -312,14 +531,14 @@
           "L": 0.48,
           "C": 0.09,
           "H": 190.0,
-          "luminance": 0.1201
+          "luminance": 0.1177
         },
         "--teal-deep": {
           "raw": "oklch(40% 0.08 190)",
           "L": 0.4,
           "C": 0.08,
           "H": 190.0,
-          "luminance": 0.0707
+          "luminance": 0.0681
         },
         "--line": {
           "raw": "oklch(87% 0.012 90)",
@@ -337,15 +556,50 @@
         }
       }
     },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 2054,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 2,
+      "em_dash_per_100w": 0.49,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 2,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": false,
       "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
       "headers_patched": false,
       "computed_style_block_hashes_count": 1,
       "computed_inline_style_attr_hashes_count": 1,
       "computed_script_hashes_count": 1,
-      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-YpFu9DvBSB5P4f6H2CX5ueBZ+uGXsIn7I807IENooiU=' 'sha256-q3nqK4VzeI/SowYCYQ/tCfo056B/JMutuSpzbJbHczk='; script-src 'self' 'sha256-+4uaAFNCDoN5EJqKJgKa17nKam+q2m26uJHKLJ9VxCc='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "patched_meta_csp": ""
     }
   },
   "t3": {
@@ -372,21 +626,55 @@
       }
     },
     "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/qwen3.8-no-think/t3/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": true,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": false,
+      "raw_scripts_covered": false,
+      "raw_headers_csp": {
+        "present": true,
+        "has_unsafe_inline": false,
+        "has_object_src_none": true,
+        "has_trusted_types": true,
+        "has_frame_ancestors_none": true
+      }
+    },
     "csp": {
       "has_meta_csp": true,
       "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
       "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": false
     },
-    "external_urls_in_attrs": [
+    "external_urls_in_attrs": [],
+    "informational_urls": [
       "https://severnaya-manufaktura.ru/"
     ],
     "seo_meta": {
       "has_title": true,
       "has_description": true,
       "has_canonical": true,
+      "canonical_href": "https://severnaya-manufaktura.ru/",
       "has_og_title": false,
-      "has_og_description": false
+      "has_og_description": false,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "json_ld": {
       "blocks_count": 1,
@@ -402,12 +690,43 @@
       "faq_all_verbatim": true,
       "has_all_4_types": true,
       "product_count": 3,
-      "faq_count": 5
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "Из какого дерева вы делаете мебель?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Какие соединения вы используете?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Сколько времени занимает изготовление?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Есть ли гарантия и доставка?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Можно ли заказать индивидуальный размер или отделку?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
     },
     "_headers": {
       "exists": true,
       "all_passed": true,
       "has_route_rule": true,
+      "routes_found": [
+        "/*"
+      ],
       "checks": {
         "Content-Security-Policy": true,
         "frame-ancestors 'none'": true,
@@ -416,7 +735,40 @@
         "Referrer-Policy": true,
         "Permissions-Policy": true,
         "Cross-Origin-Opener-Policy": true
+      },
+      "hsts_details": {
+        "present": true,
+        "max_age": 63072000,
+        "has_include_subdomains": true,
+        "has_preload": true,
+        "passed": true
+      },
+      "cross_origin_isolation": {
+        "coop": "same-origin",
+        "coep": "",
+        "corp": "",
+        "coop_same_origin": true,
+        "coep_valid": false,
+        "corp_valid": false,
+        "full_isolation_passed": false
+      },
+      "csp_details": {
+        "has_object_src_none": true,
+        "has_require_trusted_types": false,
+        "has_unsafe_inline": false
       }
+    },
+    "robots_txt": {
+      "exists": true,
+      "valid_syntax": true,
+      "user_agents": [
+        "*"
+      ],
+      "has_wildcard_agent": true,
+      "ai_training_bots_mentioned": [],
+      "ai_search_bots_mentioned": [],
+      "has_ai_crawler_policy": false,
+      "has_sitemap": true
     },
     "llms_txt": {
       "exists": true,
@@ -425,6 +777,7 @@
       "has_h2_sections": true
     },
     "semantics": {
+      "html_lang": "ru",
       "h1_count": 1,
       "landmarks": [
         "article",
@@ -439,12 +792,39 @@
       "canvas_count": 0,
       "form_inputs_count": 6,
       "form_inputs_labeled": 5,
-      "has_prefers_reduced_motion": true
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 11,
       "max_contrast_pair": 15.56,
+      "max_contrast_ratio_est": 15.56,
+      "semantic_text_bg_contrast": 15.34,
+      "semantic_bg_fg_min_contrast": 15.34,
+      "min_muted_bg_contrast": null,
       "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--bg vs --ink": 14.24,
+        "--surface vs --ink": 15.34,
+        "--surface-sunk vs --ink": 13.41
+      },
       "tokens": {
         "--bg": {
           "raw": "oklch(0.95 0.01 85)",
@@ -525,15 +905,50 @@
         }
       }
     },
+    "copy_hygiene": {
+      "expected_lang": "ru",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 5555,
+      "latin_chars_count": 378,
+      "cyrillic_density": 0.9363,
+      "latin_density": 0.0637,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 25,
+      "em_dash_per_100w": 2.65,
+      "em_dash_overuse": false,
+      "guillemets_count": 44,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": true,
+        "em_dash_count": 25,
+        "guillemets_count": 44,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": true,
       "raw_has_unsafe_inline": false,
-      "headers_patched": true,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": true,
+      "headers_patched": false,
       "computed_style_block_hashes_count": 1,
       "computed_inline_style_attr_hashes_count": 1,
-      "computed_script_hashes_count": 2,
-      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-w21bruwiCpebvgePxjxJDRHU5jwtkXgFufP3PAWQUng=' 'sha256-NXTqLL8/I59UmOnV7tNjFWxURPt85KaZpa7nT1w/lDE='; script-src 'self' 'sha256-yIZ14g0Eq3S1ATAPw9ql/epQQmNiFaor7NjypKrQ0nE=' 'sha256-sWszSj80EniC9MZdlyQ43hNSpzbswxlfhqAnqzSovPY='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "computed_script_hashes_count": 1,
+      "patched_meta_csp": "default-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests; script-src 'sha256-+3lGhZv7QmBqY0g9r4HcUkPjNfTnD6xVdFpKwXbJyA0='; style-src 'sha256-j8S/6OZM3aEoIzL1eR9CtWuYh7NqB4vXsPmD0kL2gF8='; img-src 'self' data:; font-src 'self'; connect-src 'none'; manifest-src 'self'; worker-src 'none'; media-src 'none'; child-src 'none'; frame-src 'none'; trusted-types none; require-trusted-types-for 'script'; report-to csp-endpoint;"
     }
   },
   "t4": {
@@ -561,6 +976,12 @@
     "status": "missing"
   },
   "t12": {
+    "status": "missing"
+  },
+  "t_zimage_site": {
+    "status": "missing"
+  },
+  "t_backend_form": {
     "status": "missing"
   }
 }

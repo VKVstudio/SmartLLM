@@ -1,0 +1,88 @@
+:root {
+  color-scheme: light;
+
+  --surface: oklch(0.97 0.008 95);
+  --surface-dim: oklch(0.94 0.010 95);
+  --surface-deep: oklch(0.91 0.012 95);
+  --ink: oklch(0.14 0.015 255);
+  --ink-muted: oklch(0.35 0.018 255);
+  --accent: oklch(0.45 0.14 155);
+  --accent-strong: oklch(0.36 0.16 155);
+  --signal: oklch(0.66 0.17 65);
+  --signal-strong: oklch(0.54 0.18 65);
+  --line: oklch(0.82 0.012 255);
+  --line-strong: oklch(0.72 0.016 255);
+
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4rem;
+
+  --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  --shadow-sm: 0 1px 2px oklch(0.14 0.015 255 / 0.06);
+  --shadow-md: 0 4px 12px oklch(0.14 0.015 255 / 0.08);
+
+  --transition-fast: 180ms ease-out;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+img,
+svg,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.container {
+  width: min(100%, 1120px);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--surface);
+  padding: var(--space-2) var(--space-3);
+}
+
+.skip-link:focus {
+  left: var(--space-3);
+  z-index: 100;
+}

@@ -1,0 +1,3495 @@
+{
+  "t1": {
+    "task_id": "t1",
+    "category": "web_landing",
+    "language": "en",
+    "canon": "Industrial B2B Engineering",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 32113
+      },
+      "llms.txt": {
+        "exists": true,
+        "size_bytes": 1477
+      },
+      "robots.txt": {
+        "exists": true,
+        "size_bytes": 112
+      },
+      "_headers": {
+        "exists": true,
+        "size_bytes": 815
+      }
+    },
+    "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t1/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": true,
+      "raw_has_script_placeholder": true,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": true,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true,
+      "raw_headers_csp": {
+        "present": true,
+        "has_unsafe_inline": false,
+        "has_object_src_none": true,
+        "has_trusted_types": false,
+        "has_frame_ancestors_none": true
+      }
+    },
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": true
+    },
+    "external_urls_in_attrs": [],
+    "informational_urls": [
+      "https://thermotech.example/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "canonical_href": "https://thermotech.example/",
+      "has_og_title": true,
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
+    },
+    "json_ld": {
+      "blocks_count": 2,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "BreadcrumbList",
+        "Product",
+        "Product",
+        "Product",
+        "FAQPage",
+        "WebPage"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "What is the typical lead time for a Thermotech boiler order?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Can Thermotech supply turnkey installation?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Do the boilers comply with ISO and GOST requirements?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Which fuels are supported?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "What warranty and service coverage is included?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
+    },
+    "_headers": {
+      "exists": true,
+      "all_passed": true,
+      "has_route_rule": true,
+      "routes_found": [
+        "/*"
+      ],
+      "checks": {
+        "Content-Security-Policy": true,
+        "frame-ancestors 'none'": true,
+        "Strict-Transport-Security": true,
+        "X-Content-Type-Options": true,
+        "Referrer-Policy": true,
+        "Permissions-Policy": true,
+        "Cross-Origin-Opener-Policy": true
+      },
+      "hsts_details": {
+        "present": true,
+        "max_age": 63072000,
+        "has_include_subdomains": true,
+        "has_preload": true,
+        "passed": true
+      },
+      "cross_origin_isolation": {
+        "coop": "same-origin",
+        "coep": "",
+        "corp": "",
+        "coop_same_origin": true,
+        "coep_valid": false,
+        "corp_valid": false,
+        "full_isolation_passed": false
+      },
+      "csp_details": {
+        "has_object_src_none": true,
+        "has_require_trusted_types": false,
+        "has_unsafe_inline": false
+      }
+    },
+    "robots_txt": {
+      "exists": true,
+      "valid_syntax": true,
+      "user_agents": [
+        "*"
+      ],
+      "has_wildcard_agent": true,
+      "ai_training_bots_mentioned": [],
+      "ai_search_bots_mentioned": [],
+      "has_ai_crawler_policy": false,
+      "has_sitemap": true
+    },
+    "llms_txt": {
+      "exists": true,
+      "has_h1": true,
+      "has_blockquote": true,
+      "has_h2_sections": true
+    },
+    "semantics": {
+      "html_lang": "en",
+      "h1_count": 1,
+      "landmarks": [
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 8,
+      "canvas_count": 0,
+      "form_inputs_count": 5,
+      "form_inputs_labeled": 5,
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
+    },
+    "oklch": {
+      "token_count": 12,
+      "max_contrast_pair": 14.58,
+      "max_contrast_ratio_est": 14.58,
+      "semantic_text_bg_contrast": 14.58,
+      "semantic_bg_fg_min_contrast": 14.58,
+      "min_muted_bg_contrast": null,
+      "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--bg vs --ink": 14.58,
+        "--surface vs --ink": 13.21,
+        "--surface-2 vs --ink": 12.07
+      },
+      "tokens": {
+        "--bg": {
+          "raw": "oklch(0.205 0.014 250)",
+          "L": 0.205,
+          "C": 0.014,
+          "H": 250.0,
+          "luminance": 0.0087
+        },
+        "--surface": {
+          "raw": "oklch(0.245 0.016 250)",
+          "L": 0.245,
+          "C": 0.016,
+          "H": 250.0,
+          "luminance": 0.0148
+        },
+        "--surface-2": {
+          "raw": "oklch(0.275 0.018 250)",
+          "L": 0.275,
+          "C": 0.018,
+          "H": 250.0,
+          "luminance": 0.0209
+        },
+        "--line": {
+          "raw": "oklch(0.34 0.014 250)",
+          "L": 0.34,
+          "C": 0.014,
+          "H": 250.0,
+          "luminance": 0.0394
+        },
+        "--grid": {
+          "raw": "oklch(0.28 0.012 250)",
+          "L": 0.28,
+          "C": 0.012,
+          "H": 250.0,
+          "luminance": 0.022
+        },
+        "--ink": {
+          "raw": "oklch(0.93 0.012 240)",
+          "L": 0.93,
+          "C": 0.012,
+          "H": 240.0,
+          "luminance": 0.806
+        },
+        "--ink-dim": {
+          "raw": "oklch(0.74 0.014 240)",
+          "L": 0.74,
+          "C": 0.014,
+          "H": 240.0,
+          "luminance": 0.4064
+        },
+        "--accent": {
+          "raw": "oklch(0.68 0.19 45)",
+          "L": 0.68,
+          "C": 0.19,
+          "H": 45.0,
+          "luminance": 0.2891
+        },
+        "--accent-ink": {
+          "raw": "oklch(0.82 0.12 62)",
+          "L": 0.82,
+          "C": 0.12,
+          "H": 62.0,
+          "luminance": 0.5365
+        },
+        "--water": {
+          "raw": "oklch(0.74 0.07 230)",
+          "L": 0.74,
+          "C": 0.07,
+          "H": 230.0,
+          "luminance": 0.4127
+        },
+        "--ok": {
+          "raw": "oklch(0.78 0.13 152)",
+          "L": 0.78,
+          "C": 0.13,
+          "H": 152.0,
+          "luminance": 0.5019
+        },
+        "--err": {
+          "raw": "oklch(0.72 0.15 25)",
+          "L": 0.72,
+          "C": 0.15,
+          "H": 25.0,
+          "luminance": 0.3467
+        }
+      }
+    },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 3650,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 7,
+      "em_dash_per_100w": 1.11,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 7,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "headers_patched": true,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 3,
+      "computed_script_hashes_count": 1,
+      "patched_meta_csp": "default-src 'none'; style-src 'unsafe-hashes' 'sha256-AhT7Ab1zOnZLzg+j9uo9rhM2/VxDkjYJ4BTxMMBDnKM=' 'sha256-Duf2atnAuKYQJLP8weHjB4u7h1/rXqGctpxZ7QK2sds=' 'sha256-Zti1kSKsBCDjPMPNndmmQ139hNWU3Xsx+XGt75Xz2ig=' 'sha256-UTd6kX6zAHGCYHBsdL3X+vEK9GTcgHfoJvZIv8noVeA='; script-src 'sha256-+aPMhIQoPO7nXt9vhvZt+aJL1cUqM4DQ766smYe2h+E='; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    }
+  },
+  "t2": {
+    "status": "missing"
+  },
+  "t3": {
+    "task_id": "t3",
+    "category": "web_landing",
+    "language": "ru",
+    "canon": "Luxury Minimalism",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 24553
+      },
+      "llms.txt": {
+        "exists": true,
+        "size_bytes": 1766
+      },
+      "robots.txt": {
+        "exists": true,
+        "size_bytes": 103
+      },
+      "_headers": {
+        "exists": true,
+        "size_bytes": 780
+      }
+    },
+    "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t3/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": true,
+      "raw_has_script_placeholder": true,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": true,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true,
+      "raw_headers_csp": {
+        "present": true,
+        "has_unsafe_inline": false,
+        "has_object_src_none": true,
+        "has_trusted_types": false,
+        "has_frame_ancestors_none": true
+      }
+    },
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": false,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": true
+    },
+    "external_urls_in_attrs": [],
+    "informational_urls": [
+      "https://severmanufaktura.ru/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "canonical_href": "https://severmanufaktura.ru/",
+      "has_og_title": true,
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
+    },
+    "json_ld": {
+      "blocks_count": 2,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "Product",
+        "Product",
+        "Product",
+        "BreadcrumbList",
+        "FAQPage",
+        "WebPage"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "Как долго служит мебель из массива дуба?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Можно ли заказать нестандартные размеры?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Как ухаживать за мебелью из массива?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Каковы сроки изготовления?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Доставляете ли вы по России?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
+    },
+    "_headers": {
+      "exists": true,
+      "all_passed": true,
+      "has_route_rule": true,
+      "routes_found": [
+        "/*"
+      ],
+      "checks": {
+        "Content-Security-Policy": true,
+        "frame-ancestors 'none'": true,
+        "Strict-Transport-Security": true,
+        "X-Content-Type-Options": true,
+        "Referrer-Policy": true,
+        "Permissions-Policy": true,
+        "Cross-Origin-Opener-Policy": true
+      },
+      "hsts_details": {
+        "present": true,
+        "max_age": 63072000,
+        "has_include_subdomains": true,
+        "has_preload": true,
+        "passed": true
+      },
+      "cross_origin_isolation": {
+        "coop": "same-origin",
+        "coep": "",
+        "corp": "",
+        "coop_same_origin": true,
+        "coep_valid": false,
+        "corp_valid": false,
+        "full_isolation_passed": false
+      },
+      "csp_details": {
+        "has_object_src_none": true,
+        "has_require_trusted_types": false,
+        "has_unsafe_inline": false
+      }
+    },
+    "robots_txt": {
+      "exists": true,
+      "valid_syntax": true,
+      "user_agents": [
+        "*"
+      ],
+      "has_wildcard_agent": true,
+      "ai_training_bots_mentioned": [],
+      "ai_search_bots_mentioned": [],
+      "has_ai_crawler_policy": false,
+      "has_sitemap": true
+    },
+    "llms_txt": {
+      "exists": true,
+      "has_h1": true,
+      "has_blockquote": false,
+      "has_h2_sections": true
+    },
+    "semantics": {
+      "html_lang": "ru",
+      "h1_count": 1,
+      "landmarks": [
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 5,
+      "canvas_count": 0,
+      "form_inputs_count": 3,
+      "form_inputs_labeled": 3,
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
+    },
+    "oklch": {
+      "token_count": 8,
+      "max_contrast_pair": 15.09,
+      "max_contrast_ratio_est": 15.09,
+      "semantic_text_bg_contrast": 15.09,
+      "semantic_bg_fg_min_contrast": 15.09,
+      "min_muted_bg_contrast": null,
+      "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--bg vs --ink": 14.22,
+        "--surface vs --ink": 15.09
+      },
+      "tokens": {
+        "--bg": {
+          "raw": "oklch(0.95 0.01 85)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 85.0,
+          "luminance": 0.8574
+        },
+        "--surface": {
+          "raw": "oklch(0.97 0.01 85)",
+          "L": 0.97,
+          "C": 0.01,
+          "H": 85.0,
+          "luminance": 0.9127
+        },
+        "--ink": {
+          "raw": "oklch(0.24 0.012 75)",
+          "L": 0.24,
+          "C": 0.012,
+          "H": 75.0,
+          "luminance": 0.0138
+        },
+        "--ink-soft": {
+          "raw": "oklch(0.44 0.012 75)",
+          "L": 0.44,
+          "C": 0.012,
+          "H": 75.0,
+          "luminance": 0.085
+        },
+        "--accent": {
+          "raw": "oklch(0.52 0.05 72)",
+          "L": 0.52,
+          "C": 0.05,
+          "H": 72.0,
+          "luminance": 0.1391
+        },
+        "--accent-hover": {
+          "raw": "oklch(0.45 0.06 72)",
+          "L": 0.45,
+          "C": 0.06,
+          "H": 72.0,
+          "luminance": 0.0896
+        },
+        "--line": {
+          "raw": "oklch(0.86 0.012 85)",
+          "L": 0.86,
+          "C": 0.012,
+          "H": 85.0,
+          "luminance": 0.6361
+        },
+        "--line-strong": {
+          "raw": "oklch(0.78 0.015 85)",
+          "L": 0.78,
+          "C": 0.015,
+          "H": 85.0,
+          "luminance": 0.4745
+        }
+      }
+    },
+    "copy_hygiene": {
+      "expected_lang": "ru",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 2476,
+      "latin_chars_count": 105,
+      "cyrillic_density": 0.9593,
+      "latin_density": 0.0407,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 20,
+      "em_dash_per_100w": 4.83,
+      "em_dash_overuse": false,
+      "guillemets_count": 12,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": true,
+        "em_dash_count": 20,
+        "guillemets_count": 12,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "headers_patched": true,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 3,
+      "computed_script_hashes_count": 0,
+      "patched_meta_csp": "default-src 'self'; script-src 'self' 'self'; style-src 'self' 'unsafe-hashes' 'sha256-Z05q17YOl6zMyi0wX2vLdYamNjxFd0mH2W/1ddMG5Zk=' 'sha256-SFbzZlWqiX29trnSWMsSDMFlSBDY84+giqjTY/Q2DU8=' 'sha256-XWmiU1ZhwCxH71xKP2rG3HPleIieXuEf3blAc/7D47s=' 'sha256-BQYB6WwT7Ls1wdb9LeQskgBQx1oTnLoFLzkl8D8H8iw='; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'"
+    }
+  },
+  "t4": {
+    "task_id": "t4",
+    "category": "typescript_coding",
+    "language": "en",
+    "canon": "General Coding (TypeScript Strict)",
+    "required_files": {
+      "dag.ts": {
+        "exists": true,
+        "size_bytes": 15653
+      }
+    },
+    "all_required_files_present": true,
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 7207,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 1,
+      "em_dash_per_100w": 0.08,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 1,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
+    "typescript_eval": {
+      "tsc_strict_passed": false,
+      "tsc_exit_code": 2,
+      "tsc_diagnostics": "dag.ts(206,39): error TS2345: Argument of type 'Promise<void[]>' is not assignable to parameter of type 'Promise<void>'.\n  Type 'void[]' is not assignable to type 'void'.\ndag.ts(342,25): error TS2552: Cannot find name 'attempt'. Did you mean 'attempts'?\ndag.ts(342,48): error TS2552: Cannot find name 'attempt'. Did you mean 'attempts'?\ndag.ts(342,62): error TS2552: Cannot find name 'attempt'. Did you mean 'attempts'?\ndag.ts(353,25): error TS2552: Cannot find name 'attempt'. Did you mean 'attempts'?",
+      "explicit_any_count": 0,
+      "promise_all_code_count": 1,
+      "promise_all_comment_count": 0,
+      "compiled_js_exists": true,
+      "tests_passed": 5,
+      "tests_total": 12,
+      "results": [
+        {
+          "id": 1,
+          "name": "Empty graph validate and execute",
+          "passed": true,
+          "durationMs": 0.67
+        },
+        {
+          "id": 2,
+          "name": "Linear chain topological order and result propagation",
+          "passed": false,
+          "durationMs": 0,
+          "error": "ReferenceError: attempt is not defined\n    at DAGExecutor.execute (file:///mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t4/.tsc_out/dag_compiled.mjs:249:39)\n    at async executeWorkerTest (file:///mnt/rescue/projects/SmartLLM/eval/suite/test_dag_runner.mjs:224:19)"
+        },
+        {
+          "id": 3,
+          "name": "Diamond dependency single execution and fan-in",
+          "passed": false,
+          "durationMs": 0,
+          "error": "DAGCycleError: DAG cycle detected: A → B → A → C → A → D → B → A → C → A\n    at DAGExecutor.detectCycles (file:///mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t4/.tsc_out/dag_compiled.mjs:321:31)\n    at DAGExecutor.validate (file:///mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t4/.tsc_out/dag_compiled.mjs:78:14)\n    at DAGExecutor.execute (file:///mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t4/.tsc_out/dag_compiled.mjs:86:32)\n    at executeWorkerTest (file:///mnt/rescue/projects/SmartLLM/eval/suite/test_dag_runner.mjs:237:29)"
+        },
+        {
+          "id": 4,
+          "name": "3-node cycle throws DAGCycleError with cycle array",
+          "passed": false,
+          "durationMs": 0,
+          "error": "Error: Assertion failed: Expected DAGCycleError, got null\n    at assert (file:///mnt/rescue/projects/SmartLLM/eval/suite/test_dag_runner.mjs:203:22)\n    at executeWorkerTest (file:///mnt/rescue/projects/SmartLLM/eval/suite/test_dag_runner.mjs:250:7)"
+        },
+        {
+          "id": 5,
+          "name": "Self-dependency cycle A -> A throws DAGCycleError",
+          "passed": true,
+          "durationMs": 0.44
+        },
+        {
+          "id": 6,
+          "name": "Missing dependency throws DAGValidationError",
+          "passed": true,
+          "durationMs": 0.41
+        },
+        {
+          "id": 7,
+          "name": "Duplicate node registration throws DAGValidationError",
+          "passed": true,
+          "durationMs": 0.43
+        },
+        {
+          "id": 8,
+          "name": "Bounded maxConcurrency=2 never exceeds 2 simultaneous tasks",
+          "passed": false,
+          "durationMs": 0,
+          "error": "ReferenceError: attempt is not defined\n    at DAGExecutor.execute (file:///mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t4/.tsc_out/dag_compiled.mjs:249:39)\n    at async executeWorkerTest (file:///mnt/rescue/projects/SmartLLM/eval/suite/test_dag_runner.mjs:295:19)"
+        },
+        {
+          "id": 9,
+          "name": "Flaky task succeeds on retry and records attempts count",
+          "passed": false,
+          "durationMs": 0,
+          "error": "ReferenceError: attempt is not defined\n    at DAGExecutor.execute (file:///mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t4/.tsc_out/dag_compiled.mjs:249:39)\n    at async executeWorkerTest (file:///mnt/rescue/projects/SmartLLM/eval/suite/test_dag_runner.mjs:314:19)"
+        },
+        {
+          "id": 10,
+          "name": "Failed node skips transitive dependents while independent branch finishes",
+          "passed": false,
+          "durationMs": 0,
+          "error": "ReferenceError: attempt is not defined\n    at DAGExecutor.execute (file:///mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t4/.tsc_out/dag_compiled.mjs:249:39)\n    at async executeWorkerTest (file:///mnt/rescue/projects/SmartLLM/eval/suite/test_dag_runner.mjs:330:19)"
+        },
+        {
+          "id": 11,
+          "name": "AbortSignal cancels unstarted downstream tasks",
+          "passed": true,
+          "durationMs": 1.03
+        },
+        {
+          "id": 12,
+          "name": "Shared context passed to nodes and durationMs >= 0 recorded",
+          "passed": false,
+          "durationMs": 0,
+          "error": "ReferenceError: attempt is not defined\n    at DAGExecutor.execute (file:///mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t4/.tsc_out/dag_compiled.mjs:249:39)\n    at async executeWorkerTest (file:///mnt/rescue/projects/SmartLLM/eval/suite/test_dag_runner.mjs:360:19)"
+        }
+      ]
+    }
+  },
+  "t5": {
+    "task_id": "t5",
+    "category": "web_landing",
+    "language": "en",
+    "canon": "Swiss Typographic Grid",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 33561
+      },
+      "llms.txt": {
+        "exists": true,
+        "size_bytes": 1103
+      },
+      "robots.txt": {
+        "exists": true,
+        "size_bytes": 132
+      },
+      "_headers": {
+        "exists": true,
+        "size_bytes": 1015
+      }
+    },
+    "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t5/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": true,
+      "raw_has_script_placeholder": true,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": true,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true,
+      "raw_headers_csp": {
+        "present": true,
+        "has_unsafe_inline": false,
+        "has_object_src_none": true,
+        "has_trusted_types": false,
+        "has_frame_ancestors_none": true
+      }
+    },
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 1,
+      "raw_csp_passed": true
+    },
+    "external_urls_in_attrs": [],
+    "informational_urls": [
+      "https://helvetia-kinetic-lab.ch/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "canonical_href": "https://helvetia-kinetic-lab.ch/",
+      "has_og_title": true,
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
+    },
+    "json_ld": {
+      "blocks_count": 1,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "Product",
+        "Product",
+        "Product",
+        "FAQPage",
+        "BreadcrumbList"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "What does ISO 3382 measure in a room?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "How is RT60 calculated?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "What is the Speech Transmission Index and why does it matter?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Why is structural decoupling important for vibration metrology?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "How do you calibrate a chamber before booking?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
+    },
+    "_headers": {
+      "exists": true,
+      "all_passed": true,
+      "has_route_rule": true,
+      "routes_found": [
+        "/*"
+      ],
+      "checks": {
+        "Content-Security-Policy": true,
+        "frame-ancestors 'none'": true,
+        "Strict-Transport-Security": true,
+        "X-Content-Type-Options": true,
+        "Referrer-Policy": true,
+        "Permissions-Policy": true,
+        "Cross-Origin-Opener-Policy": true
+      },
+      "hsts_details": {
+        "present": true,
+        "max_age": 63072000,
+        "has_include_subdomains": true,
+        "has_preload": true,
+        "passed": true
+      },
+      "cross_origin_isolation": {
+        "coop": "same-origin",
+        "coep": "",
+        "corp": "",
+        "coop_same_origin": true,
+        "coep_valid": false,
+        "corp_valid": false,
+        "full_isolation_passed": false
+      },
+      "csp_details": {
+        "has_object_src_none": true,
+        "has_require_trusted_types": false,
+        "has_unsafe_inline": false
+      }
+    },
+    "robots_txt": {
+      "exists": true,
+      "valid_syntax": true,
+      "user_agents": [
+        "*"
+      ],
+      "has_wildcard_agent": true,
+      "ai_training_bots_mentioned": [],
+      "ai_search_bots_mentioned": [],
+      "has_ai_crawler_policy": false,
+      "has_sitemap": false
+    },
+    "llms_txt": {
+      "exists": true,
+      "has_h1": true,
+      "has_blockquote": true,
+      "has_h2_sections": true
+    },
+    "semantics": {
+      "html_lang": "en",
+      "h1_count": 1,
+      "landmarks": [
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 2,
+      "canvas_count": 0,
+      "form_inputs_count": 10,
+      "form_inputs_labeled": 10,
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
+    },
+    "oklch": {
+      "token_count": 6,
+      "max_contrast_pair": 18.71,
+      "max_contrast_ratio_est": 18.71,
+      "semantic_text_bg_contrast": 18.71,
+      "semantic_bg_fg_min_contrast": 18.71,
+      "min_muted_bg_contrast": 7.2,
+      "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--paper vs --ink": 18.71,
+        "--panel vs --ink": 17.12
+      },
+      "tokens": {
+        "--paper": {
+          "raw": "oklch(0.975 0.005 85)",
+          "L": 0.975,
+          "C": 0.005,
+          "H": 85.0,
+          "luminance": 0.9269
+        },
+        "--ink": {
+          "raw": "oklch(0.13 0.01 260)",
+          "L": 0.13,
+          "C": 0.01,
+          "H": 260.0,
+          "luminance": 0.0022
+        },
+        "--hairline": {
+          "raw": "oklch(0.22 0.01 260)",
+          "L": 0.22,
+          "C": 0.01,
+          "H": 260.0,
+          "luminance": 0.0107
+        },
+        "--red": {
+          "raw": "oklch(0.56 0.22 27)",
+          "L": 0.56,
+          "C": 0.22,
+          "H": 27.0,
+          "luminance": 0.1516
+        },
+        "--muted": {
+          "raw": "oklch(0.42 0.012 260)",
+          "L": 0.42,
+          "C": 0.012,
+          "H": 260.0,
+          "luminance": 0.0741
+        },
+        "--panel": {
+          "raw": "oklch(0.945 0.006 85)",
+          "L": 0.945,
+          "C": 0.006,
+          "H": 85.0,
+          "luminance": 0.8439
+        }
+      }
+    },
+    "task_specific": {
+      "has_subgrid": true,
+      "has_tabular_nums": true
+    },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 3495,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 2,
+      "em_dash_per_100w": 0.34,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 2,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "headers_patched": true,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 7,
+      "computed_script_hashes_count": 1,
+      "patched_meta_csp": "default-src 'self'; script-src 'sha256-mQGbOXQeNQHD/YyAALdJqHj5fO/qQ7yoUqVNkCac/wo='; style-src 'unsafe-hashes' 'sha256-n7sx/3XmPmUBW/xJAMODQLi2yj5Jp5jhhWBhvxO+ffw=' 'sha256-QRSar4c0AUKdGc7REduPuVPIxdnpzGy7wobmtUfdqyM=' 'sha256-L5hos/U+tbmyKFaMVaRgMfGDnduDYFZpfnrpe57rHSQ=' 'sha256-gEJ1uk7TCQPXIyaec7rieh7Y2ZNarBOi1/icRv88m7s=' 'sha256-iCSSJbw/ob5anK4ag5e4VFj9vtH65Fs20jpjfi3Io04=' 'sha256-S2Ffw4xRlBQYYUo4PRFct7LPYO8NqASjm8ImFyEN2QQ=' 'sha256-IlIUqpppU0Se/y+Dja8F5MeOfnyxcCGtwhwYkVxX5q4=' 'sha256-uLrCyqtEy8LoqmBIWe3vGx1Jo7+wAnMWBUs8YAHi7u0='; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+    }
+  },
+  "t6": {
+    "task_id": "t6",
+    "category": "web_landing",
+    "language": "en",
+    "canon": "High-Tech SaaS Dark Mode",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 49534
+      },
+      "llms.txt": {
+        "exists": true,
+        "size_bytes": 2096
+      },
+      "robots.txt": {
+        "exists": true,
+        "size_bytes": 127
+      },
+      "_headers": {
+        "exists": true,
+        "size_bytes": 903
+      }
+    },
+    "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t6/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": true,
+      "raw_has_script_placeholder": true,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": true,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true,
+      "raw_headers_csp": {
+        "present": true,
+        "has_unsafe_inline": false,
+        "has_object_src_none": true,
+        "has_trusted_types": false,
+        "has_frame_ancestors_none": true
+      }
+    },
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 2,
+      "raw_csp_passed": true
+    },
+    "external_urls_in_attrs": [],
+    "informational_urls": [
+      "https://vortexcompute.example/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "canonical_href": "https://vortexcompute.example/",
+      "has_og_title": true,
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
+    },
+    "json_ld": {
+      "blocks_count": 2,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "Product",
+        "FAQPage",
+        "BreadcrumbList",
+        "WebPage"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 1,
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "How does RDMA tensor sharding reduce inference latency?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "What is speculative tree verification and why does it help MoE models?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "How does NVMe page-cache pinning work over the fabric?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Is the deployment sovereign and hardware-enclave isolated?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Which deployment tier should I choose for my MoE workload?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
+    },
+    "_headers": {
+      "exists": true,
+      "all_passed": true,
+      "has_route_rule": true,
+      "routes_found": [
+        "/*"
+      ],
+      "checks": {
+        "Content-Security-Policy": true,
+        "frame-ancestors 'none'": true,
+        "Strict-Transport-Security": true,
+        "X-Content-Type-Options": true,
+        "Referrer-Policy": true,
+        "Permissions-Policy": true,
+        "Cross-Origin-Opener-Policy": true
+      },
+      "hsts_details": {
+        "present": true,
+        "max_age": 63072000,
+        "has_include_subdomains": true,
+        "has_preload": true,
+        "passed": true
+      },
+      "cross_origin_isolation": {
+        "coop": "same-origin",
+        "coep": "require-corp",
+        "corp": "same-origin",
+        "coop_same_origin": true,
+        "coep_valid": true,
+        "corp_valid": true,
+        "full_isolation_passed": true
+      },
+      "csp_details": {
+        "has_object_src_none": true,
+        "has_require_trusted_types": false,
+        "has_unsafe_inline": false
+      }
+    },
+    "robots_txt": {
+      "exists": true,
+      "valid_syntax": true,
+      "user_agents": [
+        "*"
+      ],
+      "has_wildcard_agent": true,
+      "ai_training_bots_mentioned": [],
+      "ai_search_bots_mentioned": [],
+      "has_ai_crawler_policy": false,
+      "has_sitemap": true
+    },
+    "llms_txt": {
+      "exists": true,
+      "has_h1": true,
+      "has_blockquote": true,
+      "has_h2_sections": true
+    },
+    "semantics": {
+      "html_lang": "en",
+      "h1_count": 1,
+      "landmarks": [
+        "article",
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 7,
+      "canvas_count": 1,
+      "form_inputs_count": 10,
+      "form_inputs_labeled": 10,
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
+    },
+    "oklch": {
+      "token_count": 8,
+      "max_contrast_pair": 17.4,
+      "max_contrast_ratio_est": 17.4,
+      "semantic_text_bg_contrast": 17.4,
+      "semantic_bg_fg_min_contrast": 17.4,
+      "min_muted_bg_contrast": 6.65,
+      "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--bg vs --text": 17.4,
+        "--surface vs --text": 16.28,
+        "--surface-2 vs --text": 15.34
+      },
+      "tokens": {
+        "--bg": {
+          "raw": "oklch(0.13 0.02 260)",
+          "L": 0.13,
+          "C": 0.02,
+          "H": 260.0,
+          "luminance": 0.0022
+        },
+        "--surface": {
+          "raw": "oklch(0.18 0.02 260)",
+          "L": 0.18,
+          "C": 0.02,
+          "H": 260.0,
+          "luminance": 0.0058
+        },
+        "--surface-2": {
+          "raw": "oklch(0.21 0.025 260)",
+          "L": 0.21,
+          "C": 0.025,
+          "H": 260.0,
+          "luminance": 0.0092
+        },
+        "--border": {
+          "raw": "oklch(0.28 0.03 260)",
+          "L": 0.28,
+          "C": 0.03,
+          "H": 260.0,
+          "luminance": 0.0219
+        },
+        "--text": {
+          "raw": "oklch(0.95 0.01 250)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 250.0,
+          "luminance": 0.8582
+        },
+        "--muted": {
+          "raw": "oklch(0.70 0.02 250)",
+          "L": 0.7,
+          "C": 0.02,
+          "H": 250.0,
+          "luminance": 0.3438
+        },
+        "--cyan": {
+          "raw": "oklch(0.76 0.15 195)",
+          "L": 0.76,
+          "C": 0.15,
+          "H": 195.0,
+          "luminance": 0.4657
+        },
+        "--emerald": {
+          "raw": "oklch(0.72 0.17 155)",
+          "L": 0.72,
+          "C": 0.17,
+          "H": 155.0,
+          "luminance": 0.4044
+        }
+      }
+    },
+    "task_specific": {
+      "has_canvas": true,
+      "has_webgl_or_shader": true
+    },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 6391,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 6,
+      "em_dash_per_100w": 0.51,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 6,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "headers_patched": true,
+      "computed_style_block_hashes_count": 2,
+      "computed_inline_style_attr_hashes_count": 1,
+      "computed_script_hashes_count": 1,
+      "patched_meta_csp": "default-src 'self'; script-src 'self' 'sha256-hyCW44Mw5Ck8C2lU3XWLmweXyfsz7e/U2VZvzEzA++Q='; style-src 'self' 'unsafe-hashes' 'sha256-lHs1FEKq5VA0r4CAHZIztEEiOyr66VUVTzfM7Az8NxA=' 'sha256-curuBMKtMiNgynBS1AOWSP3fktru17bXJWRYs69idCU=' 'sha256-UiXlt9djFx1o7crFtCH7sUqquV6B2BX9ozY9jqs43JE='; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+    }
+  },
+  "t7": {
+    "task_id": "t7",
+    "category": "web_landing",
+    "language": "ru",
+    "canon": "Neo-Brutalism",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 39794
+      },
+      "llms.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "robots.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "_headers": {
+        "exists": false,
+        "size_bytes": 0
+      }
+    },
+    "all_required_files_present": false,
+    "html_structurally_complete": false,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t7/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": true,
+      "raw_has_script_placeholder": true,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": true,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true
+    },
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": true
+    },
+    "external_urls_in_attrs": [],
+    "informational_urls": [
+      "https://tseh4.ru/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "canonical_href": "https://tseh4.ru/",
+      "has_og_title": true,
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
+    },
+    "json_ld": {
+      "blocks_count": 1,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "Product",
+        "Product",
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "faq_all_verbatim": false,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "Какие допуски вы держите на 5-осевом участке и чем подтверждаете точность?",
+          "q_in_html": false,
+          "a_in_html": false
+        },
+        {
+          "q": "Можно ли заказать мелкосерийное литьё под давлением без стальной оснастки?",
+          "q_in_html": false,
+          "a_in_html": false
+        },
+        {
+          "q": "Как оформляется паспорт плавки и что входит в контроль качества партии?",
+          "q_in_html": false,
+          "a_in_html": false
+        },
+        {
+          "q": "Как передать модель — STEP или IGES, есть ли ограничения по размеру файла?",
+          "q_in_html": false,
+          "a_in_html": false
+        },
+        {
+          "q": "Какие сроки и условия оплаты для отдела снабжения?",
+          "q_in_html": false,
+          "a_in_html": false
+        }
+      ]
+    },
+    "_headers": {
+      "exists": false,
+      "all_passed": false
+    },
+    "robots_txt": {
+      "exists": false
+    },
+    "llms_txt": {
+      "exists": false
+    },
+    "semantics": {
+      "html_lang": "ru",
+      "h1_count": 1,
+      "landmarks": [
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 1,
+      "canvas_count": 0,
+      "form_inputs_count": 4,
+      "form_inputs_labeled": 3,
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
+    },
+    "oklch": {
+      "token_count": 7,
+      "max_contrast_pair": 16.72,
+      "max_contrast_ratio_est": 16.72,
+      "semantic_text_bg_contrast": 16.72,
+      "semantic_bg_fg_min_contrast": 16.72,
+      "min_muted_bg_contrast": null,
+      "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--bg vs --ink": 16.72,
+        "--bg-alt vs --ink": 14.8
+      },
+      "tokens": {
+        "--bg": {
+          "raw": "oklch(0.94 0.03 90)",
+          "L": 0.94,
+          "C": 0.03,
+          "H": 90.0,
+          "luminance": 0.8313
+        },
+        "--bg-alt": {
+          "raw": "oklch(0.90 0.03 90)",
+          "L": 0.9,
+          "C": 0.03,
+          "H": 90.0,
+          "luminance": 0.7297
+        },
+        "--ink": {
+          "raw": "oklch(0.14 0.01 260)",
+          "L": 0.14,
+          "C": 0.01,
+          "H": 260.0,
+          "luminance": 0.0027
+        },
+        "--ink-soft": {
+          "raw": "oklch(0.38 0.01 260)",
+          "L": 0.38,
+          "C": 0.01,
+          "H": 260.0,
+          "luminance": 0.0549
+        },
+        "--line": {
+          "raw": "oklch(0.14 0.01 260)",
+          "L": 0.14,
+          "C": 0.01,
+          "H": 260.0,
+          "luminance": 0.0027
+        },
+        "--signal": {
+          "raw": "oklch(0.86 0.16 90)",
+          "L": 0.86,
+          "C": 0.16,
+          "H": 90.0,
+          "luminance": 0.6335
+        },
+        "--vermilion": {
+          "raw": "oklch(0.58 0.21 30)",
+          "L": 0.58,
+          "C": 0.21,
+          "H": 30.0,
+          "luminance": 0.1711
+        }
+      }
+    },
+    "task_specific": {
+      "has_hard_offset_shadow": true,
+      "has_interactive_calc": false
+    },
+    "copy_hygiene": {
+      "expected_lang": "ru",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 1025,
+      "latin_chars_count": 55,
+      "cyrillic_density": 0.9491,
+      "latin_density": 0.0509,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 5,
+      "em_dash_per_100w": 2.54,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 5,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 0,
+      "computed_script_hashes_count": 0,
+      "patched_meta_csp": "default-src 'self'; script-src 'self'; style-src 'sha256-NmBqAqOK6BS42bMeSmdWPXplQPtVld2tyLXBwFJINwA='; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests;"
+    }
+  },
+  "t8": {
+    "task_id": "t8",
+    "category": "web_landing",
+    "language": "ru",
+    "canon": "Editorial",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 41429
+      },
+      "llms.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "robots.txt": {
+        "exists": false,
+        "size_bytes": 0
+      },
+      "_headers": {
+        "exists": false,
+        "size_bytes": 0
+      }
+    },
+    "all_required_files_present": false,
+    "html_structurally_complete": false,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t8/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": true,
+      "raw_has_script_placeholder": true,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": true,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true
+    },
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": true
+    },
+    "external_urls_in_attrs": [],
+    "informational_urls": [
+      "https://example.com/arkhiv-tehnologiy/14"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "canonical_href": "https://example.com/arkhiv-tehnologiy/14",
+      "has_og_title": true,
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
+    },
+    "json_ld": {
+      "blocks_count": 1,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Article",
+        "Product",
+        "Product",
+        "Product",
+        "FAQPage"
+      ],
+      "faq_all_verbatim": false,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "Почему в EUV вся оптика отражательная, а не преломляющая?",
+          "q_in_html": false,
+          "a_in_html": false
+        },
+        {
+          "q": "Зачем оловянная плазма, если светить можно и другим материалом?",
+          "q_in_html": false,
+          "a_in_html": false
+        },
+        {
+          "q": "Что такое зеркало Брэгга и почему это Mo/Si?",
+          "q_in_html": false,
+          "a_in_html": false
+        },
+        {
+          "q": "Чем High-NA 0.55 лучше Low-NA 0.33 и что это меняет?",
+          "q_in_html": false,
+          "a_in_html": false
+        },
+        {
+          "q": "Где физический предел кремниевых транзисторов?",
+          "q_in_html": false,
+          "a_in_html": false
+        }
+      ]
+    },
+    "_headers": {
+      "exists": false,
+      "all_passed": false
+    },
+    "robots_txt": {
+      "exists": false
+    },
+    "llms_txt": {
+      "exists": false
+    },
+    "semantics": {
+      "html_lang": "ru",
+      "h1_count": 1,
+      "landmarks": [
+        "article",
+        "aside",
+        "figure",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 2,
+      "canvas_count": 0,
+      "form_inputs_count": 4,
+      "form_inputs_labeled": 4,
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
+    },
+    "oklch": {
+      "token_count": 8,
+      "max_contrast_pair": 17.3,
+      "max_contrast_ratio_est": 17.3,
+      "semantic_text_bg_contrast": 17.3,
+      "semantic_bg_fg_min_contrast": 17.3,
+      "min_muted_bg_contrast": null,
+      "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--paper vs --ink": 17.3,
+        "--paper-2 vs --ink": 15.81
+      },
+      "tokens": {
+        "--paper": {
+          "raw": "oklch(0.96 0.015 80)",
+          "L": 0.96,
+          "C": 0.015,
+          "H": 80.0,
+          "luminance": 0.8843
+        },
+        "--paper-2": {
+          "raw": "oklch(0.93 0.012 80)",
+          "L": 0.93,
+          "C": 0.012,
+          "H": 80.0,
+          "luminance": 0.804
+        },
+        "--ink": {
+          "raw": "oklch(0.16 0.02 50)",
+          "L": 0.16,
+          "C": 0.02,
+          "H": 50.0,
+          "luminance": 0.004
+        },
+        "--ink-2": {
+          "raw": "oklch(0.35 0.02 50)",
+          "L": 0.35,
+          "C": 0.02,
+          "H": 50.0,
+          "luminance": 0.0423
+        },
+        "--accent": {
+          "raw": "oklch(0.48 0.18 25)",
+          "L": 0.48,
+          "C": 0.18,
+          "H": 25.0,
+          "luminance": 0.0961
+        },
+        "--accent-soft": {
+          "raw": "oklch(0.72 0.12 25)",
+          "L": 0.72,
+          "C": 0.12,
+          "H": 25.0,
+          "luminance": 0.3522
+        },
+        "--rule": {
+          "raw": "oklch(0.80 0.02 75)",
+          "L": 0.8,
+          "C": 0.02,
+          "H": 75.0,
+          "luminance": 0.5111
+        },
+        "--rule-strong": {
+          "raw": "oklch(0.62 0.03 60)",
+          "L": 0.62,
+          "C": 0.03,
+          "H": 60.0,
+          "luminance": 0.2364
+        }
+      }
+    },
+    "task_specific": {
+      "has_container_query": true,
+      "has_subgrid": false,
+      "has_dropcap": true
+    },
+    "copy_hygiene": {
+      "expected_lang": "ru",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 3083,
+      "latin_chars_count": 168,
+      "cyrillic_density": 0.9483,
+      "latin_density": 0.0517,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 17,
+      "em_dash_per_100w": 3.1,
+      "em_dash_overuse": false,
+      "guillemets_count": 2,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": true,
+        "em_dash_count": 17,
+        "guillemets_count": 2,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 3,
+      "computed_inline_style_attr_hashes_count": 0,
+      "computed_script_hashes_count": 0,
+      "patched_meta_csp": "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'self'; style-src 'self' 'sha256-U0QgZzruOYh3JNGV75bTxiUiDkmEGMDRGlxaYVlixyU=' 'sha256-7O/+HUNVuR6DDcJmgN/gtSNU7CL41zQcX2A0rvE1Qaw=' 'sha256-mgqsFPTTKkICylf86GYVb+vuu2AxMurI/TEOlvQSh1I='; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'none'; block-all-mixed-content"
+    }
+  },
+  "t9": {
+    "task_id": "t9",
+    "category": "agentic_multifile",
+    "language": "en",
+    "canon": "Swiss Typographic Grid",
+    "required_files": {
+      "DESIGN.md": {
+        "exists": true,
+        "size_bytes": 3384
+      },
+      "tokens.css": {
+        "exists": true,
+        "size_bytes": 1697
+      },
+      "app.js": {
+        "exists": true,
+        "size_bytes": 5183
+      },
+      "index.html": {
+        "exists": true,
+        "size_bytes": 27345
+      },
+      "zimage_prompts.json": {
+        "exists": true,
+        "size_bytes": 2153
+      },
+      "llms.txt": {
+        "exists": true,
+        "size_bytes": 20
+      },
+      "_headers": {
+        "exists": false,
+        "size_bytes": 0
+      }
+    },
+    "all_required_files_present": false,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t9/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": true,
+      "raw_has_script_placeholder": true,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": true,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true
+    },
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": true
+    },
+    "external_urls_in_attrs": [],
+    "informational_urls": [],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": false,
+      "canonical_href": null,
+      "has_og_title": false,
+      "has_og_description": false,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
+    },
+    "json_ld": {
+      "blocks_count": 1,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "Product",
+        "Product",
+        "Product",
+        "FAQPage",
+        "BreadcrumbList"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "What is AETHERIA BIO-ROBOTICS?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Which platforms are available?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Can the calculator estimate battery swaps?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "How does the telemetry filter work?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Is deployment inquiry validation client-side?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
+    },
+    "_headers": {
+      "exists": false,
+      "all_passed": false
+    },
+    "llms_txt": {
+      "exists": true,
+      "has_h1": true,
+      "has_blockquote": false,
+      "has_h2_sections": false
+    },
+    "semantics": {
+      "html_lang": "en",
+      "h1_count": 1,
+      "landmarks": [
+        "article",
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 1,
+      "canvas_count": 0,
+      "form_inputs_count": 9,
+      "form_inputs_labeled": 9,
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
+    },
+    "oklch": {
+      "token_count": 11,
+      "max_contrast_pair": 18.24,
+      "max_contrast_ratio_est": 18.24,
+      "semantic_text_bg_contrast": 18.24,
+      "semantic_bg_fg_min_contrast": 18.24,
+      "min_muted_bg_contrast": 8.65,
+      "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--surface vs --ink": 18.24,
+        "--surface-dim vs --ink": 16.69,
+        "--surface-deep vs --ink": 15.23
+      },
+      "tokens": {
+        "--surface": {
+          "raw": "oklch(0.97 0.008 95)",
+          "L": 0.97,
+          "C": 0.008,
+          "H": 95.0,
+          "luminance": 0.9132
+        },
+        "--surface-dim": {
+          "raw": "oklch(0.94 0.010 95)",
+          "L": 0.94,
+          "C": 0.01,
+          "H": 95.0,
+          "luminance": 0.8312
+        },
+        "--surface-deep": {
+          "raw": "oklch(0.91 0.012 95)",
+          "L": 0.91,
+          "C": 0.012,
+          "H": 95.0,
+          "luminance": 0.7542
+        },
+        "--ink": {
+          "raw": "oklch(0.14 0.015 255)",
+          "L": 0.14,
+          "C": 0.015,
+          "H": 255.0,
+          "luminance": 0.0028
+        },
+        "--ink-muted": {
+          "raw": "oklch(0.35 0.018 255)",
+          "L": 0.35,
+          "C": 0.018,
+          "H": 255.0,
+          "luminance": 0.043
+        },
+        "--accent": {
+          "raw": "oklch(0.45 0.14 155)",
+          "L": 0.45,
+          "C": 0.14,
+          "H": 155.0,
+          "luminance": 0.0991
+        },
+        "--accent-strong": {
+          "raw": "oklch(0.36 0.16 155)",
+          "L": 0.36,
+          "C": 0.16,
+          "H": 155.0,
+          "luminance": 0.0508
+        },
+        "--signal": {
+          "raw": "oklch(0.66 0.17 65)",
+          "L": 0.66,
+          "C": 0.17,
+          "H": 65.0,
+          "luminance": 0.2755
+        },
+        "--signal-strong": {
+          "raw": "oklch(0.54 0.18 65)",
+          "L": 0.54,
+          "C": 0.18,
+          "H": 65.0,
+          "luminance": 0.1509
+        },
+        "--line": {
+          "raw": "oklch(0.82 0.012 255)",
+          "L": 0.82,
+          "C": 0.012,
+          "H": 255.0,
+          "luminance": 0.5518
+        },
+        "--line-strong": {
+          "raw": "oklch(0.72 0.016 255)",
+          "L": 0.72,
+          "C": 0.016,
+          "H": 255.0,
+          "luminance": 0.3737
+        }
+      }
+    },
+    "task_specific": {
+      "zimage_json_valid": true,
+      "zimage_prompts_count": 3,
+      "zimage_exact_text_verified": true
+    },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 4497,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 12,
+      "em_dash_per_100w": 1.51,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 12,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "headers_patched": false,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 0,
+      "computed_script_hashes_count": 0,
+      "patched_meta_csp": "default-src 'self'; style-src 'sha256-lP0OVOVSTG4QCC84RW75ixql/Qg6suEXwQq9PLzx9Eg='; script-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+    }
+  },
+  "t10": {
+    "task_id": "t10",
+    "category": "web_landing",
+    "language": "ru",
+    "canon": "High-Tech SaaS Dark Mode",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 30604
+      },
+      "llms.txt": {
+        "exists": true,
+        "size_bytes": 1252
+      },
+      "robots.txt": {
+        "exists": true,
+        "size_bytes": 110
+      },
+      "_headers": {
+        "exists": true,
+        "size_bytes": 692
+      }
+    },
+    "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t10/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": true,
+      "raw_has_script_placeholder": true,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": true,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true,
+      "raw_headers_csp": {
+        "present": true,
+        "has_unsafe_inline": false,
+        "has_object_src_none": false,
+        "has_trusted_types": false,
+        "has_frame_ancestors_none": true
+      }
+    },
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": false,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": true
+    },
+    "external_urls_in_attrs": [],
+    "informational_urls": [
+      "https://contour-spectrum.ru/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "canonical_href": "https://contour-spectrum.ru/",
+      "has_og_title": true,
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
+    },
+    "json_ld": {
+      "blocks_count": 1,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Product",
+        "Product",
+        "Product",
+        "FAQPage"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "Соответствует ли платформа требованиям ГОСТ ИСО 10816-3?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Какая частота дискретизации используется для вейвлет-анализа?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Как обеспечивается искрозащита комплекта Спектр-Взрыв?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Возможно ли локальное развёртывание без облака?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Как рассчитывается прогноз остаточного ресурса RUL?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
+    },
+    "_headers": {
+      "exists": true,
+      "all_passed": true,
+      "has_route_rule": true,
+      "routes_found": [
+        "/*"
+      ],
+      "checks": {
+        "Content-Security-Policy": true,
+        "frame-ancestors 'none'": true,
+        "Strict-Transport-Security": true,
+        "X-Content-Type-Options": true,
+        "Referrer-Policy": true,
+        "Permissions-Policy": true,
+        "Cross-Origin-Opener-Policy": true
+      },
+      "hsts_details": {
+        "present": true,
+        "max_age": 63072000,
+        "has_include_subdomains": true,
+        "has_preload": true,
+        "passed": true
+      },
+      "cross_origin_isolation": {
+        "coop": "same-origin",
+        "coep": "",
+        "corp": "same-origin",
+        "coop_same_origin": true,
+        "coep_valid": false,
+        "corp_valid": true,
+        "full_isolation_passed": false
+      },
+      "csp_details": {
+        "has_object_src_none": false,
+        "has_require_trusted_types": false,
+        "has_unsafe_inline": false
+      }
+    },
+    "robots_txt": {
+      "exists": true,
+      "valid_syntax": true,
+      "user_agents": [
+        "*"
+      ],
+      "has_wildcard_agent": true,
+      "ai_training_bots_mentioned": [],
+      "ai_search_bots_mentioned": [],
+      "has_ai_crawler_policy": false,
+      "has_sitemap": true
+    },
+    "llms_txt": {
+      "exists": true,
+      "has_h1": true,
+      "has_blockquote": false,
+      "has_h2_sections": true
+    },
+    "semantics": {
+      "html_lang": "ru",
+      "h1_count": 1,
+      "landmarks": [
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 5,
+      "canvas_count": 0,
+      "form_inputs_count": 7,
+      "form_inputs_labeled": 7,
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
+    },
+    "oklch": {
+      "token_count": 8,
+      "max_contrast_pair": 17.23,
+      "max_contrast_ratio_est": 17.23,
+      "semantic_text_bg_contrast": 17.23,
+      "semantic_bg_fg_min_contrast": 17.23,
+      "min_muted_bg_contrast": null,
+      "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--bg vs --text": 17.23,
+        "--panel vs --text": 15.96
+      },
+      "tokens": {
+        "--bg": {
+          "raw": "oklch(0.14 0.02 255)",
+          "L": 0.14,
+          "C": 0.02,
+          "H": 255.0,
+          "luminance": 0.0027
+        },
+        "--panel": {
+          "raw": "oklch(0.19 0.02 255)",
+          "L": 0.19,
+          "C": 0.02,
+          "H": 255.0,
+          "luminance": 0.0069
+        },
+        "--line": {
+          "raw": "oklch(0.28 0.03 255)",
+          "L": 0.28,
+          "C": 0.03,
+          "H": 255.0,
+          "luminance": 0.022
+        },
+        "--text": {
+          "raw": "oklch(0.95 0.01 250)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 250.0,
+          "luminance": 0.8582
+        },
+        "--dim": {
+          "raw": "oklch(0.68 0.015 250)",
+          "L": 0.68,
+          "C": 0.015,
+          "H": 250.0,
+          "luminance": 0.315
+        },
+        "--teal": {
+          "raw": "oklch(0.76 0.14 195)",
+          "L": 0.76,
+          "C": 0.14,
+          "H": 195.0,
+          "luminance": 0.4657
+        },
+        "--amber": {
+          "raw": "oklch(0.75 0.16 75)",
+          "L": 0.75,
+          "C": 0.16,
+          "H": 75.0,
+          "luminance": 0.4107
+        },
+        "--danger": {
+          "raw": "oklch(0.65 0.18 25)",
+          "L": 0.65,
+          "C": 0.18,
+          "H": 25.0,
+          "luminance": 0.2484
+        }
+      }
+    },
+    "copy_hygiene": {
+      "expected_lang": "ru",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 2960,
+      "latin_chars_count": 148,
+      "cyrillic_density": 0.9524,
+      "latin_density": 0.0476,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 7,
+      "em_dash_per_100w": 1.48,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 7,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "headers_patched": true,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 0,
+      "computed_script_hashes_count": 1,
+      "patched_meta_csp": "default-src 'self'; style-src 'self' 'sha256-TgLUbDQzi/501JxBLBvzDRoXIqykAMZ3r1ntjn1fiwU='; script-src 'self' 'sha256-1QutMg8UCPoMDLRY3O+BlMHjZshtIiOl7wAbK8xlyZM='; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+    }
+  },
+  "t11": {
+    "task_id": "t11",
+    "category": "web_landing",
+    "language": "en",
+    "canon": "Industrial B2B Engineering",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 41042
+      },
+      "llms.txt": {
+        "exists": true,
+        "size_bytes": 2189
+      },
+      "robots.txt": {
+        "exists": true,
+        "size_bytes": 99
+      },
+      "_headers": {
+        "exists": true,
+        "size_bytes": 1066
+      }
+    },
+    "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t11/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": true,
+      "raw_has_script_placeholder": true,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": true,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true,
+      "raw_headers_csp": {
+        "present": true,
+        "has_unsafe_inline": false,
+        "has_object_src_none": true,
+        "has_trusted_types": false,
+        "has_frame_ancestors_none": true
+      }
+    },
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": true
+    },
+    "external_urls_in_attrs": [],
+    "informational_urls": [
+      "https://www.kronosgearworks.example/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "canonical_href": "https://www.kronosgearworks.example/",
+      "has_og_title": true,
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
+    },
+    "json_ld": {
+      "blocks_count": 2,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Product",
+        "Product",
+        "Product",
+        "FAQPage",
+        "WebPage"
+      ],
+      "faq_all_verbatim": true,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "What causes torsional hysteresis in a strain-wave drive and how is it compensated?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "What is ratcheting torque and how is it avoided?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Why do hollow-shaft outputs use cross-roller bearings instead of ball bearings?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "How is L10 life calculated for harmonic drives?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Is the lubrication compatible with cleanroom environments?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
+    },
+    "_headers": {
+      "exists": true,
+      "all_passed": true,
+      "has_route_rule": true,
+      "routes_found": [
+        "/*"
+      ],
+      "checks": {
+        "Content-Security-Policy": true,
+        "frame-ancestors 'none'": true,
+        "Strict-Transport-Security": true,
+        "X-Content-Type-Options": true,
+        "Referrer-Policy": true,
+        "Permissions-Policy": true,
+        "Cross-Origin-Opener-Policy": true
+      },
+      "hsts_details": {
+        "present": true,
+        "max_age": 63072000,
+        "has_include_subdomains": true,
+        "has_preload": true,
+        "passed": true
+      },
+      "cross_origin_isolation": {
+        "coop": "same-origin",
+        "coep": "",
+        "corp": "",
+        "coop_same_origin": true,
+        "coep_valid": false,
+        "corp_valid": false,
+        "full_isolation_passed": false
+      },
+      "csp_details": {
+        "has_object_src_none": true,
+        "has_require_trusted_types": false,
+        "has_unsafe_inline": false
+      }
+    },
+    "robots_txt": {
+      "exists": true,
+      "valid_syntax": true,
+      "user_agents": [
+        "*"
+      ],
+      "has_wildcard_agent": true,
+      "ai_training_bots_mentioned": [],
+      "ai_search_bots_mentioned": [],
+      "has_ai_crawler_policy": false,
+      "has_sitemap": true
+    },
+    "llms_txt": {
+      "exists": true,
+      "has_h1": true,
+      "has_blockquote": true,
+      "has_h2_sections": true
+    },
+    "semantics": {
+      "html_lang": "en",
+      "h1_count": 1,
+      "landmarks": [
+        "footer",
+        "header",
+        "main",
+        "section"
+      ],
+      "svg_count": 3,
+      "canvas_count": 1,
+      "form_inputs_count": 8,
+      "form_inputs_labeled": 8,
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
+    },
+    "oklch": {
+      "token_count": 10,
+      "max_contrast_pair": 17.01,
+      "max_contrast_ratio_est": 17.01,
+      "semantic_text_bg_contrast": 15.96,
+      "semantic_bg_fg_min_contrast": 15.96,
+      "min_muted_bg_contrast": null,
+      "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--surface vs --ink": 15.96,
+        "--surface-2 vs --ink": 14.96
+      },
+      "tokens": {
+        "--slate": {
+          "raw": "oklch(0.15 0.015 250)",
+          "L": 0.15,
+          "C": 0.015,
+          "H": 250.0,
+          "luminance": 0.0034
+        },
+        "--grid": {
+          "raw": "oklch(0.24 0.02 250)",
+          "L": 0.24,
+          "C": 0.02,
+          "H": 250.0,
+          "luminance": 0.0139
+        },
+        "--surface": {
+          "raw": "oklch(0.19 0.018 250)",
+          "L": 0.19,
+          "C": 0.018,
+          "H": 250.0,
+          "luminance": 0.0069
+        },
+        "--surface-2": {
+          "raw": "oklch(0.22 0.02 250)",
+          "L": 0.22,
+          "C": 0.02,
+          "H": 250.0,
+          "luminance": 0.0107
+        },
+        "--line": {
+          "raw": "oklch(0.30 0.025 250)",
+          "L": 0.3,
+          "C": 0.025,
+          "H": 250.0,
+          "luminance": 0.0272
+        },
+        "--ink": {
+          "raw": "oklch(0.95 0.01 250)",
+          "L": 0.95,
+          "C": 0.01,
+          "H": 250.0,
+          "luminance": 0.8582
+        },
+        "--ink-dim": {
+          "raw": "oklch(0.72 0.015 250)",
+          "L": 0.72,
+          "C": 0.015,
+          "H": 250.0,
+          "luminance": 0.3739
+        },
+        "--signal": {
+          "raw": "oklch(0.70 0.18 50)",
+          "L": 0.7,
+          "C": 0.18,
+          "H": 50.0,
+          "luminance": 0.3196
+        },
+        "--signal-dim": {
+          "raw": "oklch(0.52 0.14 50)",
+          "L": 0.52,
+          "C": 0.14,
+          "H": 50.0,
+          "luminance": 0.1307
+        },
+        "--amber": {
+          "raw": "oklch(0.78 0.13 75)",
+          "L": 0.78,
+          "C": 0.13,
+          "H": 75.0,
+          "luminance": 0.4656
+        }
+      }
+    },
+    "task_specific": {
+      "has_canvas": true,
+      "has_kinematics_js": true
+    },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 7086,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 4,
+      "em_dash_per_100w": 0.32,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 4,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "headers_patched": true,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 7,
+      "computed_script_hashes_count": 1,
+      "patched_meta_csp": "default-src 'self'; script-src 'sha256-Q/iqqCr6MknucuwmrTcFcT8MUoJK+ydOkYTdlo9msbA='; style-src 'unsafe-hashes' 'sha256-DMGZl6aR1OxQTCFQ31IjSG0Gq44nIb/xzF1/AtuQFgQ=' 'sha256-vwFuS0XwNEZ933aisUTEz+BWoydB6Nozafvd6fIcQaM=' 'sha256-4KJrZEFumQX+oHTF/Z6AGuYeZDo4bTCL1mQ+nJWDeHI=' 'sha256-dxPY4IWXckDdieBvwwJhDm+6UQ5DNz0ubwRySlx+YUw=' 'sha256-2MRNokPDba0gFkNvx4G2l+R/KZmA4r8cn4Zkvs/iYx4=' 'sha256-b7uchY28jyTKpwUIFyH6jgTmnp53DFDku49q3plcBSc=' 'sha256-+kuzAgRGGTP9KZZ74OiIqsHetI6mx9emnOxlYKNc0ZM=' 'sha256-S1RSUfGFxLKtYuA37vBnMjdYlug+ma2hgNI8TfKlfL8='; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+    }
+  },
+  "t12": {
+    "status": "missing"
+  },
+  "t_zimage_site": {
+    "task_id": "t_zimage_site",
+    "category": "web_zimage_combine",
+    "language": "bilingual",
+    "canon": "Editorial",
+    "required_files": {
+      "index.html": {
+        "exists": true,
+        "size_bytes": 56621
+      },
+      "zimage_prompts.json": {
+        "exists": true,
+        "size_bytes": 2739
+      },
+      "llms.txt": {
+        "exists": true,
+        "size_bytes": 2893
+      },
+      "robots.txt": {
+        "exists": true,
+        "size_bytes": 620
+      },
+      "_headers": {
+        "exists": true,
+        "size_bytes": 833
+      }
+    },
+    "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/smartllm-v2-k320-v1/t_zimage_site/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": true,
+      "raw_has_script_placeholder": true,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": true,
+      "raw_csp_passed": true,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true,
+      "raw_headers_csp": {
+        "present": true,
+        "has_unsafe_inline": false,
+        "has_object_src_none": true,
+        "has_trusted_types": true,
+        "has_frame_ancestors_none": true
+      }
+    },
+    "csp": {
+      "has_meta_csp": true,
+      "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": true,
+      "all_style_hashes_matched": true,
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": true
+    },
+    "external_urls_in_attrs": [],
+    "informational_urls": [
+      "https://nordic-horizon.example/",
+      "https://nordic-horizon.example/en/",
+      "https://nordic-horizon.example/ru/"
+    ],
+    "seo_meta": {
+      "has_title": true,
+      "has_description": true,
+      "has_canonical": true,
+      "canonical_href": "https://nordic-horizon.example/",
+      "has_og_title": true,
+      "has_og_description": true,
+      "hreflang_tags": {
+        "ru": "https://nordic-horizon.example/ru/",
+        "en": "https://nordic-horizon.example/en/",
+        "x-default": "https://nordic-horizon.example/"
+      },
+      "has_hreflang": true,
+      "has_bilingual_en_ru_hreflang": true,
+      "has_x_default_hreflang": true
+    },
+    "json_ld": {
+      "blocks_count": 1,
+      "valid_json": true,
+      "graph_types": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "Product",
+        "Product",
+        "Product",
+        "BreadcrumbList",
+        "FAQPage",
+        "FAQPage"
+      ],
+      "faq_all_verbatim": false,
+      "has_all_4_types": true,
+      "product_count": 3,
+      "invalid_faq_schema": false,
+      "faq_count": 10,
+      "faq_matches": [
+        {
+          "q": "Как обеспечивается огнестойкость CLT-конструкций до R90/REI60?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Как CLT ведёт себя при влажностных деформациях и циклических изменениях влажности?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Соответствуют ли панели ГОСТ 33124-2019 и EN 16351?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Как рассчитывается время реверберации RT60 в концертных залах?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Как бюро работает с экстремальными снеговыми и ветровыми нагрузками районов I–VIII?",
+          "q_in_html": true,
+          "a_in_html": false
+        },
+        {
+          "q": "How is fire resistance up to R90/REI60 ensured for CLT structures?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "How does CLT behave under moisture deformation and cyclic humidity changes?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Do panels comply with GOST 33124-2019 and EN 16351?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "How is reverberation time RT60 calculated for concert halls?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "How does the bureau handle extreme snow and wind loads of zones I–VIII?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
+    },
+    "_headers": {
+      "exists": true,
+      "all_passed": true,
+      "has_route_rule": true,
+      "routes_found": [
+        "/*"
+      ],
+      "checks": {
+        "Content-Security-Policy": true,
+        "frame-ancestors 'none'": true,
+        "Strict-Transport-Security": true,
+        "X-Content-Type-Options": true,
+        "Referrer-Policy": true,
+        "Permissions-Policy": true,
+        "Cross-Origin-Opener-Policy": true
+      },
+      "hsts_details": {
+        "present": true,
+        "max_age": 63072000,
+        "has_include_subdomains": true,
+        "has_preload": true,
+        "passed": true
+      },
+      "cross_origin_isolation": {
+        "coop": "same-origin",
+        "coep": "require-corp",
+        "corp": "same-origin",
+        "coop_same_origin": true,
+        "coep_valid": true,
+        "corp_valid": true,
+        "full_isolation_passed": true
+      },
+      "csp_details": {
+        "has_object_src_none": true,
+        "has_require_trusted_types": true,
+        "has_unsafe_inline": false
+      }
+    },
+    "robots_txt": {
+      "exists": true,
+      "valid_syntax": true,
+      "user_agents": [
+        "oai-searchbot",
+        "claude-searchbot",
+        "perplexitybot",
+        "gptbot",
+        "claudebot",
+        "google-extended",
+        "ccbot",
+        "*"
+      ],
+      "has_wildcard_agent": true,
+      "ai_training_bots_mentioned": [
+        "ccbot",
+        "claudebot",
+        "google-extended",
+        "gptbot"
+      ],
+      "ai_search_bots_mentioned": [
+        "claude-searchbot",
+        "oai-searchbot",
+        "perplexitybot"
+      ],
+      "has_ai_crawler_policy": true,
+      "has_sitemap": true
+    },
+    "llms_txt": {
+      "exists": true,
+      "has_h1": true,
+      "has_blockquote": true,
+      "has_h2_sections": true
+    },
+    "semantics": {
+      "html_lang": "ru",
+      "h1_count": 1,
+      "landmarks": [
+        "figure",
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "section"
+      ],
+      "svg_count": 1,
+      "canvas_count": 0,
+      "form_inputs_count": 11,
+      "form_inputs_labeled": 11,
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": true,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": true,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
+    },
+    "oklch": {
+      "token_count": 7,
+      "max_contrast_pair": 17.79,
+      "max_contrast_ratio_est": 17.79,
+      "semantic_text_bg_contrast": 17.79,
+      "semantic_bg_fg_min_contrast": 17.79,
+      "min_muted_bg_contrast": 10.53,
+      "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--bg-paper vs --ink-primary": 17.79,
+        "--surface-card vs --ink-primary": 16.26
+      },
+      "tokens": {
+        "--bg-paper": {
+          "raw": "oklch(0.965 0.012 82)",
+          "L": 0.965,
+          "C": 0.012,
+          "H": 82.0,
+          "luminance": 0.8984
+        },
+        "--surface-card": {
+          "raw": "oklch(0.935 0.016 80)",
+          "L": 0.935,
+          "C": 0.016,
+          "H": 80.0,
+          "luminance": 0.8169
+        },
+        "--ink-primary": {
+          "raw": "oklch(0.15 0.018 50)",
+          "L": 0.15,
+          "C": 0.018,
+          "H": 50.0,
+          "luminance": 0.0033
+        },
+        "--ink-muted": {
+          "raw": "oklch(0.32 0.02 50)",
+          "L": 0.32,
+          "C": 0.02,
+          "H": 50.0,
+          "luminance": 0.0323
+        },
+        "--border-hairline": {
+          "raw": "oklch(0.24 0.015 50)",
+          "L": 0.24,
+          "C": 0.015,
+          "H": 50.0,
+          "luminance": 0.0136
+        },
+        "--accent-carmine": {
+          "raw": "oklch(0.48 0.18 26)",
+          "L": 0.48,
+          "C": 0.18,
+          "H": 26.0,
+          "luminance": 0.0961
+        },
+        "--accent-pine": {
+          "raw": "oklch(0.38 0.09 160)",
+          "L": 0.38,
+          "C": 0.09,
+          "H": 160.0,
+          "luminance": 0.0595
+        }
+      }
+    },
+    "task_specific": {
+      "zimage_json_valid": false,
+      "zimage_prompts_count": 0,
+      "zimage_exact_text_verified": false
+    },
+    "copy_hygiene": {
+      "expected_lang": "bilingual",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 4132,
+      "latin_chars_count": 4252,
+      "cyrillic_density": 0.4928,
+      "latin_density": 0.5072,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 33,
+      "em_dash_per_100w": 2.19,
+      "em_dash_overuse": false,
+      "guillemets_count": 18,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": true,
+        "em_dash_count": 33,
+        "guillemets_count": 18,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
+    "csp_postprocessor": {
+      "applied": true,
+      "had_meta_csp_in_raw": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": true,
+      "headers_patched": true,
+      "computed_style_block_hashes_count": 1,
+      "computed_inline_style_attr_hashes_count": 1,
+      "computed_script_hashes_count": 1,
+      "patched_meta_csp": "default-src 'self'; script-src 'self' 'sha256-RRwVapf8kCNXBjrHeZuu5gXD1BBKa4QjA5QzPY8WH/s='; style-src 'self' 'unsafe-hashes' 'sha256-dTrD0hENl3Y/hEtHIJqAHO9dNJ2gDVpf8F8YLKIbojY=' 'sha256-aoesrdWP9JdJdE/VvUxLTvRpubwd/IEwcuQh+QjY6bc='; img-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; manifest-src 'self'; require-trusted-types-for 'script'"
+    }
+  },
+  "t_backend_form": {
+    "task_id": "t_backend_form",
+    "category": "typescript_coding",
+    "language": "en",
+    "canon": "Backend Security & API Engineering (TypeScript Strict)",
+    "required_files": {
+      "form_handler.ts": {
+        "exists": true,
+        "size_bytes": 14659
+      }
+    },
+    "all_required_files_present": true,
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 8232,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 1,
+      "em_dash_per_100w": 0.08,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 1,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
+    "typescript_eval": {
+      "tsc_strict_passed": true,
+      "tsc_diagnostics": "",
+      "explicit_any_count": 0,
+      "compiled_js_exists": true,
+      "tests_passed": 10,
+      "tests_total": 10,
+      "results": [
+        {
+          "id": 1,
+          "name": "Security headers include COOP/COEP/CORP, HSTS, Trusted Types & CSP hashes",
+          "passed": true,
+          "durationMs": 2.21
+        },
+        {
+          "id": 2,
+          "name": "HMAC-SHA256 CSRF token generation, constant-time verify & expiry",
+          "passed": true,
+          "durationMs": 2.08
+        },
+        {
+          "id": 3,
+          "name": "HTML & ASCII control-char sanitization prevents stored XSS",
+          "passed": true,
+          "durationMs": 1.78
+        },
+        {
+          "id": 4,
+          "name": "Constructor rejects weak csrfSecret (< 16 chars)",
+          "passed": true,
+          "durationMs": 1.51
+        },
+        {
+          "id": 5,
+          "name": "Rejects non-POST (405) and non-JSON Content-Type (415) with security headers",
+          "passed": true,
+          "durationMs": 2
+        },
+        {
+          "id": 6,
+          "name": "Honeypot field catches automated bots (400 BOT_DETECTED)",
+          "passed": true,
+          "durationMs": 1.84
+        },
+        {
+          "id": 7,
+          "name": "Tampered CSRF token rejected with 403 CSRF_INVALID",
+          "passed": true,
+          "durationMs": 1.9
+        },
+        {
+          "id": 8,
+          "name": "Invalid payload fields return 400 VALIDATION_FAILED with all 6 field codes",
+          "passed": true,
+          "durationMs": 1.9
+        },
+        {
+          "id": 9,
+          "name": "Valid bilingual RU/EN submission normalizes email and escapes message (200)",
+          "passed": true,
+          "durationMs": 2.39
+        },
+        {
+          "id": 10,
+          "name": "Sliding-window IP rate limiter enforces 429 + retry-after and resets after window",
+          "passed": true,
+          "durationMs": 2.57
+        }
+      ]
+    }
+  }
+}

@@ -1,20 +1,163 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { createRequire } from 'node:module';
 import { Worker, isMainThread, parentPort, workerData } from 'node:worker_threads';
 import { pathToFileURL } from 'node:url';
 
-const NODE_EXE = path.resolve('C:/Program Files/nodejs/node.exe');
-const TSC_BIN = path.resolve('C:/projects/VKVstudio/node_modules/typescript/bin/tsc');
+const require = createRequire(import.meta.url);
+
+function loadTypeScriptCompiler() {
+  const candidates = [
+    process.env.SMARTLLM_TS_DIR,
+    '/usr/lib/code/extensions/node_modules/typescript',
+    '/usr/lib/node_modules/typescript',
+    'C:/projects/VKVstudio/node_modules/typescript',
+  ].filter(Boolean);
+
+  for (const cand of candidates) {
+    try {
+      const tsLib = path.join(cand, 'lib', 'typescript.js');
+      if (fs.existsSync(tsLib)) {
+        return require(tsLib);
+      }
+      return require(cand);
+    } catch {
+      // try next candidate
+    }
+  }
+  throw new Error(
+    `TypeScript compiler module not found in candidates: ${candidates.join(', ')}`
+  );
+}
+
+/**
+ * Strip single-line (//...) and multi-line (/*...*\/) comments from TypeScript/JS
+ * while preserving single, double, and template string literals.
+ * Fixes comment-matching Promise.all and explicit-any false positives.
+ */
+export function stripTsComments(src) {
+  let out = '';
+  let i = 0;
+  const n = src.length;
+  let state = 'code'; // 'code' | 'single' | 'double' | 'template' | 'line_comment' | 'block_comment'
+
+  while (i < n) {
+    const ch = src[i];
+    const next = i + 1 < n ? src[i + 1] : '';
+
+    if (state === 'code') {
+      if (ch === '/' && next === '/') {
+        state = 'line_comment';
+        out += '  ';
+        i += 2;
+        continue;
+      }
+      if (ch === '/' && next === '*') {
+        state = 'block_comment';
+        out += '  ';
+        i += 2;
+        continue;
+      }
+      if (ch === "'") {
+        state = 'single';
+        out += ch;
+        i += 1;
+        continue;
+      }
+      if (ch === '"') {
+        state = 'double';
+        out += ch;
+        i += 1;
+        continue;
+      }
+      if (ch === '`') {
+        state = 'template';
+        out += ch;
+        i += 1;
+        continue;
+      }
+      out += ch;
+      i += 1;
+    } else if (state === 'line_comment') {
+      if (ch === '\n' || ch === '\r') {
+        state = 'code';
+        out += ch;
+      } else {
+        out += ' ';
+      }
+      i += 1;
+    } else if (state === 'block_comment') {
+      if (ch === '*' && next === '/') {
+        state = 'code';
+        out += '  ';
+        i += 2;
+      } else {
+        out += ch === '\n' || ch === '\r' ? ch : ' ';
+        i += 1;
+      }
+    } else if (state === 'single') {
+      out += ch;
+      if (ch === '\\' && i + 1 < n) {
+        out += src[i + 1];
+        i += 2;
+        continue;
+      }
+      if (ch === "'") state = 'code';
+      i += 1;
+    } else if (state === 'double') {
+      out += ch;
+      if (ch === '\\' && i + 1 < n) {
+        out += src[i + 1];
+        i += 2;
+        continue;
+      }
+      if (ch === '"') state = 'code';
+      i += 1;
+    } else if (state === 'template') {
+      out += ch;
+      if (ch === '\\' && i + 1 < n) {
+        out += src[i + 1];
+        i += 2;
+        continue;
+      }
+      if (ch === '`') state = 'code';
+      i += 1;
+    }
+  }
+  return out;
+}
+
+export function analyzeTsSourceStatic(srcText) {
+  const codeOnly = stripTsComments(srcText);
+  const explicitAnyMatches = codeOnly.match(/\b:\s*any\b|\bas\s+any\b|<any>/g) || [];
+  const rawPromiseAllMatches = srcText.match(/\bPromise\s*\.\s*all\s*\(/g) || [];
+  const codePromiseAllMatches = codeOnly.match(/\bPromise\s*\.\s*all\s*\(/g) || [];
+  return {
+    explicit_any_count: explicitAnyMatches.length,
+    promise_all_raw_count: rawPromiseAllMatches.length,
+    promise_all_code_count: codePromiseAllMatches.length,
+    promise_all_comment_count: Math.max(
+      0,
+      rawPromiseAllMatches.length - codePromiseAllMatches.length
+    ),
+  };
+}
 
 async function runSingleTestInWorker(emittedMjsUrl, testId) {
   return new Promise((resolve) => {
     const worker = new Worker(new URL(import.meta.url), {
       workerData: { emittedMjsUrl, testId },
     });
+    let settled = false;
+    const done = (val) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve(val);
+    };
     const timer = setTimeout(() => {
       worker.terminate();
-      resolve({
+      done({
         passed: false,
         durationMs: 3000,
         error: 'Timed out after 3000ms (infinite synchronous loop or unresolved Promise)',
@@ -22,26 +165,29 @@ async function runSingleTestInWorker(emittedMjsUrl, testId) {
     }, 3000);
 
     worker.on('message', (msg) => {
-      clearTimeout(timer);
       worker.terminate();
-      resolve(msg);
+      done(msg);
     });
     worker.on('error', (err) => {
-      clearTimeout(timer);
       worker.terminate();
-      resolve({
+      done({
         passed: false,
         durationMs: 0,
         error: err && err.stack ? err.stack : String(err),
       });
     });
     worker.on('exit', (code) => {
-      clearTimeout(timer);
       if (code !== 0) {
-        resolve({
+        done({
           passed: false,
           durationMs: 0,
           error: `Worker exited with code ${code}`,
+        });
+      } else {
+        done({
+          passed: false,
+          durationMs: 0,
+          error: 'Worker exited cleanly before Promise settled (deadlocked Promise / missing resolve)',
         });
       }
     });
@@ -252,61 +398,68 @@ if (!isMainThread) {
   ];
 
   async function main() {
+    if (process.argv[2] === '--analyze-snippet') {
+      const snippet = process.argv[3] || '';
+      console.log(JSON.stringify(analyzeTsSourceStatic(snippet)));
+      return;
+    }
+
     const dagTsPath = process.argv[2];
     if (!dagTsPath || !fs.existsSync(dagTsPath)) {
       console.error(JSON.stringify({ error: `dag.ts not found at ${dagTsPath}` }));
       process.exit(1);
     }
 
+    const ts = loadTypeScriptCompiler();
     const absDagTs = path.resolve(dagTsPath);
     const workDir = path.dirname(absDagTs);
     const outDir = path.join(workDir, '.tsc_out');
     fs.mkdirSync(outDir, { recursive: true });
 
-    const noEmitRes = spawnSync(
-      NODE_EXE,
-      [
-        TSC_BIN,
-        '--noEmit',
-        '--strict',
-        '--target', 'ES2022',
-        '--module', 'ES2022',
-        '--moduleResolution', 'bundler',
-        '--skipLibCheck',
-        absDagTs,
-      ],
-      { encoding: 'utf-8', timeout: 30000 }
-    );
-
-    const tscPassed = noEmitRes.status === 0;
-    const tscDiagnostics = ((noEmitRes.stdout || '') + '\n' + (noEmitRes.stderr || '')).trim();
     const srcText = fs.readFileSync(absDagTs, 'utf-8');
-    const explicitAnyMatches = srcText.match(/\b:\s*any\b|\bas\s+any\b|<any>/g) || [];
+    const staticInfo = analyzeTsSourceStatic(srcText);
 
-    spawnSync(
-      NODE_EXE,
-      [
-        TSC_BIN,
-        '--target', 'ES2022',
-        '--module', 'ES2022',
-        '--moduleResolution', 'bundler',
-        '--outDir', outDir,
-        '--skipLibCheck',
-        absDagTs,
-      ],
-      { encoding: 'utf-8', timeout: 30000 }
-    );
+    const strictOptions = {
+      noEmit: true,
+      strict: true,
+      target: ts.ScriptTarget.ES2022,
+      module: ts.ModuleKind.ES2022,
+      moduleResolution: ts.ModuleResolutionKind.Bundler ?? ts.ModuleResolutionKind.Node10,
+      skipLibCheck: true,
+    };
+    const program = ts.createProgram([absDagTs], strictOptions);
+    const allDiagnostics = ts.getPreEmitDiagnostics(program);
+    const formatHost = {
+      getCanonicalFileName: (p) => p,
+      getCurrentDirectory: () => workDir,
+      getNewLine: () => '\n',
+    };
+    const tscDiagnostics = ts.formatDiagnostics(allDiagnostics, formatHost).trim();
+    const tscPassed = allDiagnostics.length === 0;
+    const tscExitCode = tscPassed ? 0 : 2;
+
+    const transpiled = ts.transpileModule(srcText, {
+      compilerOptions: {
+        target: ts.ScriptTarget.ES2022,
+        module: ts.ModuleKind.ES2022,
+      },
+      fileName: absDagTs,
+    });
 
     const emittedJs = path.join(outDir, path.basename(absDagTs, '.ts') + '.js');
     const emittedMjs = path.join(outDir, 'dag_compiled.mjs');
-    if (!fs.existsSync(emittedJs)) {
+    const outputJs = (transpiled && transpiled.outputText) || '';
+
+    if (!outputJs.trim()) {
       console.log(
         JSON.stringify(
           {
             tsc_strict_passed: tscPassed,
-            tsc_exit_code: noEmitRes.status,
+            tsc_exit_code: tscExitCode,
             tsc_diagnostics: tscDiagnostics,
-            explicit_any_count: explicitAnyMatches.length,
+            explicit_any_count: staticInfo.explicit_any_count,
+            promise_all_code_count: staticInfo.promise_all_code_count,
+            promise_all_comment_count: staticInfo.promise_all_comment_count,
             compiled_js_exists: false,
             tests_passed: 0,
             tests_total: 12,
@@ -319,7 +472,8 @@ if (!isMainThread) {
       return;
     }
 
-    fs.copyFileSync(emittedJs, emittedMjs);
+    fs.writeFileSync(emittedJs, outputJs, 'utf-8');
+    fs.writeFileSync(emittedMjs, outputJs, 'utf-8');
     const emittedMjsUrl = pathToFileURL(emittedMjs).href;
 
     const results = [];
@@ -333,9 +487,11 @@ if (!isMainThread) {
       JSON.stringify(
         {
           tsc_strict_passed: tscPassed,
-          tsc_exit_code: noEmitRes.status,
+          tsc_exit_code: tscExitCode,
           tsc_diagnostics: tscDiagnostics,
-          explicit_any_count: explicitAnyMatches.length,
+          explicit_any_count: staticInfo.explicit_any_count,
+          promise_all_code_count: staticInfo.promise_all_code_count,
+          promise_all_comment_count: staticInfo.promise_all_comment_count,
           compiled_js_exists: true,
           tests_passed: passedCount,
           tests_total: results.length,
@@ -347,8 +503,12 @@ if (!isMainThread) {
     );
   }
 
-  main().catch((err) => {
-    console.error(JSON.stringify({ fatal: String(err) }));
-    process.exit(1);
-  });
+  const isDirectRun =
+    process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname);
+  if (isDirectRun) {
+    main().catch((err) => {
+      console.error(JSON.stringify({ fatal: String(err) }));
+      process.exit(1);
+    });
+  }
 }

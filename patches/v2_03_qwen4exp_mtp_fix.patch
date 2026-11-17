@@ -1,0 +1,150 @@
+diff --git a/common/speculative.cpp b/common/speculative.cpp
+index d836c8d..d7a8284 100644
+--- a/common/speculative.cpp
++++ b/common/speculative.cpp
+@@ -1512,9 +1512,11 @@ struct common_speculative_impl_draft_mtp : public common_speculative_impl {
+     // The last h-row of one process() call needs the first token of the NEXT
+     // call to pair with, so it's stashed here until that next call fires.
+     std::vector<std::vector<float>> pending_h;   // [n_seq][n_embd]
++    std::vector<bool>               has_pending_h;
+ 
+     std::vector<int32_t> i_batch_beg;
+     std::vector<int32_t> i_batch_end;
++    std::vector<int32_t> i_dft_beg;
+ 
+     // Hidden rows from the most recent target verification batch, grouped by seq.
+     // Row 0 corresponds to the sampled token, row N to the Nth accepted draft token.
+@@ -1591,10 +1593,12 @@ struct common_speculative_impl_draft_mtp : public common_speculative_impl {
+         this->n_max = this->params.n_max;
+ 
+         pending_h.assign(n_seq, std::vector<float>(n_embd, 0.0f));
++        has_pending_h.assign(n_seq, false);
+ 
+         i_last.assign(n_seq, -1);
+         i_batch_beg.assign(n_seq, -1);
+         i_batch_end.assign(n_seq, -1);
++        i_dft_beg.assign(n_seq, -1);
+ 
+         verify_h.assign(n_seq, {});
+         verify_h_rows.assign(n_seq, 0);
+@@ -1626,7 +1630,7 @@ struct common_speculative_impl_draft_mtp : public common_speculative_impl {
+         auto * ctx_dft = this->params.ctx_dft;
+         const llama_pos pos_max = llama_memory_seq_pos_max(llama_get_memory(ctx_dft), seq_id);
+ 
+-        if (pos_max < N - 1 && !is_mem_shared) {
++        if (N > 1 && pos_max < N - 1 && !is_mem_shared) {
+             SPC_WRN("ctx_dft pos_max=%d < N-1=%d - "
+                     "process() hook may not have run on every prefill ubatch "
+                     "(need_embd / output flag on every prompt position?). "
+@@ -1649,6 +1653,7 @@ struct common_speculative_impl_draft_mtp : public common_speculative_impl {
+         // remember the first and last batch index for each sequence
+         std::fill(i_batch_beg.begin(), i_batch_beg.end(), -1);
+         std::fill(i_batch_end.begin(), i_batch_end.end(), -1);
++        std::fill(i_dft_beg.begin(),   i_dft_beg.end(),   -1);
+ 
+         for (int k = 0; k < n_tokens; ++k) {
+             for (llama_seq_id seq_id = 0; seq_id < (llama_seq_id) n_seq; ++seq_id) {
+@@ -1683,6 +1688,16 @@ struct common_speculative_impl_draft_mtp : public common_speculative_impl {
+ 
+                 const llama_seq_id seq_id = t.seq_id;
+ 
++                // MTP pairs (h_{p-1}, x_p) at pos p >= 1; skip pos 0 (no predecessor h_{-1})
++                // or any sequence start lacking a valid carryover hidden state.
++                if (k == i_batch_beg[seq_id] && (t.pos[0] == 0 || !has_pending_h[seq_id])) {
++                    continue;
++                }
++
++                if (i_dft_beg[seq_id] < 0) {
++                    i_dft_beg[seq_id] = k;
++                }
++
+                 // vision tokens carry an embedding instead of an id
+                 const int32_t idx = t.id != LLAMA_TOKEN_NULL
+                     ? batch.add(t.id, t.pos[0], seq_id, false)
+@@ -1698,29 +1713,31 @@ struct common_speculative_impl_draft_mtp : public common_speculative_impl {
+             auto * mem_dft = llama_get_memory(ctx_dft);
+ 
+             bool ok = true;
+-            for (int head = 0; head < n_mtp_layers; ++head) {
+-                if (chain_heads) {
+-                    // ref: https://github.com/ggml-org/llama.cpp/pull/24340/changes#r3413498544
+-                    for (llama_seq_id seq_id = 0; seq_id < (llama_seq_id) n_seq; ++seq_id) {
+-                        if (i_batch_beg[seq_id] < 0) {
+-                            continue;
++            if (batch.size() > 0) {
++                for (int head = 0; head < n_mtp_layers; ++head) {
++                    if (chain_heads) {
++                        // ref: https://github.com/ggml-org/llama.cpp/pull/24340/changes#r3413498544
++                        for (llama_seq_id seq_id = 0; seq_id < (llama_seq_id) n_seq; ++seq_id) {
++                            if (i_dft_beg[seq_id] < 0) {
++                                continue;
++                            }
++                            llama_memory_seq_rm(mem_dft, seq_id, batch_in.tokens[i_dft_beg[seq_id]].pos[0], -1);
+                         }
+-                        llama_memory_seq_rm(mem_dft, seq_id, batch_in.tokens[i_batch_beg[seq_id]].pos[0], -1);
++                        llama_set_nextn_layer_offset(ctx_dft, head);
+                     }
+-                    llama_set_nextn_layer_offset(ctx_dft, head);
+-                }
+ 
+-                const int32_t rc = llama_process(ctx_dft, LLAMA_PROCESS_TYPE_DECODE, batch.get());
+-                if (rc != 0) {
+-                    SPC_ERR("llama_process(ctx_dft) head=%d failed rc=%d (pos=%d)\n",
+-                            head, (int) rc, (int) batch_in.tokens[0].pos[0]);
+-                    ok = false;
+-                    break;
++                    const int32_t rc = llama_process(ctx_dft, LLAMA_PROCESS_TYPE_DECODE, batch.get());
++                    if (rc != 0) {
++                        SPC_ERR("llama_process(ctx_dft) head=%d failed rc=%d (pos=%d)\n",
++                                head, (int) rc, (int) batch_in.tokens[0].pos[0]);
++                        ok = false;
++                        break;
++                    }
+                 }
+-            }
+ 
+-            if (chain_heads) {
+-                llama_set_nextn_layer_offset(ctx_dft, 0); // restore default for non-draft decodes
++                if (chain_heads) {
++                    llama_set_nextn_layer_offset(ctx_dft, 0); // restore default for non-draft decodes
++                }
+             }
+             if (!ok) {
+                 return false;
+@@ -1743,6 +1760,7 @@ struct common_speculative_impl_draft_mtp : public common_speculative_impl {
+ 
+             std::memcpy(pending_h[seq_id].data(),
+                     verify_h[seq_id].data() + (size_t) (n_rows - 1) * n_embd, row_bytes);
++            has_pending_h[seq_id] = true;
+         }
+ 
+         return true;
+@@ -1760,7 +1778,7 @@ struct common_speculative_impl_draft_mtp : public common_speculative_impl {
+         for (llama_seq_id seq_id = 0; seq_id < (llama_seq_id) n_seq; ++seq_id) {
+             auto & dp = dparams[seq_id];
+ 
+-            if (!dp.drafting) {
++            if (!dp.drafting || !has_pending_h[seq_id]) {
+                 continue;
+             }
+ 
+diff --git a/src/llama-model.cpp b/src/llama-model.cpp
+index 81af890..f73fe69 100644
+--- a/src/llama-model.cpp
++++ b/src/llama-model.cpp
+@@ -3171,13 +3171,11 @@ llama_memory_i * llama_model::create_memory(const llama_memory_params & params,
+                             };
+                         }
+ 
+-                        // the MTP draft context holds the MTP block alone: its attention and indexer, no recurrent layer
++                        // the MTP draft context holds the MTP block alone: dense causal attention, no QSA indexer or recurrent layer
+                         if (arch == LLM_ARCH_QWEN4EXP && params.ctx_type == LLAMA_CONTEXT_TYPE_MTP) {
+                             filter_attn = [&](uint32_t il) { return il >= hparams.n_layer(); };
+                             filter_recr = [&](uint32_t)    { return false; };
+-                            if (filter_idx) {
+-                                filter_idx = [&](uint32_t il) { return il >= hparams.n_layer(); };
+-                            }
++                            filter_idx  = nullptr;
+                         }
+                     }
+ 

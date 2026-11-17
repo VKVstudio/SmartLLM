@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КОНТУР-СПЕКТР — Вибродиагностика, вейвлет-анализ и предиктивная аналитика ГТУ и компрессоров</title>
+<meta name="description" content="Инженерная платформа непрерывной вибродиагностики, вейвлет-анализа и предиктивной аналитики газотурбинных и компрессорных агрегатов. Комплекты Спектр-М8, Спектр-М32, Спектр-Взрыв. Modbus TCP, OPC UA.">
+<link rel="canonical" href="https://contour-spectrum.ru/">
+<meta property="og:title" content="КОНТУР-СПЕКТР — Вибродиагностика и предиктивная аналитика ГТУ">
+<meta property="og:description" content="Платформа непрерывной вибродиагностики, вейвлет-анализа и предиктивной аналитики газотурбинных и компрессорных агрегатов.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://contour-spectrum.ru/">
+<meta property="og:locale" content="ru_RU">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'sha256-TgLUbDQzi/501JxBLBvzDRoXIqykAMZ3r1ntjn1fiwU='; script-src 'self' 'sha256-1QutMg8UCPoMDLRY3O+BlMHjZshtIiOl7wAbK8xlyZM='; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+<style>:where(.page-grid, .grid-shell, .site-main, main) > :where(section, header, footer, article, nav, div) { grid-column: 1 / -1; min-width: 0; }
+
+:root{--bg:oklch(0.14 0.02 255);--panel:oklch(0.19 0.02 255);--line:oklch(0.28 0.03 255);--text:oklch(0.95 0.01 250);--dim:oklch(0.68 0.015 250);--teal:oklch(0.76 0.14 195);--amber:oklch(0.75 0.16 75);--danger:oklch(0.65 0.18 25);--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:ui-monospace,"Cascadia Code",Consolas,monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{max-width:100%;overflow-x:clip}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;font-size:1rem}
+svg,canvas,img{max-width:100%;height:auto}
+a{color:var(--teal);text-decoration:none}
+h1,h2,h3{line-height:1.2;font-weight:700}
+h1{font-size:clamp(1.75rem,4vw,2.6rem)}
+h2{font-size:clamp(1.4rem,3vw,1.8rem)}
+h3{font-size:1.1rem}
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+.skip-link{position:absolute;left:-9999px;top:0;padding:0.5rem 1rem;background:var(--teal);color:var(--bg);font-weight:600}
+.skip-link:focus{left:1rem;top:1rem}
+header{border-bottom:1px solid var(--line);padding:0.75rem 0}
+.nav-wrap{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem 1.5rem}
+.logo{font-weight:800;font-size:1.1rem;letter-spacing:0.02em;color:var(--text)}
+.logo span{color:var(--teal)}
+nav{display:flex;flex-wrap:wrap;gap:0.25rem 1rem;font-size:0.9rem}
+nav a{color:var(--dim);padding:0.25rem 0}
+nav a:hover,nav a:focus{color:var(--text)}
+.hero{padding:3rem 0 2rem;border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:2rem}
+@media(min-width:768px){.hero-grid{grid-template-columns:1fr 1fr}}
+.hero h1{margin-bottom:1rem}
+.hero-sub{color:var(--dim);margin-bottom:1.5rem;max-width:60ch}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1rem}
+.panel-label{font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);margin-bottom:0.5rem}
+.metric-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0.75rem;margin-bottom:1rem}
+.metric{padding:0.75rem;border:1px solid var(--line);border-radius:6px;min-width:0}
+.metric-val{font-family:var(--mono);font-size:1.5rem;font-weight:700}
+.metric-unit{font-size:0.8rem;color:var(--dim)}
+.metric.ok .metric-val{color:var(--teal)}
+.metric.warn .metric-val{color:var(--amber)}
+.metric.alarm .metric-val{color:var(--danger)}
+.fft-wrap{position:relative;padding:1rem}
+.fft-svg{width:100%;height:auto}
+.fft-controls{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem}
+.fft-btn{background:var(--panel);border:1px solid var(--line);color:var(--text);padding:0.4rem 0.8rem;border-radius:4px;font-size:0.85rem;cursor:pointer;white-space:normal}
+.fft-btn[aria-pressed="true"]{border-color:var(--teal);color:var(--teal)}
+.fft-btn:focus{outline:2px solid var(--teal);outline-offset:2px}
+.fft-mode-normal .fft-imbalance,.fft-mode-normal .fft-defect{display:none}
+.fft-mode-imbalance .fft-normal,.fft-mode-imbalance .fft-defect{display:none}
+.fft-mode-defect .fft-normal,.fft-mode-defect .fft-imbalance{display:none}
+section{padding:3rem 0;border-bottom:1px solid var(--line)}
+.section-title{margin-bottom:1.5rem}
+.bento{display:grid;grid-template-columns:1fr;gap:1rem}
+@media(min-width:640px){.bento{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.bento{grid-template-columns:2fr 1fr 1fr}}
+.bento-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1.25rem;min-width:0}
+.bento-card h3{margin-bottom:0.5rem}
+.bento-card p{color:var(--dim);font-size:0.9rem}
+.bento-icon{width:2rem;height:2rem;margin-bottom:0.75rem;color:var(--teal)}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:0.9rem;white-space:nowrap}
+th,td{padding:0.6rem 0.75rem;border-bottom:1px solid var(--line);text-align:left}
+th{font-weight:600;color:var(--text);background:oklch(0.22 0.02 255)}
+.calc-grid{display:grid;grid-template-columns:1fr;gap:1.5rem}
+@media(min-width:768px){.calc-grid{grid-template-columns:1fr 1fr}}
+.calc-inputs{display:flex;flex-direction:column;gap:1rem}
+.field{display:flex;flex-direction:column;gap:0.4rem}
+.field label{font-size:0.85rem;color:var(--dim)}
+.field input{background:var(--bg);border:1px solid var(--line);color:var(--text);padding:0.6rem 0.75rem;border-radius:4px;font-family:var(--mono);font-size:1rem;min-width:0}
+.field input:focus{border-color:var(--teal);outline:2px solid var(--teal);outline-offset:1px}
+.calc-result{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1.25rem}
+.calc-result h3{margin-bottom:0.75rem}
+.result-line{display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--line);font-size:0.9rem}
+.result-line:last-child{border-bottom:none}
+.result-val{font-family:var(--mono);font-weight:600;color:var(--teal)}
+.faq-item{border-bottom:1px solid var(--line);padding:1rem 0}
+.faq-q{font-weight:600;font-size:1rem;margin-bottom:0.5rem}
+.faq-a{color:var(--dim);font-size:0.95rem}
+.form-wrap{margin-top:2rem}
+.form-grid{display:grid;grid-template-columns:1fr;gap:1rem}
+@media(min-width:640px){.form-grid{grid-template-columns:1fr 1fr 1fr}}
+.form-grid .field:nth-child(4){grid-column:1/-1}
+@media(min-width:640px){.form-grid .field:nth-child(4){grid-column:1/-1}}
+.btn{background:var(--teal);color:var(--bg);border:none;padding:0.6rem 1.2rem;border-radius:4px;font-size:0.95rem;font-weight:600;cursor:pointer;white-space:normal}
+.btn:hover{filter:brightness(1.1)}
+.btn:focus{outline:2px solid var(--text);outline-offset:2px}
+.error-msg{color:var(--danger);font-size:0.85rem;margin-top:0.25rem}
+footer{padding:2rem 0;border-top:1px solid var(--line);color:var(--dim);font-size:0.85rem}
+.footer-grid{display:grid;grid-template-columns:1fr;gap:1.5rem}
+@media(min-width:640px){.footer-grid{grid-template-columns:1fr 1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none;transition:none}}
+@media(max-width:480px){.fft-btn,.btn{white-space:normal}}
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {"@type":"Organization","@id":"https://contour-spectrum.ru/#org","name":"КОНТУР-СПЕКТР","url":"https://contour-spectrum.ru/","description":"Российская инженерная платформа непрерывной вибродиагностики, вейвлет-анализа и предиктивной аналитики газотурбинных и компрессорных агрегатов","address":{"@type":"PostalAddress","addressCountry":"RU"}},
+    {"@type":"WebSite","@id":"https://contour-spectrum.ru/#website","name":"КОНТУР-СПЕКТР","url":"https://contour-spectrum.ru/","publisher":{"@id":"https://contour-spectrum.ru/#org"}},
+    {"@type":"BreadcrumbList","@id":"https://contour-spectrum.ru/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://contour-spectrum.ru/"}]},
+    {"@type":"Product","@id":"https://contour-spectrum.ru/#spectr-m8","name":"Спектр-М8","description":"Комплект вибродиагностики на 8 каналов для компрессорных агрегатов","brand":{"@id":"https://contour-spectrum.ru/#org"},"offers":{"@type":"Offer","priceCurrency":"RUB","availability":"https://schema.org/InStock"}},
+    {"@type":"Product","@id":"https://contour-spectrum.ru/#spectr-m32","name":"Спектр-М32","description":"Комплект вибродиагностики на 32 канала для турбогенераторов","brand":{"@id":"https://contour-spectrum.ru/#org"},"offers":{"@type":"Offer","priceCurrency":"RUB","availability":"https://schema.org/InStock"}},
+    {"@type":"Product","@id":"https://contour-spectrum.ru/#spectr-vzryv","name":"Спектр-Взрыв","description":"Комплект вибродиагностики Ex ia для нефтехимии","brand":{"@id":"https://contour-spectrum.ru/#org"},"offers":{"@type":"Offer","priceCurrency":"RUB","availability":"https://schema.org/InStock"}},
+    {"@type":"FAQPage","@id":"https://contour-spectrum.ru/#faq","mainEntity":[
+      {"@type":"Question","name":"Соответствует ли платформа требованиям ГОСТ ИСО 10816-3?","acceptedAnswer":{"@type":"Answer","text":"Да. Платформа КОНТУР-СПЕКТР полностью соответствует ГОСТ ИСО 10816-3:2011 по классификации вибростатусов и зонированию значений виброскорости для турбоагрегатов мощностью свыше 5 МВт."}},
+      {"@type":"Question","name":"Какая частота дискретизации используется для вейвлет-анализа?","acceptedAnswer":{"@type":"Answer","text":"Краевой контроллер АЦП 24 бит обеспечивает дискретизацию до 25 кГц на канал, что позволяет проводить вейвлет-анализ спектра до 12,5 кГц по теории Никольского."}},
+      {"@type":"Question","name":"Как обеспечивается искрозащита комплекта Спектр-Взрыв?","acceptedAnswer":{"@type":"Answer","text":"Комплект Спектр-Взрыв выполнен по схеме Ex ia с ограничением энергии в цепи до 12 В и 150 мА. Все датчики и контроллер имеют сертификат взрывозащиты для зон ATEX 1 и 2."}},
+      {"@type":"Question","name":"Возможно ли локальное развёртывание без облака?","acceptedAnswer":{"@type":"Answer","text":"Да. Нейросетевой детектор аномалий работает полностью на краевом контроллере. Данные не покидают периметр предприятия. Интеграция с АСУ ТП осуществляется через Modbus TCP и OPC UA."}},
+      {"@type":"Question","name":"Как рассчитывается прогноз остаточного ресурса RUL?","acceptedAnswer":{"@type":"Answer","text":"Прогноз RUL формируется на основе трендов виброскорости, температуры подшипников и накопленных циклов нагружения. Модель оценивает остаточный ресурс в рабочих часах с точностью до 10%."}}
+    ]}
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+<header>
+  <div class="container">
+    <div class="nav-wrap">
+      <span class="logo">КОНТУР-<span>СПЕКТР</span></span>
+      <nav aria-label="Основная навигация">
+        <a href="#hero">Состояние</a>
+        <a href="#architecture">Архитектура</a>
+        <a href="#specs">Спецификации</a>
+        <a href="#calc">Калькулятор</a>
+        <a href="#faq">FAQ</a>
+        <a href="#request">Опросный лист</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section id="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <h1 id="hero-title">Непрерывная вибродиагностика, вейвлет-анализ и предиктивная аналитика ГТУ и компрессоров</h1>
+        <p class="hero-sub">Платформа КОНТУР-СПЕКТР мониторинга вибростатуса турбоагрегатов по ГОСТ ИСО 10816-3. Прогнозирование отказов, оценка остаточного ресурса RUL, интеграция в АСУ ТП без облака.</p>
+        <div class="panel" role="region" aria-label="Панель состояния турбоагрегата">
+          <p class="panel-label">Турбоагрегат ГТУ-420 · Онлайн</p>
+          <div class="metric-row">
+            <div class="metric ok">
+              <span class="metric-val" id="vib-val">2.1</span>
+              <span class="metric-unit">мм/с · Виброскорость</span>
+            </div>
+            <div class="metric ok">
+              <span class="metric-val" id="temp-val">68</span>
+              <span class="metric-unit">°C · Подшипник П1</span>
+            </div>
+            <div class="metric ok">
+              <span class="metric-val" id="rul-val">14200</span>
+              <span class="metric-unit">ч · Прогноз RUL</span>
+            </div>
+          </div>
+          <div class="fft-wrap">
+            <svg class="fft-svg" viewBox="0 0 400 160" role="img" aria-label="Спектрограмма БПФ турбоагрегата" id="fft-svg">
+              <defs>
+                <linearGradient id="bar-teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="oklch(0.76 0.14 195)"/><stop offset="1" stop-color="oklch(0.55 0.14 195)"/></linearGradient>
+                <linearGradient id="bar-amber" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="oklch(0.75 0.16 75)"/><stop offset="1" stop-color="oklch(0.55 0.16 75)"/></linearGradient>
+              </defs>
+              <rect x="0" y="0" width="400" height="160" fill="oklch(0.19 0.02 255)"/>
+              <line x1="0" y1="140" x2="400" y2="140" stroke="oklch(0.28 0.03 255)" stroke-width="1"/>
+              <line x1="0" y1="20" x2="400" y2="20" stroke="oklch(0.28 0.03 255)" stroke-width="1" stroke-dasharray="4 4"/>
+              <text x="10" y="155" fill="oklch(0.68 0.015 250)" font-size="11" font-family="monospace">0 Гц</text>
+              <text x="180" y="155" fill="oklch(0.68 0.015 250)" font-size="11" font-family="monospace">1X</text>
+              <text x="250" y="155" fill="oklch(0.68 0.015 250)" font-size="11" font-family="monospace">2X</text>
+              <text x="310" y="155" fill="oklch(0.68 0.015 250)" font-size="11" font-family="monospace">3X</text>
+              <text x="360" y="155" fill="oklch(0.68 0.015 250)" font-size="11" font-family="monospace">BPFO</text>
+              <g id="fft-normal" class="fft-normal">
+                <rect x="178" y="120" width="12" height="20" fill="url(#bar-teal)"/>
+                <rect x="248" y="125" width="12" height="15" fill="url(#bar-teal)"/>
+                <rect x="308" y="128" width="12" height="12" fill="url(#bar-teal)"/>
+              </g>
+              <g id="fft-imbalance" class="fft-imbalance">
+                <rect x="178" y="40" width="12" height="100" fill="url(#bar-amber)"/>
+                <rect x="248" y="125" width="12" height="15" fill="url(#bar-teal)"/>
+                <rect x="308" y="128" width="12" height="12" fill="url(#bar-teal)"/>
+              </g>
+              <g id="fft-defect" class="fft-defect">
+                <rect x="178" y="120" width="12" height="20" fill="url(#bar-teal)"/>
+                <rect x="248" y="125" width="12" height="15" fill="url(#bar-teal)"/>
+                <rect x="308" y="128" width="12" height="12" fill="url(#bar-teal)"/>
+                <rect x="358" y="60" width="12" height="80" fill="url(#bar-amber)"/>
+              </g>
+            </svg>
+            <div class="fft-controls" role="group" aria-label="Режимы спектрограммы">
+              <button class="fft-btn" id="btn-normal" aria-pressed="true" type="button">Норма</button>
+              <button class="fft-btn" id="btn-imbalance" aria-pressed="false" type="button">Дисбаланс ротора</button>
+              <button class="fft-btn" id="btn-defect" aria-pressed="false" type="button">Дефект наружного кольца</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="architecture" aria-labelledby="arch-title">
+  <div class="container">
+    <h2 id="arch-title" class="section-title">Архитектура комплекса</h2>
+    <div class="bento">
+      <div class="bento-card">
+        <svg class="bento-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M6 8h2M10 8h2M14 8h2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        <h3>Пьезоэлектрические акселерометры IEPE</h3>
+        <p>Частотный диапазон до 25 кГц. Чувствительность 100 мВ/г. Промышленное исполнение IP67 с термокомпенсацией.</p>
+      </div>
+      <div class="bento-card">
+        <svg class="bento-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="7" y1="10" x2="12" y2="10" stroke="currentColor" stroke-width="1.5"/></svg>
+        <h3>Краевой контроллер, АЦП 24 бит</h3>
+        <p>24-битное преобразование с частотой дискретизации 50 кГц. Синхронизация каналов по внешнему триггеру. Обработка на борту.</p>
+      </div>
+      <div class="bento-card">
+        <svg class="bento-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M12 8l2 3-2 3" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        <h3>Нейросетевой детектор аномалий</h3>
+        <p>Обнаружение аномалий спектра без передачи данных в облако. Детектор работает на краевом контроллере. Локальное развёртывание.</p>
+      </div>
+      <div class="bento-card">
+        <svg class="bento-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h4M8 12h4M14 12h4" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+        <h3>Modbus TCP / OPC UA в АСУ ТП</h3>
+        <p>Стандартные протоколы интеграции. Передача данных вибродиагностики в SCADA, DCS и MES без дополнительных шлюзов.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="specs" aria-labelledby="specs-title">
+  <div class="container">
+    <h2 id="specs-title" class="section-title">Комплекты поставки</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">Комплект</th><th scope="col">Каналы</th><th scope="col">Применение</th><th scope="col">Искрозащита</th><th scope="col">АЦП</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Спектр-М8</td><td>8 каналов</td><td>Компрессорные агрегаты</td><td>Нет</td><td>24 бит / 50 кГц</td></tr>
+          <tr><td>Спектр-М32</td><td>32 канала</td><td>Турбогенераторы ГТУ</td><td>Нет</td><td>24 бит / 50 кГц</td></tr>
+          <tr><td>Спектр-Взрыв</td><td>16 каналов</td><td>Нефтехимия, ATEX</td><td>Ex ia</td><td>24 бит / 25 кГц</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="calc" aria-labelledby="calc-title">
+  <div class="container">
+    <h2 id="calc-title" class="section-title">Калькулятор предотвращённого ущерба</h2>
+    <div class="calc-grid">
+      <div class="calc-inputs">
+        <div class="field">
+          <label for="calc-power">Мощность агрегата, МВт</label>
+          <input type="number" id="calc-power" value="12" min="1" max="100" aria-describedby="calc-power-desc">
+        </div>
+        <div class="field">
+          <label for="calc-cost">Стоимость часа простоя, ₽</label>
+          <input type="number" id="calc-cost" value="85000" min="1000" max="10000000">
+        </div>
+        <div class="field">
+          <label for="calc-units">Число агрегатов на объекте</label>
+          <input type="number" id="calc-units" value="4" min="1" max="50">
+        </div>
+      </div>
+      <div class="calc-result" role="region" aria-live="polite" id="calc-result">
+        <h3>Расчёт окупаемости</h3>
+        <div class="result-line"><span>Предотвращённый ущерб за год</span><span class="result-val" id="res-damage">—</span></div>
+        <div class="result-line"><span>Стоимость комплекта</span><span class="result-val" id="res-cost">—</span></div>
+        <div class="result-line"><span>Окупаемость системы</span><span class="result-val" id="res-payback">—</span></div>
+        <div class="result-line"><span>Экономический эффект, 3 года</span><span class="result-val" id="res-effect">—</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <h2 id="faq-title" class="section-title">Часто задаваемые вопросы</h2>
+    <div class="faq-item">
+      <p class="faq-q">Соответствует ли платформа требованиям ГОСТ ИСО 10816-3?</p>
+      <p class="faq-a">Да. Платформа КОНТУР-СПЕКТР полностью соответствует ГОСТ ИСО 10816-3:2011 по классификации вибростатусов и зонированию значений виброскорости для турбоагрегатов мощностью свыше 5 МВт.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">Какая частота дискретизации используется для вейвлет-анализа?</p>
+      <p class="faq-a">Краевой контроллер АЦП 24 бит обеспечивает дискретизацию до 25 кГц на канал, что позволяет проводить вейвлет-анализ спектра до 12,5 кГц по теории Никольского.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">Как обеспечивается искрозащита комплекта Спектр-Взрыв?</p>
+      <p class="faq-a">Комплект Спектр-Взрыв выполнен по схеме Ex ia с ограничением энергии в цепи до 12 В и 150 мА. Все датчики и контроллер имеют сертификат взрывозащиты для зон ATEX 1 и 2.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">Возможно ли локальное развёртывание без облака?</p>
+      <p class="faq-a">Да. Нейросетевой детектор аномалий работает полностью на краевом контроллере. Данные не покидают периметр предприятия. Интеграция с АСУ ТП осуществляется через Modbus TCP и OPC UA.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">Как рассчитывается прогноз остаточного ресурса RUL?</p>
+      <p class="faq-a">Прогноз RUL формируется на основе трендов виброскорости, температуры подшипников и накопленных циклов нагружения. Модель оценивает остаточный ресурс в рабочих часах с точностью до 10%.</p>
+    </div>
+  </div>
+</section>
+
+<section id="request" aria-labelledby="request-title">
+  <div class="container">
+    <h2 id="request-title" class="section-title">Запрос опросного листа</h2>
+    <form id="opros-form" class="form-wrap" novalidate>
+      <div class="form-grid">
+        <div class="field">
+          <label for="f-name">Наименование организации</label>
+          <input type="text" id="f-name" required aria-describedby="f-name-err">
+          <span class="error-msg" id="f-name-err" hidden></span>
+        </div>
+        <div class="field">
+          <label for="f-email">Электронная почта</label>
+          <input type="email" id="f-email" required aria-describedby="f-email-err">
+          <span class="error-msg" id="f-email-err" hidden></span>
+        </div>
+        <div class="field">
+          <label for="f-phone">Телефон</label>
+          <input type="tel" id="f-phone" required aria-describedby="f-phone-err">
+          <span class="error-msg" id="f-phone-err" hidden></span>
+        </div>
+        <div class="field">
+          <label for="f-type">Тип агрегата</label>
+          <input type="text" id="f-type" placeholder="ГТУ, компрессор, турбогенератор" aria-describedby="f-type-err">
+          <span class="error-msg" id="f-type-err" hidden></span>
+        </div>
+      </div>
+      <button class="btn" type="submit" id="btn-submit">Запросить опросный лист</button>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <p><strong>КОНТУР-СПЕКТР</strong> — инженерная платформа вибродиагностики</p>
+        <p>© 2024. Все права защищены.</p>
+      </div>
+      <div>
+        <p>Контакты: info@contour-spectrum.ru</p>
+        <p>Тел.: +7 (495) 123-45-67</p>
+      </div>
+      <div>
+        <p>Стандарты: ГОСТ ИСО 10816-3, IEC 60034</p>
+        <p>Сертификаты: ATEX, ТР ТС 010</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btnNormal=document.getElementById('btn-normal');
+  var btnImbalance=document.getElementById('btn-imbalance');
+  var btnDefect=document.getElementById('btn-defect');
+  var fftSvg=document.getElementById('fft-svg');
+  function setMode(mode){
+    fftSvg.className='fft-svg fft-mode-'+mode;
+    btnNormal.setAttribute('aria-pressed',mode==='normal'?'true':'false');
+    btnImbalance.setAttribute('aria-pressed',mode==='imbalance'?'true':'false');
+    btnDefect.setAttribute('aria-pressed',mode==='defect'?'true':'false');
+  }
+  btnNormal.addEventListener('click',function(){setMode('normal')});
+  btnImbalance.addEventListener('click',function(){setMode('imbalance')});
+  btnDefect.addEventListener('click',function(){setMode('defect')});
+
+  var calcPower=document.getElementById('calc-power');
+  var calcCost=document.getElementById('calc-cost');
+  var calcUnits=document.getElementById('calc-units');
+  var resDamage=document.getElementById('res-damage');
+  var resCost=document.getElementById('res-cost');
+  var resPayback=document.getElementById('res-payback');
+  var resEffect=document.getElementById('res-effect');
+  function fmt(n){return n.toLocaleString('ru-RU')}
+  function updateCalc(){
+    var power=parseFloat(calcPower.value)||12;
+    var cost=parseFloat(calcCost.value)||85000;
+    var units=parseInt(calcUnits.value)||4;
+    var hoursLost=units*120;
+    var damage=hoursLost*cost;
+    var kitCost=units*1800000;
+    var payback=Math.ceil((damage-kitCost)/1000000);
+    var effect=payback*3000000;
+    resDamage.textContent=fmt(Math.round(damage))+' ₽';
+    resCost.textContent=fmt(kitCost)+' ₽';
+    resPayback.textContent=payback+' мес';
+    resEffect.textContent=fmt(effect)+' ₽';
+  }
+  calcPower.addEventListener('input',updateCalc);
+  calcCost.addEventListener('input',updateCalc);
+  calcUnits.addEventListener('input',updateCalc);
+  updateCalc();
+
+  var form=document.getElementById('opros-form');
+  var fName=document.getElementById('f-name');
+  var fEmail=document.getElementById('f-email');
+  var fPhone=document.getElementById('f-phone');
+  var fType=document.getElementById('f-type');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var valid=true;
+    [fName,fEmail,fPhone].forEach(function(field){
+      var err=document.getElementById(field.id+'-err');
+      if(!field.value.trim()){
+        err.textContent='Заполните поле';
+        err.hidden=false;
+        valid=false;
+      }else{
+        err.hidden=true;
+      }
+    });
+    if(fEmail.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fEmail.value)){
+      var err=document.getElementById('f-email-err');
+      err.textContent='Некорректный email';
+      err.hidden=false;
+      valid=false;
+    }
+    if(valid){
+      alert('Опросный лист запрошен. Менеджер свяжется с вами.');
+    }
+  });
+})();
+</script>
+</body>
+</html>

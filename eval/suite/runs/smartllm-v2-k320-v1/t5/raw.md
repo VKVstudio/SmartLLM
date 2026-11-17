@@ -1,0 +1,690 @@
+FILE: index.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Helvetia Kinetic Lab — Architectural Acoustics, Vibration Metrology &amp; Spatial Sound Engineering | Zurich</title>
+<meta name="description" content="Helvetia Kinetic Lab is a Zurich-based institute for architectural acoustics, vibration metrology and spatial sound engineering. Anechoic ISO 3745, reverberation ISO 354 and laser Doppler vibrometry chambers, with a live RT60 and absorption calculator.">
+<link rel="canonical" href="https://helvetia-kinetic-lab.ch/">
+<meta name="theme-color" content="#f5f4f0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Helvetia Kinetic Lab — Architectural Acoustics &amp; Vibration Metrology, Zurich">
+<meta property="og:description" content="Anechoic ISO 3745, reverberation ISO 354 and laser Doppler vibrometry chambers, a live RT60 and absorption calculator, and a scroll-driven kinetic timeline.">
+<meta property="og:url" content="https://helvetia-kinetic-lab.ch/">
+<meta property="og:locale" content="en_CH">
+<meta property="og:site_name" content="Helvetia Kinetic Lab">
+<meta name="twitter:card" content="summary">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-__CSP_SCRIPT__'; style-src 'sha256-__CSP_STYLE__'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'">
+<style>
+:root{
+  --paper: oklch(0.975 0.005 85);
+  --ink: oklch(0.13 0.01 260);
+  --hairline: oklch(0.22 0.01 260);
+  --red: oklch(0.56 0.22 27);
+  --muted: oklch(0.42 0.012 260);
+  --panel: oklch(0.945 0.006 85);
+  --sans: "Inter","Helvetica Neue",Helvetica,Arial,"Liberation Sans",sans-serif;
+  --mono: ui-monospace,"SFMono-Regular","Menlo","Consolas","Liberation Mono",monospace;
+  --gap: clamp(1rem, 2vw, 1.6rem);
+}
+*,*::before,*::after{box-sizing:border-box;}
+html,body{max-width:100%;overflow-x:clip;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;font-size:clamp(.95rem,1.4vw,1.05rem);}
+svg,canvas,img{max-width:100%;height:auto;}
+h1,h2,h3{margin:0;font-weight:700;}
+p{margin:0;}
+a{color:var(--red);}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;}
+.wrap{max-width:76rem;margin-inline:auto;padding-inline:clamp(1rem,3vw,2rem);}
+.hair{border-bottom:1px solid var(--hairline);}
+.skip{position:absolute;left:-999px;}
+.skip:focus{left:1rem;top:1rem;background:var(--ink);color:var(--paper);padding:.5rem 1rem;z-index:50;}
+
+/* 12-col grid + subgrid */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap);}
+.grid>*{min-width:0;}
+@media (max-width:760px){.grid{grid-template-columns:repeat(4,1fr);}}
+@media (max-width:480px){.grid{grid-template-columns:repeat(2,1fr);}}
+
+/* Header */
+header.site{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:1px solid var(--hairline);}
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;padding-block:.9rem;}
+.brand{display:flex;align-items:center;gap:.6rem;font-weight:700;letter-spacing:-.02em;}
+.brand .mark{width:28px;height:28px;flex:none;}
+nav.main{display:flex;flex-wrap:wrap;gap:1.2rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;}
+nav.main a{color:var(--ink);text-decoration:none;}
+nav.main a:hover{color:var(--red);}
+@media (max-width:560px){nav.main{gap:.9rem;font-size:.78rem;}}
+
+/* Hero */
+.hero{padding-block:clamp(2rem,6vw,4rem);position:relative;}
+.hero .col-8{grid-column:span 8;}
+.hero .col-4{grid-column:span 4;}
+@media (max-width:760px){.hero .col-8,.hero .col-4{grid-column:span 4;}}
+.indexnum{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--red);font-size:clamp(3rem,10vw,6rem);line-height:.9;letter-spacing:-.04em;}
+.kicker{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;color:var(--muted);}
+h1{font-size:clamp(2rem,6vw,4rem);letter-spacing:-.02em;line-height:1.05;}
+.lede{font-size:clamp(1rem,1.8vw,1.25rem);color:var(--muted);max-width:34ch;}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+.readout{border:1px solid var(--hairline);padding:1.1rem;background:var(--panel);}
+.readout .label{text-transform:uppercase;letter-spacing:.1em;font-size:.72rem;color:var(--muted);}
+.readout .value{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(1.8rem,4vw,2.6rem);}
+.readout .unit{color:var(--muted);}
+.tick{display:flex;gap:.6rem;align-items:baseline;border-top:1px solid var(--hairline);padding-top:.6rem;margin-top:.6rem;}
+
+/* Calculator */
+.calc{padding-block:clamp(2rem,5vw,3.5rem);}
+.calc .col-5{grid-column:span 5;}
+.calc .col-7{grid-column:span 7;}
+@media (max-width:760px){.calc .col-5,.calc .col-7{grid-column:span 4;}}
+.field{border:1px solid var(--hairline);padding:1rem;background:var(--panel);}
+.field label{display:block;text-transform:uppercase;letter-spacing:.1em;font-size:.72rem;color:var(--muted);margin-bottom:.4rem;}
+.field input[type=number]{width:100%;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.4rem;border:1px solid var(--hairline);background:var(--paper);padding:.5rem;color:var(--ink);}
+input[type=range]{width:100%;accent-color:var(--red);}
+.result{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(1.6rem,4vw,2.2rem);}
+.result .flag{color:var(--red);}
+.curve-wrap{overflow-x:auto;}
+svg.curve{width:100%;aspect-ratio:16/9;border:1px solid var(--hairline);background:var(--panel);}
+.note{font-size:.85rem;color:var(--muted);}
+
+/* Matrix subgrid */
+.matrix{padding-block:clamp(2rem,5vw,3.5rem);}
+.matrix .col-12{grid-column:span 12;}
+.chambers{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);}
+@media (max-width:760px){.chambers{grid-template-columns:1fr;}}
+.chamber{display:grid;grid-template-rows:subgrid;grid-row:span 4;border:1px solid var(--hairline);background:var(--panel);}
+.chamber .head,.chamber .specs,.chamber .meta,.chamber .foot{grid-column:1/-1;}
+.chamber .head{padding:1rem;border-bottom:1px solid var(--hairline);}
+.chamber .specs{padding:1rem;}
+.spec-row{display:flex;justify-content:space-between;gap:.6rem;border-bottom:1px solid var(--hairline);padding-block:.5rem;font-variant-numeric:tabular-nums;}
+.spec-row .k{color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;}
+.spec-row .v{font-family:var(--mono);}
+.chamber .foot{padding:1rem;}
+.chamber .red{color:var(--red);}
+
+/* Timeline */
+.timeline{padding-block:clamp(2rem,5vw,3.5rem);}
+.controls{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-bottom:1.2rem;}
+.btn{font-family:var(--sans);font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--hairline);background:var(--paper);color:var(--ink);padding:.5rem .9rem;cursor:pointer;}
+.btn:hover{background:var(--ink);color:var(--paper);}
+.btn.red{border-color:var(--red);color:var(--red);}
+.scrub{flex:1;min-width:120px;}
+.track{position:relative;border:1px solid var(--hairline);padding:1rem;background:var(--panel);}
+.track .line{position:absolute;left:0;right:0;top:50%;height:1px;background:var(--hairline);}
+.node{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;background:var(--red);border-radius:50%;}
+.node .tag{position:absolute;bottom:1.4rem;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:.72rem;white-space:nowrap;}
+.track .cursor{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);}
+
+/* FAQ */
+.faq{padding-block:clamp(2rem,5vw,3.5rem);}
+.faq details{border-bottom:1px solid var(--hairline);}
+.faq summary{cursor:pointer;padding:1rem 0;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:center;}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary .plus{font-family:var(--mono);color:var(--red);}
+.faq details[open] summary .plus{color:var(--ink);}
+.faq .answer{padding-bottom:1rem;color:var(--muted);max-width:60ch;}
+
+/* Booking form */
+.book{padding-block:clamp(2rem,5vw,3.5rem);}
+.form{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap);}
+@media (max-width:760px){.form{grid-template-columns:repeat(4,1fr);}}
+.form .f2{grid-column:span 2;}
+.form .f6{grid-column:span 6;}
+.form .f12{grid-column:span 12;}
+@media (max-width:760px){.form .f2,.form .f6,.form .f12{grid-column:span 4;}}
+.form input,.form select,.form textarea{width:100%;font-family:var(--sans);font-size:1rem;border:1px solid var(--hairline);background:var(--paper);padding:.6rem;color:var(--ink);}
+.form textarea{font-family:var(--sans);}
+.err{color:var(--red);font-size:.85rem;margin-top:.3rem;}
+.ok{color:var(--ink);font-size:.9rem;margin-top:.3rem;}
+
+/* Footer */
+footer.site{border-top:1px solid var(--hairline);padding-block:1.6rem;}
+.coords{font-family:var(--mono);font-variant-numeric:tabular-nums;}
+.iso{font-size:.8rem;color:var(--muted);}
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"Organization",
+      "@id":"https://helvetia-kinetic-lab.ch/#org",
+      "name":"Helvetia Kinetic Lab",
+      "url":"https://helvetia-kinetic-lab.ch/",
+      "description":"Zurich-based institute for architectural acoustics, vibration metrology and spatial sound engineering.",
+      "address":{"@type":"PostalAddress","addressLocality":"Zurich","addressRegion":"Zurich","addressCountry":"CH"},
+      "geo":{"@type":"GeoCoordinates","latitude":47.428,"longitude":8.589},
+      "areaServed":"CH",
+      "knowsAbout":["architectural acoustics","vibration metrology","spatial sound engineering","ISO 3745","ISO 354","ISO 3382","laser Doppler vibrometry"]
+    },
+    {
+      "@type":"Product",
+      "@id":"https://helvetia-kinetic-lab.ch/#anechoic",
+      "name":"Anechoic Chamber ISO 3745",
+      "brand":{"@type":"Brand","name":"Helvetia Kinetic Lab"},
+      "category":"Metrology Chamber",
+      "description":"Free-field anechoic chamber certified to ISO 3745 for sound power measurement with a cut-off frequency of 25 Hz and cutoff frequency below 25 Hz.",
+      "offers":{"@type":"Offer","availability":"https://schema.org/InStock","priceCurrency":"CHF"}
+    },
+    {
+      "@type":"Product",
+      "@id":"https://helvetia-kinetic-lab.ch/#reverberation",
+      "name":"Reverberation Chamber ISO 354",
+      "brand":{"@type":"Brand","name":"Helvetia Kinetic Lab"},
+      "category":"Metrology Chamber",
+      "description":"Reverberation chamber certified to ISO 354 for sound absorption measurement of materials and products.",
+      "offers":{"@type":"Offer","availability":"https://schema.org/InStock","priceCurrency":"CHF"}
+    },
+    {
+      "@type":"Product",
+      "@id":"https://helvetia-kinetic-lab.ch/#vibrometry",
+      "name":"Laser Doppler Vibrometry Chamber",
+      "brand":{"@type":"Brand","name":"Helvetia Kinetic Lab"},
+      "category":"Metrology Chamber",
+      "description":"Laser Doppler vibrometry chamber for contact-free structural vibration measurement and modal analysis.",
+      "offers":{"@type":"Offer","availability":"https://schema.org/InStock","priceCurrency":"CHF"}
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://helvetia-kinetic-lab.ch/#faq",
+      "mainEntity":[
+        {
+          "@type":"Question",
+          "name":"What does ISO 3382 measure in a room?",
+          "acceptedAnswer":{"@type":"Answer","text":"ISO 3382 specifies measurement methods for acoustic parameters of rooms, including reverberation time, early decay time, clarity and spatial impression, using omnidirectional source and omnidirectional microphone techniques."}
+        },
+        {
+          "@type":"Question",
+          "name":"How is RT60 calculated?",
+          "acceptedAnswer":{"@type":"Answer","text":"RT60 is the time for the sound level to decay by 60 dB after the source stops. We derive it from room volume, total surface absorption coefficient and source level, following the Sabine equation and its modern weighted variants."}
+        },
+        {
+          "@type":"Question",
+          "name":"What is the Speech Transmission Index and why does it matter?",
+          "acceptedAnswer":{"@type":"Answer","text":"The Speech Transmission Index (STI) is a numeric measure, from 0 to 1, of how intelligible speech is transmitted through a room. Values above 0.75 indicate good intelligibility, while values below 0.45 indicate poor intelligibility."}
+        },
+        {
+          "@type":"Question",
+          "name":"Why is structural decoupling important for vibration metrology?",
+          "acceptedAnswer":{"@type":"Answer","text":"Structural decoupling isolates the metrology chamber from building-borne vibration and ground noise, so that laser Doppler vibrometry and anechoic measurements are not contaminated by ambient structural energy."}
+        },
+        {
+          "@type":"Question",
+          "name":"How do you calibrate a chamber before booking?",
+          "acceptedAnswer":{"@type":"Answer","text":"Calibration follows accredited procedures: reference sound source verification, microphone linearity checks and laser vibrometer alignment. Calibration windows are booked through the form and confirmed by our metrology team."}
+        }
+      ]
+    },
+    {
+      "@type":"BreadcrumbList",
+      "@id":"https://helvetia-kinetic-lab.ch/#breadcrumb",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://helvetia-kinetic-lab.ch/"},
+        {"@type":"ListItem","position":2,"name":"Calculator","item":"https://helvetia-kinetic-lab.ch/#calculator"},
+        {"@type":"ListItem","position":3,"name":"Chambers","item":"https://helvetia-kinetic-lab.ch/#chambers"},
+        {"@type":"ListItem","position":4,"name":"FAQ","item":"https://helvetia-kinetic-lab.ch/#faq"}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="site">
+  <div class="wrap bar">
+    <div class="brand">
+      <svg class="mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+        <rect x="1" y="1" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M2 18 L6 18 L9 6 L12 18 L15 10 L18 18 L21 12 L24 18" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      </svg>
+      <span>Helvetia Kinetic Lab</span>
+    </div>
+    <nav class="main" aria-label="Primary">
+      <a href="#calculator">Calculator</a>
+      <a href="#chambers">Chambers</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#faq">FAQ</a>
+      <a href="#booking">Booking</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="hero grid wrap" aria-labelledby="hero-h">
+    <div class="col-8 reveal" data-reveal>
+      <p class="kicker">Zurich · Architectural Acoustics · Vibration Metrology · Spatial Sound</p>
+      <h1 id="hero-h">Helvetia Kinetic Lab</h1>
+      <p class="lede">A Swiss institute measuring how space, structure and sound interact — from anechoic free-field chambers to laser Doppler vibrometry and spatial sound engineering.</p>
+    </div>
+    <div class="col-4">
+      <div class="readout" role="group" aria-label="Live reverberation readout">
+        <span class="label">Live RT60 readout</span>
+        <span class="value"><span id="rt60-live">0.62</span> <span class="unit">s @ 500 Hz</span></span>
+        <div class="tick"><span class="kicker">Absorption α</span><span class="value" id="alpha-live">0.55</span></div>
+        <div class="tick"><span class="kicker">Volume</span><span class="value" id="vol-live">180 m³</span></div>
+      </div>
+    </div>
+    <div class="col-12" aria-hidden="true">
+      <div class="grid" style="align-items:start">
+        <span class="indexnum">01</span>
+        <span class="indexnum">02</span>
+        <span class="indexnum">03</span>
+        <span class="indexnum">04</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULATOR -->
+  <section class="calc grid wrap hair" id="calculator" aria-labelledby="calc-h">
+    <div class="col-5">
+      <h2 id="calc-h">Acoustic frequency &amp; reverberation calculator</h2>
+      <p class="note">Adjust room volume, surface absorption coefficient α and target RT60. The decay curve and Sabine-derived RT60 update live.</p>
+      <div class="field">
+        <label for="vol">Room volume (m³)</label>
+        <input id="vol" type="number" min="10" max="20000" step="1" value="180" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label for="alpha">Surface absorption coefficient α</label>
+        <input id="alpha" type="range" min="0" max="1" step="0.01" value="0.55" aria-describedby="alpha-out">
+        <output id="alpha-out" class="result">0.55</output>
+      </div>
+      <div class="field">
+        <label for="target">Target RT60 (s)</label>
+        <input id="target" type="range" min="0.2" max="2.5" step="0.05" value="0.62" aria-describedby="target-out">
+        <output id="target-out" class="result">0.62 s</output>
+      </div>
+      <div class="field">
+        <label for="freq">Measurement frequency (Hz)</label>
+        <input id="freq" type="number" min="125" max="4000" step="1" value="500" inputmode="numeric">
+      </div>
+    </div>
+    <div class="col-7">
+      <div class="field">
+        <span class="label">Derived RT60 · Sabine equation</span>
+        <span class="result" id="rt60-out">0.62 s</span>
+        <span class="flag" id="rt60-flag" role="status" aria-live="polite"></span>
+        <p class="note">RT60 = (volume × 0.16 × absorption) / (absorption × 0.16 × volume)</p>
+      </div>
+      <div class="curve-wrap">
+        <svg class="curve" id="decay" viewBox="0 0 400 225" role="img" aria-labelledby="decay-t">
+          <title id="decay-t">Decay curve of reverberation time</title>
+          <g id="decay-group">
+            <line x1="0" y1="180" x2="400" y2="180" stroke="var(--hairline)" stroke-width="1"/>
+            <line x1="0" y1="40" x2="400" y2="40" stroke="var(--hairline)" stroke-width="1"/>
+            <polyline id="decay-path" points="0,40 400,40" fill="none" stroke="var(--red)" stroke-width="2"/>
+            <text x="6" y="34" font-family="var(--mono)" font-size="9" fill="var(--muted)">0 dB</text>
+            <text x="6" y="196" font-family="var(--mono)" font-size="9" fill="var(--muted)">−60 dB</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATRIX -->
+  <section class="matrix grid wrap hair" id="chambers" aria-labelledby="mat-h">
+    <div class="col-12">
+      <h2 id="mat-h">Metrology chambers &amp; services spec matrix</h2>
+    </div>
+    <div class="col-12 chambers" role="table" aria-label="Chamber specifications">
+      <div class="chamber" role="row">
+        <div class="head" role="rowheader"><span class="kicker">01</span><h3>Anechoic Chamber ISO 3745</h3></div>
+        <div class="specs" role="cell">
+          <div class="spec-row"><span class="k">Cut-off frequency</span><span class="v">25 Hz</span></div>
+          <div class="spec-row"><span class="k">Background noise</span><span class="v">12 dB(A)</span></div>
+          <div class="spec-row"><span class="k">Certification</span><span class="v">ISO 3745-1 / 3745-2</span></div>
+          <div class="spec-row"><span class="k">Usable volume</span><span class="v">14 m³</span></div>
+        </div>
+        <div class="meta" role="cell">
+          <div class="spec-row"><span class="k">Accreditation</span><span class="v">SAS / SCA</span></div>
+          <div class="spec-row"><span class="k">Turnaround</span><span class="v">10 working days</span></div>
+        </div>
+        <div class="foot" role="cell"><a href="#booking" class="red">Book calibration →</a></div>
+      </div>
+      <div class="chamber" role="row">
+        <div class="head" role="rowheader"><span class="kicker">02</span><h3>Reverberation Chamber ISO 354</h3></div>
+        <div class="specs" role="cell">
+          <div class="spec-row"><span class="k">Volume</span><span class="v">250 m³</span></div>
+          <div class="spec-row"><span class="k">RT60 @ 500 Hz</span><span class="v">1.8 s</span></div>
+          <div class="spec-row"><span class="k">Diffuser rotation</span><span class="v">10 rpm</span></div>
+          <div class="spec-row"><span class="k">Certification</span><span class="v">ISO 354</span></div>
+        </div>
+        <div class="meta" role="cell">
+          <div class="spec-row"><span class="k">Accreditation</span><span class="v">SAS / SCA</span></div>
+          <div class="spec-row"><span class="k">Turnaround</span><span class="v">7 working days</span></div>
+        </div>
+        <div class="foot" role="cell"><a href="#booking" class="red">Book calibration →</a></div>
+      </div>
+      <div class="chamber" role="row">
+        <div class="head" role="rowheader"><span class="kicker">03</span><h3>Laser Doppler Vibrometry Chamber</h3></div>
+        <div class="specs" role="cell">
+          <div class="spec-row"><span class="k">Resolution</span><span class="v">pm / nm</span></div>
+          <div class="spec-row"><span class="k">Bandwidth</span><span class="v">1 Hz – 200 kHz</span></div>
+          <div class="spec-row"><span class="k">Contact-free</span><span class="v">Yes</span></div>
+          <div class="spec-row"><span class="k">Modal analysis</span><span class="v">Yes</span></div>
+        </div>
+        <div class="meta" role="cell">
+          <div class="spec-row"><span class="k">Accreditation</span><span class="v">SAS / SCA</span></div>
+          <div class="spec-row"><span class="k">Turnaround</span><span class="v">5 working days</span></div>
+        </div>
+        <div class="foot" role="cell"><a href="#booking" class="red">Book calibration →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline grid wrap hair" id="timeline" aria-labelledby="tl-h">
+    <div class="col-12">
+      <h2 id="tl-h">Choreography &amp; scroll-driven kinetic timeline</h2>
+      <div class="controls" role="group" aria-label="Timeline controls">
+        <button class="btn red" id="play" type="button" aria-pressed="false">Play</button>
+        <button class="btn" id="pause" type="button" aria-pressed="false">Pause</button>
+        <input class="scrub" id="scrub" type="range" min="0" max="100" step="1" value="0" aria-label="Scrub timeline position">
+        <span class="note" id="tl-readout">00 %</span>
+      </div>
+      <div class="track" id="track" role="region" aria-label="Kinetic timeline track">
+        <div class="line" aria-hidden="true"></div>
+        <div class="node" style="left:12%"><span class="tag">1962</span></div>
+        <div class="node" style="left:34%"><span class="tag">1978</span></div>
+        <div class="node" style="left:58%"><span class="tag">1994</span></div>
+        <div class="node" style="left:78%"><span class="tag">2011</span></div>
+        <div class="node" style="left:94%"><span class="tag">2024</span></div>
+        <div class="cursor" id="cursor" aria-hidden="true" style="left:0%"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq grid wrap hair" id="faq" aria-labelledby="faq-h">
+    <div class="col-5">
+      <h2 id="faq-h">Frequently asked questions</h2>
+      <p class="note">Technical Q&amp;A on ISO 3382, RT60, STI and structural decoupling.</p>
+    </div>
+    <div class="col-7">
+      <details>
+        <summary><span>What does ISO 3382 measure in a room?</span><span class="plus">+</span></summary>
+        <div class="answer">ISO 3382 specifies measurement methods for acoustic parameters of rooms, including reverberation time, early decay time, clarity and spatial impression, using omnidirectional source and omnidirectional microphone techniques.</div>
+      </details>
+      <details>
+        <summary><span>How is RT60 calculated?</span><span class="plus">+</span></summary>
+        <div class="answer">RT60 is the time for the sound level to decay by 60 dB after the source stops. We derive it from room volume, total surface absorption coefficient and source level, following the Sabine equation and its modern weighted variants.</div>
+      </details>
+      <details>
+        <summary><span>What is the Speech Transmission Index and why does it matter?</span><span class="plus">+</span></summary>
+        <div class="answer">The Speech Transmission Index (STI) is a numeric measure, from 0 to 1, of how intelligible speech is transmitted through a room. Values above 0.75 indicate good intelligibility, while values below 0.45 indicate poor intelligibility.</div>
+      </details>
+      <details>
+        <summary><span>Why is structural decoupling important for vibration metrology?</span><span class="plus">+</span></summary>
+        <div class="answer">Structural decoupling isolates the metrology chamber from building-borne vibration and ground noise, so that laser Doppler vibrometry and anechoic measurements are not contaminated by ambient structural energy.</div>
+      </details>
+      <details>
+        <summary><span>How do you calibrate a chamber before booking?</span><span class="plus">+</span></summary>
+        <div class="answer">Calibration follows accredited procedures: reference sound source verification, microphone linearity checks and laser vibrometer alignment. Calibration windows are booked through the form and confirmed by our metrology team.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="book grid wrap hair" id="booking" aria-labelledby="book-h">
+    <div class="col-5">
+      <h2 id="book-h">Calibration booking</h2>
+      <p class="note">Request an accredited calibration window. Validation is client-side; submission is handled by our metrology team.</p>
+    </div>
+    <div class="col-7">
+      <form class="form" id="booking-form" novalidate>
+        <div class="f6">
+          <label for="org">Organisation</label>
+          <input id="org" name="org" type="text" required>
+          <div class="err" id="err-org" hidden></div>
+        </div>
+        <div class="f6">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required>
+          <div class="err" id="err-email" hidden></div>
+        </div>
+        <div class="f6">
+          <label for="chamber">Chamber</label>
+          <select id="chamber" name="chamber" required>
+            <option value="">Select chamber</option>
+            <option value="anechoic">Anechoic Chamber ISO 3745</option>
+            <option value="reverberation">Reverberation Chamber ISO 354</option>
+            <option value="vibrometry">Laser Doppler Vibrometry Chamber</option>
+          </select>
+          <div class="err" id="err-chamber" hidden></div>
+        </div>
+        <div class="f6">
+          <label for="date">Preferred date</label>
+          <input id="date" name="date" type="date" required>
+          <div class="err" id="err-date" hidden></div>
+        </div>
+        <div class="f12">
+          <label for="notes">Notes</label>
+          <textarea id="notes" name="notes" rows="4"></textarea>
+        </div>
+        <div class="f12">
+          <button class="btn red" type="submit">Request calibration window</button>
+          <div class="ok" id="form-status" role="status" aria-live="polite" hidden></div>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p class="coords">47.428° N / 8.589° E · Zurich, Switzerland</p>
+    <p class="iso">Accreditation: SAS / SCA · ISO/IEC 17025 · ISO 3745 · ISO 354 · ISO 3382 · © Helvetia Kinetic Lab</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var revealEls = document.querySelectorAll("[data-reveal]");
+  if (reduce) {
+    revealEls.forEach(function(el){ el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) e.target.classList.add("in"); });
+    }, { threshold: 0.2 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  var vol = document.getElementById("vol");
+  var alpha = document.getElementById("alpha");
+  var target = document.getElementById("target");
+  var freq = document.getElementById("freq");
+  var alphaOut = document.getElementById("alpha-out");
+  var targetOut = document.getElementById("target-out");
+  var rt60Out = document.getElementById("rt60-out");
+  var rt60Flag = document.getElementById("rt60-flag");
+  var decayPath = document.getElementById("decay-path");
+  var rt60Live = document.getElementById("rt60-live");
+  var alphaLive = document.getElementById("alpha-live");
+  var volLive = document.getElementById("vol-live");
+
+  function computeRT60(v, a, t){
+    var sabine = (v * 0.16 * a) / (a * 0.16 * v);
+    var rt = sabine;
+    return rt;
+  }
+
+  function update(){
+    var v = parseFloat(vol.value) || 0;
+    var a = parseFloat(alpha.value) || 0;
+    var t = parseFloat(target.value) || 0;
+    var f = parseFloat(freq.value) || 500;
+    var rt = computeRT60(v, a, t);
+    if (rt < 0) rt = 0;
+    if (rt > 2.5) rt = 2.5;
+    alphaOut.textContent = a.toFixed(2);
+    targetOut.textContent = t.toFixed(2) + " s";
+    rt60Out.textContent = rt.toFixed(2) + " s";
+    rt60Live.textContent = rt.toFixed(2);
+    alphaLive.textContent = a.toFixed(2);
+    volLive.textContent = v + " m³";
+    var diff = rt - t;
+    if (Math.abs(diff) <= 0.1) {
+      rt60Flag.textContent = "On target";
+      rt60Flag.classList.remove("flag");
+    } else {
+      rt60Flag.textContent = "Diff " + diff.toFixed(2) + " s from target";
+      rt60Flag.classList.add("flag");
+    }
+    var pts = "0,40 ";
+    var steps = 12;
+    var x = 0;
+    var maxx = 400;
+    var y = 40;
+    for (var i = 1; i <= steps; i++) {
+      x = (maxx * i) / steps;
+      y = (40 + (60 * rt) / 2) / 2;
+      y = Math.min(180, y);
+      pts += x.toFixed(1) + "," + y.toFixed(1) + " ";
+    }
+    decayPath.setAttribute("points", pts.trim());
+  }
+
+  [vol, alpha, target, freq].forEach(function(el){
+    el.addEventListener("input", update);
+  });
+  update();
+
+  var track = document.getElementById("track");
+  var cursor = document.getElementById("cursor");
+  var scrub = document.getElementById("scrub");
+  var playBtn = document.getElementById("play");
+  var pauseBtn = document.getElementById("pause");
+  var readout = document.getElementById("tl-readout");
+  var playing = false;
+  var pos = 0;
+  var rafId = null;
+  var last = 0;
+
+  function setCursor(p){
+    cursor.style.left = p + "%";
+    scrub.value = Math.round(p);
+    readout.textContent = Math.round(p) + " %";
+  }
+
+  function step(ts){
+    if (!last) last = ts;
+    var d = ts - last;
+    last = ts;
+    pos += d / 40;
+    if (pos > 100) pos = 0;
+    setCursor(pos);
+    if (playing) rafId = requestAnimationFrame(step);
+  }
+
+  playBtn.addEventListener("click", function(){
+    playing = true;
+    playBtn.setAttribute("aria-pressed", "true");
+    pauseBtn.setAttribute("aria-pressed", "false");
+    last = 0;
+    rafId = requestAnimationFrame(step);
+  });
+  pauseBtn.addEventListener("click", function(){
+    playing = false;
+    pauseBtn.setAttribute("aria-pressed", "true");
+    playBtn.setAttribute("aria-pressed", "false");
+    if (rafId) cancelAnimationFrame(rafId);
+  });
+  scrub.addEventListener("input", function(){
+    pos = parseFloat(scrub.value);
+    last = 0;
+    setCursor(pos);
+  });
+  if (reduce) {
+    setCursor(0);
+  } else {
+    setCursor(0);
+  }
+
+  var form = document.getElementById("booking-form");
+  var status = document.getElementById("form-status");
+  function showErr(id, msg){
+    var el = document.getElementById(id);
+    el.textContent = msg;
+    el.hidden = false;
+  }
+  function clearErr(id){
+    var el = document.getElementById(id);
+    el.textContent = "";
+    el.hidden = true;
+  }
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var org = document.getElementById("org");
+    var email = document.getElementById("email");
+    var chamber = document.getElementById("chamber");
+    var date = document.getElementById("date");
+    var valid = true;
+    clearErr("err-org"); clearErr("err-email"); clearErr("err-chamber"); clearErr("err-date");
+    if (!org.value.trim()) { showErr("err-org", "Organisation is required."); valid = false; }
+    if (!email.value.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.value)) { showErr("err-email", "Valid email is required."); valid = false; }
+    if (!chamber.value) { showErr("err-chamber", "Select a chamber."); valid = false; }
+    if (!date.value) { showErr("err-date", "Select a date."); valid = false; }
+    if (valid) {
+      status.hidden = false;
+      status.textContent = "Request received. Our metrology team will confirm the calibration window.";
+    } else {
+      status.hidden = true;
+    }
+  });
+})();
+</script>
+</body>
+</html>
+```
+
+FILE: llms.txt
+```
+# Helvetia Kinetic Lab
+
+> Zurich-based institute for architectural acoustics, vibration metrology and spatial sound engineering.
+
+Helvetia Kinetic Lab provides accredited acoustic and vibration metrology services: anechoic free-field measurement (ISO 3745), reverberation chamber absorption testing (ISO 354), and contact-free laser Doppler vibrometry. The site includes a live RT60 and absorption calculator, a spec matrix for the three metrology chambers, a scroll-driven kinetic timeline, a technical FAQ covering ISO 3382, RT60, STI and structural decoupling, and a client-side validated calibration booking form.
+
+## Pages
+- Home: https://helvetia-kinetic-lab.ch/
+
+## Services
+- Anechoic Chamber ISO 3745: free-field sound power measurement, cut-off frequency 25 Hz.
+- Reverberation Chamber ISO 354: sound absorption measurement of materials and products.
+- Laser Doppler Vibrometry Chamber: contact-free structural vibration measurement and modal analysis.
+
+## Standards
+- ISO 3745, ISO 354, ISO 3382, ISO/IEC 17025.
+
+## Contact
+- Address: Zurich, Switzerland
+- Coordinates: 47.428° N / 8.589° E
+```
+
+FILE: robots.txt
+```
+# Helvetia Kinetic Lab robots.txt
+User-agent: *
+Allow: /
+Disallow: /booking?
+
+# Sitemap: https://helvetia-kinetic-lab.ch/sitemap.xml
+```
+
+FILE: _headers
+```
+# Cloudflare Pages headers
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'sha256-__CSP_SCRIPT__'; style-src 'sha256-__CSP_STYLE__'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin
+```

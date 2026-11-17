@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="218" height="22" role="img" aria-label="runtime: 127.0.0.1 Zero-Swap">
+  <rect width="218" height="22" rx="4" fill="#10131a" stroke="#252f42"/>
+  <rect x="65" width="153" height="22" rx="4" fill="#151923"/>
+  <text x="32" y="15" fill="#a4a9b8" font-family="monospace" font-size="11" text-anchor="middle">runtime</text>
+  <text x="141" y="15" fill="#4ade80" font-family="monospace" font-weight="600" font-size="11" text-anchor="middle">127.0.0.1 Zero-Swap</text>
+</svg>

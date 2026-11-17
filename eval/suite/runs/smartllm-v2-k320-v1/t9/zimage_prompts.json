@@ -1,0 +1,26 @@
+[
+  {
+    "id": "x4-multispectral-frame",
+    "target_section": "platform-cards",
+    "aspect_ratio": "16:9",
+    "steps": 9,
+    "prompt": "Photorealistic industrial laboratory photograph of a high-tech bio-robotics drone platform on a bone-white bench surface. Carbon ink accents, forest telemetry green, and amber signal cues. Swiss typographic layout with crisp modular grid, instrument-grade typography, and telemetry overlays. The frame shows a compact multispectral sensor module, RTK antenna, and data cable routing. Exact readable English typography in quotes: \"AETHERIA X4 | MULTISPECTRAL RTK\". Clean, clinical, precise, no clutter, no CJK, no Cyrillic, no mojibake.",
+    "exact_text_in_frame": "AETHERIA X4 | MULTISPECTRAL RTK"
+  },
+  {
+    "id": "h8-lidar-frame",
+    "target_section": "comparison-table",
+    "aspect_ratio": "16:9",
+    "steps": 9,
+    "prompt": "Photorealistic industrial image of a heavy lidar payload drone platform in a controlled laboratory environment. Bone surface background, carbon ink labels, forest telemetry accents, and amber signal highlights. Modular Swiss grid composition with precise instrument typography and telemetry metadata. The frame includes a 128-channel lidar module, IP67 housing, carbon fiber frame, and sensor routing. Exact readable English typography in quotes: \"LIDAR PAYLOAD 128-CH | IP67\". Clean, high-tech, no clutter, no CJK, no Cyrillic, no mojibake.",
+    "exact_text_in_frame": "LIDAR PAYLOAD 128-CH | IP67"
+  },
+  {
+    "id": "s2-telemetry-frame",
+    "target_section": "schematic",
+    "aspect_ratio": "16:9",
+    "steps": 9,
+    "prompt": "Photorealistic industrial schematic frame featuring a soil probe drone payload connected to a telemetry link on a bone-white laboratory surface. Carbon ink typography, forest telemetry green, amber signal cues, and precise modular grid alignment. The frame shows a soil probe array, data pipeline, and telemetry link status. Exact readable English typography in quotes: \"TELEMETRY LINK ACTIVE 2.4 GHZ\". Clean, high-tech, no clutter, no CJK, no Cyrillic, no mojibake.",
+    "exact_text_in_frame": "TELEMETRY LINK ACTIVE 2.4 GHZ"
+  }
+]

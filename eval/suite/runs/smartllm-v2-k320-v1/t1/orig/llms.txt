@@ -1,0 +1,19 @@
+# Thermotech Engineering
+
+> Manufacturer of industrial hot-water and steam boilers with thermal output from 5 to 25 MW. ISO 9001:2015 quality management, GOST-R and GOST 12.1.020 certified, turnkey boiler houses, 24-month warranty on pressure parts and burners.
+
+## Core pages
+
+- [Product line](https://thermotech.example/#products): Three boiler platforms — TM-500 Sable (hot water, 5 MW, 105 °C, 12 bar, 92.4% efficiency), TM-1200 Corvid (steam, 12 MW, 220 °C, 15 bar, 91.8% efficiency), TM-2500 Meridian (steam, 25 MW, 280 °C, 25 bar, 90.5% efficiency).
+- [Technical schematic](https://thermotech.example/#schematic): Boiler circuit diagram covering feedwater treatment, deaerator, boiler unit, steam drum, economizer, burner, stack, and condensate return.
+- [Certifications](https://thermotech.example/#certifications): ISO 9001:2015, ISO 14001:2015, ISO 45001:2018, GOST-R conformity certification, GOST 12.1.020 equipment safety requirements.
+- [FAQ](https://thermotech.example/#faq): Lead times, turnkey installation, ISO/GOST compliance, supported fuels, warranty and service coverage.
+- [Contact](https://thermotech.example/#contact): Quote request form; engineers respond within two business days.
+
+## Supported fuels
+
+Natural gas, diesel, fuel oil, and biomass-derived fuels; dual-fuel burners available on request.
+
+## Lead times
+
+Hot-water models: 14–18 weeks from order confirmation. Steam models: 20–26 weeks, depending on configuration and fuel system.

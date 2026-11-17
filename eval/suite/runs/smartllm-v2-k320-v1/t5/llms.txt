@@ -1,0 +1,20 @@
+# Helvetia Kinetic Lab
+
+> Zurich-based institute for architectural acoustics, vibration metrology and spatial sound engineering.
+
+Helvetia Kinetic Lab provides accredited acoustic and vibration metrology services: anechoic free-field measurement (ISO 3745), reverberation chamber absorption testing (ISO 354), and contact-free laser Doppler vibrometry. The site includes a live RT60 and absorption calculator, a spec matrix for the three metrology chambers, a scroll-driven kinetic timeline, a technical FAQ covering ISO 3382, RT60, STI and structural decoupling, and a client-side validated calibration booking form.
+
+## Pages
+- Home: https://helvetia-kinetic-lab.ch/
+
+## Services
+- Anechoic Chamber ISO 3745: free-field sound power measurement, cut-off frequency 25 Hz.
+- Reverberation Chamber ISO 354: sound absorption measurement of materials and products.
+- Laser Doppler Vibrometry Chamber: contact-free structural vibration measurement and modal analysis.
+
+## Standards
+- ISO 3745, ISO 354, ISO 3382, ISO/IEC 17025.
+
+## Contact
+- Address: Zurich, Switzerland
+- Coordinates: 47.428° N / 8.589° E

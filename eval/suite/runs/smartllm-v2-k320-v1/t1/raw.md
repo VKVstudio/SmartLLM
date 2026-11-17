@@ -1,0 +1,659 @@
+FILE: index.html
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thermotech Engineering — Industrial Hot-Water &amp; Steam Boilers 5–25 MW</title>
+<meta name="description" content="Thermotech Engineering manufactures industrial hot-water and steam boilers from 5 to 25 MW. ISO 9001 / GOST-R certified, turnkey boiler houses, 24-month warranty.">
+<link rel="canonical" href="https://thermotech.example/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thermotech Engineering">
+<meta property="og:title" content="Thermotech Engineering — Industrial Hot-Water &amp; Steam Boilers 5–25 MW">
+<meta property="og:description" content="Industrial hot-water and steam boilers from 5 to 25 MW. ISO 9001 / GOST-R certified, turnkey boiler houses, 24-month warranty.">
+<meta property="og:url" content="https://thermotech.example/">
+<meta property="og:locale" content="en_US">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-__CSP_STYLE__'; script-src 'sha256-__CSP_SCRIPT__'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+<meta name="color-scheme" content="dark">
+
+<style>
+:root{
+  --bg:oklch(0.205 0.014 250);
+  --surface:oklch(0.245 0.016 250);
+  --surface-2:oklch(0.275 0.018 250);
+  --line:oklch(0.34 0.014 250);
+  --grid:oklch(0.28 0.012 250);
+  --ink:oklch(0.93 0.012 240);
+  --ink-dim:oklch(0.74 0.014 240);
+  --accent:oklch(0.68 0.19 45);
+  --accent-ink:oklch(0.82 0.12 62);
+  --water:oklch(0.74 0.07 230);
+  --ok:oklch(0.78 0.13 152);
+  --err:oklch(0.72 0.15 25);
+  --sans:'IBM Plex Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace;
+  --wrap:1120px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{max-width:100%;overflow-x:clip}
+svg,canvas,img{max-width:100%;height:auto}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:
+    linear-gradient(to right,var(--grid) 1px,transparent 1px),
+    linear-gradient(to bottom,var(--grid) 1px,transparent 1px);
+  background-size:32px 32px;
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;line-height:1.6;
+}
+a{color:var(--accent-ink);text-decoration-color:var(--line)}
+a:hover{text-decoration-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.skip{position:absolute;left:12px;top:-52px;background:var(--surface-2);color:var(--ink);padding:10px 14px;z-index:10;border:1px solid var(--accent)}
+.skip:focus{top:12px}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:20px}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin:0}
+h1,h2,h3{font-weight:600;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,5.2vw,3.25rem);letter-spacing:-.02em;margin-top:.6rem}
+h2{font-size:clamp(1.4rem,3.4vw,2rem)}
+p{margin:0}
+.lede{color:var(--ink-dim);font-size:1.05rem;max-width:56ch}
+section{padding-block:clamp(48px,7vw,88px);border-bottom:1px solid var(--line)}
+
+/* nav */
+header.site{position:sticky;top:0;z-index:5;background:oklch(0.205 0.014 250 / .92);border-bottom:1px solid var(--line);backdrop-filter:blur(6px)}
+.nav{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding-block:14px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:600;letter-spacing:.08em;color:var(--ink);text-decoration:none}
+.brand svg{width:34px;height:34px}
+.nav-links{display:flex;flex-wrap:wrap;gap:18px;margin-left:auto}
+.nav-links a{color:var(--ink-dim);text-decoration:none;font-family:var(--mono);font-size:.82rem;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a:hover{color:var(--ink)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:32px;align-items:center}
+.hero-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:28px}
+.stat{background:var(--surface);padding:16px 18px}
+.stat b{display:block;font-family:var(--mono);font-size:1.5rem;color:var(--accent-ink)}
+.stat span{font-size:.78rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim)}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.btn{display:inline-block;padding:12px 20px;font-family:var(--mono);font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border:1px solid var(--accent);background:var(--accent);color:oklch(0.22 0.02 60);min-width:0}
+.btn:hover{background:var(--accent-ink)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent-ink)}
+
+/* schematic panel */
+.blueprint{position:relative;border:1px solid var(--line);background:var(--surface);padding:10px;overflow:hidden}
+.blueprint::after{content:"";position:absolute;inset:0;background-image:linear-gradient(to right,var(--grid) 1px,transparent 1px),linear-gradient(to bottom,var(--grid) 1px,transparent 1px);background-size:24px 24px;pointer-events:none}
+.blueprint svg{display:block;width:100%;aspect-ratio:1200/620}
+.blueprint .corner{position:absolute;top:8px;right:10px;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;color:var(--ink-dim);z-index:2}
+
+/* svg classes */
+.sv-line{stroke:var(--line);stroke-width:1;fill:none}
+.node{fill:var(--surface-2);stroke:var(--line);stroke-width:1.5}
+.node-accent{fill:none;stroke:var(--accent);stroke-width:2}
+.pipe{fill:none;stroke:var(--water);stroke-width:2.5;stroke-dasharray:9 6}
+.pipe-steam{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-dasharray:9 6}
+.pipe-flue{fill:none;stroke:var(--ink-dim);stroke-width:2;stroke-dasharray:3 6}
+.lbl{font-family:var(--mono);font-size:15px;fill:var(--ink-dim)}
+.lbl-strong{fill:var(--ink);font-weight:600}
+.lbl-accent{fill:var(--accent-ink)}
+@media (prefers-reduced-motion:no-preference){
+  .pipe,.pipe-steam,.pipe-flue{animation:flow 1.6s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-30}}
+  html{scroll-behavior:smooth}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pipe,.pipe-steam,.pipe-flue{animation:none}}
+
+/* table */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{width:100%;min-width:680px;border-collapse:collapse;font-size:.92rem}
+caption{caption-side:top;text-align:left;padding:14px 16px;font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim)}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line);min-width:0}
+th{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);background:var(--surface-2)}
+tbody tr:hover{background:var(--surface-2)}
+.model{font-family:var(--mono);font-weight:600;color:var(--ink);white-space:nowrap}
+.num{font-family:var(--mono);color:var(--accent-ink)}
+.tag{display:inline-block;border:1px solid var(--line);padding:3px 8px;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-dim);white-space:normal}
+.tag-ok{border-color:oklch(0.6 0.09 152);color:var(--ok)}
+
+/* certifications */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:24px}
+.cert{border:1px solid var(--line);background:var(--surface);padding:18px;display:flex;gap:12px;align-items:flex-start}
+.cert svg{width:44px;height:44px;flex:none}
+.cert h3{font-size:1rem}
+.cert p{color:var(--ink-dim);font-size:.88rem;margin-top:6px}
+
+/* faq */
+.faq{margin-top:24px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;padding:18px 4px;font-weight:600;list-style:none;display:flex;gap:12px;align-items:baseline}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";font-family:var(--mono);color:var(--accent);font-size:1.2rem}
+.faq details[open] summary::before{content:"−"}
+.faq details[open] summary{color:var(--accent-ink)}
+.faq .answer{padding:0 4px 20px 30px;color:var(--ink-dim);max-width:65ch}
+
+/* form */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:24px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim)}
+.field input,.field select,.field textarea{background:var(--surface);border:1px solid var(--line);color:var(--ink);font:inherit;padding:12px 14px;min-width:0}
+.field textarea{min-height:120px;resize:vertical}
+.field .err-msg{font-size:.82rem;color:var(--err);font-family:var(--mono);display:none}
+.field.is-invalid input,.field.is-invalid select,.field.is-invalid textarea{border-color:var(--err)}
+.field.is-invalid .err-msg{display:block}
+.form-status{margin-top:14px;font-family:var(--mono);font-size:.85rem;color:var(--ok);min-height:1.4em}
+.form-status.is-error{color:var(--err)}
+
+/* footer */
+footer.site{border-bottom:none;background:var(--surface);padding-block:40px}
+.foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px}
+.foot-grid h3{font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:12px}
+.foot-grid ul{list-style:none;margin:0;padding:0}
+.foot-grid li{margin-bottom:8px}
+.foot-grid a{color:var(--ink-dim);text-decoration:none}
+.foot-grid a:hover{color:var(--ink)}
+.legal{margin-top:28px;font-size:.82rem;color:var(--ink-dim)}
+
+@media (max-width:900px){.hero{grid-template-columns:1fr}}
+@media (max-width:480px){
+  .hero-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tag,.btn{white-space:normal}
+  .nav-links{gap:12px}
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"Organization",
+      "@id":"https://thermotech.example/#org",
+      "name":"Thermotech Engineering",
+      "url":"https://thermotech.example/",
+      "description":"Manufacturer of industrial hot-water and steam boilers with thermal output from 5 to 25 MW.",
+      "foundingDate":"1998",
+      "areaServed":"Worldwide",
+      "contactPoint":{"@type":"ContactPoint","contactType":"sales","email":"sales@thermotech.example","availableLanguage":"English"}
+    },
+    {
+      "@type":"BreadcrumbList",
+      "@id":"https://thermotech.example/#breadcrumbs",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://thermotech.example/"},
+        {"@type":"ListItem","position":2,"name":"Product line","item":"https://thermotech.example/#products"}
+      ]
+    },
+    {
+      "@type":"Product",
+      "@id":"https://thermotech.example/#tm-500",
+      "name":"TM-500 Sable",
+      "description":"Hot-water boiler, 5 MW thermal output, 105 °C at 12 bar, 92.4% net efficiency.",
+      "category":"Hot-water boiler",
+      "brand":{"@id":"https://thermotech.example/#org"}
+    },
+    {
+      "@type":"Product",
+      "@id":"https://thermotech.example/#tm-1200",
+      "name":"TM-1200 Corvid",
+      "description":"Steam boiler, 12 MW thermal output, 220 °C steam at 15 bar, 91.8% net efficiency.",
+      "category":"Steam boiler",
+      "brand":{"@id":"https://thermotech.example/#org"}
+    },
+    {
+      "@type":"Product",
+      "@id":"https://thermotech.example/#tm-2500",
+      "name":"TM-2500 Meridian",
+      "description":"Steam boiler, 25 MW thermal output, 280 °C steam at 25 bar, 90.5% net efficiency.",
+      "category":"Steam boiler",
+      "brand":{"@id":"https://thermotech.example/#org"}
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://thermotech.example/#faq",
+      "mainEntity":[
+        {
+          "@type":"Question",
+          "name":"What is the typical lead time for a Thermotech boiler order?",
+          "acceptedAnswer":{"@type":"Answer","text":"Standard lead time is 14–18 weeks from order confirmation for hot-water models and 20–26 weeks for steam models, depending on configuration and fuel system."}
+        },
+        {
+          "@type":"Question",
+          "name":"Can Thermotech supply turnkey installation?",
+          "acceptedAnswer":{"@type":"Answer","text":"Yes. We deliver complete boiler houses including feedwater treatment, controls, stack, and commissioning, with supervision teams on site."}
+        },
+        {
+          "@type":"Question",
+          "name":"Do the boilers comply with ISO and GOST requirements?",
+          "acceptedAnswer":{"@type":"Answer","text":"Every unit is manufactured under ISO 9001:2015 quality management and certified for GOST-R and GOST 12.1.020 equipment safety requirements."}
+        },
+        {
+          "@type":"Question",
+          "name":"Which fuels are supported?",
+          "acceptedAnswer":{"@type":"Answer","text":"Natural gas, diesel, fuel oil, and biomass-derived fuels; dual-fuel burners are available on request."}
+        },
+        {
+          "@type":"Question",
+          "name":"What warranty and service coverage is included?",
+          "acceptedAnswer":{"@type":"Answer","text":"A 24-month warranty on pressure parts and burners, with optional service contracts covering annual inspections, spare parts, and remote diagnostics."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Thermotech Engineering home">
+      <svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true" focusable="false">
+        <rect x="1" y="1" width="30" height="30" fill="none" stroke="var(--line)"/>
+        <path d="M8 24 L8 8 M8 8 L24 8 M24 8 L24 24" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <circle cx="16" cy="16" r="3" fill="var(--accent)"/>
+      </svg>
+      THERMOTECH
+    </a>
+    <nav class="nav-links" aria-label="Site">
+      <a href="#products">Products</a>
+      <a href="#schematic">Schematic</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section id="top" class="wrap">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Thermotech Engineering · Since 1998</p>
+        <h1>Industrial hot-water &amp; steam boilers, 5–25 MW.</h1>
+        <p class="lede">We design, manufacture, and commission packaged boiler houses for process heat, district heating, and power generation. Every pressure part is fabricated in-house and tested to GOST and ISO standards before shipment.</p>
+        <div class="cta-row">
+          <a class="btn" href="#contact">Request a quote</a>
+          <a class="btn-ghost" href="#products">View product line</a>
+        </div>
+        <div class="hero-stats" role="list">
+          <div class="stat" role="listitem"><b>148</b><span>Units delivered</span></div>
+          <div class="stat" role="listitem"><b>25 MW</b><span>Max output</span></div>
+          <div class="stat" role="listitem"><b>92.4%</b><span>Net efficiency</span></div>
+        </div>
+      </div>
+      <div class="blueprint" aria-hidden="true">
+        <span class="corner">DWG-01 / REV 4</span>
+        <svg viewBox="0 0 1200 620" role="img">
+          <rect x="0" y="0" width="1200" height="620" fill="var(--surface)"/>
+          <g class="sv-line">
+            <line x1="0" y1="0" x2="1200" y2="0"/><line x1="0" y1="620" x2="1200" y2="620"/>
+          </g>
+          <!-- nodes -->
+          <rect class="node" x="60" y="380" width="150" height="90"/>
+          <rect class="node" x="270" y="340" width="150" height="90"/>
+          <rect class="node" x="470" y="200" width="240" height="260"/>
+          <rect class="node-accent" x="470" y="200" width="240" height="260"/>
+          <rect class="node" x="520" y="150" width="160" height="50"/>
+          <rect class="node" x="760" y="230" width="140" height="90"/>
+          <rect class="node" x="950" y="60" width="90" height="500"/>
+          <rect class="node" x="120" y="120" width="150" height="70"/>
+          <!-- water pipes -->
+          <path class="pipe" d="M210 425 L290 425 L470 425"/>
+          <path class="pipe" d="M420 380 L470 380"/>
+          <path class="pipe" d="M270 470 L270 500 L470 500"/>
+          <!-- steam pipes -->
+          <path class="pipe-steam" d="M600 150 L600 120 L760 120"/>
+          <path class="pipe-steam" d="M760 120 L760 230"/>
+          <path class="pipe-steam" d="M760 230 L950 230"/>
+          <!-- flue -->
+          <path class="pipe-flue" d="M700 230 L760 230"/>
+          <path class="pipe-flue" d="M760 300 L950 300"/>
+          <path class="pipe-flue" d="M950 300 L950 60"/>
+          <!-- burner -->
+          <path class="node-accent" d="M470 260 L430 260 M430 260 L430 300"/>
+          <circle cx="430" cy="300" r="10" fill="var(--accent)"/>
+          <!-- labels -->
+          <text class="lbl" x="90" y="415">FEEDWATER TREATMENT</text>
+          <text class="lbl" x="300" y="390">DEAERATOR</text>
+          <text class="lbl lbl-strong" x="520" y="240">BOILER UNIT</text>
+          <text class="lbl" x="520" y="270">combustion + heat exch.</text>
+          <text class="lbl lbl-accent" x="530" y="185">STEAM DRUM</text>
+          <text class="lbl" x="775" y="270">ECONOMIZER</text>
+          <text class="lbl" x="962" y="100">STACK</text>
+          <text class="lbl lbl-accent" x="130" y="165">STEAM HEADER</text>
+          <text class="lbl" x="130" y="185">to process / district</text>
+          <text class="lbl" x="500" y="530">RETURN CONDENSATE</text>
+          <text class="lbl lbl-accent" x="350" y="250">BURNER</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="products" class="wrap" aria-labelledby="products-h">
+    <p class="eyebrow">Product line</p>
+    <h2 id="products-h">Three platforms, one control architecture</h2>
+    <p class="lede" style="margin-top:12px">Specs below are nominal at standard configuration. Full data sheets are available on request.</p>
+    <div class="table-wrap" role="region" aria-label="Boiler specification table" tabindex="0">
+      <table>
+        <caption>Boiler models — specification summary</caption>
+        <thead>
+          <tr>
+            <th scope="col">Model</th>
+            <th scope="col">Type</th>
+            <th scope="col">Thermal output</th>
+            <th scope="col">Max temperature</th>
+            <th scope="col">Operating pressure</th>
+            <th scope="col">Net efficiency</th>
+            <th scope="col">Availability</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="model">TM-500 Sable</td>
+            <td>Hot-water boiler</td>
+            <td class="num">5 MW</td>
+            <td class="num">105 °C</td>
+            <td class="num">12 bar</td>
+            <td class="num">92.4 %</td>
+            <td><span class="tag tag-ok">In production</span></td>
+          </tr>
+          <tr>
+            <td class="model">TM-1200 Corvid</td>
+            <td>Steam boiler</td>
+            <td class="num">12 MW</td>
+            <td class="num">220 °C</td>
+            <td class="num">15 bar</td>
+            <td class="num">91.8 %</td>
+            <td><span class="tag tag-ok">In production</span></td>
+          </tr>
+          <tr>
+            <td class="model">TM-2500 Meridian</td>
+            <td>Steam boiler</td>
+            <td class="num">25 MW</td>
+            <td class="num">280 °C</td>
+            <td class="num">25 bar</td>
+            <td class="num">90.5 %</td>
+            <td><span class="tag">Lead time 20–26 weeks</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="schematic" class="wrap" aria-labelledby="schematic-h">
+    <p class="eyebrow">Technical schematic</p>
+    <h2 id="schematic-h">Boiler circuit — water, steam, and flue paths</h2>
+    <p class="lede" style="margin-top:12px">Feedwater is treated and deaerated before entering the boiler. Steam collects in the drum, passes through the economizer recovery stage, and exits via the stack. Condensate returns to the feedwater loop.</p>
+    <div class="blueprint" style="margin-top:24px">
+      <span class="corner">DWG-02 / CIRCUIT</span>
+      <svg viewBox="0 0 1200 620" role="img" aria-label="Boiler circuit schematic showing feedwater treatment, deaerator, boiler unit, steam drum, economizer, and stack">
+        <rect x="0" y="0" width="1200" height="620" fill="var(--surface)"/>
+        <g class="sv-line">
+          <line x1="0" y1="0" x2="1200" y2="0"/><line x1="0" y1="620" x2="1200" y2="620"/>
+          <line x1="0" y1="100" x2="1200" y2="100"/><line x1="0" y1="500" x2="1200" y2="500"/>
+        </g>
+        <rect class="node" x="60" y="380" width="150" height="90"/>
+        <rect class="node" x="270" y="340" width="150" height="90"/>
+        <rect class="node" x="470" y="200" width="240" height="260"/>
+        <rect class="node-accent" x="470" y="200" width="240" height="260"/>
+        <rect class="node" x="520" y="150" width="160" height="50"/>
+        <rect class="node" x="760" y="230" width="140" height="90"/>
+        <rect class="node" x="950" y="60" width="90" height="500"/>
+        <rect class="node" x="120" y="120" width="150" height="70"/>
+        <path class="pipe" d="M210 425 L290 425 L470 425"/>
+        <path class="pipe" d="M420 380 L470 380"/>
+        <path class="pipe" d="M270 470 L270 500 L470 500"/>
+        <path class="pipe-steam" d="M600 150 L600 120 L760 120"/>
+        <path class="pipe-steam" d="M760 120 L760 230"/>
+        <path class="pipe-steam" d="M760 230 L950 230"/>
+        <path class="pipe-flue" d="M700 230 L760 230"/>
+        <path class="pipe-flue" d="M760 300 L950 300"/>
+        <path class="pipe-flue" d="M950 300 L950 60"/>
+        <path class="node-accent" d="M470 260 L430 260 M430 260 L430 300"/>
+        <circle cx="430" cy="300" r="10" fill="var(--accent)"/>
+        <text class="lbl" x="90" y="415">FEEDWATER TREATMENT</text>
+        <text class="lbl" x="300" y="390">DEAERATOR</text>
+        <text class="lbl lbl-strong" x="520" y="240">BOILER UNIT</text>
+        <text class="lbl" x="520" y="270">combustion + heat exch.</text>
+        <text class="lbl lbl-accent" x="530" y="185">STEAM DRUM</text>
+        <text class="lbl" x="775" y="270">ECONOMIZER</text>
+        <text class="lbl" x="962" y="100">STACK</text>
+        <text class="lbl lbl-accent" x="130" y="165">STEAM HEADER</text>
+        <text class="lbl" x="130" y="185">to process / district</text>
+        <text class="lbl" x="500" y="530">RETURN CONDENSATE</text>
+        <text class="lbl lbl-accent" x="350" y="250">BURNER</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="certifications" class="wrap" aria-labelledby="cert-h">
+    <p class="eyebrow">Certifications</p>
+    <h2 id="cert-h">Quality and safety compliance</h2>
+    <div class="cert-grid">
+      <div class="cert">
+        <svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true" focusable="false"><circle cx="22" cy="22" r="15" fill="none" stroke="var(--accent)" stroke-width="2"/><path d="M15 22 L20 26 M20 26 L29 20" stroke="var(--accent)" stroke-width="2" fill="none"/></svg>
+        <div><h3>ISO 9001:2015</h3><p>Quality management system certified for design, fabrication, and commissioning.</p></div>
+      </div>
+      <div class="cert">
+        <svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true" focusable="false"><rect x="8" y="8" width="28" height="28" fill="none" stroke="var(--accent)" stroke-width="2"/><path d="M14 24 L22 24" stroke="var(--accent)" stroke-width="2"/></svg>
+        <div><h3>ISO 14001:2015</h3><p>Environmental management for production facilities and emissions control.</p></div>
+      </div>
+      <div class="cert">
+        <svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true" focusable="false"><path d="M22 6 L22 38 M14 14 L22 14 M30 14 L22 14" stroke="var(--accent)" stroke-width="2" fill="none"/></svg>
+        <div><h3>ISO 45001:2018</h3><p>Occupational health and safety management at assembly and test sites.</p></div>
+      </div>
+      <div class="cert">
+        <svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true" focusable="false"><rect x="10" y="10" width="24" height="24" fill="none" stroke="var(--accent)" stroke-width="2"/><circle cx="22" cy="22" r="6" fill="var(--accent)"/></svg>
+        <div><h3>GOST-R Certification</h3><p>Conformity certification for equipment supplied within the Eurasian market.</p></div>
+      </div>
+      <div class="cert">
+        <svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true" focusable="false"><path d="M12 32 L12 12 L32 12" stroke="var(--accent)" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
+        <div><h3>GOST 12.1.020</h3><p>Equipment safety requirements for explosive and pressure systems.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="wrap" aria-labelledby="faq-h">
+    <p class="eyebrow">FAQ</p>
+    <h2 id="faq-h">Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is the typical lead time for a Thermotech boiler order?</summary>
+        <div class="answer"><p>Standard lead time is 14–18 weeks from order confirmation for hot-water models and 20–26 weeks for steam models, depending on configuration and fuel system.</p></div>
+      </details>
+      <details>
+        <summary>Can Thermotech supply turnkey installation?</summary>
+        <div class="answer"><p>Yes. We deliver complete boiler houses including feedwater treatment, controls, stack, and commissioning, with supervision teams on site.</p></div>
+      </details>
+      <details>
+        <summary>Do the boilers comply with ISO and GOST requirements?</summary>
+        <div class="answer"><p>Every unit is manufactured under ISO 9001:2015 quality management and certified for GOST-R and GOST 12.1.020 equipment safety requirements.</p></div>
+      </details>
+      <details>
+        <summary>Which fuels are supported?</summary>
+        <div class="answer"><p>Natural gas, diesel, fuel oil, and biomass-derived fuels; dual-fuel burners are available on request.</p></div>
+      </details>
+      <details>
+        <summary>What warranty and service coverage is included?</summary>
+        <div class="answer"><p>A 24-month warranty on pressure parts and burners, with optional service contracts covering annual inspections, spare parts, and remote diagnostics.</p></div>
+      </details>
+    </div>
+  </section>
+
+  <section id="contact" class="wrap" aria-labelledby="contact-h">
+    <p class="eyebrow">Contact</p>
+    <h2 id="contact-h">Request a quote</h2>
+    <p class="lede" style="margin-top:12px">Tell us about your project. Our engineers respond within two business days.</p>
+    <form id="quote-form" novalidate>
+      <div class="form-grid">
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name">
+          <span class="err-msg" id="e-name">Name is required.</span>
+        </div>
+        <div class="field">
+          <label for="f-company">Company</label>
+          <input id="f-company" name="company" type="text" autocomplete="organization" required aria-describedby="e-company">
+          <span class="err-msg" id="e-company">Company is required.</span>
+        </div>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email">
+          <span class="err-msg" id="e-email">A valid email address is required.</span>
+        </div>
+        <div class="field">
+          <label for="f-type">Boiler type</label>
+          <select id="f-type" name="type" required aria-describedby="e-type">
+            <option value="">Select a model…</option>
+            <option value="TM-500">TM-500 Sable — hot water, 5 MW</option>
+            <option value="TM-1200">TM-1200 Corvid — steam, 12 MW</option>
+            <option value="TM-2500">TM-2500 Meridian — steam, 25 MW</option>
+            <option value="unsure">Not sure yet</option>
+          </select>
+          <span class="err-msg" id="e-type">Please select a boiler type.</span>
+        </div>
+        <div class="field" style="grid-column:1/-1">
+          <label for="f-msg">Message</label>
+          <textarea id="f-msg" name="message" required aria-describedby="e-msg"></textarea>
+          <span class="err-msg" id="e-msg">Message is required.</span>
+        </div>
+      </div>
+      <div class="cta-row">
+        <button class="btn" type="submit">Send request</button>
+      </div>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap foot-grid">
+    <div>
+      <h3>Thermotech Engineering</h3>
+      <ul>
+        <li><a href="#products">Product line</a></li>
+        <li><a href="#schematic">Technical schematic</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <ul>
+        <li><a href="#contact">Request a quote</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Standards</h3>
+      <ul>
+        <li>ISO 9001:2015</li>
+        <li>GOST-R</li>
+        <li>GOST 12.1.020</li>
+      </ul>
+    </div>
+  </div>
+  <p class="legal wrap">© 1998–2025 Thermotech Engineering. All specifications subject to engineering review.</p>
+</footer>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://thermotech.example/","url":"https://thermotech.example/","name":"Thermotech Engineering — Industrial Hot-Water & Steam Boilers 5–25 MW","isPartOf":{"@type":"WebSite","@id":"https://thermotech.example/#site","name":"Thermotech Engineering","publisher":{"@id":"https://thermotech.example/#org"}}}]}
+</script>
+
+<script>
+(function(){
+  var form=document.getElementById('quote-form');
+  var status=document.getElementById('form-status');
+  var fields=['f-name','f-company','f-email','f-type','f-msg'];
+  function validate(){
+    var ok=true;
+    fields.forEach(function(id){
+      var el=document.getElementById(id);
+      var wrap=el.closest('.field');
+      var bad=false;
+      if(!el.value.trim()) bad=true;
+      if(id==='f-email' && el.value.trim()){
+        var v=el.value.trim();
+        bad=!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      }
+      if(bad){wrap.classList.add('is-invalid');el.setAttribute('aria-invalid','true');ok=false;}
+      else{wrap.classList.remove('is-invalid');el.setAttribute('aria-invalid','false');}
+    });
+    return ok;
+  }
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(validate()){
+      status.textContent='Request validated. The client-side form has no backend; please contact sales@thermotech.example directly.';
+      status.classList.remove('is-error');
+      form.reset();
+    }else{
+      status.textContent='Please correct the highlighted fields.';
+      status.classList.add('is-error');
+      var first=form.querySelector('.is-invalid input, .is-invalid select, .is-invalid textarea');
+      if(first) first.focus();
+    }
+  });
+  fields.forEach(function(id){
+    var el=document.getElementById(id);
+    el.addEventListener('input',function(){
+      el.closest('.field').classList.remove('is-invalid');
+      el.setAttribute('aria-invalid','false');
+    });
+  });
+})();
+</script>
+</body>
+</html>
+```
+
+FILE: llms.txt
+```text
+# Thermotech Engineering
+
+> Manufacturer of industrial hot-water and steam boilers with thermal output from 5 to 25 MW. ISO 9001:2015 quality management, GOST-R and GOST 12.1.020 certified, turnkey boiler houses, 24-month warranty on pressure parts and burners.
+
+## Core pages
+
+- [Product line](https://thermotech.example/#products): Three boiler platforms — TM-500 Sable (hot water, 5 MW, 105 °C, 12 bar, 92.4% efficiency), TM-1200 Corvid (steam, 12 MW, 220 °C, 15 bar, 91.8% efficiency), TM-2500 Meridian (steam, 25 MW, 280 °C, 25 bar, 90.5% efficiency).
+- [Technical schematic](https://thermotech.example/#schematic): Boiler circuit diagram covering feedwater treatment, deaerator, boiler unit, steam drum, economizer, burner, stack, and condensate return.
+- [Certifications](https://thermotech.example/#certifications): ISO 9001:2015, ISO 14001:2015, ISO 45001:2018, GOST-R conformity certification, GOST 12.1.020 equipment safety requirements.
+- [FAQ](https://thermotech.example/#faq): Lead times, turnkey installation, ISO/GOST compliance, supported fuels, warranty and service coverage.
+- [Contact](https://thermotech.example/#contact): Quote request form; engineers respond within two business days.
+
+## Supported fuels
+
+Natural gas, diesel, fuel oil, and biomass-derived fuels; dual-fuel burners available on request.
+
+## Lead times
+
+Hot-water models: 14–18 weeks from order confirmation. Steam models: 20–26 weeks, depending on configuration and fuel system.
+```
+
+FILE: robots.txt
+```text
+# robots.txt — Thermotech Engineering
+
+User-agent: *
+Allow: /
+
+Sitemap: https://thermotech.example/sitemap.xml
+```
+
+FILE: _headers
+```text
+# Cloudflare Pages headers
+/*
+  Content-Security-Policy: default-src 'none'; style-src 'sha256-__CSP_STYLE__'; script-src 'sha256-__CSP_SCRIPT__'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+```

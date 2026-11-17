@@ -1,0 +1,6 @@
+# robots.txt for VORTEX COMPUTE
+User-agent: *
+Allow: /
+Disallow: /provision
+
+Sitemap: https://vortexcompute.example/sitemap.xml

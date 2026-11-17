@@ -1,0 +1,50 @@
+{
+  "pipeline": "sequential_sd_cpp_zimage",
+  "model": "beyond_reality_z_image_3.0_fp8.safetensors",
+  "quant_type": "q8_0",
+  "vae_tiling": true,
+  "prompts": [
+    {
+      "id": "hero_polar_pavilion",
+      "target_section": "hero",
+      "output_path": "assets/zimage_01.png",
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "steps": 9,
+      "cfg_scale": 1.0,
+      "seed": 471209,
+      "exact_text_in_frame": "NORDIC HORIZON | CLT-72M",
+      "prompt": "Photorealistic architectural photograph of an arctic polar pavilion with a cross-laminated CLT dome arch spanning 72 meters over a snow-covered plain at dusk, soft diffused polar light, frosted timber surface, steel dowel connectors visible at the crown, a technical nameplate reading \"NORDIC HORIZON | CLT-72M\" mounted on the support column, editorial Swiss-grid composition, muted warm paper tones with deep ink shadows, fine grain, 8k detail, no people, no neon",
+      "negative_prompt": "blurry, low contrast, watermark, deformed text, neon purple glow"
+    },
+    {
+      "id": "joinery_steel_dowel_node",
+      "target_section": "gallery",
+      "output_path": "assets/zimage_02.png",
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "steps": 9,
+      "cfg_scale": 1.0,
+      "seed": 830417,
+      "exact_text_in_frame": "ISO-16351 GLULAM NODE",
+      "prompt": "Macro photorealistic detail of a glued-laminated glulam beam joint with a steel dowel rod Ø32 passing through laminated timber layers, visible glue line and lamination grain, a stamped metal label reading \"ISO-16351 GLULAM NODE" engraved on the connector plate, cool workshop lighting, shallow depth of field, engineering drawing aesthetic, warm timber tones against deep ink background, precise edges, no clutter",
+      "negative_prompt": "blurry, low contrast, watermark, deformed text, neon purple glow"
+    },
+    {
+      "id": "concert_acoustic_baffles",
+      "target_section": "gallery",
+      "output_path": "assets/zimage_03.png",
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "steps": 9,
+      "cfg_scale": 1.0,
+      "seed": 261905,
+      "exact_text_in_frame": "ACOUSTIC HALL | RT60 1.4S",
+      "prompt": "Photorealistic interior of a concert hall with LVLP acoustic baffles suspended beneath a CLT timber shell ceiling, warm diffused lighting, wood grain texture, perforated absorber panels, a signage plate reading \"ACOUSTIC HALL | RT60 1.4S" on the wall, editorial architectural photography, balanced composition, muted paper palette with carmine accents, high detail, empty hall, no people",
+      "negative_prompt": "blurry, low contrast, watermark, deformed text, neon purple glow"
+    }
+  ]
+}

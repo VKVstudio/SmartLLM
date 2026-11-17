@@ -1,0 +1,10 @@
+# Cloudflare Pages headers
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-hyCW44Mw5Ck8C2lU3XWLmweXyfsz7e/U2VZvzEzA++Q='; style-src 'self' 'unsafe-hashes' 'sha256-HEImXoM9w9AncHEEETsqksWksDOADmlIn4mkM7cpB/I=' 'sha256-l849ASO9QAf5H+sJ9eLPep/WHUqooszQEpwtny/ypc0=' 'sha256-UiXlt9djFx1o7crFtCH7sUqquV6B2BX9ozY9jqs43JE='; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Resource-Policy: same-origin

@@ -23,10 +23,14 @@ research/recon_raw.json
 research/recon_part2.json
 research/recon_surgery.py
 research/recon_surgery_part2.py
-research/step1_raw/
-research/step2_raw/
-research/step3_raw/
-research/step4_raw/
+research/step*_raw/
+research/step4_fix_tz.md
+research/step5_7_tz.md
+research/deep_dive/
+research/replan/
+research/v2_runs/
+research/pilot_observer.md
+research/step3_6_anti_swap_budget.md
 scripts/step1_*.py
 scripts/step2_apply_r1_fixes.py
 scripts/step2_build_doc.py
@@ -37,27 +41,59 @@ scripts/step2_finalize_done.py
 scripts/step2_setup_llama_bins.py
 scripts/step3_audit_existing.py
 scripts/step3_create_tasks.py
+scripts/step3_5_sanitize_docs.py
 scripts/fetch_dossier_primary_sources.py
 scripts/generate_experts_dossier.py
 
 # Python & Environments
 .venv/
+.venv_linux
+.venv*/
+dist/
 __pycache__/
 *.py[cod]
 
 # Heavy Models, Weights, Calibration Data & Binaries
 models/
-data/calib/*.jsonl
-data/calib/*.parquet
-research/step4_raw/tokenizer/
+data/
 tools/llama.cpp/
+tools/stable-diffusion.cpp/
 tools/*.exe
 tools/*.zip
 
-# Eval Temp & Build Outputs
+# Screencasts, Media & Local Project Outputs
+*.mp4
+*.mkv
+*.mov
+*.avi
+*.webm
+media/
+eval/showcase/
+eval/studio_projects/
+eval/combine_out/
+eval/holdout/runs/
+eval/suite/runs/smartllm-205e-iq3-s/
+**/.tsc_out*/
+.smartllm/
+
+# Eval Temp, Archives & Build Outputs
 .tsc_out/
 eval/**/lighthouse.json
+eval/suite/runs_archive_*/
+eval/suite/tasks_v1_archive.json
 
+# External Agent / IDE Leftovers & Social Drafts
+.opencode/
+opencode.json
+.antigravity/
+social/
+
+eval/suite/results/auto_benchmark_report.md
+eval/suite/results/compare.md
+eval/suite/results/gallery.html
+eval/suite/results/live_status.md
+eval/suite/results/step8_judge_1_argon.json
+/examples
 # Secrets & Private Docs
 .env*
 .secrets/

@@ -1,0 +1,4 @@
+# SmartLLM Evaluation Gate Configuration v2 (Alias / Mirror of v3 Stage A-D Hard Invariants)
+# Kept alongside eval_gate_v1.yaml for callers referencing v2 gate config.
+inherit_from: "eval_gate_v1.yaml"
+version: "3.0"

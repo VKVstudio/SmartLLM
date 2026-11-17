@@ -1,0 +1,92 @@
+# SmartLLM Evaluation Gate Configuration (v3 / Stage A-D Hard Invariants)
+version: "3.0"
+suite_name: "SmartLLM-v2-Eval-Suite"
+
+# 1. Hard Runtime & Zero-Swap SLA Gates (enforced by step7_smoke_antiswap.py & sla_watchdog.py)
+runtime_sla_gates:
+  pswpout_delta_max: 0               # /proc/vmstat Δpswpout == 0 (Zero-Swap hard invariant)
+  min_avail_phys_gib: 3.0            # /proc/meminfo MemAvailable >= 3.0 GiB (3072 MiB)
+  crit_avail_phys_gib: 2.0           # Emergency kill threshold: MemAvailable < 2.0 GiB
+  max_vram_gib: 10.5                 # nvidia-smi memory.used <= 10.5 GiB (10752 MiB) on 12 GB RTX 4080
+  max_ple_rss_kb: 0                  # /proc/<pid>/smaps Rss for per_layer_token_embd.weight == 0 kB
+  min_decode_tok_per_s: 15.0         # Target decode throughput >= 15 tok/s on 256E-320E candidate
+  min_prefill_tok_per_s: 120.0       # Target prefill throughput >= 120 tok/s
+  post_exit_compute_apps: 0          # 0 active compute processes after server exit
+  post_exit_vram_delta_mib_max: 64.0 # Post-exit VRAM within +64 MiB of idle desktop baseline
+
+# 2. Frozen Donor Sampler Configuration (CODE-03 fix: no --eos-logit-bias -3.0 or -1000 token suppression)
+frozen_sampler:
+  temperature: 0.6
+  top_p: 0.95
+  top_k: 20
+  min_p: 0.0
+  dry_multiplier: 0.0
+  repeat_penalty: 1.0
+  frequency_penalty: 0.0
+  presence_penalty: 0.0
+  eos_logit_bias: 0.0
+  logit_bias_tokens: []
+
+# 3. Stage A Deterministic Auditor Gates (code_checks.py, copy_checks.py, browser_and_lh_suite.mjs, test_dag_runner.mjs)
+deterministic_gates:
+  security_csp_and_headers:
+    grade_raw_html_before_postprocessor: true   # NEW-BUG-01 fix
+    reject_bare_and_quoted_unsafe_inline: true  # CODE-01 fix
+    require_object_src_none: true
+    require_base_uri_restricted: true
+    require_trusted_types_for_script: true
+    require_frame_ancestors_none_in_headers: true
+    require_valid_cloudflare_headers_syntax: true
+    hsts_min_max_age: 31536000
+    hsts_require_include_subdomains: true
+    require_coop_same_origin: true
+    require_coep: true
+    require_corp: true
+  design_and_css:
+    require_oklch_tokens: true
+    semantic_bg_fg_contrast_min: 4.5            # NEW-BUG-04 fix (semantic token pairing)
+    tailwind_utility_ban: true
+    reject_bare_100vh_without_dvh_svh: true     # 100vh hygiene fix
+    mobile_375_overflow_x_allowed: false
+  seo_aeo_geo:
+    require_valid_json_ld_in_head: true
+    require_robots_txt_ai_crawlers: true
+    min_ai_crawler_rules: 2
+    require_canonical_link: true
+    no_synthetic_seo_or_perf_inflation: true    # NEW-BUG-05 fix
+  accessibility_wcag22:
+    min_target_size_css_px: 24                  # WCAG 2.2 SC 2.5.8 Target Size (Minimum)
+    require_focus_not_obscured: true            # WCAG 2.2 SC 2.4.11 Focus Not Obscured
+    min_lighthouse_accessibility: 95
+  copywriting:
+    require_explicit_expected_lang: true
+    ru_min_cyrillic_density: 0.65               # Rejects single-char ru_hits >= 1 bug
+    ru_min_cyrillic_chars: 50
+    max_ai_slop_hits: 0                         # NEW-BUG-06 fix (EN + RU lexical bans)
+    max_double_spaces: 0
+    ru_em_dash_allowed: true
+    ru_require_guillemets: true
+  typescript_coding:
+    require_tsc_strict_zero_errors: true
+    max_explicit_any: 0
+    strip_comments_before_regex_checks: true    # Fixes Promise.all / any comment false positives
+    min_dag_unit_tests_passed: 12
+
+# 4. Stage C Pre-Quantization & Stage D Post-Quantization Milestone Gates (OPUS_MASTER_PLAN_V2 §3)
+milestone_gates:
+  stage_c_pre_quant:
+    ppl_degradation_vs_donor_max_pct: 8.0
+    code_domain_ppl_degradation_max_pct: 5.0
+    ru_domain_ppl_degradation_max_pct: 5.0
+    top1_logit_agreement_min_pct: 82.0
+    mini_eval_pass_min_tasks: 5
+    mini_eval_total_tasks: 6
+  stage_d_post_quant:
+    require_blind_dual_judge: true              # NEW-BUG-07 fix (single-judge -> PENDING-JUDGE)
+    discrepancy_threshold_points: 2.0
+    combined_overall_min: 8.2
+    web_design_mean_min: 8.0
+    copy_en_mean_min: 8.2
+    copy_ru_mean_min: 8.2
+    code_ts_pass_rate_min: 0.85
+    lighthouse_a11y_seo_bp_mean_min: 95.0

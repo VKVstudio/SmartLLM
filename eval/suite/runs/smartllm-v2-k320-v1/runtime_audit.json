@@ -1,0 +1,1076 @@
+{
+  "t1": {
+    "mode": "http-navigation",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 4349,
+      "overflowX": false,
+      "wcag22InteractiveCount": 20,
+      "wcag22TargetSizeViolationsCount": 5,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "a",
+          "id": null,
+          "text": "PRODUCTS",
+          "width": 69.23,
+          "height": 21
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "SCHEMATIC",
+          "width": 77.89,
+          "height": 21
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "CERTIFICATIONS",
+          "width": 121.17,
+          "height": 21
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "FAQ",
+          "width": 25.97,
+          "height": 21
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "CONTACT",
+          "width": 60.59,
+          "height": 21
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 63,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": false,
+      "titleText": "Thermotech Engineering — Industrial Hot-Water & Steam Boilers 5–25 MW",
+      "hasMetaDescription": true,
+      "bodyBg": "oklch(0.205 0.014 250)",
+      "bodyColor": "oklch(0.93 0.012 240)",
+      "h1Text": "Industrial hot-water & steam boilers, 5–25 MW.",
+      "h1FontSize": "52px",
+      "cls": 0,
+      "lcpMs": 52
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 5106,
+      "overflowX": false,
+      "wcag22InteractiveCount": 20,
+      "wcag22TargetSizeViolationsCount": 5,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "a",
+          "id": null,
+          "text": "PRODUCTS",
+          "width": 69.23,
+          "height": 21
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "SCHEMATIC",
+          "width": 77.89,
+          "height": 21
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "CERTIFICATIONS",
+          "width": 121.17,
+          "height": 21
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "FAQ",
+          "width": 25.97,
+          "height": 21
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "CONTACT",
+          "width": 60.59,
+          "height": 21
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 131,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": false
+    },
+    "consoleErrors": [
+      "[desktop] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "[desktop] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[mobile] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element."
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "performanceMode": "lighthouse_navigation",
+      "accessibility": 100,
+      "bestPractices": 96,
+      "seo": 100,
+      "seoRawFileMode": 100,
+      "hasLocalRobotsTxt": true,
+      "cls": 0,
+      "lcpMs": 52
+    }
+  },
+  "t3": {
+    "mode": "http-navigation",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 5093,
+      "overflowX": false,
+      "wcag22InteractiveCount": 13,
+      "wcag22TargetSizeViolationsCount": 0,
+      "wcag22TargetSizeViolations": [],
+      "wcag22TargetSizePassed": true,
+      "wcag22StickyHeaderHeightPx": 0,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": true,
+      "titleText": "Северная Мануфактура — мебель и столярные изделия из массива дуба",
+      "hasMetaDescription": true,
+      "bodyBg": "oklch(0.95 0.01 85)",
+      "bodyColor": "oklch(0.24 0.012 75)",
+      "h1Text": "Мебель из массива дуба,\nкоторая переживёт нас",
+      "h1FontSize": "67.2px",
+      "cls": 0,
+      "lcpMs": 64
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 4604,
+      "overflowX": false,
+      "wcag22InteractiveCount": 13,
+      "wcag22TargetSizeViolationsCount": 0,
+      "wcag22TargetSizeViolations": [],
+      "wcag22TargetSizePassed": true,
+      "wcag22StickyHeaderHeightPx": 0,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": true
+    },
+    "consoleErrors": [
+      "[desktop] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "[desktop] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[mobile] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element."
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "performanceMode": "lighthouse_navigation",
+      "accessibility": 100,
+      "bestPractices": 96,
+      "seo": 100,
+      "seoRawFileMode": 100,
+      "hasLocalRobotsTxt": true,
+      "cls": 0,
+      "lcpMs": 64
+    }
+  },
+  "t5": {
+    "mode": "http-navigation",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 4161,
+      "overflowX": false,
+      "wcag22InteractiveCount": 27,
+      "wcag22TargetSizeViolationsCount": 11,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "a",
+          "id": null,
+          "text": "CALCULATOR",
+          "width": 101.03,
+          "height": 20.39
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "CHAMBERS",
+          "width": 85.75,
+          "height": 20.39
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "TIMELINE",
+          "width": 71.41,
+          "height": 20.39
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "FAQ",
+          "width": 30.47,
+          "height": 20.39
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "BOOKING",
+          "width": 71.08,
+          "height": 20.39
+        },
+        {
+          "tag": "input",
+          "id": "alpha",
+          "text": "",
+          "width": 431.06,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "target",
+          "text": "",
+          "width": 431.06,
+          "height": 16
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Book calibration →",
+          "width": 140.86,
+          "height": 19
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Book calibration →",
+          "width": 140.86,
+          "height": 19
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Book calibration →",
+          "width": 140.86,
+          "height": 19
+        },
+        {
+          "tag": "input",
+          "id": "scrub",
+          "text": "Scrub timeline position",
+          "width": 120,
+          "height": 16
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 58,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": false,
+      "titleText": "Helvetia Kinetic Lab — Architectural Acoustics, Vibration Metrology & Spatial Sound Engineering | Zurich",
+      "hasMetaDescription": true,
+      "bodyBg": "oklch(0.975 0.005 85)",
+      "bodyColor": "oklch(0.13 0.01 260)",
+      "h1Text": "Helvetia Kinetic Lab",
+      "h1FontSize": "64px",
+      "cls": 0,
+      "lcpMs": 52
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 5034,
+      "overflowX": false,
+      "wcag22InteractiveCount": 27,
+      "wcag22TargetSizeViolationsCount": 12,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Skip to main content",
+          "width": 137.61,
+          "height": 22.8
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "CALCULATOR",
+          "width": 92.67,
+          "height": 18.72
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "CHAMBERS",
+          "width": 78.66,
+          "height": 18.72
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "TIMELINE",
+          "width": 65.5,
+          "height": 18.72
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "FAQ",
+          "width": 27.95,
+          "height": 18.72
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "BOOKING",
+          "width": 65.19,
+          "height": 18.72
+        },
+        {
+          "tag": "input",
+          "id": "alpha",
+          "text": "",
+          "width": 309,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "target",
+          "text": "",
+          "width": 309,
+          "height": 16
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Book calibration →",
+          "width": 127.48,
+          "height": 17
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Book calibration →",
+          "width": 127.48,
+          "height": 17
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Book calibration →",
+          "width": 127.48,
+          "height": 17
+        },
+        {
+          "tag": "input",
+          "id": "scrub",
+          "text": "Scrub timeline position",
+          "width": 123.27,
+          "height": 16
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 126,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": false
+    },
+    "consoleErrors": [
+      "[desktop] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "[desktop] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[mobile] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element."
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "performanceMode": "lighthouse_navigation",
+      "accessibility": 96,
+      "bestPractices": 96,
+      "seo": 92,
+      "seoRawFileMode": 92,
+      "hasLocalRobotsTxt": true,
+      "cls": 0,
+      "lcpMs": 52
+    }
+  },
+  "t6": {
+    "mode": "http-navigation",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 5999,
+      "overflowX": false,
+      "wcag22InteractiveCount": 25,
+      "wcag22TargetSizeViolationsCount": 6,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Architecture",
+          "width": 86.56,
+          "height": 22.81
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Sizing",
+          "width": 41.42,
+          "height": 22.81
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Benchmarks",
+          "width": 87.73,
+          "height": 22.81
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "FAQ",
+          "width": 28.38,
+          "height": 22.81
+        },
+        {
+          "tag": "input",
+          "id": "active-params",
+          "text": "",
+          "width": 494,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "total-params",
+          "text": "",
+          "width": 494,
+          "height": 16
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 67,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": false,
+      "titleText": "VORTEX COMPUTE — Sovereign Distributed GPU & NVMe-over-Fabrics Inference Engine",
+      "hasMetaDescription": true,
+      "bodyBg": "oklch(0.13 0.02 260)",
+      "bodyColor": "oklch(0.95 0.01 250)",
+      "h1Text": "Low-latency MoE inference over RDMA & NVMe-over-Fabrics.",
+      "h1FontSize": "51.2px",
+      "cls": 0,
+      "lcpMs": 100
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 8247,
+      "overflowX": false,
+      "wcag22InteractiveCount": 25,
+      "wcag22TargetSizeViolationsCount": 6,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Architecture",
+          "width": 86.56,
+          "height": 22.81
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Sizing",
+          "width": 41.42,
+          "height": 22.81
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "Benchmarks",
+          "width": 87.73,
+          "height": 22.81
+        },
+        {
+          "tag": "a",
+          "id": null,
+          "text": "FAQ",
+          "width": 28.38,
+          "height": 22.81
+        },
+        {
+          "tag": "input",
+          "id": "active-params",
+          "text": "",
+          "width": 297,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "total-params",
+          "text": "",
+          "width": 297,
+          "height": 16
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 144,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": false
+    },
+    "consoleErrors": [
+      "[desktop] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "[mobile] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element."
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [
+      "[desktop] TypeError: Cannot read properties of null (reading 'clearRect')",
+      "[mobile] TypeError: Cannot read properties of null (reading 'clearRect')"
+    ],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "performanceMode": "lighthouse_navigation",
+      "accessibility": 99,
+      "bestPractices": 96,
+      "seo": 92,
+      "seoRawFileMode": 92,
+      "hasLocalRobotsTxt": true,
+      "cls": 0,
+      "lcpMs": 100
+    }
+  },
+  "t7": {
+    "mode": "http-navigation",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 2149,
+      "overflowX": false,
+      "wcag22InteractiveCount": 21,
+      "wcag22TargetSizeViolationsCount": 1,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "input",
+          "id": "batch-range",
+          "text": "",
+          "width": 503.55,
+          "height": 16
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 93,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": false,
+      "titleText": "ЦЕХ №4 — 5-осевая ЧПУ-обработка титана, инконеля и закалённых сталей в Екатеринбурге",
+      "hasMetaDescription": true,
+      "bodyBg": "oklch(0.94 0.03 90)",
+      "bodyColor": "oklch(0.14 0.01 260)",
+      "h1Text": "ТИТАН, ИНКОНЕЛЬ И ЗАКАЛЁННЫЕ СТАЛИ БЕЗ ПОТЕРИ ДОПУСКА",
+      "h1FontSize": "73.6px",
+      "cls": 0,
+      "lcpMs": 72
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 3139,
+      "overflowX": false,
+      "wcag22InteractiveCount": 21,
+      "wcag22TargetSizeViolationsCount": 1,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "input",
+          "id": "batch-range",
+          "text": "",
+          "width": 230.55,
+          "height": 16
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 282,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": false
+    },
+    "consoleErrors": [
+      "[desktop] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "[desktop] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[mobile] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element."
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "performanceMode": "lighthouse_navigation",
+      "accessibility": 95,
+      "bestPractices": 96,
+      "seo": 100,
+      "seoRawFileMode": 100,
+      "hasLocalRobotsTxt": false,
+      "cls": 0,
+      "lcpMs": 72
+    }
+  },
+  "t8": {
+    "mode": "http-navigation",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 4194,
+      "overflowX": false,
+      "wcag22InteractiveCount": 10,
+      "wcag22TargetSizeViolationsCount": 4,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "input",
+          "id": "na",
+          "text": "",
+          "width": 260,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "lambda",
+          "text": "",
+          "width": 260,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "k1",
+          "text": "",
+          "width": 260,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "k2",
+          "text": "",
+          "width": 260,
+          "height": 16
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 3,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": false,
+      "titleText": "Экстремальная ультрафиолетовая литография (EUV 13.5 нм) — АРХИВ ТЕХНОЛОГИЙ №14",
+      "hasMetaDescription": true,
+      "bodyBg": "oklch(0.96 0.015 80)",
+      "bodyColor": "oklch(0.16 0.02 50)",
+      "h1Text": "Экстремальная ультрафиолетовая литография (EUV 13.5 нм): оптика Цейсса, оловянная плазма и предел кремниевых транзисторов",
+      "h1FontSize": "64px",
+      "cls": 0,
+      "lcpMs": 72
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 5259,
+      "overflowX": false,
+      "wcag22InteractiveCount": 10,
+      "wcag22TargetSizeViolationsCount": 4,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "input",
+          "id": "na",
+          "text": "",
+          "width": 163.5,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "lambda",
+          "text": "",
+          "width": 163.5,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "k1",
+          "text": "",
+          "width": 163.5,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "k2",
+          "text": "",
+          "width": 163.5,
+          "height": 16
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 3,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": false
+    },
+    "consoleErrors": [
+      "[desktop] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "[desktop] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[mobile] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element."
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "performanceMode": "lighthouse_navigation",
+      "accessibility": 96,
+      "bestPractices": 96,
+      "seo": 100,
+      "seoRawFileMode": 100,
+      "hasLocalRobotsTxt": false,
+      "cls": 0,
+      "lcpMs": 72
+    }
+  },
+  "t9": {
+    "mode": "http-navigation",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 4328,
+      "overflowX": false,
+      "wcag22InteractiveCount": 26,
+      "wcag22TargetSizeViolationsCount": 0,
+      "wcag22TargetSizeViolations": [],
+      "wcag22TargetSizePassed": true,
+      "wcag22StickyHeaderHeightPx": 0,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": true,
+      "titleText": "AETHERIA BIO-ROBOTICS | Autonomous Environmental & Precision Agriculture Drones",
+      "hasMetaDescription": true,
+      "bodyBg": "oklch(0.97 0.008 95)",
+      "bodyColor": "oklch(0.14 0.015 255)",
+      "h1Text": "Autonomous bio-robotic telemetry for environmental and precision agriculture operations",
+      "h1FontSize": "64px",
+      "cls": 0,
+      "lcpMs": 48
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 6244,
+      "overflowX": false,
+      "wcag22InteractiveCount": 26,
+      "wcag22TargetSizeViolationsCount": 0,
+      "wcag22TargetSizeViolations": [],
+      "wcag22TargetSizePassed": true,
+      "wcag22StickyHeaderHeightPx": 0,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": true
+    },
+    "consoleErrors": [
+      "[desktop] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "[desktop] Loading the stylesheet 'http://127.0.0.1:45851/tokens.css' violates the following Content Security Policy directive: \"style-src 'sha256-lP0OVOVSTG4QCC84RW75ixql/Qg6suEXwQq9PLzx9Eg='\". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked.",
+      "[desktop] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[mobile] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "[mobile] Loading the stylesheet 'http://127.0.0.1:45851/tokens.css' violates the following Content Security Policy directive: \"style-src 'sha256-lP0OVOVSTG4QCC84RW75ixql/Qg6suEXwQq9PLzx9Eg='\". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked."
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [
+      {
+        "viewport": "desktop",
+        "url": "http://127.0.0.1:45851/tokens.css",
+        "reason": "failed"
+      },
+      {
+        "viewport": "mobile",
+        "url": "http://127.0.0.1:45851/tokens.css",
+        "reason": "failed"
+      }
+    ],
+    "lighthouse": {
+      "performance": 100,
+      "performanceMode": "lighthouse_navigation",
+      "accessibility": 96,
+      "bestPractices": 92,
+      "seo": 100,
+      "seoRawFileMode": 100,
+      "hasLocalRobotsTxt": false,
+      "cls": 0,
+      "lcpMs": 48
+    }
+  },
+  "t_zimage_site": {
+    "mode": "http-navigation",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 7287,
+      "overflowX": false,
+      "wcag22InteractiveCount": 23,
+      "wcag22TargetSizeViolationsCount": 3,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "input",
+          "id": "f-name",
+          "text": "",
+          "width": 185,
+          "height": 21
+        },
+        {
+          "tag": "input",
+          "id": "f-org",
+          "text": "",
+          "width": 185,
+          "height": 21
+        },
+        {
+          "tag": "input",
+          "id": "f-email",
+          "text": "",
+          "width": 185,
+          "height": 21
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 73,
+      "wcag22ScrollPaddingTopPx": 80,
+      "wcag22FocusNotObscuredPassed": true,
+      "titleText": "КБ «Северный Горизонт» / NORDIC HORIZON ARCHIVE — арктическая инженерия клеёной древесины: CLT, LVLP, гнутоклеёные арки и полярные станции",
+      "hasMetaDescription": true,
+      "bodyBg": "oklch(0.965 0.012 82)",
+      "bodyColor": "oklch(0.15 0.018 50)",
+      "h1Text": "Архитектура высоких широт: клеёная древесина против экстремальных ветровых и снеговых нагрузок",
+      "h1FontSize": "67.2px",
+      "cls": 0,
+      "lcpMs": 68
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 11667,
+      "overflowX": false,
+      "wcag22InteractiveCount": 23,
+      "wcag22TargetSizeViolationsCount": 3,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "input",
+          "id": "f-name",
+          "text": "",
+          "width": 185,
+          "height": 21
+        },
+        {
+          "tag": "input",
+          "id": "f-org",
+          "text": "",
+          "width": 185,
+          "height": 21
+        },
+        {
+          "tag": "input",
+          "id": "f-email",
+          "text": "",
+          "width": 185,
+          "height": 21
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 209,
+      "wcag22ScrollPaddingTopPx": 80,
+      "wcag22FocusNotObscuredPassed": true
+    },
+    "consoleErrors": [
+      "[desktop] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "[desktop] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[desktop] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[desktop] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[desktop] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[mobile] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "[mobile] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[mobile] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[mobile] Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "performanceMode": "lighthouse_navigation",
+      "accessibility": 100,
+      "bestPractices": 96,
+      "seo": 100,
+      "seoRawFileMode": 100,
+      "hasLocalRobotsTxt": true,
+      "cls": 0,
+      "lcpMs": 68
+    }
+  },
+  "t10": {
+    "mode": "http-navigation",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 3503,
+      "overflowX": false,
+      "wcag22InteractiveCount": 18,
+      "wcag22TargetSizeViolationsCount": 0,
+      "wcag22TargetSizeViolations": [],
+      "wcag22TargetSizePassed": true,
+      "wcag22StickyHeaderHeightPx": 0,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": true,
+      "titleText": "КОНТУР-СПЕКТР — Вибродиагностика, вейвлет-анализ и предиктивная аналитика ГТУ и компрессоров",
+      "hasMetaDescription": true,
+      "bodyBg": "oklch(0.14 0.02 255)",
+      "bodyColor": "oklch(0.95 0.01 250)",
+      "h1Text": "Непрерывная вибродиагностика, вейвлет-анализ и предиктивная аналитика ГТУ и компрессоров",
+      "h1FontSize": "41.6px",
+      "cls": 0,
+      "lcpMs": 52
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 5296,
+      "overflowX": false,
+      "wcag22InteractiveCount": 18,
+      "wcag22TargetSizeViolationsCount": 0,
+      "wcag22TargetSizeViolations": [],
+      "wcag22TargetSizePassed": true,
+      "wcag22StickyHeaderHeightPx": 0,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": true
+    },
+    "consoleErrors": [
+      "[desktop] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "[desktop] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[mobile] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element."
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "performanceMode": "lighthouse_navigation",
+      "accessibility": 100,
+      "bestPractices": 96,
+      "seo": 100,
+      "seoRawFileMode": 100,
+      "hasLocalRobotsTxt": true,
+      "cls": 0,
+      "lcpMs": 52
+    }
+  },
+  "t11": {
+    "mode": "http-navigation",
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 5114,
+      "overflowX": false,
+      "wcag22InteractiveCount": 25,
+      "wcag22TargetSizeViolationsCount": 3,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "input",
+          "id": "ratio",
+          "text": "",
+          "width": 355.33,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "rpm",
+          "text": "",
+          "width": 355.33,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "load",
+          "text": "",
+          "width": 355.34,
+          "height": 16
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 0,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": true,
+      "titleText": "KRONOS PRECISION GEARWORKS — Strain-Wave & Planetary Actuators for Surgical and Industrial Robotics",
+      "hasMetaDescription": true,
+      "bodyBg": "oklch(0.15 0.015 250)",
+      "bodyColor": "oklch(0.95 0.01 250)",
+      "h1Text": "Precision gearwork for surgical and industrial robotics.",
+      "h1FontSize": "48px",
+      "cls": 0,
+      "lcpMs": 84
+    },
+    "mobile": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "scrollHeight": 8000,
+      "overflowX": false,
+      "wcag22InteractiveCount": 25,
+      "wcag22TargetSizeViolationsCount": 3,
+      "wcag22TargetSizeViolations": [
+        {
+          "tag": "input",
+          "id": "ratio",
+          "text": "",
+          "width": 297,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "rpm",
+          "text": "",
+          "width": 297,
+          "height": 16
+        },
+        {
+          "tag": "input",
+          "id": "load",
+          "text": "",
+          "width": 297,
+          "height": 16
+        }
+      ],
+      "wcag22TargetSizePassed": false,
+      "wcag22StickyHeaderHeightPx": 0,
+      "wcag22ScrollPaddingTopPx": 0,
+      "wcag22FocusNotObscuredPassed": true
+    },
+    "consoleErrors": [
+      "[desktop] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.",
+      "[desktop] Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "[mobile] The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element."
+    ],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "externalRequests": [],
+    "failedRequests": [],
+    "lighthouse": {
+      "performance": 100,
+      "performanceMode": "lighthouse_navigation",
+      "accessibility": 100,
+      "bestPractices": 96,
+      "seo": 92,
+      "seoRawFileMode": 92,
+      "hasLocalRobotsTxt": true,
+      "cls": 0,
+      "lcpMs": 84
+    }
+  }
+}

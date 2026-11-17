@@ -1,0 +1,6 @@
+# Helvetia Kinetic Lab robots.txt
+User-agent: *
+Allow: /
+Disallow: /booking?
+
+# Sitemap: https://helvetia-kinetic-lab.ch/sitemap.xml

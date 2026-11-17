@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartLLM Studio v0.0.1-beta</title>
+  <link rel="icon" href="/assets/smartllm-logo.svg">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="icon-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+    <symbol id="icon-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 18l9 5 9-5"/></symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.3-9C1.4 8 3.6 4.5 7.2 4.5c2.1 0 3.6 1.2 4.8 2.7 1.2-1.5 2.7-2.7 4.8-2.7 3.6 0 5.8 3.5 4.5 7-1.8 4.4-9.3 9-9.3 9z"/></symbol>
+    <symbol id="icon-sliders" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="10" cy="18" r="2"/></symbol>
+    <symbol id="icon-folder" viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z"/></symbol>
+    <symbol id="icon-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 20"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></symbol>
+    <symbol id="icon-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 3l8 3.5v5.5c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6.5L12 3z"/></symbol>
+  </svg>
+
+  <!-- 1. TOP BAR -->
+  <header class="atelier-topbar">
+    <div class="brand-group">
+      <img class="brand-emblem" src="/assets/smartllm-logo.svg" width="28" height="28" alt="SmartLLM Studio">
+      <span class="brand-title" data-i18n="app_title">SmartLLM Studio</span>
+      <span class="badge-v">v0.0.1-beta</span>
+    </div>
+
+    <div class="mode-switcher" role="tablist" aria-label="Studio Mode">
+      <button class="mode-btn" id="mode-btn-constructor" role="tab" aria-selected="true" type="button">
+        <svg class="icon-24"><use href="#icon-layers"/></svg>
+        <span data-i18n="mode_constructor">Конструктор (5 шагов)</span>
+      </button>
+      <button class="mode-btn" id="mode-btn-express" role="tab" aria-selected="false" type="button">
+        <svg class="icon-24"><use href="#icon-bolt"/></svg>
+        <span data-i18n="mode_express">Автоматический режим</span>
+      </button>
+    </div>
+
+    <div class="topbar-actions">
+      <button class="btn" id="btn-lang-switch" type="button">
+        <svg class="icon-24"><use href="#icon-globe"/></svg>
+        <span id="lang-indicator">RU | EN</span>
+      </button>
+      <button class="btn btn-quiet" id="btn-open-support" type="button">
+        <svg class="icon-24"><use href="#icon-heart"/></svg>
+        <span data-i18n="nav_support">Поддержка</span>
+      </button>
+      <button class="btn" id="btn-open-settings" type="button">
+        <svg class="icon-24"><use href="#icon-sliders"/></svg>
+        <span data-i18n="nav_settings">Настройки</span>
+      </button>
+      <button class="btn" id="btn-toggle-stage-drawer" type="button">
+        <span data-i18n="nav_stage_toggle">Предпросмотр</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 2. THREE-PANE SHELL -->
+  <div class="atelier-shell">
+    <!-- Left Navigator: 5 Steps + Live Orchestrator Queue -->
+    <aside class="atelier-nav" aria-label="Constructor Navigation">
+      <div>
+        <h2 class="nav-section-title" data-i18n="nav_steps_heading">Шаги конструктора</h2>
+        <div class="step-list">
+          <button class="nav-step-btn" id="nav-step-1" data-step="1" aria-current="step" type="button">
+            <span class="step-numeral">01</span>
+            <span data-i18n="step_1_label">Папка проекта</span>
+          </button>
+          <button class="nav-step-btn" id="nav-step-2" data-step="2" type="button">
+            <span class="step-numeral">02</span>
+            <span data-i18n="step_2_label">Название и Лого 512×512</span>
+          </button>
+          <button class="nav-step-btn" id="nav-step-3" data-step="3" type="button">
+            <span class="step-numeral">03</span>
+            <span data-i18n="step_3_label">Выбор стиля</span>
+          </button>
+          <button class="nav-step-btn" id="nav-step-4" data-step="4" type="button">
+            <span class="step-numeral">04</span>
+            <span data-i18n="step_4_label">Страницы и блоки</span>
+          </button>
+          <button class="nav-step-btn" id="nav-step-5" data-step="5" type="button">
+            <span class="step-numeral">05</span>
+            <span data-i18n="step_5_label">Описание блоков и Сборка</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="orch-box">
+        <h2 class="nav-section-title" data-i18n="orch_heading">Оркестратор задач</h2>
+        <div class="orch-list" id="orch-sidebar-list">
+          <div class="orch-item" data-orch="1_architect"><span class="orch-dot"></span><span data-i18n="orch_1">1. Оркестратор: память и архитектура</span></div>
+          <div class="orch-item" data-orch="2_blocks"><span class="orch-dot"></span><span data-i18n="orch_2">2. Субагенты: тексты, SEO, ревизия</span></div>
+          <div class="orch-item" data-orch="3_visuals"><span class="orch-dot"></span><span data-i18n="orch_3">3. Дизайн блоков и визуальный план</span></div>
+          <div class="orch-item" data-orch="4_seo_geo"><span class="orch-dot"></span><span data-i18n="orch_4">4. Сборка SEO / AEO / GEO / CSP</span></div>
+          <div class="orch-item" data-orch="5_bundle"><span class="orch-dot"></span><span data-i18n="orch_5">5. Бандл и финальный аудит</span></div>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn" id="btn-reset-draft" type="button" style="width:100%;">
+          <span data-i18n="nav_new_project">Сбросить черновик</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Centre Fluid Workspace -->
+    <main class="atelier-workspace" id="main-workspace">
+      <div class="workspace-inner">
+
+        <!-- AUTOMATIC MODE VIEW -->
+        <section id="view-express" class="panel-card" hidden>
+          <picture aria-hidden="true">
+            <source srcset="/static/art/atelier_hero_prism.avif" type="image/avif">
+            <img class="hero-art-banner" src="/static/art/atelier_hero_prism.webp" alt="" aria-hidden="true">
+          </picture>
+          <h1 class="display-h2" data-i18n="express_hero_title">Автоматический режим — Сайт из одного промпта</h1>
+          <p class="sub-lead" data-i18n="express_hero_sub">Опишите задачу своими словами. Оркестратор сам распределит этапы: подберёт стиль, создаст страницы и блоки, сгенерирует визуал и автоматически упакует SEO / AEO / GEO и защиту CSP.</p>
+
+          <div class="field">
+            <label for="exp-folder-input" data-i18n="lbl_exp_folder">Папка для сохранения проекта</label>
+            <div style="display:flex; gap:8px;">
+              <input id="exp-folder-input" type="text" data-i18n-attr="placeholder:ph_exp_folder" placeholder="Путь к папке проекта...">
+              <button class="btn" id="exp-pick-folder-btn" type="button">
+                <svg class="icon-24"><use href="#icon-folder"/></svg>
+                <span data-i18n="btn_exp_pick_folder">Выбрать папку</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="exp-brief-input" data-i18n="lbl_exp_brief">Промпт (описание сайта своими словами)</label>
+            <textarea id="exp-brief-input" rows="4" maxlength="2000" data-i18n-attr="placeholder:ph_exp_brief" placeholder="Например: Архитектурное бюро деревянных домов и акустических студий в скандинавском стиле, с галереей проектов, 3 тарифами проектирования, частыми вопросами и формой заявки...">Архитектурное бюро акустических студий и деревянных интерьеров «SoundCraft»: расчёт акустики помещений, 3 тарифа проектирования под ключ, портфолио залов, ответы на вопросы и форма заявки.</textarea>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="field">
+              <label for="exp-lang-select" data-i18n="lbl_exp_lang">Язык сайта</label>
+              <select id="exp-lang-select">
+                <option value="ru" selected data-i18n="opt_lang_ru">Русский (RU)</option>
+                <option value="en" data-i18n="opt_lang_en">Английский (EN)</option>
+                <option value="en+ru" data-i18n="opt_lang_both">Двуязычный (RU + EN)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="exp-canon-select" data-i18n="lbl_exp_quick_canon">Стиль оформления (или Авто-подбор)</label>
+              <select id="exp-canon-select">
+                <option value="" data-i18n="opt_canon_auto">Автоматический подбор под тему промпта</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+            <button class="btn btn-primary" id="exp-generate-btn" type="button">
+              <svg class="icon-24"><use href="#icon-bolt"/></svg>
+              <span data-i18n="btn_exp_generate">Создать сайт автоматически</span>
+            </button>
+            <button class="btn" id="exp-open-folder-btn" type="button">
+              <svg class="icon-24"><use href="#icon-folder"/></svg>
+              <span data-i18n="btn_exp_open_folder">Открыть папку проекта</span>
+            </button>
+            <span id="exp-status-readout" style="font-family:var(--font-code); font-size:12px; color:var(--ok); align-self:center;"></span>
+          </div>
+        </section>
+
+        <!-- CONSTRUCTOR MODE (5 CLEAR STEPS) -->
+        <section id="view-constructor">
+
+          <!-- STEP 1: PROJECT FOLDER -->
+          <div id="ctor-step-1" class="panel-card ctor-pane">
+            <h1 class="display-h2" data-i18n="s1_heading">Шаг 1 — Выберите папку для проекта</h1>
+            <p class="sub-lead" data-i18n="s1_sub">Укажите папку на диске, куда студия будет сохранять готовые страницы, стили, логотип и изображения вашего сайта.</p>
+
+            <div class="field">
+              <label for="s1-folder-input" data-i18n="lbl_s1_folder">Папка проекта на диске</label>
+              <div style="display:flex; gap:8px;">
+                <input id="s1-folder-input" type="text" data-i18n-attr="placeholder:ph_exp_folder" placeholder="/mnt/rescue/projects/SmartLLM/eval/studio_projects/default">
+                <button class="btn btn-primary" id="s1-pick-folder-btn" type="button">
+                  <svg class="icon-24"><use href="#icon-folder"/></svg>
+                  <span data-i18n="btn_exp_pick_folder">Выбрать папку</span>
+                </button>
+                <button class="btn" id="s1-open-folder-btn" type="button">
+                  <span data-i18n="btn_exp_open_folder">Открыть папку</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="s1-lang" data-i18n="lbl_proj_lang">Основной язык сайта</label>
+              <select id="s1-lang">
+                <option value="ru" selected data-i18n="opt_lang_ru">Русский (RU)</option>
+                <option value="en" data-i18n="opt_lang_en">Английский (EN)</option>
+                <option value="en+ru" data-i18n="opt_lang_both">Двуязычный (RU + EN)</option>
+              </select>
+            </div>
+
+            <div class="step-footer-nav">
+              <span></span>
+              <button class="btn btn-primary step-next-btn" id="s1-next-btn" data-target="2" type="button" data-i18n="btn_step_next">Далее: Название и Логотип →</button>
+            </div>
+          </div>
+
+          <!-- STEP 2: NAME, DESCRIPTION & 6x 512x512 LOGO GENERATOR -->
+          <div id="ctor-step-2" class="panel-card ctor-pane" hidden>
+            <h2 class="display-h2" data-i18n="s2_heading">Шаг 2 — Название, описание и логотип (6 вариантов 512×512)</h2>
+            <p class="sub-lead" data-i18n="s2_sub">Введите название и краткое описание сайта. Вы можете загрузить свой логотип или сгенерировать 6 вариантов 512×512 под название и выбрать лучший кликом.</p>
+
+            <div class="field">
+              <label for="s2-name" data-i18n="lbl_proj_name">Название сайта / бренда</label>
+              <input id="s2-name" type="text" value="SoundCraft Acoustic Labs" data-i18n-attr="placeholder:ph_proj_name" placeholder="Введите название бренда или проекта...">
+            </div>
+
+            <div class="field">
+              <label for="s2-desc" data-i18n="lbl_proj_goal">Краткое описание сайта (о чём проект и для кого)</label>
+              <textarea id="s2-desc" rows="3" data-i18n-attr="placeholder:ph_proj_goal" placeholder="Опишите чем занимается проект, основные услуги и задачу сайта...">Архитектурная акустика, проектирование студий звукозаписи, деревянные диффузоры и виброизоляция помещений под ключ.</textarea>
+            </div>
+
+            <div class="field">
+              <label for="s2-logo-prompt" data-i18n="lbl_logo_prompt">Промпт для логотипа — опишите словами, что хотите видеть</label>
+              <textarea id="s2-logo-prompt" rows="3" maxlength="600" data-i18n-attr="placeholder:ph_logo_prompt" placeholder="Например: строгий знак из двух переплетённых дуг, тёмно-синий и тёплое золото, без текста. Можно писать по-русски или по-английски."></textarea>
+              <p class="sub-lead" style="margin:6px 0 0 0; font-size:12px;" data-i18n="msg_logo_prompt_hint">Модель SmartLLM расширит ваш текст в профессиональный промпт для Z-Image по канону логотипов 2026: один центрированный знак, чистые цвета, читаемость в 32 px.</p>
+            </div>
+
+            <div class="composer-box" style="margin-bottom:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+                <strong data-i18n="lbl_logo_section">Логотип сайта (загрузка или генерация 6 вариантов 512×512)</strong>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                  <button class="btn btn-primary" id="s2-gen-logos-btn" type="button">
+                    <svg class="icon-24"><use href="#icon-image"/></svg>
+                    <span data-i18n="btn_gen_6_logos">Сгенерировать 6 вариантов 512×512</span>
+                  </button>
+                  <button class="btn" id="s2-upload-logo-btn" type="button">
+                    <span data-i18n="btn_upload_custom_logo">Загрузить свой файл (SVG/PNG)</span>
+                  </button>
+                  <input id="s2-logo-file" type="file" accept=".svg,.png,.webp" aria-label="Logo File" hidden>
+                </div>
+              </div>
+              <div id="s2-logo-grid" class="logo-variants-grid"></div>
+              <p id="s2-logo-status" class="sub-lead" style="margin:6px 0 0 0; font-size:12px;" data-i18n="msg_logo_hint">Нажмите «Сгенерировать 6 вариантов 512×512», затем кликните по понравившемуся логотипу.</p>
+              <div id="s2-logo-progress" class="logo-progress" hidden aria-live="polite">
+                <div class="logo-progress-head">
+                  <span class="logo-spinner" aria-hidden="true"></span>
+                  <span id="s2-logo-progress-text">Подготовка...</span>
+                  <span id="s2-logo-progress-time" class="logo-progress-time">00:00</span>
+                </div>
+                <div class="logo-progress-track"><span id="s2-logo-progress-fill"></span></div>
+              </div>
+            </div>
+
+            <div class="step-footer-nav">
+              <button class="btn step-prev-btn" id="s2-prev-btn" data-target="1" type="button" data-i18n="btn_step_back">← Назад</button>
+              <button class="btn btn-primary step-next-btn" id="s2-next-btn" data-target="3" type="button" data-i18n="btn_step_next">Далее: Выбор стиля →</button>
+            </div>
+          </div>
+
+          <!-- STEP 3: VISUAL STYLE SELECTION -->
+          <div id="ctor-step-3" class="panel-card ctor-pane" hidden>
+            <h2 class="display-h2" data-i18n="s3_heading">Шаг 3 — Выберите визуальный стиль из списка</h2>
+            <p class="sub-lead" data-i18n="s3_sub">Кликните по подходящему стилю оформления. Палитра, типографика и контрастность применятся к вашему сайту автоматически.</p>
+
+            <div class="form-grid-2">
+              <div class="field">
+                <label for="s3-canon-search" data-i18n="lbl_canon_search">Поиск по названию стиля</label>
+                <input id="s3-canon-search" type="text" data-i18n-attr="placeholder:ph_canon_search" placeholder="Швейцарский, тёмный, минимализм, редакционный...">
+              </div>
+              <div class="field">
+                <label for="s3-canon-cat" data-i18n="lbl_canon_cat">Категория стилей</label>
+                <select id="s3-canon-cat">
+                  <option value="all" data-i18n="opt_cat_all">Все стили (20)</option>
+                </select>
+              </div>
+            </div>
+            <p class="sub-lead" style="margin:0 0 10px 0; font-size:12px;" data-i18n="s3_palette_note">Палитры — канон-согласованные токены (NN/g, MDN, Tailwind, WCAG), а не единственный официальный HEX-набор стиля.</p>
+
+            <div id="s3-canon-gallery" class="canon-gallery-grid"></div>
+
+            <div class="step-footer-nav">
+              <button class="btn step-prev-btn" id="s3-prev-btn" data-target="2" type="button" data-i18n="btn_step_back">← Назад</button>
+              <button class="btn btn-primary step-next-btn" id="s3-next-btn" data-target="4" type="button" data-i18n="btn_step_next">Далее: Страницы и блоки →</button>
+            </div>
+          </div>
+
+          <!-- STEP 4: PAGES & BLOCKS SELECTION -->
+          <div id="ctor-step-4" class="panel-card ctor-pane" hidden>
+            <h2 class="display-h2" data-i18n="s4_heading">Шаг 4 — Выбор страниц и блоков сайта</h2>
+            <p class="sub-lead" data-i18n="s4_sub">Выберите формат сайта: одностраничник (лендинг) с нужными блоками или многостраничный сайт с автоматическим меню.</p>
+
+            <div class="field">
+              <label data-i18n="lbl_site_type">Формат сайта</label>
+              <div style="display:flex; gap:10px;">
+                <button class="btn btn-primary" id="s4-type-single-btn" type="button" aria-pressed="true" data-i18n="btn_type_single">Одностраничник (выбор блоков)</button>
+                <button class="btn" id="s4-type-multi-btn" type="button" aria-pressed="false" data-i18n="btn_type_multi">Многостраничный сайт (выбор страниц)</button>
+              </div>
+            </div>
+
+            <div id="s4-pages-box" class="composer-box" style="margin-bottom:14px;" hidden>
+              <strong data-i18n="lbl_select_pages">Отметьте нужные страницы многостраничного сайта:</strong>
+              <div id="s4-pages-checklist" class="check-grid" style="margin-top:8px;"></div>
+              <div style="display:flex; gap:8px; margin-top:10px;">
+                <input id="s4-custom-page-input" type="text" data-i18n-attr="placeholder:ph_new_route_title" placeholder="Своя страница (например: Доставка, Блог)...">
+                <button class="btn" id="s4-add-page-btn" type="button" data-i18n="btn_add_route">Добавить страницу</button>
+              </div>
+            </div>
+
+            <div class="composer-box">
+              <strong data-i18n="lbl_select_blocks">Блоки для каждой выбранной страницы:</strong>
+              <p class="sub-lead" style="margin:6px 0 0 0; font-size:12px;" data-i18n="s4_blocks_hint">Сначала выберите типовые страницы корпоративного сайта, затем настройте блоки отдельно для каждой страницы. Наборы блоков подобраны под назначение страницы.</p>
+              <div id="s4-page-blocks-list" class="page-block-list" style="margin-top:10px;"></div>
+            </div>
+
+            <div class="step-footer-nav">
+              <button class="btn step-prev-btn" id="s4-prev-btn" data-target="3" type="button" data-i18n="btn_step_back">← Назад</button>
+              <button class="btn btn-primary step-next-btn" id="s4-next-btn" data-target="5" type="button" data-i18n="btn_step_next">Далее: Описание блоков и Сборка →</button>
+            </div>
+          </div>
+
+          <!-- STEP 5: PER-BLOCK DESCRIPTIONS & BUILD -->
+          <div id="ctor-step-5" class="panel-card ctor-pane" hidden>
+            <h2 class="display-h2" data-i18n="s5_heading">Шаг 5 — Описание блоков и запуск сборки</h2>
+            <p class="sub-lead" data-i18n="s5_sub">Сначала проверьте бренд-основу и контакты, затем описания блоков для каждой выбранной страницы. Эти данные попадут в текст, JSON-LD, llms.txt и GEO-разметку.</p>
+
+            <div class="composer-box company-foundation" id="s5-company-card">
+              <strong data-i18n="s5_company_title">Бренд-основа и контакты (используются в SEO / AEO / GEO)</strong>
+              <p class="sub-lead" style="margin:6px 0 10px 0; font-size:12px;" data-i18n="s5_company_hint">Девиз, позиционирование, принципы, приоритеты, города, адрес, телефон и email. Проверьте значения — они попадут в JSON-LD, llms.txt и контактные блоки.</p>
+              <div class="form-grid-2">
+                <div class="field">
+                  <label for="s5-tagline" data-i18n="lbl_s5_tagline">Девиз / лозунг компании</label>
+                  <input id="s5-tagline" type="text" data-i18n-attr="placeholder:ph_s5_tagline" placeholder="Короткий девиз или обещание бренда...">
+                </div>
+                <div class="field">
+                  <label for="s5-priorities" data-i18n="lbl_s5_priorities">Топ-приоритеты (через запятую)</label>
+                  <input id="s5-priorities" type="text" data-i18n-attr="placeholder:ph_s5_priorities" placeholder="Качество, сроки, прозрачность...">
+                </div>
+              </div>
+              <div class="field">
+                <label for="s5-positioning" data-i18n="lbl_s5_positioning">Позиционирование компании</label>
+                <textarea id="s5-positioning" rows="2" data-i18n-attr="placeholder:ph_s5_positioning" placeholder="Кто вы, для кого и какой результат даёте..."></textarea>
+              </div>
+              <div class="field">
+                <label for="s5-values" data-i18n="lbl_s5_values">Отношение к продукту / команде / клиентам</label>
+                <textarea id="s5-values" rows="3" data-i18n-attr="placeholder:ph_s5_values" placeholder="Продукт: ... | Команда: ... | Клиенты: ..."></textarea>
+              </div>
+              <div class="form-grid-2">
+                <div class="field">
+                  <label for="s5-cities" data-i18n="lbl_s5_cities">Города и целевые локации (через запятую)</label>
+                  <input id="s5-cities" type="text" data-i18n-attr="placeholder:ph_s5_cities" placeholder="Москва, Санкт-Петербург, Онлайн...">
+                </div>
+                <div class="field">
+                  <label for="s5-address" data-i18n="lbl_s5_address">Адрес офиса</label>
+                  <input id="s5-address" type="text" data-i18n-attr="placeholder:ph_s5_address" placeholder="Город, улица, дом...">
+                </div>
+                <div class="field">
+                  <label for="s5-phone" data-i18n="lbl_s5_phone">Телефон</label>
+                  <input id="s5-phone" type="text" data-i18n-attr="placeholder:ph_s5_phone" placeholder="+7 ...">
+                </div>
+                <div class="field">
+                  <label for="s5-email" data-i18n="lbl_s5_email">Эл. почта</label>
+                  <input id="s5-email" type="email" data-i18n-attr="placeholder:ph_s5_email" placeholder="hello@example.ru">
+                </div>
+              </div>
+              <div class="field">
+                <label for="s5-hours" data-i18n="lbl_s5_hours">Часы работы</label>
+                <input id="s5-hours" type="text" data-i18n-attr="placeholder:ph_s5_hours" placeholder="Пн–Пт 10:00–19:00">
+              </div>
+            </div>
+
+            <h3 class="s5-blocks-title" data-i18n="s5_blocks_title">Описания блоков по страницам</h3>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+              <button class="btn" id="s5-autofill-btn" type="button" data-i18n="btn_autofill_blocks">Заполнить бренд-основу и блоки автоматически</button>
+            </div>
+            <div id="s5-autofill-progress" class="logo-progress" hidden aria-live="polite">
+              <div class="logo-progress-head">
+                <span class="logo-spinner" aria-hidden="true"></span>
+                <span id="s5-autofill-progress-text">Подготовка...</span>
+                <span id="s5-autofill-progress-time" class="logo-progress-time">00:00</span>
+              </div>
+              <div class="logo-progress-track"><span id="s5-autofill-progress-fill"></span></div>
+            </div>
+
+            <div id="s5-block-descriptions-list" class="block-desc-list"></div>
+
+            <div class="composer-box" style="margin-top:14px;">
+              <label class="render-toggle" for="s5-render-visuals" style="display:flex; gap:8px; align-items:center; margin-bottom:10px; font-size:13px; cursor:pointer;">
+                <input id="s5-render-visuals" type="checkbox" checked style="width:18px; height:18px; accent-color:var(--accent);">
+                <span data-i18n="lbl_s5_render_visuals">Рендерить визуалы Z-Image (hero каждой страницы, галерея, портреты команды)</span>
+              </label>
+              <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <button class="btn btn-primary" id="s5-build-site-btn" type="button">
+                  <svg class="icon-24"><use href="#icon-bolt"/></svg>
+                  <span data-i18n="btn_build_orchestrator">Собрать сайт через Оркестратор</span>
+                </button>
+                <button class="btn" id="s5-export-zip-btn" type="button" data-i18n="btn_export_zip">Скачать архивом .ZIP</button>
+                <button class="btn" id="s5-reveal-folder-btn" type="button" data-i18n="btn_export_reveal">Открыть папку с готовым сайтом</button>
+              </div>
+              <p id="s5-build-status" style="font-family:var(--font-code); font-size:12px; color:var(--ok); margin:8px 0 0 0;" aria-live="polite"></p>
+            </div>
+
+            <!-- Non-modal post-export PWYW card -->
+            <div id="pwyw-post-export-card" class="composer-box" style="margin-top:12px; border-color:var(--gold);" hidden>
+              <p style="margin:0 0 8px 0;" data-i18n="support_literal_copy">SmartLLM Studio бесплатна. Если проект сэкономил вам время, вы можете поддержать его разработку — можно и 0 ₽.</p>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn btn-primary" id="pwyw-card-donate-btn" type="button" data-i18n="btn_support_donate">Поддержать разработку (DONATE.md) ↗</button>
+                <button class="btn" id="pwyw-card-vkv-btn" type="button" data-i18n="btn_support_vkv">VKVstudio GitHub ↗</button>
+                <button class="btn" id="pwyw-card-not-now-btn" type="button" data-i18n="btn_support_not_now">Не сейчас</button>
+                <button class="btn" id="pwyw-card-dismiss-btn" type="button" data-i18n="btn_support_dismiss">Больше не показывать</button>
+              </div>
+            </div>
+
+            <div class="step-footer-nav">
+              <button class="btn step-prev-btn" id="s5-prev-btn" data-target="4" type="button" data-i18n="btn_step_back">← Назад к выбору блоков</button>
+              <span></span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- 3. PERSISTENT RIGHT LIVE STAGE -->
+    <aside class="atelier-stage" id="atelier-live-stage" aria-label="Live Stage">
+      <div class="stage-toolbar">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <button class="btn stage-vp-btn" id="vp-btn-1440" data-vp="100%" type="button">1440</button>
+          <button class="btn stage-vp-btn" id="vp-btn-834" data-vp="834px" type="button">834</button>
+          <button class="btn stage-vp-btn" id="vp-btn-390" data-vp="390px" type="button">390</button>
+          <select id="stage-route-select" aria-label="Stage Route" style="width:140px;"></select>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <button class="btn" id="stage-reload-btn" type="button" data-i18n-attr="title:btn_stage_reload" title="Обновить макет">
+            <svg class="icon-24"><use href="#icon-refresh"/></svg>
+          </button>
+          <button class="btn" id="stage-browser-btn" type="button" data-i18n-attr="title:btn_stage_browser" title="Открыть в браузере">
+            <svg class="icon-24"><use href="#icon-external"/></svg>
+          </button>
+          <button class="btn" id="stage-audit-btn" type="button" data-i18n="btn_stage_audit">Авто-SEO/CSP</button>
+        </div>
+      </div>
+
+      <div class="stage-viewport-wrap">
+        <iframe class="stage-iframe" id="live-stage-iframe" title="Live Stage Preview" src="/preview/default/index.html?rev=1"></iframe>
+        <div class="stage-audit-overlay" id="stage-audit-overlay" hidden>
+          <div data-i18n="audit_csp_ok">CSP: SHA-256 ПРОВЕРЕНО</div>
+          <div>SEO / AEO / GEO: JSON-LD @graph + llms.txt + robots.txt</div>
+          <div>WCAG 2.2: AAA / 100svh</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- 4. BOTTOM TELEMETRY HUD -->
+  <footer class="atelier-hud">
+    <div class="hud-metrics">
+      <span><span class="hud-dot" id="hud-dot"></span><span data-i18n="hud_engine_label">Движок:</span> <strong id="hud-engine-state">idle</strong></span>
+      <span><span data-i18n="hud_vram_label">Видеопамять:</span> <strong id="hud-vram-val">0.0 MiB</strong></span>
+      <span><span data-i18n="hud_ram_label">Доступно ОЗУ:</span> <strong id="hud-ram-val">24.0 GiB</strong></span>
+      <span><span data-i18n="hud_speed_label">Скорость:</span> <strong id="hud-speed-val">0.0 tok/s</strong></span>
+      <span><span data-i18n="hud_lock_label">Блокировка:</span> <strong id="hud-lock-val">free</strong></span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <button class="btn" id="hud-start-llm-btn" type="button" style="min-height:24px; padding:2px 10px;" data-i18n="btn_hud_start_llm">Запустить модель</button>
+      <button class="btn" id="hud-stop-llm-btn" type="button" style="min-height:24px; padding:2px 10px;" data-i18n="btn_hud_stop_llm">Освободить память</button>
+      <button class="btn btn-quiet" id="hud-support-link-btn" type="button" style="min-height:24px; padding:2px 8px;" data-i18n="nav_support">Поддержка</button>
+    </div>
+  </footer>
+
+  <!-- SETTINGS MODAL -->
+  <div class="overlay-backdrop" id="modal-settings" hidden>
+    <div class="modal-dialog" role="dialog" aria-labelledby="modal-settings-h2">
+      <h2 class="display-h2" id="modal-settings-h2" data-i18n="modal_settings_title">Настройки путей к локальным движкам</h2>
+      <div class="field">
+        <label for="set-model-input" data-i18n="lbl_set_model">Путь к весам модели (GGUF)</label>
+        <input id="set-model-input" type="text">
+      </div>
+      <div class="field">
+        <label for="set-llama-input" data-i18n="lbl_set_llama">Путь к llama-server</label>
+        <input id="set-llama-input" type="text">
+      </div>
+      <div class="field">
+        <label for="set-sd-input" data-i18n="lbl_set_sd">Путь к stable-diffusion.cpp (sd-cli)</label>
+        <input id="set-sd-input" type="text">
+      </div>
+      <div class="field">
+        <label for="set-support-mode" data-i18n="lbl_set_support_mode">Режим карточки поддержки</label>
+        <select id="set-support-mode">
+          <option value="free_launch" data-i18n="opt_mode_free">free_launch (Бесплатный запуск)</option>
+          <option value="pwyw" data-i18n="opt_mode_pwyw">pwyw (Показ после экспорта)</option>
+        </select>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:16px;">
+        <button class="btn" id="btn-close-settings" type="button" data-i18n="btn_settings_close">Закрыть</button>
+        <button class="btn btn-primary" id="btn-save-settings" type="button" data-i18n="btn_settings_save">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT & SUPPORT SHEET -->
+  <div class="overlay-backdrop" id="modal-support" hidden>
+    <div class="modal-dialog" role="dialog" aria-labelledby="modal-support-h2">
+      <h2 class="display-h2" id="modal-support-h2" data-i18n="modal_support_title">О программе и поддержка SmartLLM Studio</h2>
+      <p style="font-size:15px; color:var(--text-1); margin-bottom:8px;" data-i18n="support_literal_copy">SmartLLM Studio бесплатна. Если проект сэкономил вам время, вы можете поддержать его разработку — можно и 0 ₽.</p>
+      <p class="sub-lead" data-i18n="support_built_by">Создано в VKVstudio · vkvstudio.com</p>
+      <p class="sub-lead" data-i18n="support_license_note">Код открыт по лицензии FSL-1.1-ALv2 (переходит в Apache-2.0 через 2 года). Вы владеете 100% прав на все созданные сайты, код и графику.</p>
+      <div class="wallet-list">
+        <div class="wallet-row">
+          <div class="wallet-meta">
+            <div class="wallet-net" data-i18n="lbl_wallet_trc20">USDT · TRX (сеть Tron TRC-20, рекомендуется)</div>
+            <code class="wallet-code">TCe57bLA4KBqcPc3ApKauE4VHLd3WqW1WT</code>
+          </div>
+          <button class="btn wallet-copy-btn" id="btn-copy-wallet-trc20" data-address="TCe57bLA4KBqcPc3ApKauE4VHLd3WqW1WT" type="button" data-i18n="btn_copy_wallet">Копировать</button>
+        </div>
+        <div class="wallet-row">
+          <div class="wallet-meta">
+            <div class="wallet-net" data-i18n="lbl_wallet_ton">USDT · TON (сеть TON, рекомендуется)</div>
+            <code class="wallet-code">UQAEvC5puI21Z5OtPTo6SilVWtElgyZXvH8VIHLLKGxRL4AO</code>
+          </div>
+          <button class="btn wallet-copy-btn" id="btn-copy-wallet-ton" data-address="UQAEvC5puI21Z5OtPTo6SilVWtElgyZXvH8VIHLLKGxRL4AO" type="button" data-i18n="btn_copy_wallet">Копировать</button>
+        </div>
+        <div class="wallet-row">
+          <div class="wallet-meta">
+            <div class="wallet-net" data-i18n="lbl_wallet_evm">USDT · USDC · ETH (EVM: Ethereum, Arbitrum, Base, Optimism, Polygon, BSC)</div>
+            <code class="wallet-code">0xdcE037bdF1c580A98D58815C508F7B4d7f7c4603</code>
+          </div>
+          <button class="btn wallet-copy-btn" id="btn-copy-wallet-evm" data-address="0xdcE037bdF1c580A98D58815C508F7B4d7f7c4603" type="button" data-i18n="btn_copy_wallet">Копировать</button>
+        </div>
+        <div class="wallet-row">
+          <div class="wallet-meta">
+            <div class="wallet-net" data-i18n="lbl_wallet_btc">BTC (Bitcoin Native SegWit)</div>
+            <code class="wallet-code">bc1q6nvqcw53r36w9gsjw429d6v3reshjr0pn8frrm</code>
+          </div>
+          <button class="btn wallet-copy-btn" id="btn-copy-wallet-btc" data-address="bc1q6nvqcw53r36w9gsjw429d6v3reshjr0pn8frrm" type="button" data-i18n="btn_copy_wallet">Копировать</button>
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; align-items:center;">
+        <button class="btn btn-primary" id="btn-support-donate" type="button" data-i18n="btn_support_donate">Поддержать разработку (DONATE.md) ↗</button>
+        <button class="btn" id="btn-support-vkv" type="button" data-i18n="btn_support_vkv">VKVstudio GitHub ↗</button>
+        <button class="btn" id="btn-close-support" type="button" data-i18n="btn_support_close">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

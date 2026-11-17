@@ -1,6 +1,6 @@
 # SmartLLM Offline Evaluation Suite (`eval/suite/`)
 
-**Версия:** `1.0.0`  
+**Версия:** `2.2.4`  
 **Режим:** Строго офлайн / локальный (`$0`, внешние платные API и OpenRouter заблокированы в `run_suite.py` на уровне кода).
 
 ---
@@ -11,7 +11,7 @@
 1. **Донора до обрезки (`Qwen/Qwen3.8-Flash-Next` full 512 экспертов/слой):**
    - Сохранённые полные ответы на `T1–T3` (`eval/suite/runs/qwen3.8-think-8k/` и `eval/suite/runs/qwen3.8-no-think/`),
    - Локальный референс по всем 12 задачам на `Gyro-M` (`Qwen3.8-Flash-Next-Gyro-M-TQ2_0.gguf` + `mmproj-Qwen3.8-Flash-Next-BF16.gguf`, бюджет reasoning `~4000`).
-2. **Обрезанной модели (`512 → 205` экспертов/слой, `IQ3_XXS` / `IQ3_S` + `imatrix` на mainline `llama.cpp`)**.
+2. **Обрезанной модели (`512 → 205` или целевого числа экспертов по анти-своп бюджету Шага 3.6, `IQ3_XXS` / `IQ3_S` + `imatrix` на mainline `llama.cpp`)**.
 
 ---
 
@@ -19,7 +19,7 @@
 
 Распределение задач:
 - **Языки и модальности:** **6 EN** (`t1, t4, t5, t6, t9, t11`) + **4 RU** (`t3, t7, t8, t10`) + **2 по скриншоту Vision-to-Code** (`t2, t12`) = **12 задач**.
-- **Преемственность:** `t1`, `t2`, `t3` включены из `eval/round2` **без единого изменения промпта** (побайтовое совпадение проверено).
+- **Преемственность и честное сравнение (`t1–t12`):** пользовательский `prompt` `t2` взят из `eval/round2` побайтово (`user_prompt_origin: "round2_exact"`), а `t1`/`t3` сохраняют пользовательскую постановку `round2` с автосборочным плейсхолдером CSP (`user_prompt_origin: "round2_csp_placeholder_only"`). По сравнению с базовой версией `1.0.0` (`eval/suite/tasks_v1_archive.json`, на которой исторически прогонялись `eval/round2` `t1–t3` и `gyro-m-local` `t1–t12`), пользовательские `prompt` `t2, t4, t12` не менялись, а `t5–t11` были расширены начиная с `v2.0.0`. В `v2.2.0` по **всем 12 задачам (`t1–t12`)** расширен `system_prompt` (общий офлайн-контракт сборки: `FILE:`, запрет `.style.*`, `<head>` JSON-LD, единые CSS-инварианты `375px`, `prefers-reduced-motion`, чистый UTF-8 без CJK/омоглифов, формат `_headers` и строгая гигиена TypeScript для `t4`). Параметры сэмплера `v2.2.4` (`temperature=0.5`, `min_p=0.08`, `top_k=20`, `top_p=0.95`, синтаксически-безопасный `DRY`: `dry_multiplier=0.5`, `dry_base=1.75`, `dry_allowed_length=24`, `dry_penalty_last_n=192`, `dry_sequence_breakers=["\n", "<", ">", "{", "}", ";", "="]`, `repeat_penalty=1.0`, `frequency_penalty=0.0`, `presence_penalty=0.0`, CLI `--logit-bias` `-1000` по 11 служебным/EOG токенам + мягкое подавление спайков `248046-3.0` в `run_suite.py` / `step8_run_eval_autonomous.py`) относятся к инференсу, а не к `system_prompt`; при сопоставлении `v2.2.4` (`IQ3_S` vs `IQ3_XXS`) с архивами `round2` и `gyro-m-local` (`1.0.0`) различия `system_prompt` и параметров сэмплинга фиксируются явно.
 - **Покрытие всех 6 дизайн-канонов в `OKLCH`:**
   1. `Industrial B2B Engineering` — `t1` (EN, котлы 5–25 МВт) и `t11` (EN, волновые редукторы + 3D/Canvas кинематика).
   2. `Luxury Minimalism` — `t3` (RU, «Северная Мануфактура», столярная мануфактура).
@@ -72,7 +72,7 @@
 
 ## 4. Судьи (`judge_rubric.md` + `aggregate_judges.py`)
 
-- 2 независимых слепых судьи (`Gemini 3.8 Flash`).
+- 2 независимых слепых судьи (независимые семейства мультимодальных моделей или локальная VLM `Family 1 + Family 2`).
 - Каждый судья независимо выставляет оценки `0–10` по 4 осям (`canon`, `design`, `copy`, `ru`) в `results/judge_1.json` и `results/judge_2.json`.
 - Скрипт `aggregate_judges.py` считает средние баллы и автоматически помечает любое расхождение `|score_1 - score_2| > 2.0` (`discrepancy_flagged: true`).
 
@@ -91,5 +91,5 @@ node eval\suite\browser_and_lh_suite.mjs
 .venv\Scripts\python.exe eval\suite\aggregate_judges.py
 
 # 4. Локальный прогон всех 12 задач через локальный OpenAI-совместимый сервер (llama-server):
-.venv\Scripts\python.exe eval\suite\run_suite.py --endpoint http://127.0.0.1:8080/v1/chat/completions --model-slug qwen3.8-reap-205 --model-id qwen3.8-reap-205 --reasoning-budget 4000
+.venv\Scripts\python.exe eval\suite\run_suite.py --endpoint http://127.0.0.1:8080/v1/chat/completions --model-slug smartllm-205e-iq3-s --model-id smartllm-205e-iq3-s --reasoning-budget 4000 --temperature 0.5 --min-p 0.08 --dry-multiplier 0.5 --dry-allowed-length 24 --dry-penalty-last-n 192 --eos-logit-bias -3.0
 ```

@@ -23,21 +23,55 @@
       }
     },
     "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/gyro-m-local/t1/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": false,
+      "raw_scripts_covered": false,
+      "raw_headers_csp": {
+        "present": true,
+        "has_unsafe_inline": false,
+        "has_object_src_none": false,
+        "has_trusted_types": false,
+        "has_frame_ancestors_none": true
+      }
+    },
     "csp": {
       "has_meta_csp": true,
       "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
       "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 3,
+      "raw_csp_passed": false
     },
-    "external_urls_in_attrs": [
+    "external_urls_in_attrs": [],
+    "informational_urls": [
       "https://thermotech.example/"
     ],
     "seo_meta": {
       "has_title": true,
       "has_description": true,
       "has_canonical": true,
+      "canonical_href": "https://thermotech.example/",
       "has_og_title": true,
-      "has_og_description": true
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "json_ld": {
       "blocks_count": 1,
@@ -53,21 +87,85 @@
       "faq_all_verbatim": true,
       "has_all_4_types": true,
       "product_count": 3,
-      "faq_count": 5
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "What fuel options are available for Thermotech boilers?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "What is the typical lead time for manufacturing?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Can Thermotech supply complete boiler-house packages?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "How are emissions and combustion compliance handled?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "What maintenance access is provided?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
     },
     "_headers": {
       "exists": true,
       "all_passed": false,
       "has_route_rule": true,
+      "routes_found": [
+        "/*"
+      ],
       "checks": {
         "Content-Security-Policy": true,
         "frame-ancestors 'none'": true,
         "Strict-Transport-Security": true,
         "X-Content-Type-Options": true,
         "Referrer-Policy": true,
-        "Permissions-Policy": true,
+        "Permissions-Policy": false,
         "Cross-Origin-Opener-Policy": false
+      },
+      "hsts_details": {
+        "present": true,
+        "max_age": 63072000,
+        "has_include_subdomains": true,
+        "has_preload": true,
+        "passed": true
+      },
+      "cross_origin_isolation": {
+        "coop": "",
+        "coep": "",
+        "corp": "",
+        "coop_same_origin": false,
+        "coep_valid": false,
+        "corp_valid": false,
+        "full_isolation_passed": false
+      },
+      "csp_details": {
+        "has_object_src_none": true,
+        "has_require_trusted_types": false,
+        "has_unsafe_inline": false
       }
+    },
+    "robots_txt": {
+      "exists": true,
+      "valid_syntax": true,
+      "user_agents": [
+        "*"
+      ],
+      "has_wildcard_agent": true,
+      "ai_training_bots_mentioned": [],
+      "ai_search_bots_mentioned": [],
+      "has_ai_crawler_policy": false,
+      "has_sitemap": true
     },
     "llms_txt": {
       "exists": true,
@@ -76,6 +174,7 @@
       "has_h2_sections": true
     },
     "semantics": {
+      "html_lang": "en",
       "h1_count": 1,
       "landmarks": [
         "figure",
@@ -89,12 +188,40 @@
       "canvas_count": 0,
       "form_inputs_count": 7,
       "form_inputs_labeled": 7,
-      "has_prefers_reduced_motion": true
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": true,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": true,
+        "bare_100vh_count": 1,
+        "vh_hygiene_passed": false,
+        "viewport_vh_passed": false
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 15,
       "max_contrast_pair": 18.79,
+      "max_contrast_ratio_est": 18.79,
+      "semantic_text_bg_contrast": 18.79,
+      "semantic_bg_fg_min_contrast": 18.79,
+      "min_muted_bg_contrast": 9.92,
       "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--bg vs --text": 18.79,
+        "--bg-2 vs --text": 18.04,
+        "--surface vs --text": 17.4,
+        "--surface-2 vs --text": 16.32
+      },
       "tokens": {
         "--bg": {
           "raw": "oklch(0.14 0.012 230)",
@@ -171,7 +298,7 @@
           "L": 0.74,
           "C": 0.2,
           "H": 45.0,
-          "luminance": 0.3472
+          "luminance": 0.3793
         },
         "--accent-ink": {
           "raw": "oklch(0.16 0.02 45)",
@@ -199,19 +326,54 @@
           "L": 0.82,
           "C": 0.14,
           "H": 200.0,
-          "luminance": 0.5838
+          "luminance": 0.5832
         }
       }
     },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 5078,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 0,
+      "em_dash_per_100w": 0.0,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 0,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": true,
       "raw_has_unsafe_inline": false,
-      "headers_patched": true,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "headers_patched": false,
       "computed_style_block_hashes_count": 1,
       "computed_inline_style_attr_hashes_count": 5,
-      "computed_script_hashes_count": 2,
-      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-f8fG4UQxFsfEGHfEd426oda0NuCYB5r+6W/2Psa+0Vg=' 'sha256-sZGPBEtStjhaBNuXRBAg3dI5j7a3DLwX1b9XmlgwC9U=' 'sha256-5WGK7UeEf0ArHKhMFhdgpbfZnKiZiIGv1x5nW1x8B2U=' 'sha256-7poypFXTUhkl9hnMWCBEDT1qyRIgu92i5qkJKXdSw2c=' 'sha256-UThYskA/+OmQhgO/Tohf12mGvoBAii+rnS82WD4O3B8=' 'sha256-jYQpkDCaJDAtvSwWgwYbFjrHZ9PxLzGKxSOL6bb0/qw='; script-src 'self' 'sha256-qYy+ZyJhcrGwhA12qszZ2ufHV8UsX7Z8jHsAWpdDG70=' 'sha256-yuHh1LFldYiT2gRBtSy3k4PcXiqM5dxm6zXlLiY8eDA='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "computed_script_hashes_count": 1,
+      "patched_meta_csp": "default-src 'self'; script-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; style-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; manifest-src 'self'; report-to csp-endpoint;"
     }
   },
   "t2": {
@@ -226,21 +388,49 @@
       }
     },
     "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/gyro-m-local/t2/orig/index.html",
+      "raw_meta_csp_present": false,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": false,
+      "raw_scripts_covered": true
+    },
     "csp": {
-      "has_meta_csp": true,
+      "has_meta_csp": false,
       "has_unsafe_inline": false,
-      "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": false,
+      "all_script_hashes_matched": false,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": false
     },
     "external_urls_in_attrs": [],
+    "informational_urls": [],
     "seo_meta": {
       "has_title": true,
       "has_description": false,
       "has_canonical": false,
+      "canonical_href": null,
       "has_og_title": false,
-      "has_og_description": false
+      "has_og_description": false,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "semantics": {
+      "html_lang": "en",
       "h1_count": 1,
       "landmarks": [
         "article",
@@ -255,12 +445,39 @@
       "canvas_count": 0,
       "form_inputs_count": 0,
       "form_inputs_labeled": 0,
-      "has_prefers_reduced_motion": false
+      "has_prefers_reduced_motion": false,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 11,
       "max_contrast_pair": 13.33,
+      "max_contrast_ratio_est": 13.33,
+      "semantic_text_bg_contrast": 13.33,
+      "semantic_bg_fg_min_contrast": 13.33,
+      "min_muted_bg_contrast": null,
       "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--bg vs --ink": 12.67,
+        "--bg-alt vs --ink": 11.92,
+        "--bg-card vs --ink": 13.33
+      },
       "tokens": {
         "--bg": {
           "raw": "oklch(0.945 0.018 92)",
@@ -337,19 +554,54 @@
           "L": 0.46,
           "C": 0.09,
           "H": 172.0,
-          "luminance": 0.1049
+          "luminance": 0.1046
         }
       }
     },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 1966,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 1,
+      "em_dash_per_100w": 0.26,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 1,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": false,
       "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
       "headers_patched": false,
       "computed_style_block_hashes_count": 1,
       "computed_inline_style_attr_hashes_count": 2,
       "computed_script_hashes_count": 0,
-      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-mNpceO/WhkLGl9PrhjO+CzTZwJM+xfI8onD5jRnzc9Y=' 'sha256-p3trxylQtsyLV8RTlQ9hLC4+k1kwM9wFCZHa/gIiAxI=' 'sha256-0LFnhhlHXWXMFUJzX4zFSZDTx/jme+kCDlah7hnh8MA='; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "patched_meta_csp": ""
     }
   },
   "t3": {
@@ -376,21 +628,55 @@
       }
     },
     "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/gyro-m-local/t3/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": false,
+      "raw_scripts_covered": true,
+      "raw_headers_csp": {
+        "present": true,
+        "has_unsafe_inline": false,
+        "has_object_src_none": true,
+        "has_trusted_types": false,
+        "has_frame_ancestors_none": true
+      }
+    },
     "csp": {
       "has_meta_csp": true,
       "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
       "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": false
     },
-    "external_urls_in_attrs": [
+    "external_urls_in_attrs": [],
+    "informational_urls": [
       "https://severnaya-manufactura.example/"
     ],
     "seo_meta": {
       "has_title": true,
       "has_description": true,
       "has_canonical": true,
+      "canonical_href": "https://severnaya-manufactura.example/",
       "has_og_title": true,
-      "has_og_description": true
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "json_ld": {
       "blocks_count": 1,
@@ -407,12 +693,43 @@
       "faq_all_verbatim": true,
       "has_all_4_types": true,
       "product_count": 3,
-      "faq_count": 5
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "Какая древесина используется в производстве?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Как обрабатывается столешница?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Сколько занимает изготовление?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Можно ли изменить размеры и отделку?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Как происходит доставка и сборка?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
     },
     "_headers": {
       "exists": true,
       "all_passed": true,
       "has_route_rule": true,
+      "routes_found": [
+        "/*"
+      ],
       "checks": {
         "Content-Security-Policy": true,
         "frame-ancestors 'none'": true,
@@ -421,7 +738,40 @@
         "Referrer-Policy": true,
         "Permissions-Policy": true,
         "Cross-Origin-Opener-Policy": true
+      },
+      "hsts_details": {
+        "present": true,
+        "max_age": 63072000,
+        "has_include_subdomains": true,
+        "has_preload": true,
+        "passed": true
+      },
+      "cross_origin_isolation": {
+        "coop": "same-origin",
+        "coep": "",
+        "corp": "",
+        "coop_same_origin": true,
+        "coep_valid": false,
+        "corp_valid": false,
+        "full_isolation_passed": false
+      },
+      "csp_details": {
+        "has_object_src_none": true,
+        "has_require_trusted_types": false,
+        "has_unsafe_inline": false
       }
+    },
+    "robots_txt": {
+      "exists": true,
+      "valid_syntax": true,
+      "user_agents": [
+        "*"
+      ],
+      "has_wildcard_agent": true,
+      "ai_training_bots_mentioned": [],
+      "ai_search_bots_mentioned": [],
+      "has_ai_crawler_policy": false,
+      "has_sitemap": true
     },
     "llms_txt": {
       "exists": true,
@@ -430,6 +780,7 @@
       "has_h2_sections": true
     },
     "semantics": {
+      "html_lang": "ru",
       "h1_count": 1,
       "landmarks": [
         "article",
@@ -443,12 +794,38 @@
       "canvas_count": 0,
       "form_inputs_count": 6,
       "form_inputs_labeled": 6,
-      "has_prefers_reduced_motion": true
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 7,
       "max_contrast_pair": 18.32,
+      "max_contrast_ratio_est": 18.32,
+      "semantic_text_bg_contrast": 18.32,
+      "semantic_bg_fg_min_contrast": 18.32,
+      "min_muted_bg_contrast": 6.43,
       "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--bg vs --ink": 16.77,
+        "--surface vs --ink": 18.32
+      },
       "tokens": {
         "--bg": {
           "raw": "oklch(0.95 0.01 85)",
@@ -497,19 +874,54 @@
           "L": 0.3,
           "C": 0.08,
           "H": 65.0,
-          "luminance": 0.0258
+          "luminance": 0.0259
         }
       }
     },
+    "copy_hygiene": {
+      "expected_lang": "ru",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 3907,
+      "latin_chars_count": 1358,
+      "cyrillic_density": 0.7421,
+      "latin_density": 0.2579,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 3,
+      "em_dash_per_100w": 0.37,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 3,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": true,
       "raw_has_unsafe_inline": false,
-      "headers_patched": true,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "headers_patched": false,
       "computed_style_block_hashes_count": 1,
       "computed_inline_style_attr_hashes_count": 1,
-      "computed_script_hashes_count": 1,
-      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-g+xO71pQPe7LY/5GEauBcnkujiYhor6kCFJg4smNo1M=' 'sha256-aqNNdDLnnrDOnTNdkJpYlAxKVJtLt9CtFLklmInuUAE='; script-src 'self' 'sha256-IwBwItXqD9sEDkiQ3F6IsjH5i6p/0y+0DeJp61qnpPk='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "computed_script_hashes_count": 0,
+      "patched_meta_csp": "default-src 'self'; script-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; style-src 'self' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' data:; img-src 'self' data:; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests"
     }
   },
   "t4": {
@@ -524,11 +936,46 @@
       }
     },
     "all_required_files_present": true,
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 8894,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 0,
+      "em_dash_per_100w": 0.0,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 0,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
     "typescript_eval": {
       "tsc_strict_passed": false,
       "tsc_exit_code": 2,
-      "tsc_diagnostics": "eval/suite/runs/gyro-m-local/t4/dag.ts(405,20): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.",
+      "tsc_diagnostics": "dag.ts(405,20): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.",
       "explicit_any_count": 0,
+      "promise_all_code_count": 0,
+      "promise_all_comment_count": 0,
       "compiled_js_exists": true,
       "tests_passed": 5,
       "tests_total": 12,
@@ -537,7 +984,7 @@
           "id": 1,
           "name": "Empty graph validate and execute",
           "passed": true,
-          "durationMs": 2.07
+          "durationMs": 0.77
         },
         {
           "id": 2,
@@ -557,25 +1004,25 @@
           "id": 4,
           "name": "3-node cycle throws DAGCycleError with cycle array",
           "passed": true,
-          "durationMs": 2.34
+          "durationMs": 0.5
         },
         {
           "id": 5,
           "name": "Self-dependency cycle A -> A throws DAGCycleError",
           "passed": true,
-          "durationMs": 2.09
+          "durationMs": 0.52
         },
         {
           "id": 6,
           "name": "Missing dependency throws DAGValidationError",
           "passed": true,
-          "durationMs": 1.58
+          "durationMs": 0.45
         },
         {
           "id": 7,
           "name": "Duplicate node registration throws DAGValidationError",
           "passed": true,
-          "durationMs": 5.02
+          "durationMs": 0.47
         },
         {
           "id": 8,
@@ -639,19 +1086,46 @@
       }
     },
     "all_required_files_present": false,
+    "html_structurally_complete": false,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/gyro-m-local/t5/orig/index.html",
+      "raw_meta_csp_present": false,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true
+    },
     "csp": {
-      "has_meta_csp": true,
+      "has_meta_csp": false,
       "has_unsafe_inline": false,
-      "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": false,
+      "all_script_hashes_matched": false,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": false
     },
     "external_urls_in_attrs": [],
+    "informational_urls": [],
     "seo_meta": {
       "has_title": false,
       "has_description": false,
       "has_canonical": false,
+      "canonical_href": null,
       "has_og_title": false,
-      "has_og_description": false
+      "has_og_description": false,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "json_ld": {
       "blocks_count": 0,
@@ -663,37 +1137,99 @@
       "exists": false,
       "all_passed": false
     },
+    "robots_txt": {
+      "exists": false
+    },
     "llms_txt": {
       "exists": false
     },
     "semantics": {
+      "html_lang": "en",
       "h1_count": 0,
       "landmarks": [],
       "svg_count": 0,
       "canvas_count": 0,
       "form_inputs_count": 0,
       "form_inputs_labeled": 0,
-      "has_prefers_reduced_motion": false
+      "has_prefers_reduced_motion": false,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 0,
       "max_contrast_pair": 0.0,
+      "max_contrast_ratio_est": 0.0,
+      "semantic_text_bg_contrast": 0.0,
+      "semantic_bg_fg_min_contrast": 0.0,
+      "min_muted_bg_contrast": null,
       "passes_aaa_7_to_1": false,
+      "passes_aa_4_5_to_1": false,
+      "semantic_bg_fg_contrast_passed": false,
+      "passes_any_pair_aaa_7_to_1": false,
+      "semantic_pairs": {},
       "tokens": {}
     },
     "task_specific": {
       "has_subgrid": false,
       "has_tabular_nums": false
     },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 12054,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 0,
+      "em_dash_per_100w": 0.0,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 0,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": false,
       "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
       "headers_patched": false,
       "computed_style_block_hashes_count": 0,
       "computed_inline_style_attr_hashes_count": 0,
       "computed_script_hashes_count": 0,
-      "injected_meta_csp": "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "patched_meta_csp": ""
     }
   },
   "t6": {
@@ -720,21 +1256,48 @@
       }
     },
     "all_required_files_present": false,
+    "html_structurally_complete": false,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/gyro-m-local/t6/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": false,
+      "raw_scripts_covered": false
+    },
     "csp": {
       "has_meta_csp": true,
       "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
       "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": false
     },
-    "external_urls_in_attrs": [
+    "external_urls_in_attrs": [],
+    "informational_urls": [
       "https://vortexcompute.example/index.html"
     ],
     "seo_meta": {
       "has_title": true,
       "has_description": true,
       "has_canonical": true,
+      "canonical_href": "https://vortexcompute.example/index.html",
       "has_og_title": true,
-      "has_og_description": true
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "json_ld": {
       "blocks_count": 1,
@@ -747,19 +1310,51 @@
         "FAQPage",
         "BreadcrumbList"
       ],
-      "faq_all_verbatim": true,
+      "faq_all_verbatim": false,
       "has_all_4_types": true,
       "product_count": 3,
-      "faq_count": 5
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "How does VORTEX COMPUTE shard tensors across GPUs without increasing tail latency?",
+          "q_in_html": false,
+          "a_in_html": false
+        },
+        {
+          "q": "Why is NVMe-over-Fabrics used for model weights instead of keeping all parameters in VRAM?",
+          "q_in_html": false,
+          "a_in_html": false
+        },
+        {
+          "q": "What is speculative tree verification in VORTEX COMPUTE?",
+          "q_in_html": false,
+          "a_in_html": false
+        },
+        {
+          "q": "How does zero-copy KV ring reduce memory traffic during long-context inference?",
+          "q_in_html": false,
+          "a_in_html": false
+        },
+        {
+          "q": "How does hardware enclave isolation protect sovereign inference workloads?",
+          "q_in_html": false,
+          "a_in_html": false
+        }
+      ]
     },
     "_headers": {
       "exists": false,
       "all_passed": false
     },
+    "robots_txt": {
+      "exists": false
+    },
     "llms_txt": {
       "exists": false
     },
     "semantics": {
+      "html_lang": "en",
       "h1_count": 1,
       "landmarks": [
         "article",
@@ -772,12 +1367,35 @@
       "canvas_count": 1,
       "form_inputs_count": 5,
       "form_inputs_labeled": 5,
-      "has_prefers_reduced_motion": true
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": true,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": true,
+        "bare_100vh_count": 1,
+        "vh_hygiene_passed": false,
+        "viewport_vh_passed": false
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 11,
       "max_contrast_pair": 17.4,
+      "max_contrast_ratio_est": 17.4,
+      "semantic_text_bg_contrast": 17.4,
+      "semantic_bg_fg_min_contrast": 17.4,
+      "min_muted_bg_contrast": 8.88,
       "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {},
       "tokens": {
         "--obsidian": {
           "raw": "oklch(0.13 0.02 260)",
@@ -833,7 +1451,7 @@
           "L": 0.76,
           "C": 0.15,
           "H": 195.0,
-          "luminance": 0.4833
+          "luminance": 0.4657
         },
         "--emerald": {
           "raw": "oklch(0.72 0.17 155)",
@@ -847,7 +1465,7 @@
           "L": 0.78,
           "C": 0.14,
           "H": 25.0,
-          "luminance": 0.4347
+          "luminance": 0.4481
         },
         "--amber": {
           "raw": "oklch(0.82 0.12 90)",
@@ -862,15 +1480,50 @@
       "has_canvas": true,
       "has_webgl_or_shader": true
     },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 3078,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 12,
+      "em_dash_per_100w": 2.19,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 12,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": true,
       "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
       "headers_patched": false,
       "computed_style_block_hashes_count": 1,
       "computed_inline_style_attr_hashes_count": 1,
-      "computed_script_hashes_count": 2,
-      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-tk2unTQd4aCGuPkxO/jI2jAmuqXEc3ajzhWCgZCEM5U=' 'sha256-QFDSFDz4ZRW08ReaLbvQQKTZk1cdfx1Tv1g6tX9Be8U='; script-src 'self' 'sha256-3VhnDDDbhaxii/uqYGL2wD2w6DGnjLvk25a5YZlIE58=' 'sha256-KLJy7oU713UcBCk1faghyrxwfXbSwb4Pztqwy3rA9Pk='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "computed_script_hashes_count": 1,
+      "patched_meta_csp": "default-src 'self'; script-src 'sha256-Zm9vYmFyLWludmFsaWQtaGFzaA==;' 'nonce-vortex-2024'; style-src 'sha256-Zm9vYmFyLWludmFsaWQtaGFzaA==;' 'nonce-vortex-2024'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; report-uri /csp-report"
     }
   },
   "t7": {
@@ -897,19 +1550,46 @@
       }
     },
     "all_required_files_present": false,
+    "html_structurally_complete": false,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/gyro-m-local/t7/orig/index.html",
+      "raw_meta_csp_present": false,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true
+    },
     "csp": {
-      "has_meta_csp": true,
+      "has_meta_csp": false,
       "has_unsafe_inline": false,
-      "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": false,
+      "all_script_hashes_matched": false,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": false
     },
     "external_urls_in_attrs": [],
+    "informational_urls": [],
     "seo_meta": {
       "has_title": false,
       "has_description": false,
       "has_canonical": false,
+      "canonical_href": null,
       "has_og_title": false,
-      "has_og_description": false
+      "has_og_description": false,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "json_ld": {
       "blocks_count": 0,
@@ -921,37 +1601,99 @@
       "exists": false,
       "all_passed": false
     },
+    "robots_txt": {
+      "exists": false
+    },
     "llms_txt": {
       "exists": false
     },
     "semantics": {
+      "html_lang": "ru",
       "h1_count": 0,
       "landmarks": [],
       "svg_count": 0,
       "canvas_count": 0,
       "form_inputs_count": 0,
       "form_inputs_labeled": 0,
-      "has_prefers_reduced_motion": false
+      "has_prefers_reduced_motion": false,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 0,
       "max_contrast_pair": 0.0,
+      "max_contrast_ratio_est": 0.0,
+      "semantic_text_bg_contrast": 0.0,
+      "semantic_bg_fg_min_contrast": 0.0,
+      "min_muted_bg_contrast": null,
       "passes_aaa_7_to_1": false,
+      "passes_aa_4_5_to_1": false,
+      "semantic_bg_fg_contrast_passed": false,
+      "passes_any_pair_aaa_7_to_1": false,
+      "semantic_pairs": {},
       "tokens": {}
     },
     "task_specific": {
       "has_hard_offset_shadow": false,
       "has_interactive_calc": false
     },
+    "copy_hygiene": {
+      "expected_lang": "ru",
+      "lang_check_passed": false,
+      "lang_gate_passed": false,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 10066,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 0,
+      "em_dash_per_100w": 0.0,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 0,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": false
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": false,
       "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
       "headers_patched": false,
       "computed_style_block_hashes_count": 0,
       "computed_inline_style_attr_hashes_count": 0,
       "computed_script_hashes_count": 0,
-      "injected_meta_csp": "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "patched_meta_csp": ""
     }
   },
   "t8": {
@@ -978,21 +1720,48 @@
       }
     },
     "all_required_files_present": false,
-    "csp": {
-      "has_meta_csp": true,
-      "has_unsafe_inline": false,
-      "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+    "html_structurally_complete": false,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/gyro-m-local/t8/orig/index.html",
+      "raw_meta_csp_present": false,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true
     },
-    "external_urls_in_attrs": [
+    "csp": {
+      "has_meta_csp": false,
+      "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": false,
+      "all_script_hashes_matched": false,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": false
+    },
+    "external_urls_in_attrs": [],
+    "informational_urls": [
       "https://example.org/arhiv-tehnologiy/issue-14/euv-13-5-nm/"
     ],
     "seo_meta": {
       "has_title": true,
       "has_description": true,
       "has_canonical": true,
+      "canonical_href": "https://example.org/arhiv-tehnologiy/issue-14/euv-13-5-nm/",
       "has_og_title": true,
-      "has_og_description": true
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "json_ld": {
       "blocks_count": 0,
@@ -1004,22 +1773,49 @@
       "exists": false,
       "all_passed": false
     },
+    "robots_txt": {
+      "exists": false
+    },
     "llms_txt": {
       "exists": false
     },
     "semantics": {
+      "html_lang": "ru",
       "h1_count": 0,
       "landmarks": [],
       "svg_count": 0,
       "canvas_count": 0,
       "form_inputs_count": 0,
       "form_inputs_labeled": 0,
-      "has_prefers_reduced_motion": false
+      "has_prefers_reduced_motion": false,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 0,
       "max_contrast_pair": 0.0,
+      "max_contrast_ratio_est": 0.0,
+      "semantic_text_bg_contrast": 0.0,
+      "semantic_bg_fg_min_contrast": 0.0,
+      "min_muted_bg_contrast": null,
       "passes_aaa_7_to_1": false,
+      "passes_aa_4_5_to_1": false,
+      "semantic_bg_fg_contrast_passed": false,
+      "passes_any_pair_aaa_7_to_1": false,
+      "semantic_pairs": {},
       "tokens": {}
     },
     "task_specific": {
@@ -1027,15 +1823,50 @@
       "has_subgrid": false,
       "has_dropcap": false
     },
+    "copy_hygiene": {
+      "expected_lang": "ru",
+      "lang_check_passed": false,
+      "lang_gate_passed": false,
+      "cyrillic_chars_count": 56,
+      "latin_chars_count": 8965,
+      "cyrillic_density": 0.0062,
+      "latin_density": 0.9938,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 0,
+      "em_dash_per_100w": 0.0,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 0,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": false
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": false,
       "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
       "headers_patched": false,
       "computed_style_block_hashes_count": 0,
       "computed_inline_style_attr_hashes_count": 0,
       "computed_script_hashes_count": 0,
-      "injected_meta_csp": "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "patched_meta_csp": ""
     }
   },
   "t9": {
@@ -1074,19 +1905,46 @@
       }
     },
     "all_required_files_present": false,
+    "html_structurally_complete": false,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/gyro-m-local/t9/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": true,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": true,
+      "raw_has_unsafe_inline_style": true,
+      "raw_styles_covered": false,
+      "raw_scripts_covered": true
+    },
     "csp": {
       "has_meta_csp": true,
-      "has_unsafe_inline": false,
+      "has_unsafe_inline": true,
+      "has_unsafe_inline_script": true,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
       "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": false
     },
     "external_urls_in_attrs": [],
+    "informational_urls": [],
     "seo_meta": {
       "has_title": true,
       "has_description": true,
       "has_canonical": false,
+      "canonical_href": null,
       "has_og_title": false,
-      "has_og_description": false
+      "has_og_description": false,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "json_ld": {
       "blocks_count": 0,
@@ -1102,6 +1960,7 @@
       "exists": false
     },
     "semantics": {
+      "html_lang": "en",
       "h1_count": 1,
       "landmarks": [
         "article",
@@ -1115,12 +1974,35 @@
       "canvas_count": 0,
       "form_inputs_count": 7,
       "form_inputs_labeled": 7,
-      "has_prefers_reduced_motion": true
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 15,
       "max_contrast_pair": 18.24,
+      "max_contrast_ratio_est": 18.24,
+      "semantic_text_bg_contrast": 18.24,
+      "semantic_bg_fg_min_contrast": 18.24,
+      "min_muted_bg_contrast": null,
       "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {},
       "tokens": {
         "--color-bone": {
           "raw": "oklch(0.97 0.008 95)",
@@ -1176,21 +2058,21 @@
           "L": 0.45,
           "C": 0.14,
           "H": 155.0,
-          "luminance": 0.1057
+          "luminance": 0.0991
         },
         "--color-forest-ink": {
           "raw": "oklch(0.30 0.11 155)",
           "L": 0.3,
           "C": 0.11,
           "H": 155.0,
-          "luminance": 0.033
+          "luminance": 0.0294
         },
         "--color-forest-deep": {
           "raw": "oklch(0.22 0.09 155)",
           "L": 0.22,
           "C": 0.09,
           "H": 155.0,
-          "luminance": 0.0135
+          "luminance": 0.0116
         },
         "--color-forest-soft": {
           "raw": "oklch(0.88 0.055 155)",
@@ -1204,28 +2086,28 @@
           "L": 0.66,
           "C": 0.17,
           "H": 65.0,
-          "luminance": 0.2751
+          "luminance": 0.2755
         },
         "--color-signal-ink": {
           "raw": "oklch(0.36 0.15 65)",
           "L": 0.36,
           "C": 0.15,
           "H": 65.0,
-          "luminance": 0.0436
+          "luminance": 0.0447
         },
         "--color-signal-deep": {
           "raw": "oklch(0.28 0.13 65)",
           "L": 0.28,
           "C": 0.13,
           "H": 65.0,
-          "luminance": 0.0203
+          "luminance": 0.021
         },
         "--color-signal-soft": {
           "raw": "oklch(0.92 0.070 75)",
           "L": 0.92,
           "C": 0.07,
           "H": 75.0,
-          "luminance": 0.7706
+          "luminance": 0.7739
         }
       }
     },
@@ -1234,15 +2116,52 @@
       "zimage_prompts_count": 0,
       "zimage_exact_text_verified": false
     },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 8685,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 1,
+      "ai_slop_count": 1,
+      "ai_slop_sample": [
+        "seamless"
+      ],
+      "en_slop_hits_count": 1,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 1,
+      "em_dash_per_100w": 0.06,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 1,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": false
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": true,
       "raw_has_unsafe_inline": true,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
       "headers_patched": false,
       "computed_style_block_hashes_count": 2,
       "computed_inline_style_attr_hashes_count": 1,
       "computed_script_hashes_count": 0,
-      "injected_meta_csp": "default-src 'none'; style-src 'self' 'unsafe-hashes' 'sha256-rNHL+EsGq/HRiLa3Yyz/DdxlNiRoQfKW4nFNlsQutV0=' 'sha256-EUVwELef1l6TeRTepLe5PuYOl0B5pOFkyhwpVM1P15E=' 'sha256-CTQvbdFtFE6MeCJ594NkHv1xZMdfYY76mEMKj0umGEQ='; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "patched_meta_csp": "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'data:'; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"
     }
   },
   "t10": {
@@ -1253,7 +2172,7 @@
     "required_files": {
       "index.html": {
         "exists": true,
-        "size_bytes": 70541
+        "size_bytes": 70595
       },
       "llms.txt": {
         "exists": false,
@@ -1269,21 +2188,48 @@
       }
     },
     "all_required_files_present": false,
+    "html_structurally_complete": false,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/gyro-m-local/t10/orig/index.html",
+      "raw_meta_csp_present": true,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": false,
+      "raw_scripts_covered": false
+    },
     "csp": {
       "has_meta_csp": true,
       "has_unsafe_inline": false,
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
       "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+      "all_script_hashes_matched": true,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": false
     },
-    "external_urls_in_attrs": [
+    "external_urls_in_attrs": [],
+    "informational_urls": [
       "https://contour-spectrum.example/index.html"
     ],
     "seo_meta": {
       "has_title": true,
       "has_description": true,
       "has_canonical": true,
+      "canonical_href": "https://contour-spectrum.example/index.html",
       "has_og_title": true,
-      "has_og_description": true
+      "has_og_description": true,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "json_ld": {
       "blocks_count": 1,
@@ -1299,16 +2245,48 @@
       "faq_all_verbatim": true,
       "has_all_4_types": true,
       "product_count": 3,
-      "faq_count": 5
+      "invalid_faq_schema": false,
+      "faq_count": 5,
+      "faq_matches": [
+        {
+          "q": "Как КОНТУР-СПЕКТР определяет норму виброскорости по ГОСТ ИСО 10816?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Какая частота дискретизации нужна для вейвлет-анализа подшипников и зубчатых передач?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Чем вейвлет-анализ отличается от классического БПФ в вибродиагностике?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Как обеспечивается искрозащита Ex ia в комплектах Спектр-Взрыв?",
+          "q_in_html": true,
+          "a_in_html": true
+        },
+        {
+          "q": "Можно ли развернуть нейросетевой детектор аномалий без облака?",
+          "q_in_html": true,
+          "a_in_html": true
+        }
+      ]
     },
     "_headers": {
       "exists": false,
       "all_passed": false
     },
+    "robots_txt": {
+      "exists": false
+    },
     "llms_txt": {
       "exists": false
     },
     "semantics": {
+      "html_lang": "ru",
       "h1_count": 1,
       "landmarks": [
         "article",
@@ -1322,12 +2300,38 @@
       "canvas_count": 0,
       "form_inputs_count": 10,
       "form_inputs_labeled": 10,
-      "has_prefers_reduced_motion": true
+      "has_prefers_reduced_motion": true,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": true,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": true,
+        "bare_100vh_count": 1,
+        "vh_hygiene_passed": false,
+        "viewport_vh_passed": false
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 12,
       "max_contrast_pair": 17.23,
+      "max_contrast_ratio_est": 17.23,
+      "semantic_text_bg_contrast": 16.54,
+      "semantic_bg_fg_min_contrast": 16.54,
+      "min_muted_bg_contrast": 9.24,
       "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {
+        "--panel vs --text": 15.96,
+        "--panel-2 vs --text": 16.54
+      },
       "tokens": {
         "--obsidian": {
           "raw": "oklch(0.14 0.02 255)",
@@ -1390,40 +2394,75 @@
           "L": 0.76,
           "C": 0.14,
           "H": 195.0,
-          "luminance": 0.4747
+          "luminance": 0.4657
         },
         "--teal-dark": {
           "raw": "oklch(0.56 0.11 195)",
           "L": 0.56,
           "C": 0.11,
           "H": 195.0,
-          "luminance": 0.1931
+          "luminance": 0.1863
         },
         "--amber": {
           "raw": "oklch(0.75 0.16 75)",
           "L": 0.75,
           "C": 0.16,
           "H": 75.0,
-          "luminance": 0.4108
+          "luminance": 0.4107
         },
         "--danger": {
           "raw": "oklch(0.72 0.18 17)",
           "L": 0.72,
           "C": 0.18,
           "H": 17.0,
-          "luminance": 0.3362
+          "luminance": 0.3405
         }
       }
     },
+    "copy_hygiene": {
+      "expected_lang": "ru",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 7137,
+      "latin_chars_count": 353,
+      "cyrillic_density": 0.9529,
+      "latin_density": 0.0471,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 2,
+      "em_dash_per_100w": 0.18,
+      "em_dash_overuse": false,
+      "guillemets_count": 10,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": true,
+        "em_dash_count": 2,
+        "guillemets_count": 10,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": true,
       "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": true,
+      "raw_has_trusted_types": false,
       "headers_patched": false,
       "computed_style_block_hashes_count": 1,
       "computed_inline_style_attr_hashes_count": 0,
       "computed_script_hashes_count": 2,
-      "injected_meta_csp": "default-src 'none'; style-src 'self' 'sha256-+5vk2bjRLMfSSUFmbEGRkDlyN5K4b+EMU7lj2GlOfBw='; script-src 'self' 'sha256-7OkTZctzCAsbxBaoiftMHNTE0cg83MH4avqoy/RQjVs=' 'sha256-FMDiC/9EUJp/fNDJMZC7YYgdbifM1YDwGpEoioc7QrA='; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "patched_meta_csp": "default-src 'none'; script-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'; style-src 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'; img-src data:; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests"
     }
   },
   "t11": {
@@ -1450,19 +2489,46 @@
       }
     },
     "all_required_files_present": false,
+    "html_structurally_complete": false,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/gyro-m-local/t11/orig/index.html",
+      "raw_meta_csp_present": false,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": true,
+      "raw_scripts_covered": true
+    },
     "csp": {
-      "has_meta_csp": true,
+      "has_meta_csp": false,
       "has_unsafe_inline": false,
-      "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": false,
+      "all_script_hashes_matched": false,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": false
     },
     "external_urls_in_attrs": [],
+    "informational_urls": [],
     "seo_meta": {
       "has_title": false,
       "has_description": false,
       "has_canonical": false,
+      "canonical_href": null,
       "has_og_title": false,
-      "has_og_description": false
+      "has_og_description": false,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "json_ld": {
       "blocks_count": 0,
@@ -1474,37 +2540,99 @@
       "exists": false,
       "all_passed": false
     },
+    "robots_txt": {
+      "exists": false
+    },
     "llms_txt": {
       "exists": false
     },
     "semantics": {
+      "html_lang": "en",
       "h1_count": 0,
       "landmarks": [],
       "svg_count": 0,
       "canvas_count": 0,
       "form_inputs_count": 0,
       "form_inputs_labeled": 0,
-      "has_prefers_reduced_motion": false
+      "has_prefers_reduced_motion": false,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": false,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": false,
+        "bare_100vh_count": 0,
+        "vh_hygiene_passed": true,
+        "viewport_vh_passed": true
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 0,
       "max_contrast_pair": 0.0,
+      "max_contrast_ratio_est": 0.0,
+      "semantic_text_bg_contrast": 0.0,
+      "semantic_bg_fg_min_contrast": 0.0,
+      "min_muted_bg_contrast": null,
       "passes_aaa_7_to_1": false,
+      "passes_aa_4_5_to_1": false,
+      "semantic_bg_fg_contrast_passed": false,
+      "passes_any_pair_aaa_7_to_1": false,
+      "semantic_pairs": {},
       "tokens": {}
     },
     "task_specific": {
       "has_canvas": false,
       "has_kinematics_js": false
     },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 104,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 0,
+      "em_dash_per_100w": 0.0,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 0,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": false,
       "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
       "headers_patched": false,
       "computed_style_block_hashes_count": 0,
       "computed_inline_style_attr_hashes_count": 0,
       "computed_script_hashes_count": 0,
-      "injected_meta_csp": "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "patched_meta_csp": ""
     }
   },
   "t12": {
@@ -1519,21 +2647,49 @@
       }
     },
     "all_required_files_present": true,
+    "html_structurally_complete": true,
+    "raw_csp": {
+      "raw_html_path": "/mnt/rescue/projects/SmartLLM/eval/suite/runs/gyro-m-local/t12/orig/index.html",
+      "raw_meta_csp_present": false,
+      "raw_has_unsafe_inline": false,
+      "raw_has_style_placeholder": false,
+      "raw_has_script_placeholder": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
+      "raw_csp_passed": false,
+      "raw_has_unsafe_inline_script": false,
+      "raw_has_unsafe_inline_style": false,
+      "raw_styles_covered": false,
+      "raw_scripts_covered": true
+    },
     "csp": {
-      "has_meta_csp": true,
+      "has_meta_csp": false,
       "has_unsafe_inline": false,
-      "all_style_hashes_matched": true,
-      "all_script_hashes_matched": true
+      "has_unsafe_inline_script": false,
+      "has_object_src_none": true,
+      "has_require_trusted_types": false,
+      "all_style_hashes_matched": false,
+      "all_script_hashes_matched": false,
+      "inline_event_handlers_count": 0,
+      "js_style_mutations_count": 0,
+      "raw_csp_passed": false
     },
     "external_urls_in_attrs": [],
+    "informational_urls": [],
     "seo_meta": {
       "has_title": true,
       "has_description": false,
       "has_canonical": false,
+      "canonical_href": null,
       "has_og_title": false,
-      "has_og_description": false
+      "has_og_description": false,
+      "hreflang_tags": {},
+      "has_hreflang": false,
+      "has_bilingual_en_ru_hreflang": false,
+      "has_x_default_hreflang": false
     },
     "semantics": {
+      "html_lang": "en",
       "h1_count": 1,
       "landmarks": [
         "article",
@@ -1545,12 +2701,35 @@
       "canvas_count": 0,
       "form_inputs_count": 0,
       "form_inputs_labeled": 0,
-      "has_prefers_reduced_motion": false
+      "has_prefers_reduced_motion": false,
+      "has_scroll_padding_top": false,
+      "viewport_vh_hygiene": {
+        "has_100vh": true,
+        "has_100dvh_or_svh": false,
+        "has_unfallback_100vh": true,
+        "bare_100vh_count": 1,
+        "vh_hygiene_passed": false,
+        "viewport_vh_passed": false
+      },
+      "tailwind_ban": {
+        "tailwind_ban_passed": true,
+        "tailwind_cdn_hits": [],
+        "tailwind_utility_hits_count": 0,
+        "tailwind_utility_sample": []
+      }
     },
     "oklch": {
       "token_count": 11,
       "max_contrast_pair": 18.62,
+      "max_contrast_ratio_est": 18.62,
+      "semantic_text_bg_contrast": 18.62,
+      "semantic_bg_fg_min_contrast": 18.62,
+      "min_muted_bg_contrast": null,
       "passes_aaa_7_to_1": true,
+      "passes_aa_4_5_to_1": true,
+      "semantic_bg_fg_contrast_passed": true,
+      "passes_any_pair_aaa_7_to_1": true,
+      "semantic_pairs": {},
       "tokens": {
         "--bg": {
           "raw": "oklch(0.135 0.014 255)",
@@ -1620,7 +2799,7 @@
           "L": 0.74,
           "C": 0.14,
           "H": 205.0,
-          "luminance": 0.4381
+          "luminance": 0.4273
         },
         "--green": {
           "raw": "oklch(0.800 0.170 150)",
@@ -1631,15 +2810,56 @@
         }
       }
     },
+    "copy_hygiene": {
+      "expected_lang": "en",
+      "lang_check_passed": true,
+      "lang_gate_passed": true,
+      "cyrillic_chars_count": 0,
+      "latin_chars_count": 708,
+      "cyrillic_density": 0.0,
+      "latin_density": 1.0,
+      "cjk_chars_count": 0,
+      "replacement_chars_count": 0,
+      "mixed_script_tokens_count": 0,
+      "mixed_script_sample": [],
+      "ai_slop_hits_count": 0,
+      "ai_slop_count": 0,
+      "ai_slop_sample": [],
+      "en_slop_hits_count": 0,
+      "ru_slop_hits_count": 0,
+      "double_spaces_count": 0,
+      "double_space_count": 0,
+      "em_dash_count": 0,
+      "em_dash_per_100w": 0.0,
+      "em_dash_overuse": false,
+      "guillemets_count": 0,
+      "ru_straight_quotes_count": 0,
+      "ru_typography": {
+        "ru_em_dash_allowed": true,
+        "has_guillemets": false,
+        "em_dash_count": 0,
+        "guillemets_count": 0,
+        "straight_quotes_count": 0
+      },
+      "copy_hygiene_passed": true
+    },
     "csp_postprocessor": {
-      "applied": true,
+      "applied": false,
       "had_meta_csp_in_raw": false,
       "raw_has_unsafe_inline": false,
+      "raw_has_object_src_none": false,
+      "raw_has_trusted_types": false,
       "headers_patched": false,
       "computed_style_block_hashes_count": 1,
       "computed_inline_style_attr_hashes_count": 0,
       "computed_script_hashes_count": 0,
-      "injected_meta_csp": "default-src 'none'; style-src 'self' 'sha256-2keWBZkVUhHrZlOSNQqD3JbAfplv66Kr9C1p2qUKedo='; script-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+      "patched_meta_csp": ""
     }
+  },
+  "t_zimage_site": {
+    "status": "missing"
+  },
+  "t_backend_form": {
+    "status": "missing"
   }
 }

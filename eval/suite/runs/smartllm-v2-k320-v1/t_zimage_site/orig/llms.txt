@@ -1,0 +1,30 @@
+# llms.txt — NORDIC HORIZON ARCHIVE / КБ «Северный Горизонт»
+# https://nordic-horizon.example/llms.txt
+# Стандарт llmstxt.org
+
+# NORDIC HORIZON ARCHIVE — КБ «Северный Горизонт»
+> Арктическое конструкторское бюро большепролётных деревянных конструкций: CLT/LVLP-панели,
+> гнутоклеёные арки 18–96 м, акустические концертные залы и автономные полярные станции.
+> Проектирование по СП 20.13330-2016 (снеговые районы I–VIII), ГОСТ 33124-2019, EN 16351, EN 1924-2.
+> Языки: русский (основной) и английский (параллельные редакционные блоки).
+
+## Основные разделы / Key sections
+- [Манифест / Manifesto](https://nordic-horizon.example/#hero): «Архитектура высоких широт: клеёная древесина против экстремальных ветровых и снеговых нагрузок» / "High-Latitude Timber Engineering: Cross-Laminated Mass Timber Under Polar Loads".
+- [Редакционная галерея / Editorial Gallery](https://nordic-horizon.example/#gallery): узел сопряжения, CLT-купол, акустические baffles.
+- [Инженерный калькулятор / Engineering Calculator](https://nordic-horizon.example/#calculator): пролёт 18–96 м, снеговой район I–VIII, CLT мм, NRC, RT60, углеродный след.
+- [Сравнение систем / System Comparison](https://nordic-horizon.example/#systems): ГКД-Арктика 72м, CLT-Акустик Зал, Модуль-Полюс Автономный.
+- [FAQ](https://nordic-horizon.example/#faq): 5 двуязычных пар вопросов/ответов (огнестойкость R90/REI60, влажность, ГОСТ 33124 / EN 16351, RT60, нагрузки).
+
+## Конструктивные системы / Systems
+- ГКД-Арктика 72м / GKDA-72 Arctic Lattice Arch — пролёт 72 м, снеговые районы I–IV, R90/REI60.
+- CLT-Акустик Зал / CLT-Acoustic Hall — пролёт 36 м, RT60 1.4 с, NRC 0.95.
+- Модуль-Полюс Автономный / Pole Module Autonomous — пролёт 18 м, снеговые районы VII–VIII.
+
+## Стандарты / Standards
+- ГОСТ 33124-2019, EN 16351, EN 1924-2, СП 20.13330-2016, СП 51.13330, ISO 354.
+
+## Промпт-конвейер / Image pipeline
+- Последовательный Z-Image (stable-diffusion.cpp, q8_0): hero_polar_pavilion, joinery_steel_dowel_node, concert_acoustic_baffles.
+
+## Контакт / Contact
+- press@nordic-horizon.example · projects@nordic-horizon.example

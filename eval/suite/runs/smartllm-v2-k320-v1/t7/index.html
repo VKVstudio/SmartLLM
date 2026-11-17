@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ЦЕХ №4 — 5-осевая ЧПУ-обработка титана, инконеля и закалённых сталей в Екатеринбурге</title>
+<meta name="description" content="Уральское бюро промышленного прототипирования: 5-осевой ЧПУ-фрезер (титан ВТ6, 12Х18Н10Т, 40Х, Д16Т), проволочная электроэрозия, мелкосерийное литьё под давлением. Допуски IT6 по ГОСТ 25346, шероховатость Ra 0.4, габариты до 1200×800×600 мм. Расчёт партии по STEP/IGES.">
+<link rel="canonical" href="https://tseh4.ru/">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="oklch(0.94 0.03 90)">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="ЦЕХ №4">
+<meta property="og:title" content="ЦЕХ №4 — 5-осевая ЧПУ-обработка и мелкосерийное литьё">
+<meta property="og:description" content="Прототипирование и мелкосерийное производство титана, инконеля и закалённых сталей в Екатеринбурге. Допуски IT6 по ГОСТ 25346, Ra 0.4, габариты до 1200×800×600 мм.">
+<meta property="og:url" content="https://tseh4.ru/">
+<meta property="og:image" content="https://tseh4.ru/og-card.png">
+<meta property="og:image:alt" content="ЦЕХ №4 — изометрический чертёж крыльчатки турбины">
+<meta name="twitter:card" content="summary_large_image">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'sha256-NmBqAqOK6BS42bMeSmdWPXplQPtVld2tyLXBwFJINwA=' 'sha256-PM6zNhSwX1zAmQnhO1NRSKpR6KT3YWHsN4k2vNcQ7gI='; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests;">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://tseh4.ru/#org",
+      "name": "ЦЕХ №4",
+      "alternateName": "Уральское бюро промышленного прототипирования",
+      "url": "https://tseh4.ru/",
+      "logo": "https://tseh4.ru/og-card.png",
+      "description": "5-осевой ЧПУ-металлообработка титана, инконеля и закалённых сталей, проволочная электроэрозия и мелкосерийное литьё под давлением в Екатеринбурге.",
+      "areaServed": { "@type": "City", "name": "Екатеринбург" },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "ул. Промышленная, 14, цех №4",
+        "addressLocality": "Екатеринбург",
+        "postalCode": "620014",
+        "addressRegion": "Свердловская область",
+        "addressCountry": "RU"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "email": "calc@tseh4.ru",
+        "telephone": "+7-343-300-14-04",
+        "availableLanguage": "Russian"
+      },
+      "sameAs": [
+        "https://tseh4.ru/llms.txt",
+        "https://tseh4.ru/robots.txt"
+      ]
+    },
+    {
+      "@type": "Product",
+      "@id": "https://tseh4.ru/#milling",
+      "name": "5-осевой фрезерный комплекс (DMU 50 / 5-осевой обрабатывающий центр)",
+      "productID": "CEH4-MILL-5AX",
+      "category": "ЧПУ-фрезерная обработка",
+      "description": "5-осевая фрезерная обработка титана ВТ6, инконеля и закалённых сталей с допуском IT6 по ГОСТ 25346 и шероховатостью Ra 0.4. Габариты заготовки до 1200×800×600 мм.",
+      "brand": { "@id": "https://tseh4.ru/#org" },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "RUB",
+        "availability": "https://schema.org/InStock",
+        "price": "0",
+        "url": "https://tseh4.ru/#calculator"
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://tseh4.ru/#edm",
+      "name": "Проволочный электроэрозионный комплекс",
+      "productID": "CEH4-EDM-WIRE",
+      "category": "Электроэрозионная обработка",
+      "description": "Проволочная электроэрозия (Wire EDM) для сложного контура, калиток и твердосплавных элементов закалённых сталей. Точность до ±0,005 мм.",
+      "brand": { "@id": "https://tseh4.ru/#org" },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "RUB",
+        "availability": "https://schema.org/InStock",
+        "price": "0",
+        "url": "https://tseh4.ru/#park"
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://tseh4.ru/#casting",
+      "name": "Мелкосерийное литьё под давлением (вакуумное литьё в силикон и ТПА)",
+      "productID": "CEH4-CASTING",
+      "category": "Литьё под давлением",
+      "description": "Мелкосерийное литьё под давлением: вакуумное литьё в силиконовую оснастку (до 50 копий с матрицы) и термопластавтоматы для серий до 500 шт.",
+      "brand": { "@id": "https://tseh4.ru/#org" },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "RUB",
+        "availability": "https://schema.org/InStock",
+        "price": "0",
+        "url": "https://tseh4.ru/#casting"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://tseh4.ru/#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ЦЕХ №4", "item": "https://tseh4.ru/" },
+        { "@type": "ListItem", "position": 2, "name": "Технологические комплексы", "item": "https://tseh4.ru/#park" },
+        { "@type": "ListItem", "position": 3, "name": "Расчёт партии", "item": "https://tseh4.ru/#calculator" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://tseh4.ru/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Какие допуски вы держите на 5-осевом участке и чем подтверждаете точность?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "5-осевой участок держит квалитеты IT6–IT10 по ГОСТ 25346. Номинальный допуск на посадочные размеры — IT6 (±0,005–0,011 мм в зависимости от номинала), шероховатость Ra 0,4 на ответственных поверхностях. Точность подтверждается протоколом контрольного КИМ Carl Zeiss Contura с сохранением карты отклонений на каждую партию."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно ли заказать мелкосерийное литьё под давлением без стальной оснастки?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да. Для партий до 50 копий мы делаем вакуумное литьё в силиконовую оснастку, изготовленную с модели STEP. Металлическая пресс-форма не требуется, срок — от 5 рабочих дней. Для серий до 500 шт. подключаем термопластавтоматы, а стальную оснастку заказываем только при тираже свыше 1000 копий."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как оформляется паспорт плавки и что входит в контроль качества партии?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Каждая партия сопровождается паспортом плавки: марка сплава, химический состав, номер плавки, механические свойства и результаты рентгеноскопии. Контроль включает КИМ Carl Zeiss, рентгеноскопию литья и визуальный контроль по чертежу. Паспорт выдаётся вместе с комплектом деталей и хранится в архиве бюро 5 лет."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как передать модель — STEP или IGES, есть ли ограничения по размеру файла?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Мы принимаем STEP (AP203/AP214) и IGES, а также 2D-чертежи в PDF/DWG. Ограничение по объёму модели — 200 МБ. Если модель содержит сборку, присылайте её единым файлом с сохранёнными допусками. Перед расчётом мы проверяем модель на соответствие габаритам участка (до 1200×800×600 мм)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какие сроки и условия оплаты для отдела снабжения?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Прототип — от 5 рабочих дней, мелкосерийная партия — от 10 рабочих дней. Отдел снабжения работает с нами по договору с отсрочкой платежа 10 банковских дней после отгрузки. Мы работаем с НДС, предоставляем УПД и полный комплект закрывающих документов. Для постоянных клиентов действует складская программа хранения оснастки."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>:where(.page-grid, .grid-shell, .site-main, main) > :where(section, header, footer, article, nav, div) { grid-column: 1 / -1; min-width: 0; }
+
+:root{
+  --bg: oklch(0.94 0.03 90);
+  --bg-alt: oklch(0.90 0.03 90);
+  --ink: oklch(0.14 0.01 260);
+  --ink-soft: oklch(0.38 0.01 260);
+  --line: oklch(0.14 0.01 260);
+  --signal: oklch(0.86 0.16 90);
+  --vermilion: oklch(0.58 0.21 30);
+  --shadow: 4px 4px 0px oklch(0.14 0.01 260);
+  --shadow-lg: 8px 8px 0px oklch(0.14 0.01 260);
+  --border: 2px solid oklch(0.14 0.01 260);
+  --font-display: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace;
+  --max: 1240px;
+  --pad: clamp(1rem, 4vw, 2.5rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { max-width: 100%; overflow-x: clip; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 0.62vw + 0.5rem, 1.15rem);
+  line-height: 1.55;
+  background-image:
+    linear-gradient(transparent 95%, var(--bg-alt) 100%),
+    linear-gradient(90deg, transparent 95%, oklch(0.82 0.03 90) 100%);
+  background-size: 100% 3px, 3px 100%;
+}
+svg, canvas, img { max-width: 100%; height: auto; }
+a { color: var(--ink); }
+:focus-visible { outline: 3px solid var(--vermilion); outline-offset: 3px; }
+.skip-link { position: absolute; left: var(--pad); top: 0.5rem; transform: translateY(-200%); background: var(--signal); color: var(--ink); padding: .6rem 1rem; border: var(--border); font-weight: 700; z-index: 100; }
+.skip-link:focus { transform: none; }
+
+.wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--pad); }
+
+/* ===== Header ===== */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--bg);
+  border-bottom: var(--border);
+}
+.header-row { display: flex; align-items: center; gap: 1rem; padding-block: .75rem; flex-wrap: wrap; }
+.brand { display: flex; align-items: baseline; gap: .6rem; text-decoration: none; }
+.brand-mark {
+  font-family: var(--font-display); font-weight: 800; font-size: 1.5rem;
+  letter-spacing: .02em; text-transform: uppercase;
+  background: var(--ink); color: var(--bg); padding: .35rem .6rem;
+}
+.brand-name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+.brand-sub { font-family: var(--font-mono); font-size: .72rem; color: var(--ink-soft); }
+.nav { margin-left: auto; }
+.nav-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem; }
+.nav-list a {
+  display: block; text-decoration: none; font-family: var(--font-mono);
+  font-size: .8rem; text-transform: uppercase; letter-spacing: .06em;
+  padding: .5rem .7rem; border: 2px solid transparent;
+}
+.nav-list a:hover { border-color: var(--line); background: var(--bg-alt); }
+.cta-btn {
+  display: inline-block; text-decoration: none; font-family: var(--font-display);
+  font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+  background: var(--signal); color: var(--ink); border: var(--border);
+  box-shadow: var(--shadow); padding: .7rem 1.1rem;
+}
+.cta-btn:hover { box-shadow: 2px 2px 0px var(--ink); transform: translate(2px,2px); }
+.cta-btn:active { box-shadow: none; transform: translate(4px,4px); }
+
+/* ===== Hero ===== */
+.hero { padding-block: clamp(2rem, 5vw, 4rem); }
+.hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(1.5rem, 3vw, 3rem); align-items: start; }
+.kicker {
+  font-family: var(--font-mono); font-size: .78rem; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--ink-soft); border: var(--border);
+  display: inline-block; padding: .4rem .7rem; background: var(--bg-alt);
+  box-shadow: var(--shadow);
+}
+h1 {
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+  letter-spacing: -0.02em; line-height: 0.95; margin: 1.2rem 0 1rem;
+  font-size: clamp(2.1rem, 6.2vw, 4.6rem);
+}
+h1 .accent { color: var(--vermilion); }
+.hero-lede { font-size: clamp(1.05rem, 1.6vw, 1.35rem); max-width: 42ch; margin: 0 0 1.5rem; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; }
+
+/* Passport */
+.passport { border: var(--border); background: var(--bg); box-shadow: var(--shadow); margin-top: 1.5rem; }
+.passport-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; padding: .8rem 1rem; border-bottom: var(--border); background: var(--ink); color: var(--bg); font-family: var(--font-mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; }
+.passport dl { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); margin: 0; }
+.passport .cell { padding: .9rem 1rem; border-right: var(--border); border-bottom: var(--border); }
+.passport .cell:nth-child(2n) { border-right: 0; }
+.passport dt { font-family: var(--font-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); margin-bottom: .4rem; }
+.passport dd { margin: 0; font-family: var(--font-mono); font-weight: 700; font-size: 1.15rem; }
+
+/* Drawing */
+.drawing { border: var(--border); background: var(--bg); box-shadow: var(--shadow); }
+.drawing .plate { padding: .8rem 1rem; border-bottom: var(--border); display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; }
+.drawing svg { display: block; width: 100%; }
+.drawing-foot { padding: .8rem 1rem; border-top: var(--border); font-family: var(--font-mono); font-size: .72rem; color: var(--ink-soft); }
+
+/* Ticker */
+.ticker { border-block: var(--border); background: var(--signal); color: var(--ink); overflow: hidden; }
+.ticker-track { display: flex; white-space: nowrap; will-change: transform; animation: ticker 28s linear infinite; }
+.ticker-track span { font-family: var(--font-mono); font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; padding: .55rem 1.2rem; }
+.ticker-track span::after { content: "•"; margin-left: 1.2rem; color: var(--vermilion); }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ===== Section shell ===== */
+section { padding-block: clamp(2.5rem, 6vw, 4.5rem); border-bottom: var(--border); }
+.section-head { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.8rem; }
+.section-index { font-family: var(--font-mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; background: var(--ink); color: var(--bg); padding: .3rem .6rem; }
+h2 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; font-size: clamp(1.6rem, 3.4vw, 2.6rem); margin: 0; }
+.section-note { color: var(--ink-soft); font-family: var(--font-mono); font-size: .82rem; margin-left: auto; max-width: 32ch; }
+
+/* ===== Calculator ===== */
+.calc-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(1.5rem, 3vw, 2.5rem); }
+.calc-controls { border: var(--border); background: var(--bg); box-shadow: var(--shadow); padding: 1.2rem; }
+.field { margin-bottom: 1.4rem; }
+.field > label, .field > legend { font-family: var(--font-mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; display: block; margin-bottom: .7rem; }
+fieldset { border: 0; margin: 0; padding: 0; }
+.chip-set { display: flex; flex-wrap: wrap; gap: .5rem; }
+.chip {
+  font-family: var(--font-mono); font-size: .82rem; text-transform: uppercase; letter-spacing: .04em;
+  border: var(--border); background: var(--bg); color: var(--ink);
+  padding: .6rem .8rem; cursor: pointer; box-shadow: var(--shadow);
+  min-width: 0;
+}
+.chip:hover { background: var(--bg-alt); }
+.chip[aria-pressed="true"] { background: var(--signal); box-shadow: 2px 2px 0px var(--ink); }
+.chip:focus-visible { outline: 3px solid var(--vermilion); outline-offset: 3px; }
+.range-wrap { display: flex; align-items: center; gap: 1rem; }
+input[type="range"] { width: 100%; accent-color: var(--vermilion); }
+.range-value { font-family: var(--font-mono); font-weight: 700; font-size: 1.3rem; min-width: 4ch; }
+.num-input { width: 100%; font-family: var(--font-mono); font-size: 1rem; border: var(--border); background: var(--bg); color: var(--ink); padding: .6rem .8rem; }
+.num-input:focus-visible { outline: 3px solid var(--vermilion); outline-offset: 2px; }
+.dim-row { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: .5rem; }
+
+/* Results */
+.calc-results { border: var(--border); background: var(--bg); box-shadow: var(--shadow); }
+.result-head { background: var(--ink); color: var(--bg); padding: .8rem 1rem; font-family: var(--font-mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; }
+.result-row { display: grid; grid-template-columns: 1fr auto; gap: 1rem; padding: 1rem; border-bottom: var(--border); align-items: baseline; }
+.result-row:last-child { border-bottom: 0; }
+.result-row .k { font-family: var(--font-mono); font-size: .74rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
+.result-row .v { font-family: var(--font-mono); font-weight: 700; font-size: clamp(1.3rem, 2.4vw, 1.9rem); }
+.result-price { background: var(--signal); }
+.result-price .v { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+.result-note { padding: .8rem 1rem; font-family: var(--font-mono); font-size: .72rem; color: var(--ink-soft); }
+
+/* ===== Machine park ===== */
+.table-wrap { overflow-x: auto; border: var(--border); background: var(--bg); box-shadow: var(--shadow); }
+table { width: 100%; border-collapse: collapse; min-width: 640px; }
+th, td { text-align: left; padding: .8rem 1rem; border-bottom: var(--border); font-family: var(--font-mono); font-size: .82rem; vertical-align: top; }
+th { background: var(--ink); color: var(--bg); text-transform: uppercase; letter-spacing: .06em; font-size: .72rem; }
+tbody tr:hover { background: var(--bg-alt); }
+td .spec-tag { display: inline-block; background: var(--signal); color: var(--ink); border: 2px solid var(--ink); padding: .2rem .5rem; font-size: .72rem; text-transform: uppercase; }
+.park-cards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1.2rem; margin-top: 1.5rem; }
+.card { border: var(--border); background: var(--bg); box-shadow: var(--shadow); padding: 1.2rem; }
+.card h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .02em; margin: 0 0 .6rem; font-size: 1.15rem; }
+.card .card-index { font-family: var(--font-mono); font-size: .72rem; color: var(--vermilion); }
+.card ul { list-style: none; margin: .8rem 0 0; padding: 0; }
+.card li { font-family: var(--font-mono); font-size: .82rem; padding: .4rem 0; border-top: 1px solid oklch(0.72 0.03 90); }
+
+/* ===== Quality ===== */
+.qc-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1.2rem; }
+.qc-card { border: var(--border); background: var(--bg); box-shadow: var(--shadow); padding: 1.3rem; position: relative; }
+.qc-card .badge { position: absolute; top: -1.4rem; right: 1rem; background: var(--vermilion); color: var(--bg); border: var(--border); font-family: var(--font-mono); font-size: .72rem; text-transform: uppercase; padding: .3rem .6rem; }
+.qc-card h3 { font-family: var(--font-display); text-transform: uppercase; margin: 0 0 .6rem; font-size: 1.25rem; }
+.qc-card p { margin: 0; color: var(--ink-soft); }
+.qc-strip { margin-top: 1.5rem; border: var(--border); background: var(--signal); color: var(--ink); padding: 1rem 1.2rem; font-family: var(--font-mono); font-size: .82rem; display: flex; flex-wrap: wrap; gap: 1rem 2rem; }
+
+/* ===== FAQ ===== */
+.faq-list { border: var(--border); background: var(--bg); box-shadow: var(--shadow); }
+.faq-item { border-bottom: var(--border); }
+.faq-item:last-child { border-bottom: 0; }
+.faq-q { width: 100%; display: flex; align-items: center; gap: 1rem; text-align: left; background: var(--bg); border: 0; cursor: pointer; padding: 1.1rem 1.2rem; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: .02em; font-size: 1.05rem; color: var(--ink); }
+.faq-q:hover { background: var(--bg-alt); }
+.faq-q .marker { font-family: var(--font-mono); font-size: 1.2rem; color: var(--vermilion); flex: 0 0 auto; }
+.faq-q[aria-expanded="true"] { background: var(--ink); color: var(--bg); }
+.faq-q[aria-expanded="true"] .marker { color: var(--signal); }
+.faq-a { padding: 0 1.2rem 1.2rem; color: var(--ink); }
+.faq-a p { margin: 0 0 .6rem; }
+.faq-a .who { font-family: var(--font-mono); font-size: .72rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .06em; }
+
+/* ===== Form ===== */
+.form-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(1.5rem, 3vw, 2.5rem); }
+.form-card { border: var(--border); background: var(--bg); box-shadow: var(--shadow); padding: 1.3rem; }
+.form-row { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
+.form-field { margin-bottom: 1rem; }
+.form-field label { font-family: var(--font-mono); font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; display: block; margin-bottom: .5rem; }
+.form-field input, .form-field textarea, .form-field select {
+  width: 100%; font-family: var(--font-body); font-size: 1rem; border: var(--border);
+  background: var(--bg); color: var(--ink); padding: .7rem .8rem;
+}
+.form-field textarea { min-height: 7rem; resize: vertical; }
+.form-field[aria-invalid="true"] input, .form-field[aria-invalid="true"] textarea { border-color: var(--vermilion); }
+.error-msg { font-family: var(--font-mono); font-size: .72rem; color: var(--vermilion); margin-top: .4rem; min-height: 1rem; }
+.form-submit { margin-top: .5rem; }
+.form-info { border: var(--border); background: var(--bg-alt); box-shadow: var(--shadow); padding: 1.3rem; }
+.form-info h2 { font-size: 1.4rem; }
+.form-info ul { list-style: none; padding: 0; margin: 1rem 0 0; }
+.form-info li { font-family: var(--font-mono); font-size: .82rem; padding: .5rem 0; border-top: 1px solid oklch(0.72 0.03 90); }
+.form-success { border: var(--border); background: var(--signal); color: var(--ink); padding: 1rem 1.2rem; font-family: var(--font-mono); margin-top: 1rem; }
+
+/* ===== Footer ===== */
+.site-footer { background: var(--ink); color: var(--bg); border-top: var(--border); }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 1.5rem; padding-block: 2.5rem; }
+.footer-col h4 { font-family: var(--font-mono); font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; color: var(--signal); margin: 0 0 .8rem; }
+.footer-col p, .footer-col li { font-family: var(--font-mono); font-size: .82rem; line-height: 1.7; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-brand { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 1.8rem; }
+.footer-bottom { border-top: 2px solid oklch(0.35 0.01 260); padding-block: 1rem; font-family: var(--font-mono); font-size: .72rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; }
+
+/* Reveal */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .hero-grid, .calc-grid, .form-grid { grid-template-columns: 1fr; }
+  .park-cards, .qc-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .nav { margin-left: 0; width: 100%; }
+}
+@media (max-width: 480px) {
+  .passport dl { grid-template-columns: 1fr; }
+  .passport .cell { border-right: 0; }
+  .form-row { grid-template-columns: 1fr; }
+  .dim-row { grid-template-columns: 1fr 1fr; }
+  .chip, .cta-btn, .spec-tag, .badge { white-space: normal; }
+  .section-note { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .ticker-track { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .cta-btn:hover { transform: none; }
+  .drawing .draw-line { stroke-dasharray: none !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="#top" aria-label="ЦЕХ №4 — на главную">
+      <span class="brand-mark">ЦЕХ №4</span>
+      <span>
+        <span class="brand-name">Уральское бюро прототипирования</span><br>
+        <span class="brand-sub">5-осевой ЧПУ · литьё · Екатеринбург</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Основная навигация">
+      <ul class="nav-list">
+        <li><a href="#passport">Паспорт</a></li>
+        <li><a href="#calculator">Расчёт</a></li>
+        <li><a href="#park">Станки</a></li>
+        <li><a href="#quality">Контроль</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <a class="cta-btn" href="#request">Заказать расчёт</a>
+  </div>
+</header>
+
+<main id="main">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="ticker">
+      <span>ГОСТ 25346 · квалитет IT6</span>
+      <span>Шероховатость Ra 0,4</span>
+      <span>Габариты 1200 × 800 × 600 мм</span>
+      <span>Титан ВТ6</span>
+      <span>12Х18Н10Т</span>
+      <span>Инконель</span>
+      <span>Закалённые стали 40Х</span>
+      <span>КИМ Carl Zeiss Contura</span>
+      <span>Рентгеноскопия литья</span>
+      <span>Паспорта плавки</span>
+    </div>
+  </div>
+
+  <!-- 1. HERO -->
+  <section id="top" class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="reveal">
+          <p class="kicker">Прототипирование · мелкая серия · 5 осей</p>
+          <h1 id="hero-title" data-scramble>
+            <span class="scramble-target">Титан, инконель и&nbsp;закалённые стали</span>
+            <span class="accent" data-scramble-target>без потери допуска</span>
+          </h1>
+          <p class="hero-lede">ЦЕХ №4 — уральское бюро промышленного прототипирования. 5-осевой ЧПУ-фрезер, проволочная электроэрозия и мелкосерийное литьё под давлением. От одной детали до партии 500&nbsp;шт. — с паспортом плавки и протоколом КИМ.</p>
+          <div class="hero-actions">
+            <a class="cta-btn" href="#request">Расчёт по STEP / IGES</a>
+            <a class="cta-btn" href="#calculator">Калькулятор партии</a>
+          </div>
+
+          <!-- Passport -->
+          <div class="passport" id="passport" aria-label="Паспорт производства">
+            <div class="passport-head">
+              <span>Паспорт производства</span>
+              <span>№ Ц4-2024 / ГОСТ 25346</span>
+            </div>
+            <dl>
+              <div class="cell">
+                <dt>Допуск посадочных</dt>
+                <dd>IT6 ±0,005…0,011</dd>
+              </div>
+              <div class="cell">
+                <dt>Шероховатость</dt>
+                <dd>Ra 0,4</dd>
+              </div>
+              <div class="cell">
+                <dt>Габариты заготовки</dt>
+                <dd>1200 × 800 × 600 мм</dd>
+              </div>
+              <div class="cell">
+                <dt>Шпиндель</dt>
+                <dd>до 24 000 об/мин</dd>
+              </div>
+              <div class="cell">
+                <dt>Сплавы</dt>
+                <dd>ВТ6 · 12Х18Н10Т · 40Х · Д16Т</dd>
+              </div>
+              <div class="cell">
+                <dt>Срок прототипа</dt>
+                <dd>от 5 рабочих дней</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <!-- Isometric drawing -->
+        <div class="drawing reveal" aria-label="Изометрический чертёж фрезеруемой крыльчатки турбины">
+          <div class="plate">
+            <span>Крыльчатка турбины</span>
+            <span>Масштаб 1:2 · ГОСТ 2.102</span>
+          </div>
+          <svg viewBox="0 0 640 460" width="640" height="460" role="img" aria-labelledby="svg-title svg-desc">
+            <title id="svg-title">Изометрический чертёж крыльчатки турбины</title>
+            <desc id="svg-desc">Изометрическая проекция крыльчатки с размерными цепями: наружный диаметр 220 мм, диаметр ступицы 64 мм, высота лопатки 38 мм, посадочный размер IT6.</desc>
+            <defs>
+              <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M0 0 L20 0 M0 20 L20 20" stroke="oklch(0.82 0.03 90)" stroke-width="1" fill="none"/>
+              </pattern>
+              <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 Z" fill="oklch(0.14 0.01 260)"/>
+              </marker>
+              <marker id="dot" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6">
+                <circle cx="5" cy="5" r="3.5" fill="oklch(0.58 0.21 30)"/>
+              </marker>
+            </defs>
+
+            <rect x="0" y="0" width="640" height="460" fill="url(#grid)"/>
+            <rect x="14" y="14" width="612" height="432" fill="none" stroke="oklch(0.14 0.01 260)" stroke-width="2"/>
+
+            <!-- Impeller isometric -->
+            <g id="impeller" stroke="oklch(0.14 0.01 260)" stroke-width="2" fill="none">
+              <!-- shroud ring -->
+              <path class="draw-line" d="M150 150 L210 150 L210 190 L150 190 L150 150 L210 150" />
+              <ellipse cx="210" cy="150" rx="60" ry="18" stroke="oklch(0.58 0.21 30)" stroke-width="2"/>
+              <!-- hub cylinder -->
+              <path class="draw-line" d="M210 190 L210 235" />
+              <path class="draw-line" d="M150 190 L150 235" />
+              <path class="draw-line" d="M210 235 L210 265 L150 265" />
+              <!-- blades -->
+              <g class="draw-line" stroke-width="1.5">
+                <path d="M210 165 L250 165"/>
+                <path d="M210 180 L250 180"/>
+                <path d="M150 165 L110 165"/>
+                <path d="M150 180 L110 180"/>
+                <path d="M210 200 L250 200"/>
+                <path d="M150 200 L110 200"/>
+              </g>
+            </g>
+
+            <!-- Dimension chains -->
+            <g font-family="var(--font-mono)" font-size="12" fill="oklch(0.14 0.01 260)" stroke="oklch(0.14 0.01 260)" stroke-width="1.5">
+              <!-- Ø 220 -->
+              <line x1="150" y1="300" x2="210" y2="300" marker-start="url(#dot)" marker-end="url(#arrow)"/>
+              <text x="180" y="292">Ø220</text>
+              <!-- hub Ø64 -->
+              <line x1="150" y1="340" x2="210" y2="340" marker-start="url(#dot)" marker-end="url(#arrow)"/>
+              <text x="180" y="332">Ø64</text>
+              <!-- blade height 38 -->
+              <line x1="250" y1="165" x2="250" y2="200" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+              <text x="258" y="192">38</text>
+              <!-- overall height -->
+              <line x1="150" y1="375" x2="210" y2="375" marker-start="url(#dot)" marker-end="url(#arrow)"/>
+              <text x="180" y="367">210</text>
+            </g>
+
+            <!-- Tolerance callouts -->
+            <g font-family="var(--font-mono)" font-size="11" fill="oklch(0.58 0.21 30)">
+              <text x="330" y="120">Ø220 ±0,011</text>
+              <text x="330" y="140">Ø64 IT6</text>
+              <text x="330" y="160">Ra 0,4</text>
+              <text x="330" y="180">ВТ6 / 12Х18Н10Т</text>
+            </g>
+
+            <!-- Title block -->
+            <g stroke="oklch(0.14 0.01 260)" stroke-width="2" fill="none">
+              <rect x="430" y="360" width="180" height="60"/>
+              <line x1="430" y1="385" x2="610" y2="385"/>
+              <line x1="510" y1="360" x2="510" y2="420"/>
+            </g>
+            <g font-family="var(--font-mono)" font-size="10" fill="oklch(0.14 0.01 260)">
+              <text x="438" y="376">Изм. ЦЕХ №4</text>
+              <text x="438" y="404">Лист 01</text>
+              <text x="520" y="376">Прототип</text>
+              <text x="520" y="404">М 1:2</text>
+            </g>
+          </svg>
+          <div class="drawing-foot">Размерные цепи проверены на контрольном КИМ. Отклонения в пределах IT6.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. CALCULATOR -->
+  <section id="calculator" aria-labelledby="calc-title">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-index">02</span>
+        <h2 id="calc-title" data-scramble>Калькулятор партии</h2>
+        <p class="section-note">Сплав · квалитет · тираж → масса заготовки, машино-часы и цена в рублях. Расчёт без перезагрузки.</p>
+      </div>
+
+      <div class="calc-grid">
+        <div class="calc-controls reveal">
+          <fieldset class="field">
+            <legend>Сплав заготовки</legend>
+            <div class="chip-set" role="group" aria-label="Выбор сплава" id="alloy-set">
+              <button type="button" class="chip" data-alloy="vt6" aria-pressed="true">ВТ6 титан</button>
+              <button type="button" class="chip" data-alloy="12x18" aria-pressed="false">12Х18Н10Т</button>
+              <button type="button" class="chip" data-alloy="d16t" aria-pressed="false">Д16Т</button>
+              <button type="button" class="chip" data-alloy="40h" aria-pressed="false">40Х закал.</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>Квалитет точности</legend>
+            <div class="chip-set" role="group" aria-label="Квалитет точности" id="it-set">
+              <button type="button" class="chip" data-it="6" aria-pressed="true">IT6</button>
+              <button type="button" class="chip" data-it="8" aria-pressed="false">IT8</button>
+              <button type="button" class="chip" data-it="10" aria-pressed="false">IT10</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend for="batch-range">Размер партии</legend>
+            <div class="range-wrap">
+              <input type="range" id="batch-range" min="1" max="500" step="1" value="20" aria-describedby="batch-out">
+              <output class="range-value" id="batch-out" for="batch-range">20</output>
+            </div>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>Габариты заготовки (мм)</legend>
+            <div class="dim-row">
+              <div class="form-field">
+                <label for="dim-l">Длина</label>
+                <input class="num-input" type="number" id="dim-l" min="10" max="1200" value="180" inputmode="numeric">
+              </div>
+              <div class="form-field">
+                <label for="dim-w">Ширина</label>
+                <input class="num-input" type="number" id="dim-w" min="10" max="800" value="120" inputmode="numeric">
+              </div>
+              <div class="form-field">
+                <label for="dim-h">Высота</label>
+                <input class="num-input" type="number" id="dim-h" min="10" max="600" value="60" inputmode="numeric">
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="calc-results reveal" aria-live="polite" aria-atomic="true">
+          <div class="result-head">Расчёт партии · ЦЕХ №4</div>
+          <div class="result-row">
+            <span class="k">Масса заготовки</span>
+            <span class="v" id="res-mass">—</span>
+          </div>
+          <div class="result-row">
+            <span class="k">Машино-часы на деталь</span>
+            <span class="v" id="res-hours">—</span>
+          </div>
+          <div class="result-row">
+            <span class="k">Суммарное время партии</span>
+            <span class="v" id="

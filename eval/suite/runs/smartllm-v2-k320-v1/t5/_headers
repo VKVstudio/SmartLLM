@@ -1,0 +1,8 @@
+# Cloudflare Pages headers
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'sha256-mQGbOXQeNQHD/YyAALdJqHj5fO/qQ7yoUqVNkCac/wo='; style-src 'unsafe-hashes' 'sha256-uIorRJJBCrUoL4/0VWuQXqRN54I9N/Idnslc1pxYW3E=' 'sha256-QRSar4c0AUKdGc7REduPuVPIxdnpzGy7wobmtUfdqyM=' 'sha256-L5hos/U+tbmyKFaMVaRgMfGDnduDYFZpfnrpe57rHSQ=' 'sha256-gEJ1uk7TCQPXIyaec7rieh7Y2ZNarBOi1/icRv88m7s=' 'sha256-iCSSJbw/ob5anK4ag5e4VFj9vtH65Fs20jpjfi3Io04=' 'sha256-S2Ffw4xRlBQYYUo4PRFct7LPYO8NqASjm8ImFyEN2QQ=' 'sha256-IlIUqpppU0Se/y+Dja8F5MeOfnyxcCGtwhwYkVxX5q4=' 'sha256-uLrCyqtEy8LoqmBIWe3vGx1Jo7+wAnMWBUs8YAHi7u0='; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin
