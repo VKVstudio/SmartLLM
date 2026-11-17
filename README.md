@@ -105,7 +105,8 @@ User Prompt (EN / RU / EN+RU)
 ### 2. Attach Local Weights & Binaries (in **Settings** or CLI)
 
 Studio never bundles multi-gigabyte model weights. Inside Studio top bar → **Settings** (or via env/config), point to your local:
-1. **GGUF Model:** `SmartLLM-v2-K320-V1.gguf` (runs via **`llama-server`** with `--lazy-mode direct --n-cpu-moe 42 --moe-cache-mib 2048 --cache-ram 0 -fa on`).
+1. **GGUF Model & Vision Projector:** `SmartLLM-v2-K320-V1.gguf` (`55.01 GiB`) + `mmproj-Qwen3.8-Flash-Next-BF16.gguf` (`865.50 MiB`), executed via **`llama-server`** with `--lazy-mode direct --n-cpu-moe 42 --moe-cache-mib 2048 --cache-ram 0 -fa on`.
+   > If downloading the split parts (`SmartLLM-v2-K320-V1.gguf.part01`..`part30`, `< 2 GiB` each) from [Releases](https://github.com/VKVstudio/SmartLLM/releases) alongside `MODEL_SHA256SUMS.txt`, verify and join them bit-for-bit using [`reassemble_model.sh`](scripts/release/reassemble_model.sh) (`bash reassemble_model.sh --cleanup`), [`reassemble_model.ps1`](scripts/release/reassemble_model.ps1), or [`reassemble_model.py`](scripts/release/reassemble_model.py).
 2. **Image Generator (`sd-cli`):** `stable-diffusion.cpp` (`beyond_reality_z_image_3.0_fp8.safetensors` + `qwen_3_4b.safetensors` + `ae.safetensors`, `--steps 8 --cfg-scale 1.0 --type q8_0 --clip-on-cpu --vae-tiling`).
 
 > Only **one model occupies VRAM at a time** — Studio cleanly stops `llama-server` before starting `sd-cli` and verifies `0 MiB` compute VRAM upon exit.

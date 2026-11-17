@@ -105,7 +105,8 @@
 ### 2. Подключение весов моделей и движков (в окне **Настройки**)
 
 Studio не содержит внутри многогигабайтных весов. В верхней панели открой **Настройки (`Settings`)** и укажи пути к локальным файлам:
-1. **GGUF-модель:** `SmartLLM-v2-K320-V1.gguf` и бинарник **`llama-server`** (запуск с `-fit off --lazy-mode direct --n-cpu-moe 42 --moe-cache-mib 2048 --cache-ram 0 -fa on`).
+1. **GGUF-модель и проектор зрения:** `SmartLLM-v2-K320-V1.gguf` (`55.01 GiB`) + `mmproj-Qwen3.8-Flash-Next-BF16.gguf` (`865.50 MiB`), запуск через **`llama-server`** с `-fit off --lazy-mode direct --n-cpu-moe 42 --moe-cache-mib 2048 --cache-ram 0 -fa on`.
+   > Если скачал модель из [Releases](https://github.com/VKVstudio/SmartLLM/releases) по частям (`SmartLLM-v2-K320-V1.gguf.part01`..`part30`, каждая `< 2 GiB`) вместе с `MODEL_SHA256SUMS.txt`, проверь и собери её 1-в-1 скриптом [`reassemble_model.sh`](scripts/release/reassemble_model.sh) (`bash reassemble_model.sh --cleanup`), [`reassemble_model.ps1`](scripts/release/reassemble_model.ps1) или [`reassemble_model.py`](scripts/release/reassemble_model.py).
 2. **Генератор визуалов (`sd-cli`):** `stable-diffusion.cpp` (`beyond_reality_z_image_3.0_fp8.safetensors` + `qwen_3_4b.safetensors` + `ae.safetensors`, `--steps 8 --cfg-scale 1.0 --type q8_0 --clip-on-cpu --vae-tiling`).
 
 > В видеопамяти одновременно находится **только одна модель**: Studio сама выгружает `llama-server` перед запуском `sd-cli` и проверяет `0 MiB` compute VRAM на выходе.
