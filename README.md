@@ -140,9 +140,9 @@ Questions, or something here that looks wrong: **hello@vkvstudio.com**.
 ---
 
 <div align="center">
-  <a href="DONATE.md">
-    <img src="assets/badges/support-button.svg" alt="Support the work" height="40" />
+  <a href="https://github.com/VKVstudio/.github/blob/main/DONATE.md">
+    <img src="https://raw.githubusercontent.com/VKVstudio/.github/main/assets/support-button.svg" alt="Support the work" height="40" />
   </a>
   <br>
-  <sub>SmartLLM Studio is free. If this project saved you time, consider supporting its development — $0 is fine (<a href="DONATE.md">DONATE.md</a>).</sub>
+  <sub>If this project saved you time, consider supporting its development.</sub>
 </div>
