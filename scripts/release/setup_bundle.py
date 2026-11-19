@@ -68,8 +68,28 @@ def _open(url: str, extra_headers: dict[str, str] | None = None):
     headers = {"User-Agent": USER_AGENT}
     if extra_headers:
         headers.update(extra_headers)
-    req = urllib.request.Request(url, headers=headers)
-    return urllib.request.urlopen(req, timeout=120)
+    last_exc: Exception | None = None
+    for attempt in range(5):
+        req = urllib.request.Request(url, headers=headers)
+        try:
+            return urllib.request.urlopen(req, timeout=120)
+        except urllib.error.HTTPError as exc:
+            last_exc = exc
+            if exc.code in (404, 429, 500, 502, 503, 504) and attempt < 4:
+                import time
+
+                time.sleep(3 * (attempt + 1))
+                continue
+            raise
+        except (urllib.error.URLError, TimeoutError) as exc:
+            last_exc = exc
+            if attempt < 4:
+                import time
+
+                time.sleep(3 * (attempt + 1))
+                continue
+            raise
+    raise last_exc  # type: ignore[misc]
 
 
 def download(url: str, dest: Path, expected_sha256: str | None = None, expected_size: int | None = None) -> Path:
@@ -152,7 +172,7 @@ def step_studio(dest: Path, repo: str, tag: str) -> None:
         return
     _log("[1/4] studio: downloading app archive")
     win = os.name == "nt"
-    name = f"SmartLLM-Studio-v{tag}-windows11.zip" if win else f"SmartLLM-Studio-v{tag}-linux.tar.gz"
+    name = f"SmartLLM-Studio-{tag}-windows11.zip" if win else f"SmartLLM-Studio-{tag}-linux.tar.gz"
     url = f"https://github.com/{repo}/releases/download/{tag}/{name}"
     archive = download(url, dest / "_downloads" / name)
     tmp_extract = dest / "_downloads" / "studio_extract"
@@ -298,7 +318,7 @@ def step_binaries(dest: Path, repo: str, tag: str) -> None:
         _log("[4/4] binaries: already present, skip")
         return
     _log("[4/4] binaries: trying GitHub Release engine packages")
-    name = f"SmartLLM-Engines-v{tag}-windows11.zip" if os.name == "nt" else f"SmartLLM-Engines-v{tag}-linux.tar.gz"
+    name = f"SmartLLM-Engines-{tag}-windows11.zip" if os.name == "nt" else f"SmartLLM-Engines-{tag}-linux.tar.gz"
     url = f"https://github.com/{repo}/releases/download/{tag}/{name}"
     archive = dest / "_downloads" / name
     try:
