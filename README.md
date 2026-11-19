@@ -64,7 +64,7 @@
 | **Zero-Swap Memory** | **`0 B`** disk swap · **`0 kB`** resident PLE RSS | `26.82 GiB` PLE via direct `O_DIRECT` NVMe `pread`; `max VRAM = 9.12 GiB` |
 | **Web Lighthouse (Suite / Holdout)** | **`100 / 98.2 / 95.6 / 97.6`** · **`100 / 98.8 / 95.2 / 98.0`** | Real Chromium + Lighthouse (`P / A / BP / SEO`, `0` unsafe-inline) |
 | **Strict TypeScript** | **`10/10`** Suite + **`8/8`** Holdout unit tests PASS | Compiled with `tsc --strict` (`0` `any`) |
-| **Studio UI Gate** | **`227/227`** controls bound · LH **`100 / 100`** | `0` console errors, `0` external requests, `54` responsive shots |
+| **Studio UI Gate** | **`231/231`** controls bound · LH **`100 / 100`** | `0` console errors, `0` external requests, `54` responsive shots |
 
 ---
 
@@ -86,14 +86,16 @@ User Prompt (EN / RU / EN+RU)
 
 ### 0. One-Folder Bundle (Any Folder, Any Drive)
 
-[`scripts/release/setup_bundle.py`](scripts/release/setup_bundle.py) (Python 3.11+, pure stdlib, resumable) downloads EVERYTHING from our GitHub Releases into ONE portable folder — `studio/` + `models/` (55 GiB GGUF with SHA-256 verified reassembly + mmproj) + `models/z-image/` (official Apache-2.0 `Z-Image-Turbo`: DiT + text encoder + VAE, split into <2 GiB parts) + `bin/` portable CUDA engine binaries (Linux glibc >= 2.35 / Windows 11, RTX 20–50 series). No HuggingFace access required; optional `--zimage-source hf|civitai` for upstream or the showcase finetune.
+**Requirements:** NVIDIA GPU with `>= 12 GB` VRAM (RTX 20–50 series, driver `>= 525`), `32 GB` RAM recommended, `~160 GB` free disk during setup (`~80 GB` after `--cleanup-parts`), Python 3.11+.
+
+[`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.2-beta/setup_bundle.py) (also in [`scripts/release/`](scripts/release/setup_bundle.py); pure stdlib, resumable, SHA-256 verified) downloads EVERYTHING from our GitHub Releases into ONE portable folder — `studio/` + `models/` (55 GiB GGUF reassembled from 30 parts + mmproj) + `models/z-image/` (official Apache-2.0 `Z-Image-Turbo`: DiT + text encoder + VAE) + `bin/` portable CUDA engine binaries (Linux glibc >= 2.35 / Windows 11, no VC++ redist needed). No HuggingFace access required; optional `--zimage-source hf|civitai` for upstream or the showcase finetune.
 
 ```bash
-python3 scripts/release/setup_bundle.py --dest /any/drive/SmartLLM --cleanup-parts
+python3 setup_bundle.py --dest /any/drive/SmartLLM --cleanup-parts
 /any/drive/SmartLLM/studio/bin/smartllm-studio   # Linux (Windows: studio\smartllm-studio.bat)
 ```
 
-### 1. Launch SmartLLM Studio (`Linux` & `Windows 11`)
+### 1. Launch SmartLLM Studio from Source (`Linux` & `Windows 11`)
 
 - **Linux (`CachyOS` / Ubuntu / Debian):**
   ```bash
@@ -116,7 +118,7 @@ python3 scripts/release/setup_bundle.py --dest /any/drive/SmartLLM --cleanup-par
 Studio never bundles multi-gigabyte model weights. Inside Studio top bar → **Settings** (or via env/config), point to your local:
 1. **GGUF Model & Vision Projector:** `SmartLLM-v2-K320-V1.gguf` (`55.01 GiB`) + `mmproj-Qwen3.8-Flash-Next-BF16.gguf` (`865.50 MiB`), executed via **`llama-server`** with `--lazy-mode direct --n-cpu-moe 42 --moe-cache-mib 2048 --cache-ram 0 -fa on`.
    > If downloading the split parts (`SmartLLM-v2-K320-V1.gguf.part01`..`part30`, `< 2 GiB` each) from [Releases](https://github.com/VKVstudio/SmartLLM/releases) alongside `MODEL_SHA256SUMS.txt`, verify and join them bit-for-bit using [`reassemble_model.sh`](scripts/release/reassemble_model.sh) (`bash reassemble_model.sh --cleanup`), [`reassemble_model.ps1`](scripts/release/reassemble_model.ps1), or [`reassemble_model.py`](scripts/release/reassemble_model.py).
-2. **Image Generator (`sd-cli`):** `stable-diffusion.cpp` (`beyond_reality_z_image_3.0_fp8.safetensors` + `qwen_3_4b.safetensors` + `ae.safetensors`, `--steps 8 --cfg-scale 1.0 --type q8_0 --clip-on-cpu --vae-tiling`).
+2. **Image Generator (`sd-cli`):** `stable-diffusion.cpp` with the official `z_image_turbo_bf16.safetensors` + `qwen_3_4b.safetensors` + `ae.safetensors` (Apache-2.0, included in the bundle; `--steps 8 --cfg-scale 1.0 --type q8_0 --clip-on-cpu --vae-tiling`). The showcase visuals used the optional `beyond_reality_z_image_3.0_fp8.safetensors` CivitAI finetune (`--zimage-source civitai`).
 
 > Only **one model occupies VRAM at a time** — Studio cleanly stops `llama-server` before starting `sd-cli` and verifies `0 MiB` compute VRAM upon exit.
 
@@ -130,7 +132,7 @@ Copy-paste ready prompts and step-by-step constructor walkthroughs live in [`stu
 ### 4. CLI Combine & Headless Verification
 
 - **1-command CLI combine:** [`./run_combine.sh`](docs/OFFLINE_COMBINE_QUICKSTART.md) (`--brief "..." --out eval/combine_out/demo`)
-- **Offline Studio verification suite (`227` DOM controls + Lighthouse):**
+- **Offline Studio verification suite (`231` DOM controls + Lighthouse):**
   ```bash
   CUDA_VISIBLE_DEVICES="" .venv_linux/bin/python studio/tests/test_studio_cpu.py
   ```
@@ -143,6 +145,8 @@ Copy-paste ready prompts and step-by-step constructor walkthroughs live in [`stu
 - **Repository pruning, calibration & evaluation scripts:** **[Apache-2.0](LICENSE)**
 - **SmartLLM Studio (`studio/`):** Source-available under **[FSL-1.1-ALv2 → Apache-2.0 after 2 years](studio/LICENSE.md)** ([`TRADEMARKS.md`](studio/TRADEMARKS.md), [`OUTPUTS.md`](studio/OUTPUTS.md) — you own 100% of every website, script, and visual you generate, [`THIRD_PARTY_NOTICES.md`](studio/THIRD_PARTY_NOTICES.md)).
 - **`SmartLLM v2` GGUF weights:** Distributed separately under `qwen-community-1.0`.
+- **Z-Image-Turbo (DiT), Qwen3-4B text encoder, Flux.1 AE VAE:** **Apache-2.0** (byte-identical to `Comfy-Org/Z-Image-Turbo`; re-hosted in our Releases for convenience).
+- **Engine binaries (`llama-server`, `sd-cli`):** MIT forks of `llama.cpp` / `stable-diffusion.cpp` with the SmartLLM v2 runtime (`--lazy-mode direct`, MoE cache, qwen4exp MTP).
 
 Questions, or something here that looks wrong: **hello@vkvstudio.com**.
 

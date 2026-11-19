@@ -50,7 +50,7 @@
 **SmartLLM Studio (`v0.0.2-beta`)** is a standalone, cross-platform (**Linux + Windows 11**) local multimodal website & design atelier bound strictly to `127.0.0.1:8090` with zero cloud calls, a persistent Live Stage (`1440 / 834 / 390`), and a lock-aware sequential GPU controller (`llama.cpp` ↔ `stable-diffusion.cpp` `Z-Image`).
 
 - **3-Pane Atelier Shell:** 56 px top bar (`Constructor | Automatic Mode`, `EN | RU`, `Support`, `Settings`, `Live Stage`), 264 px step & task queue navigator, fluid centre workspace, 44% persistent right Live Stage, and 32 px Telemetry HUD (`Engine`, `VRAM`, `RAM Avail`, `Speed`, `Lock`).
-- **Offline Gate Metrics:** **`227/227`** interactive DOM controls bound (`0` unbound), `0` console/page errors, `0` external network requests, **Lighthouse Accessibility `100` / Best Practices `100`**, `EN + RU` parity (`0` unexpected Latin in RU), `54` responsive shots validated.
+- **Offline Gate Metrics:** **`231/231`** interactive DOM controls bound (`0` unbound), `0` console/page errors, `0` external network requests, **Lighthouse Accessibility `100` / Best Practices `100`**, `EN + RU` parity (`0` unexpected Latin in RU), `54` responsive shots validated.
 - **Bundled Typography & Artwork:** Self-hosted Latin+Cyrillic OFL-1.1 `.woff2` typefaces (`Cormorant Garamond`, `Onest`, `JetBrains Mono`) and bundled `.avif`/`.webp` studio artworks.
 
 ## 3. Modes & Functional Contract
@@ -67,6 +67,10 @@ Single-prompt site generation driven by `ProjectOrchestrator` (`smartllm_studio/
 
 ## 4. Quickstart (Linux & Windows 11)
 
+**Recommended — one-folder bundle:** download [`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.2-beta/setup_bundle.py) from Releases and run `python3 setup_bundle.py --dest /any/drive/SmartLLM --cleanup-parts`. It fetches the app, the 55 GiB GGUF + mmproj, the official Apache-2.0 Z-Image-Turbo weights, and portable CUDA engines into one folder; all paths are then auto-discovered (NVIDIA >= 12 GB VRAM, 32 GB RAM recommended).
+
+**From source (developers):**
+
 ### Linux
 ```bash
 cd studio
@@ -81,7 +85,7 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 .\smartllm-studio.bat
 ```
 
-Open `http://127.0.0.1:8090` and check **Settings** to configure your local `SmartLLM-v2-K320-V1.gguf`, `llama-server`, and `sd-cli` (`Z-Image`) paths. Try ready prompts in [`examples/`](examples/).
+Open `http://127.0.0.1:8090`. Inside a bundle, all engine/weight paths are discovered automatically; otherwise configure them in **Settings** (GGUF, mmproj, `llama-server`, `sd-cli`, Z-Image DiT/TE/VAE — with live `OK/MISS` diagnostics). Try ready prompts in [`examples/`](examples/).
 
 ## 5. Licensing & Weight Boundary
 
