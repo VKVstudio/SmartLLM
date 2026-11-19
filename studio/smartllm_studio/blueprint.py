@@ -6,7 +6,9 @@ import base64
 from datetime import datetime, timezone
 import hashlib
 import json
+import os
 from pathlib import Path
+import re
 import shutil
 from typing import Any
 import zipfile
@@ -21,6 +23,26 @@ from .sanitizer import ingest_brand_logo
 
 def sha256_csp(content: str) -> str:
     return "sha256-" + base64.b64encode(hashlib.sha256(content.encode("utf-8")).digest()).decode("ascii")
+
+
+def _safe_project_dir(raw: Any, default_dir: Path) -> Path:
+    """Portable output_dir resolution: reject foreign-OS absolute paths (shared dual-boot drives)
+    and unwritable/deleted folders, falling back to the per-project default directory."""
+    s = str(raw or "").strip().strip("`\"'")
+    if s:
+        foreign_win = bool(re.match(r"^[A-Za-z]:[\\/]", s)) or s.startswith("\\\\")
+        foreign_posix = s.startswith("/") and not s.startswith("//")
+        if (os.name != "nt" and foreign_win) or (os.name == "nt" and foreign_posix):
+            s = ""
+    if s:
+        try:
+            p = Path(s).resolve()
+            p.mkdir(parents=True, exist_ok=True)
+            return p
+        except OSError:
+            pass
+    default_dir.mkdir(parents=True, exist_ok=True)
+    return default_dir.resolve()
 
 
 def default_project_draft(project_id: str = "default", repo_root: Path | None = None) -> dict[str, Any]:
@@ -166,7 +188,8 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
         seo_cfg["title"] = f"{project_name} — {short_hl[:48]}"
         seo_cfg["description"] = lead_sub[:155]
 
-    project_dir = Path(payload.get("output_dir") or payload.get("project_dir") or (root / "eval" / "studio_projects" / "default")).resolve()
+    safe_id = "".join(c for c in str(payload.get("id") or "default") if c.isalnum() or c in ("-", "_")) or "default"
+    project_dir = _safe_project_dir(payload.get("output_dir") or payload.get("project_dir"), root / "eval" / "studio_projects" / safe_id)
     assets_dir = project_dir / "assets"
     assets_dir.mkdir(parents=True, exist_ok=True)
 
@@ -354,7 +377,7 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
     }
 
     blueprint_doc = {
-        "schema_version": "0.0.1-beta",
+        "schema_version": "0.0.2-beta",
         "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "project_id": str(payload.get("id") or project_dir.name),
         "revision": int(payload.get("revision") or 1),

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SmartLLM Studio v0.0.1-beta</title>
+  <title>SmartLLM Studio v0.0.2-beta</title>
   <link rel="icon" href="/assets/smartllm-logo.svg">
   <link rel="stylesheet" href="/static/styles.css">
 </head>
@@ -27,7 +27,7 @@
     <div class="brand-group">
       <img class="brand-emblem" src="/assets/smartllm-logo.svg" width="28" height="28" alt="SmartLLM Studio">
       <span class="brand-title" data-i18n="app_title">SmartLLM Studio</span>
-      <span class="badge-v">v0.0.1-beta</span>
+      <span class="badge-v">v0.0.2-beta</span>
     </div>
 
     <div class="mode-switcher" role="tablist" aria-label="Studio Mode">
@@ -482,6 +482,26 @@
       <div class="field">
         <label for="set-sd-input" data-i18n="lbl_set_sd">Путь к stable-diffusion.cpp (sd-cli)</label>
         <input id="set-sd-input" type="text">
+      </div>
+      <div class="field">
+        <label for="set-mmproj-input" data-i18n="lbl_set_mmproj">Путь к мультимодальному проектору (GGUF)</label>
+        <input id="set-mmproj-input" type="text">
+      </div>
+      <div class="field">
+        <label for="set-dit-input" data-i18n="lbl_set_dit">Путь к весам Z-Image (диффузионная модель)</label>
+        <input id="set-dit-input" type="text">
+      </div>
+      <div class="field">
+        <label for="set-te-input" data-i18n="lbl_set_te">Путь к текстовому энкодеру Z-Image</label>
+        <input id="set-te-input" type="text">
+      </div>
+      <div class="field">
+        <label for="set-vae-input" data-i18n="lbl_set_vae">Путь к автоэнкодеру Z-Image</label>
+        <input id="set-vae-input" type="text">
+      </div>
+      <div class="field">
+        <label data-i18n="lbl_set_paths_status">Диагностика путей</label>
+        <code id="set-paths-status" style="display:block; font-size:12px; white-space:pre-wrap; word-break:break-all; color:var(--text-1);"></code>
       </div>
       <div class="field">
         <label for="set-support-mode" data-i18n="lbl_set_support_mode">Режим карточки поддержки</label>

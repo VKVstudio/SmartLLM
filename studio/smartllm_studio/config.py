@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
+import shutil
 from typing import Any
 
 from .os_compat import current_platform_tag, get_user_config_path, is_windows
@@ -31,9 +32,9 @@ def load_edition_config(edition_path: Path = EDITION_CONFIG_PATH) -> dict[str, A
     return {
         "schema": 2,
         "product": "SmartLLM Studio",
-        "version": "0.0.1-beta",
+        "version": "0.0.2-beta",
         "license_spdx": "FSL-1.1-ALv2",
-        "license_change_date": "2028-11-16",
+        "license_change_date": "2028-11-19",
         "telemetry": False,
         "update_check": False,
         "author": {
@@ -63,11 +64,156 @@ def load_edition_config(edition_path: Path = EDITION_CONFIG_PATH) -> dict[str, A
 
 
 def _find_monorepo_root(start_dir: Path) -> Path | None:
+    """Walk up from start_dir; accept monorepo markers or a release layout with models/SmartLLM*.gguf."""
     cur = start_dir.resolve()
     for candidate in (cur, *cur.parents):
-        if (candidate / "CLAUDE.md").exists() and (candidate / "models").is_dir():
+        models_dir = candidate / "models"
+        if not models_dir.is_dir():
+            continue
+        if (candidate / "CLAUDE.md").exists() or (candidate / "AGENTS.md").exists():
+            return candidate
+        if any(models_dir.glob("SmartLLM*.gguf")):
             return candidate
     return None
+
+
+def _resolve_repo_root(explicit: Path | None) -> tuple[Path, bool]:
+    """Portable root resolution: explicit flag -> SMARTLLM_REPO_ROOT env -> walk up from package dir."""
+    starts: list[Path] = []
+    if explicit is not None:
+        starts.append(explicit)
+    env_root = os.environ.get("SMARTLLM_REPO_ROOT")
+    if env_root:
+        starts.append(Path(env_root))
+    starts.append(STUDIO_ROOT)
+    for start in starts:
+        found = _find_monorepo_root(start)
+        if found is not None:
+            return found, True
+    return (explicit.resolve() if explicit is not None else DEFAULT_REPO_ROOT.resolve()), False
+
+
+def _first_existing(candidates: list[Path]) -> Path | None:
+    for cand in candidates:
+        try:
+            if cand.is_file():
+                return cand
+        except OSError:
+            continue
+    return None
+
+
+def _binary_candidates(root: Path, win: bool, tool_dir_name: str, exe_name: str) -> list[Path]:
+    """All common build layouts (Ninja/MSBuild/Release), any drive or folder, plus PATH lookup."""
+    names = [f"{exe_name}.exe"] if win else [exe_name]
+    build_dirs = ["build", "build_win", "build_linux"] if win else ["build_linux", "build", "build_win"]
+    sub_dirs = ["bin", "bin/Release", "bin/Debug", "bin/RelWithDebInfo"]
+    tool_dir = root / "tools" / tool_dir_name
+    bundle_sub = "llama" if tool_dir_name == "llama.cpp" else "sd"
+    cands: list[Path] = []
+    for bd in build_dirs:
+        for sub in sub_dirs:
+            for n in names:
+                cands.append(tool_dir / bd / sub / n)
+    for n in names:
+        cands.append(root / "bin" / n)
+        cands.append(root / "bin" / bundle_sub / n)
+        cands.append(tool_dir / n)
+    for n in names:
+        cands.extend(sorted(tool_dir.glob(f"build*/bin/**/{n}")))
+    which = shutil.which(exe_name)
+    if which:
+        cands.append(Path(which))
+    return cands
+
+
+def _discover_model(models_dir: Path) -> Path:
+    preferred = models_dir / "SmartLLM-v2-K320-V1.gguf"
+    if preferred.exists():
+        return preferred
+    v2 = sorted(p for p in models_dir.glob("SmartLLM-v2-*.gguf") if "BF16" not in p.name.upper())
+    if v2:
+        return v2[0]
+    any_smart = sorted(models_dir.glob("SmartLLM*.gguf"))
+    if any_smart:
+        return any_smart[0]
+    return preferred
+
+
+def _discover_mmproj(models_dir: Path) -> Path:
+    cands = sorted(models_dir.glob("mmproj*.gguf"))
+    for cand in cands:
+        if "BF16" in cand.name.upper() or "F16" in cand.name.upper():
+            return cand
+    if cands:
+        return cands[0]
+    return models_dir / "mmproj-Qwen3.8-Flash-Next-BF16.gguf"
+
+
+def _find_zimage_models_dir(root: Path) -> Path | None:
+    """Search ComfyUI-style weight folders relative to the repo (any drive, no hardcoded paths)."""
+    bases: list[Path] = []
+    ancestors = [root, *list(root.parents)[:3]]
+    for anc in ancestors:
+        bases.append(anc / "ComfyUI_windows_portable" / "ComfyUI" / "models")
+        bases.append(anc / "ComfyUI" / "models")
+        try:
+            for cand in sorted(anc.glob("ComfyUI*")):
+                if cand.is_dir():
+                    bases.append(cand / "ComfyUI" / "models")
+                    bases.append(cand / "models")
+        except OSError:
+            pass
+        bases.append(anc / "models" / "z-image")
+        bases.append(anc / "models")
+    for base in bases:
+        try:
+            if (base / "diffusion_models").is_dir() or (base / "text_encoders").is_dir():
+                return base
+        except OSError:
+            continue
+    return None
+
+
+def _pick_weight(models_base: Path, sub_dir: str, preferred: str, patterns: list[str]) -> Path:
+    d = models_base / sub_dir
+    pref = d / preferred
+    if pref.exists():
+        return pref
+    for pat in patterns:
+        hits = sorted(p for p in d.glob(pat) if p.is_file())
+        if hits:
+            return hits[0]
+    return pref
+
+
+def refresh_path_flags(paths: dict[str, Any]) -> dict[str, Any]:
+    """Recompute *_exists and missing_* diagnostics after any path merge/update."""
+    for key, flag in (
+        ("gguf_model_path", "gguf_model_exists"),
+        ("mmproj_path", "mmproj_exists"),
+        ("llama_server_bin", "llama_server_exists"),
+        ("sd_cli_bin", "sd_cli_exists"),
+        ("dit_model_path", "dit_model_exists"),
+        ("te_model_path", "te_model_exists"),
+        ("vae_model_path", "vae_model_exists"),
+    ):
+        paths[flag] = Path(str(paths.get(key) or "")).exists()
+    paths["missing_required"] = [
+        k for k, flag in (
+            ("gguf_model_path", "gguf_model_exists"),
+            ("llama_server_bin", "llama_server_exists"),
+        ) if not paths.get(flag)
+    ]
+    paths["missing_visuals"] = [
+        k for k, flag in (
+            ("sd_cli_bin", "sd_cli_exists"),
+            ("dit_model_path", "dit_model_exists"),
+            ("te_model_path", "te_model_exists"),
+            ("vae_model_path", "vae_model_exists"),
+        ) if not paths.get(flag)
+    ]
+    return paths
 
 
 def discover_studio_paths(
@@ -75,7 +221,11 @@ def discover_studio_paths(
     platform_override: str | None = None,
     cli_overrides: dict[str, str] | None = None,
 ) -> dict[str, Any]:
-    """5-Tier Path Discovery (1. CLI flag -> 2. env -> 3. user config -> 4. monorepo -> 5. wizard)."""
+    """5-Tier Path Discovery (1. CLI flag -> 2. env -> 3. user config -> 4. monorepo/release auto -> 5. wizard).
+
+    Fully portable: every candidate is derived from the package location, an explicit
+    root, or the user config/env — never from a hardcoded drive letter or mount point.
+    """
     win = is_windows(platform_override)
     cli = cli_overrides or {}
     cfg_path = get_user_config_path(platform_override)
@@ -88,36 +238,25 @@ def discover_studio_paths(
         except Exception:
             pass
 
-    mono_root = repo_root.resolve() if repo_root else _find_monorepo_root(STUDIO_ROOT)
-    root = mono_root or DEFAULT_REPO_ROOT.resolve()
+    root, mono_detected = _resolve_repo_root(repo_root)
 
-    # Monorepo candidate map
     models_dir = root / "models"
-    v2_candidates = sorted(
-        (p for p in models_dir.glob("SmartLLM-v2-*.gguf") if "BF16" not in p.name.upper()),
-        key=lambda p: p.name,
-    ) if models_dir.exists() else []
-    mono_model = (models_dir / "SmartLLM-v2-K320-V1.gguf") if (models_dir / "SmartLLM-v2-K320-V1.gguf").exists() else (v2_candidates[0] if v2_candidates else (models_dir / "SmartLLM-205E-IQ3_S.gguf"))
+    llama_cands = _binary_candidates(root, win, "llama.cpp", "llama-server")
+    sd_cands = _binary_candidates(root, win, "stable-diffusion.cpp", "sd-cli")
+    llama_mono = _first_existing(llama_cands) or llama_cands[0]
+    sd_mono = _first_existing(sd_cands) or sd_cands[0]
 
-    llama_mono = (
-        root / "tools" / "llama.cpp" / "build" / "bin" / "Release" / "llama-server.exe"
-        if win
-        else root / "tools" / "llama.cpp" / "build_linux" / "bin" / "llama-server"
-    )
-    sd_mono = (
-        root / "tools" / "stable-diffusion.cpp" / "build" / "bin" / "Release" / "sd-cli.exe"
-        if win
-        else root / "tools" / "stable-diffusion.cpp" / "build_linux" / "bin" / "sd-cli"
-    )
-    comfy_base = Path("D:/ComfyUI_windows_portable/ComfyUI/models") if win else Path("/mnt/rescue/ComfyUI_windows_portable/ComfyUI/models")
+    zimage_base = _find_zimage_models_dir(root)
+    if zimage_base is None:
+        zimage_base = models_dir / "z-image"
     mono_map = {
-        "gguf_model_path": mono_model,
-        "mmproj_path": models_dir / "mmproj-SmartLLM-v2-f16.gguf",
+        "gguf_model_path": _discover_model(models_dir),
+        "mmproj_path": _discover_mmproj(models_dir),
         "llama_server_bin": llama_mono,
         "sd_cli_bin": sd_mono,
-        "dit_model_path": comfy_base / "diffusion_models" / "beyond_reality_z_image_3.0_fp8.safetensors",
-        "te_model_path": comfy_base / "text_encoders" / "qwen_3_4b.safetensors",
-        "vae_model_path": comfy_base / "vae" / "ae.safetensors",
+        "dit_model_path": _pick_weight(zimage_base, "diffusion_models", "beyond_reality_z_image_3.0_fp8.safetensors", ["*z_image*.safetensors", "*z-image*.safetensors", "*.safetensors"]),
+        "te_model_path": _pick_weight(zimage_base, "text_encoders", "qwen_3_4b.safetensors", ["qwen*.safetensors", "*.safetensors"]),
+        "vae_model_path": _pick_weight(zimage_base, "vae", "ae.safetensors", ["ae*.safetensors", "*.safetensors"]),
     }
 
     resolved: dict[str, Any] = {}
@@ -133,29 +272,28 @@ def discover_studio_paths(
         elif user_cfg.get(key):
             resolved[key] = str(user_cfg[key])
             sources[key] = "user_config"
-        elif mono_root is not None and (mono_map[key].exists() or key in ("gguf_model_path", "llama_server_bin", "sd_cli_bin")):
+        elif mono_detected and (mono_map[key].exists() or key in ("gguf_model_path", "llama_server_bin", "sd_cli_bin")):
             resolved[key] = str(mono_map[key])
             sources[key] = "monorepo"
         else:
             resolved[key] = str(mono_map[key])
             sources[key] = "wizard"
 
-    lock_path = (mono_root / ".system" / "gpu.lock") if (mono_root and (mono_root / ".system").exists()) else (cfg_path.parent / "gpu.lock")
+    lock_path = (root / ".system" / "gpu.lock") if (mono_detected and (root / ".system").exists()) else (cfg_path.parent / "gpu.lock")
+    projects_root = (root / "eval" / "studio_projects") if mono_detected else (root / "studio_projects")
 
-    return {
+    paths = {
         "os": current_platform_tag(platform_override),
-        "monorepo_detected": mono_root is not None,
+        "monorepo_detected": mono_detected,
         "repo_root": str(root),
         "studio_root": str(STUDIO_ROOT),
-        "projects_root": str(root / "eval" / "studio_projects"),
+        "projects_root": str(projects_root),
         "gpu_lock_path": str(lock_path),
         "config_path": str(cfg_path),
         "sources": sources,
         **resolved,
-        "llama_server_exists": Path(resolved["llama_server_bin"]).exists(),
-        "sd_cli_exists": Path(resolved["sd_cli_bin"]).exists(),
-        "gguf_model_exists": Path(resolved["gguf_model_path"]).exists(),
     }
+    return refresh_path_flags(paths)
 
 
 def load_user_settings(
@@ -182,7 +320,12 @@ def load_user_settings(
             if isinstance(saved, dict):
                 base.update({k: v for k, v in saved.items() if k != "paths"})
                 if isinstance(saved.get("paths"), dict):
-                    base["paths"].update(saved["paths"])
+                    for key in ENV_KEY_MAP:
+                        val = saved["paths"].get(key)
+                        if val:
+                            base["paths"][key] = str(val)
+                            base["paths"]["sources"][key] = "user_config"
+                    refresh_path_flags(base["paths"])
         except Exception:
             pass
     return base
@@ -196,11 +339,17 @@ def save_user_settings(
     current = load_user_settings(repo_root=repo_root, platform_override=platform_override)
     for k, v in updates.items():
         if k == "paths" and isinstance(v, dict):
-            current["paths"].update(v)
+            for key in ENV_KEY_MAP:
+                if v.get(key):
+                    current["paths"][key] = str(v[key])
+                    current["paths"]["sources"][key] = "user_config"
         elif k != "host":
             current[k] = v
     current["host"] = "127.0.0.1"
+    refresh_path_flags(current["paths"])
+    persisted = {k: v for k, v in current.items() if k != "paths"}
+    persisted["paths"] = {key: current["paths"][key] for key in ENV_KEY_MAP}
     cpath = get_user_config_path(platform_override)
     cpath.parent.mkdir(parents=True, exist_ok=True)
-    cpath.write_text(json.dumps(current, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    cpath.write_text(json.dumps(persisted, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return current

@@ -1,13 +1,30 @@
 #!/usr/bin/env bash
-# SmartLLM Studio v0.0.1-beta — Linux Executable Launcher (127.0.0.1 only)
+# SmartLLM Studio v0.0.2-beta — Linux Executable Launcher (127.0.0.1 only, portable: any folder / any drive)
 set -euo pipefail
 
 STUDIO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REPO_ROOT="$(cd "${STUDIO_DIR}/.." && pwd)"
 
-PYTHON_BIN="${REPO_ROOT}/.venv_linux/bin/python"
-if [[ ! -x "${PYTHON_BIN}" ]]; then
-    PYTHON_BIN="/usr/bin/python3"
+PYTHON_BIN=""
+for cand in \
+    "${REPO_ROOT}/.venv_linux/bin/python" \
+    "${REPO_ROOT}/.venv/bin/python" \
+    "${HOME}/.local/share/smartllm-studio/venv/bin/python"; do
+    if [[ -x "${cand}" ]]; then
+        PYTHON_BIN="${cand}"
+        break
+    fi
+done
+if [[ -z "${PYTHON_BIN}" ]]; then
+    PYTHON_BIN="$(command -v python3 || command -v python || true)"
+fi
+if [[ -z "${PYTHON_BIN}" ]]; then
+    echo "SmartLLM Studio: Python 3.11+ not found. Install Python >= 3.11 first." >&2
+    exit 1
+fi
+if ! "${PYTHON_BIN}" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)' 2>/dev/null; then
+    echo "SmartLLM Studio: Python 3.11+ is required (found: ${PYTHON_BIN})." >&2
+    exit 1
 fi
 
 export PYTHONPATH="${STUDIO_DIR}:${REPO_ROOT}/tools/llama.cpp/gguf-py:${REPO_ROOT}:${PYTHONPATH:-}"

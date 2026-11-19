@@ -114,7 +114,7 @@ def run_all_tests() -> dict[str, object]:
     results: dict[str, object] = {}
 
     # 1. Q1-Q2: FSL-1.1-ALv2 License, TRADEMARKS, OUTPUTS, THIRD_PARTY_NOTICES, edition.json v2 & Docs
-    assert __version__ == "0.0.1-beta"
+    assert __version__ == "0.0.2-beta"
     lic_txt = (STUDIO_ROOT / "LICENSE.md").read_text(encoding="utf-8")
     assert "FSL-1.1-ALv2" in lic_txt and "Apache License, Version 2.0" in lic_txt
     assert "Краткое резюме" not in lic_txt, "Russian summary must be in README.ru.md, not LICENSE.md"

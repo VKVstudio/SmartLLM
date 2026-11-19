@@ -291,7 +291,7 @@ def create_studio_server(
                 edition = load_edition_config()
                 if "support_mode" in settings:
                     edition["support"]["mode"] = settings["support_mode"]
-                return self._send_json(200, {"status": "ok", "version": __version__, "instance_id": state.instance_id, "host": "127.0.0.1", "edition": edition, "engine": state.gpu.status_dict(), "telemetry": get_system_telemetry(), "paths": discover_studio_paths(repo_root=state.repo_root), "settings": settings})
+                return self._send_json(200, {"status": "ok", "version": __version__, "instance_id": state.instance_id, "host": "127.0.0.1", "edition": edition, "engine": state.gpu.status_dict(), "telemetry": get_system_telemetry(), "paths": settings["paths"], "settings": settings})
             if path == "/api/catalog":
                 cat = load_studio_catalog(repo_root=state.repo_root)
                 cat["available_blocks"] = AVAILABLE_BLOCKS
@@ -336,7 +336,21 @@ def create_studio_server(
 
             try:
                 if path == "/api/settings":
-                    return self._send_json(200, {"status": "saved", "settings": save_user_settings(body, repo_root=state.repo_root)})
+                    saved = save_user_settings(body, repo_root=state.repo_root)
+                    sp = saved.get("paths") or {}
+                    if sp.get("llama_server_bin"):
+                        state.llm.server_bin = Path(str(sp["llama_server_bin"]))
+                    if sp.get("gguf_model_path"):
+                        state.llm.model_path = Path(str(sp["gguf_model_path"]))
+                    if sp.get("sd_cli_bin"):
+                        state.image_jobs.sd_cli_bin = Path(str(sp["sd_cli_bin"]))
+                    if sp.get("dit_model_path"):
+                        state.image_jobs.dit_model_path = Path(str(sp["dit_model_path"]))
+                    if sp.get("te_model_path"):
+                        state.image_jobs.te_model_path = Path(str(sp["te_model_path"]))
+                    if sp.get("vae_model_path"):
+                        state.image_jobs.vae_model_path = Path(str(sp["vae_model_path"]))
+                    return self._send_json(200, {"status": "saved", "settings": saved})
                 if path == "/api/engine/llm/start":
                     req_bytes = int(body["model_host_bytes"]) if "model_host_bytes" in body else None
                     res = state.llm.start(model_host_bytes=req_bytes, mock_cmd=body.get("mock_cmd"))

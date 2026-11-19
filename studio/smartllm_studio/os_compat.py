@@ -44,6 +44,24 @@ def get_user_settings_path(platform_override: str | None = None) -> Path:
     return get_user_config_path(platform_override)
 
 
+def get_log_dir(platform_override: str | None = None) -> Path:
+    """Persistent per-user log directory (works on any drive/folder, Linux + Windows)."""
+    d = get_user_config_dir(platform_override) / "logs"
+    try:
+        d.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        import tempfile
+
+        d = Path(tempfile.gettempdir()) / "smartllm-studio-logs"
+        d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+def is_cpu_test_mode() -> bool:
+    """True only for explicit headless CPU isolation (tests), never for a broken GPU setup."""
+    return os.environ.get("CUDA_VISIBLE_DEVICES") == "" or os.environ.get("SMARTLLM_STUDIO_HEADLESS") == "1"
+
+
 class CrossPlatformFileLock:
     """Non-blocking exclusive file lock supporting Linux (fcntl) and Windows (msvcrt)."""
 
@@ -143,7 +161,7 @@ def get_system_telemetry() -> dict[str, Any]:
 
     cuda_masked = os.environ.get("CUDA_VISIBLE_DEVICES", None) == ""
     gpu_info = {"available": not cuda_masked, "vram_used_mib": 0.0, "vram_total_mib": 12282.0, "mode": "cpu_isolated" if cuda_masked else "ready"}
-    if not cuda_masked and is_linux():
+    if not cuda_masked and (is_linux() or is_windows()) and shutil.which("nvidia-smi"):
         try:
             raw_smi = subprocess.check_output(
                 ["nvidia-smi", "--query-gpu=memory.total", "--format=csv,noheader,nounits"],
@@ -167,7 +185,7 @@ def get_system_telemetry() -> dict[str, Any]:
                     engine_active = True
                     if mem.isdigit():
                         compute_values.append(float(mem))
-            if not engine_active:
+            if not engine_active and is_linux():
                 try:
                     pg = subprocess.run(["pgrep", "-f", "llama-server|sd-cli"], capture_output=True, text=True, timeout=0.8, check=False)
                     engine_active = pg.returncode == 0 and bool(pg.stdout.strip())

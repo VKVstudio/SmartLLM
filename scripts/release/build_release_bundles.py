@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SmartLLM v0.0.1-beta Release Bundler & Git Staging Safety Auditor.
+"""SmartLLM v0.0.2-beta Release Bundler & Git Staging Safety Auditor.
 
 Responsibilities:
 1. Audits `.gitignore` and `git ls-files` in the monorepo to guarantee ZERO
@@ -15,8 +15,8 @@ Responsibilities:
    `uninstall.{sh,ps1}`, `smartllm-studio.bat`, `smartllm-studio-silent.vbs`,
    and a strict standalone `.gitignore`), containing 0 weights and 0 compiled binaries.
 3. Packages deterministic release archives:
-   - `dist/releases/SmartLLM-Studio-v0.0.1-beta-linux.tar.gz`
-   - `dist/releases/SmartLLM-Studio-v0.0.1-beta-windows11.zip`
+   - `dist/releases/SmartLLM-Studio-v0.0.2-beta-linux.tar.gz`
+   - `dist/releases/SmartLLM-Studio-v0.0.2-beta-windows11.zip`
    - `dist/releases/SHA256SUMS.txt`
 4. Runs an isolated extraction + standalone import/health smoke in `/tmp/rel_smoke`
    and cleans `/tmp/rel_smoke` immediately afterward.
@@ -286,8 +286,8 @@ def stage_standalone_studio_repo(
         raise RuntimeError("Staged LICENSE.md failed FSL-1.1-ALv2 / 2028-11-16 check")
 
     version_str = (stage_dir / "VERSION").read_text(encoding="utf-8").strip()
-    if version_str != "0.0.1-beta":
-        raise RuntimeError(f"Expected VERSION '0.0.1-beta', got '{version_str}'")
+    if version_str != "0.0.2-beta":
+        raise RuntimeError(f"Expected VERSION '0.0.2-beta', got '{version_str}'")
 
     edition = json.loads((stage_dir / "config" / "edition.json").read_text(encoding="utf-8"))
     if edition.get("telemetry") is not False or edition.get("update_check") is not False:
@@ -316,7 +316,7 @@ def stage_standalone_studio_repo(
 def build_release_archives(
     stage_dir: Path = STAGE_REPO_DIR,
     releases_dir: Path = RELEASES_DIR,
-    version: str = "0.0.1-beta",
+    version: str = "0.0.2-beta",
 ) -> dict:
     releases_dir.mkdir(parents=True, exist_ok=True)
     prefix = f"SmartLLM-Studio-v{version}"
@@ -380,7 +380,7 @@ def build_release_archives(
     }
 
 
-def verify_extracted_archive_in_tmp(linux_tar_path: Path, version: str = "0.0.1-beta") -> dict:
+def verify_extracted_archive_in_tmp(linux_tar_path: Path, version: str = "0.0.2-beta") -> dict:
     smoke_root = Path("/tmp/rel_smoke")
     if smoke_root.exists():
         shutil.rmtree(smoke_root)
@@ -434,7 +434,7 @@ def verify_extracted_archive_in_tmp(linux_tar_path: Path, version: str = "0.0.1-
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Build & verify SmartLLM Studio v0.0.1-beta release bundles.")
+    parser = argparse.ArgumentParser(description="Build & verify SmartLLM Studio v0.0.2-beta release bundles.")
     parser.add_argument("--verify", action="store_true", help="Run full git audit, staging, packaging & /tmp/rel_smoke verification")
     args = parser.parse_args(argv)
 

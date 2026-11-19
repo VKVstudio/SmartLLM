@@ -2,7 +2,7 @@
   <img src="assets/brand/smartllm-logo.svg" alt="SmartLLM Logo" width="96" height="96">
 </p>
 
-<h1 align="center">SmartLLM &amp; SmartLLM Studio <code>v0.0.1-beta</code></h1>
+<h1 align="center">SmartLLM &amp; SmartLLM Studio <code>v0.0.2-beta</code></h1>
 
 <p align="center">
   <b>Local Offline Multimodal Website, Design &amp; Copywriting Combine (EN + RU)</b><br>
@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/badges/version.svg" alt="release: v0.0.1-beta">
+  <img src="assets/badges/version.svg" alt="release: v0.0.2-beta">
   <img src="assets/badges/platform.svg" alt="platform: Linux | Windows 11">
   <img src="assets/badges/offline.svg" alt="runtime: 127.0.0.1 Zero-Swap">
   <img src="assets/badges/license.svg" alt="license: Apache-2.0 / FSL-1.1-ALv2">
@@ -84,6 +84,15 @@ User Prompt (EN / RU / EN+RU)
 
 ## Quickstart Guide
 
+### 0. One-Folder Bundle (Any Folder, Any Drive)
+
+[`scripts/release/setup_bundle.py`](scripts/release/setup_bundle.py) (Python 3.11+, pure stdlib, resumable) downloads EVERYTHING from our GitHub Releases into ONE portable folder — `studio/` + `models/` (55 GiB GGUF with SHA-256 verified reassembly + mmproj) + `models/z-image/` (official Apache-2.0 `Z-Image-Turbo`: DiT + text encoder + VAE, split into <2 GiB parts) + `bin/` portable CUDA engine binaries (Linux glibc >= 2.35 / Windows 11, RTX 20–50 series). No HuggingFace access required; optional `--zimage-source hf|civitai` for upstream or the showcase finetune.
+
+```bash
+python3 scripts/release/setup_bundle.py --dest /any/drive/SmartLLM --cleanup-parts
+/any/drive/SmartLLM/studio/bin/smartllm-studio   # Linux (Windows: studio\smartllm-studio.bat)
+```
+
 ### 1. Launch SmartLLM Studio (`Linux` & `Windows 11`)
 
 - **Linux (`CachyOS` / Ubuntu / Debian):**
@@ -100,7 +109,7 @@ User Prompt (EN / RU / EN+RU)
   powershell -ExecutionPolicy Bypass -File .\install.ps1
   .\smartllm-studio.bat
   ```
-  Studio starts strictly on loopback **`http://127.0.0.1:8090`**. Standalone pre-packaged archives (`SmartLLM-Studio-v0.0.1-beta-linux.tar.gz` and `.zip`) are also available in [Releases](https://github.com/VKVstudio/SmartLLM/releases).
+  Studio starts strictly on loopback **`http://127.0.0.1:8090`**. Standalone pre-packaged archives (`SmartLLM-Studio-v0.0.2-beta-linux.tar.gz` and `.zip`) are also available in [Releases](https://github.com/VKVstudio/SmartLLM/releases).
 
 ### 2. Attach Local Weights & Binaries (in **Settings** or CLI)
 

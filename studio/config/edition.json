@@ -1,9 +1,9 @@
 {
   "schema": 2,
   "product": "SmartLLM Studio",
-  "version": "0.0.1-beta",
+  "version": "0.0.2-beta",
   "license_spdx": "FSL-1.1-ALv2",
-  "license_change_date": "2028-11-16",
+  "license_change_date": "2028-11-19",
   "telemetry": false,
   "update_check": false,
   "author": {

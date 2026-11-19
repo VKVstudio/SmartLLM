@@ -14,9 +14,21 @@ import urllib.request
 
 from . import __version__
 from .config import DEFAULT_REPO_ROOT, discover_studio_paths, load_edition_config
-from .os_compat import open_chromeless_window
+from .os_compat import get_log_dir, open_chromeless_window
 from .server import assert_studio_loopback, create_studio_server
 from .tray import run_system_tray_or_wait
+
+
+def _studio_log(msg: str) -> None:
+    """Persistent launcher log (visible even when the Windows launcher runs hidden via VBS)."""
+    try:
+        from datetime import datetime, timezone
+
+        line = f"{datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} {msg}\n"
+        with open(get_log_dir() / "studio.log", "a", encoding="utf-8") as fh:
+            fh.write(line)
+    except Exception:
+        pass
 
 
 def _probe_existing_studio(port: int) -> dict | None:
@@ -67,18 +79,33 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
 
+    _studio_log(f"launch host={args.host} port={args.port} repo_root={args.repo_root} no_browser={args.no_browser} no_tray={args.no_tray}")
+    try:
+        return _run_server(args)
+    except Exception as exc:
+        import traceback
+
+        _studio_log(f"FATAL {type(exc).__name__}: {exc}\n{traceback.format_exc()}")
+        print(json.dumps({"error": type(exc).__name__, "message": str(exc), "log": str(get_log_dir() / "studio.log")}), file=sys.stderr)
+        return 1
+
+
+def _run_server(args: argparse.Namespace) -> int:
     # Single-instance handoff (Q6): if args.port has our product running, open browser to it and exit 0; else try 8091..8099
     existing = _probe_existing_studio(args.port)
     if existing is not None:
         url = f"http://127.0.0.1:{args.port}/"
         if not args.no_browser:
             open_chromeless_window(url)
+        _studio_log(f"attached_existing url={url} instance_id={existing.get('instance_id')}")
         print(json.dumps({"status": "attached_existing", "studio_url": url, "instance_id": existing.get("instance_id")}), flush=True)
         return 0
 
     candidates = [args.port] if args.port != 8090 else list(range(8090, 8100))
     srv = None
     state = None
+    import errno
+
     for cand_port in candidates:
         try:
             srv, state = create_studio_server(
@@ -88,10 +115,14 @@ def main(argv: list[str] | None = None) -> int:
                 allow_lock_write=True,
             )
             break
-        except OSError:
-            continue
+        except OSError as exc:
+            if exc.errno in (errno.EADDRINUSE, errno.EACCES):
+                continue
+            _studio_log(f"SERVER_CREATE_FAILED port={cand_port}: {type(exc).__name__}: {exc}")
+            raise
 
     if srv is None or state is None:
+        _studio_log(f"PORT_BIND_FAILED ports_tried={candidates}")
         print(json.dumps({"error": "PORT_BIND_FAILED", "ports_tried": candidates}), file=sys.stderr)
         return 1
 
@@ -102,7 +133,9 @@ def main(argv: list[str] | None = None) -> int:
 
     actual_port = srv.server_address[1]
     url = f"http://127.0.0.1:{actual_port}/"
-    print(json.dumps({"studio_url": url, "version": __version__, "host": "127.0.0.1", "port": actual_port, "instance_id": state.instance_id}), flush=True)
+    startup = {"studio_url": url, "version": __version__, "host": "127.0.0.1", "port": actual_port, "instance_id": state.instance_id}
+    _studio_log(f"started {json.dumps(startup)}")
+    print(json.dumps(startup), flush=True)
 
     if not args.no_browser:
         open_chromeless_window(url)
@@ -119,11 +152,13 @@ def main(argv: list[str] | None = None) -> int:
                 pass
             state.gpu.cleanup_children()
             srv.server_close()
+        _studio_log("stopped (no-tray)")
         return 0
 
     srv_thread = threading.Thread(target=srv.serve_forever, daemon=True)
     srv_thread.start()
     mode = run_system_tray_or_wait(url, state.projects_root, on_quit=srv.shutdown, no_tray=args.no_tray)
+    _studio_log(f"tray_mode={mode}")
     if mode.startswith("headless") or mode.startswith("tray_unavailable"):
         try:
             srv_thread.join()
@@ -135,6 +170,7 @@ def main(argv: list[str] | None = None) -> int:
         pass
     state.gpu.cleanup_children()
     srv.server_close()
+    _studio_log("stopped")
     return 0
 
 

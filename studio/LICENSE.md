@@ -45,4 +45,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Apache 2.0 Future License Grant
 
-On the second anniversary of the date we make a specific version of the Software available (for `v0.0.1-beta` released on `2026-11-16`, on **`2028-11-16`**), we hereby grant you a license to that version of the Software under the terms of the **Apache License, Version 2.0** (https://www.apache.org/licenses/LICENSE-2.0), effective on that anniversary date.
+On the second anniversary of the date we make a specific version of the Software available (for `v0.0.1-beta` released on `2026-11-16`, on **`2028-11-16`**; for `v0.0.2-beta` released on `2026-11-19`, on **`2028-11-19`**), we hereby grant you a license to that version of the Software under the terms of the **Apache License, Version 2.0** (https://www.apache.org/licenses/LICENSE-2.0), effective on that anniversary date.

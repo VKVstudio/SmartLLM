@@ -1059,7 +1059,7 @@
     el("hud-stop-llm-btn").addEventListener("click", function () {
       fetch("/api/engine/llm/stop", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" }).then(function () { refreshEngineHUD(); });
     });
-    ["set-model-input", "set-llama-input", "set-sd-input", "set-support-mode"].forEach(function (id) {
+    ["set-model-input", "set-llama-input", "set-sd-input", "set-mmproj-input", "set-dit-input", "set-te-input", "set-vae-input", "set-support-mode"].forEach(function (id) {
       el(id).addEventListener("input", function () {});
       el(id).addEventListener("change", function () {});
     });
@@ -1072,7 +1072,11 @@
           paths: {
             gguf_model_path: el("set-model-input").value,
             llama_server_bin: el("set-llama-input").value,
-            sd_cli_bin: el("set-sd-input").value
+            sd_cli_bin: el("set-sd-input").value,
+            mmproj_path: el("set-mmproj-input").value,
+            dit_model_path: el("set-dit-input").value,
+            te_model_path: el("set-te-input").value,
+            vae_model_path: el("set-vae-input").value
           }
         })
       }).then(function () { el("modal-settings").hidden = true; });
@@ -1134,6 +1138,23 @@
           el("set-model-input").value = st.paths.gguf_model_path || "";
           el("set-llama-input").value = st.paths.llama_server_bin || "";
           el("set-sd-input").value = st.paths.sd_cli_bin || "";
+          el("set-mmproj-input").value = st.paths.mmproj_path || "";
+          el("set-dit-input").value = st.paths.dit_model_path || "";
+          el("set-te-input").value = st.paths.te_model_path || "";
+          el("set-vae-input").value = st.paths.vae_model_path || "";
+          var flagMap = {
+            gguf_model_path: "gguf_model_exists",
+            llama_server_bin: "llama_server_exists",
+            sd_cli_bin: "sd_cli_exists",
+            mmproj_path: "mmproj_exists",
+            dit_model_path: "dit_model_exists",
+            te_model_path: "te_model_exists",
+            vae_model_path: "vae_model_exists"
+          };
+          var diag = Object.keys(flagMap).map(function (k) {
+            return (st.paths[flagMap[k]] ? "OK   " : "MISS ") + k + " = " + (st.paths[k] || "");
+          });
+          el("set-paths-status").textContent = diag.join("\n");
         }
         renderCanons();
         syncRouteSelectFromDraft(store.draft);

@@ -2,7 +2,7 @@
   <img src="assets/brand/smartllm-logo.svg" alt="Логотип SmartLLM" width="96" height="96">
 </p>
 
-<h1 align="center">SmartLLM и SmartLLM Studio <code>v0.0.1-beta</code></h1>
+<h1 align="center">SmartLLM и SmartLLM Studio <code>v0.0.2-beta</code></h1>
 
 <p align="center">
   <b>Локальный офлайн-комбайн для веб-разработки, дизайна и копирайтинга (EN + RU)</b><br>
@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/badges/version.svg" alt="release: v0.0.1-beta">
+  <img src="assets/badges/version.svg" alt="release: v0.0.2-beta">
   <img src="assets/badges/platform.svg" alt="platform: Linux | Windows 11">
   <img src="assets/badges/offline.svg" alt="runtime: 127.0.0.1 Zero-Swap">
   <img src="assets/badges/license.svg" alt="license: Apache-2.0 / FSL-1.1-ALv2">
@@ -83,6 +83,15 @@
 ---
 
 ## Пошаговая инструкция
+
+### 0. Всё в одной папке (любая папка, любой диск)
+
+[`scripts/release/setup_bundle.py`](scripts/release/setup_bundle.py) (Python 3.11+, только stdlib, докачка после обрыва) скачивает ВСЁ из наших GitHub Releases в ОДНУ переносимую папку — `studio/` + `models/` (55 GiB GGUF с SHA-256 верификацией сборки + mmproj) + `models/z-image/` (официальный Apache-2.0 `Z-Image-Turbo`: DiT + текстовый энкодер + VAE, части <2 GiB) + `bin/` переносимые CUDA-движки (Linux glibc >= 2.35 / Windows 11, RTX 20–50). HuggingFace не нужен; опции `--zimage-source hf|civitai` — для оригинала или showcase-файнтюна.
+
+```bash
+python3 scripts/release/setup_bundle.py --dest /any/drive/SmartLLM --cleanup-parts
+/any/drive/SmartLLM/studio/bin/smartllm-studio   # Linux (Windows: studio\smartllm-studio.bat)
+```
 
 ### 1. Установка и запуск SmartLLM Studio (`Linux` и `Windows 11`)
 

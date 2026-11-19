@@ -29,7 +29,7 @@ const CHROME_PATH = process.env.SMARTLLM_CHROME_EXE || '/usr/bin/google-chrome-s
 const MCP_THIRD_PARTY = findChromeMcpEntry();
 
 const RU_LATIN_ALLOWLIST = new Set([
-  'smartllm', 'studio', 'v0.0.1-beta', '0.0.1-beta', 'en', 'ru', 'aa',
+  'smartllm', 'studio', 'v0.0.2-beta', '0.0.2-beta', 'en', 'ru', 'aa',
   'oklch', 'wcag', 'aaa', 'csp', 'sha-256', 'seo', 'aeo', 'geo', 'serp',
   'og', 'opengraph', 'json-ld', 'json', 'faq', 'faqpage', 'html', 'html5',
   'css', 'ts', 'js', 'astro', 'vite', 'next.js', 'nextjs', 'sveltekit',

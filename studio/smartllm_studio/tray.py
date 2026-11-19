@@ -33,7 +33,7 @@ def run_system_tray_or_wait(
 
         icon_path = str(tray_svg if tray_svg.exists() else tray_png)
         tray = QSystemTrayIcon(QIcon(icon_path), app)
-        tray.setToolTip("SmartLLM Studio v0.0.1-beta (127.0.0.1)")
+        tray.setToolTip("SmartLLM Studio v0.0.2-beta (127.0.0.1)")
 
         menu = QMenu()
         act_open = QAction("Open SmartLLM Studio (127.0.0.1)", menu)

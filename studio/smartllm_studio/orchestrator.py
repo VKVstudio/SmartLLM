@@ -18,6 +18,7 @@ from .adapters import get_rag_selector
 from .catalog import AI_CRAWLERS_DEFAULT
 from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT
 from .engines.llm import _PageCacheTrimmer
+from .os_compat import get_log_dir, is_cpu_test_mode
 from .pages import (
     AVAILABLE_BLOCKS,
     DEFAULT_PAGE_SLUGS,
@@ -45,7 +46,7 @@ def _can_use_gpu(state: Any | None) -> bool:
     """Return True when real GPU LLM / sd-cli execution is allowed and binaries exist."""
     if state is None:
         return False
-    if os.environ.get("CUDA_VISIBLE_DEVICES") == "" or os.environ.get("SMARTLLM_STUDIO_HEADLESS"):
+    if is_cpu_test_mode():
         return False
     return bool(
         getattr(state, "llm", None)
@@ -53,6 +54,26 @@ def _can_use_gpu(state: Any | None) -> bool:
         and state.llm.server_bin.exists()
         and state.llm.model_path
         and state.llm.model_path.exists()
+    )
+
+
+def _gpu_unavailable_message(state: Any | None) -> str:
+    """Actionable diagnosis instead of a silent CPU-template fallback in interactive mode."""
+    if state is None:
+        return "GPU engine unavailable: Studio state is not initialized."
+    missing: list[str] = []
+    llm = getattr(state, "llm", None)
+    if llm is None or not getattr(llm, "server_bin", None) or not llm.server_bin.exists():
+        missing.append(f"llama-server binary not found ({getattr(llm, 'server_bin', None) or 'not configured'})")
+    if llm is None or not getattr(llm, "model_path", None) or not llm.model_path.exists():
+        missing.append(f"GGUF model not found ({getattr(llm, 'model_path', None) or 'not configured'})")
+    img = getattr(state, "image_jobs", None)
+    if img is not None and not img._has_real_sd_weights():
+        missing.append("sd-cli binary or Z-Image weights not found (GPU visuals would be skipped)")
+    return (
+        "GPU engine unavailable: " + "; ".join(missing or ["unknown reason"])
+        + ". Fix the paths in Settings (or env LLAMA_SERVER_BIN / SMARTLLM_MODEL_PATH / SD_CLI_BIN / ZIMAGE_DIT_PATH / ZIMAGE_TE_PATH / ZIMAGE_VAE_PATH)."
+        + " For deliberate CPU-only mode set SMARTLLM_STUDIO_HEADLESS=1."
     )
 
 
@@ -165,7 +186,7 @@ def _expand_logo_prompt_with_llm(
             return prompt, "llm"
     except Exception as exc:
         try:
-            Path("/tmp/smartllm-studio-logo-prompt-debug.log").write_text(f"logo_prompt_exc: {exc!r}\n", encoding="utf-8")
+            (get_log_dir() / "logo-prompt-debug.log").write_text(f"logo_prompt_exc: {exc!r}\n", encoding="utf-8")
         except Exception:
             pass
     finally:
@@ -217,6 +238,8 @@ def generate_six_logo_variants_512(
     lang: str = "ru",
 ) -> dict[str, Any]:
     """Generate 6 distinct 512x512 brand logo variants (real Z-Image sd-cli on GPU, Pillow fallback in CPU tests)."""
+    if state is not None and not _can_use_gpu(state) and not is_cpu_test_mode() and not state.llm.is_healthy():
+        raise RuntimeError(_gpu_unavailable_message(state))
     bid = batch_id or f"lbatch_{uuid.uuid4().hex[:8]}"
     batch_dir = out_dir / bid
     batch_dir.mkdir(parents=True, exist_ok=True)
@@ -702,7 +725,9 @@ def _generate_site_plan_with_llm(
 ) -> dict[str, str]:
     """Use real SmartLLM-v2 llama-server to author bespoke website copy + Z-Image prompt."""
     if not _can_use_gpu(state) and not (state and state.llm.is_healthy()):
-        return {}
+        if is_cpu_test_mode():
+            return {}
+        raise RuntimeError(_gpu_unavailable_message(state))
     target_lang = "Russian" if str(lang).startswith("ru") else "English"
     sys_msg = (
         f"You are SmartLLM v2 Web Architect & Copywriter. Write crisp, specific, authentic {target_lang} copy "
@@ -750,7 +775,7 @@ def _generate_site_plan_with_llm(
         raw_obj = state.llm.generate_structured_json(sys_msg, user_msg, max_tokens=2048)
     except Exception as exc:
         try:
-            Path("/tmp/smartllm-studio-llm-debug.log").write_text(f"site_plan_exc: {exc!r}\n", encoding="utf-8")
+            (get_log_dir() / "llm-debug.log").write_text(f"site_plan_exc: {exc!r}\n", encoding="utf-8")
         except Exception:
             pass
         return {}
@@ -809,7 +834,9 @@ def _generate_company_with_llm(
 ) -> dict[str, Any]:
     """Generate the brand foundation, canonical team/features/stats, and contact details (single source of truth)."""
     if not _can_use_gpu(state) and not (state and state.llm.is_healthy()):
-        return {}
+        if is_cpu_test_mode():
+            return {}
+        raise RuntimeError(_gpu_unavailable_message(state))
     target_lang = "Russian" if str(lang).lower().startswith("ru") else "English"
     sys_msg = (
         "You are SmartLLM v2 Brand Strategist. Establish the SINGLE SOURCE OF TRUTH for this brand: "
@@ -848,7 +875,7 @@ def _generate_company_with_llm(
         raw = state.llm.generate_structured_json(sys_msg, user_msg, max_tokens=2800)
     except Exception as exc:
         try:
-            Path("/tmp/smartllm-studio-company-debug.log").write_text(f"company_exc: {exc!r}\n", encoding="utf-8")
+            (get_log_dir() / "company-debug.log").write_text(f"company_exc: {exc!r}\n", encoding="utf-8")
         except Exception:
             pass
         return {}
@@ -918,7 +945,9 @@ def _generate_page_prompts_with_llm(
 ) -> tuple[dict[str, dict[str, str]], dict[str, str]]:
     """Generate per-page block copy using flat keys slug::block for reliable local-model parsing."""
     if not _can_use_gpu(state) and not (state and state.llm.is_healthy()):
-        return {}, {}
+        if is_cpu_test_mode():
+            return {}, {}
+        raise RuntimeError(_gpu_unavailable_message(state))
     target_lang = "Russian" if str(lang).lower().startswith("ru") else "English"
     flat_keys: list[str] = ["headline", "hero_zimage_prompt"]
     for slug, blocks in page_blocks.items():
@@ -968,7 +997,7 @@ def _generate_page_prompts_with_llm(
         raw = state.llm.generate_structured_json(sys_msg, user_msg, max_tokens=3200)
     except Exception as exc:
         try:
-            Path("/tmp/smartllm-studio-page-prompts-debug.log").write_text(f"page_prompts_exc: {exc!r}\n", encoding="utf-8")
+            (get_log_dir() / "page-prompts-debug.log").write_text(f"page_prompts_exc: {exc!r}\n", encoding="utf-8")
         except Exception:
             pass
         return {}, {}
@@ -1086,6 +1115,7 @@ class ProjectOrchestrator:
 
     def execute_pipeline(self, payload: dict[str, Any]) -> dict[str, Any]:
         """Run the sequential sub-agent pipeline: disk memory -> isolated agents -> Z-Image -> deterministic compile -> audit."""
+        from .blueprint import _safe_project_dir
         from .pipeline import _sanitize_zimage_prompt, mark_external_step, run_content_pipeline, run_final_audit
 
         def _clean_path_str(val: Any) -> str:
@@ -1185,14 +1215,18 @@ class ProjectOrchestrator:
 
             brief_for_llm = str(merged.get("brief") or merged.get("goal") or merged.get("name") or "").strip()
             norm_lang = "ru" if str(merged.get("languages") or "ru").startswith("ru") else "en"
-            clean_out = _clean_path_str(merged.get("output_dir")) or str(self.state.project_dir("default"))
-            out_dir = Path(clean_out).resolve()
-            out_dir.mkdir(parents=True, exist_ok=True)
+            clean_out = _clean_path_str(merged.get("output_dir"))
+            out_dir = _safe_project_dir(clean_out, self.state.project_dir(str(merged.get("id") or "default")))
             merged["output_dir"] = str(out_dir)
             selector = get_rag_selector(repo_root=self.state.repo_root)
             canon_bundle = selector.select(brief=brief_for_llm, lang=norm_lang, explicit_canon_id=str(merged.get("canon_id") or ""))
             canon_card = canon_bundle.get("canon_card") or {}
             gpu_ok = _can_use_gpu(self.state)
+            if not gpu_ok and not is_cpu_test_mode():
+                if self.state.llm.is_healthy():
+                    gpu_ok = True
+                else:
+                    raise RuntimeError(_gpu_unavailable_message(self.state))
 
             def report(_idx: int, pct: int, msg_ru: str, msg_en: str, detail: str = "") -> None:
                 idx = 0 if pct < 16 else 1

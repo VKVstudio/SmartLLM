@@ -2,7 +2,7 @@
   <img src="assets/smartllm-logo.svg" alt="SmartLLM Studio Logo" width="96" height="96">
 </p>
 
-# SmartLLM Studio `v0.0.1-beta`
+# SmartLLM Studio `v0.0.2-beta`
 
 <p align="center">
   <b>Local Offline Multimodal Website, Design &amp; Copywriting Atelier (EN + RU)</b><br>
@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/badges/version.svg" alt="release: v0.0.1-beta">
+  <img src="assets/badges/version.svg" alt="release: v0.0.2-beta">
   <img src="assets/badges/platform.svg" alt="platform: Linux | Windows 11">
   <img src="assets/badges/offline.svg" alt="runtime: 127.0.0.1 Zero-Swap">
   <img src="assets/badges/license.svg" alt="license: FSL-1.1-ALv2 -> Apache-2.0">
@@ -47,7 +47,7 @@
 
 ## 2. Overview & Verified Architecture
 
-**SmartLLM Studio (`v0.0.1-beta`)** is a standalone, cross-platform (**Linux + Windows 11**) local multimodal website & design atelier bound strictly to `127.0.0.1:8090` with zero cloud calls, a persistent Live Stage (`1440 / 834 / 390`), and a lock-aware sequential GPU controller (`llama.cpp` ↔ `stable-diffusion.cpp` `Z-Image`).
+**SmartLLM Studio (`v0.0.2-beta`)** is a standalone, cross-platform (**Linux + Windows 11**) local multimodal website & design atelier bound strictly to `127.0.0.1:8090` with zero cloud calls, a persistent Live Stage (`1440 / 834 / 390`), and a lock-aware sequential GPU controller (`llama.cpp` ↔ `stable-diffusion.cpp` `Z-Image`).
 
 - **3-Pane Atelier Shell:** 56 px top bar (`Constructor | Automatic Mode`, `EN | RU`, `Support`, `Settings`, `Live Stage`), 264 px step & task queue navigator, fluid centre workspace, 44% persistent right Live Stage, and 32 px Telemetry HUD (`Engine`, `VRAM`, `RAM Avail`, `Speed`, `Lock`).
 - **Offline Gate Metrics:** **`227/227`** interactive DOM controls bound (`0` unbound), `0` console/page errors, `0` external network requests, **Lighthouse Accessibility `100` / Best Practices `100`**, `EN + RU` parity (`0` unexpected Latin in RU), `54` responsive shots validated.

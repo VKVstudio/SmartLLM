@@ -138,6 +138,14 @@ class GPUEngineController:
                         proc.kill()
                     except Exception:
                         pass
+            try:
+                proc.wait(timeout=5.0)
+            except Exception:
+                try:
+                    proc.kill()
+                    proc.wait(timeout=2.0)
+                except Exception:
+                    pass
         self._children.clear()
         if not is_windows():
             try:

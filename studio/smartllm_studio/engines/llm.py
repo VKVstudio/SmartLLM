@@ -14,7 +14,7 @@ from typing import Any, Iterator
 import urllib.error
 import urllib.request
 
-from ..os_compat import is_windows
+from ..os_compat import get_log_dir, is_cpu_test_mode, is_windows
 from .gpu import GPUEngineController, GPUState
 
 
@@ -129,6 +129,8 @@ class LLMEngineClient:
         self.model_path = model_path
         self.proc: subprocess.Popen[Any] | None = None
         self._trimmer: _PageCacheTrimmer | None = None
+        self._log_fh: Any = None
+        self.server_log_path: Path = get_log_dir() / "llama-server.log"
 
     @property
     def base_url(self) -> str:
@@ -209,20 +211,32 @@ class LLMEngineClient:
                 "--no-webui",
             ]
         else:
-            # In CPU/standalone mode with no live daemon yet, mark ready for local RAG/SSE synthesis
-            self.gpu.transition(GPUState.LLM_READY)
-            return {"status": "ready_cpu_fallback", "state": self.gpu.state.value, "port": self.port}
+            if is_cpu_test_mode():
+                # Explicit headless CPU isolation (tests): local RAG/SSE synthesis without a daemon
+                self.gpu.transition(GPUState.LLM_READY)
+                return {"status": "ready_cpu_fallback", "state": self.gpu.state.value, "port": self.port}
+            missing = [str(p) for p in (self.server_bin, self.model_path) if not (p and p.exists())]
+            msg = (
+                "GPU engine unavailable: missing " + ", ".join(missing or ["llama-server binary or GGUF model"])
+                + ". Fix the paths in Settings (or LLAMA_SERVER_BIN / SMARTLLM_MODEL_PATH env)."
+            )
+            self.gpu.transition(GPUState.ERROR, error=msg)
+            raise RuntimeError(msg)
 
         try:
-            kwargs: dict[str, Any] = {"stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL}
-            if not is_windows():
+            self.server_log_path.parent.mkdir(parents=True, exist_ok=True)
+            self._log_fh = open(self.server_log_path, "ab")
+            kwargs: dict[str, Any] = {"stdout": self._log_fh, "stderr": subprocess.STDOUT}
+            if is_windows():
+                kwargs["creationflags"] = getattr(subprocess, "CREATE_NO_WINDOW", 0x08000000)
+            else:
                 kwargs["start_new_session"] = True
             self.proc = subprocess.Popen(cmd, **kwargs)
             self.gpu.register_child(self.proc)
             if self.model_path and self.model_path.exists() and mock_cmd is None:
                 self._trimmer = _PageCacheTrimmer([self.model_path], interval_sec=2.0)
                 self._trimmer.start()
-            deadline = time.monotonic() + 90.0
+            deadline = time.monotonic() + 180.0
             while time.monotonic() < deadline:
                 if self.is_healthy():
                     self.gpu.transition(GPUState.LLM_READY)
@@ -230,20 +244,39 @@ class LLMEngineClient:
                 if self.proc.poll() is not None:
                     break
                 time.sleep(0.15)
+            log_tail = self._read_log_tail()
             self.stop()
-            self.gpu.transition(GPUState.ERROR, error="llama-server failed health check")
-            raise RuntimeError("llama-server failed health check")
+            msg = f"llama-server failed health check (log: {self.server_log_path}). {log_tail}"
+            self.gpu.transition(GPUState.ERROR, error=msg)
+            raise RuntimeError(msg)
         except Exception as exc:
             if self._trimmer is not None:
                 self._trimmer.stop()
                 self._trimmer = None
+            self._close_log()
             self.gpu.transition(GPUState.ERROR, error=str(exc))
             self.gpu.release_lock()
             raise
 
+    def _read_log_tail(self, limit: int = 1200) -> str:
+        try:
+            data = self.server_log_path.read_text(encoding="utf-8", errors="replace")
+            return data[-limit:].strip()
+        except Exception:
+            return ""
+
+    def _close_log(self) -> None:
+        if self._log_fh is not None:
+            try:
+                self._log_fh.close()
+            except Exception:
+                pass
+            self._log_fh = None
+
     def _kill_orphan_server(self) -> None:
         """Kill a healthy llama-server on our port that is not tracked in self.proc (e.g. after a Studio restart)."""
         if is_windows():
+            self._kill_orphan_server_windows()
             return
         pattern = f"llama-server.*--port {self.port}"
         for sig in (signal.SIGTERM, signal.SIGKILL):
@@ -274,6 +307,34 @@ class LLMEngineClient:
                     pass
             time.sleep(0.5)
 
+    def _kill_orphan_server_windows(self) -> None:
+        """Windows: find the PID listening on 127.0.0.1:<port> via netstat and taskkill it."""
+        pids: set[int] = set()
+        try:
+            out = subprocess.check_output(["netstat", "-ano", "-p", "tcp"], text=True, timeout=5.0)
+            needle = f"127.0.0.1:{self.port}"
+            for line in out.splitlines():
+                parts = line.split()
+                if len(parts) >= 5 and parts[0].upper() == "TCP" and parts[1] == needle and parts[3].upper() == "LISTENING":
+                    try:
+                        pids.add(int(parts[4]))
+                    except ValueError:
+                        continue
+        except Exception:
+            pass
+        for pid in pids:
+            if pid == os.getpid():
+                continue
+            try:
+                subprocess.run(["taskkill", "/F", "/PID", str(pid)], capture_output=True, timeout=5.0, check=False)
+            except Exception:
+                pass
+        if not pids and self.is_healthy():
+            try:
+                subprocess.run(["taskkill", "/F", "/IM", "llama-server.exe"], capture_output=True, timeout=5.0, check=False)
+            except Exception:
+                pass
+
     def stop(self) -> dict[str, Any]:
         if self._trimmer is not None:
             self._trimmer.stop()
@@ -281,6 +342,7 @@ class LLMEngineClient:
         self.gpu.cleanup_children()
         self._kill_orphan_server()
         self.proc = None
+        self._close_log()
         self.gpu.release_lock()
         self.gpu.transition(GPUState.IDLE)
         return {"status": "stopped", "state": self.gpu.state.value}
@@ -353,7 +415,7 @@ class LLMEngineClient:
                     },
                     ensure_ascii=False,
                 )
-                Path("/tmp/smartllm-studio-llm-debug.log").write_text(debug_line + "\n", encoding="utf-8")
+                (get_log_dir() / "llm-debug.log").write_text(debug_line + "\n", encoding="utf-8")
             except Exception:
                 pass
         return parsed

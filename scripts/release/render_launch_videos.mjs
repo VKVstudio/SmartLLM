@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * SmartLLM v0.0.1-beta — Frame-Exact 60fps Launch Video Renderer (Remotion Best-Practices Engine)
+ * SmartLLM v0.0.2-beta — Frame-Exact 60fps Launch Video Renderer (Remotion Best-Practices Engine)
  *
  * Strictly follows `remotion-best-practices`:
  * - 100% frame-driven deterministic rendering via `window.renderFrame(frame, fps)`
@@ -280,7 +280,7 @@ function renderYoutube16x9(frame, fps) {
       <div style="padding:64px 72px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:48px;align-items:center;height:880px;transform:translateY(\${(1-s)*28}px);opacity:\${clamp(s,0,1)};">
         <div>
           <div style="display:flex;gap:12px;margin-bottom:22px;">
-            <span class="pill pill-gold">OPEN BETA v0.0.1-beta</span>
+            <span class="pill pill-gold">OPEN BETA v0.0.2-beta</span>
             <span class="pill">RTX 4080 LAPTOP 12 GB + 31 GB RAM</span>
           </div>
           <h1 class="serif" style="font-size:74px;line-height:1.02;font-weight:600;color:#ffffff;letter-spacing:-0.02em;">
@@ -416,8 +416,8 @@ function renderYoutube16x9(frame, fps) {
     caption = 'Verified Wave 3 & Stage D Hardware Receipts: 1,223s 32K Soak at 17.50 tok/s with 0 B Disk Swap.';
     sceneHtml = renderReceiptsGrid(frame - Math.round(30 * fps), fps);
   } else {
-    caption = 'Test SmartLLM v0.0.1-beta Free on Linux & Windows 11 — Star, Break It, and File Issues on GitHub.';
-    sceneHtml = renderCtaScene(frame - Math.round(54 * fps), fps, 'OPEN v0.0.1-beta · TEST & FEEDBACK INVITE');
+    caption = 'Test SmartLLM v0.0.2-beta Free on Linux & Windows 11 — Star, Break It, and File Issues on GitHub.';
+    sceneHtml = renderCtaScene(frame - Math.round(54 * fps), fps, 'OPEN v0.0.2-beta · TEST & FEEDBACK INVITE');
   }
 
   return \`
@@ -548,7 +548,7 @@ function renderReddit16x9(frame, fps) {
     body = renderYoutube16x9(Math.round(12 * fps), fps);
     return body;
   } else {
-    caption = 'Clone v0.0.1-beta, Run the 1-Hz Zero-Swap Watchdog on Your Rig, and Post Your Telemetry in GitHub Issues.';
+    caption = 'Clone v0.0.2-beta, Run the 1-Hz Zero-Swap Watchdog on Your Rig, and Post Your Telemetry in GitHub Issues.';
     body = renderCtaScene(frame - Math.round(36 * fps), fps, 'r/LocalLLaMA & r/SelfHosted BENCHMARK CALL');
   }
   return \`
@@ -568,7 +568,7 @@ function renderLinkedin4x5(frame, fps) {
       ? '100% Local Client Privacy: 127.0.0.1 Loopback Only, Zero Cloud APIs, FSL-1.1-ALv2 Free for Agency Client Work.'
       : sec < 38
       ? 'Deterministic 5-Gate Quality Seal: SHA-256 CSP, WCAG AAA OKLCH, JSON-LD @graph, and Lighthouse 100/100.'
-      : 'Download SmartLLM Studio v0.0.1-beta for Linux & Windows 11 — Share Your Agency Workflow Feedback on GitHub.';
+      : 'Download SmartLLM Studio v0.0.2-beta for Linux & Windows 11 — Share Your Agency Workflow Feedback on GitHub.';
 
   return \`
     <div style="padding:36px 44px;height:1350px;display:flex;flex-direction:column;justify-content:space-between;">
@@ -577,7 +577,7 @@ function renderLinkedin4x5(frame, fps) {
           <div style="display:flex;align-items:center;gap:14px;">
             <div class="logo-box">\${DATA.logoSvg}</div>
             <div>
-              <div style="font-size:22px;font-weight:600;color:#ffffff;">SmartLLM Studio <span class="mono" style="font-size:14px;color:#e5b869;">v0.0.1-beta</span></div>
+              <div style="font-size:22px;font-weight:600;color:#ffffff;">SmartLLM Studio <span class="mono" style="font-size:14px;color:#e5b869;">v0.0.2-beta</span></div>
               <div class="mono" style="font-size:12px;color:#94a3b8;">OFFLINE WEB &amp; BRAND DESIGN COMBINE (EN + RU)</div>
             </div>
           </div>
@@ -626,7 +626,7 @@ function renderLinkedin4x5(frame, fps) {
 
         <div class="card mono" style="margin-top:20px;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:#e2e8f0;border-color:rgba(192,132,252,0.4);">
           <span>github.com/VKVstudio/SmartLLM-Studio</span>
-          <span style="color:#4ade80;">Test v0.0.1-beta &amp; Share Feedback &rarr;</span>
+          <span style="color:#4ade80;">Test v0.0.2-beta &amp; Share Feedback &rarr;</span>
         </div>
       </div>
 
@@ -641,13 +641,13 @@ function renderReels9x16(frame, fps) {
   const sec = frame / fps;
   const beatIdx = Math.floor(sec / 2.0);
   const beats = [
-    { tag: 'BEAT 01 · THE HOOK', title: '335 GB MoE Combine on a 12 GB Laptop GPU.', metric: '0 CLOUD · 0 SWAP', sub: 'SmartLLM v0.0.1-beta running locally on 127.0.0.1' },
+    { tag: 'BEAT 01 · THE HOOK', title: '335 GB MoE Combine on a 12 GB Laptop GPU.', metric: '0 CLOUD · 0 SWAP', sub: 'SmartLLM v0.0.2-beta running locally on 127.0.0.1' },
     { tag: 'BEAT 02 · PRUNED + HEALED', title: 'K = 320 / 512 Specialists Kept.', metric: '-65.68% Q2_0 ERR', sub: 'Quota-locked EN+RU+Code+Vision + Clean-Room GSQ Q2_0' },
     { tag: 'BEAT 03 · O_DIRECT PLE', title: '26.82 GiB PLE Table Off-RAM.', metric: '0 kB PLE RSS', sub: '8-worker O_DIRECT NVMe pread · 24.6 GiB RAM free' },
     { tag: 'BEAT 04 · 32K SOAK SPEED', title: 'Sustained 32K Context Decode.', metric: '17.5–25.3 tok/s', sub: '9.12 GiB peak VRAM · 289.3 tok/s prefill' },
     { tag: 'BEAT 05 · SEQUENTIAL Z-IMAGE', title: 'LLM <-> Z-Image GPU Handoff.', metric: '19.68s 1024×1024', sub: 'Slot saved in 37.8 ms · 31 MiB clean VRAM barrier' },
     { tag: 'BEAT 06 · 3-PANE ATELIER', title: 'Express & 6-Step Constructor.', metric: '167/167 CONTROLS', sub: '28 OKLCH Canons · 168 EN/RU Copy Pairs · 5-Gate Seal' },
-    { tag: 'BEAT 07 · TEST THE BETA', title: 'Free Launch on Linux & Win11.', metric: 'v0.0.1-beta LIVE', sub: 'github.com/VKVstudio/SmartLLM · Try it & file feedback!' },
+    { tag: 'BEAT 07 · TEST THE BETA', title: 'Free Launch on Linux & Win11.', metric: 'v0.0.2-beta LIVE', sub: 'github.com/VKVstudio/SmartLLM · Try it & file feedback!' },
   ];
   const cur = beats[beatIdx % beats.length];
 
@@ -659,7 +659,7 @@ function renderReels9x16(frame, fps) {
           <div class="logo-box">\${DATA.logoSvg}</div>
           <span style="font-size:24px;font-weight:600;color:#ffffff;">SmartLLM</span>
         </div>
-        <span class="pill pill-gold">v0.0.1-beta</span>
+        <span class="pill pill-gold">v0.0.2-beta</span>
       </div>
 
       <div class="card" style="padding:34px;border-top:4px solid #c084fc;">
