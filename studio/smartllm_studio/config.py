@@ -93,14 +93,20 @@ def _resolve_repo_root(explicit: Path | None) -> tuple[Path, bool]:
     return (explicit.resolve() if explicit is not None else DEFAULT_REPO_ROOT.resolve()), False
 
 
-def _first_existing(candidates: list[Path]) -> Path | None:
+def _newest_existing(candidates: list[Path]) -> Path | None:
+    """Pick the most recently built existing binary: stale stubs in older build dirs
+    (e.g. an outdated build/bin/llama-server.exe) must not shadow fresh builds."""
+    best: Path | None = None
+    best_mtime = -1.0
     for cand in candidates:
         try:
             if cand.is_file():
-                return cand
+                mt = cand.stat().st_mtime
+                if mt > best_mtime:
+                    best, best_mtime = cand, mt
         except OSError:
             continue
-    return None
+    return best
 
 
 def _binary_candidates(root: Path, win: bool, tool_dir_name: str, exe_name: str) -> list[Path]:
@@ -243,8 +249,8 @@ def discover_studio_paths(
     models_dir = root / "models"
     llama_cands = _binary_candidates(root, win, "llama.cpp", "llama-server")
     sd_cands = _binary_candidates(root, win, "stable-diffusion.cpp", "sd-cli")
-    llama_mono = _first_existing(llama_cands) or llama_cands[0]
-    sd_mono = _first_existing(sd_cands) or sd_cands[0]
+    llama_mono = _newest_existing(llama_cands) or llama_cands[0]
+    sd_mono = _newest_existing(sd_cands) or sd_cands[0]
 
     zimage_base = _find_zimage_models_dir(root)
     if zimage_base is None:

@@ -185,6 +185,22 @@ def run_all_tests() -> dict[str, object]:
         saved = st.save_project("default", {"output_dir": "D:\\mnt\\rescue\\foreign"})
         assert saved["output_dir"] == str(st.project_dir("default").resolve())
 
+    # 2c. Stale-binary shadowing: newest build must win over an outdated stub in build/bin
+    with tempfile.TemporaryDirectory(prefix="smartllm_stale_") as td:
+        td_p = Path(td)
+        (td_p / "models").mkdir()
+        (td_p / "CLAUDE.md").write_text("marker", encoding="utf-8")
+        stub = td_p / "tools" / "llama.cpp" / "build" / "bin" / "llama-server.exe"
+        fresh = td_p / "tools" / "llama.cpp" / "build_win" / "bin" / "llama-server.exe"
+        for f in (stub, fresh):
+            f.parent.mkdir(parents=True, exist_ok=True)
+            f.write_bytes(b"MZ-stub")
+        now = __import__("time").time()
+        os.utime(stub, (now - 30 * 86400, now - 30 * 86400))
+        os.utime(fresh, (now, now))
+        p_stale = discover_studio_paths(repo_root=td_p, platform_override="windows")
+        assert Path(p_stale["llama_server_bin"]) == fresh, p_stale["llama_server_bin"]
+
     # 3. Q4: Bundled Fonts (<= 650 KB, zero "Inter"), Artworks (<= 250 KB), and Token Contrast (>= 4.5:1)
     fonts_dir = STUDIO_ROOT / "smartllm_studio" / "static" / "fonts"
     woff2_files = list(fonts_dir.glob("*.woff2"))

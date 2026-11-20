@@ -247,6 +247,8 @@ class LLMEngineClient:
             log_tail = self._read_log_tail()
             self.stop()
             msg = f"llama-server failed health check (log: {self.server_log_path}). {log_tail}"
+            if "error while handling argument" in log_tail or "unknown argument" in log_tail:
+                msg += " | Hint: this binary is outdated (missing v2 flags). Set Settings -> llama-server to the bundled engines (bin/llama/llama-server) or rebuild."
             self.gpu.transition(GPUState.ERROR, error=msg)
             raise RuntimeError(msg)
         except Exception as exc:
