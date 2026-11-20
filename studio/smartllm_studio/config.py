@@ -133,7 +133,7 @@ def _binary_candidates(root: Path, win: bool, tool_dir_name: str, exe_name: str)
     return cands
 
 
-def _discover_model(models_dir: Path, fallback_dirs: list[Path] | None = None) -> Path:
+def _discover_model(models_dir: Path) -> Path:
     preferred = models_dir / "SmartLLM-v2-K320-V1.gguf"
     if preferred.exists():
         return preferred
@@ -143,94 +143,21 @@ def _discover_model(models_dir: Path, fallback_dirs: list[Path] | None = None) -
     any_smart = sorted(models_dir.glob("SmartLLM*.gguf"))
     if any_smart:
         return any_smart[0]
-    for fb in fallback_dirs or []:
-        try:
-            hits = sorted(p for p in fb.glob("SmartLLM*.gguf") if p.is_file() and "BF16" not in p.name.upper())
-            if hits:
-                return hits[0]
-        except OSError:
-            continue
     return preferred
 
 
-def _discover_mmproj(models_dir: Path, hint_dir: Path | None = None, fallback_dirs: list[Path] | None = None) -> Path:
-    search = ([hint_dir] if hint_dir and hint_dir != models_dir else []) + [models_dir] + list(fallback_dirs or [])
-    for d in search:
-        try:
-            cands = sorted(d.glob("mmproj*.gguf"))
-        except OSError:
-            continue
-        for cand in cands:
-            if "BF16" in cand.name.upper() or "F16" in cand.name.upper():
-                return cand
-        if cands:
-            return cands[0]
+def _discover_mmproj(models_dir: Path) -> Path:
+    cands = sorted(models_dir.glob("mmproj*.gguf"))
+    for cand in cands:
+        if "BF16" in cand.name.upper() or "F16" in cand.name.upper():
+            return cand
+    if cands:
+        return cands[0]
     return models_dir / "mmproj-Qwen3.8-Flash-Next-BF16.gguf"
 
 
-def _drive_roots() -> list[Path]:
-    """Existing drive roots (Windows letters) or common mount points (Linux/macOS)."""
-    roots: list[Path] = []
-    if is_windows():
-        import string
-        for letter in string.ascii_uppercase:
-            dr = Path(f"{letter}:\\")
-            try:
-                if dr.exists():
-                    roots.append(dr)
-            except OSError:
-                continue
-    else:
-        for mount in ("/mnt", "/media", "/Volumes"):
-            mp = Path(mount)
-            try:
-                if mp.is_dir():
-                    roots.extend(sorted(p for p in mp.iterdir() if p.is_dir())[:16])
-            except OSError:
-                continue
-        roots.append(Path.home())
-    return roots
-
-
-def _extra_weight_bases(root: Path) -> list[Path]:
-    """Bounded cross-drive candidate folders for weights (no deep recursion)."""
-    bases: list[Path] = []
-    seen: set[Path] = set()
-    home = Path.home()
-    for dr in _drive_roots():
-        for cand in (
-            dr / "models",
-            dr / "ComfyUI_windows_portable" / "ComfyUI" / "models",
-            dr / "ComfyUI" / "models",
-            dr / "SmartLLM" / "models",
-            home / "models",
-            home / "ComfyUI" / "models",
-            home / "Documents" / "ComfyUI" / "models",
-        ):
-            if cand not in seen:
-                seen.add(cand)
-                bases.append(cand)
-        try:
-            for pat in ("ComfyUI*", "SmartLLM*"):
-                for hit in sorted(dr.glob(pat))[:8]:
-                    if hit.is_dir():
-                        for sub in (hit / "models", hit / "ComfyUI" / "models"):
-                            if sub not in seen:
-                                seen.add(sub)
-                                bases.append(sub)
-            for hit in sorted(dr.glob("projects/*"))[:16]:
-                if hit.is_dir():
-                    sub = hit / "models"
-                    if sub not in seen:
-                        seen.add(sub)
-                        bases.append(sub)
-        except OSError:
-            continue
-    return bases
-
-
-def _find_zimage_models_dir(root: Path, extra: list[Path] | None = None) -> Path | None:
-    """Search ComfyUI-style weight folders relative to the repo, then across all drives."""
+def _find_zimage_models_dir(root: Path) -> Path | None:
+    """Search ComfyUI-style weight folders inside the project and its nearest ancestors only."""
     bases: list[Path] = []
     ancestors = [root, *list(root.parents)[:3]]
     for anc in ancestors:
@@ -245,7 +172,6 @@ def _find_zimage_models_dir(root: Path, extra: list[Path] | None = None) -> Path
             pass
         bases.append(anc / "models" / "z-image")
         bases.append(anc / "models")
-    bases.extend(extra if extra is not None else _extra_weight_bases(root))
     for base in bases:
         try:
             if (base / "diffusion_models").is_dir() or (base / "text_encoders").is_dir():
@@ -326,14 +252,12 @@ def discover_studio_paths(
     llama_mono = _newest_existing(llama_cands) or llama_cands[0]
     sd_mono = _newest_existing(sd_cands) or sd_cands[0]
 
-    extra_bases = _extra_weight_bases(root)
-    zimage_base = _find_zimage_models_dir(root, extra_bases)
+    zimage_base = _find_zimage_models_dir(root)
     if zimage_base is None:
         zimage_base = models_dir / "z-image"
-    model_found = _discover_model(models_dir, extra_bases)
     mono_map = {
-        "gguf_model_path": model_found,
-        "mmproj_path": _discover_mmproj(models_dir, model_found.parent, extra_bases),
+        "gguf_model_path": _discover_model(models_dir),
+        "mmproj_path": _discover_mmproj(models_dir),
         "llama_server_bin": llama_mono,
         "sd_cli_bin": sd_mono,
         "dit_model_path": _pick_weight(zimage_base, "diffusion_models", "beyond_reality_z_image_3.0_fp8.safetensors", ["*z_image*.safetensors", "*z-image*.safetensors", "*.safetensors"]),
