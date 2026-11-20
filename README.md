@@ -86,25 +86,29 @@ User Prompt (EN / RU / EN+RU)
 
 ### 0. One-Folder Bundle (Any Folder, Any Drive)
 
-**Requirements:** NVIDIA GPU with `>= 12 GB` VRAM (RTX 20–50 series, driver `>= 525`), `32 GB` RAM recommended, `~160 GB` free disk during setup (`~80 GB` after `--cleanup-parts`), Python 3.11+.
+**Requirements:** NVIDIA GPU with `>= 12 GB` VRAM (RTX 20–50 series, driver `>= 525`), `32 GB` RAM recommended, Python 3.11+ (`python3-venv` package on Linux). **Disk:** `~165 GB` free without `--cleanup-parts`; with `--cleanup-parts` peak `~120 GB`, `~85 GB` after install. The installer checks free space BEFORE downloading and aborts with a clear message if there is not enough.
 
 [`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py) (also in [`scripts/release/`](scripts/release/setup_bundle.py); pure stdlib, resumable, SHA-256 verified) downloads EVERYTHING from our GitHub Releases into ONE portable folder — `studio/` + `models/` (55 GiB GGUF reassembled from 30 parts + mmproj) + `models/z-image/` (official Apache-2.0 `Z-Image-Turbo`: DiT + text encoder + VAE) + `bin/` portable CUDA engine binaries (Linux glibc >= 2.35 / Windows 11, no VC++ redist needed). No HuggingFace access required; optional `--zimage-source hf|civitai` for upstream or the showcase finetune.
 
+Open a terminal in ANY folder where you want the project to live — the installer creates a `SmartLLM` folder there for you. No specific drive or path is required.
+
 **Linux:**
 ```bash
+cd ~   # or any folder you like
 curl -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py
-python3 setup_bundle.py --dest ~/SmartLLM --cleanup-parts
-~/SmartLLM/studio/bin/smartllm-studio
+python3 setup_bundle.py --cleanup-parts
+SmartLLM/studio/bin/smartllm-studio
 ```
 
 **Windows 11 (PowerShell):**
 ```powershell
+cd $HOME   # or any folder on any drive
 curl.exe -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py
-python setup_bundle.py --dest D:\SmartLLM --cleanup-parts
-D:\SmartLLM\studio\smartllm-studio.bat
+python setup_bundle.py --cleanup-parts
+SmartLLM\studio\smartllm-studio.bat
 ```
 
-Then open **http://127.0.0.1:8090**. First run downloads ~78 GB; on Linux the `python3-venv` package is required. Everything lives inside the bundle folder — if any component is missing, Studio shows a one-click "Download everything automatically" banner.
+Then open **http://127.0.0.1:8090**. First run downloads ~85 GB. Everything lives inside the `SmartLLM` folder — if any component is missing, Studio shows a one-click "Download everything automatically" banner.
 
 ### 1. Launch SmartLLM Studio from Source (`Linux` & `Windows 11`)
 

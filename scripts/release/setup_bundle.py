@@ -46,8 +46,41 @@ HF_API_TREE = "https://huggingface.co/api/models/Comfy-Org/Z-Image-Turbo/tree/ma
 CIVITAI_DIT_URL = "https://civitai.com/api/download/models/2674158"
 CIVITAI_DIT_NAME = "beyond_reality_z_image_3.0_fp8.safetensors"
 CIVITAI_DIT_BYTES = 6154970792
-USER_AGENT = "SmartLLM-Setup/0.0.1 (local bundle installer)"
+USER_AGENT = "SmartLLM-Setup/0.0.3 (local bundle installer)"
 CHUNK = 4 * 1024 * 1024
+GB = 1000**3
+
+
+def _space_plan(skip_model: bool, skip_zimage: bool, skip_binaries: bool, cleanup: bool) -> tuple[float, float, float]:
+    """(download_gb, peak_disk_gb, final_disk_gb) from real release asset sizes.
+    Peak accounts for parts + reassembled file coexisting during assembly."""
+    steps = [(0.02, 0.0, 0.02)]  # studio: download, assemble-extra, keep-after
+    if not skip_model:
+        parts, final = 59.07 + 0.91, 59.07  # 30 GGUF parts + mmproj, reassembled GGUF
+        steps.append((parts, final, final if cleanup else parts + final))
+    if not skip_zimage:
+        parts, final = 12.31 + 8.05 + 0.34, 12.31 + 8.05 + 0.34  # DiT + TE + VAE
+        steps.append((parts, final, final if cleanup else parts + final))
+    if not skip_binaries:
+        steps.append((3.75, 0.0, 3.75))  # engine archive + extracted binaries
+    download = kept = peak = 0.0
+    for dl, extra, keep in steps:
+        download += dl
+        peak = max(peak, kept + dl + extra)
+        kept += keep
+    return download, peak, kept
+
+
+def _check_free_space(dest: Path, skip_model: bool, skip_zimage: bool, skip_binaries: bool, cleanup: bool) -> bool:
+    download, peak, final = _space_plan(skip_model, skip_zimage, skip_binaries, cleanup)
+    free = shutil.disk_usage(dest).free
+    need = peak * GB * 1.05  # 5% safety margin
+    _log(f"Disk plan: download ~{download:.0f} GB, peak usage ~{peak:.0f} GB, after install ~{final:.0f} GB" + (" (--cleanup-parts)" if cleanup else " (parts kept)"))
+    _log(f"Free space at {dest}: {free / GB:.1f} GB")
+    if free < need:
+        _log(f"ERROR: not enough free space (need ~{need / GB:.0f} GB with margin). Free up disk, pick another --dest, or use --cleanup-parts / --skip-model / --skip-zimage / --skip-binaries.")
+        return False
+    return True
 
 
 def _log(msg: str) -> None:
@@ -427,7 +460,8 @@ def main(argv: list[str] | None = None) -> int:
     dest = args.dest.resolve()
     dest.mkdir(parents=True, exist_ok=True)
     _log(f"SmartLLM bundle setup -> {dest}")
-    _log("Total download: ~55 GiB model + ~20 GiB Z-Image + ~3 GiB engines + ~7 MB app (all from GitHub Releases by default).")
+    if not _check_free_space(dest, args.skip_model, args.skip_zimage, args.skip_binaries, args.cleanup_parts):
+        return 2
     if not args.skip_studio:
         step_studio(dest, args.repo, args.tag)
     if not args.skip_model:

@@ -231,6 +231,17 @@ def run_all_tests() -> dict[str, object]:
     partial = dict(full, llama_server_exists=False)
     assert "--skip-binaries" not in _setup_skip_flags(partial) and "--skip-model" in _setup_skip_flags(partial)
 
+    # 2d-3. Installer disk-space plan (real asset sizes): peak/final with and without --cleanup-parts
+    import importlib.util as _ilu
+    _spec = _ilu.spec_from_file_location("setup_bundle_test", REPO_ROOT / "scripts" / "release" / "setup_bundle.py")
+    _sb = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_sb)
+    dl, peak, final = _sb._space_plan(False, False, False, True)
+    assert 80 < dl < 90 and 115 < peak < 125 and 80 < final < 90, (dl, peak, final)
+    dl2, peak2, final2 = _sb._space_plan(False, False, False, False)
+    assert peak2 > 160 and final2 > 160, (peak2, final2)
+    assert _sb._space_plan(True, True, True, True)[1] < 1
+
     # 2f. Self-containment: discovery must NEVER pick weights/binaries outside the project folder
     with tempfile.TemporaryDirectory(prefix="smartllm_selfcontained_") as td:
         td_p = Path(td)
