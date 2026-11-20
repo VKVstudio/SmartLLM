@@ -208,7 +208,13 @@ def create_studio_server(
             self.end_headers()
             self.wfile.write(raw)
 
-        def _send_file(self, file_path: Path, is_preview: bool = False, no_store: bool = False) -> None:
+        def _send_file(self, file_path: Path, base_dir: Path | None = None, is_preview: bool = False, no_store: bool = False) -> None:
+            if base_dir is not None:
+                try:
+                    if not file_path.resolve().is_relative_to(base_dir.resolve()):
+                        return self._send_json(403, {"error": "FORBIDDEN_PATH"})
+                except (OSError, ValueError):
+                    return self._send_json(403, {"error": "FORBIDDEN_PATH"})
             if not file_path.exists() or not file_path.is_file():
                 return self._send_json(404, {"error": "NOT_FOUND", "path": str(file_path)})
             data = file_path.read_bytes()
@@ -244,28 +250,32 @@ def create_studio_server(
 
         def do_GET(self) -> None:
             path = urlparse(self.path).path
+
+            def _safe_parts(raw: str) -> list[str]:
+                return [p for p in raw.split("/") if p and p not in ("..", ".") and ":" not in p and "\\" not in p]
+
             if path in ("/", "/index.html"):
-                return self._send_file(STATIC_DIR / "index.html")
+                return self._send_file(STATIC_DIR / "index.html", base_dir=STATIC_DIR)
             if path.startswith("/static/"):
-                return self._send_file((STATIC_DIR / path[len("/static/") :]).resolve())
+                return self._send_file((STATIC_DIR / path[len("/static/") :]).resolve(), base_dir=STATIC_DIR)
             if path.startswith("/assets/"):
-                return self._send_file((ASSETS_DIR / path[len("/assets/") :]).resolve())
+                return self._send_file((ASSETS_DIR / path[len("/assets/") :]).resolve(), base_dir=ASSETS_DIR)
             if path.startswith("/preview/"):
-                parts = [p for p in path[len("/preview/") :].split("/") if p and p != ".."]
+                parts = _safe_parts(path[len("/preview/") :])
                 if parts:
                     base_dir = state.preview_dirs.get(parts[0]) or state.project_dir(parts[0])
                     rel_f = "/".join(parts[1:]) or "index.html"
-                    return self._send_file((base_dir / rel_f).resolve(), is_preview=True)
+                    return self._send_file((base_dir / rel_f).resolve(), base_dir=base_dir, is_preview=True)
                 return self._send_json(404, {"error": "PREVIEW_NOT_FOUND"})
             if path.startswith("/api/image/files/"):
-                parts = [p for p in path[len("/api/image/files/") :].split("/") if p and p != ".."]
+                parts = _safe_parts(path[len("/api/image/files/") :])
                 if len(parts) == 2:
-                    return self._send_file((state.image_jobs.out_root / parts[0] / parts[1]).resolve(), no_store=True)
+                    return self._send_file((state.image_jobs.out_root / parts[0] / parts[1]).resolve(), base_dir=state.image_jobs.out_root, no_store=True)
                 return self._send_json(404, {"error": "IMAGE_NOT_FOUND"})
             if path.startswith("/api/logo/files/"):
-                parts = [p for p in path[len("/api/logo/files/") :].split("/") if p and p != ".."]
+                parts = _safe_parts(path[len("/api/logo/files/") :])
                 if len(parts) == 2:
-                    return self._send_file((state.logo_batches_dir / parts[0] / parts[1]).resolve(), no_store=True)
+                    return self._send_file((state.logo_batches_dir / parts[0] / parts[1]).resolve(), base_dir=state.logo_batches_dir, no_store=True)
                 return self._send_json(404, {"error": "LOGO_NOT_FOUND"})
             if path == "/api/orchestrator/progress":
                 prog = dict(state.orchestrator.active_status)

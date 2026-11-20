@@ -233,7 +233,7 @@ class LLMEngineClient:
                 kwargs["start_new_session"] = True
             self.proc = subprocess.Popen(cmd, **kwargs)
             self.gpu.register_child(self.proc)
-            if self.model_path and self.model_path.exists() and mock_cmd is None:
+            if self.model_path and self.model_path.exists() and mock_cmd is None and hasattr(os, "posix_fadvise"):
                 self._trimmer = _PageCacheTrimmer([self.model_path], interval_sec=2.0)
                 self._trimmer.start()
             deadline = time.monotonic() + 180.0
@@ -283,7 +283,7 @@ class LLMEngineClient:
         pattern = f"llama-server.*--port {self.port}"
         for sig in (signal.SIGTERM, signal.SIGKILL):
             try:
-                out = subprocess.check_output(["pgrep", "-f", pattern], text=True, timeout=2.0)
+                out = subprocess.check_output(["pgrep", "-f", pattern], text=True, encoding="utf-8", errors="replace", timeout=2.0)
             except Exception:
                 return
             pids = []
@@ -313,7 +313,7 @@ class LLMEngineClient:
         """Windows: find the PID listening on 127.0.0.1:<port> via netstat and taskkill it."""
         pids: set[int] = set()
         try:
-            out = subprocess.check_output(["netstat", "-ano", "-p", "tcp"], text=True, timeout=5.0)
+            out = subprocess.check_output(["netstat", "-ano", "-p", "tcp"], text=True, encoding="utf-8", errors="replace", timeout=5.0)
             needle = f"127.0.0.1:{self.port}"
             for line in out.splitlines():
                 parts = line.split()

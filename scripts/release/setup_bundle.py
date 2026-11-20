@@ -375,6 +375,28 @@ def step_verify(dest: Path) -> None:
             _log(f"    {dest / 'studio' / 'bin' / 'smartllm-studio'}")
 
 
+def step_deps(dest: Path) -> None:
+    """Create a bundle-local venv (.venv) and install Pillow so launchers work out of the box."""
+    venv_dir = dest / ".venv"
+    py = venv_dir / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
+    if not py.exists():
+        _log("Creating bundle Python venv (.venv) ...")
+        res = subprocess.run([sys.executable, "-m", "venv", str(venv_dir)], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=300)
+        if res.returncode != 0 or not py.exists():
+            _log("WARN: venv creation failed (" + (res.stderr or "").strip()[:200] + "). Install manually: python -m pip install Pillow")
+            return
+    _log("Installing Pillow into bundle venv ...")
+    try:
+        res = subprocess.run([str(py), "-m", "pip", "install", "--quiet", "Pillow"], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=600)
+    except subprocess.TimeoutExpired:
+        _log("WARN: Pillow install timed out. Install manually: " + str(py) + " -m pip install Pillow")
+        return
+    if res.returncode != 0:
+        _log("WARN: Pillow install failed: " + (res.stderr or "").strip()[:200])
+    else:
+        _log("Pillow OK (" + str(py) + ")")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Download the full SmartLLM bundle into ONE portable folder (any drive).")
     parser.add_argument("--dest", type=Path, default=Path("SmartLLM"), help="Target bundle folder (default: ./SmartLLM)")
@@ -390,6 +412,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--skip-model", action="store_true")
     parser.add_argument("--skip-zimage", action="store_true")
     parser.add_argument("--skip-binaries", action="store_true")
+    parser.add_argument("--skip-deps", action="store_true", help="Skip bundle venv + Pillow install")
     parser.add_argument("--cleanup-parts", action="store_true", help="Delete .partNN files after verified reassembly (saves ~75 GiB)")
     args = parser.parse_args(argv)
 
@@ -405,6 +428,8 @@ def main(argv: list[str] | None = None) -> int:
         step_zimage(dest, args.repo, args.tag, args.zimage_source, args.dit, args.cleanup_parts)
     if not args.skip_binaries:
         step_binaries(dest, args.repo, args.tag)
+    if not args.skip_deps:
+        step_deps(dest)
     step_verify(dest)
     return 0
 

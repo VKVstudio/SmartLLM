@@ -122,6 +122,23 @@ def _extract_initials(name: str) -> str:
     return (words[0][0] + words[1][0]).upper()
 
 
+def _logo_font_candidates() -> list[Path]:
+    """Cross-OS TTF candidates for the CPU logo fallback (PIL cannot read bundled WOFF2)."""
+    cands: list[Path] = []
+    win_root = os.environ.get("SystemRoot") or os.environ.get("WINDIR")
+    if win_root:
+        fonts = Path(win_root) / "Fonts"
+        cands += [fonts / "arialbd.ttf", fonts / "segoeuib.ttf", fonts / "calibrib.ttf", fonts / "arial.ttf"]
+    cands += [
+        Path("/usr/share/fonts/TTF/DejaVuSans-Bold.ttf"),
+        Path("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"),
+        Path("/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf"),
+        Path("/usr/share/fonts/noto/NotoSans-Bold.ttf"),
+        Path("/System/Library/Fonts/Supplemental/Arial Bold.ttf"),
+    ]
+    return cands
+
+
 def _seed_colors_from_text(text: str, variant_idx: int) -> tuple[tuple[int, int, int], tuple[int, int, int], tuple[int, int, int]]:
     h = hashlib.sha256(f"{text}:{variant_idx}".encode("utf-8")).digest()
     palettes = [
@@ -318,7 +335,7 @@ def generate_six_logo_variants_512(
                 "--batch-json",
                 str(manifest_path),
             ]
-            res = subprocess.run(cmd, capture_output=True, text=True, timeout=900.0, check=False)
+            res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=900.0, check=False)
             if res.returncode == 0 and all((batch_dir / f"logo_{i + 1}.png").exists() for i in range(6)):
                 used_zimage = True
                 _set_logo_progress(state, 92, "Сохраняем 6 вариантов логотипа...", "Saving 6 logo variants...")
@@ -405,11 +422,7 @@ def generate_six_logo_variants_512(
     try:
         from PIL import Image, ImageDraw, ImageFont
 
-        font_paths = [
-            STUDIO_ROOT / "smartllm_studio" / "static" / "fonts",
-            Path("/usr/share/fonts/TTF/DejaVuSans-Bold.ttf"),
-            Path("/usr/share/fonts/noto/NotoSans-Bold.ttf"),
-        ]
+        font_paths = _logo_font_candidates()
         ttf_file: Path | None = None
         for fp in font_paths:
             if fp.is_file():
@@ -1407,7 +1420,7 @@ class ProjectOrchestrator:
                         "-o", batch_items[0]["output_path"],
                         "--batch-json", str(manifest_path),
                     ]
-                    res = subprocess.run(cmd, capture_output=True, text=True, timeout=900.0, check=False)
+                    res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=900.0, check=False)
                     if res.returncode == 0 and (assets_dir / "hero_primary.png").exists():
                         zimage_rendered = True
                         gallery_images = [

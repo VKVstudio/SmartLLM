@@ -201,6 +201,44 @@ def run_all_tests() -> dict[str, object]:
         p_stale = discover_studio_paths(repo_root=td_p, platform_override="windows")
         assert Path(p_stale["llama_server_bin"]) == fresh, p_stale["llama_server_bin"]
 
+    # 2d. File-serving containment: drive-letter injection & traversal must never escape base dirs
+    srv_t, state_t = create_studio_server(host="127.0.0.1", port=18195, repo_root=REPO_ROOT, allow_lock_write=False)
+    thr_t = threading.Thread(target=srv_t.serve_forever, daemon=True)
+    thr_t.start()
+    try:
+        for evil in (
+            "/preview/default/C:/Windows/win.ini",
+            "/preview/default/..%2f..%2fserver.py",
+            "/api/image/files/C:/Windows/win.ini",
+            "/static/../smartllm_studio/server.py",
+            "/assets/../../CLAUDE.md",
+        ):
+            code, _ = _http_req(f"http://127.0.0.1:18195{evil}")
+            assert code in (403, 404), f"traversal {evil} returned {code}"
+        code_ok, _ = _http_req("http://127.0.0.1:18195/static/app.js")
+        assert code_ok == 200
+    finally:
+        srv_t.shutdown()
+        srv_t.server_close()
+
+    # 2e. Cross-OS logo fallback fonts & subprocess encoding invariant (cp1251 Windows safety)
+    from smartllm_studio.orchestrator import _logo_font_candidates
+    from unittest.mock import patch
+    linux_cands = _logo_font_candidates()
+    assert any("DejaVuSans-Bold" in str(c) for c in linux_cands)
+    with patch.dict(os.environ, {"SystemRoot": "C:\\Windows"}):
+        win_cands = _logo_font_candidates()
+        assert str(win_cands[0]).replace("\\", "/").endswith("C:/Windows/Fonts/arialbd.ttf")
+    import ast as _ast
+    for pyf in sorted((STUDIO_ROOT / "smartllm_studio").rglob("*.py")):
+        for node in _ast.walk(_ast.parse(pyf.read_text(encoding="utf-8"))):
+            if isinstance(node, _ast.Call):
+                fn = node.func
+                nm = fn.attr if isinstance(fn, _ast.Attribute) else (fn.id if isinstance(fn, _ast.Name) else "")
+                kw = {k.arg for k in node.keywords if k.arg}
+                if nm in ("run", "check_output", "Popen") and "text" in kw:
+                    assert "encoding" in kw, f"{pyf}:{node.lineno} subprocess text=True without encoding"
+
     # 3. Q4: Bundled Fonts (<= 650 KB, zero "Inter"), Artworks (<= 250 KB), and Token Contrast (>= 4.5:1)
     fonts_dir = STUDIO_ROOT / "smartllm_studio" / "static" / "fonts"
     woff2_files = list(fonts_dir.glob("*.woff2"))

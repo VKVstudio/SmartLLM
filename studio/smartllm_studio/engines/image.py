@@ -149,7 +149,7 @@ class ImageJobManager:
             aspect_ratio = str(rec.get("aspect_ratio") or "16:9")
             variants: list[str] = []
             if mock_sd_cmd is not None:
-                res = subprocess.run(mock_sd_cmd, capture_output=True, text=True, timeout=30.0, check=False)
+                res = subprocess.run(mock_sd_cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30.0, check=False)
                 if res.returncode != 0:
                     raise RuntimeError(f"sd-cli exited with {res.returncode}: {res.stderr.strip()}")
                 pw, ph = _aspect_dims(aspect_ratio, real_render=False)
@@ -194,7 +194,7 @@ class ImageJobManager:
                     "-o",
                     str(vp1),
                 ]
-                res = subprocess.run(cmd, capture_output=True, text=True, timeout=180.0, check=False)
+                res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=180.0, check=False)
                 if res.returncode == 0 and vp1.exists():
                     variants.append(f"/api/image/files/{job_id}/variant_1.png")
                     for idx in range(1, 4):

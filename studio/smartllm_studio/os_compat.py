@@ -110,8 +110,8 @@ class CrossPlatformFileLock:
 
 def get_system_telemetry() -> dict[str, Any]:
     """Read host RAM, Zero-Swap status, and GPU status without touching CUDA when masked."""
-    mem_total_gib = 31.06
-    mem_avail_gib = 24.0
+    mem_total_gib = 0.0
+    mem_avail_gib = 0.0
     disk_swap_used_mib = 0.0
     zram_used_mib = 0.0
 
@@ -160,18 +160,18 @@ def get_system_telemetry() -> dict[str, Any]:
         mem_avail_gib = float(override_avail)
 
     cuda_masked = os.environ.get("CUDA_VISIBLE_DEVICES", None) == ""
-    gpu_info = {"available": not cuda_masked, "vram_used_mib": 0.0, "vram_total_mib": 12282.0, "mode": "cpu_isolated" if cuda_masked else "ready"}
+    gpu_info = {"available": not cuda_masked, "vram_used_mib": 0.0, "vram_total_mib": 0.0, "mode": "cpu_isolated" if cuda_masked else "ready"}
     if not cuda_masked and (is_linux() or is_windows()) and shutil.which("nvidia-smi"):
         try:
             raw_smi = subprocess.check_output(
                 ["nvidia-smi", "--query-gpu=memory.total", "--format=csv,noheader,nounits"],
-                text=True,
+                text=True, encoding="utf-8", errors="replace",
                 timeout=2.5,
             ).strip().splitlines()[0]
             gpu_info["vram_total_mib"] = float(raw_smi.strip())
             compute_raw = subprocess.check_output(
                 ["nvidia-smi", "--query-compute-apps=process_name,used_memory", "--format=csv,noheader,nounits"],
-                text=True,
+                text=True, encoding="utf-8", errors="replace",
                 timeout=2.5,
             ).strip()
             compute_values = []
@@ -187,7 +187,7 @@ def get_system_telemetry() -> dict[str, Any]:
                         compute_values.append(float(mem))
             if not engine_active and is_linux():
                 try:
-                    pg = subprocess.run(["pgrep", "-f", "llama-server|sd-cli"], capture_output=True, text=True, timeout=0.8, check=False)
+                    pg = subprocess.run(["pgrep", "-f", "llama-server|sd-cli"], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=0.8, check=False)
                     engine_active = pg.returncode == 0 and bool(pg.stdout.strip())
                 except Exception:
                     pass
@@ -196,7 +196,7 @@ def get_system_telemetry() -> dict[str, Any]:
             elif engine_active:
                 used_raw = subprocess.check_output(
                     ["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
-                    text=True,
+                    text=True, encoding="utf-8", errors="replace",
                     timeout=2.5,
                 ).strip().splitlines()[0]
                 if used_raw.strip().isdigit():
@@ -230,6 +230,7 @@ def pick_os_dialog(
         if is_windows():
             if kind == "file":
                 ps_cmd = (
+                    "[Console]::OutputEncoding=[Text.Encoding]::UTF8; "
                     "Add-Type -AssemblyName System.Windows.Forms; "
                     "$f = New-Object System.Windows.Forms.OpenFileDialog; "
                     "$f.Filter = 'Brand Assets (*.svg;*.png;*.webp)|*.svg;*.png;*.webp'; "
@@ -237,17 +238,18 @@ def pick_os_dialog(
                 )
             else:
                 ps_cmd = (
+                    "[Console]::OutputEncoding=[Text.Encoding]::UTF8; "
                     "Add-Type -AssemblyName System.Windows.Forms; "
                     "$d = New-Object System.Windows.Forms.FolderBrowserDialog; "
                     "if ($d.ShowDialog() -eq 'OK') { Write-Output $d.SelectedPath }"
                 )
-            res = subprocess.run(["powershell", "-NoProfile", "-STA", "-Command", ps_cmd], capture_output=True, text=True, timeout=120.0, check=False)
+            res = subprocess.run(["powershell", "-NoProfile", "-STA", "-Command", ps_cmd], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120.0, check=False)
             return res.stdout.strip() or None
 
         # Linux: zenity -> kdialog -> None (UI fallback)
         if shutil.which("zenity"):
             cmd = ["zenity", "--file-selection"] + (["--directory"] if kind == "folder" else [f"--file-filter={filters}"])
-            res = subprocess.run(cmd, capture_output=True, text=True, timeout=120.0, check=False)
+            res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120.0, check=False)
             if res.returncode == 0 and res.stdout.strip():
                 return res.stdout.strip()
         if shutil.which("kdialog"):
@@ -256,7 +258,7 @@ def pick_os_dialog(
                 if kind == "folder"
                 else ["kdialog", "--getopenfilename", initial_dir or str(Path.home()), filters]
             )
-            res = subprocess.run(cmd, capture_output=True, text=True, timeout=120.0, check=False)
+            res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120.0, check=False)
             if res.returncode == 0 and res.stdout.strip():
                 return res.stdout.strip()
     except Exception:
