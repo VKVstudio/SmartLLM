@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Procedural multi-layer dark-cinema audio synthesizer for SmartLLM v0.0.2-beta launch videos.
+"""Procedural multi-layer dark-cinema audio synthesizer for SmartLLM v0.0.3-beta launch videos.
 
 Synthesizes frame-accurate stereo 48 kHz soundtracks using multi-layer additive/subtractive
 synthesis and normalizes to broadcast EBU R128 / streaming standard (`loudnorm=I=-14:TP=-1.5:LRA=11`)

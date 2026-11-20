@@ -12,7 +12,7 @@
 # and ggml's dynamic backend loader searches the EXECUTABLE directory.
 set -euo pipefail
 
-VERSION="${VERSION:-0.0.2-beta}"
+VERSION="${VERSION:-0.0.3-beta}"
 OUT="/build/engines-linux"
 LLAMA_BIN="/build/llama/bin"
 SD_BIN="/build/sd/bin"

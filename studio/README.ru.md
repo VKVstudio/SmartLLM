@@ -2,7 +2,7 @@
   <img src="assets/smartllm-logo.svg" alt="SmartLLM Studio Logo" width="96" height="96">
 </p>
 
-# SmartLLM Studio `v0.0.2-beta`
+# SmartLLM Studio `v0.0.3-beta`
 
 <p align="center">
   <b>Локальное офлайн-ателье веб-разработки, дизайна и копирайтинга (EN + RU)</b><br>
@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/badges/version.svg" alt="release: v0.0.2-beta">
+  <img src="assets/badges/version.svg" alt="release: v0.0.3-beta">
   <img src="assets/badges/platform.svg" alt="platform: Linux | Windows 11">
   <img src="assets/badges/offline.svg" alt="runtime: 127.0.0.1 Zero-Swap">
   <img src="assets/badges/license.svg" alt="license: FSL-1.1-ALv2 -> Apache-2.0">
@@ -47,7 +47,7 @@
 
 ## 2. Обзор и подтверждённые метрики
 
-**SmartLLM Studio (`v0.0.2-beta`)** — автономное кроссплатформенное (**Linux + Windows 11**) локальное ателье веб-разработки и дизайна на `127.0.0.1:8090` без облачных вызовов, с постоянным окном предпросмотра Live Stage (`1440 / 834 / 390`) и последовательным контроллером GPU (`llama.cpp` ↔ `stable-diffusion.cpp` `Z-Image`).
+**SmartLLM Studio (`v0.0.3-beta`)** — автономное кроссплатформенное (**Linux + Windows 11**) локальное ателье веб-разработки и дизайна на `127.0.0.1:8090` без облачных вызовов, с постоянным окном предпросмотра Live Stage (`1440 / 834 / 390`) и последовательным контроллером GPU (`llama.cpp` ↔ `stable-diffusion.cpp` `Z-Image`).
 
 - **Трёхпанельный интерфейс:** верхняя панель 56 px (`Конструктор | Автоматический режим`, `EN | RU`, `Поддержка`, `Настройки`, `Предпросмотр`), левый навигатор шагов и очереди задач 264 px, центральная рабочая область, правый Live Stage (44%) и нижний HUD телеметрии (`Engine`, `VRAM`, `RAM Avail`, `Speed`, `Lock`).
 - **Проверенные тесты интерфейса:** привязаны **`232/232`** элементов управления (`0` неактивных), `0` ошибок консоли и страницы, `0` внешних сетевых запросов, **Lighthouse Accessibility `100` / Best Practices `100`**, `0` лишней латиницы в RU-режиме, проверено `54` адаптивных скриншота.
@@ -67,7 +67,7 @@
 
 ## 4. Быстрый старт (Linux и Windows 11)
 
-**Рекомендуется — бандл в одну папку:** скачай [`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.2-beta/setup_bundle.py) из Releases и запусти `python3 setup_bundle.py --dest /any/drive/SmartLLM --cleanup-parts`. Он соберёт в одной папке приложение, 55 GiB GGUF + mmproj, официальные Apache-2.0 веса Z-Image-Turbo и переносимые CUDA-движки; все пути найдутся автоматически (NVIDIA >= 12 GB VRAM, желательно 32 GB RAM).
+**Рекомендуется — бандл в одну папку:** скачай [`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py) из Releases и запусти `python3 setup_bundle.py --dest /any/drive/SmartLLM --cleanup-parts`. Он соберёт в одной папке приложение, 55 GiB GGUF + mmproj, официальные Apache-2.0 веса Z-Image-Turbo и переносимые CUDA-движки; все пути найдутся автоматически (NVIDIA >= 12 GB VRAM, желательно 32 GB RAM).
 
 **Из исходников (для разработчиков):**
 

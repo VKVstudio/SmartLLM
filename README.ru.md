@@ -2,7 +2,7 @@
   <img src="assets/brand/smartllm-logo.svg" alt="Логотип SmartLLM" width="96" height="96">
 </p>
 
-<h1 align="center">SmartLLM и SmartLLM Studio <code>v0.0.2-beta</code></h1>
+<h1 align="center">SmartLLM и SmartLLM Studio <code>v0.0.3-beta</code></h1>
 
 <p align="center">
   <b>Локальный офлайн-комбайн для веб-разработки, дизайна и копирайтинга (EN + RU)</b><br>
@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/badges/version.svg" alt="release: v0.0.2-beta">
+  <img src="assets/badges/version.svg" alt="release: v0.0.3-beta">
   <img src="assets/badges/platform.svg" alt="platform: Linux | Windows 11">
   <img src="assets/badges/offline.svg" alt="runtime: 127.0.0.1 Zero-Swap">
   <img src="assets/badges/license.svg" alt="license: Apache-2.0 / FSL-1.1-ALv2">
@@ -88,12 +88,23 @@
 
 **Требования:** NVIDIA GPU с `>= 12 GB` VRAM (RTX 20–50, драйвер `>= 525`), желательно `32 GB` RAM, `~160 GB` свободного места на время установки (`~80 GB` после `--cleanup-parts`), Python 3.11+.
 
-[`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.2-beta/setup_bundle.py) (также в [`scripts/release/`](scripts/release/setup_bundle.py); только stdlib, докачка после обрыва, SHA-256) скачивает ВСЁ из наших GitHub Releases в ОДНУ переносимую папку — `studio/` + `models/` (55 GiB GGUF, сборка из 30 частей + mmproj) + `models/z-image/` (официальный Apache-2.0 `Z-Image-Turbo`: DiT + текстовый энкодер + VAE) + `bin/` переносимые CUDA-движки (Linux glibc >= 2.35 / Windows 11, VC++ redist не нужен). HuggingFace не нужен; опции `--zimage-source hf|civitai` — для оригинала или showcase-файнтюна.
+[`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py) (также в [`scripts/release/`](scripts/release/setup_bundle.py); только stdlib, докачка после обрыва, SHA-256) скачивает ВСЁ из наших GitHub Releases в ОДНУ переносимую папку — `studio/` + `models/` (55 GiB GGUF, сборка из 30 частей + mmproj) + `models/z-image/` (официальный Apache-2.0 `Z-Image-Turbo`: DiT + текстовый энкодер + VAE) + `bin/` переносимые CUDA-движки (Linux glibc >= 2.35 / Windows 11, VC++ redist не нужен). HuggingFace не нужен; опции `--zimage-source hf|civitai` — для оригинала или showcase-файнтюна.
 
+**Linux:**
 ```bash
-python3 setup_bundle.py --dest /any/drive/SmartLLM --cleanup-parts
-/any/drive/SmartLLM/studio/bin/smartllm-studio   # Linux (Windows: studio\smartllm-studio.bat)
+curl -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py
+python3 setup_bundle.py --dest ~/SmartLLM --cleanup-parts
+~/SmartLLM/studio/bin/smartllm-studio
 ```
+
+**Windows 11 (PowerShell):**
+```powershell
+curl.exe -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py
+python setup_bundle.py --dest D:\SmartLLM --cleanup-parts
+D:\SmartLLM\studio\smartllm-studio.bat
+```
+
+Затем открой **http://127.0.0.1:8090**. Первый запуск скачивает ~78 GB; на Linux нужен пакет `python3-venv`. Всё лежит внутри папки бандла — если какого-то компонента не хватает, Studio покажет баннер «Скачать всё автоматически» (один клик).
 
 ### 1. Установка и запуск SmartLLM Studio из исходников (`Linux` и `Windows 11`)
 

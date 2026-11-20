@@ -383,7 +383,7 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
     }
 
     blueprint_doc = {
-        "schema_version": "0.0.2-beta",
+        "schema_version": "0.0.3-beta",
         "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "project_id": str(payload.get("id") or project_dir.name),
         "revision": int(payload.get("revision") or 1),

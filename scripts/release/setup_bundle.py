@@ -34,11 +34,12 @@ import shutil
 import subprocess
 import sys
 import tarfile
+import tempfile
 import urllib.request
 import zipfile
 
 DEFAULT_REPO = "VKVstudio/SmartLLM"
-DEFAULT_TAG = "v0.0.2-beta"
+DEFAULT_TAG = "v0.0.3-beta"
 DEFAULT_MODEL_TAG = "v0.0.1-beta"  # 55 GiB GGUF parts + mmproj live in the first release (reused)
 HF_BASE = "https://huggingface.co/Comfy-Org/Z-Image-Turbo/resolve/main/split_files"
 HF_API_TREE = "https://huggingface.co/api/models/Comfy-Org/Z-Image-Turbo/tree/main/split_files"
@@ -344,10 +345,17 @@ def step_binaries(dest: Path, repo: str, tag: str) -> None:
 
 
 def step_verify(dest: Path) -> None:
-    _log("[verify] path discovery from the bundle:")
+    _log("[verify] path discovery from the bundle (isolated from any user config):")
     studio_dir = dest / "studio"
     sys.path.insert(0, str(studio_dir))
     env = os.environ.copy()
+    iso = tempfile.mkdtemp(prefix="smartllm_verify_")
+    env["XDG_CONFIG_HOME"] = iso
+    env["APPDATA"] = iso
+    env["LOCALAPPDATA"] = iso
+    for k in list(env):
+        if k.startswith("SMARTLLM_"):
+            del env[k]
     code = (
         "import json, sys\n"
         f"sys.path.insert(0, {repr(str(studio_dir))})\n"

@@ -31,9 +31,9 @@ def load_edition_config(edition_path: Path = EDITION_CONFIG_PATH) -> dict[str, A
     return {
         "schema": 2,
         "product": "SmartLLM Studio",
-        "version": "0.0.2-beta",
+        "version": "0.0.3-beta",
         "license_spdx": "FSL-1.1-ALv2",
-        "license_change_date": "2028-11-19",
+        "license_change_date": "2028-11-21",
         "telemetry": False,
         "update_check": False,
         "author": {

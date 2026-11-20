@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SmartLLM Studio v0.0.2-beta — Linux Executable Launcher (127.0.0.1 only, portable: any folder / any drive)
+# SmartLLM Studio v0.0.3-beta — Linux Executable Launcher (127.0.0.1 only, portable: any folder / any drive)
 set -euo pipefail
 
 STUDIO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

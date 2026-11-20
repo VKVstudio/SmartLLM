@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    SmartLLM v0.0.2-beta — Windows 11 engine builder (llama-server.exe + sd-cli.exe, CUDA 12).
+    SmartLLM v0.0.3-beta — Windows 11 engine builder (llama-server.exe + sd-cli.exe, CUDA 12).
     Run from "x64 Native Tools Command Prompt for VS 2022" (or Developer PowerShell) so cl.exe is on PATH.
     Prerequisites: VS 2022 Build Tools (C++), CUDA Toolkit 12.x, CMake >= 3.22, Ninja, Git.
     Output: dist\engines-windows\llama\ and ...\sd\ (exe + all DLLs per engine; the two ggml
@@ -62,7 +62,7 @@ foreach ($dll in @("cudart64_12.dll", "cublas64_12.dll", "cublasLt64_12.dll")) {
     }
 }
 
-$Zip = Join-Path $RepoRoot "dist\SmartLLM-Engines-v0.0.2-beta-windows11.zip"
+$Zip = Join-Path $RepoRoot "dist\SmartLLM-Engines-v0.0.3-beta-windows11.zip"
 if (Test-Path $Zip) { Remove-Item $Zip -Force }
 # Compress-Archive (PS 5.1) writes backslash entry names (non-standard ZIP);
 # use .NET ZipFile with explicit forward-slash entry names instead.

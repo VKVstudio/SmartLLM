@@ -2,7 +2,7 @@
   <img src="assets/smartllm-logo.svg" alt="SmartLLM Studio Logo" width="96" height="96">
 </p>
 
-# SmartLLM Studio `v0.0.2-beta`
+# SmartLLM Studio `v0.0.3-beta`
 
 <p align="center">
   <b>Local Offline Multimodal Website, Design &amp; Copywriting Atelier (EN + RU)</b><br>
@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/badges/version.svg" alt="release: v0.0.2-beta">
+  <img src="assets/badges/version.svg" alt="release: v0.0.3-beta">
   <img src="assets/badges/platform.svg" alt="platform: Linux | Windows 11">
   <img src="assets/badges/offline.svg" alt="runtime: 127.0.0.1 Zero-Swap">
   <img src="assets/badges/license.svg" alt="license: FSL-1.1-ALv2 -> Apache-2.0">
@@ -47,7 +47,7 @@
 
 ## 2. Overview & Verified Architecture
 
-**SmartLLM Studio (`v0.0.2-beta`)** is a standalone, cross-platform (**Linux + Windows 11**) local multimodal website & design atelier bound strictly to `127.0.0.1:8090` with zero cloud calls, a persistent Live Stage (`1440 / 834 / 390`), and a lock-aware sequential GPU controller (`llama.cpp` ↔ `stable-diffusion.cpp` `Z-Image`).
+**SmartLLM Studio (`v0.0.3-beta`)** is a standalone, cross-platform (**Linux + Windows 11**) local multimodal website & design atelier bound strictly to `127.0.0.1:8090` with zero cloud calls, a persistent Live Stage (`1440 / 834 / 390`), and a lock-aware sequential GPU controller (`llama.cpp` ↔ `stable-diffusion.cpp` `Z-Image`).
 
 - **3-Pane Atelier Shell:** 56 px top bar (`Constructor | Automatic Mode`, `EN | RU`, `Support`, `Settings`, `Live Stage`), 264 px step & task queue navigator, fluid centre workspace, 44% persistent right Live Stage, and 32 px Telemetry HUD (`Engine`, `VRAM`, `RAM Avail`, `Speed`, `Lock`).
 - **Offline Gate Metrics:** **`232/232`** interactive DOM controls bound (`0` unbound), `0` console/page errors, `0` external network requests, **Lighthouse Accessibility `100` / Best Practices `100`**, `EN + RU` parity (`0` unexpected Latin in RU), `54` responsive shots validated.
@@ -67,7 +67,7 @@ Single-prompt site generation driven by `ProjectOrchestrator` (`smartllm_studio/
 
 ## 4. Quickstart (Linux & Windows 11)
 
-**Recommended — one-folder bundle:** download [`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.2-beta/setup_bundle.py) from Releases and run `python3 setup_bundle.py --dest /any/drive/SmartLLM --cleanup-parts`. It fetches the app, the 55 GiB GGUF + mmproj, the official Apache-2.0 Z-Image-Turbo weights, and portable CUDA engines into one folder; all paths are then auto-discovered (NVIDIA >= 12 GB VRAM, 32 GB RAM recommended).
+**Recommended — one-folder bundle:** download [`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py) from Releases and run `python3 setup_bundle.py --dest /any/drive/SmartLLM --cleanup-parts`. It fetches the app, the 55 GiB GGUF + mmproj, the official Apache-2.0 Z-Image-Turbo weights, and portable CUDA engines into one folder; all paths are then auto-discovered (NVIDIA >= 12 GB VRAM, 32 GB RAM recommended).
 
 **From source (developers):**
 

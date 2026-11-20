@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-    SmartLLM Studio v0.0.2-beta — Hardened Windows 11 Installer (Opus Spec Q6)
+    SmartLLM Studio v0.0.3-beta — Hardened Windows 11 Installer (Opus Spec Q6)
     Checks py -3.11+, creates venv in %LOCALAPPDATA%\SmartLLM Studio, registers Start Menu shortcut & uninstaller. Never downloads models.
 #>
 param(
@@ -19,7 +19,7 @@ $StartMenuDir = Join-Path ([Environment]::GetFolderPath("Programs")) "SmartLLM S
 $StartMenuShortcut = Join-Path $StartMenuDir "SmartLLM Studio.lnk"
 
 if ($DryRun) {
-    Write-Output "[DRY-RUN] SmartLLM Studio v0.0.2-beta Windows 11 Installer"
+    Write-Output "[DRY-RUN] SmartLLM Studio v0.0.3-beta Windows 11 Installer"
     Write-Output "[DRY-RUN] Check Python >= 3.11 via 'py -3' or 'python' (prompt before winget install Python.Python.3.12 if missing)"
     Write-Output "[DRY-RUN] Target Venv: $VenvDir"
     Write-Output "[DRY-RUN] Pip dependencies: Pillow (+ PyQt6 with -WithTray)"
@@ -76,8 +76,8 @@ foreach ($LnkPath in @($DesktopShortcut, $StartMenuShortcut)) {
     $Shortcut.Arguments = "`"$VbsPath`""
     $Shortcut.WorkingDirectory = $StudioDir
     $Shortcut.IconLocation = "$IconPath,0"
-    $Shortcut.Description = "SmartLLM Studio v0.0.2-beta — Local Offline Multimodal Web & Design Atelier"
+    $Shortcut.Description = "SmartLLM Studio v0.0.3-beta — Local Offline Multimodal Web & Design Atelier"
     $Shortcut.Save()
 }
 
-Write-Output "Installed SmartLLM Studio v0.0.2-beta in $LocalAppDir (venv + Pillow$(if ($WithTray) { ' + PyQt6' })). No model weights downloaded."
+Write-Output "Installed SmartLLM Studio v0.0.3-beta in $LocalAppDir (venv + Pillow$(if ($WithTray) { ' + PyQt6' })). No model weights downloaded."
