@@ -231,6 +231,25 @@ def run_all_tests() -> dict[str, object]:
     partial = dict(full, llama_server_exists=False)
     assert "--skip-binaries" not in _setup_skip_flags(partial) and "--skip-model" in _setup_skip_flags(partial)
 
+    # 2f. Self-containment: discovery must NEVER pick weights/binaries outside the project folder
+    with tempfile.TemporaryDirectory(prefix="smartllm_selfcontained_") as td:
+        td_p = Path(td)
+        proj = td_p / "project"
+        (proj / "models").mkdir(parents=True)
+        (proj / "CLAUDE.md").write_text("marker", encoding="utf-8")
+        foreign = td_p / "ComfyUI_windows_portable" / "ComfyUI" / "models"
+        (foreign / "diffusion_models").mkdir(parents=True)
+        (foreign / "text_encoders").mkdir(parents=True)
+        (foreign / "diffusion_models" / "z_image_turbo_bf16.safetensors").write_bytes(b"x")
+        p_iso = discover_studio_paths(repo_root=proj)
+        assert Path(p_iso["dit_model_path"]).is_relative_to(proj), p_iso["dit_model_path"]
+        assert Path(p_iso["te_model_path"]).is_relative_to(proj), p_iso["te_model_path"]
+        import shutil as _shutil
+        from unittest.mock import patch as _patch
+        with _patch.object(_shutil, "which", return_value="/usr/bin/llama-server"):
+            p_path = discover_studio_paths(repo_root=proj)
+            assert "usr/bin" not in p_path["llama_server_bin"], p_path["llama_server_bin"]
+
     # 2e. Cross-OS logo fallback fonts & subprocess encoding invariant (cp1251 Windows safety)
     from smartllm_studio.orchestrator import _logo_font_candidates
     from unittest.mock import patch

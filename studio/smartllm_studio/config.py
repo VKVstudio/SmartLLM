@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
-import shutil
 from typing import Any
 
 from .os_compat import current_platform_tag, get_user_config_path, is_windows
@@ -127,9 +126,6 @@ def _binary_candidates(root: Path, win: bool, tool_dir_name: str, exe_name: str)
         cands.append(tool_dir / n)
     for n in names:
         cands.extend(sorted(tool_dir.glob(f"build*/bin/**/{n}")))
-    which = shutil.which(exe_name)
-    if which:
-        cands.append(Path(which))
     return cands
 
 
@@ -157,22 +153,9 @@ def _discover_mmproj(models_dir: Path) -> Path:
 
 
 def _find_zimage_models_dir(root: Path) -> Path | None:
-    """Search ComfyUI-style weight folders inside the project and its nearest ancestors only."""
-    bases: list[Path] = []
-    ancestors = [root, *list(root.parents)[:3]]
-    for anc in ancestors:
-        bases.append(anc / "ComfyUI_windows_portable" / "ComfyUI" / "models")
-        bases.append(anc / "ComfyUI" / "models")
-        try:
-            for cand in sorted(anc.glob("ComfyUI*")):
-                if cand.is_dir():
-                    bases.append(cand / "ComfyUI" / "models")
-                    bases.append(cand / "models")
-        except OSError:
-            pass
-        bases.append(anc / "models" / "z-image")
-        bases.append(anc / "models")
-    for base in bases:
+    """Self-contained: Z-Image weights are looked up ONLY inside the project folder
+    (bundle layout models/z-image, or ComfyUI-style subdirs directly in models/)."""
+    for base in (root / "models" / "z-image", root / "models"):
         try:
             if (base / "diffusion_models").is_dir() or (base / "text_encoders").is_dir():
                 return base
