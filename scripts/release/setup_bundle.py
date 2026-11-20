@@ -12,12 +12,11 @@ Downloads everything a new user needs into ONE portable folder on ANY drive:
 This script is the ONLY online step; the Studio runtime stays fully offline (127.0.0.1).
 Downloads are resumable and SHA-256 verified. By default EVERYTHING comes from our GitHub
 Releases (model parts from --model-tag, Studio/engines/Z-Image from --tag) — no HuggingFace
-or CivitAI access required.
+access required.
 
 Z-Image sources (--zimage-source):
   release   Official Tongyi-MAI Z-Image-Turbo bf16 (Apache-2.0), re-hosted in our Release [default]
   hf        Same official weights directly from Comfy-Org/Z-Image-Turbo on Hugging Face
-  civitai   "BEYOND REALITY 3.0 FP8" finetune by Nurburgring (showcase visuals; credit the author)
 
 Text encoder (qwen_3_4b.safetensors) and VAE (ae.safetensors, Flux.1 AE, Apache-2.0)
 are byte-identical to Comfy-Org/Z-Image-Turbo on Hugging Face in all modes.
@@ -43,9 +42,6 @@ DEFAULT_TAG = "v0.0.3-beta"
 DEFAULT_MODEL_TAG = "v0.0.1-beta"  # 55 GiB GGUF parts + mmproj live in the first release (reused)
 HF_BASE = "https://huggingface.co/Comfy-Org/Z-Image-Turbo/resolve/main/split_files"
 HF_API_TREE = "https://huggingface.co/api/models/Comfy-Org/Z-Image-Turbo/tree/main/split_files"
-CIVITAI_DIT_URL = "https://civitai.com/api/download/models/2674158"
-CIVITAI_DIT_NAME = "beyond_reality_z_image_3.0_fp8.safetensors"
-CIVITAI_DIT_BYTES = 6154970792
 USER_AGENT = "SmartLLM-Setup/0.0.3 (local bundle installer)"
 CHUNK = 4 * 1024 * 1024
 GB = 1000**3
@@ -302,13 +298,12 @@ def _reassemble(parts_dir: Path, final_name: str, sums: dict[str, str], target: 
     return target
 
 
-def step_zimage(dest: Path, repo: str, tag: str, source: str, dit_choice: str, cleanup_parts: bool) -> None:
+def step_zimage(dest: Path, repo: str, tag: str, source: str, cleanup_parts: bool) -> None:
     zdir = dest / "models" / "z-image"
     te = zdir / "text_encoders" / "qwen_3_4b.safetensors"
     vae = zdir / "vae" / "ae.safetensors"
     dit_dir = zdir / "diffusion_models"
-    dit_name = "z_image_turbo_bf16.safetensors" if source != "civitai" else CIVITAI_DIT_NAME
-    dit = dit_dir / dit_name
+    dit = dit_dir / "z_image_turbo_bf16.safetensors"
     if te.exists() and vae.exists() and dit.exists():
         _log("[3/4] z-image: already present, skip")
         return
@@ -329,18 +324,14 @@ def step_zimage(dest: Path, repo: str, tag: str, source: str, dit_choice: str, c
         _log(f"  OK z-image -> {zdir}")
         return
 
-    _log(f"[3/4] z-image: downloading DiT ({dit_choice}), text encoder, VAE from upstream")
+    _log("[3/4] z-image: official Z-Image-Turbo bf16, text encoder, VAE from upstream (Comfy-Org)")
     meta = hf_file_meta()
     te_meta = meta.get("split_files/text_encoders/qwen_3_4b.safetensors", {})
     vae_meta = meta.get("split_files/vae/ae.safetensors", {})
     download(f"{HF_BASE}/text_encoders/qwen_3_4b.safetensors", te, expected_sha256=te_meta.get("sha256"), expected_size=te_meta.get("size"))
     download(f"{HF_BASE}/vae/ae.safetensors", vae, expected_sha256=vae_meta.get("sha256"), expected_size=vae_meta.get("size"))
-    if source == "civitai":
-        _log("  source: CivitAI 'BEYOND REALITY 3.0 FP8' by Nurburgring (please credit the author)")
-        download(CIVITAI_DIT_URL, dit, expected_size=CIVITAI_DIT_BYTES)
-    else:
-        d_meta = meta.get("split_files/diffusion_models/z_image_turbo_bf16.safetensors", {})
-        download(f"{HF_BASE}/diffusion_models/z_image_turbo_bf16.safetensors", dit, expected_sha256=d_meta.get("sha256"), expected_size=d_meta.get("size"))
+    d_meta = meta.get("split_files/diffusion_models/z_image_turbo_bf16.safetensors", {})
+    download(f"{HF_BASE}/diffusion_models/z_image_turbo_bf16.safetensors", dit, expected_sha256=d_meta.get("sha256"), expected_size=d_meta.get("size"))
     _log(f"  OK z-image -> {zdir}")
 
 
@@ -444,11 +435,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--repo", default=DEFAULT_REPO)
     parser.add_argument("--tag", default=DEFAULT_TAG, help="Release tag for Studio, engines and Z-Image weights")
     parser.add_argument("--model-tag", default=DEFAULT_MODEL_TAG, help="Release tag holding the 55 GiB GGUF parts + mmproj")
-    parser.add_argument("--zimage-source", choices=["release", "hf", "civitai"], default="release",
-                        help="Z-Image weights source: our GitHub Release (default, official Apache-2.0 Turbo), "
-                             "HuggingFace Comfy-Org, or CivitAI 'Beyond Reality' finetune (credit author Nurburgring)")
-    parser.add_argument("--dit", choices=["turbo-bf16", "beyond-reality-fp8"], default="turbo-bf16",
-                        help="DiT variant for --zimage-source hf (civitai always uses beyond-reality-fp8)")
+    parser.add_argument("--zimage-source", choices=["release", "hf"], default="release",
+                        help="Z-Image weights source: our GitHub Release (default, official Apache-2.0 Turbo bf16) "
+                             "or HuggingFace Comfy-Org (same official weights)")
     parser.add_argument("--skip-studio", action="store_true")
     parser.add_argument("--skip-model", action="store_true")
     parser.add_argument("--skip-zimage", action="store_true")
@@ -467,7 +456,7 @@ def main(argv: list[str] | None = None) -> int:
     if not args.skip_model:
         step_model(dest, args.repo, args.model_tag, args.cleanup_parts)
     if not args.skip_zimage:
-        step_zimage(dest, args.repo, args.tag, args.zimage_source, args.dit, args.cleanup_parts)
+        step_zimage(dest, args.repo, args.tag, args.zimage_source, args.cleanup_parts)
     if not args.skip_binaries:
         step_binaries(dest, args.repo, args.tag)
     if not args.skip_deps:

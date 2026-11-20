@@ -88,7 +88,7 @@
 
 **Требования:** NVIDIA GPU с `>= 12 GB` VRAM (RTX 20–50, драйвер `>= 525`), желательно `32 GB` RAM, Python 3.11+ (на Linux пакет `python3-venv`). **Диск:** `~165 GB` свободно без `--cleanup-parts`; с `--cleanup-parts` пик `~120 GB`, после установки `~85 GB`. Установщик проверяет свободное место ДО закачки и при нехватке останавливается с понятным сообщением.
 
-[`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py) (также в [`scripts/release/`](scripts/release/setup_bundle.py); только stdlib, докачка после обрыва, SHA-256) скачивает ВСЁ из наших GitHub Releases в ОДНУ переносимую папку — `studio/` + `models/` (55 GiB GGUF, сборка из 30 частей + mmproj) + `models/z-image/` (официальный Apache-2.0 `Z-Image-Turbo`: DiT + текстовый энкодер + VAE) + `bin/` переносимые CUDA-движки (Linux glibc >= 2.35 / Windows 11, VC++ redist не нужен). HuggingFace не нужен; опции `--zimage-source hf|civitai` — для оригинала или showcase-файнтюна.
+[`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py) (также в [`scripts/release/`](scripts/release/setup_bundle.py); только stdlib, докачка после обрыва, SHA-256) скачивает ВСЁ из наших GitHub Releases в ОДНУ переносимую папку — `studio/` + `models/` (55 GiB GGUF, сборка из 30 частей + mmproj) + `models/z-image/` (официальный Apache-2.0 `Z-Image-Turbo`: DiT + текстовый энкодер + VAE) + `bin/` переносимые CUDA-движки (Linux glibc >= 2.35 / Windows 11, VC++ redist не нужен). HuggingFace не нужен; опция `--zimage-source hf` — те же официальные веса напрямую из Comfy-Org.
 
 Открой терминал в ЛЮБОЙ папке, где хочешь разместить проект — установщик создаст там папку `SmartLLM`. Конкретный диск или путь не нужны.
 
@@ -133,7 +133,7 @@ SmartLLM\studio\smartllm-studio.bat
 Studio не содержит внутри многогигабайтных весов. В верхней панели открой **Настройки (`Settings`)** и укажи пути к локальным файлам:
 1. **GGUF-модель и проектор зрения:** `SmartLLM-v2-K320-V1.gguf` (`55.01 GiB`) + `mmproj-Qwen3.8-Flash-Next-BF16.gguf` (`865.50 MiB`), запуск через **`llama-server`** с `-fit off --lazy-mode direct --n-cpu-moe 42 --moe-cache-mib 2048 --cache-ram 0 -fa on`.
    > Если скачал модель из [Releases](https://github.com/VKVstudio/SmartLLM/releases) по частям (`SmartLLM-v2-K320-V1.gguf.part01`..`part30`, каждая `< 2 GiB`) вместе с `MODEL_SHA256SUMS.txt`, проверь и собери её 1-в-1 скриптом [`reassemble_model.sh`](scripts/release/reassemble_model.sh) (`bash reassemble_model.sh --cleanup`), [`reassemble_model.ps1`](scripts/release/reassemble_model.ps1) или [`reassemble_model.py`](scripts/release/reassemble_model.py).
-2. **Генератор визуалов (`sd-cli`):** `stable-diffusion.cpp` с официальными `z_image_turbo_bf16.safetensors` + `qwen_3_4b.safetensors` + `ae.safetensors` (Apache-2.0, уже в бандле; `--steps 8 --cfg-scale 1.0 --type q8_0 --clip-on-cpu --vae-tiling`). Showcase-визуалы сделаны на опциональном CivitAI-файнтюне `beyond_reality_z_image_3.0_fp8.safetensors` (`--zimage-source civitai`).
+2. **Генератор визуалов (`sd-cli`):** `stable-diffusion.cpp` с официальными полными весами `z_image_turbo_bf16.safetensors` + `qwen_3_4b.safetensors` + `ae.safetensors` (Apache-2.0, уже в бандле; `--steps 8 --cfg-scale 1.0 --type q8_0 --clip-on-cpu --vae-tiling`).
 
 > В видеопамяти одновременно находится **только одна модель**: Studio сама выгружает `llama-server` перед запуском `sd-cli` и проверяет `0 MiB` compute VRAM на выходе.
 

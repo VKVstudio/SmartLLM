@@ -243,7 +243,7 @@ def discover_studio_paths(
         "mmproj_path": _discover_mmproj(models_dir),
         "llama_server_bin": llama_mono,
         "sd_cli_bin": sd_mono,
-        "dit_model_path": _pick_weight(zimage_base, "diffusion_models", "beyond_reality_z_image_3.0_fp8.safetensors", ["*z_image*.safetensors", "*z-image*.safetensors", "*.safetensors"]),
+        "dit_model_path": _pick_weight(zimage_base, "diffusion_models", "z_image_turbo_bf16.safetensors", ["*z_image*.safetensors", "*z-image*.safetensors", "*.safetensors"]),
         "te_model_path": _pick_weight(zimage_base, "text_encoders", "qwen_3_4b.safetensors", ["qwen*.safetensors", "*.safetensors"]),
         "vae_model_path": _pick_weight(zimage_base, "vae", "ae.safetensors", ["ae*.safetensors", "*.safetensors"]),
     }
