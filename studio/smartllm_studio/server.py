@@ -13,7 +13,7 @@ from urllib.parse import urlparse
 import uuid
 
 from . import __version__
-from .blueprint import compile_project_blueprint, default_project_draft, export_project_bundle
+from .blueprint import _safe_project_dir, compile_project_blueprint, default_project_draft, export_project_bundle
 from .catalog import load_studio_catalog
 from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT, discover_studio_paths, load_edition_config, load_user_settings, save_user_settings
 from .engines import GPUEngineController, GPULockBusyError, ImageJobManager, LLMEngineClient, MemoryGuardError
@@ -144,7 +144,12 @@ class StudioState:
         pfile = pdir / "project.json"
         if pfile.exists():
             try:
-                return self._migrate_draft(json.loads(pfile.read_text(encoding="utf-8")))
+                draft = self._migrate_draft(json.loads(pfile.read_text(encoding="utf-8")))
+                safe_out = _safe_project_dir(draft.get("output_dir"), pdir)
+                if str(draft.get("output_dir") or "") != str(safe_out):
+                    draft["output_dir"] = str(safe_out)
+                    pfile.write_text(json.dumps(draft, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                return draft
             except Exception:
                 pass
         draft = default_project_draft(project_id=project_id, repo_root=self.repo_root)
@@ -158,7 +163,7 @@ class StudioState:
         current.update(data)
         current["id"] = project_id
         current["revision"] = int(current.get("revision", 1)) + 1
-        current["output_dir"] = str(data.get("output_dir") or pdir)
+        current["output_dir"] = str(_safe_project_dir(data.get("output_dir"), pdir))
         (pdir / "project.json").write_text(json.dumps(current, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         return current
 
@@ -424,7 +429,7 @@ def create_studio_server(
                     if not src_p.exists() or not src_p.is_file():
                         return self._send_json(404, {"error": "LOGO_VARIANT_NOT_FOUND"})
                     raw_out_dir = str(body.get("output_dir") or "").strip().strip("`\"'")
-                    pdir = Path(raw_out_dir or state.project_dir(pid_l))
+                    pdir = _safe_project_dir(raw_out_dir, state.project_dir(pid_l))
                     res_logo = ingest_brand_logo(src_p.name, src_p.read_bytes(), pdir / "assets")
                     draft = state.save_project(pid_l, {"logo": res_logo, "selected_logo_path": str(src_p)})
                     bp = compile_project_blueprint(draft, repo_root=state.repo_root)
@@ -470,7 +475,7 @@ def create_studio_server(
                     pid = path.split("/")[3] or "default"
                     draft = state.load_project(pid)
                     bp = compile_project_blueprint(draft, repo_root=state.repo_root)
-                    target = Path(str(body["target_dir"])) if body.get("target_dir") else Path(bp["project_dir"])
+                    target = _safe_project_dir(body.get("target_dir"), Path(bp["project_dir"])) if body.get("target_dir") else Path(bp["project_dir"])
                     exp = export_project_bundle(Path(bp["project_dir"]), target_dir=target, as_zip=bool(body.get("as_zip", False)))
                     settings = load_user_settings(repo_root=state.repo_root)
                     exports_cnt = int(settings.get("exports_completed", 0)) + 1

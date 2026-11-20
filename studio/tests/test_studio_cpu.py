@@ -29,12 +29,12 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from smartllm_studio import __version__  # noqa: E402
-from smartllm_studio.blueprint import compile_project_blueprint  # noqa: E402
+from smartllm_studio.blueprint import _safe_project_dir, compile_project_blueprint, default_project_draft  # noqa: E402
 from smartllm_studio.config import discover_studio_paths, load_edition_config  # noqa: E402
 from smartllm_studio.os_compat import CrossPlatformFileLock, get_user_config_path  # noqa: E402
 from smartllm_studio.rag import StudioRAGSelector  # noqa: E402
 from smartllm_studio.sanitizer import sanitize_svg_bytes, validate_png_bytes  # noqa: E402
-from smartllm_studio.server import assert_studio_loopback, create_studio_server  # noqa: E402
+from smartllm_studio.server import StudioState, assert_studio_loopback, create_studio_server  # noqa: E402
 
 
 def _http_req(url: str, method: str = "GET", payload: dict | None = None) -> tuple[int, bytes]:
@@ -158,6 +158,32 @@ def run_all_tests() -> dict[str, object]:
         # Tier 4: Monorepo
         p_mono = discover_studio_paths()
         assert p_mono["sources"]["gguf_model_path"] == "monorepo"
+
+    # 2b. Cross-OS output_dir portability (dual-boot shared project.json must not leak foreign paths)
+    from smartllm_studio import blueprint as bp_mod
+    with tempfile.TemporaryDirectory(prefix="smartllm_paths_") as td:
+        td_p = Path(td)
+        default_dir = td_p / "projects" / "default"
+        assert _safe_project_dir("D:\\foreign\\site", default_dir) == default_dir.resolve()
+        assert _safe_project_dir("", default_dir) == default_dir.resolve()
+        assert _safe_project_dir("my-site", default_dir) == (td_p / "projects" / "my-site").resolve()
+        orig_os_name = bp_mod.os.name
+        try:
+            bp_mod.os.name = "nt"
+            assert _safe_project_dir("/mnt/rescue/projects/x", default_dir) == default_dir.resolve()
+            assert _safe_project_dir("\\mnt\\rescue\\projects\\x", default_dir) == default_dir.resolve()
+        finally:
+            bp_mod.os.name = orig_os_name
+        st = StudioState(repo_root=REPO_ROOT, projects_root_override=td_p / "projects", lock_path_override=td_p / "gpu.lock")
+        pj = st.project_dir("default") / "project.json"
+        poisoned = default_project_draft("default", repo_root=REPO_ROOT)
+        poisoned["output_dir"] = "D:\\mnt\\rescue\\foreign"
+        pj.write_text(json.dumps(poisoned), encoding="utf-8")
+        loaded = st.load_project("default")
+        assert loaded["output_dir"] == str(st.project_dir("default").resolve())
+        assert json.loads(pj.read_text(encoding="utf-8"))["output_dir"] == loaded["output_dir"]
+        saved = st.save_project("default", {"output_dir": "D:\\mnt\\rescue\\foreign"})
+        assert saved["output_dir"] == str(st.project_dir("default").resolve())
 
     # 3. Q4: Bundled Fonts (<= 650 KB, zero "Inter"), Artworks (<= 250 KB), and Token Contrast (>= 4.5:1)
     fonts_dir = STUDIO_ROOT / "smartllm_studio" / "static" / "fonts"

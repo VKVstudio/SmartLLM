@@ -813,6 +813,11 @@
           var sep = bp.preview_url.indexOf("?") === -1 ? "?" : "&";
           el("live-stage-iframe").src = bp.preview_url + sep + "t=" + Date.now();
         }
+        if (bp.project_dir) {
+          el("s1-folder-input").value = bp.project_dir;
+          el("exp-folder-input").value = bp.project_dir;
+          if (store.draft) store.draft.output_dir = bp.project_dir;
+        }
         if (statusEl) {
           var orch = bp.orchestrator || {};
           var aiTag = orch.ai_used

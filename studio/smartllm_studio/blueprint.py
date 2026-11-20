@@ -32,11 +32,17 @@ def _safe_project_dir(raw: Any, default_dir: Path) -> Path:
     if s:
         foreign_win = bool(re.match(r"^[A-Za-z]:[\\/]", s)) or s.startswith("\\\\")
         foreign_posix = s.startswith("/") and not s.startswith("//")
-        if (os.name != "nt" and foreign_win) or (os.name == "nt" and foreign_posix):
+        # Windows driveless rooted paths ("\mnt\rescue\...", "/mnt/...") are foreign/ambiguous:
+        # they silently resolve onto the current drive (D:\mnt\rescue\...) on dual-boot shares.
+        driveless_rooted = s.startswith(("/", "\\")) and not foreign_win
+        if (os.name != "nt" and foreign_win) or (os.name == "nt" and (foreign_posix or driveless_rooted)):
             s = ""
     if s:
         try:
-            p = Path(s).resolve()
+            p = Path(s)
+            if not p.is_absolute():
+                p = default_dir.parent / p
+            p = p.resolve()
             p.mkdir(parents=True, exist_ok=True)
             return p
         except OSError:
