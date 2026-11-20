@@ -79,6 +79,8 @@
   "btn_stage_audit": "Авто-SEO/CSP",
   "audit_csp_ok": "CSP: SHA-256 ПРОВЕРЕНО",
   "hud_engine_label": "Движок:",
+  "setup_banner_text": "Не найдены модель или движки.",
+  "setup_auto_btn": "Скачать всё автоматически",
   "hud_vram_label": "Видеопамять:",
   "hud_ram_label": "Доступно ОЗУ:",
   "hud_speed_label": "Скорость:",

@@ -7,8 +7,11 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import mimetypes
 from pathlib import Path
+import subprocess
+import sys
 import threading
 from typing import Any
+import urllib.request
 from urllib.parse import urlparse
 import uuid
 
@@ -32,6 +35,18 @@ def assert_studio_loopback(host: str) -> None:
         raise ValueError(f"Security violation: SmartLLM Studio must bind strictly to '127.0.0.1', got '{host}'")
 
 
+def _setup_skip_flags(paths: dict[str, Any]) -> list[str]:
+    """Which bundle components are already present and need no download."""
+    skips: list[str] = []
+    if paths.get("gguf_model_exists") and paths.get("mmproj_exists"):
+        skips.append("--skip-model")
+    if paths.get("dit_model_exists") and paths.get("te_model_exists") and paths.get("vae_model_exists"):
+        skips.append("--skip-zimage")
+    if paths.get("llama_server_exists") and paths.get("sd_cli_exists"):
+        skips.append("--skip-binaries")
+    return skips
+
+
 class StudioState:
     """In-memory and on-disk state registry for projects, previews, and lock-aware engines."""
 
@@ -44,6 +59,7 @@ class StudioState:
         projects_root_override: Path | None = None,
     ) -> None:
         self.instance_id = f"studio_{uuid.uuid4().hex[:8]}"
+        self.setup_progress: dict[str, Any] = {"running": False, "done": False, "error": "", "line": ""}
         self.repo_root = (repo_root or DEFAULT_REPO_ROOT).resolve()
         paths = discover_studio_paths(repo_root=self.repo_root)
         self.projects_root = Path(projects_root_override or paths["projects_root"]).resolve()
@@ -314,6 +330,8 @@ def create_studio_server(
                 return self._send_json(200, cat)
             if path == "/api/settings":
                 return self._send_json(200, load_user_settings(repo_root=state.repo_root))
+            if path == "/api/setup/progress":
+                return self._send_json(200, state.setup_progress)
             if path.startswith("/api/projects/"):
                 pid = path.split("/")[3] or "default"
                 return self._send_json(200, state.load_project(pid))
@@ -350,6 +368,51 @@ def create_studio_server(
                 return False
 
             try:
+                if path == "/api/setup/auto":
+                    if state.setup_progress.get("running"):
+                        return self._send_json(409, {"error": "SETUP_ALREADY_RUNNING"})
+                    settings = load_user_settings(repo_root=state.repo_root)
+                    skips = _setup_skip_flags(settings.get("paths") or {})
+                    if len(skips) >= 3:
+                        return self._send_json(200, {"status": "nothing_to_do"})
+                    script = state.repo_root / "scripts" / "release" / "setup_bundle.py"
+                    if not script.exists():
+                        script = state.repo_root / "setup_bundle.py"
+                        if not script.exists():
+                            url = f"https://github.com/VKVstudio/SmartLLM/releases/download/v{__version__}/setup_bundle.py"
+                            try:
+                                with urllib.request.urlopen(url, timeout=60) as resp:
+                                    script.write_bytes(resp.read())
+                            except Exception as exc:
+                                return self._send_json(502, {"error": "SETUP_SCRIPT_DOWNLOAD_FAILED", "message": str(exc)[:200]})
+                    cmd = [sys.executable, str(script), "--dest", str(state.repo_root), "--skip-studio", *skips]
+
+                    def _setup_worker() -> None:
+                        try:
+                            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace")
+                            if proc.stdout is not None:
+                                for line in proc.stdout:
+                                    state.setup_progress["line"] = line.strip()[:300]
+                            rc = proc.wait()
+                            state.setup_progress["done"] = True
+                            state.setup_progress["error"] = "" if rc == 0 else f"exit code {rc}"
+                            if rc == 0:
+                                fresh = discover_studio_paths(repo_root=state.repo_root)
+                                state.llm.server_bin = Path(fresh["llama_server_bin"])
+                                state.llm.model_path = Path(fresh["gguf_model_path"])
+                                state.image_jobs.sd_cli_bin = Path(fresh["sd_cli_bin"])
+                                state.image_jobs.dit_model_path = Path(fresh["dit_model_path"])
+                                state.image_jobs.te_model_path = Path(fresh["te_model_path"])
+                                state.image_jobs.vae_model_path = Path(fresh["vae_model_path"])
+                        except Exception as exc:
+                            state.setup_progress["done"] = True
+                            state.setup_progress["error"] = str(exc)[:300]
+                        finally:
+                            state.setup_progress["running"] = False
+
+                    state.setup_progress.update({"running": True, "done": False, "error": "", "line": "Starting download..."})
+                    threading.Thread(target=_setup_worker, daemon=True).start()
+                    return self._send_json(200, {"status": "started", "skips": skips})
                 if path == "/api/settings":
                     saved = save_user_settings(body, repo_root=state.repo_root)
                     sp = saved.get("paths") or {}

@@ -64,7 +64,7 @@
 | **Zero-Swap Memory** | **`0 B`** disk swap · **`0 kB`** resident PLE RSS | `26.82 GiB` PLE via direct `O_DIRECT` NVMe `pread`; `max VRAM = 9.12 GiB` |
 | **Web Lighthouse (Suite / Holdout)** | **`100 / 98.2 / 95.6 / 97.6`** · **`100 / 98.8 / 95.2 / 98.0`** | Real Chromium + Lighthouse (`P / A / BP / SEO`, `0` unsafe-inline) |
 | **Strict TypeScript** | **`10/10`** Suite + **`8/8`** Holdout unit tests PASS | Compiled with `tsc --strict` (`0` `any`) |
-| **Studio UI Gate** | **`231/231`** controls bound · LH **`100 / 100`** | `0` console errors, `0` external requests, `54` responsive shots |
+| **Studio UI Gate** | **`232/232`** controls bound · LH **`100 / 100`** | `0` console errors, `0` external requests, `54` responsive shots |
 
 ---
 
@@ -132,7 +132,7 @@ Copy-paste ready prompts and step-by-step constructor walkthroughs live in [`stu
 ### 4. CLI Combine & Headless Verification
 
 - **1-command CLI combine:** [`./run_combine.sh`](docs/OFFLINE_COMBINE_QUICKSTART.md) (`--brief "..." --out eval/combine_out/demo`)
-- **Offline Studio verification suite (`231` DOM controls + Lighthouse):**
+- **Offline Studio verification suite (`232` DOM controls + Lighthouse):**
   ```bash
   CUDA_VISIBLE_DEVICES="" .venv_linux/bin/python studio/tests/test_studio_cpu.py
   ```

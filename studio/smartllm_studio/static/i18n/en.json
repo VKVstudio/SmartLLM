@@ -79,6 +79,8 @@
   "btn_stage_audit": "Auto-SEO/CSP",
   "audit_csp_ok": "CSP: SHA-256 VERIFIED",
   "hud_engine_label": "Engine:",
+  "setup_banner_text": "Model or engines not found.",
+  "setup_auto_btn": "Download everything automatically",
   "hud_vram_label": "VRAM:",
   "hud_ram_label": "RAM Avail:",
   "hud_speed_label": "Speed:",

@@ -50,7 +50,7 @@
 **SmartLLM Studio (`v0.0.2-beta`)** is a standalone, cross-platform (**Linux + Windows 11**) local multimodal website & design atelier bound strictly to `127.0.0.1:8090` with zero cloud calls, a persistent Live Stage (`1440 / 834 / 390`), and a lock-aware sequential GPU controller (`llama.cpp` ↔ `stable-diffusion.cpp` `Z-Image`).
 
 - **3-Pane Atelier Shell:** 56 px top bar (`Constructor | Automatic Mode`, `EN | RU`, `Support`, `Settings`, `Live Stage`), 264 px step & task queue navigator, fluid centre workspace, 44% persistent right Live Stage, and 32 px Telemetry HUD (`Engine`, `VRAM`, `RAM Avail`, `Speed`, `Lock`).
-- **Offline Gate Metrics:** **`231/231`** interactive DOM controls bound (`0` unbound), `0` console/page errors, `0` external network requests, **Lighthouse Accessibility `100` / Best Practices `100`**, `EN + RU` parity (`0` unexpected Latin in RU), `54` responsive shots validated.
+- **Offline Gate Metrics:** **`232/232`** interactive DOM controls bound (`0` unbound), `0` console/page errors, `0` external network requests, **Lighthouse Accessibility `100` / Best Practices `100`**, `EN + RU` parity (`0` unexpected Latin in RU), `54` responsive shots validated.
 - **Bundled Typography & Artwork:** Self-hosted Latin+Cyrillic OFL-1.1 `.woff2` typefaces (`Cormorant Garamond`, `Onest`, `JetBrains Mono`) and bundled `.avif`/`.webp` studio artworks.
 
 ## 3. Modes & Functional Contract

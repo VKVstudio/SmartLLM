@@ -453,6 +453,13 @@
 
   <!-- 4. BOTTOM TELEMETRY HUD -->
   <footer class="atelier-hud">
+    <div id="setup-banner" class="setup-banner" hidden>
+      <code id="setup-banner-text" data-i18n="setup_banner_text">Не найдены модель или движки.</code>
+      <button class="btn btn-primary" id="setup-auto-btn" type="button">
+        <span data-i18n="setup_auto_btn">Скачать всё автоматически</span>
+      </button>
+      <span id="setup-progress" class="setup-progress"></span>
+    </div>
     <div class="hud-metrics">
       <span><span class="hud-dot" id="hud-dot"></span><span data-i18n="hud_engine_label">Движок:</span> <strong id="hud-engine-state">idle</strong></span>
       <span><span data-i18n="hud_vram_label">Видеопамять:</span> <strong id="hud-vram-val">0.0 MiB</strong></span>

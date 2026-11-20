@@ -217,9 +217,19 @@ def run_all_tests() -> dict[str, object]:
             assert code in (403, 404), f"traversal {evil} returned {code}"
         code_ok, _ = _http_req("http://127.0.0.1:18195/static/app.js")
         assert code_ok == 200
+        code_prog, body_prog = _http_req("http://127.0.0.1:18195/api/setup/progress")
+        assert code_prog == 200 and json.loads(body_prog)["running"] is False
     finally:
         srv_t.shutdown()
         srv_t.server_close()
+
+    # 2d-2. Auto-setup skip logic: only download what is actually missing
+    from smartllm_studio.server import _setup_skip_flags
+    full = {"gguf_model_exists": True, "mmproj_exists": True, "dit_model_exists": True, "te_model_exists": True, "vae_model_exists": True, "llama_server_exists": True, "sd_cli_exists": True}
+    assert _setup_skip_flags(full) == ["--skip-model", "--skip-zimage", "--skip-binaries"]
+    assert _setup_skip_flags({}) == []
+    partial = dict(full, llama_server_exists=False)
+    assert "--skip-binaries" not in _setup_skip_flags(partial) and "--skip-model" in _setup_skip_flags(partial)
 
     # 2e. Cross-OS logo fallback fonts & subprocess encoding invariant (cp1251 Windows safety)
     from smartllm_studio.orchestrator import _logo_font_candidates

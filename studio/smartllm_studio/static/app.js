@@ -919,6 +919,33 @@
 
     // Step 1 controls
     el("s1-folder-input").addEventListener("input", function () { el("exp-folder-input").value = el("s1-folder-input").value; });
+    el("setup-auto-btn").addEventListener("click", function () {
+      var btn = el("setup-auto-btn");
+      btn.disabled = true;
+      el("setup-progress").textContent = store.lang === "ru" ? "Запуск загрузки..." : "Starting download...";
+      fetch("/api/setup/auto", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d.status === "nothing_to_do") { el("setup-banner").hidden = true; btn.disabled = false; return; }
+          if (d.error) { el("setup-progress").textContent = d.error + (d.message ? ": " + d.message : ""); btn.disabled = false; return; }
+          var timer = setInterval(function () {
+            fetch("/api/setup/progress").then(function (r) { return r.json(); }).then(function (p) {
+              el("setup-progress").textContent = p.line || "";
+              if (p.done) {
+                clearInterval(timer);
+                btn.disabled = false;
+                if (p.error) {
+                  el("setup-progress").textContent = (store.lang === "ru" ? "Ошибка: " : "Error: ") + p.error;
+                } else {
+                  el("setup-progress").textContent = store.lang === "ru" ? "Готово! Перезагружаю интерфейс..." : "Done! Reloading UI...";
+                  setTimeout(function () { location.reload(); }, 1200);
+                }
+              }
+            }).catch(function () {});
+          }, 2000);
+        })
+        .catch(function (e) { el("setup-progress").textContent = String(e); btn.disabled = false; });
+    });
     el("s1-pick-folder-btn").addEventListener("click", function () {
       fetch("/api/os/pick", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ kind: "folder" }) })
         .then(function (r) { return r.json(); })
@@ -1160,6 +1187,14 @@
             return (st.paths[flagMap[k]] ? "OK   " : "MISS ") + k + " = " + (st.paths[k] || "");
           });
           el("set-paths-status").textContent = diag.join("\n");
+          var missing = (st.paths.missing_required || []).concat(st.paths.missing_visuals || []);
+          var banner = el("setup-banner");
+          if (banner) {
+            banner.hidden = missing.length === 0;
+            if (missing.length) {
+              el("setup-banner-text").textContent = (store.lang === "ru" ? "Не найдены компоненты: " : "Missing components: ") + missing.join(", ");
+            }
+          }
         }
         renderCanons();
         syncRouteSelectFromDraft(store.draft);

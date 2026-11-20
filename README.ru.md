@@ -64,7 +64,7 @@
 | **Zero-Swap рантайм** | **`0 B`** дискового свопа · **`0 kB`** PLE в RAM | `26.82 GiB` PLE читается напрямую с NVMe (`O_DIRECT pread`); пик VRAM `9.12 GiB` |
 | **HTTP Lighthouse (Suite / Holdout)** | **`100 / 98.2 / 95.6 / 97.6`** · **`100 / 98.8 / 95.2 / 98.0`** | Реальный Chromium + Lighthouse (`P / A / BP / SEO`, `0` unsafe-inline) |
 | **Строгий TypeScript** | **`10/10`** Suite + **`8/8`** Holdout тестов PASS | Сборка с `tsc --strict` (`0` `any`) |
-| **UI-стенд Studio** | **`231/231`** контролов привязаны · LH **`100 / 100`** | `0` ошибок консоли, `0` внешних запросов, `54` скриншота |
+| **UI-стенд Studio** | **`232/232`** контролов привязаны · LH **`100 / 100`** | `0` ошибок консоли, `0` внешних запросов, `54` скриншота |
 
 ---
 
@@ -132,7 +132,7 @@ Studio не содержит внутри многогигабайтных ве�
 ### 4. CLI-комбайн и автономные тесты
 
 - **CLI-комбайн в одну команду:** [`./run_combine.sh`](docs/OFFLINE_COMBINE_QUICKSTART.md)
-- **Прогон тестов Studio на CPU (`231` контролов + Chromium/Lighthouse):**
+- **Прогон тестов Studio на CPU (`232` контролов + Chromium/Lighthouse):**
   ```bash
   CUDA_VISIBLE_DEVICES="" .venv_linux/bin/python studio/tests/test_studio_cpu.py
   ```
