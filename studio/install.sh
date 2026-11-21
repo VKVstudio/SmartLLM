@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SmartLLM Studio v0.0.3-beta — Hardened Linux Installer (Opus Spec Q6)
+# SmartLLM Studio v0.0.4-beta — Hardened Linux Installer (Opus Spec Q6)
 # Verifies Python >= 3.11, creates venv in ~/.local/share/smartllm-studio, installs .desktop & icon. Never downloads models.
 set -euo pipefail
 
@@ -46,7 +46,7 @@ Version=1.0
 Type=Application
 Name=SmartLLM Studio
 GenericName=Offline Multimodal Web & Design Atelier
-Comment=SmartLLM Studio v0.0.3-beta — Local Offline Web, Design & Z-Image Atelier (127.0.0.1)
+Comment=SmartLLM Studio v0.0.4-beta — Local Offline Web, Design & Z-Image Atelier (127.0.0.1)
 Exec="${LAUNCHER_PATH}"
 Icon=${ICON_PATH}
 Terminal=false
@@ -55,7 +55,7 @@ StartupNotify=true
 EOF
 
 if [[ "${DRY_RUN}" -eq 1 ]]; then
-    echo "[DRY-RUN] SmartLLM Studio v0.0.3-beta Linux Installer"
+    echo "[DRY-RUN] SmartLLM Studio v0.0.4-beta Linux Installer"
     echo "[DRY-RUN] Verified Python >= 3.11: ${PYTHON_CMD}"
     echo "[DRY-RUN] Would create venv at: ${VENV_DIR} (pip: Pillow$( [[ "${WITH_TRAY}" -eq 1 ]] && printf ' + PyQt6' ))"
     echo "[DRY-RUN] Would symlink ${LOCAL_BIN_DIR}/smartllm-studio -> ${LAUNCHER_PATH}"
@@ -79,4 +79,4 @@ chmod +x "${LAUNCHER_PATH}"
 ln -sf "${LAUNCHER_PATH}" "${LOCAL_BIN_DIR}/smartllm-studio"
 printf "%s\n" "${DESKTOP_CONTENT}" > "${DESKTOP_FILE}"
 chmod 644 "${DESKTOP_FILE}"
-echo "Installed SmartLLM Studio v0.0.3-beta (${VENV_DIR}, ${DESKTOP_FILE}). No model weights downloaded."
+echo "Installed SmartLLM Studio v0.0.4-beta (${VENV_DIR}, ${DESKTOP_FILE}). No model weights downloaded."

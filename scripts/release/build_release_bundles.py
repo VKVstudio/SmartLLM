@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SmartLLM v0.0.3-beta Release Bundler & Git Staging Safety Auditor.
+"""SmartLLM Studio Release Bundler & Git Staging Safety Auditor.
 
 Responsibilities:
 1. Audits `.gitignore` and `git ls-files` in the monorepo to guarantee ZERO
@@ -15,11 +15,11 @@ Responsibilities:
    `uninstall.{sh,ps1}`, `smartllm-studio.bat`, `smartllm-studio-silent.vbs`,
    and a strict standalone `.gitignore`), containing 0 weights and 0 compiled binaries.
 3. Packages deterministic release archives:
-   - `dist/releases/SmartLLM-Studio-v0.0.3-beta-linux.tar.gz`
-   - `dist/releases/SmartLLM-Studio-v0.0.3-beta-windows11.zip`
+   - `dist/releases/SmartLLM-Studio-v<version>-linux.tar.gz`
+   - `dist/releases/SmartLLM-Studio-v<version>-windows11.zip`
    - `dist/releases/SHA256SUMS.txt`
-4. Runs an isolated extraction + standalone import/health smoke in `/tmp/rel_smoke`
-   and cleans `/tmp/rel_smoke` immediately afterward.
+4. Runs an isolated extraction + standalone import/health smoke in a cross-OS temp directory
+   and cleans it immediately afterward.
 """
 
 from __future__ import annotations
@@ -39,6 +39,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
 STUDIO_SRC = ROOT / "studio"
+STUDIO_VERSION = (STUDIO_SRC / "VERSION").read_text(encoding="utf-8").strip()
 DIST_DIR = ROOT / "dist"
 STAGE_REPO_DIR = DIST_DIR / "SmartLLM-Studio-repo"
 RELEASES_DIR = DIST_DIR / "releases"
@@ -183,6 +184,8 @@ def audit_monorepo_git_safety(repo_root: Path = ROOT) -> dict:
         ["git", "-C", str(repo_root), "ls-files"],
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         check=True,
     )
     tracked_files = [line.strip() for line in proc.stdout.splitlines() if line.strip()]
@@ -214,6 +217,8 @@ def audit_monorepo_git_safety(repo_root: Path = ROOT) -> dict:
         ["git", "-C", str(repo_root), "check-ignore", "--", *probe_paths],
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         check=False,
     )
     ignored_set = {line.strip() for line in proc_ign.stdout.splitlines() if line.strip()}
@@ -281,17 +286,18 @@ def stage_standalone_studio_repo(
         raise RuntimeError(f"Staged SmartLLM-Studio-repo is missing required items: {missing}")
 
     # Verify license & version metadata
-    lic_text = (stage_dir / "LICENSE.md").read_text(encoding="utf-8")
-    if "FSL-1.1-ALv2" not in lic_text or "2028-11-16" not in lic_text:
-        raise RuntimeError("Staged LICENSE.md failed FSL-1.1-ALv2 / 2028-11-16 check")
-
-    version_str = (stage_dir / "VERSION").read_text(encoding="utf-8").strip()
-    if version_str != "0.0.3-beta":
-        raise RuntimeError(f"Expected VERSION '0.0.3-beta', got '{version_str}'")
-
     edition = json.loads((stage_dir / "config" / "edition.json").read_text(encoding="utf-8"))
     if edition.get("telemetry") is not False or edition.get("update_check") is not False:
         raise RuntimeError(f"Invalid edition.json privacy flags: {edition}")
+
+    lic_text = (stage_dir / "LICENSE.md").read_text(encoding="utf-8")
+    if "FSL-1.1-ALv2" not in lic_text or edition["license_change_date"] not in lic_text:
+        raise RuntimeError(f"Staged LICENSE.md failed FSL-1.1-ALv2 / {edition['license_change_date']} check")
+
+    expected_version = (studio_src / "VERSION").read_text(encoding="utf-8").strip()
+    version_str = (stage_dir / "VERSION").read_text(encoding="utf-8").strip()
+    if version_str != expected_version:
+        raise RuntimeError(f"Expected VERSION '{expected_version}', got '{version_str}'")
 
     # Count staged files and total bytes, asserting 0 forbidden extensions
     file_count = 0
@@ -316,7 +322,7 @@ def stage_standalone_studio_repo(
 def build_release_archives(
     stage_dir: Path = STAGE_REPO_DIR,
     releases_dir: Path = RELEASES_DIR,
-    version: str = "0.0.3-beta",
+    version: str = STUDIO_VERSION,
 ) -> dict:
     releases_dir.mkdir(parents=True, exist_ok=True)
     prefix = f"SmartLLM-Studio-v{version}"
@@ -380,13 +386,9 @@ def build_release_archives(
     }
 
 
-def verify_extracted_archive_in_tmp(linux_tar_path: Path, version: str = "0.0.3-beta") -> dict:
-    smoke_root = Path("/tmp/rel_smoke")
-    if smoke_root.exists():
-        shutil.rmtree(smoke_root)
-    smoke_root.mkdir(parents=True, exist_ok=True)
-
-    try:
+def verify_extracted_archive_in_tmp(linux_tar_path: Path, version: str = STUDIO_VERSION) -> dict:
+    with tempfile.TemporaryDirectory(prefix="smartllm_rel_smoke_") as tmp_dir_str:
+        smoke_root = Path(tmp_dir_str)
         with tarfile.open(linux_tar_path, "r:gz") as tf:
             tf.extractall(smoke_root, filter="data")
 
@@ -413,19 +415,18 @@ def verify_extracted_archive_in_tmp(linux_tar_path: Path, version: str = "0.0.3-
         env["CUDA_VISIBLE_DEVICES"] = ""
         proc = subprocess.run(
             [sys.executable, "-c", check_code],
-            cwd="/tmp",
+            cwd=str(smoke_root),
             env=env,
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             timeout=20,
             check=True,
         )
         smoke_res = json.loads(proc.stdout.strip().splitlines()[-1])
-    finally:
-        if smoke_root.exists():
-            shutil.rmtree(smoke_root)
 
-    assert not smoke_root.exists(), "/tmp/rel_smoke was not cleaned up!"
+    assert not smoke_root.exists(), f"{smoke_root} was not cleaned up!"
     return {
         "tmp_rel_smoke": "PASS",
         "tmp_rel_smoke_cleaned": not smoke_root.exists(),
@@ -434,8 +435,8 @@ def verify_extracted_archive_in_tmp(linux_tar_path: Path, version: str = "0.0.3-
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Build & verify SmartLLM Studio v0.0.3-beta release bundles.")
-    parser.add_argument("--verify", action="store_true", help="Run full git audit, staging, packaging & /tmp/rel_smoke verification")
+    parser = argparse.ArgumentParser(description=f"Build & verify SmartLLM Studio v{STUDIO_VERSION} release bundles.")
+    parser.add_argument("--verify", action="store_true", help="Run full git audit, staging, packaging & temp smoke verification")
     args = parser.parse_args(argv)
 
     git_audit = audit_monorepo_git_safety(ROOT)

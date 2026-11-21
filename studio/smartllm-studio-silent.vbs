@@ -1,4 +1,4 @@
-' SmartLLM Studio v0.0.3-beta — Windows 11 Silent Background Launcher
+' SmartLLM Studio v0.0.4-beta — Windows 11 Silent Background Launcher
 Option Explicit
 Dim fso, studioDir, batPath, shell
 Set fso = CreateObject("Scripting.FileSystemObject")

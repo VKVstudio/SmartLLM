@@ -398,7 +398,7 @@ def create_studio_server(
                                     script.write_bytes(resp.read())
                             except Exception as exc:
                                 return self._send_json(502, {"error": "SETUP_SCRIPT_DOWNLOAD_FAILED", "message": str(exc)[:200]})
-                    cmd = [sys.executable, str(script), "--dest", str(state.repo_root), "--skip-studio", *skips]
+                    cmd = [sys.executable, str(script), "--dest", str(state.repo_root), "--skip-studio", "--cleanup-parts", "--skip-deps", "--line-progress", *skips]
 
                     def _setup_worker() -> None:
                         try:

@@ -38,13 +38,16 @@ import urllib.request
 import zipfile
 
 DEFAULT_REPO = "VKVstudio/SmartLLM"
-DEFAULT_TAG = "v0.0.3-beta"
+DEFAULT_TAG = "v0.0.4-beta"
 DEFAULT_MODEL_TAG = "v0.0.1-beta"  # 55 GiB GGUF parts + mmproj live in the first release (reused)
+DEFAULT_ZIMAGE_TAG = "v0.0.3-beta"
+DEFAULT_ENGINES_TAG = "v0.0.3-beta"
 HF_BASE = "https://huggingface.co/Comfy-Org/Z-Image-Turbo/resolve/main/split_files"
 HF_API_TREE = "https://huggingface.co/api/models/Comfy-Org/Z-Image-Turbo/tree/main/split_files"
-USER_AGENT = "SmartLLM-Setup/0.0.3 (local bundle installer)"
+USER_AGENT = "SmartLLM-Setup/0.0.4 (local bundle installer)"
 CHUNK = 4 * 1024 * 1024
 GB = 1000**3
+_LINE_PROGRESS = False
 
 
 def _space_plan(skip_model: bool, skip_zimage: bool, skip_binaries: bool, cleanup: bool) -> tuple[float, float, float]:
@@ -122,8 +125,15 @@ def _open(url: str, extra_headers: dict[str, str] | None = None):
     raise last_exc  # type: ignore[misc]
 
 
-def download(url: str, dest: Path, expected_sha256: str | None = None, expected_size: int | None = None) -> Path:
+def download(
+    url: str,
+    dest: Path,
+    expected_sha256: str | None = None,
+    expected_size: int | None = None,
+    line_progress: bool | None = None,
+) -> Path:
     """Resumable streaming download with SHA-256 / size verification and atomic promotion."""
+    use_lines = _LINE_PROGRESS if line_progress is None else bool(line_progress)
     dest.parent.mkdir(parents=True, exist_ok=True)
     if dest.exists():
         if expected_sha256:
@@ -160,6 +170,7 @@ def download(url: str, dest: Path, expected_sha256: str | None = None, expected_
         if mode == "wb":
             resume_from = 0
         done = resume_from
+        last_step = int((100.0 * done / total) // 5) if (total and done) else -1
         with part.open(mode) as out:
             while True:
                 block = resp.read(CHUNK)
@@ -169,8 +180,14 @@ def download(url: str, dest: Path, expected_sha256: str | None = None, expected_
                 done += len(block)
                 if total:
                     pct = 100.0 * done / total
-                    print(f"\r  {dest.name}: {done / 1e6:.0f}/{total / 1e6:.0f} MB ({pct:.1f}%)", end="", flush=True)
-        if total:
+                    if use_lines:
+                        step = int(pct // 5)
+                        if step > last_step or done >= total:
+                            last_step = step
+                            _log(f"  {dest.name}: {done / 1e6:.0f}/{total / 1e6:.0f} MB ({pct:.1f}%)")
+                    else:
+                        print(f"\r  {dest.name}: {done / 1e6:.0f}/{total / 1e6:.0f} MB ({pct:.1f}%)", end="", flush=True)
+        if total and not use_lines:
             print()
     if expected_size and part.stat().st_size != expected_size:
         raise RuntimeError(f"{dest.name}: size mismatch ({part.stat().st_size} != {expected_size})")
@@ -195,7 +212,7 @@ def hf_file_meta() -> dict[str, dict]:
     return meta
 
 
-def step_studio(dest: Path, repo: str, tag: str) -> None:
+def step_studio(dest: Path, repo: str, tag: str, cleanup_parts: bool = False) -> None:
     studio_dir = dest / "studio"
     if (studio_dir / "smartllm_studio" / "cli.py").exists():
         _log("[1/4] studio: already present, skip")
@@ -204,8 +221,9 @@ def step_studio(dest: Path, repo: str, tag: str) -> None:
     win = os.name == "nt"
     name = f"SmartLLM-Studio-{tag}-windows11.zip" if win else f"SmartLLM-Studio-{tag}-linux.tar.gz"
     url = f"https://github.com/{repo}/releases/download/{tag}/{name}"
-    archive = download(url, dest / "_downloads" / name)
-    tmp_extract = dest / "_downloads" / "studio_extract"
+    downloads_dir = dest / "_downloads"
+    archive = download(url, downloads_dir / name)
+    tmp_extract = downloads_dir / "studio_extract"
     if tmp_extract.exists():
         shutil.rmtree(tmp_extract)
     tmp_extract.mkdir(parents=True)
@@ -220,6 +238,10 @@ def step_studio(dest: Path, repo: str, tag: str) -> None:
         raise RuntimeError(f"Unexpected archive layout: {roots}")
     roots[0].replace(studio_dir)
     shutil.rmtree(tmp_extract, ignore_errors=True)
+    if cleanup_parts:
+        archive.unlink(missing_ok=True)
+        if downloads_dir.exists() and not any(downloads_dir.iterdir()):
+            downloads_dir.rmdir()
     _log(f"  OK studio -> {studio_dir}")
 
 
@@ -335,7 +357,7 @@ def step_zimage(dest: Path, repo: str, tag: str, source: str, cleanup_parts: boo
     _log(f"  OK z-image -> {zdir}")
 
 
-def step_binaries(dest: Path, repo: str, tag: str) -> None:
+def step_binaries(dest: Path, repo: str, tag: str, cleanup_parts: bool = False) -> None:
     bin_dir = dest / "bin"
     exe = "llama-server.exe" if os.name == "nt" else "llama-server"
     sd_exe = "sd-cli.exe" if os.name == "nt" else "sd-cli"
@@ -345,7 +367,8 @@ def step_binaries(dest: Path, repo: str, tag: str) -> None:
     _log("[4/4] binaries: trying GitHub Release engine packages")
     name = f"SmartLLM-Engines-{tag}-windows11.zip" if os.name == "nt" else f"SmartLLM-Engines-{tag}-linux.tar.gz"
     url = f"https://github.com/{repo}/releases/download/{tag}/{name}"
-    archive = dest / "_downloads" / name
+    downloads_dir = dest / "_downloads"
+    archive = downloads_dir / name
     try:
         download(url, archive)
     except Exception as exc:
@@ -365,6 +388,10 @@ def step_binaries(dest: Path, repo: str, tag: str) -> None:
     for tool in (bin_dir / "llama" / exe, bin_dir / "sd" / sd_exe):
         if tool.exists() and os.name != "nt":
             tool.chmod(0o755)
+    if cleanup_parts:
+        archive.unlink(missing_ok=True)
+        if downloads_dir.exists() and not any(downloads_dir.iterdir()):
+            downloads_dir.rmdir()
     _log(f"  OK binaries -> {bin_dir}")
 
 
@@ -389,7 +416,7 @@ def step_verify(dest: Path) -> None:
         "flags = {'gguf_model_path':'gguf_model_exists','mmproj_path':'mmproj_exists','llama_server_bin':'llama_server_exists','sd_cli_bin':'sd_cli_exists','dit_model_path':'dit_model_exists','te_model_path':'te_model_exists','vae_model_path':'vae_model_exists'}\n"
         "print(json.dumps({k: {'path': p[k], 'ok': p[flags[k]]} for k in keys}, ensure_ascii=False))\n"
     )
-    proc = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, env=env, check=False)
+    proc = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, encoding="utf-8", errors="replace", env=env, check=False)
     if proc.returncode != 0:
         _log(f"  verify failed: {proc.stderr.strip()[:400]}")
         return
@@ -430,11 +457,14 @@ def step_deps(dest: Path) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
+    global _LINE_PROGRESS
     parser = argparse.ArgumentParser(description="Download the full SmartLLM bundle into ONE portable folder (any drive).")
     parser.add_argument("--dest", type=Path, default=Path("SmartLLM"), help="Target bundle folder (default: ./SmartLLM)")
     parser.add_argument("--repo", default=DEFAULT_REPO)
-    parser.add_argument("--tag", default=DEFAULT_TAG, help="Release tag for Studio, engines and Z-Image weights")
+    parser.add_argument("--tag", default=DEFAULT_TAG, help="Release tag for Studio app archive")
     parser.add_argument("--model-tag", default=DEFAULT_MODEL_TAG, help="Release tag holding the 55 GiB GGUF parts + mmproj")
+    parser.add_argument("--zimage-tag", default=DEFAULT_ZIMAGE_TAG, help="Release tag holding official Z-Image-Turbo weights")
+    parser.add_argument("--engines-tag", default=DEFAULT_ENGINES_TAG, help="Release tag holding prebuilt CUDA engine binaries")
     parser.add_argument("--zimage-source", choices=["release", "hf"], default="release",
                         help="Z-Image weights source: our GitHub Release (default, official Apache-2.0 Turbo bf16) "
                              "or HuggingFace Comfy-Org (same official weights)")
@@ -443,8 +473,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--skip-zimage", action="store_true")
     parser.add_argument("--skip-binaries", action="store_true")
     parser.add_argument("--skip-deps", action="store_true", help="Skip bundle venv + Pillow install")
-    parser.add_argument("--cleanup-parts", action="store_true", help="Delete .partNN files after verified reassembly (saves ~75 GiB)")
+    parser.add_argument("--cleanup-parts", action="store_true", help="Delete .partNN files and downloaded archives after verified assembly (saves ~75 GiB)")
+    parser.add_argument("--line-progress", action="store_true", help="Emit newline-terminated progress steps (~5%%) for HUD polling")
     args = parser.parse_args(argv)
+    _LINE_PROGRESS = bool(args.line_progress)
 
     dest = args.dest.resolve()
     dest.mkdir(parents=True, exist_ok=True)
@@ -452,13 +484,13 @@ def main(argv: list[str] | None = None) -> int:
     if not _check_free_space(dest, args.skip_model, args.skip_zimage, args.skip_binaries, args.cleanup_parts):
         return 2
     if not args.skip_studio:
-        step_studio(dest, args.repo, args.tag)
+        step_studio(dest, args.repo, args.tag, args.cleanup_parts)
     if not args.skip_model:
         step_model(dest, args.repo, args.model_tag, args.cleanup_parts)
     if not args.skip_zimage:
-        step_zimage(dest, args.repo, args.tag, args.zimage_source, args.cleanup_parts)
+        step_zimage(dest, args.repo, args.zimage_tag, args.zimage_source, args.cleanup_parts)
     if not args.skip_binaries:
-        step_binaries(dest, args.repo, args.tag)
+        step_binaries(dest, args.repo, args.engines_tag, args.cleanup_parts)
     if not args.skip_deps:
         step_deps(dest)
     step_verify(dest)

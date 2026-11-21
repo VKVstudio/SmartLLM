@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 from typing import Callable
 
+from . import __version__
 from .config import STUDIO_ROOT
 from .os_compat import open_chromeless_window, reveal_in_file_manager
 
@@ -33,7 +34,7 @@ def run_system_tray_or_wait(
 
         icon_path = str(tray_svg if tray_svg.exists() else tray_png)
         tray = QSystemTrayIcon(QIcon(icon_path), app)
-        tray.setToolTip("SmartLLM Studio v0.0.3-beta (127.0.0.1)")
+        tray.setToolTip(f"SmartLLM Studio v{__version__} (127.0.0.1)")
 
         menu = QMenu()
         act_open = QAction("Open SmartLLM Studio (127.0.0.1)", menu)

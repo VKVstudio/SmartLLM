@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const STUDIO_URL = process.argv[2];
 const SHOTS_DIR = process.argv[3];
@@ -10,6 +10,9 @@ if (!STUDIO_URL || !SHOTS_DIR) {
   console.error('Usage: node browser_q7_gate.mjs <studio_url> <shots_dir>');
   process.exit(2);
 }
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const STUDIO_VERSION = fs.readFileSync(path.resolve(__dirname, '..', 'VERSION'), 'utf8').trim().toLowerCase();
 
 function findChromeMcpEntry() {
   if (process.env.SMARTLLM_MCP_THIRD_PARTY && fs.existsSync(process.env.SMARTLLM_MCP_THIRD_PARTY)) {
@@ -25,11 +28,29 @@ function findChromeMcpEntry() {
   return 'puppeteer';
 }
 
-const CHROME_PATH = process.env.SMARTLLM_CHROME_EXE || '/usr/bin/google-chrome-stable';
+function resolveChromePath() {
+  if (process.env.SMARTLLM_CHROME_EXE) return process.env.SMARTLLM_CHROME_EXE;
+  if (process.platform === 'win32') {
+    const localAppData = process.env.LOCALAPPDATA || '';
+    const winCands = [
+      'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+      'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+      localAppData ? path.join(localAppData, 'Google', 'Chrome', 'Application', 'chrome.exe') : '',
+      'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+      'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
+    ];
+    for (const cand of winCands) {
+      if (cand && fs.existsSync(cand)) return cand;
+    }
+  }
+  return '/usr/bin/google-chrome-stable';
+}
+
+const CHROME_PATH = resolveChromePath();
 const MCP_THIRD_PARTY = findChromeMcpEntry();
 
 const RU_LATIN_ALLOWLIST = new Set([
-  'smartllm', 'studio', 'v0.0.3-beta', '0.0.3-beta', 'en', 'ru', 'aa',
+  'smartllm', 'studio', `v${STUDIO_VERSION}`, STUDIO_VERSION, 'en', 'ru', 'aa',
   'oklch', 'wcag', 'aaa', 'csp', 'sha-256', 'seo', 'aeo', 'geo', 'serp',
   'og', 'opengraph', 'json-ld', 'json', 'faq', 'faqpage', 'html', 'html5',
   'css', 'ts', 'js', 'astro', 'vite', 'next.js', 'nextjs', 'sveltekit',

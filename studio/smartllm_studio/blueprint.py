@@ -13,6 +13,7 @@ import shutil
 from typing import Any
 import zipfile
 
+from . import __version__
 from .adapters import get_rag_selector
 from .catalog import AI_CRAWLERS_DEFAULT
 from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT, discover_studio_paths
@@ -407,7 +408,7 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
     }
 
     blueprint_doc = {
-        "schema_version": "0.0.3-beta",
+        "schema_version": __version__,
         "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "project_id": str(payload.get("id") or project_dir.name),
         "revision": int(payload.get("revision") or 1),

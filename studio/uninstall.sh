@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SmartLLM Studio v0.0.3-beta — Linux Uninstaller (Opus Spec Q6)
+# SmartLLM Studio v0.0.4-beta — Linux Uninstaller (Opus Spec Q6)
 set -euo pipefail
 
 DRY_RUN=0

@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-    SmartLLM Studio v0.0.3-beta — Windows 11 Uninstaller (Opus Spec Q6)
+    SmartLLM Studio v0.0.4-beta — Windows 11 Uninstaller (Opus Spec Q6)
 #>
 param(
     [switch]$DryRun = $false

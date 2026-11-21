@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 from typing import Any
 
+from . import __version__
 from .os_compat import current_platform_tag, get_user_config_path, is_windows
 
 STUDIO_ROOT = Path(__file__).resolve().parents[1]
@@ -31,7 +32,7 @@ def load_edition_config(edition_path: Path = EDITION_CONFIG_PATH) -> dict[str, A
     return {
         "schema": 2,
         "product": "SmartLLM Studio",
-        "version": "0.0.3-beta",
+        "version": __version__,
         "license_spdx": "FSL-1.1-ALv2",
         "license_change_date": "2028-11-21",
         "telemetry": False,

@@ -2,7 +2,7 @@
   <img src="assets/brand/smartllm-logo.svg" alt="SmartLLM Logo" width="96" height="96">
 </p>
 
-<h1 align="center">SmartLLM &amp; SmartLLM Studio <code>v0.0.3-beta</code></h1>
+<h1 align="center">SmartLLM &amp; SmartLLM Studio <code>v0.0.4-beta</code></h1>
 
 <p align="center">
   <b>Local Offline Multimodal Website, Design &amp; Copywriting Combine (EN + RU)</b><br>
@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/badges/version.svg" alt="release: v0.0.3-beta">
+  <img src="assets/badges/version.svg" alt="release: v0.0.4-beta">
   <img src="assets/badges/platform.svg" alt="platform: Linux | Windows 11">
   <img src="assets/badges/offline.svg" alt="runtime: 127.0.0.1 Zero-Swap">
   <img src="assets/badges/license.svg" alt="license: Apache-2.0 / FSL-1.1-ALv2">
@@ -88,14 +88,14 @@ User Prompt (EN / RU / EN+RU)
 
 **Requirements:** NVIDIA GPU with `>= 12 GB` VRAM (RTX 20–50 series, driver `>= 525`), `32 GB` RAM recommended, Python 3.11+ (`python3-venv` package on Linux). **Disk:** `~165 GB` free without `--cleanup-parts`; with `--cleanup-parts` peak `~120 GB`, `~85 GB` after install. The installer checks free space BEFORE downloading and aborts with a clear message if there is not enough.
 
-[`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py) (also in [`scripts/release/`](scripts/release/setup_bundle.py); pure stdlib, resumable, SHA-256 verified) downloads EVERYTHING from our GitHub Releases into ONE portable folder — `studio/` + `models/` (55 GiB GGUF reassembled from 30 parts + mmproj) + `models/z-image/` (official Apache-2.0 `Z-Image-Turbo`: DiT + text encoder + VAE) + `bin/` portable CUDA engine binaries (Linux glibc >= 2.35 / Windows 11, no VC++ redist needed). No HuggingFace access required; optional `--zimage-source hf` fetches the same official weights from Comfy-Org upstream.
+[`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.4-beta/setup_bundle.py) (also in [`scripts/release/`](scripts/release/setup_bundle.py); pure stdlib, resumable, SHA-256 verified) downloads EVERYTHING from our GitHub Releases into ONE portable folder — `studio/` + `models/` (55 GiB GGUF reassembled from 30 parts + mmproj) + `models/z-image/` (official Apache-2.0 `Z-Image-Turbo`: DiT + text encoder + VAE) + `bin/` portable CUDA engine binaries (Linux glibc >= 2.35 / Windows 11, no VC++ redist needed). No HuggingFace access required; optional `--zimage-source hf` fetches the same official weights from Comfy-Org upstream.
 
 Open a terminal in ANY folder where you want the project to live — the installer creates a `SmartLLM` folder there for you. No specific drive or path is required.
 
 **Linux:**
 ```bash
 cd ~   # or any folder you like
-curl -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py
+curl -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.4-beta/setup_bundle.py
 python3 setup_bundle.py --cleanup-parts
 SmartLLM/studio/bin/smartllm-studio
 ```
@@ -103,7 +103,7 @@ SmartLLM/studio/bin/smartllm-studio
 **Windows 11 (PowerShell):**
 ```powershell
 cd $HOME   # or any folder on any drive
-curl.exe -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py
+curl.exe -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.4-beta/setup_bundle.py
 python setup_bundle.py --cleanup-parts
 SmartLLM\studio\smartllm-studio.bat
 ```
@@ -126,7 +126,7 @@ Then open **http://127.0.0.1:8090**. First run downloads ~85 GB. Everything live
   powershell -ExecutionPolicy Bypass -File .\install.ps1
   .\smartllm-studio.bat
   ```
-  Studio starts strictly on loopback **`http://127.0.0.1:8090`**. Standalone pre-packaged archives (`SmartLLM-Studio-v0.0.3-beta-linux.tar.gz` and `.zip`) are also available in [Releases](https://github.com/VKVstudio/SmartLLM/releases).
+  Studio starts strictly on loopback **`http://127.0.0.1:8090`**. Standalone pre-packaged archives (`SmartLLM-Studio-v0.0.4-beta-linux.tar.gz` and `.zip`) are also available in [Releases](https://github.com/VKVstudio/SmartLLM/releases).
 
 ### 2. Attach Local Weights & Binaries (in **Settings** or CLI)
 

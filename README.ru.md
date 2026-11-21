@@ -2,7 +2,7 @@
   <img src="assets/brand/smartllm-logo.svg" alt="Логотип SmartLLM" width="96" height="96">
 </p>
 
-<h1 align="center">SmartLLM и SmartLLM Studio <code>v0.0.3-beta</code></h1>
+<h1 align="center">SmartLLM и SmartLLM Studio <code>v0.0.4-beta</code></h1>
 
 <p align="center">
   <b>Локальный офлайн-комбайн для веб-разработки, дизайна и копирайтинга (EN + RU)</b><br>
@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/badges/version.svg" alt="release: v0.0.3-beta">
+  <img src="assets/badges/version.svg" alt="release: v0.0.4-beta">
   <img src="assets/badges/platform.svg" alt="platform: Linux | Windows 11">
   <img src="assets/badges/offline.svg" alt="runtime: 127.0.0.1 Zero-Swap">
   <img src="assets/badges/license.svg" alt="license: Apache-2.0 / FSL-1.1-ALv2">
@@ -88,14 +88,14 @@
 
 **Требования:** NVIDIA GPU с `>= 12 GB` VRAM (RTX 20–50, драйвер `>= 525`), желательно `32 GB` RAM, Python 3.11+ (на Linux пакет `python3-venv`). **Диск:** `~165 GB` свободно без `--cleanup-parts`; с `--cleanup-parts` пик `~120 GB`, после установки `~85 GB`. Установщик проверяет свободное место ДО закачки и при нехватке останавливается с понятным сообщением.
 
-[`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py) (также в [`scripts/release/`](scripts/release/setup_bundle.py); только stdlib, докачка после обрыва, SHA-256) скачивает ВСЁ из наших GitHub Releases в ОДНУ переносимую папку — `studio/` + `models/` (55 GiB GGUF, сборка из 30 частей + mmproj) + `models/z-image/` (официальный Apache-2.0 `Z-Image-Turbo`: DiT + текстовый энкодер + VAE) + `bin/` переносимые CUDA-движки (Linux glibc >= 2.35 / Windows 11, VC++ redist не нужен). HuggingFace не нужен; опция `--zimage-source hf` — те же официальные веса напрямую из Comfy-Org.
+[`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.4-beta/setup_bundle.py) (также в [`scripts/release/`](scripts/release/setup_bundle.py); только stdlib, докачка после обрыва, SHA-256) скачивает ВСЁ из наших GitHub Releases в ОДНУ переносимую папку — `studio/` + `models/` (55 GiB GGUF, сборка из 30 частей + mmproj) + `models/z-image/` (официальный Apache-2.0 `Z-Image-Turbo`: DiT + текстовый энкодер + VAE) + `bin/` переносимые CUDA-движки (Linux glibc >= 2.35 / Windows 11, VC++ redist не нужен). HuggingFace не нужен; опция `--zimage-source hf` — те же официальные веса напрямую из Comfy-Org.
 
 Открой терминал в ЛЮБОЙ папке, где хочешь разместить проект — установщик создаст там папку `SmartLLM`. Конкретный диск или путь не нужны.
 
 **Linux:**
 ```bash
 cd ~   # или любая папка на твой выбор
-curl -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py
+curl -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.4-beta/setup_bundle.py
 python3 setup_bundle.py --cleanup-parts
 SmartLLM/studio/bin/smartllm-studio
 ```
@@ -103,7 +103,7 @@ SmartLLM/studio/bin/smartllm-studio
 **Windows 11 (PowerShell):**
 ```powershell
 cd $HOME   # или любая папка на любом диске
-curl.exe -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.3-beta/setup_bundle.py
+curl.exe -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.4-beta/setup_bundle.py
 python setup_bundle.py --cleanup-parts
 SmartLLM\studio\smartllm-studio.bat
 ```
