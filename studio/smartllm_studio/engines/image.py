@@ -9,6 +9,7 @@ import time
 from typing import Any, Iterator
 import uuid
 
+from ..os_compat import subprocess_kwargs
 from ..rag import make_synthetic_png
 from .gpu import GPUEngineController, GPUState
 from .llm import LLMEngineClient
@@ -135,12 +136,12 @@ class ImageJobManager:
         rec = self.jobs[job_id]
         was_llm_ready = self.gpu.state == GPUState.LLM_READY
         try:
-            self.gpu.acquire_or_raise()
             self.gpu.transition(GPUState.SWITCHING)
             rec["status"] = "switching"
             rec["events"].append({"stage": "switching_stop_llm", "progress": 25})
-            if was_llm_ready:
+            if was_llm_ready or self.llm.is_healthy():
                 self.llm.stop()
+            self.gpu.acquire_or_raise()
 
             self.gpu.transition(GPUState.IMAGE_RUNNING)
             rec["status"] = "running"
@@ -149,7 +150,7 @@ class ImageJobManager:
             aspect_ratio = str(rec.get("aspect_ratio") or "16:9")
             variants: list[str] = []
             if mock_sd_cmd is not None:
-                res = subprocess.run(mock_sd_cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30.0, check=False)
+                res = subprocess.run(mock_sd_cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30.0, check=False, **subprocess_kwargs())
                 if res.returncode != 0:
                     raise RuntimeError(f"sd-cli exited with {res.returncode}: {res.stderr.strip()}")
                 pw, ph = _aspect_dims(aspect_ratio, real_render=False)
@@ -194,7 +195,7 @@ class ImageJobManager:
                     "-o",
                     str(vp1),
                 ]
-                res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=180.0, check=False)
+                res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=180.0, check=False, **subprocess_kwargs())
                 if res.returncode == 0 and vp1.exists():
                     variants.append(f"/api/image/files/{job_id}/variant_1.png")
                     for idx in range(1, 4):
@@ -225,11 +226,8 @@ class ImageJobManager:
 
             self.gpu.transition(GPUState.SWITCHING)
             rec["events"].append({"stage": "switching_verify_vram", "progress": 90})
-            if was_llm_ready:
-                self.gpu.transition(GPUState.LLM_READY)
-            else:
-                self.gpu.transition(GPUState.IDLE)
-                self.gpu.release_lock()
+            self.gpu.transition(GPUState.IDLE)
+            self.gpu.release_lock()
 
             rec["variants"] = variants
             rec["status"] = "completed"

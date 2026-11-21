@@ -21,7 +21,7 @@ from .catalog import load_studio_catalog
 from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT, discover_studio_paths, load_edition_config, load_user_settings, save_user_settings
 from .engines import GPUEngineController, GPULockBusyError, ImageJobManager, LLMEngineClient, MemoryGuardError
 from .orchestrator import AVAILABLE_BLOCKS, PRESET_PAGES, ProjectOrchestrator, autofill_blocks_smart, build_default_block_descriptions, generate_six_logo_variants_512
-from .os_compat import get_system_telemetry, pick_os_dialog, reveal_in_file_manager
+from .os_compat import get_system_telemetry, pick_os_dialog, reveal_in_file_manager, subprocess_kwargs
 from .pages import DEFAULT_PAGE_SLUGS, build_default_company, clean_page_blocks, default_page_blocks
 from .sanitizer import ingest_brand_logo
 
@@ -402,7 +402,7 @@ def create_studio_server(
 
                     def _setup_worker() -> None:
                         try:
-                            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace")
+                            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace", **subprocess_kwargs())
                             if proc.stdout is not None:
                                 for line in proc.stdout:
                                     state.setup_progress["line"] = line.strip()[:300]

@@ -18,7 +18,7 @@ from .adapters import get_rag_selector
 from .catalog import AI_CRAWLERS_DEFAULT
 from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT
 from .engines.llm import _PageCacheTrimmer
-from .os_compat import get_log_dir, is_cpu_test_mode
+from .os_compat import get_log_dir, is_cpu_test_mode, subprocess_kwargs
 from .pages import (
     AVAILABLE_BLOCKS,
     DEFAULT_PAGE_SLUGS,
@@ -335,7 +335,7 @@ def generate_six_logo_variants_512(
                 "--batch-json",
                 str(manifest_path),
             ]
-            res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=900.0, check=False)
+            res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=900.0, check=False, **subprocess_kwargs())
             if res.returncode == 0 and all((batch_dir / f"logo_{i + 1}.png").exists() for i in range(6)):
                 used_zimage = True
                 _set_logo_progress(state, 92, "Сохраняем 6 вариантов логотипа...", "Saving 6 logo variants...")
@@ -1420,7 +1420,7 @@ class ProjectOrchestrator:
                         "-o", batch_items[0]["output_path"],
                         "--batch-json", str(manifest_path),
                     ]
-                    res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=900.0, check=False)
+                    res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=900.0, check=False, **subprocess_kwargs())
                     if res.returncode == 0 and (assets_dir / "hero_primary.png").exists():
                         zimage_rendered = True
                         gallery_images = [

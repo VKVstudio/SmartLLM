@@ -10,7 +10,7 @@ import signal
 import subprocess
 from typing import Any
 
-from ..os_compat import CrossPlatformFileLock, get_system_telemetry, is_linux, is_windows
+from ..os_compat import CrossPlatformFileLock, get_system_telemetry, is_linux, is_windows, subprocess_kwargs
 
 
 class GPUState(str, Enum):
@@ -130,7 +130,7 @@ class GPUEngineController:
             if proc.poll() is None:
                 try:
                     if is_windows():
-                        subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)], capture_output=True, check=False)
+                        subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)], capture_output=True, check=False, **subprocess_kwargs())
                     else:
                         os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
                 except Exception:

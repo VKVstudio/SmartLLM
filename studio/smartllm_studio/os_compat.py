@@ -8,8 +8,12 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import time
 from typing import Any
 import webbrowser
+
+_SMI_CACHE: dict[str, Any] = {"ts": 0.0, "gpu_info": None}
+_SMI_CACHE_TTL_SEC = 1.5
 
 
 def is_windows(platform_override: str | None = None) -> bool:
@@ -20,6 +24,15 @@ def is_windows(platform_override: str | None = None) -> bool:
 def is_linux(platform_override: str | None = None) -> bool:
     plat = (platform_override or sys.platform).lower()
     return plat.startswith("linux")
+
+
+def subprocess_kwargs(new_session: bool = False) -> dict[str, Any]:
+    """Return OS-appropriate subprocess keyword arguments (CREATE_NO_WINDOW on Windows)."""
+    if is_windows():
+        return {"creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0x08000000)}
+    if new_session:
+        return {"start_new_session": True}
+    return {}
 
 
 def current_platform_tag(platform_override: str | None = None) -> str:
@@ -161,18 +174,28 @@ def get_system_telemetry() -> dict[str, Any]:
 
     cuda_masked = os.environ.get("CUDA_VISIBLE_DEVICES", None) == ""
     gpu_info = {"available": not cuda_masked, "vram_used_mib": 0.0, "vram_total_mib": 0.0, "mode": "cpu_isolated" if cuda_masked else "ready"}
-    if not cuda_masked and (is_linux() or is_windows()) and shutil.which("nvidia-smi"):
+    now_mono = time.monotonic()
+    use_cache = (not cuda_masked) and (override_avail is None)
+    if (
+        use_cache
+        and _SMI_CACHE.get("gpu_info") is not None
+        and (now_mono - float(_SMI_CACHE.get("ts", 0.0))) < _SMI_CACHE_TTL_SEC
+    ):
+        gpu_info = dict(_SMI_CACHE["gpu_info"])
+    elif not cuda_masked and (is_linux() or is_windows()) and shutil.which("nvidia-smi"):
         try:
             raw_smi = subprocess.check_output(
                 ["nvidia-smi", "--query-gpu=memory.total", "--format=csv,noheader,nounits"],
                 text=True, encoding="utf-8", errors="replace",
                 timeout=2.5,
+                **subprocess_kwargs(),
             ).strip().splitlines()[0]
             gpu_info["vram_total_mib"] = float(raw_smi.strip())
             compute_raw = subprocess.check_output(
                 ["nvidia-smi", "--query-compute-apps=process_name,used_memory", "--format=csv,noheader,nounits"],
                 text=True, encoding="utf-8", errors="replace",
                 timeout=2.5,
+                **subprocess_kwargs(),
             ).strip()
             compute_values = []
             engine_active = False
@@ -185,12 +208,32 @@ def get_system_telemetry() -> dict[str, Any]:
                     engine_active = True
                     if mem.isdigit():
                         compute_values.append(float(mem))
-            if not engine_active and is_linux():
-                try:
-                    pg = subprocess.run(["pgrep", "-f", "llama-server|sd-cli"], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=0.8, check=False)
-                    engine_active = pg.returncode == 0 and bool(pg.stdout.strip())
-                except Exception:
-                    pass
+            if not compute_values and not engine_active:
+                if is_linux():
+                    try:
+                        pg = subprocess.run(
+                            ["pgrep", "-f", "llama-server|sd-cli"],
+                            capture_output=True, text=True, encoding="utf-8", errors="replace",
+                            timeout=0.8, check=False,
+                            **subprocess_kwargs(),
+                        )
+                        engine_active = pg.returncode == 0 and bool(pg.stdout.strip())
+                    except Exception:
+                        pass
+                elif is_windows():
+                    for exe_name in ("llama-server.exe", "sd-cli.exe"):
+                        try:
+                            tl = subprocess.run(
+                                ["tasklist", "/FI", f"IMAGENAME eq {exe_name}", "/NH"],
+                                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                                timeout=1.5, check=False,
+                                **subprocess_kwargs(),
+                            )
+                            if tl.returncode == 0 and exe_name.lower() in (tl.stdout or "").lower():
+                                engine_active = True
+                                break
+                        except Exception:
+                            pass
             if compute_values:
                 gpu_info["vram_used_mib"] = round(sum(compute_values), 1)
             elif engine_active:
@@ -198,9 +241,13 @@ def get_system_telemetry() -> dict[str, Any]:
                     ["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
                     text=True, encoding="utf-8", errors="replace",
                     timeout=2.5,
+                    **subprocess_kwargs(),
                 ).strip().splitlines()[0]
                 if used_raw.strip().isdigit():
                     gpu_info["vram_used_mib"] = float(used_raw.strip())
+            if use_cache:
+                _SMI_CACHE["ts"] = now_mono
+                _SMI_CACHE["gpu_info"] = dict(gpu_info)
         except Exception:
             pass
     return {
@@ -228,28 +275,52 @@ def pick_os_dialog(
 
     try:
         if is_windows():
+            owner_setup = (
+                "[Console]::OutputEncoding=[Text.Encoding]::UTF8; "
+                "Add-Type -AssemblyName System.Windows.Forms; "
+                "Add-Type -AssemblyName System.Drawing; "
+                "$owner = New-Object System.Windows.Forms.Form; "
+                "$owner.TopMost = $true; "
+                "$owner.StartPosition = 'Manual'; "
+                "$owner.Location = New-Object System.Drawing.Point(-32000,-32000); "
+                "$owner.Size = New-Object System.Drawing.Size(1,1); "
+            )
             if kind == "file":
                 ps_cmd = (
-                    "[Console]::OutputEncoding=[Text.Encoding]::UTF8; "
-                    "Add-Type -AssemblyName System.Windows.Forms; "
+                    owner_setup
+                    + "try { "
                     "$f = New-Object System.Windows.Forms.OpenFileDialog; "
                     "$f.Filter = 'Brand Assets (*.svg;*.png;*.webp)|*.svg;*.png;*.webp'; "
-                    "if ($f.ShowDialog() -eq 'OK') { Write-Output $f.FileName }"
+                    "if ($f.ShowDialog($owner) -eq 'OK') { Write-Output $f.FileName } "
+                    "} finally { $owner.Dispose() }"
                 )
             else:
                 ps_cmd = (
-                    "[Console]::OutputEncoding=[Text.Encoding]::UTF8; "
-                    "Add-Type -AssemblyName System.Windows.Forms; "
+                    owner_setup
+                    + "try { "
                     "$d = New-Object System.Windows.Forms.FolderBrowserDialog; "
-                    "if ($d.ShowDialog() -eq 'OK') { Write-Output $d.SelectedPath }"
+                    "if ($d.ShowDialog($owner) -eq 'OK') { Write-Output $d.SelectedPath } "
+                    "} finally { $owner.Dispose() }"
                 )
-            res = subprocess.run(["powershell", "-NoProfile", "-STA", "-Command", ps_cmd], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120.0, check=False)
+            res = subprocess.run(
+                ["powershell", "-NoProfile", "-STA", "-Command", ps_cmd],
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                timeout=120.0, check=False,
+                **subprocess_kwargs(),
+            )
             return res.stdout.strip() or None
 
         # Linux: zenity -> kdialog -> None (UI fallback)
         if shutil.which("zenity"):
             cmd = ["zenity", "--file-selection"] + (["--directory"] if kind == "folder" else [f"--file-filter={filters}"])
-            res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120.0, check=False)
+            if initial_dir and Path(initial_dir).exists():
+                cmd.append(f"--filename={initial_dir.rstrip('/')}/")
+            res = subprocess.run(
+                cmd,
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                timeout=120.0, check=False,
+                **subprocess_kwargs(),
+            )
             if res.returncode == 0 and res.stdout.strip():
                 return res.stdout.strip()
         if shutil.which("kdialog"):
@@ -258,7 +329,12 @@ def pick_os_dialog(
                 if kind == "folder"
                 else ["kdialog", "--getopenfilename", initial_dir or str(Path.home()), filters]
             )
-            res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120.0, check=False)
+            res = subprocess.run(
+                cmd,
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                timeout=120.0, check=False,
+                **subprocess_kwargs(),
+            )
             if res.returncode == 0 and res.stdout.strip():
                 return res.stdout.strip()
     except Exception:
@@ -275,8 +351,12 @@ def reveal_in_file_manager(target_path: Path, dry_run: bool = False) -> bool:
     if dry_run or os.environ.get("SMARTLLM_STUDIO_HEADLESS") == "1":
         return True
     try:
+        target_path = Path(target_path)
         if is_windows():
-            subprocess.Popen(["explorer.exe", str(target_path)])
+            if not target_path.suffix:
+                target_path.mkdir(parents=True, exist_ok=True)
+            norm_path = os.path.normpath(str(target_path))
+            subprocess.Popen(["explorer.exe", norm_path])
         elif shutil.which("xdg-open"):
             subprocess.Popen(["xdg-open", str(target_path)])
         return True
@@ -290,11 +370,41 @@ def open_chromeless_window(url: str, dry_run: bool = False) -> str:
         raise ValueError(f"Refusing non-loopback URL: {url}")
     if dry_run or os.environ.get("SMARTLLM_STUDIO_HEADLESS") == "1":
         return f"dry_run:{url}"
-    candidates = ["msedge.exe", "chrome.exe"] if is_windows() else ["google-chrome-stable", "chromium", "google-chrome"]
-    for b in candidates:
-        exe = shutil.which(b)
-        if exe:
-            subprocess.Popen([exe, f"--app={url}"])
-            return f"app_window:{exe}"
+    if is_windows():
+        pf = os.environ.get("ProgramFiles", r"C:\Program Files")
+        pf86 = os.environ.get("ProgramFiles(x86)", r"C:\Program Files (x86)")
+        local_app = os.environ.get("LOCALAPPDATA") or str(Path.home() / "AppData" / "Local")
+        explicit_paths = [
+            Path(pf) / "Google" / "Chrome" / "Application" / "chrome.exe",
+            Path(pf86) / "Google" / "Chrome" / "Application" / "chrome.exe",
+            Path(local_app) / "Google" / "Chrome" / "Application" / "chrome.exe",
+            Path(pf86) / "Microsoft" / "Edge" / "Application" / "msedge.exe",
+            Path(pf) / "Microsoft" / "Edge" / "Application" / "msedge.exe",
+        ]
+        win_candidates: list[str] = [str(p) for p in explicit_paths if p.is_file()]
+        for name in ("chrome.exe", "msedge.exe"):
+            found = shutil.which(name)
+            if found and found not in win_candidates:
+                win_candidates.append(found)
+        for exe in win_candidates:
+            try:
+                subprocess.Popen([exe, f"--app={url}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                return f"app_window:{exe}"
+            except OSError:
+                continue
+    else:
+        for b in ("google-chrome-stable", "google-chrome", "chromium", "chromium-browser", "brave-browser"):
+            exe = shutil.which(b)
+            if exe:
+                try:
+                    subprocess.Popen(
+                        [exe, f"--app={url}"],
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        start_new_session=True,
+                    )
+                    return f"app_window:{exe}"
+                except OSError:
+                    continue
     webbrowser.open(url)
     return "webbrowser"

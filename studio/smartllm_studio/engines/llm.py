@@ -14,7 +14,7 @@ from typing import Any, Iterator
 import urllib.error
 import urllib.request
 
-from ..os_compat import get_log_dir, is_cpu_test_mode, is_windows
+from ..os_compat import get_log_dir, is_cpu_test_mode, is_windows, subprocess_kwargs
 from .gpu import GPUEngineController, GPUState
 
 
@@ -226,12 +226,12 @@ class LLMEngineClient:
         try:
             self.server_log_path.parent.mkdir(parents=True, exist_ok=True)
             self._log_fh = open(self.server_log_path, "ab")
-            kwargs: dict[str, Any] = {"stdout": self._log_fh, "stderr": subprocess.STDOUT}
-            if is_windows():
-                kwargs["creationflags"] = getattr(subprocess, "CREATE_NO_WINDOW", 0x08000000)
-            else:
-                kwargs["start_new_session"] = True
-            self.proc = subprocess.Popen(cmd, **kwargs)
+            self.proc = subprocess.Popen(
+                cmd,
+                stdout=self._log_fh,
+                stderr=subprocess.STDOUT,
+                **subprocess_kwargs(new_session=True),
+            )
             self.gpu.register_child(self.proc)
             if self.model_path and self.model_path.exists() and mock_cmd is None and hasattr(os, "posix_fadvise"):
                 self._trimmer = _PageCacheTrimmer([self.model_path], interval_sec=2.0)
@@ -283,7 +283,7 @@ class LLMEngineClient:
         pattern = f"llama-server.*--port {self.port}"
         for sig in (signal.SIGTERM, signal.SIGKILL):
             try:
-                out = subprocess.check_output(["pgrep", "-f", pattern], text=True, encoding="utf-8", errors="replace", timeout=2.0)
+                out = subprocess.check_output(["pgrep", "-f", pattern], text=True, encoding="utf-8", errors="replace", timeout=2.0, **subprocess_kwargs())
             except Exception:
                 return
             pids = []
@@ -313,7 +313,7 @@ class LLMEngineClient:
         """Windows: find the PID listening on 127.0.0.1:<port> via netstat and taskkill it."""
         pids: set[int] = set()
         try:
-            out = subprocess.check_output(["netstat", "-ano", "-p", "tcp"], text=True, encoding="utf-8", errors="replace", timeout=5.0)
+            out = subprocess.check_output(["netstat", "-ano", "-p", "tcp"], text=True, encoding="utf-8", errors="replace", timeout=5.0, **subprocess_kwargs())
             needle = f"127.0.0.1:{self.port}"
             for line in out.splitlines():
                 parts = line.split()
@@ -328,12 +328,12 @@ class LLMEngineClient:
             if pid == os.getpid():
                 continue
             try:
-                subprocess.run(["taskkill", "/F", "/PID", str(pid)], capture_output=True, timeout=5.0, check=False)
+                subprocess.run(["taskkill", "/F", "/PID", str(pid)], capture_output=True, timeout=5.0, check=False, **subprocess_kwargs())
             except Exception:
                 pass
         if not pids and self.is_healthy():
             try:
-                subprocess.run(["taskkill", "/F", "/IM", "llama-server.exe"], capture_output=True, timeout=5.0, check=False)
+                subprocess.run(["taskkill", "/F", "/IM", "llama-server.exe"], capture_output=True, timeout=5.0, check=False, **subprocess_kwargs())
             except Exception:
                 pass
 

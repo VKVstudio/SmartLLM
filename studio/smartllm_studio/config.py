@@ -311,8 +311,8 @@ def load_user_settings(
                 if isinstance(saved.get("paths"), dict):
                     for key in ENV_KEY_MAP:
                         val = saved["paths"].get(key)
-                        if val:
-                            base["paths"][key] = str(val)
+                        if val and str(val).strip() and base["paths"]["sources"].get(key) not in ("cli", "env"):
+                            base["paths"][key] = str(val).strip()
                             base["paths"]["sources"][key] = "user_config"
                     refresh_path_flags(base["paths"])
         except Exception:
@@ -325,20 +325,55 @@ def save_user_settings(
     repo_root: Path | None = None,
     platform_override: str | None = None,
 ) -> dict[str, Any]:
-    current = load_user_settings(repo_root=repo_root, platform_override=platform_override)
+    cpath = get_user_config_path(platform_override)
+    raw: dict[str, Any] = {}
+    if cpath.exists():
+        try:
+            loaded = json.loads(cpath.read_text(encoding="utf-8"))
+            if isinstance(loaded, dict):
+                raw = loaded
+        except Exception:
+            raw = {}
+
+    raw_paths = raw.get("paths") if isinstance(raw.get("paths"), dict) else {}
+    saved_paths: dict[str, str] = {
+        k: str(v).strip()
+        for k, v in raw_paths.items()
+        if k in ENV_KEY_MAP and v is not None and str(v).strip()
+    }
+
+    edition = load_edition_config()
+    persisted: dict[str, Any] = {
+        "language": "en",
+        "host": "127.0.0.1",
+        "port": 8090,
+        "llm_port": 18080,
+        "support_mode": edition.get("support", {}).get("mode", "free_launch"),
+        "support_card_dismissed": False,
+        "exports_completed": 0,
+    }
+    for k, v in raw.items():
+        if k not in ("paths", "host"):
+            persisted[k] = v
+
     for k, v in updates.items():
         if k == "paths" and isinstance(v, dict):
             for key in ENV_KEY_MAP:
-                if v.get(key):
-                    current["paths"][key] = str(v[key])
-                    current["paths"]["sources"][key] = "user_config"
-        elif k != "host":
-            current[k] = v
-    current["host"] = "127.0.0.1"
-    refresh_path_flags(current["paths"])
-    persisted = {k: v for k, v in current.items() if k != "paths"}
-    persisted["paths"] = {key: current["paths"][key] for key in ENV_KEY_MAP}
-    cpath = get_user_config_path(platform_override)
+                if key in v:
+                    val_str = str(v[key] or "").strip()
+                    if val_str:
+                        saved_paths[key] = val_str
+                    else:
+                        saved_paths.pop(key, None)
+        elif k not in ("paths", "host"):
+            persisted[k] = v
+
+    persisted["host"] = "127.0.0.1"
+    if saved_paths:
+        persisted["paths"] = saved_paths
+    else:
+        persisted.pop("paths", None)
+
     cpath.parent.mkdir(parents=True, exist_ok=True)
     cpath.write_text(json.dumps(persisted, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    return current
+    return load_user_settings(repo_root=repo_root, platform_override=platform_override)
