@@ -212,6 +212,17 @@ PAGE_MAP: dict[str, dict[str, Any]] = {p["slug"]: p for p in PRESET_PAGES}
 DEFAULT_PAGE_SLUGS: list[str] = ["index", "about", "services", "portfolio", "pricing", "contact"]
 
 
+def resolve_primary_lang(lang_pref: str, brief: str = "") -> str:
+    """Resolve primary content language ('ru' or 'en') consistently across constructor, autofill, and pipeline."""
+    lp = str(lang_pref or "ru").strip().lower()
+    if lp in ("en+ru", "ru+en", "auto", "both", ""):
+        from .rag import detect_language
+        return detect_language(brief, explicit_lang="auto")
+    if lp.startswith("ru"):
+        return "ru"
+    return "en"
+
+
 def page_title(slug: str, lang: str = "ru") -> str:
     preset = PAGE_MAP.get(slug)
     if preset:

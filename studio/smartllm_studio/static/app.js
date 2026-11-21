@@ -696,6 +696,10 @@
     setBusy(true);
     var stopAutofillProgress = startAutofillProgress();
     var stopPolling = startProgressPolling(statusEl);
+    var activePages = {};
+    activePageSlugs().forEach(function (slug) {
+      activePages[slug] = store.pageBlocks[slug] || [];
+    });
     fetch("/api/orchestrator/autofill-blocks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -703,7 +707,7 @@
         name: el("s2-name").value,
         brief: el("s2-desc").value,
         selected_blocks: store.selectedBlocks,
-        page_blocks: store.pageBlocks,
+        page_blocks: activePages,
         company: store.company,
         lang: el("s1-lang").value
       })
@@ -711,13 +715,21 @@
       .then(function (r) { return r.json(); })
       .then(function (res) {
         stopPolling();
-        stopAutofillProgress(store.lang === "ru" ? "Бренд-основа и блоки готовы" : "Foundation and blocks ready");
-        setBusy(false);
-        refreshEngineHUD();
+        var hasWarnings = Array.isArray(res.warnings) && res.warnings.length > 0;
         if (res.error) {
+          stopAutofillProgress(store.lang === "ru" ? "Ошибка" : "Error");
+          setBusy(false);
+          refreshEngineHUD();
           if (statusEl) statusEl.textContent = (store.lang === "ru" ? "Ошибка: " : "Error: ") + res.error;
           return;
         }
+        stopAutofillProgress(
+          hasWarnings
+            ? (store.lang === "ru" ? "Заполнено с предупреждениями" : "Completed with warnings")
+            : (store.lang === "ru" ? "Бренд-основа и блоки готовы" : "Foundation and blocks ready")
+        );
+        setBusy(false);
+        refreshEngineHUD();
         if (res.company) {
           store.company = res.company;
           renderCompanyFields();
@@ -726,9 +738,13 @@
         if (res.block_prompts) store.blockPrompts = res.block_prompts;
         renderBlockDescriptionInputs();
         if (statusEl) {
-          statusEl.textContent = store.lang === "ru"
-            ? "Бренд-основа и тексты по страницам заполнены. Проверьте и нажмите «Собрать сайт через Оркестратор»."
-            : "Brand foundation and per-page copy filled. Review and click Build Site via Orchestrator.";
+          if (hasWarnings) {
+            statusEl.textContent = res.warnings.join(" | ");
+          } else {
+            statusEl.textContent = store.lang === "ru"
+              ? "Бренд-основа и тексты по страницам заполнены. Проверьте и нажмите «Собрать сайт через Оркестратор»."
+              : "Brand foundation and per-page copy filled. Review and click Build Site via Orchestrator.";
+          }
         }
       })
       .catch(function (err) {

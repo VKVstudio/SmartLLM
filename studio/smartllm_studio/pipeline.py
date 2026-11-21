@@ -14,11 +14,28 @@ from pathlib import Path
 import re
 from typing import Any, Callable
 
-from .pages import BLOCK_MAP, PAGE_MAP, build_default_company, company_block_prompt, infer_gender, page_title
+from .pages import BLOCK_MAP, PAGE_MAP, build_default_company, company_block_prompt, infer_gender, page_title, resolve_primary_lang
 
 ReportFn = Callable[[int, int, str, str, str], None]
 
 REVIEW_CRITERIA = ("offer", "brand", "specificity", "structure", "seo", "language")
+_EN_BOILERPLATE_LEAKS = (
+    "engineered for measurable quality",
+    "can we customize modules?",
+    "what is delivered at handoff?",
+)
+
+
+def _is_broken_user_block(bid: str, copy_map: dict[str, str], det_failed: list[str] | set[str]) -> bool:
+    """Allow review to override user-block immutability when language leaked or boilerplate/placeholders remain."""
+    if "language" in det_failed:
+        return True
+    low_txt = str(copy_map.get(bid, "")).lower()
+    if any(mk in low_txt for mk in PLACEHOLDER_MARKERS):
+        return True
+    if any(mk in low_txt for mk in _EN_BOILERPLATE_LEAKS):
+        return True
+    return False
 PLACEHOLDER_MARKERS = (
     "lorem", "xxx", "todo", "tbd", "placeholder", "плейсхолдер", "[insert", "вставьте",
     "значение — подпись", "имя — роль", "name — role", "value — label", "вопрос? ответ",
@@ -705,14 +722,10 @@ def run_content_pipeline(
     """Run foundation -> architect -> structure -> per-page hero/copy -> SEO -> visuals -> review agents."""
     from .orchestrator import _generate_company_with_llm, build_default_block_descriptions
     from .blueprint_render import load_canon_dossier
-    from .rag import detect_language
 
-    lang_pref_raw = str(merged.get("languages") or "ru")
-    bilingual = lang_pref_raw == "en+ru"
-    if bilingual:
-        lang = detect_language(_clean(merged.get("brief") or merged.get("goal") or merged.get("name") or ""), explicit_lang="auto")
-    else:
-        lang = "ru" if lang_pref_raw.startswith("ru") else "en"
+    lang_pref_raw = str(merged.get("languages") or "ru").strip()
+    bilingual = lang_pref_raw.lower() in ("en+ru", "ru+en")
+    lang = resolve_primary_lang(lang_pref_raw, _clean(merged.get("brief") or merged.get("goal") or merged.get("name") or ""))
     alt_lang = "en" if lang == "ru" else "ru"
     dossier = load_canon_dossier(str(canon_card.get("id") or ""))
     target_lang = "Russian" if lang == "ru" else "English"
@@ -1258,9 +1271,17 @@ def run_content_pipeline(
                 low_b = str(txt).lower()
                 if bid not in fixes and any(mk in low_b for mk in PLACEHOLDER_MARKERS):
                     fixes[bid] = "Rewrite with concrete brand data; remove template placeholders and English field labels."
-            has_placeholder = any(any(mk in str(t).lower() for mk in PLACEHOLDER_MARKERS) for t in pr["copy"].values())
+                elif bid not in fixes and any(mk in low_b for mk in _EN_BOILERPLATE_LEAKS):
+                    fixes[bid] = "Rewrite with concrete brand data in the target language; remove template boilerplate."
+            has_placeholder = any(
+                any(mk in str(t).lower() for mk in PLACEHOLDER_MARKERS) or any(mk in str(t).lower() for mk in _EN_BOILERPLATE_LEAKS)
+                for t in pr["copy"].values()
+            )
             all_passed = all(verdict.get(c, False) for c in REVIEW_CRITERIA) and not det["issues"] and not has_placeholder
-            fixable = [] if all_passed else [b for b in fixes if b not in user_pages.get(slug, {})]
+            fixable = [] if all_passed else [
+                b for b in fixes
+                if (b not in user_pages.get(slug, {})) or _is_broken_user_block(b, pr["copy"], det["failed"])
+            ]
             applied_fixes: list[str] = []
             if fixable and gpu_ok:
                 report(stage_idx, pct + 1, f"Ревизия «{page_title(slug, lang)}»: точечные правки {len(fixable)} блоков...", f"Review '{page_title(slug, lang)}': targeted fixes for {len(fixable)} blocks...", f"review fixes {slug}")
@@ -1277,15 +1298,16 @@ def run_content_pipeline(
                 if raw_fix:
                     agents_run += 1
                 user_owned_set = set(user_pages.get(slug, {}))
+                review_user_owned = user_owned_set - set(fixable)
                 for bid in fixable:
                     txt = _norm_block_value(bid, raw_fix.get(bid))
-                    if txt and _accept_review_fix(bid, pr["copy"].get(bid, ""), txt, lang, brand, eff_hero, pr["headings"], pr["blocks"], pr["seo"], company, slug, pr["copy"], user_owned_set):
+                    if txt and _accept_review_fix(bid, pr["copy"].get(bid, ""), txt, lang, brand, eff_hero, pr["headings"], pr["blocks"], pr["seo"], company, slug, pr["copy"], review_user_owned):
                         pr["copy"][bid] = txt
                         applied_fixes.append(bid)
-                pr["copy"] = _sync_page_copy_to_foundation(slug, pr["copy"], company, lang, user_owned_set, team_slots)
+                pr["copy"] = _sync_page_copy_to_foundation(slug, pr["copy"], company, lang, review_user_owned, team_slots)
                 page_copy[slug] = pr["copy"]
                 memory.write_artifact(f"pages/{slug}/copy.json", pr["copy"])
-                det2 = _deterministic_checks(lang, brand, eff_hero, pr["headings"], pr["copy"], pr["blocks"], pr["seo"], company, slug, user_owned_set)
+                det2 = _deterministic_checks(lang, brand, eff_hero, pr["headings"], pr["copy"], pr["blocks"], pr["seo"], company, slug, review_user_owned)
                 verdict2, llm_issues2, _ = review_pass(det2["issues"])
                 agents_run += 1
                 verdict = verdict2
@@ -1307,6 +1329,7 @@ def run_content_pipeline(
 
     ai_used = agents_run > 0
     summary = {
+        "lang": lang,
         "company": company,
         "chrome": chrome,
         "pages": {slug: {"hero": pr["hero"], "headings": pr["headings"], "seo": pr["seo"], "review": pr["review"], "variants": pr.get("variants") or {}, "loc": pr.get("loc") or {}} for slug, pr in page_results.items()},

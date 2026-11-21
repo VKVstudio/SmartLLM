@@ -392,7 +392,7 @@ class LLMEngineClient:
             headers={"Content-Type": "application/json"},
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=180.0) as resp:
+        with urllib.request.urlopen(req, timeout=300.0) as resp:
             raw_body = json.loads(resp.read().decode("utf-8", errors="replace"))
 
         timings = raw_body.get("timings") or {}

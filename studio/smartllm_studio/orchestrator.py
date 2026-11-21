@@ -11,7 +11,7 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
-from typing import Any
+from typing import Any, Callable
 import uuid
 
 from .adapters import get_rag_selector
@@ -33,6 +33,7 @@ from .pages import (
     page_available_blocks,
     page_default_blocks,
     page_title,
+    resolve_primary_lang,
     resolve_slot_dimensions,
 )
 from .rag import detect_language, make_synthetic_png
@@ -955,20 +956,21 @@ def _generate_page_prompts_with_llm(
     page_blocks: dict[str, list[str]],
     lang: str,
     company: dict[str, Any],
-) -> tuple[dict[str, dict[str, str]], dict[str, str]]:
-    """Generate per-page block copy using flat keys slug::block for reliable local-model parsing."""
+    progress_cb: Callable[[int, int, str], None] | None = None,
+) -> tuple[dict[str, dict[str, str]], dict[str, Any]]:
+    """Generate per-page block copy one page at a time using flat keys slug::block for reliable local-model parsing."""
     if not _can_use_gpu(state) and not (state and state.llm.is_healthy()):
         if is_cpu_test_mode():
-            return {}, {}
+            return {}, {"_failed_pages": []}
         raise RuntimeError(_gpu_unavailable_message(state))
     target_lang = "Russian" if str(lang).lower().startswith("ru") else "English"
-    flat_keys: list[str] = ["headline", "hero_zimage_prompt"]
-    for slug, blocks in page_blocks.items():
-        for bid in blocks:
-            if bid != "footer":
-                flat_keys.append(f"{slug}::{bid}")
-    if len(flat_keys) <= 2:
-        return {}, {}
+    active_pages: list[tuple[str, list[str]]] = [
+        (slug, [bid for bid in blocks if bid != "footer"])
+        for slug, blocks in page_blocks.items()
+    ]
+    active_pages = [(slug, blks) for slug, blks in active_pages if blks]
+    if not active_pages:
+        return {}, {"_failed_pages": []}
     hints = {
         "manifesto": "Tagline | one positioning sentence",
         "values": "Product: ... | Team: ... | Clients: ...",
@@ -987,49 +989,86 @@ def _generate_page_prompts_with_llm(
         "cta": "one conversion sentence",
         "legal": "Paragraph | Paragraph | Paragraph",
     }
-    format_lines = "\n".join(f"- {bid}: {hints[bid]}" for bid in dict.fromkeys(b for page in page_blocks.values() for b in page) if bid in hints)
     sys_msg = (
         "You are SmartLLM v2 Web Copywriter. Write page-specific website copy for every requested key. "
         "Return ONLY valid JSON."
     )
-    user_msg = (
-        f"Brand name: {brand_name}\nBrief: {brief}\n"
-        f"Brand foundation (single source of truth — keep team, products/prices, capabilities, metrics, and contacts 100% consistent across ALL pages): "
-        f"{json.dumps(company, ensure_ascii=False)}\n\n"
-        f"Write all values in {target_lang}. Keep each value concise and specific. "
-        "Use the brand foundation for manifesto, values, priorities, locations, team, pricing, and contact. "
-        "Never put pricing tiers into 'features'; put pricing ONLY in 'pricing'. Separate list items with ' | '. Every value MUST be a plain string.\n"
-        "Required format per block type:\n"
-        f"{format_lines}\n"
-        "FAQ must always be 'Question? Answer' pairs, never questions alone.\n"
-        "Return one JSON object with exactly these keys (flat slug::block):\n"
-        + "\n".join(f'- "{k}"' for k in flat_keys)
-        + "\nAdd a punchy editorial headline and an English Z-Image hero photography prompt (40-70 words, positive visual photography framing)."
-    )
-    try:
-        raw = state.llm.generate_structured_json(sys_msg, user_msg, max_tokens=3200)
-    except Exception as exc:
-        try:
-            (get_log_dir() / "page-prompts-debug.log").write_text(f"page_prompts_exc: {exc!r}\n", encoding="utf-8")
-        except Exception:
-            pass
-        return {}, {}
     from .pipeline import _norm_block_value
     out: dict[str, dict[str, str]] = {}
-    meta: dict[str, str] = {}
-    for key, value in (raw or {}).items():
-        if key in ("headline", "hero_zimage_prompt"):
-            text = _clean(value)
-            if text:
-                meta[key] = text
+    meta: dict[str, Any] = {}
+    failed_pages: list[str] = []
+    company_json = json.dumps(company, ensure_ascii=False)
+    total_pages = len(active_pages)
+
+    for idx, (slug, page_bids) in enumerate(active_pages, start=1):
+        if progress_cb is not None:
+            try:
+                progress_cb(idx, total_pages, slug)
+            except Exception:
+                pass
+        flat_keys: list[str] = []
+        if slug == "index":
+            flat_keys.extend(["headline", "hero_zimage_prompt"])
+        for bid in page_bids:
+            flat_keys.append(f"{slug}::{bid}")
+        format_lines = "\n".join(f"- {bid}: {hints[bid]}" for bid in dict.fromkeys(page_bids) if bid in hints)
+        extra_meta = (
+            "\nAdd a punchy editorial headline and an English Z-Image hero photography prompt (40-70 words, positive visual photography framing)."
+            if slug == "index"
+            else ""
+        )
+        user_msg = (
+            f"Brand name: {brand_name}\nBrief: {brief}\n"
+            f"Page: {page_title(slug, lang)} ({slug})\n"
+            f"Brand foundation (single source of truth — keep team, products/prices, capabilities, metrics, and contacts 100% consistent across ALL pages): "
+            f"{company_json}\n\n"
+            f"Write all values in {target_lang}. Keep each value concise and specific to the '{slug}' page. "
+            "Use the brand foundation for manifesto, values, priorities, locations, team, pricing, and contact. "
+            "Never put pricing tiers into 'features'; put pricing ONLY in 'pricing'. Separate list items with ' | '. Every value MUST be a plain string.\n"
+            "Required format per block type:\n"
+            f"{format_lines}\n"
+            "FAQ must always be 'Question? Answer' pairs, never questions alone.\n"
+            "Return one JSON object with exactly these keys (flat slug::block):\n"
+            + "\n".join(f'- "{k}"' for k in flat_keys)
+            + extra_meta
+        )
+        try:
+            raw = state.llm.generate_structured_json(sys_msg, user_msg, max_tokens=2048)
+        except Exception as exc:
+            failed_pages.append(slug)
+            try:
+                log_path = get_log_dir() / "page-prompts-debug.log"
+                with log_path.open("a", encoding="utf-8") as fh:
+                    fh.write(f"page_prompts_exc[{slug}]: {exc!r}\n")
+            except Exception:
+                pass
             continue
-        if "::" not in str(key):
+        if not isinstance(raw, dict) or not raw:
+            failed_pages.append(slug)
             continue
-        slug, bid = str(key).split("::", 1)
-        if slug in page_blocks and bid in page_blocks[slug]:
-            text = _norm_block_value(bid, value)
-            if text:
-                out.setdefault(slug, {})[bid] = text
+        parsed_count = 0
+        for key, value in raw.items():
+            if key in ("headline", "hero_zimage_prompt"):
+                text = _clean(value)
+                if text:
+                    meta[key] = text
+                continue
+            k_str = str(key)
+            if "::" in k_str:
+                k_slug, bid = k_str.split("::", 1)
+            elif k_str in page_bids:
+                k_slug, bid = slug, k_str
+            else:
+                continue
+            if k_slug == slug and bid in page_bids:
+                text = _norm_block_value(bid, value)
+                if text:
+                    out.setdefault(slug, {})[bid] = text
+                    parsed_count += 1
+        if parsed_count == 0:
+            failed_pages.append(slug)
+
+    meta["_failed_pages"] = failed_pages
     return out, meta
 
 
@@ -1043,7 +1082,7 @@ def autofill_blocks_smart(
     company: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Generate block descriptions using SmartLLM-v2 when GPU is available, else deterministic template."""
-    norm_lang = "ru" if str(lang).startswith("ru") else "en"
+    norm_lang = resolve_primary_lang(lang, f"{brand_name} {brief}")
     if hasattr(state, "orchestrator"):
         state.orchestrator.active_status = {
             "running": True,
@@ -1069,7 +1108,34 @@ def autofill_blocks_smart(
             company = {**fallback_company, **llm_company}
         set_progress(45, "Бренд-основа готова. Генерируем блоки по страницам...", "Brand foundation ready. Generating page-specific blocks...")
         fallback_pages = build_page_block_prompts(brand_name, brief, page_blocks, norm_lang, company)
-        llm_pages, _ = _generate_page_prompts_with_llm(state, brand_name, brief, page_blocks, norm_lang, company)
+
+        def on_page_progress(idx: int, total: int, slug: str) -> None:
+            pct = 45 + int(47 * idx / max(1, total))
+            set_progress(
+                pct,
+                f"Генерируем страницу {idx}/{total}: {page_title(slug, 'ru')}...",
+                f"Generating page {idx}/{total}: {page_title(slug, 'en')}...",
+            )
+
+        llm_pages, llm_meta = _generate_page_prompts_with_llm(
+            state, brand_name, brief, page_blocks, norm_lang, company, progress_cb=on_page_progress
+        )
+        failed_pages = list(llm_meta.get("_failed_pages") or []) if isinstance(llm_meta, dict) else []
+        warnings: list[str] = []
+        if not is_cpu_test_mode():
+            if not llm_company:
+                warnings.append(
+                    "ИИ не смог сгенерировать бренд-основу — подставлен шаблон."
+                    if norm_lang == "ru"
+                    else "AI could not generate the brand foundation — template fallback applied."
+                )
+            if failed_pages:
+                pages_str = ", ".join(failed_pages)
+                warnings.append(
+                    f"ИИ не заполнил страницы ({pages_str}) — подставлены шаблонные тексты."
+                    if norm_lang == "ru"
+                    else f"AI could not fill pages ({pages_str}) — template fallback applied."
+                )
         from .pipeline import _sync_page_copy_to_foundation
         page_prompts: dict[str, dict[str, str]] = {}
         for slug, page_map in fallback_pages.items():
@@ -1081,7 +1147,7 @@ def autofill_blocks_smart(
                 if bid not in flat:
                     flat[bid] = text
         set_progress(95, "Собираем и проверяем описания...", "Merging and validating the copy...")
-        return {"company": company, "page_block_prompts": page_prompts, "block_prompts": flat}
+        return {"company": company, "page_block_prompts": page_prompts, "block_prompts": flat, "warnings": warnings}
     finally:
         if hasattr(state, "orchestrator"):
             state.orchestrator.active_status = {
@@ -1227,7 +1293,7 @@ class ProjectOrchestrator:
                 merged["audience"] = ""
 
             brief_for_llm = str(merged.get("brief") or merged.get("goal") or merged.get("name") or "").strip()
-            norm_lang = "ru" if str(merged.get("languages") or "ru").startswith("ru") else "en"
+            norm_lang = resolve_primary_lang(str(merged.get("languages") or "ru"), brief_for_llm)
             clean_out = _clean_path_str(merged.get("output_dir"))
             out_dir = _safe_project_dir(clean_out, self.state.project_dir(str(merged.get("id") or "default")))
             merged["output_dir"] = str(out_dir)
@@ -1254,20 +1320,29 @@ class ProjectOrchestrator:
             merged["block_prompts"] = summary["block_prompts"]
             merged["pipeline"] = summary
             merged["hero_zimage_prompt"] = summary["visuals"].get("hero")
-            index_hero = (summary["pages"].get("index") or {}).get("hero") or {}
-            if index_hero.get("headline") and merged.get("routes"):
+            summary_lang = str(summary.get("lang") or norm_lang)
+            primary_copy_key = "copy_ru" if summary_lang == "ru" else "copy_en"
+            alt_copy_key = "copy_en" if summary_lang == "ru" else "copy_ru"
+            index_page = summary["pages"].get("index") or {}
+            index_hero = index_page.get("hero") or {}
+            loc_index_hero = (index_page.get("loc") or {}).get("hero") or {}
+            if merged.get("routes"):
                 r0 = merged["routes"][0]
-                r0.setdefault("copy_ru", {})["headline"] = index_hero["headline"]
-                r0.setdefault("copy_en", {})["headline"] = index_hero["headline"]
-                if index_hero.get("subhead"):
-                    r0["copy_ru"]["subhead"] = index_hero["subhead"]
-                    r0["copy_en"]["subhead"] = index_hero["subhead"]
+                if index_hero.get("headline"):
+                    r0.setdefault(primary_copy_key, {})["headline"] = index_hero["headline"]
+                    if index_hero.get("subhead"):
+                        r0[primary_copy_key]["subhead"] = index_hero["subhead"]
+                if loc_index_hero.get("headline"):
+                    r0.setdefault(alt_copy_key, {})["headline"] = loc_index_hero["headline"]
+                    if loc_index_hero.get("subhead"):
+                        r0[alt_copy_key]["subhead"] = loc_index_hero["subhead"]
             ai_used = bool(summary["ai_used"])
             tasks[0]["status"] = "done"
             tasks[0]["detail"] = f"{merged.get('name')} · {merged.get('canon_id')} · {len(merged.get('routes', []))} стр. · smartllm.md"
             tasks[1]["status"] = "done"
+            speed_suffix = f" · {self.state.gpu.tok_per_sec} tok/s" if self.state.gpu.tok_per_sec else ""
             tasks[1]["detail"] = (
-                f"{summary['agents_run']} агентов · ревизия {summary['review_avg']}/6 · {self.state.gpu.tok_per_sec or 20} tok/s"
+                f"{summary['agents_run']} агентов · ревизия {summary['review_avg']}/6{speed_suffix}"
                 if ai_used
                 else f"CPU шаблон · {len(summary['page_block_prompts'])} стр. · ревизия {summary['review_avg']}/6"
             )
