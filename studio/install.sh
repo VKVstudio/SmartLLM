@@ -47,7 +47,7 @@ Type=Application
 Name=SmartLLM Studio
 GenericName=Offline Multimodal Web & Design Atelier
 Comment=SmartLLM Studio v0.0.3-beta — Local Offline Web, Design & Z-Image Atelier (127.0.0.1)
-Exec=${LAUNCHER_PATH}
+Exec="${LAUNCHER_PATH}"
 Icon=${ICON_PATH}
 Terminal=false
 Categories=Development;WebDevelopment;Graphics;
@@ -68,8 +68,10 @@ mkdir -p "${APP_SHARE_DIR}" "${LOCAL_BIN_DIR}" "${DESKTOP_DIR}"
 if [[ ! -x "${VENV_DIR}/bin/python" ]]; then
     "${PYTHON_CMD}" -m venv --system-site-packages "${VENV_DIR}"
 fi
-"${VENV_DIR}/bin/pip" install --upgrade pip >/dev/null
-"${VENV_DIR}/bin/pip" install Pillow
+if ! "${VENV_DIR}/bin/python" -c "import PIL" 2>/dev/null; then
+    "${VENV_DIR}/bin/pip" install --upgrade pip >/dev/null
+    "${VENV_DIR}/bin/pip" install Pillow
+fi
 if [[ "${WITH_TRAY}" -eq 1 ]]; then
     "${VENV_DIR}/bin/pip" install -e "${STUDIO_DIR}[tray]"
 fi

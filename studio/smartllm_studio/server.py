@@ -57,11 +57,13 @@ class StudioState:
         allow_lock_write: bool = False,
         llm_port: int = 18080,
         projects_root_override: Path | None = None,
+        cli_overrides: dict[str, Any] | None = None,
     ) -> None:
         self.instance_id = f"studio_{uuid.uuid4().hex[:8]}"
         self.setup_progress: dict[str, Any] = {"running": False, "done": False, "error": "", "line": ""}
         self.repo_root = (repo_root or DEFAULT_REPO_ROOT).resolve()
-        paths = discover_studio_paths(repo_root=self.repo_root)
+        self.cli_overrides = cli_overrides
+        paths = discover_studio_paths(repo_root=self.repo_root, cli_overrides=cli_overrides)
         self.projects_root = Path(projects_root_override or paths["projects_root"]).resolve()
         self.projects_root.mkdir(parents=True, exist_ok=True)
         self.preview_dirs: dict[str, Path] = {}
@@ -197,6 +199,7 @@ def create_studio_server(
     allow_lock_write: bool = False,
     llm_port: int = 18080,
     projects_root_override: Path | None = None,
+    cli_overrides: dict[str, Any] | None = None,
 ) -> tuple[ThreadingHTTPServer, StudioState]:
     assert_studio_loopback(host)
     state = StudioState(
@@ -205,6 +208,7 @@ def create_studio_server(
         allow_lock_write=allow_lock_write,
         llm_port=llm_port,
         projects_root_override=projects_root_override,
+        cli_overrides=cli_overrides,
     )
     # Pre-compile default project so Live Stage has an instant preview ready
     default_bp = compile_project_blueprint(state.load_project("default"), repo_root=state.repo_root)
@@ -314,7 +318,7 @@ def create_studio_server(
                 evs = [("progress", ev) for ev in state.image_jobs.stream_job_events(job_id)]
                 return self._send_sse(evs)
             if path == "/api/health":
-                return self._send_json(200, {"product": "SmartLLM Studio", "version": __version__, "instance_id": state.instance_id})
+                return self._send_json(200, {"product": "SmartLLM Studio", "version": __version__, "instance_id": state.instance_id, "repo_root": str(state.repo_root)})
             if path == "/api/engine":
                 return self._send_json(200, state.gpu.status_dict())
             if path == "/api/status":
@@ -368,6 +372,15 @@ def create_studio_server(
                 return False
 
             try:
+                if path == "/api/studio/shutdown":
+                    try:
+                        state.llm.stop()
+                    except Exception:
+                        pass
+                    state.gpu.cleanup_children()
+                    self._send_json(200, {"status": "shutting_down"})
+                    threading.Thread(target=self.server.shutdown, daemon=True).start()
+                    return
                 if path == "/api/setup/auto":
                     if state.setup_progress.get("running"):
                         return self._send_json(409, {"error": "SETUP_ALREADY_RUNNING"})

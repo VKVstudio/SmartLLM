@@ -13,7 +13,7 @@ authors = [
     { name = "VKV Studio", email = "hello@vkvstudio.com" }
 ]
 keywords = ["smartllm", "offline-ai", "web-design", "astro", "gsap", "z-image", "llama-cpp"]
-dependencies = []
+dependencies = ["Pillow>=10.0"]
 
 [project.optional-dependencies]
 tray = ["PyQt6>=6.5"]

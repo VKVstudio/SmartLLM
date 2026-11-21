@@ -2,15 +2,16 @@
 # SmartLLM Studio v0.0.3-beta — Linux Executable Launcher (127.0.0.1 only, portable: any folder / any drive)
 set -euo pipefail
 
-STUDIO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || python3 -c 'import os,sys; print(os.path.realpath(sys.argv[1]))' "${BASH_SOURCE[0]}")"
+STUDIO_DIR="$(cd "$(dirname "${SCRIPT_PATH}")/.." && pwd)"
 REPO_ROOT="$(cd "${STUDIO_DIR}/.." && pwd)"
 
 PYTHON_BIN=""
 for cand in \
-    "${REPO_ROOT}/.venv_linux/bin/python" \
     "${REPO_ROOT}/.venv/bin/python" \
+    "${REPO_ROOT}/.venv_linux/bin/python" \
     "${HOME}/.local/share/smartllm-studio/venv/bin/python"; do
-    if [[ -x "${cand}" ]]; then
+    if [[ -x "${cand}" ]] && "${cand}" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)' 2>/dev/null; then
         PYTHON_BIN="${cand}"
         break
     fi

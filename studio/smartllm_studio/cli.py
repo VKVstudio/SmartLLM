@@ -31,13 +31,21 @@ def _studio_log(msg: str) -> None:
         pass
 
 
-def _probe_existing_studio(port: int) -> dict | None:
+def _probe_existing_studio(port: int, repo_root: Path | None = None) -> dict | None:
     try:
         req = urllib.request.Request(f"http://127.0.0.1:{port}/api/health", method="GET")
         with urllib.request.urlopen(req, timeout=1.0) as resp:
             if resp.status == 200:
                 data = json.loads(resp.read().decode("utf-8"))
                 if data.get("product") == "SmartLLM Studio":
+                    if repo_root is not None:
+                        rem_root = data.get("repo_root")
+                        if data.get("version") != __version__ or not rem_root or Path(str(rem_root)).resolve() != repo_root.resolve():
+                            _studio_log(
+                                f"existing studio mismatch on port={port}: remote_version={data.get('version')} "
+                                f"local_version={__version__} remote_root={rem_root} local_root={repo_root}"
+                            )
+                            return None
                     return data
     except Exception:
         pass
@@ -54,6 +62,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--model", type=str, default="", help="CLI override for GGUF model path")
     parser.add_argument("--no-browser", action="store_true", help="Do not launch browser/app window on startup")
     parser.add_argument("--no-tray", action="store_true", help="Run without system tray icon")
+    parser.add_argument("--silent-launch", action="store_true", help="Launched silently via Windows VBS wrapper")
     parser.add_argument("--repo-root", type=Path, default=DEFAULT_REPO_ROOT, help="Path to SmartLLM repository root")
     parser.add_argument("--check-config", action="store_true", help="Print discovered 5-tier paths and edition config as JSON")
     args = parser.parse_args(argv)
@@ -92,7 +101,7 @@ def main(argv: list[str] | None = None) -> int:
 
 def _run_server(args: argparse.Namespace) -> int:
     # Single-instance handoff (Q6): if args.port has our product running, open browser to it and exit 0; else try 8091..8099
-    existing = _probe_existing_studio(args.port)
+    existing = _probe_existing_studio(args.port, repo_root=args.repo_root)
     if existing is not None:
         url = f"http://127.0.0.1:{args.port}/"
         if not args.no_browser:
@@ -102,9 +111,17 @@ def _run_server(args: argparse.Namespace) -> int:
         return 0
 
     candidates = [args.port] if args.port != 8090 else list(range(8090, 8100))
+    cli_overrides = {"gguf_model_path": args.model} if args.model else None
     srv = None
     state = None
     import errno
+
+    bind_retry_codes = (
+        errno.EADDRINUSE,
+        errno.EACCES,
+        getattr(errno, "WSAEADDRINUSE", 10048),
+        getattr(errno, "WSAEACCES", 10013),
+    )
 
     for cand_port in candidates:
         try:
@@ -113,10 +130,11 @@ def _run_server(args: argparse.Namespace) -> int:
                 port=cand_port,
                 repo_root=args.repo_root,
                 allow_lock_write=True,
+                cli_overrides=cli_overrides,
             )
             break
         except OSError as exc:
-            if exc.errno in (errno.EADDRINUSE, errno.EACCES):
+            if exc.errno in bind_retry_codes or getattr(exc, "winerror", None) in bind_retry_codes:
                 continue
             _studio_log(f"SERVER_CREATE_FAILED port={cand_port}: {type(exc).__name__}: {exc}")
             raise
