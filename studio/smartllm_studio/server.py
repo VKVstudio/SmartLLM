@@ -7,12 +7,13 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import mimetypes
 from pathlib import Path
+import re
 import subprocess
 import sys
 import threading
 from typing import Any
 import urllib.request
-from urllib.parse import unquote, urlparse
+from urllib.parse import quote, unquote, urlparse
 import uuid
 
 from . import __version__
@@ -67,6 +68,7 @@ class StudioState:
         self.projects_root = Path(projects_root_override or paths["projects_root"]).resolve()
         self.projects_root.mkdir(parents=True, exist_ok=True)
         self.preview_dirs: dict[str, Path] = {}
+        self.exported_zips: dict[str, Path] = {}
 
         lock_p = lock_path_override or Path(paths["gpu_lock_path"])
         self.gpu = GPUEngineController(lock_path=lock_p, allow_lock_write=allow_lock_write)
@@ -336,6 +338,32 @@ def create_studio_server(
                 return self._send_json(200, load_user_settings(repo_root=state.repo_root))
             if path == "/api/setup/progress":
                 return self._send_json(200, state.setup_progress)
+            if path.startswith("/api/export/") and path.endswith("/download"):
+                parts_exp = [p for p in path.split("/") if p]
+                pid_exp = parts_exp[2] if len(parts_exp) >= 4 else "default"
+                zip_path = state.exported_zips.get(pid_exp)
+                if zip_path is None or not zip_path.is_file():
+                    draft_exp = state.load_project(pid_exp)
+                    pdir_exp = Path(str(draft_exp.get("output_dir") or state.project_dir(pid_exp)))
+                    cand_exp = pdir_exp / f"{pdir_exp.name}_bundle.zip"
+                    if cand_exp.is_file():
+                        zip_path = cand_exp
+                if zip_path is None or not zip_path.is_file() or zip_path.suffix.lower() != ".zip":
+                    return self._send_json(404, {"error": "EXPORT_ZIP_NOT_FOUND", "project_id": pid_exp})
+                safe_name = re.sub(r"[^A-Za-z0-9._-]+", "_", zip_path.name).strip("_") or "site_bundle.zip"
+                data = zip_path.read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/zip")
+                self.send_header("Content-Disposition", f'attachment; filename="{safe_name}"')
+                self.send_header("Content-Length", str(len(data)))
+                self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
+                self.send_header("X-Content-Type-Options", "nosniff")
+                self.end_headers()
+                try:
+                    self.wfile.write(data)
+                except (BrokenPipeError, ConnectionResetError):
+                    pass
+                return
             if path.startswith("/api/projects/"):
                 pid = path.split("/")[3] or "default"
                 return self._send_json(200, state.load_project(pid))
@@ -579,6 +607,9 @@ def create_studio_server(
                     bp = compile_project_blueprint(draft, repo_root=state.repo_root)
                     target = _safe_project_dir(body.get("target_dir"), Path(bp["project_dir"])) if body.get("target_dir") else Path(bp["project_dir"])
                     exp = export_project_bundle(Path(bp["project_dir"]), target_dir=target, as_zip=bool(body.get("as_zip", False)))
+                    if exp.get("format") == "zip" and exp.get("path"):
+                        state.exported_zips[pid] = Path(exp["path"]).resolve()
+                        exp["download_url"] = f"/api/export/{quote(pid, safe='')}/download"
                     settings = load_user_settings(repo_root=state.repo_root)
                     exports_cnt = int(settings.get("exports_completed", 0)) + 1
                     save_user_settings({"exports_completed": exports_cnt}, repo_root=state.repo_root)

@@ -446,8 +446,12 @@ def export_project_bundle(project_dir: Path, target_dir: Path | None = None, as_
         zip_path = dest / f"{src.name}_bundle.zip"
         with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
             for fp in sorted(src.rglob("*")):
-                if fp.is_file() and fp.resolve() != zip_path.resolve():
-                    zf.write(fp, fp.relative_to(src))
+                if not fp.is_file() or fp.resolve() == zip_path.resolve():
+                    continue
+                rel = fp.relative_to(src)
+                if ".smartllm" in rel.parts or fp.suffix.lower() == ".zip":
+                    continue
+                zf.write(fp, rel)
         return {"exported": True, "format": "zip", "path": str(zip_path), "bytes": zip_path.stat().st_size}
 
     if dest != src:

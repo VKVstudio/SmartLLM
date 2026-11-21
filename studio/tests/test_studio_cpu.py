@@ -429,6 +429,37 @@ def _run_all_tests_inner(results: dict[str, object]) -> dict[str, object]:
         assert gpu_c.state == GPUState.IDLE, gpu_c.state
         assert gpu_c.check_lock_owner() is None, gpu_c.check_lock_owner()
 
+    # 2h. Logo prompt diversity, team portrait distinctness, and square logo CSS regressions
+    from smartllm_studio.orchestrator import _prepare_logo_prompts
+    from smartllm_studio.pipeline import _ensure_distinct_team_portrait, _pick_team_personas
+
+    logo_prompts_6, _, _, _ = _prepare_logo_prompts(None, "VKB+Biling", "English school", "кененсберг стайл", "ru")
+    assert len(logo_prompts_6) == 6
+    assert len({p[:45].lower() for p in logo_prompts_6}) == 6, f"Logo prompts not diverse: {logo_prompts_6}"
+    assert all("vkb+biling" not in p.lower() and "no text" not in p.lower() for p in logo_prompts_6)
+
+    dup_slots = [
+        {"name": "Anna Petrova", "role": "Founder", "gender": "female"},
+        {"name": "Ivan Smirnov", "role": "Lead Coach", "gender": "male"},
+        {"name": "Olga Volkov", "role": "Methodologist", "gender": "female"},
+        {"name": "Sergey Orlov", "role": "Tutor", "gender": "male"},
+    ]
+    personas_4 = _pick_team_personas(dup_slots, "VKB+Biling")
+    seen_team: list[set[str]] = []
+    out_portraits = [
+        _ensure_distinct_team_portrait(
+            "Vertical 3:4 medium chest-up studio portrait with generous empty headroom, editorial headshot, 85mm lens",
+            dup_slots[i]["gender"],
+            personas_4[i],
+            "editorial headshot, dark charcoal seamless backdrop",
+            seen_team,
+        )
+        for i in range(4)
+    ]
+    assert len(set(out_portraits)) == 4, f"Duplicate team portraits remained: {out_portraits}"
+    assert "woman" in out_portraits[0].lower() and "man" in out_portraits[1].lower()
+    assert "woman" in out_portraits[2].lower() and "man" in out_portraits[3].lower()
+
     # 3. Q4: Bundled Fonts (<= 650 KB, zero "Inter"), Artworks (<= 250 KB), and Token Contrast (>= 4.5:1)
     fonts_dir = STUDIO_ROOT / "smartllm_studio" / "static" / "fonts"
     woff2_files = list(fonts_dir.glob("*.woff2"))
@@ -436,6 +467,7 @@ def _run_all_tests_inner(results: dict[str, object]) -> dict[str, object]:
     assert len(woff2_files) == 6 and 0 < total_font_bytes <= 650 * 1024
     css_txt = (STUDIO_ROOT / "smartllm_studio" / "static" / "styles.css").read_text(encoding="utf-8")
     assert '"Inter"' not in css_txt and "'Inter'" not in css_txt
+    assert "height: auto;" in css_txt and "object-fit: contain;" in css_txt
 
     art_dir = STUDIO_ROOT / "smartllm_studio" / "static" / "art"
     for art_stem in ("atelier_hero_prism", "stage_empty_wireframe", "zimage_optical_core"):
@@ -709,6 +741,19 @@ HTTPServer(("127.0.0.1", {mock_llama_port}), H).serve_forever()
             _, exp_raw = _http_req(f"{base}/api/export/default", method="POST", payload={"target_dir": str(tmp_dir / "exp_out"), "as_zip": True})
             exp_doc = json.loads(exp_raw.decode("utf-8"))
             assert exp_doc["exported"] is True and exp_doc["format"] == "zip" and exp_doc["show_support_card"] is True
+            assert exp_doc.get("download_url") == "/api/export/default/download", exp_doc
+            import io as _dl_io
+            import zipfile as _dl_zip
+
+            with urllib.request.urlopen(f"{base}{exp_doc['download_url']}", timeout=5) as dl_resp:
+                assert dl_resp.status == 200
+                assert "application/zip" in (dl_resp.headers.get("Content-Type") or "")
+                assert "attachment;" in (dl_resp.headers.get("Content-Disposition") or "")
+                dl_bytes = dl_resp.read()
+            with _dl_zip.ZipFile(_dl_io.BytesIO(dl_bytes), "r") as dl_zf:
+                dl_names = dl_zf.namelist()
+                assert "index.html" in dl_names
+                assert not any(n.startswith(".smartllm/") or n.endswith(".zip") for n in dl_names), dl_names
             _http_req(f"{base}/api/settings", method="POST", payload={"support_mode": "free_launch"})
 
             # Run Browser Q7 Gate (CDP dead-control test, RU Latin scan, Lighthouse, 54 screenshots)

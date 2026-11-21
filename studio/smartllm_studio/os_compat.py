@@ -261,13 +261,26 @@ def get_system_telemetry() -> dict[str, Any]:
     }
 
 
+def _resolve_dialog_initial_dir(initial_dir: str) -> str:
+    raw = str(initial_dir or "").strip()
+    if raw:
+        cand = Path(raw)
+        for p in (cand, *cand.parents):
+            try:
+                if p.exists() and p.is_dir():
+                    return str(p.resolve())
+            except OSError:
+                continue
+    return str(Path.home())
+
+
 def pick_os_dialog(
     kind: str = "folder",
     filters: str = "*.svg *.png *.webp",
     initial_dir: str = "",
     dry_run: bool = False,
 ) -> str | None:
-    """Open native OS folder/file dialog (Linux zenity->kdialog, Windows PowerShell STA, 120s timeout)."""
+    """Open native OS folder/file dialog (Windows Win32/Tk -> STA WinForms fallback; Linux zenity -> kdialog)."""
     if dry_run or os.environ.get("SMARTLLM_STUDIO_HEADLESS") == "1":
         if kind == "file":
             return str(Path(initial_dir or Path.home()) / "brand-logo.svg")
@@ -275,21 +288,76 @@ def pick_os_dialog(
 
     try:
         if is_windows():
+            start_dir = _resolve_dialog_initial_dir(initial_dir)
+            tk_mode = "file" if kind == "file" else "folder"
+            tk_script = (
+                "import ctypes, sys, tkinter as tk\n"
+                "from tkinter import filedialog\n"
+                "try:\n"
+                "    sys.stdout.reconfigure(encoding='utf-8', errors='replace')\n"
+                "except Exception:\n"
+                "    pass\n"
+                "try:\n"
+                "    ctypes.windll.shcore.SetProcessDpiAwareness(1)\n"
+                "except Exception:\n"
+                "    pass\n"
+                "start_dir = sys.argv[1] if len(sys.argv) > 1 else ''\n"
+                "mode = sys.argv[2] if len(sys.argv) > 2 else 'folder'\n"
+                "root = tk.Tk()\n"
+                "root.withdraw()\n"
+                "root.attributes('-topmost', True)\n"
+                "root.update()\n"
+                "try:\n"
+                "    ctypes.windll.user32.SetForegroundWindow(root.winfo_id())\n"
+                "except Exception:\n"
+                "    pass\n"
+                "if mode == 'file':\n"
+                "    picked = filedialog.askopenfilename(\n"
+                "        parent=root,\n"
+                "        initialdir=start_dir,\n"
+                "        title='Select Brand Asset',\n"
+                "        filetypes=[('Brand Assets', '*.svg *.png *.webp'), ('All files', '*.*')],\n"
+                "    )\n"
+                "else:\n"
+                "    picked = filedialog.askdirectory(\n"
+                "        parent=root,\n"
+                "        initialdir=start_dir,\n"
+                "        title='Select Project Folder',\n"
+                "        mustexist=False,\n"
+                "    )\n"
+                "root.destroy()\n"
+                "if isinstance(picked, str) and picked.strip():\n"
+                "    print(picked.strip())\n"
+            )
+            res = subprocess.run(
+                [sys.executable, "-c", tk_script, start_dir, tk_mode],
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                timeout=120.0, check=False,
+                **subprocess_kwargs(),
+            )
+            if res.returncode == 0:
+                chosen_tk = res.stdout.strip()
+                return os.path.normpath(chosen_tk) if chosen_tk else None
+
             owner_setup = (
                 "[Console]::OutputEncoding=[Text.Encoding]::UTF8; "
                 "Add-Type -AssemblyName System.Windows.Forms; "
                 "Add-Type -AssemblyName System.Drawing; "
                 "$owner = New-Object System.Windows.Forms.Form; "
                 "$owner.TopMost = $true; "
-                "$owner.StartPosition = 'Manual'; "
-                "$owner.Location = New-Object System.Drawing.Point(-32000,-32000); "
+                "$owner.ShowInTaskbar = $false; "
+                "$owner.Opacity = 0; "
+                "$owner.StartPosition = 'CenterScreen'; "
                 "$owner.Size = New-Object System.Drawing.Size(1,1); "
+                "$owner.Show(); "
+                "$owner.Activate(); "
             )
             if kind == "file":
                 ps_cmd = (
                     owner_setup
                     + "try { "
                     "$f = New-Object System.Windows.Forms.OpenFileDialog; "
+                    "$f.InitialDirectory = $env:SMARTLLM_PICK_DIR; "
                     "$f.Filter = 'Brand Assets (*.svg;*.png;*.webp)|*.svg;*.png;*.webp'; "
                     "if ($f.ShowDialog($owner) -eq 'OK') { Write-Output $f.FileName } "
                     "} finally { $owner.Dispose() }"
@@ -299,16 +367,22 @@ def pick_os_dialog(
                     owner_setup
                     + "try { "
                     "$d = New-Object System.Windows.Forms.FolderBrowserDialog; "
+                    "$d.UseDescriptionForTitle = $true; "
+                    "$d.Description = 'Select Project Folder'; "
+                    "$d.SelectedPath = $env:SMARTLLM_PICK_DIR; "
                     "if ($d.ShowDialog($owner) -eq 'OK') { Write-Output $d.SelectedPath } "
                     "} finally { $owner.Dispose() }"
                 )
-            res = subprocess.run(
+            env_ps = dict(os.environ)
+            env_ps["SMARTLLM_PICK_DIR"] = start_dir
+            res_ps = subprocess.run(
                 ["powershell", "-NoProfile", "-STA", "-Command", ps_cmd],
                 capture_output=True, text=True, encoding="utf-8", errors="replace",
-                timeout=120.0, check=False,
+                timeout=120.0, check=False, env=env_ps,
                 **subprocess_kwargs(),
             )
-            return res.stdout.strip() or None
+            chosen_ps = res_ps.stdout.strip()
+            return os.path.normpath(chosen_ps) if chosen_ps else None
 
         # Linux: zenity -> kdialog -> None (UI fallback)
         if shutil.which("zenity"):
@@ -347,7 +421,7 @@ def pick_folder_native(initial_dir: str = "", dry_run: bool = False) -> str | No
 
 
 def reveal_in_file_manager(target_path: Path, dry_run: bool = False) -> bool:
-    """Open target directory in OS file manager (xdg-open on Linux, explorer.exe on Windows)."""
+    """Open target directory in OS file manager (Win32 ShellExecute on Windows, xdg-open on Linux)."""
     if dry_run or os.environ.get("SMARTLLM_STUDIO_HEADLESS") == "1":
         return True
     try:
@@ -355,8 +429,13 @@ def reveal_in_file_manager(target_path: Path, dry_run: bool = False) -> bool:
         if is_windows():
             if not target_path.suffix:
                 target_path.mkdir(parents=True, exist_ok=True)
-            norm_path = os.path.normpath(str(target_path))
-            subprocess.Popen(["explorer.exe", norm_path])
+            norm_path = os.path.normpath(str(target_path.resolve()))
+            try:
+                os.startfile(norm_path)  # type: ignore[attr-defined]
+                return True
+            except Exception:
+                subprocess.Popen(["explorer.exe", norm_path])
+                return True
         elif shutil.which("xdg-open"):
             subprocess.Popen(["xdg-open", str(target_path)])
         return True

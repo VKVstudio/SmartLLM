@@ -180,8 +180,8 @@
 
             <div class="field">
               <label for="s1-folder-input" data-i18n="lbl_s1_folder">Папка проекта на диске</label>
-              <div style="display:flex; gap:8px;">
-                <input id="s1-folder-input" type="text" name="studio_s1_folder" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_exp_folder" placeholder="Путь к папке проекта...">
+              <input id="s1-folder-input" type="text" name="studio_s1_folder" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_exp_folder" placeholder="Путь к папке проекта..." style="width:100%; font-family:var(--font-code); font-size:12px;">
+              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
                 <button class="btn btn-primary" id="s1-pick-folder-btn" type="button">
                   <svg class="icon-24"><use href="#icon-folder"/></svg>
                   <span data-i18n="btn_exp_pick_folder">Выбрать папку</span>
@@ -190,6 +190,7 @@
                   <span data-i18n="btn_exp_open_folder">Открыть папку</span>
                 </button>
               </div>
+              <p id="s1-folder-status" class="sub-lead" style="margin:6px 0 0 0; font-family:var(--font-code); font-size:12px;" aria-live="polite"></p>
             </div>
 
             <div class="field">
@@ -399,6 +400,7 @@
                 <input id="s5-render-visuals" type="checkbox" name="studio_render_visuals" checked style="width:18px; height:18px; accent-color:var(--accent);">
                 <span data-i18n="lbl_s5_render_visuals">Рендерить визуалы Z-Image (hero каждой страницы, галерея, портреты команды)</span>
               </label>
+              <p id="s5-project-path-readout" style="font-family:var(--font-code); font-size:12px; color:var(--muted); margin:0 0 10px 0; word-break:break-all;"></p>
               <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
                 <button class="btn btn-primary" id="s5-build-site-btn" type="button">
                   <svg class="icon-24"><use href="#icon-bolt"/></svg>

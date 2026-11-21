@@ -781,8 +781,10 @@ textarea { min-height: 76px; resize: vertical; }
 }
 .logo-variant-card img {
   width: 100%;
-  max-width: 132px;
+  max-width: 140px;
+  height: auto;
   aspect-ratio: 1 / 1;
+  object-fit: contain;
   border-radius: var(--r-sm);
   display: block;
 }

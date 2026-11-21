@@ -24,6 +24,83 @@
     return document.getElementById(id);
   }
 
+  function syncProjectPathDisplay(pathStr) {
+    var clean = String(pathStr || "").trim();
+    if (el("s1-folder-input") && el("s1-folder-input").value !== clean) el("s1-folder-input").value = clean;
+    if (el("exp-folder-input") && el("exp-folder-input").value !== clean) el("exp-folder-input").value = clean;
+    if (el("s1-folder-input")) el("s1-folder-input").title = clean;
+    if (el("exp-folder-input")) el("exp-folder-input").title = clean;
+    var readout = el("s5-project-path-readout");
+    if (readout) {
+      readout.textContent = clean
+        ? (store.lang === "ru" ? "Папка сохранения: " : "Save folder: ") + clean
+        : "";
+    }
+  }
+
+  function pickProjectFolder(btnId, statusId, sourceInputId) {
+    var btn = el(btnId);
+    var statusEl = el(statusId);
+    var initial = el(sourceInputId) ? el(sourceInputId).value : "";
+    if (btn) btn.disabled = true;
+    if (statusEl) {
+      statusEl.textContent = store.lang === "ru"
+        ? "Открыт системный диалог выбора папки..."
+        : "Waiting for system folder dialog...";
+    }
+    fetch("/api/os/pick", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kind: "folder", initial_dir: initial })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.path) {
+          syncProjectPathDisplay(d.path);
+          if (store.draft) store.draft.output_dir = d.path;
+          if (statusEl) {
+            statusEl.textContent = (store.lang === "ru" ? "Выбрана папка: " : "Selected folder: ") + d.path;
+          }
+        } else if (statusEl) {
+          statusEl.textContent = store.lang === "ru"
+            ? "Выбор папки отменён."
+            : "Folder selection cancelled.";
+        }
+      })
+      .catch(function (err) {
+        if (statusEl) {
+          statusEl.textContent = (store.lang === "ru" ? "Не удалось открыть диалог: " : "Folder dialog failed: ") + (err && err.message ? err.message : String(err));
+        }
+      })
+      .finally(function () {
+        if (btn) btn.disabled = false;
+      });
+  }
+
+  function revealProjectFolder(pathValue, statusId) {
+    var target = String(pathValue || "").trim();
+    var statusEl = el(statusId);
+    fetch("/api/os/reveal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ path: target })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!statusEl) return;
+        if (d && d.opened) {
+          statusEl.textContent = (store.lang === "ru" ? "Открыта папка: " : "Opened folder: ") + (d.path || target);
+        } else {
+          statusEl.textContent = (store.lang === "ru" ? "Не удалось открыть папку: " : "Could not open folder: ") + ((d && (d.message || d.path)) || target);
+        }
+      })
+      .catch(function (err) {
+        if (statusEl) {
+          statusEl.textContent = (store.lang === "ru" ? "Ошибка открытия папки: " : "Open folder error: ") + (err && err.message ? err.message : String(err));
+        }
+      });
+  }
+
   function translateDOM(lang) {
     store.lang = lang === "ru" ? "ru" : "en";
     document.documentElement.lang = store.lang;
@@ -49,6 +126,7 @@
     renderCanons();
     renderPagesAndBlocksChecklists();
     renderBlockDescriptionInputs();
+    if (el("s1-folder-input")) syncProjectPathDisplay(el("s1-folder-input").value);
   }
 
   function setMode(mode) {
@@ -214,8 +292,7 @@
       btn.setAttribute("aria-pressed", isSel ? "true" : "false");
       var img = document.createElement("img");
       img.src = v.url + (v.url.indexOf("?") === -1 ? "?" : "&") + "t=" + Date.now();
-      img.width = 128;
-      img.height = 128;
+      img.width = 140;
       img.alt = v.label_en;
       var cap = document.createElement("span");
       cap.textContent = store.lang === "ru" ? v.label_ru : v.label_en;
@@ -836,8 +913,7 @@
           el("live-stage-iframe").src = bp.preview_url + sep + "t=" + Date.now();
         }
         if (bp.project_dir) {
-          el("s1-folder-input").value = bp.project_dir;
-          el("exp-folder-input").value = bp.project_dir;
+          syncProjectPathDisplay(bp.project_dir);
           if (store.draft) store.draft.output_dir = bp.project_dir;
         }
         if (statusEl) {
@@ -987,22 +1063,20 @@
     });
 
     // Automatic mode controls
-    el("exp-folder-input").addEventListener("input", function () {});
+    el("exp-folder-input").addEventListener("input", function () { syncProjectPathDisplay(el("exp-folder-input").value); });
     el("exp-pick-folder-btn").addEventListener("click", function () {
-      fetch("/api/os/pick", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ kind: "folder" }) })
-        .then(function (r) { return r.json(); })
-        .then(function (d) { if (d.path) { el("exp-folder-input").value = d.path; el("s1-folder-input").value = d.path; } });
+      pickProjectFolder("exp-pick-folder-btn", "exp-status-readout", "exp-folder-input");
     });
     el("exp-brief-input").addEventListener("input", function () {});
     el("exp-lang-select").addEventListener("change", function () {});
     el("exp-canon-select").addEventListener("change", function () {});
     el("exp-generate-btn").addEventListener("click", function () { runOrchestratorBuild("auto"); });
     el("exp-open-folder-btn").addEventListener("click", function () {
-      fetch("/api/os/reveal", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ path: el("exp-folder-input").value }) });
+      revealProjectFolder(el("exp-folder-input").value, "exp-status-readout");
     });
 
     // Step 1 controls
-    el("s1-folder-input").addEventListener("input", function () { el("exp-folder-input").value = el("s1-folder-input").value; });
+    el("s1-folder-input").addEventListener("input", function () { syncProjectPathDisplay(el("s1-folder-input").value); });
     el("setup-auto-btn").addEventListener("click", function () {
       var btn = el("setup-auto-btn");
       btn.disabled = true;
@@ -1031,12 +1105,10 @@
         .catch(function (e) { el("setup-progress").textContent = String(e); btn.disabled = false; });
     });
     el("s1-pick-folder-btn").addEventListener("click", function () {
-      fetch("/api/os/pick", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ kind: "folder" }) })
-        .then(function (r) { return r.json(); })
-        .then(function (d) { if (d.path) { el("s1-folder-input").value = d.path; el("exp-folder-input").value = d.path; } });
+      pickProjectFolder("s1-pick-folder-btn", "s1-folder-status", "s1-folder-input");
     });
     el("s1-open-folder-btn").addEventListener("click", function () {
-      fetch("/api/os/reveal", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ path: el("s1-folder-input").value }) });
+      revealProjectFolder(el("s1-folder-input").value, "s1-folder-status");
     });
     el("s1-lang").addEventListener("change", function () {});
 
@@ -1096,20 +1168,45 @@
         : (store.lang === "ru" ? "Сборка без рендера визуалов (быстрее)." : "Build without visual rendering (faster).");
     });
     el("s5-export-zip-btn").addEventListener("click", function () {
+      var zipBtn = el("s5-export-zip-btn");
+      var statusEl = el("s5-build-status");
       var pid = (store.draft && store.draft.id) || "default";
+      if (zipBtn) zipBtn.disabled = true;
+      if (statusEl) statusEl.textContent = store.lang === "ru" ? "Создаём ZIP-архив..." : "Building ZIP archive...";
       fetch("/api/export/" + encodeURIComponent(pid), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ target_dir: el("s1-folder-input").value, as_zip: true })
       })
-        .then(function (r) { return r.json(); })
-        .then(function (res) {
-          el("s5-build-status").textContent = "ZIP: " + (res.path || "");
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
+        .then(function (resp) {
+          var res = resp.data || {};
+          if (!resp.ok || res.error) {
+            if (statusEl) statusEl.textContent = (store.lang === "ru" ? "Ошибка экспорта ZIP: " : "ZIP export error: ") + (res.message || res.error || "failed");
+            return;
+          }
+          if (res.download_url) {
+            var a = document.createElement("a");
+            a.href = res.download_url;
+            a.download = "";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          }
+          if (statusEl) {
+            statusEl.textContent = (store.lang === "ru" ? "ZIP скачан и сохранён: " : "ZIP downloaded & saved: ") + (res.path || "");
+          }
           if (res.show_support_card) el("pwyw-post-export-card").hidden = false;
+        })
+        .catch(function (err) {
+          if (statusEl) statusEl.textContent = (store.lang === "ru" ? "Ошибка скачивания ZIP: " : "ZIP download failed: ") + (err && err.message ? err.message : String(err));
+        })
+        .finally(function () {
+          if (zipBtn) zipBtn.disabled = false;
         });
     });
     el("s5-reveal-folder-btn").addEventListener("click", function () {
-      fetch("/api/os/reveal", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ path: el("s1-folder-input").value }) });
+      revealProjectFolder(el("s1-folder-input").value, "s5-build-status");
     });
 
     // Support & PWYW VKVstudio buttons + direct crypto wallet copy controls
@@ -1283,9 +1380,9 @@
         syncRouteSelectFromDraft(store.draft);
         translateDOM(initLang);
         if (st && st.paths) {
-          var defDir = store.draft.output_dir || st.paths.projects_root + "/default";
-          el("exp-folder-input").value = defDir;
-          el("s1-folder-input").value = defDir;
+          var pathSep = String(st.paths.projects_root || "").indexOf("\\") !== -1 ? "\\" : "/";
+          var defDir = store.draft.output_dir || (st.paths.projects_root + pathSep + "default");
+          syncProjectPathDisplay(defDir);
           renderPathDiagnostics(st.paths);
         }
         refreshEngineHUD();

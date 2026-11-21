@@ -156,17 +156,86 @@ def _seed_colors_from_text(text: str, variant_idx: int) -> tuple[tuple[int, int,
     return bg, accent1, accent2
 
 
+_LOGO_LITERAL_STOPWORDS_RE = re.compile(
+    r"(?i)\b(?:no\s+text|without\s+text|no\s+letters|without\s+letters|no\s+words|without\s+words|"
+    r"text-free|typography|letterforms?|monograms?|initials?|words?|letters?|slogan|wordmark)\b"
+)
+
+_LOGO_FALLBACK_SPECS = [
+    (
+        "Pictogram",
+        "Flat geometric vector pictogram of twin arched bridge spans crowned by a sunlit amber keystone, flat terracotta brick (#B84A39) and deep charcoal (#1F242D) on a warm cream paper (#F6F2E9) solid backdrop",
+    ),
+    (
+        "Negative Space",
+        "Clever negative-space silhouette emblem carving an ascending folded prism inside a solid stepped gateway form, warm champagne gold (#D6A85A) on a deep obsidian matte (#12151C) solid backdrop",
+    ),
+    (
+        "Geometric Abstraction",
+        "Constructivist Bauhaus geometric abstraction built from three overlapping precision circles and a sharp 45-degree diagonal light beam, Prussian blue (#1D3557) and burnt copper (#D97736) on a soft stone-ivory (#EDF0EA) solid backdrop",
+    ),
+    (
+        "Circular Seal",
+        "Symmetrical circular heritage crest formed by a crisp heavy ring enclosing a stylized Nordic spruce leaf and horizon arc, deep forest pine (#1E4635) and burnished brass (#C89D54) on a warm alabaster (#FAF7F0) solid backdrop",
+    ),
+    (
+        "Bold Silhouette",
+        "Confident monolithic sculptural silhouette formed from two interlocking tilted stone slabs framing a diamond spark, crisp ivory (#F8F9FA) and amber gold (#E59F3C) on a midnight slate (#101A2B) solid backdrop",
+    ),
+    (
+        "Line Art",
+        "Uniform monoline continuous-stroke infinity knot twisted around a Gothic pointed arch diamond, deep crimson vermilion (#C2412D) and graphite (#23272E) on a light parchment (#F4F1EA) solid backdrop",
+    ),
+]
+
+
+def _strip_brand_tokens_for_logo(text: str, brand_name: str, logo_prompt: str = "") -> str:
+    """Prevent literal brand names, surnames, or 'no text' negations from making Z-Image render plain letters."""
+    out = " ".join(str(text or "").split())
+    forbidden: list[str] = []
+    if brand_name:
+        forbidden.append(brand_name.strip())
+        for tok in re.findall(r"[A-Za-zА-Яа-яЁё0-9]{2,}", brand_name):
+            forbidden.append(tok)
+    for phrase in sorted(set(x for x in forbidden if len(x) >= 2), key=len, reverse=True):
+        out = re.sub(rf"(?<![A-Za-z0-9]){re.escape(phrase)}(?![A-Za-z0-9])", "", out, flags=re.I)
+    out = _LOGO_LITERAL_STOPWORDS_RE.sub("", out)
+    out = re.sub(r"\s*['\"]\s*['\"]\s*", " ", out)
+    out = re.sub(r"\s*,\s*(?:,\s*)+", ", ", out)
+    out = re.sub(r"\s+", " ", out).strip(" ,.;:-")
+    return out
+
+
 def _default_logo_base_prompt(brand_name: str, description: str, logo_prompt: str, lang: str) -> str:
-    clean_brand = re.sub(r"[^A-Za-zА-Яа-яЁё0-9 &_-]+", " ", (brand_name or "Studio").strip()).strip() or "Atelier"
-    mood = " ".join((logo_prompt or description or "minimal architectural engineering emblem").split())[:260]
-    if str(lang).lower().startswith("ru") and not logo_prompt:
-        mood = "minimalist engineering emblem, crisp geometry, precision, luxury character"
+    raw_mood = _strip_brand_tokens_for_logo(logo_prompt or description or "", brand_name)
+    raw_mood = re.sub(r"[^A-Za-z0-9 ,.-]+", " ", raw_mood)
+    mood = " ".join(raw_mood.split())[:160].strip(" ,.-")
+    if not mood:
+        mood = "architectural precision arch, Baltic heritage geometry, minimalist balanced negative space"
     return (
-        f"A flat vector logo mark for the brand '{clean_brand}': {mood}. "
-        "A single centered symbol on a solid neutral backdrop, 2-4 colors, crisp edges, "
-        "balanced negative space, strong silhouette at small sizes, symbol-only composition, "
-        "professional brand-identity quality."
+        f"Flat vector graphic symbol inspired by {mood}: one clean centered pictorial emblem on a solid matte backdrop, "
+        "bold Swiss Bauhaus geometry, two crisp high-contrast colors, pure iconographic silhouette, balanced negative space."
     )
+
+
+def _default_logo_variant_prompts(
+    brand_name: str,
+    description: str,
+    logo_prompt: str,
+    lang: str,
+) -> list[str]:
+    """Six structurally & chromatographically distinct symbol-only fallback prompts for Z-Image-Turbo."""
+    ctx_words = _strip_brand_tokens_for_logo(f"{logo_prompt} {description}", brand_name)
+    ascii_cue = " ".join(re.findall(r"[A-Za-z0-9-]+", ctx_words))[:90].strip()
+    cue_tail = f" Subtle thematic inspiration: {ascii_cue}." if len(ascii_cue) >= 6 else ""
+    out: list[str] = []
+    for _style, lead in _LOGO_FALLBACK_SPECS:
+        p = (
+            f"{lead}.{cue_tail} Pure iconographic graphic symbol, sharp anti-aliased vector edges, "
+            "generous breathing room around the central mark, unmistakable silhouette at 32px, minimalist Swiss design."
+        )
+        out.append(_strip_brand_tokens_for_logo(p, brand_name, logo_prompt))
+    return out
 
 
 def _expand_logo_prompt_with_llm(
@@ -175,33 +244,52 @@ def _expand_logo_prompt_with_llm(
     description: str,
     logo_prompt: str,
     lang: str,
-) -> tuple[str, str]:
-    """Ask SmartLLM-v2 for ONE positive Z-Image-Turbo logo prompt (Turbo ignores negative prompts)."""
-    if not logo_prompt.strip() or not _can_use_gpu(state):
-        return "", "human"
+) -> tuple[list[str], str]:
+    """Ask SmartLLM-v2 for 6 truly different visual logo concepts in a single structured call."""
+    if not (logo_prompt.strip() or description.strip() or brand_name.strip()) or not _can_use_gpu(state):
+        return [], "human"
     target_lang = "Russian" if str(lang).lower().startswith("ru") else "English"
     sys_msg = (
-        "You are SmartLLM v2 Logo Art Director. Write ONE positive production prompt for Z-Image-Turbo "
-        "(8 NFEs, CFG off). Z-Image-Turbo ignores negative prompts, so describe only what should be visible. "
+        "You are an acclaimed Senior Brand Identity Director (Pentagram / Chermayeff & Geismar / Saul Bass studio). "
+        "Create SIX genuinely different flat vector graphic symbol concepts for Z-Image-Turbo (8 NFEs, CFG off). "
+        "Z-Image-Turbo renders whatever words appear inside the prompt and ignores negatives, so describe ONLY pure visual forms "
+        "and NEVER mention the words 'text', 'letter', 'initial', 'word', 'font', 'typography', or the client's literal name. "
         "Return ONLY valid JSON."
     )
     user_msg = (
-        f"Brand name: {brand_name}\n"
-        f"Project description: {description}\n"
-        f"Human logo brief ({target_lang}): {logo_prompt}\n\n"
-        "Write the prompt in English, 60-110 words, natural language (not tag soup).\n"
-        "Describe exactly one centered logo symbol and its construction, 2-4 exact colors, "
-        "a solid neutral backdrop, flat vector style, crisp edges, balanced negative space, "
-        "strong silhouette at 32px, symbol-only composition.\n"
-        f"Follow this canon: {ZIMAGE_LOGO_CANON_2026}\n"
-        "Do not write a negative-prompt list; phrase every requirement positively.\n\n"
-        'Return JSON: {"prompt": "...", "symbol": "...", "palette": ["#hex", "#hex", "#hex"]}'
+        f"Industry / Project brief ({target_lang}): {description or brand_name}\n"
+        f"Visual & Cultural Direction from User ({target_lang}): {logo_prompt or 'timeless architectural brand mark'}\n\n"
+        "Translate any geographic, historical, or cultural mood (such as Koenigsberg red-brick Baltic heritage, Prussian Gothic arches, "
+        "twin-river bridge geometry, amber, architectural rhythm, acoustic waves, craft tools) into PURE VISUAL SHAPES & METAPHORS.\n\n"
+        "Produce EXACTLY 6 completely different graphic concepts matching these 6 styles in order:\n"
+        "01 Pictogram: crisp single recognizable object / architectural symbol\n"
+        "02 Negative Space: clever figure-ground illusion carved out of one bold shape\n"
+        "03 Geometric Abstraction: overlapping Bauhaus circles, arcs, triangles, or angled ribs\n"
+        "04 Circular Seal: symmetrical badge ring enclosing an emblem inside\n"
+        "05 Bold Silhouette: heavy dark sculptural mass on light stone or luminous gold mark on deep obsidian\n"
+        "06 Line Art: continuous uniform-weight monoline geometric emblem\n\n"
+        "MANDATORY DIVERSITY RULES:\n"
+        "- Each of the 6 prompts MUST use a DIFFERENT concrete visual subject and a DIFFERENT color palette + background polarity (mix cream/ivory, deep obsidian/slate with brass, terracotta/navy, emerald/alabaster — NEVER repeat navy-on-white!).\n"
+        "- Put the physical visual object, geometry, and exact colors in the VERY FIRST 15 WORDS of each prompt.\n"
+        "- NEVER spell out the client brand name, initials, letter shapes (like 'letter K'), or write 'no text'/'without letters'.\n"
+        f"- Follow this canon: {ZIMAGE_LOGO_CANON_2026}\n"
+        "- Length: 55-85 words per prompt in vivid natural English.\n\n"
+        'Return JSON: {"concepts": [{"style": "01 Pictogram", "prompt": "..."}, {"style": "02 Negative Space", "prompt": "..."}, '
+        '{"style": "03 Geometric Abstraction", "prompt": "..."}, {"style": "04 Circular Seal", "prompt": "..."}, '
+        '{"style": "05 Bold Silhouette", "prompt": "..."}, {"style": "06 Line Art", "prompt": "..."}]}'
     )
     try:
-        raw = state.llm.generate_structured_json(sys_msg, user_msg, max_tokens=700)
-        prompt = " ".join(str(raw.get("prompt") or "").split())
-        if len(prompt) >= 50:
-            return prompt, "llm"
+        raw = state.llm.generate_structured_json(sys_msg, user_msg, max_tokens=1600)
+        concepts = raw.get("concepts") if isinstance(raw, dict) else None
+        if isinstance(concepts, list):
+            parsed: list[str] = []
+            for item in concepts:
+                raw_p = item.get("prompt") if isinstance(item, dict) else (item if isinstance(item, str) else "")
+                clean_p = _strip_brand_tokens_for_logo(" ".join(str(raw_p or "").split()), brand_name, logo_prompt)
+                if len(clean_p) >= 40:
+                    parsed.append(clean_p)
+            if len(parsed) >= 3:
+                return parsed[:6], "llm"
     except Exception as exc:
         try:
             (get_log_dir() / "logo-prompt-debug.log").write_text(f"logo_prompt_exc: {exc!r}\n", encoding="utf-8")
@@ -212,7 +300,7 @@ def _expand_logo_prompt_with_llm(
             state.llm.stop()
         except Exception:
             pass
-    return "", "human"
+    return [], "human"
 
 
 def _prepare_logo_prompts(
@@ -222,14 +310,24 @@ def _prepare_logo_prompts(
     logo_prompt: str,
     lang: str,
 ) -> tuple[list[str], list[str], list[str], str]:
-    base_prompt, source = _expand_logo_prompt_with_llm(state, brand_name, description, logo_prompt, lang) if state else ("", "human")
-    if not base_prompt:
-        base_prompt = _default_logo_base_prompt(brand_name, description, logo_prompt, lang)
-    prompts = [
-        f"{base_prompt} Composition: {finisher}. Flat vector symbol, centered on a solid neutral background."
-        for finisher in LOGO_FINISHERS
-    ]
-    return prompts[:6], list(LOGO_STYLES_RU), list(LOGO_STYLES_EN), source
+    llm_prompts, source = (
+        _expand_logo_prompt_with_llm(state, brand_name, description, logo_prompt, lang)
+        if state is not None
+        else ([], "human")
+    )
+    fallback_prompts = _default_logo_variant_prompts(brand_name, description, logo_prompt, lang)
+    final_prompts: list[str] = []
+    seen_prefixes: set[str] = set()
+    for idx in range(6):
+        cand = llm_prompts[idx] if idx < len(llm_prompts) else ""
+        cand = _strip_brand_tokens_for_logo(cand, brand_name, logo_prompt)
+        prefix = cand[:45].lower()
+        if not cand or len(cand) < 40 or prefix in seen_prefixes:
+            cand = fallback_prompts[idx]
+            prefix = cand[:45].lower()
+        seen_prefixes.add(prefix)
+        final_prompts.append(cand)
+    return final_prompts, list(LOGO_STYLES_RU), list(LOGO_STYLES_EN), source
 
 
 def _set_logo_progress(state: Any | None, percent: int, msg_ru: str, msg_en: str) -> None:
@@ -283,6 +381,7 @@ def generate_six_logo_variants_512(
             state.gpu.acquire_or_raise()
             state.gpu.transition(state.image_jobs.gpu.state.__class__.IMAGE_RUNNING)
             _set_logo_progress(state, 55, "Z-Image рендерит 6 вариантов 512×512...", "Z-Image is rendering 6 variants at 512x512...")
+            base_seed = (int(uuid.uuid4().hex[:6], 16) % 900000) + 1000
             batch_items = [
                 {
                     "id": f"logo_{idx + 1}",
@@ -291,7 +390,7 @@ def generate_six_logo_variants_512(
                     "height": 512,
                     "steps": 8,
                     "cfg_scale": 1.0,
-                    "seed": 101 + idx,
+                    "seed": base_seed + idx * 7919,
                     "output_path": str(batch_dir / f"logo_{idx + 1}.png"),
                 }
                 for idx in range(6)
@@ -1406,6 +1505,15 @@ class ProjectOrchestrator:
                     style_suffix = _sanitize_zimage_prompt(str(visuals.get("style_suffix") or ""), team_names)
                     heroes = visuals.get("heroes") or {"index": visuals.get("hero") or ""}
                     batch_items = []
+                    def _join_prompt_suffix(base_p: str, suf: str) -> str:
+                        clean_b = str(base_p or "").strip()
+                        clean_s = str(suf or "").strip()
+                        if not clean_s:
+                            return clean_b
+                        if clean_s[:32].lower() in clean_b.lower():
+                            return clean_b
+                        return f"{clean_b} {clean_s}".strip()
+
                     for p_idx, h_slug in enumerate(merged.get("selected_pages") or ["index"]):
                         raw_hp = str(heroes.get(h_slug) or heroes.get("index") or f"Editorial photograph of {brief_for_llm[:140]}, crisp directional lighting, 35mm lens")
                         h_prompt = _sanitize_zimage_prompt(raw_hp, team_names)
@@ -1416,7 +1524,7 @@ class ProjectOrchestrator:
                         batch_items.append(
                             {
                                 "id": h_id,
-                                "prompt": f"{h_prompt} {style_suffix}".strip(),
+                                "prompt": _join_prompt_suffix(h_prompt, style_suffix),
                                 "width": hw,
                                 "height": hh,
                                 "steps": 8,
@@ -1431,7 +1539,7 @@ class ProjectOrchestrator:
                         batch_items.append(
                             {
                                 "id": f"gallery_{g_idx + 1}",
-                                "prompt": f"{g_clean} {style_suffix}".strip(),
+                                "prompt": _join_prompt_suffix(g_clean, style_suffix),
                                 "width": gw,
                                 "height": gh,
                                 "steps": 8,
@@ -1441,6 +1549,7 @@ class ProjectOrchestrator:
                             }
                         )
                     tw, th = resolve_slot_dimensions("team")
+                    brand_seed_offset = sum(ord(c) for c in str(merged.get("name") or "s")) % 997
                     for t_idx, t_prompt in enumerate(visuals.get("team") or []):
                         t_clean = _sanitize_zimage_prompt(str(t_prompt), team_names)
                         batch_items.append(
@@ -1451,7 +1560,7 @@ class ProjectOrchestrator:
                                 "height": th,
                                 "steps": 8,
                                 "cfg_scale": 1.0,
-                                "seed": 70 + t_idx,
+                                "seed": 1703 + t_idx * 977 + brand_seed_offset,
                                 "output_path": str(assets_dir / f"team_{t_idx + 1}.png"),
                             }
                         )

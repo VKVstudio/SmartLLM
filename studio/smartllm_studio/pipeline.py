@@ -55,7 +55,7 @@ LATIN_WHITELIST = {
     "sla", "nvme", "nvlink", "gpu", "cpu", "llm", "lora", "soc", "iso", "api", "cad", "cnc",
 }
 COPY_BATCH_SIZE = 6
-PIPELINE_VERSION = 10
+PIPELINE_VERSION = 11
 
 BLOCK_FORMAT_HINTS_RU = {
     "manifesto": "<Девиз> | <Одно конкретное предложение позиционирования этой страницы>",
@@ -355,6 +355,86 @@ def _resolve_canonical_team(
 _WOMAN_WORDS_RE = re.compile(r"\b(?:woman|women|female|lady)\b", re.I)
 _MAN_WORDS_RE = re.compile(r"\b(?:man|men|male|gentleman)\b", re.I)
 _NEUTRAL_PERSON_RE = re.compile(r"\b(?:person|individual|specialist|subject)\b", re.I)
+
+TEAM_PERSONAS_FEMALE = [
+    "34-year-old woman with honey-blonde hair pulled back into a clean low bun, bright hazel eyes, subtle confident smile, tailored ivory silk blouse under a slate blazer, slight three-quarter turn",
+    "46-year-old woman with silver-streaked chestnut shoulder-length wavy hair, thin tortoiseshell rectangular glasses, warm composed expression, burgundy fine-knit turtleneck, front-angle framing",
+    "29-year-old woman with short dark espresso pixie haircut, dark brown eyes, faint freckles, relaxed open gaze, olive linen architectural jacket over black knit top, gentle head tilt",
+    "53-year-old woman with sleek silver-gray bob haircut, defined jawline, poised warm smile, deep navy structured wool blazer over cream shirt, upright editorial stance",
+    "38-year-old woman with curly auburn copper hair framing her shoulders, emerald green eyes, attentive expression, warm camel cashmere crewneck sweater, three-quarter studio pose",
+    "42-year-old woman with straight jet-black hair tucked behind one ear, small brushed gold earrings, calm friendly expression, charcoal coat over warm sand silk collar",
+]
+
+TEAM_PERSONAS_MALE = [
+    "39-year-old man with short salt-and-pepper wavy hair and neatly trimmed short beard, slim dark eyeglasses, calm analytical expression, graphite merino crewneck under textured blazer, three-quarter turn",
+    "54-year-old man with silver-gray receding hair, clean-shaven face, subtle character lines around eyes, warm reassuring smile, unbuttoned navy Oxford collar with herringbone jacket",
+    "31-year-old man with thick dark-brown tousled side-part hair, clean-shaven jaw, energetic approachable gaze, warm terracotta knit polo, slight shoulder angle",
+    "45-year-old bald man with groomed full dark beard and expressive eyebrows, hazel eyes, composed editorial gaze, crisp black Mandarin-collar architectural overshirt",
+    "49-year-old man with combed-back blond-gray hair, light stubble, thin steel round eyewear, attentive expression, forest-olive structured overshirt over charcoal tee",
+    "35-year-old East Asian man with neat dark straight crop, clean-shaven face, friendly subtle smile, warm sand suede jacket over slate shirt, relaxed upright studio posture",
+]
+
+_PORTRAIT_APPEARANCE_MARKERS = re.compile(
+    r"(?i)\b(?:year-old|blonde|chestnut|auburn|silver-gray|pixie|bob|wavy|curly|"
+    r"beard|clean-shaven|bald|stubble|glasses|eyewear|freckl|turtleneck|blazer|jacket|sweater|linen|polo|overshirt)\b"
+)
+
+
+def _pick_team_personas(team_slots: list[dict[str, Any]], brand: str = "") -> list[str]:
+    """Assign distinct, non-repeating real-world appearance personas aligned with each slot's gender."""
+    offset = sum(ord(ch) for ch in str(brand or "studio"))
+    fem_used = 0
+    male_used = 0
+    picked: list[str] = []
+    for slot in team_slots:
+        if str(slot.get("gender") or "female") == "female":
+            idx = (offset + fem_used) % len(TEAM_PERSONAS_FEMALE)
+            picked.append(TEAM_PERSONAS_FEMALE[idx])
+            fem_used += 1
+        else:
+            idx = (offset + male_used) % len(TEAM_PERSONAS_MALE)
+            picked.append(TEAM_PERSONAS_MALE[idx])
+            male_used += 1
+    return picked
+
+
+def _portrait_token_set(text: str) -> set[str]:
+    stripped = re.sub(
+        r"(?i)vertical 3:4 medium chest-up studio portrait(?: of an adult (?:woman|man))? with generous empty headroom above the top of the head",
+        "",
+        str(text or ""),
+    )
+    stops = {"portrait", "studio", "editorial", "seamless", "backdrop", "background", "light", "lighting", "soft", "lens", "85mm", "sharp", "focus", "eyes", "with", "headroom", "empty", "generous", "adult", "woman", "man", "above", "head"}
+    return {w for w in re.findall(r"[a-z0-9-]{3,}", stripped.lower()) if w not in stops}
+
+
+def _ensure_distinct_team_portrait(
+    cand_prompt: str,
+    gender: str,
+    persona: str,
+    team_style: str,
+    seen_token_sets: list[set[str]],
+) -> str:
+    """Guarantee every team slot depicts a visibly distinct person with concrete appearance cues."""
+    normalized = _enforce_portrait_gender(cand_prompt, gender)
+    toks = _portrait_token_set(normalized)
+    has_persona = bool(_PORTRAIT_APPEARANCE_MARKERS.search(normalized))
+    is_duplicate = False
+    for prev in seen_token_sets:
+        union = toks | prev
+        if union and (len(toks & prev) / len(union)) >= 0.60:
+            is_duplicate = True
+            break
+    if is_duplicate or not has_persona or not toks:
+        synthesized = (
+            f"Vertical 3:4 medium chest-up studio portrait of a {persona}, "
+            f"generous empty headroom above the top of the head, {team_style}, "
+            "sharp focus on eyes, 85mm prime lens"
+        )
+        normalized = _enforce_portrait_gender(synthesized, gender)
+        toks = _portrait_token_set(normalized)
+    seen_token_sets.append(toks)
+    return _clean(normalized)
 
 
 def _enforce_portrait_gender(prompt: str, gender: str) -> str:
@@ -1069,8 +1149,9 @@ def run_content_pipeline(
                 break
     member_names = [m["name"] for m in team_slots if m.get("name")]
     brand_words = [w for w in re.findall(r"[A-Za-zА-Яа-яЁё0-9]{3,}", brand or "") if w]
+    team_personas = _pick_team_personas(team_slots, brand)
     team_roles = [
-        f"Slot {idx + 1} ({'FEMALE' if m.get('gender') == 'female' else 'MALE'} specialist, DO NOT write name): {m.get('role') or 'senior specialist'}"
+        f"Slot {idx + 1} ({'FEMALE' if m.get('gender') == 'female' else 'MALE'} specialist, DO NOT write name): {m.get('role') or 'senior specialist'} — distinct appearance: {team_personas[idx]}"
         for idx, m in enumerate(team_slots)
     ]
     if visuals is None:
@@ -1103,7 +1184,7 @@ def run_content_pipeline(
             "CRITICAL RULES FOR Z-IMAGE-TURBO:\n"
             "1. 'brand_logo': follow " + ZIMAGE_LOGO_CANON_2026 + " Design ONE minimalist flat vector emblem uniquely symbolizing THIS company's industry on a solid neutral backdrop, 2-3 crisp geometric colors. NEVER write brand letters, initials, or words.\n"
             "2. 'heroes' and 'gallery': photorealistic architectural/hardware/environment/product scenes matching each slot — NO close-up faces or human headshots inside wide heroes. 'gallery[0]' MUST clearly differ in framing and subject from 'gallery[1]'.\n"
-            "3. 'team': one vertical 3:4 medium chest-up editorial portrait per slot on a seamless neutral studio backdrop with generous empty headroom above the top of the head so full hair, head, and shoulders sit comfortably inside frame. For EVERY FEMALE slot start with 'Vertical 3:4 medium chest-up studio portrait of an adult woman with generous empty headroom'; for EVERY MALE slot start with 'Vertical 3:4 medium chest-up studio portrait of an adult man with generous empty headroom'. Never include person names, nameplates, watermarks, or words.\n"
+            "3. 'team': one distinct vertical 3:4 medium chest-up editorial portrait per slot on a seamless neutral studio backdrop with generous empty headroom above the top of the head so full hair, head, and shoulders sit comfortably inside frame. Each person MUST clearly match their assigned distinct age, hair, glasses/beard/clean-shaven look, attire, and pose from 'team_roles' — NEVER copy or repeat the same appearance description across slots. For EVERY FEMALE slot describe the adult woman's exact look; for EVERY MALE slot describe the adult man's exact look. Never include person names, nameplates, watermarks, or words.\n"
             'Return JSON: {"brand_logo": "...", "heroes": {"slug": "..."}, "gallery": ["distinct scene 1", "distinct scene 2"], "team": ["...", ...], "style_suffix": "short positive lighting and lens clause"}'
         )
         raw = _llm_json(state, gpu_ok, sys_msg, user_msg, max_tokens=3200, required_keys=["brand_logo", "heroes", "gallery", "team"])
@@ -1125,13 +1206,15 @@ def run_content_pipeline(
         team_style = _sanitize_zimage_prompt(_clean(dossier.get("team")) or "clean editorial headshot, soft studio light, seamless neutral backdrop")
         raw_team_list = [_sanitize_zimage_prompt(_clean(x), member_names) for x in (raw.get("team") or []) if _clean(x)]
         team_raw: list[str] = []
+        seen_team_tokens: list[set[str]] = []
         for idx, slot in enumerate(team_slots):
             gender = str(slot.get("gender") or infer_gender(slot.get("name", ""), "", idx))
-            role_cue = re.sub(r"[^A-Za-z0-9 ,.-]+", " ", str(slot.get("role") or "senior specialist"))[:80].strip()
+            persona = team_personas[idx] if idx < len(team_personas) else (TEAM_PERSONAS_FEMALE[idx % len(TEAM_PERSONAS_FEMALE)] if gender == "female" else TEAM_PERSONAS_MALE[idx % len(TEAM_PERSONAS_MALE)])
             cand_p = raw_team_list[idx] if idx < len(raw_team_list) and raw_team_list[idx] else (
-                f"{team_style}, tailored studio attire matching a {role_cue}, softbox key light, seamless neutral background, 85mm shallow depth of field"
+                f"Vertical 3:4 medium chest-up studio portrait of a {persona}, generous empty headroom above the top of the head, {team_style}, 85mm shallow depth of field"
             )
-            team_raw.append(_sanitize_zimage_prompt(_enforce_portrait_gender(cand_p, gender), member_names))
+            distinct_p = _ensure_distinct_team_portrait(cand_p, gender, persona, team_style, seen_team_tokens)
+            team_raw.append(_sanitize_zimage_prompt(distinct_p, member_names))
         raw_logo_p = _clean(raw.get("brand_logo") or raw.get("logo"))
         if not raw_logo_p or len(raw_logo_p) < 35:
             raw_logo_p = _default_logo_base_prompt(brand, brief, "", lang)
