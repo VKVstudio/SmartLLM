@@ -87,6 +87,7 @@
   "hud_lock_label": "Блокировка:",
   "btn_hud_start_llm": "Запустить модель",
   "btn_hud_stop_llm": "Освободить память",
+  "btn_hud_quit": "Выйти",
   "modal_settings_title": "Настройки путей к локальным движкам",
   "lbl_set_model": "Путь к весам модели (GGUF)",
   "lbl_set_llama": "Путь к бинарному файлу llama-server",

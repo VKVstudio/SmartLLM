@@ -92,12 +92,21 @@ def extract_six_swatches(raw_bytes: bytes, fmt: str) -> list[str]:
             c = m.lower()
             if c not in found:
                 found.append(c)
-    else:
-        step = max(1, len(raw_bytes) // 24)
-        for i in range(8, min(len(raw_bytes) - 3, 8 + step * 12), step):
-            hx = f"#{raw_bytes[i]:02x}{raw_bytes[i+1]:02x}{raw_bytes[i+2]:02x}"
-            if hx not in found:
-                found.append(hx)
+    elif fmt in ("png", "webp"):
+        try:
+            import io
+            from PIL import Image
+
+            with Image.open(io.BytesIO(raw_bytes)) as im:
+                quant = im.convert("RGB").resize((64, 64)).quantize(colors=6)
+                rgb_colors = quant.convert("RGB").getcolors() or []
+                for _count, rgb in sorted(rgb_colors, key=lambda x: x[0], reverse=True):
+                    if isinstance(rgb, tuple) and len(rgb) >= 3:
+                        hx = f"#{int(rgb[0]):02x}{int(rgb[1]):02x}{int(rgb[2]):02x}"
+                        if hx not in found:
+                            found.append(hx)
+        except Exception:
+            pass
     for fallback in DEFAULT_ATELIER_SWATCHES:
         if len(found) >= 6:
             break

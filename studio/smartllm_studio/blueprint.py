@@ -15,7 +15,7 @@ import zipfile
 
 from .adapters import get_rag_selector
 from .catalog import AI_CRAWLERS_DEFAULT
-from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT
+from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT, discover_studio_paths
 from .pages import DEFAULT_PAGE_SLUGS, build_default_company, build_routes_from_pages, default_page_blocks, read_png_dimensions
 from .rag import make_synthetic_png
 from .sanitizer import ingest_brand_logo
@@ -53,6 +53,8 @@ def _safe_project_dir(raw: Any, default_dir: Path) -> Path:
 
 def default_project_draft(project_id: str = "default", repo_root: Path | None = None) -> dict[str, Any]:
     root = (repo_root or DEFAULT_REPO_ROOT).resolve()
+    safe_id = "".join(c for c in str(project_id or "default") if c.isalnum() or c in ("-", "_")) or "default"
+    projects_root = Path(discover_studio_paths(repo_root=root)["projects_root"])
     page_blocks = default_page_blocks(DEFAULT_PAGE_SLUGS)
     routes = build_routes_from_pages(DEFAULT_PAGE_SLUGS, page_blocks, "ru")
     company = build_default_company("Quartz-Field Atelier", "High-craft industrial design and acoustic engineering", "ru")
@@ -72,7 +74,7 @@ def default_project_draft(project_id: str = "default", repo_root: Path | None = 
         "compare_canon_id": "13_generative_ai_adaptive",
         "stack": "astro",
         "motion": "gsap_scrolltrigger",
-        "output_dir": str(root / "eval" / "studio_projects" / project_id),
+        "output_dir": str(projects_root / safe_id),
         "site_type": "multi",
         "selected_pages": list(DEFAULT_PAGE_SLUGS),
         "page_blocks": page_blocks,
@@ -121,26 +123,42 @@ def default_project_draft(project_id: str = "default", repo_root: Path | None = 
     }
 
 
+_RU_TRANSLIT_MAP: dict[str, str] = {
+    "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ё": "yo", "ж": "zh",
+    "з": "z", "и": "i", "й": "y", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o",
+    "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "kh", "ц": "ts",
+    "ч": "ch", "ш": "sh", "щ": "shch", "ъ": "", "ы": "y", "ь": "", "э": "e", "ю": "yu", "я": "ya",
+}
+
+
+def _slugify_route(raw: str, fallback: str = "index") -> str:
+    lower = str(raw or "").strip().lower()
+    translit = "".join(_RU_TRANSLIT_MAP.get(ch, ch) for ch in lower)
+    slug = re.sub(r"[^a-z0-9_-]+", "-", translit).strip("-")
+    return slug or fallback
+
+
 def _normalize_routes(raw_routes: list[dict[str, Any]] | None, lang: str) -> list[dict[str, Any]]:
     if not raw_routes:
         return default_project_draft()["routes"]
     out: list[dict[str, Any]] = []
     seen: set[str] = set()
     for idx, r in enumerate(raw_routes):
-        slug = str(r.get("slug") or ("index" if idx == 0 else f"page-{idx}")).strip().lower()
-        slug = "".join(ch for ch in slug if ch.isalnum() or ch in ("-", "_")) or "index"
+        raw_slug = str(r.get("slug") or ("index" if idx == 0 else f"page-{idx}")).strip()
+        slug = _slugify_route(raw_slug, fallback="index" if idx == 0 else f"page-{idx}")
         if slug in seen:
             continue
         seen.add(slug)
         filename = "index.html" if slug in ("index", "home", "root") else f"{slug}.html"
         path = "/" if filename == "index.html" else f"/{filename}"
         bricks = list(r.get("bricks") or ["hero", "features", "faq", "contact", "footer"])
+        default_title = raw_slug if any(ch in _RU_TRANSLIT_MAP for ch in raw_slug.lower()) else ("Главная" if lang == "ru" and filename == "index.html" else slug.title())
         out.append(
             {
                 "slug": slug,
                 "filename": filename,
                 "path": path,
-                "title": str(r.get("title") or ("Главная" if lang == "ru" and filename == "index.html" else slug.title())),
+                "title": str(r.get("title") or default_title),
                 "bricks": bricks,
                 "copy_en": dict(r.get("copy_en") or {}),
                 "copy_ru": dict(r.get("copy_ru") or {}),
@@ -195,7 +213,8 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
         seo_cfg["description"] = lead_sub[:155]
 
     safe_id = "".join(c for c in str(payload.get("id") or "default") if c.isalnum() or c in ("-", "_")) or "default"
-    project_dir = _safe_project_dir(payload.get("output_dir") or payload.get("project_dir"), root / "eval" / "studio_projects" / safe_id)
+    default_projects_root = Path(discover_studio_paths(repo_root=root)["projects_root"])
+    project_dir = _safe_project_dir(payload.get("output_dir") or payload.get("project_dir"), default_projects_root / safe_id)
     assets_dir = project_dir / "assets"
     assets_dir.mkdir(parents=True, exist_ok=True)
 
@@ -203,7 +222,12 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
         logo_meta = ingest_brand_logo(str(payload["logo_filename"]), base64.b64decode(str(payload["logo_bytes_b64"])), assets_dir)
     elif payload.get("selected_logo_path"):
         lp = Path(str(payload["selected_logo_path"])).resolve()
-        allowed_roots = ((root / "eval" / "studio_projects").resolve(), STUDIO_ROOT.resolve(), project_dir.parent.resolve())
+        allowed_roots = (
+            (root / "eval" / "studio_projects").resolve(),
+            (root / "studio_projects").resolve(),
+            STUDIO_ROOT.resolve(),
+            project_dir.parent.resolve(),
+        )
         if lp.exists() and lp.is_file() and any(lp.is_relative_to(r) for r in allowed_roots):
             logo_meta = ingest_brand_logo(lp.name, lp.read_bytes(), assets_dir)
         else:

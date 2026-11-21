@@ -12,7 +12,7 @@ import sys
 import threading
 from typing import Any
 import urllib.request
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 import uuid
 
 from . import __version__
@@ -269,7 +269,7 @@ def create_studio_server(
             self.wfile.write(raw)
 
         def do_GET(self) -> None:
-            path = urlparse(self.path).path
+            path = unquote(urlparse(self.path).path)
 
             def _safe_parts(raw: str) -> list[str]:
                 return [p for p in raw.split("/") if p and p not in ("..", ".") and ":" not in p and "\\" not in p]
@@ -347,7 +347,7 @@ def create_studio_server(
             return json.loads(raw) if raw.strip() else {}
 
         def do_PUT(self) -> None:
-            path = urlparse(self.path).path
+            path = unquote(urlparse(self.path).path)
             try:
                 body = self._read_body()
                 if path.startswith("/api/projects/"):
@@ -359,7 +359,7 @@ def create_studio_server(
             self._send_json(404, {"error": "UNKNOWN_PUT_ENDPOINT", "path": path})
 
         def do_POST(self) -> None:
-            path = urlparse(self.path).path
+            path = unquote(urlparse(self.path).path)
             try:
                 body = self._read_body()
             except Exception as exc:
@@ -517,6 +517,9 @@ def create_studio_server(
                     raw_out_dir = str(body.get("output_dir") or "").strip().strip("`\"'")
                     pdir = _safe_project_dir(raw_out_dir, state.project_dir(pid_l))
                     res_logo = ingest_brand_logo(src_p.name, src_p.read_bytes(), pdir / "assets")
+                    if res_logo.get("format") != "svg":
+                        (pdir / "assets" / "brand-logo.svg").unlink(missing_ok=True)
+                        (pdir / "assets" / "favicon.svg").unlink(missing_ok=True)
                     draft = state.save_project(pid_l, {"logo": res_logo, "selected_logo_path": str(src_p)})
                     bp = compile_project_blueprint(draft, repo_root=state.repo_root)
                     prev_url = state.register_preview(pid_l, Path(bp["project_dir"]), rev=draft["revision"])
@@ -547,9 +550,22 @@ def create_studio_server(
                     b64 = str(body.get("data_b64") or "")
                     pid = str(body.get("project_id") or "default")
                     raw_proj_dir = str(body.get("project_dir") or "").strip().strip("`\"'")
-                    pdir = Path(raw_proj_dir or state.project_dir(pid))
+                    pdir = _safe_project_dir(raw_proj_dir, state.project_dir(pid))
                     res = ingest_brand_logo(fname, base64.b64decode(b64), pdir / "assets")
-                    return self._send_json(200, {"status": "sanitized", "logo": res})
+                    if res.get("format") in ("png", "webp"):
+                        (pdir / "assets" / "brand-logo.svg").unlink(missing_ok=True)
+                        (pdir / "assets" / "favicon.svg").unlink(missing_ok=True)
+                    elif res.get("format") == "svg":
+                        (pdir / "assets" / "brand-logo.png").unlink(missing_ok=True)
+                        (pdir / "assets" / "favicon.png").unlink(missing_ok=True)
+                        (pdir / "assets" / "brand-logo.webp").unlink(missing_ok=True)
+                    save_payload: dict[str, Any] = {"logo": res, "selected_logo_path": str(pdir / res["logo_relpath"])}
+                    if raw_proj_dir:
+                        save_payload["output_dir"] = str(pdir)
+                    draft = state.save_project(pid, save_payload)
+                    bp = compile_project_blueprint(draft, repo_root=state.repo_root)
+                    prev_url = state.register_preview(pid, Path(bp["project_dir"]), rev=draft["revision"])
+                    return self._send_json(200, {"status": "sanitized", "logo": res, "selected_logo_path": draft["selected_logo_path"], "preview_url": prev_url})
                 if path.startswith("/api/preview/"):
                     pid = path.split("/")[3] or "default"
                     draft = state.save_project(pid, body) if body else state.load_project(pid)

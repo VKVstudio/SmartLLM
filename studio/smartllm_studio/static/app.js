@@ -661,7 +661,13 @@
         lbl.textContent = store.lang === "ru" ? meta.title_ru : meta.title_en;
         var ta = document.createElement("textarea");
         ta.id = inpId;
+        ta.name = "studio_blk_" + slug + "_" + bid;
         ta.rows = 2;
+        ta.setAttribute("autocomplete", "off");
+        ta.setAttribute("data-lpignore", "true");
+        ta.setAttribute("data-1p-ignore", "true");
+        ta.setAttribute("data-bwignore", "true");
+        ta.setAttribute("data-form-type", "other");
         ta.value = ((store.pageBlockPrompts[slug] || {})[bid]) || "";
         ta.placeholder = store.lang === "ru"
           ? "Опишите своими словами, что должно быть в этом блоке (пункты можно разделять точкой с запятой ; или |)..."
@@ -840,6 +846,55 @@
       });
   }
 
+  var RU_TRANSLIT_MAP = {
+    "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ё": "yo", "ж": "zh",
+    "з": "z", "и": "i", "й": "y", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o",
+    "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "kh", "ц": "ts",
+    "ч": "ch", "ш": "sh", "щ": "shch", "ъ": "", "ы": "y", "ь": "", "э": "e", "ю": "yu", "я": "ya"
+  };
+
+  function slugifyPageTitle(raw) {
+    var lower = String(raw || "").trim().toLowerCase();
+    var out = "";
+    for (var i = 0; i < lower.length; i++) {
+      var ch = lower.charAt(i);
+      out += Object.prototype.hasOwnProperty.call(RU_TRANSLIT_MAP, ch) ? RU_TRANSLIT_MAP[ch] : ch;
+    }
+    return out.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "page";
+  }
+
+  function renderPathDiagnostics(paths) {
+    if (!paths) return;
+    el("set-model-input").value = paths.gguf_model_path || "";
+    el("set-llama-input").value = paths.llama_server_bin || "";
+    el("set-sd-input").value = paths.sd_cli_bin || "";
+    el("set-mmproj-input").value = paths.mmproj_path || "";
+    el("set-dit-input").value = paths.dit_model_path || "";
+    el("set-te-input").value = paths.te_model_path || "";
+    el("set-vae-input").value = paths.vae_model_path || "";
+    var flagMap = {
+      gguf_model_path: "gguf_model_exists",
+      llama_server_bin: "llama_server_exists",
+      sd_cli_bin: "sd_cli_exists",
+      mmproj_path: "mmproj_exists",
+      dit_model_path: "dit_model_exists",
+      te_model_path: "te_model_exists",
+      vae_model_path: "vae_model_exists"
+    };
+    var diag = Object.keys(flagMap).map(function (k) {
+      return (paths[flagMap[k]] ? "OK   " : "MISS ") + k + " = " + (paths[k] || "");
+    });
+    el("set-paths-status").textContent = diag.join("\n");
+    var missing = (paths.missing_required || []).concat(paths.missing_visuals || []);
+    var banner = el("setup-banner");
+    if (banner) {
+      banner.hidden = missing.length === 0;
+      if (missing.length) {
+        el("setup-banner-text").textContent = (store.lang === "ru" ? "Не найдены компоненты: " : "Missing components: ") + missing.join(", ");
+      }
+    }
+  }
+
   function handleLogoUpload(file) {
     if (!file || !store.draft) return;
     var reader = new FileReader();
@@ -860,6 +915,10 @@
         .then(function (data) {
           if (data.logo) {
             store.draft.logo = data.logo;
+            store.draft.selected_logo_path = data.selected_logo_path || store.draft.selected_logo_path;
+            if (data.preview_url) {
+              el("live-stage-iframe").src = data.preview_url + (data.preview_url.indexOf("?") === -1 ? "?" : "&") + "t=" + Date.now();
+            }
             el("s2-logo-status").textContent = (store.lang === "ru" ? "Загружен свой логотип: " : "Uploaded custom logo: ") + file.name;
           }
         });
@@ -868,9 +927,18 @@
   }
 
   function bindAllControls() {
+    document.addEventListener("submit", function (ev) { ev.preventDefault(); });
     el("mode-btn-constructor").addEventListener("click", function () { setMode("constructor"); });
     el("mode-btn-express").addEventListener("click", function () { setMode("express"); });
-    el("btn-lang-switch").addEventListener("click", function () { translateDOM(store.lang === "en" ? "ru" : "en"); });
+    el("btn-lang-switch").addEventListener("click", function () {
+      var nextLang = store.lang === "en" ? "ru" : "en";
+      translateDOM(nextLang);
+      fetch("/api/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ language: nextLang })
+      }).catch(function () {});
+    });
     el("btn-open-support").addEventListener("click", function () { el("modal-support").hidden = false; });
     el("hud-support-link-btn").addEventListener("click", function () { el("modal-support").hidden = false; });
     el("btn-close-support").addEventListener("click", function () { el("modal-support").hidden = true; });
@@ -981,7 +1049,7 @@
     el("s4-add-page-btn").addEventListener("click", function () {
       var raw = el("s4-custom-page-input").value.trim();
       if (!raw) return;
-      var slug = raw.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, "-") || "page";
+      var slug = slugifyPageTitle(raw);
       var allBlocks = (store.catalog.available_blocks || []).map(function (b) { return b.id; });
       store.catalog.preset_pages.push({
         slug: slug,
@@ -1091,6 +1159,12 @@
     el("hud-stop-llm-btn").addEventListener("click", function () {
       fetch("/api/engine/llm/stop", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" }).then(function () { refreshEngineHUD(); });
     });
+    el("hud-quit-studio-btn").addEventListener("click", function () {
+      el("hud-quit-studio-btn").disabled = true;
+      fetch("/api/studio/shutdown", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" })
+        .then(function () { el("hud-engine-state").textContent = "stopped"; })
+        .catch(function () { el("hud-engine-state").textContent = "stopped"; });
+    });
     ["set-model-input", "set-llama-input", "set-sd-input", "set-mmproj-input", "set-dit-input", "set-te-input", "set-vae-input", "set-support-mode"].forEach(function (id) {
       el(id).addEventListener("input", function () {});
       el(id).addEventListener("change", function () {});
@@ -1111,7 +1185,14 @@
             vae_model_path: el("set-vae-input").value
           }
         })
-      }).then(function () { el("modal-settings").hidden = true; });
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res && res.settings && res.settings.paths) {
+            renderPathDiagnostics(res.settings.paths);
+          }
+          el("modal-settings").hidden = true;
+        });
     });
 
     document.addEventListener("keydown", function (ev) {
@@ -1160,45 +1241,37 @@
         store.i18n.ru = res[1];
         store.catalog = res[2];
         store.draft = res[3];
+        if (store.draft) {
+          if (store.draft.name && String(store.draft.name).trim()) {
+            el("s2-name").value = String(store.draft.name).trim();
+          }
+          var draftBrief = store.draft.brief || store.draft.goal;
+          if (draftBrief && String(draftBrief).trim()) {
+            el("s2-desc").value = String(draftBrief).trim();
+          }
+          var draftLang = String(store.draft.languages || "").toLowerCase();
+          if (draftLang === "ru" || draftLang === "en" || draftLang === "en+ru") {
+            el("s1-lang").value = draftLang;
+          }
+        }
         initializePageState();
         initializeCompanyState();
         var st = res[4];
+        if (st && st.version) {
+          var vBadge = el("app-version-badge");
+          if (vBadge) vBadge.textContent = "v" + st.version;
+          document.title = "SmartLLM Studio v" + st.version;
+        }
+        var initLang = (st && st.settings && st.settings.language) || "ru";
+        renderCanons();
+        syncRouteSelectFromDraft(store.draft);
+        translateDOM(initLang);
         if (st && st.paths) {
           var defDir = store.draft.output_dir || st.paths.projects_root + "/default";
           el("exp-folder-input").value = defDir;
           el("s1-folder-input").value = defDir;
-          el("set-model-input").value = st.paths.gguf_model_path || "";
-          el("set-llama-input").value = st.paths.llama_server_bin || "";
-          el("set-sd-input").value = st.paths.sd_cli_bin || "";
-          el("set-mmproj-input").value = st.paths.mmproj_path || "";
-          el("set-dit-input").value = st.paths.dit_model_path || "";
-          el("set-te-input").value = st.paths.te_model_path || "";
-          el("set-vae-input").value = st.paths.vae_model_path || "";
-          var flagMap = {
-            gguf_model_path: "gguf_model_exists",
-            llama_server_bin: "llama_server_exists",
-            sd_cli_bin: "sd_cli_exists",
-            mmproj_path: "mmproj_exists",
-            dit_model_path: "dit_model_exists",
-            te_model_path: "te_model_exists",
-            vae_model_path: "vae_model_exists"
-          };
-          var diag = Object.keys(flagMap).map(function (k) {
-            return (st.paths[flagMap[k]] ? "OK   " : "MISS ") + k + " = " + (st.paths[k] || "");
-          });
-          el("set-paths-status").textContent = diag.join("\n");
-          var missing = (st.paths.missing_required || []).concat(st.paths.missing_visuals || []);
-          var banner = el("setup-banner");
-          if (banner) {
-            banner.hidden = missing.length === 0;
-            if (missing.length) {
-              el("setup-banner-text").textContent = (store.lang === "ru" ? "Не найдены компоненты: " : "Missing components: ") + missing.join(", ");
-            }
-          }
+          renderPathDiagnostics(st.paths);
         }
-        renderCanons();
-        syncRouteSelectFromDraft(store.draft);
-        translateDOM("ru");
         refreshEngineHUD();
         setInterval(refreshEngineHUD, 2500);
       })

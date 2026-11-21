@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SmartLLM Studio v0.0.3-beta</title>
+  <title>SmartLLM Studio</title>
   <link rel="icon" href="/assets/smartllm-logo.svg">
   <link rel="stylesheet" href="/static/styles.css">
 </head>
@@ -27,7 +27,7 @@
     <div class="brand-group">
       <img class="brand-emblem" src="/assets/smartllm-logo.svg" width="28" height="28" alt="SmartLLM Studio">
       <span class="brand-title" data-i18n="app_title">SmartLLM Studio</span>
-      <span class="badge-v">v0.0.3-beta</span>
+      <span class="badge-v" id="app-version-badge"></span>
     </div>
 
     <div class="mode-switcher" role="tablist" aria-label="Studio Mode">
@@ -114,6 +114,7 @@
 
         <!-- AUTOMATIC MODE VIEW -->
         <section id="view-express" class="panel-card" hidden>
+          <form class="studio-form" autocomplete="off" novalidate>
           <picture aria-hidden="true">
             <source srcset="/static/art/atelier_hero_prism.avif" type="image/avif">
             <img class="hero-art-banner" src="/static/art/atelier_hero_prism.webp" alt="" aria-hidden="true">
@@ -124,7 +125,7 @@
           <div class="field">
             <label for="exp-folder-input" data-i18n="lbl_exp_folder">Папка для сохранения проекта</label>
             <div style="display:flex; gap:8px;">
-              <input id="exp-folder-input" type="text" data-i18n-attr="placeholder:ph_exp_folder" placeholder="Путь к папке проекта...">
+              <input id="exp-folder-input" type="text" name="studio_exp_folder" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_exp_folder" placeholder="Путь к папке проекта...">
               <button class="btn" id="exp-pick-folder-btn" type="button">
                 <svg class="icon-24"><use href="#icon-folder"/></svg>
                 <span data-i18n="btn_exp_pick_folder">Выбрать папку</span>
@@ -134,7 +135,7 @@
 
           <div class="field">
             <label for="exp-brief-input" data-i18n="lbl_exp_brief">Промпт (описание сайта своими словами)</label>
-            <textarea id="exp-brief-input" rows="4" maxlength="2000" data-i18n-attr="placeholder:ph_exp_brief" placeholder="Например: Архитектурное бюро деревянных домов и акустических студий в скандинавском стиле, с галереей проектов, 3 тарифами проектирования, частыми вопросами и формой заявки...">Архитектурное бюро акустических студий и деревянных интерьеров «SoundCraft»: расчёт акустики помещений, 3 тарифа проектирования под ключ, портфолио залов, ответы на вопросы и форма заявки.</textarea>
+            <textarea id="exp-brief-input" name="studio_exp_brief" rows="4" maxlength="2000" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_exp_brief" placeholder="Например: Архитектурное бюро деревянных домов и акустических студий в скандинавском стиле, с галереей проектов, 3 тарифами проектирования, частыми вопросами и формой заявки...">Архитектурное бюро акустических студий и деревянных интерьеров «SoundCraft»: расчёт акустики помещений, 3 тарифа проектирования под ключ, портфолио залов, ответы на вопросы и форма заявки.</textarea>
           </div>
 
           <div class="form-grid-2">
@@ -165,6 +166,7 @@
             </button>
             <span id="exp-status-readout" style="font-family:var(--font-code); font-size:12px; color:var(--ok); align-self:center;"></span>
           </div>
+          </form>
         </section>
 
         <!-- CONSTRUCTOR MODE (5 CLEAR STEPS) -->
@@ -172,13 +174,14 @@
 
           <!-- STEP 1: PROJECT FOLDER -->
           <div id="ctor-step-1" class="panel-card ctor-pane">
+            <form class="studio-form" autocomplete="off" novalidate>
             <h1 class="display-h2" data-i18n="s1_heading">Шаг 1 — Выберите папку для проекта</h1>
             <p class="sub-lead" data-i18n="s1_sub">Укажите папку на диске, куда студия будет сохранять готовые страницы, стили, логотип и изображения вашего сайта.</p>
 
             <div class="field">
               <label for="s1-folder-input" data-i18n="lbl_s1_folder">Папка проекта на диске</label>
               <div style="display:flex; gap:8px;">
-                <input id="s1-folder-input" type="text" data-i18n-attr="placeholder:ph_exp_folder" placeholder="Путь к папке проекта...">
+                <input id="s1-folder-input" type="text" name="studio_s1_folder" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_exp_folder" placeholder="Путь к папке проекта...">
                 <button class="btn btn-primary" id="s1-pick-folder-btn" type="button">
                   <svg class="icon-24"><use href="#icon-folder"/></svg>
                   <span data-i18n="btn_exp_pick_folder">Выбрать папку</span>
@@ -202,26 +205,28 @@
               <span></span>
               <button class="btn btn-primary step-next-btn" id="s1-next-btn" data-target="2" type="button" data-i18n="btn_step_next">Далее: Название и Логотип →</button>
             </div>
+            </form>
           </div>
 
           <!-- STEP 2: NAME, DESCRIPTION & 6x 512x512 LOGO GENERATOR -->
           <div id="ctor-step-2" class="panel-card ctor-pane" hidden>
+            <form class="studio-form" autocomplete="off" novalidate>
             <h2 class="display-h2" data-i18n="s2_heading">Шаг 2 — Название, описание и логотип (6 вариантов 512×512)</h2>
             <p class="sub-lead" data-i18n="s2_sub">Введите название и краткое описание сайта. Вы можете загрузить свой логотип или сгенерировать 6 вариантов 512×512 под название и выбрать лучший кликом.</p>
 
             <div class="field">
               <label for="s2-name" data-i18n="lbl_proj_name">Название сайта / бренда</label>
-              <input id="s2-name" type="text" value="SoundCraft Acoustic Labs" data-i18n-attr="placeholder:ph_proj_name" placeholder="Введите название бренда или проекта...">
+              <input id="s2-name" type="text" name="studio_brand_title" value="SoundCraft Acoustic Labs" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_proj_name" placeholder="Введите название бренда или проекта...">
             </div>
 
             <div class="field">
               <label for="s2-desc" data-i18n="lbl_proj_goal">Краткое описание сайта (о чём проект и для кого)</label>
-              <textarea id="s2-desc" rows="3" data-i18n-attr="placeholder:ph_proj_goal" placeholder="Опишите чем занимается проект, основные услуги и задачу сайта...">Архитектурная акустика, проектирование студий звукозаписи, деревянные диффузоры и виброизоляция помещений под ключ.</textarea>
+              <textarea id="s2-desc" name="studio_brand_desc" rows="3" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_proj_goal" placeholder="Опишите чем занимается проект, основные услуги и задачу сайта...">Архитектурная акустика, проектирование студий звукозаписи, деревянные диффузоры и виброизоляция помещений под ключ.</textarea>
             </div>
 
             <div class="field">
               <label for="s2-logo-prompt" data-i18n="lbl_logo_prompt">Промпт для логотипа — опишите словами, что хотите видеть</label>
-              <textarea id="s2-logo-prompt" rows="3" maxlength="600" data-i18n-attr="placeholder:ph_logo_prompt" placeholder="Например: строгий знак из двух переплетённых дуг, тёмно-синий и тёплое золото, без текста. Можно писать по-русски или по-английски."></textarea>
+              <textarea id="s2-logo-prompt" name="studio_logo_prompt" rows="3" maxlength="600" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_logo_prompt" placeholder="Например: строгий знак из двух переплетённых дуг, тёмно-синий и тёплое золото, без текста. Можно писать по-русски или по-английски."></textarea>
               <p class="sub-lead" style="margin:6px 0 0 0; font-size:12px;" data-i18n="msg_logo_prompt_hint">Модель SmartLLM расширит ваш текст в профессиональный промпт для Z-Image по канону логотипов 2026: один центрированный знак, чистые цвета, читаемость в 32 px.</p>
             </div>
 
@@ -236,7 +241,7 @@
                   <button class="btn" id="s2-upload-logo-btn" type="button">
                     <span data-i18n="btn_upload_custom_logo">Загрузить свой файл (SVG/PNG)</span>
                   </button>
-                  <input id="s2-logo-file" type="file" accept=".svg,.png,.webp" aria-label="Logo File" hidden>
+                  <input id="s2-logo-file" type="file" name="studio_logo_file" accept=".svg,.png,.webp" aria-label="Logo File" hidden>
                 </div>
               </div>
               <div id="s2-logo-grid" class="logo-variants-grid"></div>
@@ -255,17 +260,19 @@
               <button class="btn step-prev-btn" id="s2-prev-btn" data-target="1" type="button" data-i18n="btn_step_back">← Назад</button>
               <button class="btn btn-primary step-next-btn" id="s2-next-btn" data-target="3" type="button" data-i18n="btn_step_next">Далее: Выбор стиля →</button>
             </div>
+            </form>
           </div>
 
           <!-- STEP 3: VISUAL STYLE SELECTION -->
           <div id="ctor-step-3" class="panel-card ctor-pane" hidden>
+            <form class="studio-form" autocomplete="off" novalidate>
             <h2 class="display-h2" data-i18n="s3_heading">Шаг 3 — Выберите визуальный стиль из списка</h2>
             <p class="sub-lead" data-i18n="s3_sub">Кликните по подходящему стилю оформления. Палитра, типографика и контрастность применятся к вашему сайту автоматически.</p>
 
             <div class="form-grid-2">
               <div class="field">
                 <label for="s3-canon-search" data-i18n="lbl_canon_search">Поиск по названию стиля</label>
-                <input id="s3-canon-search" type="text" data-i18n-attr="placeholder:ph_canon_search" placeholder="Швейцарский, тёмный, минимализм, редакционный...">
+                <input id="s3-canon-search" type="text" name="studio_canon_filter" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_canon_search" placeholder="Швейцарский, тёмный, минимализм, редакционный...">
               </div>
               <div class="field">
                 <label for="s3-canon-cat" data-i18n="lbl_canon_cat">Категория стилей</label>
@@ -282,10 +289,12 @@
               <button class="btn step-prev-btn" id="s3-prev-btn" data-target="2" type="button" data-i18n="btn_step_back">← Назад</button>
               <button class="btn btn-primary step-next-btn" id="s3-next-btn" data-target="4" type="button" data-i18n="btn_step_next">Далее: Страницы и блоки →</button>
             </div>
+            </form>
           </div>
 
           <!-- STEP 4: PAGES & BLOCKS SELECTION -->
           <div id="ctor-step-4" class="panel-card ctor-pane" hidden>
+            <form class="studio-form" autocomplete="off" novalidate>
             <h2 class="display-h2" data-i18n="s4_heading">Шаг 4 — Выбор страниц и блоков сайта</h2>
             <p class="sub-lead" data-i18n="s4_sub">Выберите формат сайта: одностраничник (лендинг) с нужными блоками или многостраничный сайт с автоматическим меню.</p>
 
@@ -301,7 +310,7 @@
               <strong data-i18n="lbl_select_pages">Отметьте нужные страницы многостраничного сайта:</strong>
               <div id="s4-pages-checklist" class="check-grid" style="margin-top:8px;"></div>
               <div style="display:flex; gap:8px; margin-top:10px;">
-                <input id="s4-custom-page-input" type="text" data-i18n-attr="placeholder:ph_new_route_title" placeholder="Своя страница (например: Доставка, Блог)...">
+                <input id="s4-custom-page-input" type="text" name="studio_custom_page" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_new_route_title" placeholder="Своя страница (например: Доставка, Блог)...">
                 <button class="btn" id="s4-add-page-btn" type="button" data-i18n="btn_add_route">Добавить страницу</button>
               </div>
             </div>
@@ -316,10 +325,12 @@
               <button class="btn step-prev-btn" id="s4-prev-btn" data-target="3" type="button" data-i18n="btn_step_back">← Назад</button>
               <button class="btn btn-primary step-next-btn" id="s4-next-btn" data-target="5" type="button" data-i18n="btn_step_next">Далее: Описание блоков и Сборка →</button>
             </div>
+            </form>
           </div>
 
           <!-- STEP 5: PER-BLOCK DESCRIPTIONS & BUILD -->
           <div id="ctor-step-5" class="panel-card ctor-pane" hidden>
+            <form class="studio-form" autocomplete="off" novalidate>
             <h2 class="display-h2" data-i18n="s5_heading">Шаг 5 — Описание блоков и запуск сборки</h2>
             <p class="sub-lead" data-i18n="s5_sub">Сначала проверьте бренд-основу и контакты, затем описания блоков для каждой выбранной страницы. Эти данные попадут в текст, JSON-LD, llms.txt и GEO-разметку.</p>
 
@@ -329,42 +340,42 @@
               <div class="form-grid-2">
                 <div class="field">
                   <label for="s5-tagline" data-i18n="lbl_s5_tagline">Девиз / лозунг компании</label>
-                  <input id="s5-tagline" type="text" data-i18n-attr="placeholder:ph_s5_tagline" placeholder="Короткий девиз или обещание бренда...">
+                  <input id="s5-tagline" type="text" name="studio_brand_tagline" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_s5_tagline" placeholder="Короткий девиз или обещание бренда...">
                 </div>
                 <div class="field">
                   <label for="s5-priorities" data-i18n="lbl_s5_priorities">Топ-приоритеты (через запятую)</label>
-                  <input id="s5-priorities" type="text" data-i18n-attr="placeholder:ph_s5_priorities" placeholder="Качество, сроки, прозрачность...">
+                  <input id="s5-priorities" type="text" name="studio_brand_priorities" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_s5_priorities" placeholder="Качество, сроки, прозрачность...">
                 </div>
               </div>
               <div class="field">
                 <label for="s5-positioning" data-i18n="lbl_s5_positioning">Позиционирование компании</label>
-                <textarea id="s5-positioning" rows="2" data-i18n-attr="placeholder:ph_s5_positioning" placeholder="Кто вы, для кого и какой результат даёте..."></textarea>
+                <textarea id="s5-positioning" name="studio_brand_positioning" rows="2" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_s5_positioning" placeholder="Кто вы, для кого и какой результат даёте..."></textarea>
               </div>
               <div class="field">
                 <label for="s5-values" data-i18n="lbl_s5_values">Отношение к продукту / команде / клиентам</label>
-                <textarea id="s5-values" rows="3" data-i18n-attr="placeholder:ph_s5_values" placeholder="Продукт: ... | Команда: ... | Клиенты: ..."></textarea>
+                <textarea id="s5-values" name="studio_brand_values" rows="3" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_s5_values" placeholder="Продукт: ... | Команда: ... | Клиенты: ..."></textarea>
               </div>
               <div class="form-grid-2">
                 <div class="field">
                   <label for="s5-cities" data-i18n="lbl_s5_cities">Города и целевые локации (через запятую)</label>
-                  <input id="s5-cities" type="text" data-i18n-attr="placeholder:ph_s5_cities" placeholder="Москва, Санкт-Петербург, Онлайн...">
+                  <input id="s5-cities" type="text" name="studio_brand_cities" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_s5_cities" placeholder="Москва, Санкт-Петербург, Онлайн...">
                 </div>
                 <div class="field">
                   <label for="s5-address" data-i18n="lbl_s5_address">Адрес офиса</label>
-                  <input id="s5-address" type="text" data-i18n-attr="placeholder:ph_s5_address" placeholder="Город, улица, дом...">
+                  <input id="s5-address" type="text" name="studio_brand_address" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_s5_address" placeholder="Город, улица, дом...">
                 </div>
                 <div class="field">
                   <label for="s5-phone" data-i18n="lbl_s5_phone">Телефон</label>
-                  <input id="s5-phone" type="text" data-i18n-attr="placeholder:ph_s5_phone" placeholder="+7 ...">
+                  <input id="s5-phone" type="text" name="studio_brand_phone" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_s5_phone" placeholder="+7 ...">
                 </div>
                 <div class="field">
                   <label for="s5-email" data-i18n="lbl_s5_email">Эл. почта</label>
-                  <input id="s5-email" type="email" data-i18n-attr="placeholder:ph_s5_email" placeholder="hello@example.ru">
+                  <input id="s5-email" type="text" inputmode="email" name="studio_brand_contact_mail" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_s5_email" placeholder="hello@example.ru">
                 </div>
               </div>
               <div class="field">
                 <label for="s5-hours" data-i18n="lbl_s5_hours">Часы работы</label>
-                <input id="s5-hours" type="text" data-i18n-attr="placeholder:ph_s5_hours" placeholder="Пн–Пт 10:00–19:00">
+                <input id="s5-hours" type="text" name="studio_brand_hours" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:ph_s5_hours" placeholder="Пн–Пт 10:00–19:00">
               </div>
             </div>
 
@@ -385,7 +396,7 @@
 
             <div class="composer-box" style="margin-top:14px;">
               <label class="render-toggle" for="s5-render-visuals" style="display:flex; gap:8px; align-items:center; margin-bottom:10px; font-size:13px; cursor:pointer;">
-                <input id="s5-render-visuals" type="checkbox" checked style="width:18px; height:18px; accent-color:var(--accent);">
+                <input id="s5-render-visuals" type="checkbox" name="studio_render_visuals" checked style="width:18px; height:18px; accent-color:var(--accent);">
                 <span data-i18n="lbl_s5_render_visuals">Рендерить визуалы Z-Image (hero каждой страницы, галерея, портреты команды)</span>
               </label>
               <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
@@ -414,6 +425,7 @@
               <button class="btn step-prev-btn" id="s5-prev-btn" data-target="4" type="button" data-i18n="btn_step_back">← Назад к выбору блоков</button>
               <span></span>
             </div>
+            </form>
           </div>
         </section>
 
@@ -470,6 +482,7 @@
     <div style="display:flex; align-items:center; gap:8px;">
       <button class="btn" id="hud-start-llm-btn" type="button" style="min-height:24px; padding:2px 10px;" data-i18n="btn_hud_start_llm">Запустить модель</button>
       <button class="btn" id="hud-stop-llm-btn" type="button" style="min-height:24px; padding:2px 10px;" data-i18n="btn_hud_stop_llm">Освободить память</button>
+      <button class="btn btn-quiet" id="hud-quit-studio-btn" type="button" style="min-height:24px; padding:2px 8px;" data-i18n="btn_hud_quit">Выйти</button>
       <button class="btn btn-quiet" id="hud-support-link-btn" type="button" style="min-height:24px; padding:2px 8px;" data-i18n="nav_support">Поддержка</button>
     </div>
   </footer>
@@ -477,34 +490,35 @@
   <!-- SETTINGS MODAL -->
   <div class="overlay-backdrop" id="modal-settings" hidden>
     <div class="modal-dialog" role="dialog" aria-labelledby="modal-settings-h2">
+      <form class="studio-form" autocomplete="off" novalidate>
       <h2 class="display-h2" id="modal-settings-h2" data-i18n="modal_settings_title">Настройки путей к локальным движкам</h2>
       <div class="field">
         <label for="set-model-input" data-i18n="lbl_set_model">Путь к весам модели (GGUF)</label>
-        <input id="set-model-input" type="text">
+        <input id="set-model-input" type="text" name="studio_cfg_gguf" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other">
       </div>
       <div class="field">
         <label for="set-llama-input" data-i18n="lbl_set_llama">Путь к llama-server</label>
-        <input id="set-llama-input" type="text">
+        <input id="set-llama-input" type="text" name="studio_cfg_llama" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other">
       </div>
       <div class="field">
         <label for="set-sd-input" data-i18n="lbl_set_sd">Путь к stable-diffusion.cpp (sd-cli)</label>
-        <input id="set-sd-input" type="text">
+        <input id="set-sd-input" type="text" name="studio_cfg_sd" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other">
       </div>
       <div class="field">
         <label for="set-mmproj-input" data-i18n="lbl_set_mmproj">Путь к мультимодальному проектору (GGUF)</label>
-        <input id="set-mmproj-input" type="text">
+        <input id="set-mmproj-input" type="text" name="studio_cfg_mmproj" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other">
       </div>
       <div class="field">
         <label for="set-dit-input" data-i18n="lbl_set_dit">Путь к весам Z-Image (диффузионная модель)</label>
-        <input id="set-dit-input" type="text">
+        <input id="set-dit-input" type="text" name="studio_cfg_dit" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other">
       </div>
       <div class="field">
         <label for="set-te-input" data-i18n="lbl_set_te">Путь к текстовому энкодеру Z-Image</label>
-        <input id="set-te-input" type="text">
+        <input id="set-te-input" type="text" name="studio_cfg_te" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other">
       </div>
       <div class="field">
         <label for="set-vae-input" data-i18n="lbl_set_vae">Путь к автоэнкодеру Z-Image</label>
-        <input id="set-vae-input" type="text">
+        <input id="set-vae-input" type="text" name="studio_cfg_vae" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other">
       </div>
       <div class="field">
         <label data-i18n="lbl_set_paths_status">Диагностика путей</label>
@@ -521,6 +535,7 @@
         <button class="btn" id="btn-close-settings" type="button" data-i18n="btn_settings_close">Закрыть</button>
         <button class="btn btn-primary" id="btn-save-settings" type="button" data-i18n="btn_settings_save">Сохранить</button>
       </div>
+      </form>
     </div>
   </div>
 

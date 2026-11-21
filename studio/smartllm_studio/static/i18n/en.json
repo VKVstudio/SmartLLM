@@ -87,6 +87,7 @@
   "hud_lock_label": "Lock:",
   "btn_hud_start_llm": "Start LLM",
   "btn_hud_stop_llm": "Stop Engine",
+  "btn_hud_quit": "Quit",
   "modal_settings_title": "Local Engine Path Settings",
   "lbl_set_model": "GGUF Model Checkpoint Path",
   "lbl_set_llama": "llama-server Binary Path",
