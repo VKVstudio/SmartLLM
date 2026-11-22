@@ -1,0 +1,29 @@
+{
+  "id": "09_aurora_obsidian_mesh",
+  "name": "Aurora Mesh & Luminous Depth",
+  "name_ru": "Аврора-меш и световая глубина",
+  "category": "surface",
+  "legacy_ids": ["07_mesh_gradients"],
+  "dials": {"variance": 7, "motion": 6, "density": 4},
+  "default_polarity": "dark",
+  "marquee_allowed": false,
+  "palettes": {
+    "dark": {"bg": "oklch(0.115 0.020 278)", "surface": "oklch(0.168 0.022 276)", "surface_elevated": "oklch(0.218 0.026 276)", "border": "oklch(0.380 0.045 278)", "border_control": "oklch(0.580 0.045 278)", "text": "oklch(0.960 0.010 275)", "muted": "oklch(0.750 0.028 275)", "accent": "oklch(0.740 0.140 288)", "accent_ink": "oklch(0.115 0.022 278)", "accent_2": "oklch(0.785 0.125 198)", "contrast_verified": {"text_bg": 18.14, "text_surface": 17.09, "muted_bg": 9.14, "muted_surface": 8.61, "accent_ink_accent": 8.52, "accent_bg": 8.52, "border_control_surface": 4.45, "accent_2_bg": 10.89}},
+    "light": {"bg": "oklch(0.965 0.012 285)", "surface": "oklch(0.994 0.003 285)", "surface_elevated": "oklch(1.000 0.000 0)", "border": "oklch(0.830 0.032 285)", "border_control": "oklch(0.575 0.040 285)", "text": "oklch(0.175 0.030 285)", "muted": "oklch(0.440 0.035 285)", "accent": "oklch(0.490 0.195 285)", "accent_ink": "oklch(0.996 0.001 285)", "accent_2": "oklch(0.495 0.084 198)", "contrast_verified": {"text_bg": 17.16, "text_surface": 18.7, "muted_bg": 7.06, "muted_surface": 7.69, "accent_ink_accent": 6.72, "accent_bg": 6.14, "border_control_surface": 4.33, "accent_2_bg": 5.31}}
+  },
+  "fonts": {"heading": "'Unbounded Variable', 'Unbounded', system-ui, sans-serif", "body": "'Geologica Variable', 'Geologica', system-ui, sans-serif", "mono": "'Fira Code Variable', 'Fira Code', monospace", "packages": ["@fontsource-variable/unbounded", "@fontsource-variable/geologica", "@fontsource-variable/fira-code"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 18, "radius_button_px": 12, "radius_input_px": 10, "radius_badge_px": 999, "border_width_px": 1, "border_style": "solid", "surface_treatment": "fixed body::before radial aurora mesh (opacity <= 0.24, composited transform drift) + 100% opaque matte cards (0 backdrop-filter, separates from 08)", "shadow_light": "0 18px 44px -12px oklch(0.42 0.08 285 / 0.14)", "shadow_dark": "inset 0 1px 0 oklch(1 0 0 / 0.08), 0 18px 48px -12px oklch(0.05 0.03 280 / 0.55)"},
+  "motion": {"ease": "cubic-bezier(0.22, 1, 0.36, 1)", "duration_ms": 280, "stagger_ms": 40, "hover": "card rim lights to var(--accent) + translateY(-2px)", "press": "scale(0.98) 120ms", "scroll": "ambient body::before translate3d drift 16s; optional view() rise", "forbidden": ["animating radial-gradient color stops directly", "translucent glass cards (belongs to 08)", "rainbow gradient text on every H2"], "reduced_motion": "freeze ambient aura at frame 0; instant rim highlight"},
+  "responsive": {
+    "container_max_px": 1312,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 22, "section_py_px": 92, "card_pad_px": 28}, "tablet": {"cols": 8, "gutter_px": 18, "section_py_px": 68, "card_pad_px": 22}, "mobile": {"cols": 4, "gutter_px": 14, "section_py_px": 48, "card_pad_px": 18}},
+    "typography": {"h1": {"clamp": "clamp(1.625rem, 1.167rem + 2.04vw, 3rem)", "desktop_px": 48, "tablet_px": 36, "mobile_px": 26, "lh": 1.12, "ls": "-0.02em", "weight": 600, "measure_ch": 20}, "h2": {"clamp": "clamp(1.375rem, 1.167rem + 0.93vw, 2rem)", "desktop_px": 32, "tablet_px": 26, "mobile_px": 22, "lh": 1.18, "ls": "-0.015em", "weight": 600, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.6, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "cta_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "label_gap_px": 6, "border": "1px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Keep aura strictly on fixed body::before behind 100% opaque matte cards", "Clamp Unbounded H1 floor to 26px at 360px", "Animate mesh via transform: translate3d() only"], "avoid": ["Slop neon gradients inside cards", "Frosted glass blur on cards (belongs to 08)"]},
+  "zimage_direction": {
+    "dark": "Sculpted dark smoked obsidian glass ribbons framing {subject} and catching subtle refracted aurora violet and glacier cyan light beams in a dark studio void, 85mm lens, clean blank surfaces",
+    "light": "Translucent iridescent pearl and opalescent silk ribbons around {subject} refracting pastel orchid and soft aqua dawn light on white ceramic, 85mm studio macro, clean blank surfaces",
+    "team_portrait": "Vertical 3:4 studio portrait lit by subtle cool violet-cyan rim light against seamless matte obsidian-charcoal (dark) or pearl-white (light) backdrop, 85mm lens, generous empty headroom"
+  }
+}

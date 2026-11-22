@@ -1,0 +1,29 @@
+{
+  "id": "04_hyper_minimal_speed",
+  "name": "Hyper-Minimalist Technical / Speed-First",
+  "name_ru": "Гиперминимализм и скорость",
+  "category": "layout",
+  "legacy_ids": ["19_hyper_minimalism_speed", "10_scientific_documentation_tufte"],
+  "dials": {"variance": 4, "motion": 2, "density": 5},
+  "default_polarity": "light",
+  "marquee_allowed": false,
+  "palettes": {
+    "light": {"bg": "oklch(0.996 0.001 250)", "surface": "oklch(0.968 0.003 250)", "surface_elevated": "oklch(1.000 0.000 0)", "border": "oklch(0.875 0.006 250)", "border_control": "oklch(0.560 0.010 250)", "text": "oklch(0.155 0.006 255)", "muted": "oklch(0.455 0.010 255)", "accent": "oklch(0.495 0.168 256)", "accent_ink": "oklch(0.998 0.000 250)", "accent_2": "oklch(0.495 0.115 152)", "contrast_verified": {"text_bg": 19.32, "text_surface": 17.82, "muted_bg": 7.19, "muted_surface": 6.63, "accent_ink_accent": 6.21, "accent_bg": 6.17, "border_control_surface": 4.24, "accent_2_bg": 5.74}},
+    "dark": {"bg": "oklch(0.125 0.005 260)", "surface": "oklch(0.168 0.007 260)", "surface_elevated": "oklch(0.212 0.008 260)", "border": "oklch(0.295 0.010 260)", "border_control": "oklch(0.545 0.012 260)", "text": "oklch(0.955 0.003 255)", "muted": "oklch(0.705 0.008 255)", "accent": "oklch(0.740 0.125 245)", "accent_ink": "oklch(0.125 0.006 260)", "accent_2": "oklch(0.765 0.138 155)", "contrast_verified": {"text_bg": 17.73, "text_surface": 16.83, "muted_bg": 7.71, "muted_surface": 7.32, "accent_ink_accent": 8.86, "accent_bg": 8.86, "border_control_surface": 3.87, "accent_2_bg": 10.13}}
+  },
+  "fonts": {"heading": "'Geist Variable', 'Geist', system-ui, sans-serif", "body": "'Geist Variable', 'Geist', system-ui, sans-serif", "mono": "'Geist Mono Variable', 'Geist Mono', monospace", "packages": ["@fontsource-variable/geist", "@fontsource-variable/geist-mono"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 0, "radius_button_px": 4, "radius_input_px": 4, "radius_badge_px": 3, "border_width_px": 1, "border_style": "solid", "surface_treatment": "borderless-reading-spine (zero boxed cards; 1px horizontal dividers only)", "shadow_light": "none", "shadow_dark": "none"},
+  "motion": {"ease": "cubic-bezier(0.2, 0, 0, 1)", "duration_ms": 100, "stagger_ms": 0, "hover": "text/border tint shift ONLY (zero transform)", "press": "instant bg step", "scroll": "none (0 scroll listeners, 0 reveal delays)", "forbidden": ["boxed shadow cards", "backdrop-filter blur", "stagger delays", "parallax"], "reduced_motion": "0ms instant render"},
+  "responsive": {
+    "container_max_px": 1120,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 16, "section_py_px": 56, "card_pad_px": 16}, "tablet": {"cols": 8, "gutter_px": 16, "section_py_px": 44, "card_pad_px": 16}, "mobile": {"cols": 4, "gutter_px": 12, "section_py_px": 36, "card_pad_px": 14}},
+    "typography": {"h1": {"clamp": "clamp(1.75rem, 1.5rem + 1.11vw, 2.5rem)", "desktop_px": 40, "tablet_px": 34, "mobile_px": 28, "lh": 1.15, "ls": "-0.025em", "weight": 600, "measure_ch": 30}, "h2": {"clamp": "clamp(1.375rem, 1.25rem + 0.56vw, 1.75rem)", "desktop_px": 28, "tablet_px": 24, "mobile_px": 22, "lh": 1.22, "ls": "-0.02em", "weight": 600, "measure_ch": 30}, "h3": {"desktop_px": 19, "tablet_px": 18, "mobile_px": 17, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 15, "tablet_px": 15, "mobile_px": 16, "lh": 1.6, "ls": "0em", "weight": 400, "measure_ch": 68}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 40, "tablet": 44, "mobile": 48}, "cta_h_px": {"desktop": 40, "tablet": 44, "mobile": 48}, "label_gap_px": 6, "border": "1px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Render a borderless 68ch reading spine with faint horizontal dividers", "Keep above-the-fold payload ultra-lean", "Format all benchmarks in tabular-nums"], "avoid": ["Giant empty 100vh hero padding", "Heavy ambient meshes or glass blur", "Slow staggered entrances"]},
+  "zimage_direction": {
+    "light": "Minimalist technical studio photograph of a single precision matte-black anodized aluminum instrument resting on a crisp white cyclorama, clinical even softbox illumination, crisp geometry, 50mm lens, clean blank unmarked surface",
+    "dark": "Precision technical studio photograph of a single matte graphite server chassis and optical fiber patch on flat dark charcoal cyclorama, single crisp edge highlight, 50mm lens, clean unmarked surface",
+    "team_portrait": "Vertical 3:4 crisp minimal portrait in plain dark knitwear, flat even studio illumination, seamless off-white (light) or dark slate (dark) wall, 85mm lens, generous empty headroom"
+  }
+}

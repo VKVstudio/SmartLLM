@@ -1,0 +1,29 @@
+{
+  "id": "14_spatial_3d_showcase",
+  "name": "Spatial Hardware & 3D Stage",
+  "name_ru": "Пространственная 3D-сцена и хардвер",
+  "category": "immersive",
+  "legacy_ids": ["10_interactive_3d_webgl"],
+  "dials": {"variance": 7, "motion": 7, "density": 4},
+  "default_polarity": "dark",
+  "marquee_allowed": false,
+  "palettes": {
+    "dark": {"bg": "oklch(0.128 0.014 255)", "surface": "oklch(0.176 0.017 255)", "surface_elevated": "oklch(0.226 0.020 255)", "border": "oklch(0.330 0.024 250)", "border_control": "oklch(0.560 0.026 250)", "text": "oklch(0.952 0.008 240)", "muted": "oklch(0.738 0.018 245)", "accent": "oklch(0.780 0.125 212)", "accent_ink": "oklch(0.130 0.016 255)", "accent_2": "oklch(0.785 0.138 76)", "contrast_verified": {"text_bg": 17.54, "text_surface": 16.48, "muted_bg": 8.7, "muted_surface": 8.17, "accent_ink_accent": 10.47, "accent_bg": 10.49, "border_control_surface": 4.08, "accent_2_bg": 10.07}},
+    "light": {"bg": "oklch(0.965 0.006 246)", "surface": "oklch(0.994 0.002 246)", "surface_elevated": "oklch(0.932 0.010 246)", "border": "oklch(0.820 0.014 246)", "border_control": "oklch(0.545 0.018 246)", "text": "oklch(0.165 0.018 252)", "muted": "oklch(0.440 0.018 248)", "accent": "oklch(0.475 0.108 244)", "accent_ink": "oklch(0.990 0.002 245)", "accent_2": "oklch(0.505 0.112 58)", "contrast_verified": {"text_bg": 17.41, "text_surface": 18.94, "muted_bg": 7.01, "muted_surface": 7.62, "accent_ink_accent": 6.43, "accent_bg": 5.98, "border_control_surface": 4.86, "accent_2_bg": 5.5}}
+  },
+  "fonts": {"heading": "'Tektur Variable', 'Tektur', system-ui, sans-serif", "body": "'Geologica Variable', 'Geologica', system-ui, sans-serif", "mono": "'Martian Mono Variable', 'Martian Mono', monospace", "packages": ["@fontsource-variable/tektur", "@fontsource-variable/geologica", "@fontsource-variable/martian-mono"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 16, "radius_button_px": 10, "radius_input_px": 10, "radius_badge_px": 6, "border_width_px": 1, "border_style": "solid", "surface_treatment": "specular-stage-rim + subtle coordinate grid + CSS perspective / optional lazy MIT Three.js w/ Z-Image fallback", "shadow_light": "inset 0 1px 0 rgba(255,255,255,0.95), 0 16px 36px -10px rgba(9,20,38,0.10)", "shadow_dark": "inset 0 1px 0 rgba(165,220,245,0.22), 0 24px 48px -12px rgba(0,4,12,0.72)"},
+  "motion": {"ease": "cubic-bezier(0.16, 1, 0.3, 1)", "duration_ms": 340, "stagger_ms": 45, "hover": "perspective(1200px) rotateX(2deg) rotateY(-2deg) translateY(-3px)", "press": "scale(0.97)", "scroll": "stage panel scale(0.97)->1 + opacity; rAF CSS custom-prop light spot (0 React useState)", "forbidden": ["auto-spinning GPU-draining WebGL", "fake div-drawn 3D mockups", "purple cyberpunk glow"], "reduced_motion": "disable tilt/orbit; crisp static Z-Image hardware stage"},
+  "responsive": {
+    "container_max_px": 1312,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 22, "section_py_px": 96, "card_pad_px": 26}, "tablet": {"cols": 8, "gutter_px": 18, "section_py_px": 72, "card_pad_px": 22}, "mobile": {"cols": 4, "gutter_px": 14, "section_py_px": 52, "card_pad_px": 18}},
+    "typography": {"h1": {"clamp": "clamp(1.875rem, 1.292rem + 2.59vw, 3.625rem)", "desktop_px": 58, "tablet_px": 42, "mobile_px": 30, "lh": 1.08, "ls": "-0.02em", "weight": 700, "measure_ch": 20}, "h2": {"clamp": "clamp(1.5rem, 1.208rem + 1.3vw, 2.375rem)", "desktop_px": 38, "tablet_px": 30, "mobile_px": 24, "lh": 1.15, "ls": "-0.015em", "weight": 600, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.6, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 46, "tablet": 46, "mobile": 48}, "cta_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "label_gap_px": 6, "border": "1px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Ship crisp static Z-Image stage by default; lazy-load Three.js (<=1 canvas) only if enabled", "Keep coordinate labels crisp in Martian Mono"], "avoid": ["Blocking initial LCP on WebGL shader compile", "Draining battery with unthrottled animation frames"]},
+  "zimage_direction": {
+    "dark": "Studio HDRI physically-based industrial hardware sculpture of {subject} suspended inside a pitch-dark titanium cyclorama, razor-sharp glacial cyan specular rim light and warm amber indicator detail, 50mm lens, clean unmarked hardware",
+    "light": "Wind-tunnel studio HDRI product render of {subject} in bead-blasted aluminum and optical sapphire glass floating above cool ceramic cyclorama, crisp cobalt reflections, 50mm technical lens, clean unmarked surfaces",
+    "team_portrait": "Vertical 3:4 clean technical studio portrait in dark minimalist attire, crisp cool specular rim highlight, seamless dark charcoal-slate (dark) or light grey (light) backdrop, 85mm lens, generous empty headroom"
+  }
+}

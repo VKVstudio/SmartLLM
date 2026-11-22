@@ -1,0 +1,29 @@
+{
+  "id": "06_neo_brutalism",
+  "name": "Neo-Brutalism / Raw Print",
+  "name_ru": "Нео-брутализм / Сырая печать",
+  "category": "experimental",
+  "legacy_ids": ["18_neo_brutalism_neon", "02_neo_brutalism_tactile"],
+  "dials": {"variance": 9, "motion": 7, "density": 4},
+  "default_polarity": "light",
+  "marquee_allowed": true,
+  "palettes": {
+    "light": {"bg": "oklch(0.965 0.018 96)", "surface": "oklch(0.996 0.002 96)", "surface_elevated": "oklch(0.945 0.060 98)", "border": "oklch(0.130 0.005 90)", "border_control": "oklch(0.130 0.005 90)", "text": "oklch(0.130 0.005 90)", "muted": "oklch(0.390 0.010 90)", "accent": "oklch(0.510 0.205 348)", "accent_ink": "oklch(0.996 0.002 96)", "accent_2": "oklch(0.895 0.172 98)", "contrast_verified": {"text_bg": 18.2, "text_surface": 19.89, "muted_bg": 8.69, "muted_surface": 9.49, "accent_ink_accent": 6.39, "accent_bg": 5.85, "border_control_surface": 19.89, "accent_2_bg": 1.23}},
+    "dark": {"bg": "oklch(0.115 0.008 280)", "surface": "oklch(0.175 0.010 280)", "surface_elevated": "oklch(0.225 0.012 280)", "border": "oklch(0.930 0.010 96)", "border_control": "oklch(0.930 0.010 96)", "text": "oklch(0.965 0.008 96)", "muted": "oklch(0.735 0.010 280)", "accent": "oklch(0.875 0.200 128)", "accent_ink": "oklch(0.115 0.008 280)", "accent_2": "oklch(0.700 0.205 345)", "contrast_verified": {"text_bg": 18.43, "text_surface": 17.16, "muted_bg": 8.67, "muted_surface": 8.07, "accent_ink_accent": 14.64, "accent_bg": 14.64, "border_control_surface": 15.46, "accent_2_bg": 6.89}}
+  },
+  "fonts": {"heading": "'Unbounded Variable', 'Unbounded', system-ui, sans-serif", "body": "'Golos Text Variable', 'Golos Text', system-ui, sans-serif", "mono": "'Martian Mono Variable', 'Martian Mono', monospace", "packages": ["@fontsource-variable/unbounded", "@fontsource-variable/golos-text", "@fontsource-variable/martian-mono"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 0, "radius_button_px": 0, "radius_input_px": 0, "radius_badge_px": 0, "border_width_px": 3, "border_style": "solid", "surface_treatment": "hard-offset-ink-stamp (0deg tilt, 0px blur)", "shadow_light": "6px 6px 0 oklch(0.130 0.005 90)", "shadow_dark": "6px 6px 0 oklch(0.875 0.200 128)"},
+  "motion": {"ease": "cubic-bezier(0.2, 0, 0, 1)", "duration_ms": 110, "stagger_ms": 20, "hover": "mechanical lift translate(-2px,-2px) + offset shadow 8px 8px 0", "press": "stamp collapse translate(4px,4px) + shadow 0", "scroll": "optional 4px top bar; pauseable marquee", "forbidden": ["tilted/rotated cards (belongs to 20_maximalist)", "blurred shadows", "rounded pills"], "reduced_motion": "0ms transform; static crisp invert on hover"},
+  "responsive": {
+    "container_max_px": 1312,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 24, "section_py_px": 84, "card_pad_px": 24}, "tablet": {"cols": 8, "gutter_px": 18, "section_py_px": 60, "card_pad_px": 20}, "mobile": {"cols": 4, "gutter_px": 14, "section_py_px": 44, "card_pad_px": 16}},
+    "typography": {"h1": {"clamp": "clamp(1.5rem, 0.875rem + 2.78vw, 3.375rem)", "desktop_px": 54, "tablet_px": 40, "mobile_px": 24, "lh": 1.06, "ls": "-0.025em", "weight": 800, "measure_ch": 16, "transform": "uppercase"}, "h2": {"clamp": "clamp(1.375rem, 1.083rem + 1.3vw, 2.25rem)", "desktop_px": 36, "tablet_px": 28, "mobile_px": 22, "lh": 1.12, "ls": "-0.02em", "weight": 700, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.6, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 46, "tablet": 48, "mobile": 48}, "cta_h_px": {"desktop": 48, "tablet": 48, "mobile": 50}, "label_gap_px": 6, "border": "3px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Keep 0deg orthogonal 0px cards with 3px solid ink borders", "Use accent_2 volt yellow strictly as fill behind dark text", "Place focus-visible outline 4px outside border"], "avoid": ["Yellow text on cream", "Blurred drop shadows", "Rotated sticker cards (belongs to 20)"]},
+  "zimage_direction": {
+    "light": "Raw direct-flash studio still life of poured concrete cubes and solid magenta acrylic slabs on warm cream newsprint surface, crisp sharp hard shadows, 35mm lens, completely blank unmarked surfaces",
+    "dark": "Direct-flash architectural concrete monolith lit by saturated acid-lime and magenta studio gel lights against pitch-black shadow, sharp edges, 35mm lens, completely unmarked surfaces",
+    "team_portrait": "Vertical 3:4 punchy direct-flash studio portrait in crisp modern attire, seamless off-white (light) or pitch-dark (dark) backdrop, 50mm lens, generous empty headroom"
+  }
+}

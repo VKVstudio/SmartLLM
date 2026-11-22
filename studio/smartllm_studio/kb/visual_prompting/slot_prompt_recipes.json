@@ -1,0 +1,184 @@
+{
+  "schema_version": "2026.11.1",
+  "engine": {
+    "model": "Tongyi-MAI/Z-Image-Turbo",
+    "architecture": "S3-DiT-6.15B (30 joint + 2 noise_refiner + 2 context_refiner) + Qwen3-4B + FLUX-16ch-VAE",
+    "sd_cli_flags": {
+      "type": "q8_0",
+      "sampling_method": "euler",
+      "flow_shift": 3.0,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "clip_on_cpu": true,
+      "vae_tiling": true,
+      "never_use_cfg_zero": true
+    },
+    "negative_prompt_supported": false,
+    "positive_only_framing": true,
+    "resolution_grid_multiple": 64,
+    "vae_patch_hard_multiple": 16,
+    "prompt_word_budget": {"min": 45, "target": 70, "max": 95, "hard_cap": 110},
+    "cyrillic_in_image_text_allowed": false
+  },
+  "aspect_dimensions": {
+    "16:9": [1024, 576],
+    "4:3": [896, 672],
+    "1:1": [768, 768],
+    "4:5": [640, 800],
+    "3:4": [576, 768],
+    "9:16_hero_safe": [640, 800],
+    "9:16_sticky_full": [576, 1024],
+    "logo": [512, 512]
+  },
+  "theme_polarity_modifiers": {
+    "dark": {
+      "bg_oklch_L_max": 0.25,
+      "lighting_clause": "Low-key sculpted studio lighting with controlled 6:1 contrast ratio, deep dark atmospheric shadow falloff absorbing the frame edges smoothly, and a single crisp specular rim highlight matching the accent hue.",
+      "backdrop_clause": "deep matte obsidian architectural environment melting seamlessly into shadowed margins",
+      "portrait_backdrop": "seamless matte dark charcoal studio backdrop with delicate accent-tinted hair separation rim light"
+    },
+    "light": {
+      "bg_oklch_L_min": 0.85,
+      "lighting_clause": "High-key diffused northern daylight and large overhead studio softbox illumination, bright airy architectural luminance, and soft clean grounded contact shadows.",
+      "backdrop_clause": "pale warm alabaster and honed neutral stone environment with open bright surfaces",
+      "portrait_backdrop": "seamless pale warm off-white studio backdrop with even, glare-free softbox illumination"
+    },
+    "mid": {
+      "bg_oklch_L_range": [0.25, 0.85],
+      "lighting_clause": "Balanced directional studio softbox lighting with crisp figure-ground tonal separation, refined mid-tone shading, and controlled highlights.",
+      "backdrop_clause": "tonal matte architectural studio backdrop harmonized to surface reflectance",
+      "portrait_backdrop": "seamless neutral mid-slate matte studio backdrop with gentle directional key light"
+    }
+  },
+  "slot_recipes": {
+    "hero_split": {
+      "target_variants": ["asymmetric_split", "command_stage", "editorial_poster"],
+      "aspect_rule": "canon_default_or_16:9",
+      "composition_clause": "Balanced rule-of-thirds editorial framing with the primary physical subject positioned cleanly in the center-right 55% and uncluttered breathing room around all four edges.",
+      "optics_clause": "Shot on a 35mm architectural tilt-shift lens at f/5.6 with straight verticals, crisp material fidelity, and natural depth.",
+      "blank_surface_guard": "All visible screens, panels, walls, and object housings remain completely blank, smooth, and unmarked.",
+      "forbidden_elements": ["close-up human face", "passport headshot", "UI screenshot"]
+    },
+    "hero_fullbleed_scrim": {
+      "target_variants": ["fullbleed_scrim"],
+      "aspect_rule": "16:9",
+      "dimensions": [1024, 576],
+      "composition_clause": "Wide cinematic asymmetric composition anchoring the focal physical subject strictly inside the right 40% of the frame, while the entire left 55% remains calm, low-detail atmospheric negative space matching the canvas tone for clear visual rest.",
+      "optics_clause": "Shot on a 24mm wide-angle cinema prime lens at f/4 with gentle depth falloff toward the quiet left horizon.",
+      "blank_surface_guard": "Every architectural surface and foreground material is clean, unmarked, and smooth.",
+      "forbidden_elements": ["busy left-half clutter", "centered portrait face", "high-frequency left-side texture"]
+    },
+    "hero_bento_tile": {
+      "target_variants": ["bento_showcase"],
+      "aspect_rule": "1:1",
+      "dimensions": [768, 768],
+      "composition_clause": "Crisp elevated orthographic product study with the single hero object centered and occupying 68% of the square frame, surrounded by an even quiet matte perimeter margin.",
+      "optics_clause": "Shot on a 50mm prime studio lens at f/5.6 with uniform softbox lighting and clean grounded micro-shadows.",
+      "blank_surface_guard": "Smooth unmarked industrial finish across every face of the object."
+    },
+    "gallery_wide": {
+      "slot_id": "gallery_1",
+      "aspect_rule": "gallery_container",
+      "composition_clause": "Wide environmental architectural establishing photograph showing spatial scale, craft workflow, and real physical context across a deep perspective plane.",
+      "optics_clause": "Shot on a 24mm wide-angle prime lens at f/8 with crisp front-to-back clarity and disciplined geometric lines.",
+      "blank_surface_guard": "Clean architectural surfaces with unmarked fixtures and blank panels."
+    },
+    "gallery_detail": {
+      "slot_id": "gallery_2",
+      "aspect_rule": "gallery_container",
+      "composition_clause": "Intimate close-up tactile macro study isolating signature raw materials, precision joinery, or surface craftsmanship at 1:2 magnification, offering stark visual contrast to the wide establishing shot.",
+      "optics_clause": "Shot on a 90mm macro lens at f/2.8 with shallow depth of field and raking directional side light revealing authentic surface grain.",
+      "blank_surface_guard": "Unmarked raw tactile surfaces showcasing pure material craft."
+    },
+    "team_portrait": {
+      "slot_id": "team_n",
+      "aspect_rule": "3:4",
+      "dimensions": [576, 768],
+      "composition_clause": "Vertical 3:4 medium chest-up editorial studio portrait of an adult {gender} specialist ({unique_persona}), centered horizontally with generous empty backdrop headroom occupying the top 20% above the hair so full head, hair, and shoulders sit comfortably inside frame.",
+      "optics_clause": "Shot on an 85mm f/2 portrait prime lens with razor-sharp focus on natural eyes, authentic skin texture, and soft sculpted key lighting.",
+      "blank_surface_guard": "Solid plain seamless studio backdrop and unbranded tailored attire."
+    },
+    "brand_logo": {
+      "slot_id": "brand_logo",
+      "aspect_rule": "logo",
+      "dimensions": [512, 512],
+      "composition_clause": "Single centered minimalist flat geometric vector emblem representing {domain_archetype}, filling 60% of a square solid matte neutral canvas with wide uniform margin, strong iconic silhouette crisp at 32px scale, strictly abstract symbol form built from 2 to 3 clean flat geometric shapes.",
+      "optics_clause": "Flat orthographic Swiss graphic design presentation with razor-sharp anti-aliased edges and uniform matte pigment fills.",
+      "blank_surface_guard": "Purely iconic geometric mark on a clean solid flat backdrop."
+    }
+  },
+  "oklch_material_palette_lut": {
+    "achromatic_chroma_threshold": 0.025,
+    "achromatic_by_L": [
+      {"max_L": 0.16, "descriptor": "deep obsidian black"},
+      {"max_L": 0.30, "descriptor": "matte graphite charcoal"},
+      {"max_L": 0.55, "descriptor": "brushed architectural pewter"},
+      {"max_L": 0.85, "descriptor": "honed limestone grey"},
+      {"max_L": 1.01, "descriptor": "pure warm alabaster white"}
+    ],
+    "hue_sectors_deg": [
+      {"range": [0, 20], "low_L": "deep oxblood burgundy", "mid_L": "vermilion carmine", "high_L": "soft coral blush"},
+      {"range": [20, 50], "low_L": "burnt umber espresso", "mid_L": "warm kiln terracotta", "high_L": "sunlit apricot clay"},
+      {"range": [50, 85], "low_L": "aged bronze ochre", "mid_L": "brushed warm amber brass", "high_L": "pale champagne gold"},
+      {"range": [85, 125], "low_L": "deep olive slate", "mid_L": "acid chartreuse lime", "high_L": "soft pistachio linen"},
+      {"range": [125, 165], "low_L": "deep pine forest green", "mid_L": "botanical moss emerald", "high_L": "pale eucalyptus sage"},
+      {"range": [165, 210], "low_L": "deep marine slate teal", "mid_L": "crisp glacial cyan", "high_L": "frosted ice aqua"},
+      {"range": [210, 255], "low_L": "midnight sapphire navy", "mid_L": "anodized precision cobalt", "high_L": "pale cerulean mist"},
+      {"range": [255, 295], "low_L": "deep nocturnal indigo", "mid_L": "luminous electric violet", "high_L": "soft periwinkle lavender"},
+      {"range": [295, 345], "low_L": "dark plum aubergine", "mid_L": "vivid electric magenta", "high_L": "pale rose quartz"},
+      {"range": [345, 360], "low_L": "deep oxblood burgundy", "mid_L": "sharp crimson scarlet", "high_L": "soft coral blush"}
+    ]
+  },
+  "canon_art_direction_overrides": {
+    "01_bento_grid": "Clean industrial product flat-lay and architectural photography arranged in disciplined modular geometry on honed stone and anodized aluminum, crisp softbox micro-shadows, tactile matte finish.",
+    "02_swiss_international": "High-contrast Swiss architectural photography of crisp modernist concrete and brushed steel planes with sharp mathematical shadow lines and vast open alabaster gallery negative space.",
+    "03_editorial_magazine": "High-contrast broadsheet architectural photography on archival newsprint stock tone, sharp natural daylight chiaroscuro across sculptural stone, steel, and linen volumes with authentic 35mm texture.",
+    "04_hyper_minimal_speed": "Ultra-clean monochrome technical studio study isolating one precision matte instrument on a crisp flat cyclorama with clinical edge lighting and vast calm negative space.",
+    "05_kinetic_typography": "High-contrast exhibition stage photography driven by sweeping diagonal light beams and razor shadow blades slicing across brushed steel and dark obsidian concrete with single vivid crimson highlights.",
+    "06_neo_brutalism": "Raw direct-flash graphic still-life of poured concrete blocks and bold pigmented matte acrylic slabs casting sharp solid shadows across raw newsprint stock or dark carbon tabletop.",
+    "07_avant_garde_poster": "Constructivist photomontage-inspired architectural photography with stark diagonal steel truss shadows, dramatic chiaroscuro contrast, and bold scarlet geometric planes on archival stock.",
+    "08_liquid_glass": "Macro optical photography seen through thick beveled frosted sapphire glass slabs, luminous caustic light refractions, and smooth specular rim reflections over calm dark or pearl gradients.",
+    "09_aurora_obsidian_mesh": "Ethereal diffused studio still-life of smoked glass and satin anodized ribbons catching restrained atmospheric aurora light fields in deep obsidian or opalescent pearl stillness.",
+    "10_industrial_tactile": "Braun and Teenage Engineering inspired industrial macro study of bead-blasted aluminum enclosures, knurled rotary dials, matte ceramic tactile buttons, and warm signal-orange highlights.",
+    "11_soft_clay_playful": "Isometric tactile miniature still-life built from matte sculpted ceramic, soft-touch pastel clay geometric blocks, and rounded physical dials under wraparound softbox lighting.",
+    "12_quiet_luxury_minimal": "Cold-luxury architectural gallery still life crafted in brushed stainless steel, cool pale limestone, and dark alpine stone on a platinum plinth with hushed north-window illumination.",
+    "13_cinematic_documentary": "Cinematic 35mm darkroom documentary photograph with warm practical tungsten accents carving rich selenium-charcoal shadows, distinct foreground framing, and organic analog film grain.",
+    "14_spatial_3d_showcase": "Physically accurate studio hardware sculpture suspended against a seamless cyclorama with crisp HDRI ice-cyan specular rim reflections, brushed titanium, and optical sapphire glass.",
+    "15_organic_biophilic_eco": "Honest natural overcast daylight photograph featuring raw unbleached linen, Nordic ash timber, cool river slate, glazed celadon ceramic, and restrained botanical pine foliage.",
+    "16_artisan_craft_zine": "Tactile risograph workshop craft photography featuring unglazed kiln terracotta stoneware, Prussian indigo ink tools, and cool slate-tinted cotton paper under morning window light.",
+    "17_fintech_institutional": "Architectural Swiss-bank editorial study of brushed architectural glass facades, honed dark basalt or cool white granite, and disciplined midnight navy steel geometry in sharp daylight.",
+    "18_devtool_command_ui": "Precision carbon-black hardware and optical silicon macro study featuring matte graphite heatsink fins, smoked optical glass, and a single calibrated emerald status light beam.",
+    "19_calm_human_accessible": "Calm glare-free daylight architectural interior crafted from pale Nordic birch wood, soft sea-glass teal ceramics, and clean warm-white textures with reassuring open clarity.",
+    "20_maximalist_collage_pop": "Editorial pop-art studio still life arranged as bold geometric color blocks in ultramarine cobalt, marigold yellow, and coral ceramic props under crisp directional sunlight."
+  },
+  "post_sanitization_spec": {
+    "visual_protect_words": [
+      "white", "black", "gray", "grey", "silver", "gold", "golden", "brass", "copper", "bronze", "amber", "rose",
+      "green", "blue", "red", "cyan", "indigo", "violet", "ivory", "cream", "sand", "slate", "obsidian", "charcoal",
+      "stone", "oak", "wood", "timber", "pine", "birch", "walnut", "maple", "cedar", "steel", "iron", "chrome",
+      "titanium", "aluminum", "aluminium", "metal", "glass", "crystal", "ceramic", "clay", "porcelain", "linen",
+      "cotton", "wool", "silk", "leather", "paper", "concrete", "marble", "granite", "travertine", "brick", "plaster",
+      "light", "lighting", "dark", "shadow", "shadows", "sunlight", "daylight", "studio", "craft", "arch", "bridge",
+      "wave", "leaf", "botanical", "forest", "moss", "earth", "solar", "space", "line", "lines", "grid", "frame",
+      "prism", "form", "mark", "clean", "warm", "cool", "matte", "gloss", "brushed", "anodized", "machined",
+      "modern", "classic", "minimal", "nordic", "alpine", "urban", "coastal", "industrial", "organic", "natural",
+      "dental", "coffee", "roast", "roastery", "clinic", "factory", "workshop", "atelier", "house", "tower",
+      "water", "fire", "wind", "air", "sky", "sea", "peak", "ridge", "valley", "field", "garden", "bloom", "spark",
+      "brown", "hazel", "blond", "blonde", "auburn", "chestnut", "beard", "hair", "eyes", "skin", "face", "smile"
+    ],
+    "neg_clause_regex": "(?i)(?:,\\s*|\\s+and\\s+|\\s+with\\s+)?\\b(?:zero|no|without|free\\s+of|devoid\\s+of|avoid(?:ing)?)\\s+(?:(?:any|visible|readable|embedded|printed)\\s+)?(?:text|words?|letters?|lettering|typography|watermarks?|labels?|captions?|badges?|logos?|signage|signs?|brand(?:ing|\\s+names?)?|people|faces|humans?|outlines?|borders?|frames?|clutter|beige|gradients?|drop\\s+shadows?|text\\s+overlay)(?:\\s+(?:or|and)\\s+(?:text|words?|letters?|lettering|typography|watermarks?|labels?|captions?|badges?|logos?|signage|signs?|overlays?))*\\b",
+    "hex_color_regex": "(?i)\\s*\\(?#[0-9a-f]{3,8}\\)?|\\s*\\(?oklch\\([^)]+\\)\\)?|\\s*\\(?rgba?\\([^)]+\\)\\)?",
+    "cyrillic_run_regex": "[\\u0400-\\u04FF]+(?:[\\s-]+[\\u0400-\\u04FF]+)*",
+    "text_replace_map": [
+      {"pattern": "(?i)\\b(?:a\\s+|an\\s+|the\\s+)?(?:blank|empty|clean|hanging|mounted|illuminated|wooden|metal|neon|shop|storefront|street|road|wall)\\s+signs?\\b|\\b(?:neon\\s+|shop\\s+|storefront\\s+|street\\s+)?signage\\b", "replace": "an unmarked architectural surface"},
+      {"pattern": "(?i)\\b(?:ui|web|app|cta|interface|menu|clickable)\\s+buttons?\\b", "replace": "geometric translucent glass tiles"},
+      {"pattern": "(?i)\\b(?:floating\\s+)?(?:adaptive\\s+)?interface\\s+cards?\\b|\\bdashboards?\\b|\\binfographics?\\b|\\bpie\\s+charts?\\b|\\bbar\\s+charts?\\b", "replace": "luminous abstract glass modules"},
+      {"pattern": "(?i)\\b(?:oversized\\s+)?(?:variable\\s+)?(?:typography|letterforms?|monospaced\\s+glyph\\s+grid)\\b", "replace": "bold sculptural geometric monoliths"},
+      {"pattern": "(?i)\\b(?:wearing\\s+a\\s+|with\\s+a\\s+)?(?:nameplates?|name\\s+badges?|id\\s+badges?|watermarks?|captions?|subtitles?|slogans?|wordmarks?|monograms?|initials?)\\b", "replace": ""},
+      {"pattern": "(?i)\\b(?:text|lettering|typographic|labeled|posters?|billboards?|banners?)\\b", "replace": ""}
+    ],
+    "optics_dedup_regex": "(?i)\\b(?:\\d{2,3}mm|lens|daylight|softbox|rim\\s+light|golden\\s+hour)\\b",
+    "preserve_terms": ["negative space", "tactile buttons", "tactile switches"],
+    "max_words": 95
+  }
+}

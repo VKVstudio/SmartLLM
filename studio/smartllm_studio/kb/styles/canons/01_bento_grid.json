@@ -1,0 +1,29 @@
+{
+  "id": "01_bento_grid",
+  "name": "Bento Grid",
+  "name_ru": "Бенто-сетка",
+  "category": "layout",
+  "legacy_ids": ["01_bento_grid", "18_bento_hardware_showcase", "23_audio_dsp_modular_rack", "26_ecommerce_lookbook_grid"],
+  "dials": {"variance": 7, "motion": 5, "density": 4},
+  "default_polarity": "light",
+  "marquee_allowed": false,
+  "palettes": {
+    "light": {"bg": "oklch(0.962 0.004 255)", "surface": "oklch(0.996 0.001 255)", "surface_elevated": "oklch(0.980 0.005 255)", "border": "oklch(0.865 0.008 255)", "border_control": "oklch(0.585 0.012 255)", "text": "oklch(0.185 0.008 255)", "muted": "oklch(0.455 0.012 255)", "accent": "oklch(0.505 0.175 258)", "accent_ink": "oklch(0.995 0.001 255)", "accent_2": "oklch(0.515 0.105 162)", "contrast_verified": {"text_bg": 16.69, "text_surface": 18.42, "muted_bg": 6.52, "muted_surface": 7.19, "accent_ink_accent": 5.93, "accent_bg": 5.39, "border_control_surface": 4.15, "accent_2_bg": 4.77}},
+    "dark": {"bg": "oklch(0.135 0.012 260)", "surface": "oklch(0.185 0.014 260)", "surface_elevated": "oklch(0.228 0.016 260)", "border": "oklch(0.305 0.018 260)", "border_control": "oklch(0.550 0.020 260)", "text": "oklch(0.955 0.006 255)", "muted": "oklch(0.715 0.014 255)", "accent": "oklch(0.715 0.135 252)", "accent_ink": "oklch(0.135 0.015 260)", "accent_2": "oklch(0.760 0.130 162)", "contrast_verified": {"text_bg": 17.56, "text_surface": 16.35, "muted_bg": 7.93, "muted_surface": 7.38, "accent_ink_accent": 7.94, "accent_bg": 7.94, "border_control_surface": 3.84, "accent_2_bg": 9.85}}
+  },
+  "fonts": {"heading": "'Manrope Variable', 'Manrope', system-ui, sans-serif", "body": "'Inter Variable', 'Inter', system-ui, sans-serif", "mono": "'JetBrains Mono Variable', 'JetBrains Mono', monospace", "packages": ["@fontsource-variable/manrope", "@fontsource-variable/inter", "@fontsource-variable/jetbrains-mono"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 24, "radius_button_px": 12, "radius_input_px": 12, "radius_badge_px": 999, "border_width_px": 1, "border_style": "solid", "surface_treatment": "matte-precision", "shadow_light": "0 1px 2px oklch(0.22 0.02 255 / 0.05), 0 14px 36px -8px oklch(0.22 0.03 255 / 0.08)", "shadow_dark": "inset 0 1px 0 oklch(1 0 0 / 0.07), 0 0 0 1px oklch(0.305 0.018 260)"},
+  "motion": {"ease": "cubic-bezier(0.22, 1, 0.36, 1)", "duration_ms": 220, "stagger_ms": 40, "hover": "translateY(-2px) + shadow expand (light) or border brighten (dark)", "press": "scale(0.985) 110ms", "scroll": "@supports(animation-timeline: view()) opacity+translateY(16px)", "forbidden": ["elastic bounces", "continuous marquee", "3D tilt gimmicks"], "reduced_motion": "opacity: 1; transform: none; instant border swap"},
+  "responsive": {
+    "container_max_px": 1312,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 22, "section_py_px": 88, "card_pad_px": 26}, "tablet": {"cols": 8, "gutter_px": 18, "section_py_px": 64, "card_pad_px": 20}, "mobile": {"cols": 4, "gutter_px": 14, "section_py_px": 48, "card_pad_px": 18}},
+    "typography": {"h1": {"clamp": "clamp(2rem, 1.542rem + 2.04vw, 3.375rem)", "desktop_px": 54, "tablet_px": 40, "mobile_px": 32, "lh": 1.08, "ls": "-0.03em", "weight": 700, "measure_ch": 22}, "h2": {"clamp": "clamp(1.5rem, 1.25rem + 1.11vw, 2.25rem)", "desktop_px": 36, "tablet_px": 28, "mobile_px": 24, "lh": 1.15, "ls": "-0.025em", "weight": 700, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.6, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "cta_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "label_gap_px": 6, "border": "1px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["One dominant 7-col anchor tile per viewport", "One isolated concept per cell", "Reserve accent for primary metric or CTA"], "avoid": ["Nested cards >2 levels", "Rainbow gradients per cell", "Unvaried 3-equal-card repetition"]},
+  "zimage_direction": {
+    "light": "Clean modular industrial product flat-lay of {subject} arranged in disciplined compartments on honed cool off-white limestone, crisp directional north-window softbox shadows, single restrained cobalt anodized detail, 50mm studio lens, completely blank unmarked surfaces",
+    "dark": "Anodized dark graphite studio flat-lay of {subject} on matte obsidian slate, stepped surface geometry, controlled cool cobalt rim highlight, crisp precision bevels, 50mm lens, clean unmarked hardware surfaces",
+    "team_portrait": "Vertical 3:4 medium chest-up studio portrait in smart minimalist attire, softbox key light, seamless neutral cool-grey (light) or charcoal (dark) backdrop, 85mm lens, generous empty headroom"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "18_devtool_command_ui",
+  "name": "DevTool / Command Terminal UI",
+  "name_ru": "Инструмент разработчика и командный UI",
+  "category": "surface",
+  "legacy_ids": ["13_generative_ai_adaptive", "03_dark_precision_saas_linear", "09_monospace_cli_devtools", "19_quant_analytics_dense_terminal", "27_cybersecurity_zero_trust_ops"],
+  "dials": {"variance": 5, "motion": 4, "density": 5},
+  "default_polarity": "dark",
+  "marquee_allowed": false,
+  "palettes": {
+    "dark": {"bg": "oklch(0.118 0.004 260)", "surface": "oklch(0.162 0.006 260)", "surface_elevated": "oklch(0.212 0.008 260)", "border": "oklch(0.295 0.010 260)", "border_control": "oklch(0.545 0.012 260)", "text": "oklch(0.958 0.004 260)", "muted": "oklch(0.735 0.008 260)", "accent": "oklch(0.768 0.142 164)", "accent_ink": "oklch(0.118 0.006 260)", "accent_2": "oklch(0.728 0.140 245)", "contrast_verified": {"text_bg": 17.99, "text_surface": 17.13, "muted_bg": 8.66, "muted_surface": 8.24, "accent_ink_accent": 10.35, "accent_bg": 10.35, "border_control_surface": 3.91, "accent_2_bg": 8.53}},
+    "light": {"bg": "oklch(0.990 0.002 260)", "surface": "oklch(0.960 0.004 260)", "surface_elevated": "oklch(1.000 0.000 0)", "border": "oklch(0.855 0.008 260)", "border_control": "oklch(0.555 0.010 260)", "text": "oklch(0.155 0.006 260)", "muted": "oklch(0.445 0.008 260)", "accent": "oklch(0.450 0.088 165)", "accent_ink": "oklch(0.992 0.002 165)", "accent_2": "oklch(0.485 0.145 255)", "contrast_verified": {"text_bg": 18.99, "text_surface": 17.4, "muted_bg": 7.39, "muted_surface": 6.77, "accent_ink_accent": 6.95, "accent_bg": 6.9, "border_control_surface": 4.23, "accent_2_bg": 6.28}}
+  },
+  "fonts": {"heading": "'Geist Variable', 'Geist', system-ui, sans-serif", "body": "'Geist Variable', 'Geist', system-ui, sans-serif", "mono": "'Geist Mono Variable', 'Geist Mono', monospace", "packages": ["@fontsource-variable/geist", "@fontsource-variable/geist-mono"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 10, "radius_button_px": 8, "radius_input_px": 8, "radius_badge_px": 6, "border_width_px": 1, "border_style": "solid", "surface_treatment": "command-hairline-zinc (flat dark carbon, subtle 24px dot-grid, <kbd> shortcut chips, 0 blur, 0 purple aurora)", "shadow_light": "0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04)", "shadow_dark": "inset 0 1px 0 rgba(255,255,255,0.07), 0 0 0 1px rgba(255,255,255,0.04)"},
+  "motion": {"ease": "cubic-bezier(0.16, 1, 0.3, 1)", "duration_ms": 160, "stagger_ms": 25, "hover": "border-color -> var(--accent) + top rim brighten (0 Y-bounce)", "press": "scale(0.98)", "scroll": "snappy 160ms opacity+8px reveal", "forbidden": ["purple radial aurora blobs", "backdrop-filter blur", "slow 600ms fades", "fake typing-cursor loops"], "reduced_motion": "0ms instant state swaps"},
+  "responsive": {
+    "container_max_px": 1312,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 20, "section_py_px": 88, "card_pad_px": 24}, "tablet": {"cols": 8, "gutter_px": 16, "section_py_px": 64, "card_pad_px": 20}, "mobile": {"cols": 4, "gutter_px": 16, "section_py_px": 48, "card_pad_px": 18}},
+    "typography": {"h1": {"clamp": "clamp(2rem, 1.5rem + 2.22vw, 3.5rem)", "desktop_px": 56, "tablet_px": 42, "mobile_px": 32, "lh": 1.08, "ls": "-0.035em", "weight": 600, "measure_ch": 22}, "h2": {"clamp": "clamp(1.5rem, 1.25rem + 1.11vw, 2.25rem)", "desktop_px": 36, "tablet_px": 28, "mobile_px": 24, "lh": 1.15, "ls": "-0.025em", "weight": 600, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.6, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "cta_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "label_gap_px": 6, "border": "1px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Keep flat dark zinc surfaces with Terminal Emerald accents", "Use semantic <kbd> shortcut chips and hairline matrix grids", "Keep all copy & commands crisp and technical"], "avoid": ["AI purple/violet gradient slop", "Fake div-drawn mock terminal screenshots"]},
+  "zimage_direction": {
+    "dark": "Precision carbon-black hardware macro study of {subject} featuring matte graphite heatsink fins, smoked optical silicon, and a single calibrated emerald status beam on deep obsidian, 85mm lens, clean blank surfaces",
+    "light": "Minimalist studio macro of {subject} in precision anodized aluminum and dark optical silicon on a crisp white-zinc drafting table with one subtle emerald optical fiber glint, 85mm lens, clean blank surfaces",
+    "team_portrait": "Vertical 3:4 crisp minimal studio portrait in understated black/grey attire, tight directional key light, seamless matte zinc-black (dark) or light grey (light) cyclorama, 85mm lens, generous empty headroom"
+  }
+}

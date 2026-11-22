@@ -1,0 +1,29 @@
+{
+  "id": "19_calm_human_accessible",
+  "name": "Calm Humanist & Trust-First WCAG AAA",
+  "name_ru": "Спокойный гуманизм и доступность WCAG AAA",
+  "category": "accessible",
+  "legacy_ids": ["20_inclusive_empathetic_ux", "12_clinical_biotech_cleanroom", "15_high_contrast_civic_gov_wcag_aaa"],
+  "dials": {"variance": 3, "motion": 2, "density": 4},
+  "default_polarity": "light",
+  "marquee_allowed": false,
+  "palettes": {
+    "light": {"bg": "oklch(0.985 0.004 215)", "surface": "oklch(1.000 0.000 0)", "surface_elevated": "oklch(0.952 0.008 215)", "border": "oklch(0.540 0.016 218)", "border_control": "oklch(0.450 0.018 218)", "text": "oklch(0.155 0.015 222)", "muted": "oklch(0.355 0.016 220)", "accent": "oklch(0.355 0.056 212)", "accent_ink": "oklch(1.000 0.000 0)", "accent_2": "oklch(0.395 0.088 56)", "contrast_verified": {"text_bg": 18.71, "text_surface": 19.51, "muted_bg": 10.57, "muted_surface": 11.02, "accent_ink_accent": 10.85, "accent_bg": 10.4, "border_control_surface": 7.39, "accent_2_bg": 9.28}},
+    "dark": {"bg": "oklch(0.155 0.014 225)", "surface": "oklch(0.205 0.016 225)", "surface_elevated": "oklch(0.255 0.018 225)", "border": "oklch(0.560 0.020 220)", "border_control": "oklch(0.600 0.020 220)", "text": "oklch(0.962 0.005 212)", "muted": "oklch(0.810 0.012 216)", "accent": "oklch(0.820 0.090 204)", "accent_ink": "oklch(0.145 0.016 225)", "accent_2": "oklch(0.835 0.118 78)", "contrast_verified": {"text_bg": 17.5, "text_surface": 16.02, "muted_bg": 10.85, "muted_surface": 9.93, "accent_ink_accent": 11.69, "accent_bg": 11.55, "border_control_surface": 4.56, "accent_2_bg": 11.62}}
+  },
+  "fonts": {"heading": "'Golos Text Variable', 'Golos Text', system-ui, sans-serif", "body": "'Source Sans 3 Variable', 'Source Sans 3', system-ui, sans-serif", "mono": "'Fira Code Variable', 'Fira Code', monospace", "packages": ["@fontsource-variable/golos-text", "@fontsource-variable/source-sans-3", "@fontsource-variable/fira-code"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 12, "radius_button_px": 8, "radius_input_px": 8, "radius_badge_px": 6, "border_width_px": 2, "border_style": "solid", "surface_treatment": "wcag-aaa-civic-clarity (>=14:1 text, >=7:1 muted & accent, 48px targets, 3px focus ring, always-underlined inline links)", "shadow_light": "0 2px 8px rgba(6,14,17,0.06)", "shadow_dark": "none"},
+  "motion": {"ease": "cubic-bezier(0.25, 0.1, 0.25, 1)", "duration_ms": 180, "stagger_ms": 0, "hover": "border darken to var(--accent) + focus ring preview (0 transform)", "press": "scale(0.99)", "scroll": "opacity-only gentle reveal (0px translate to eliminate vestibular triggers)", "forbidden": ["parallax", "marquees", "transform/scale scroll motion", "color-only status indicators", "backdrop-filter over text"], "reduced_motion": "100% static 0ms render"},
+  "responsive": {
+    "container_max_px": 1312,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 24, "section_py_px": 88, "card_pad_px": 28}, "tablet": {"cols": 8, "gutter_px": 20, "section_py_px": 68, "card_pad_px": 24}, "mobile": {"cols": 4, "gutter_px": 16, "section_py_px": 52, "card_pad_px": 20}},
+    "typography": {"h1": {"clamp": "clamp(2rem, 1.625rem + 1.67vw, 3.125rem)", "desktop_px": 50, "tablet_px": 40, "mobile_px": 32, "lh": 1.18, "ls": "-0.015em", "weight": 700, "measure_ch": 26}, "h2": {"clamp": "clamp(1.5rem, 1.292rem + 0.93vw, 2.125rem)", "desktop_px": 34, "tablet_px": 28, "mobile_px": 24, "lh": 1.24, "ls": "-0.01em", "weight": 600, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 17, "tablet_px": 17, "mobile_px": 17, "lh": 1.7, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 48, "tablet": 48, "mobile": 52}, "cta_h_px": {"desktop": 48, "tablet": 48, "mobile": 52}, "label_gap_px": 6, "border": "2px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Maintain strict WCAG 2.2 AAA across every color pair and 48px+ targets", "Always underline inline links and pair icons with status text", "Use always-open two-column Q&A or clear <details>"], "avoid": ["Vestibular parallax/scale animations", "Pure #000 dark halation or <48px mobile controls"]},
+  "zimage_direction": {
+    "light": "Calm glare-free daylight architectural interior photograph of {subject}, pale Nordic birch wood, soft sea-glass teal ceramic accents, and warm porcelain surfaces with open airy clarity, 50mm lens, clean blank unmarked walls",
+    "dark": "Calm evening civic-clinic architectural photograph of {subject} with soft glare-free warm-white interior lamps, deep calm ocean-slate walls, and gentle pale aqua-glass accents, 50mm lens, clean unmarked surfaces",
+    "team_portrait": "Vertical 3:4 warm trustworthy studio headshot with welcoming natural smile, glare-free softbox daylight, seamless pale porcelain-grey (light) or calm slate-navy (dark) backdrop, 85mm lens, generous empty headroom"
+  }
+}

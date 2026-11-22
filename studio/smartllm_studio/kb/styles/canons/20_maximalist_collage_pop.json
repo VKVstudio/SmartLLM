@@ -1,0 +1,29 @@
+{
+  "id": "20_maximalist_collage_pop",
+  "name": "Curated Maximalism & Pop Editorial",
+  "name_ru": "Курируемый максимализм и поп-эдиториал",
+  "category": "experimental",
+  "legacy_ids": ["05_nonlinear_navigation", "15_creative_404_microworlds"],
+  "dials": {"variance": 9, "motion": 8, "density": 4},
+  "default_polarity": "light",
+  "marquee_allowed": true,
+  "palettes": {
+    "light": {"bg": "oklch(0.976 0.008 98)", "surface": "oklch(0.946 0.028 98)", "surface_elevated": "oklch(0.996 0.002 98)", "border": "oklch(0.150 0.014 265)", "border_control": "oklch(0.150 0.014 265)", "text": "oklch(0.145 0.014 265)", "muted": "oklch(0.415 0.018 265)", "accent": "oklch(0.455 0.202 264)", "accent_ink": "oklch(0.992 0.002 260)", "accent_2": "oklch(0.515 0.195 22)", "contrast_verified": {"text_bg": 18.49, "text_surface": 16.94, "muted_bg": 8.08, "muted_surface": 7.4, "accent_ink_accent": 7.52, "accent_bg": 7.18, "border_control_surface": 16.84, "accent_2_bg": 5.83}},
+    "dark": {"bg": "oklch(0.148 0.030 268)", "surface": "oklch(0.205 0.036 266)", "surface_elevated": "oklch(0.262 0.040 264)", "border": "oklch(0.840 0.020 96)", "border_control": "oklch(0.840 0.020 96)", "text": "oklch(0.968 0.008 96)", "muted": "oklch(0.775 0.022 258)", "accent": "oklch(0.865 0.162 94)", "accent_ink": "oklch(0.148 0.030 268)", "accent_2": "oklch(0.715 0.168 24)", "contrast_verified": {"text_bg": 18.01, "text_surface": 16.37, "muted_bg": 9.7, "muted_surface": 8.82, "accent_ink_accent": 13.12, "accent_bg": 13.12, "border_control_surface": 11.0, "accent_2_bg": 7.26}}
+  },
+  "fonts": {"heading": "'Rubik Variable', 'Rubik', system-ui, sans-serif", "body": "'Nunito Variable', 'Nunito', system-ui, sans-serif", "mono": "'JetBrains Mono Variable', 'JetBrains Mono', monospace", "accent_sticker": "'Shantell Sans Variable', 'Shantell Sans', cursive", "packages": ["@fontsource-variable/rubik", "@fontsource-variable/nunito", "@fontsource-variable/jetbrains-mono", "@fontsource-variable/shantell-sans"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 18, "radius_button_px": 9999, "radius_input_px": 12, "radius_badge_px": 9999, "border_width_px": 2, "border_style": "solid", "surface_treatment": "poster-color-blocking (heterogeneous 18px cards + 9999px pill stickers, colored 5px 5px 0 var(--accent-2) offset shadow, subtle alternating collage tilts straightened on hover & reduced-motion)", "shadow_light": "5px 5px 0 oklch(0.515 0.195 22)", "shadow_dark": "5px 5px 0 oklch(0.715 0.168 24)"},
+  "motion": {"ease": "cubic-bezier(0.34, 1.38, 0.64, 1)", "duration_ms": 280, "stagger_ms": 40, "hover": "straighten tilt to 0deg + translate(-3px,-3px) + colored shadow 8px 8px 0", "press": "translate(4px,4px) + shadow 0", "scroll": "staggered pop entrance + max 1 pauseable marquee", "forbidden": ["strictly 0px orthogonal black shadows (belongs to 06_brutalism)", "unreadable text overlapping photos", "mid-page light/dark breaks"], "reduced_motion": "0deg static cards; marquee paused to wrapped pills"},
+  "responsive": {
+    "container_max_px": 1312,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 24, "section_py_px": 92, "card_pad_px": 26}, "tablet": {"cols": 8, "gutter_px": 18, "section_py_px": 68, "card_pad_px": 22}, "mobile": {"cols": 4, "gutter_px": 16, "section_py_px": 50, "card_pad_px": 18}},
+    "typography": {"h1": {"clamp": "clamp(2rem, 1.458rem + 2.41vw, 3.625rem)", "desktop_px": 58, "tablet_px": 44, "mobile_px": 32, "lh": 1.06, "ls": "-0.03em", "weight": 800, "measure_ch": 18}, "h2": {"clamp": "clamp(1.5rem, 1.208rem + 1.3vw, 2.375rem)", "desktop_px": 38, "tablet_px": 30, "mobile_px": 24, "lh": 1.14, "ls": "-0.025em", "weight": 700, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.6, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 48, "tablet": 48, "mobile": 48}, "cta_h_px": {"desktop": 48, "tablet": 48, "mobile": 48}, "label_gap_px": 6, "border": "2px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Use colored accent-2 offset shadows and heterogeneous card+pill radii", "Lock overall page polarity even while alternating surface color blocks", "Straighten subtle card tilts cleanly under prefers-reduced-motion"], "avoid": ["More than 1 marquee per page", "Black 0px brutalist stamps (belongs to 06)"]},
+  "zimage_direction": {
+    "light": "Editorial pop-art studio still life of {subject} arranged as bold geometric color blocks in ultramarine cobalt, vermilion red, and pale canary ceramic props under crisp directional sunlight, 50mm lens, clean blank unmarked objects",
+    "dark": "Curated maximalist theater still life of {subject} lit with sharp marigold-yellow and hot-coral studio gel planes against deep midnight cobalt, crisp sculptural ceramic props, 50mm lens, clean unmarked surfaces",
+    "team_portrait": "Vertical 3:4 punchy creative editorial studio headshot in bold solid-color styling, crisp directional studio strobe light, seamless cobalt (light) or deep indigo (dark) backdrop, 85mm lens, generous empty headroom"
+  }
+}

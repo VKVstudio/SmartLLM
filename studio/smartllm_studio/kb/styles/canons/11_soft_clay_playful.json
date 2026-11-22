@@ -1,0 +1,29 @@
+{
+  "id": "11_soft_clay_playful",
+  "name": "Tactile Clay & Playful Product",
+  "name_ru": "Тактильная глина и игривый продукт",
+  "category": "surface",
+  "legacy_ids": ["06_gamified_ui"],
+  "dials": {"variance": 7, "motion": 8, "density": 3},
+  "default_polarity": "light",
+  "marquee_allowed": false,
+  "palettes": {
+    "light": {"bg": "oklch(0.962 0.010 228)", "surface": "oklch(0.992 0.004 228)", "surface_elevated": "oklch(0.935 0.016 228)", "border": "oklch(0.820 0.022 228)", "border_control": "oklch(0.555 0.026 232)", "text": "oklch(0.210 0.032 252)", "muted": "oklch(0.455 0.026 246)", "accent": "oklch(0.535 0.185 28)", "accent_ink": "oklch(0.992 0.002 30)", "accent_2": "oklch(0.470 0.092 165)", "contrast_verified": {"text_bg": 15.89, "text_surface": 17.32, "muted_bg": 6.51, "muted_surface": 7.1, "accent_ink_accent": 5.54, "accent_bg": 5.09, "border_control_surface": 4.62, "accent_2_bg": 5.83}},
+    "dark": {"bg": "oklch(0.175 0.032 258)", "surface": "oklch(0.228 0.036 258)", "surface_elevated": "oklch(0.278 0.040 258)", "border": "oklch(0.380 0.042 258)", "border_control": "oklch(0.575 0.035 250)", "text": "oklch(0.960 0.010 235)", "muted": "oklch(0.765 0.024 242)", "accent": "oklch(0.745 0.140 34)", "accent_ink": "oklch(0.160 0.030 258)", "accent_2": "oklch(0.775 0.128 165)", "contrast_verified": {"text_bg": 16.92, "text_surface": 15.15, "muted_bg": 9.03, "muted_surface": 8.08, "accent_ink_accent": 8.12, "accent_bg": 7.93, "border_control_surface": 3.9, "accent_2_bg": 9.84}}
+  },
+  "fonts": {"heading": "'Rubik Variable', 'Rubik', system-ui, sans-serif", "body": "'Nunito Variable', 'Nunito', system-ui, sans-serif", "mono": "'JetBrains Mono Variable', 'JetBrains Mono', monospace", "packages": ["@fontsource-variable/rubik", "@fontsource-variable/nunito", "@fontsource-variable/jetbrains-mono"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 28, "radius_button_px": 9999, "radius_input_px": 18, "radius_badge_px": 9999, "border_width_px": 1, "border_style": "solid", "surface_treatment": "clay-double-bevel (outer ambient lift + top-inner specular highlight + bottom-inner compression)", "shadow_light": "inset 0 3px 6px rgba(255,255,255,0.92), inset 0 -5px 10px rgba(145,175,196,0.28), 0 14px 28px -6px rgba(24,52,78,0.12)", "shadow_dark": "inset 0 2px 5px rgba(180,210,255,0.16), inset 0 -6px 12px rgba(3,7,15,0.62), 0 18px 34px -8px rgba(2,6,14,0.58)"},
+  "motion": {"ease": "cubic-bezier(0.34, 1.45, 0.64, 1)", "duration_ms": 320, "stagger_ms": 50, "hover": "buoyant lift translateY(-4px) scale(1.015)", "press": "tactile squish translateY(1px) scale(0.95)", "scroll": "viewport-once gentle scale(0.95)->1 + opacity", "forbidden": ["infinite floating cards", "confetti spam", "blur-heavy glass over clay"], "reduced_motion": "0ms settled layout; inset highlight color shift on hover"},
+  "responsive": {
+    "container_max_px": 1312,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 24, "section_py_px": 96, "card_pad_px": 28}, "tablet": {"cols": 8, "gutter_px": 20, "section_py_px": 72, "card_pad_px": 24}, "mobile": {"cols": 4, "gutter_px": 16, "section_py_px": 52, "card_pad_px": 20}},
+    "typography": {"h1": {"clamp": "clamp(2.125rem, 1.625rem + 2.22vw, 3.625rem)", "desktop_px": 58, "tablet_px": 44, "mobile_px": 34, "lh": 1.08, "ls": "-0.025em", "weight": 700, "measure_ch": 20}, "h2": {"clamp": "clamp(1.5rem, 1.208rem + 1.3vw, 2.375rem)", "desktop_px": 38, "tablet_px": 30, "mobile_px": 24, "lh": 1.15, "ls": "-0.02em", "weight": 700, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.6, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 48, "tablet": 48, "mobile": 48}, "cta_h_px": {"desktop": 48, "tablet": 48, "mobile": 48}, "label_gap_px": 6, "border": "1px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Keep rounded 28px clay bevels + 9999px pill CTAs", "Use crisp border_control on clay inputs", "Celebrate milestones concisely without dark-pattern streaks"], "avoid": ["Dark muddy plum plastic rings", "Sharp 0px brutalist corners"]},
+  "zimage_direction": {
+    "light": "Isometric tactile miniature studio scene of {subject} built from smooth matte-clay and frosted ceramic geometric forms in coral-terracotta and mint accents on pale sky-chalk stage, wraparound daylight softbox, 50mm macro lens, completely blank smooth surfaces",
+    "dark": "Playful satin-clay and matte anodized geometric props for {subject} on a deep twilight-indigo studio tabletop, warm coral-peach key light and mint rim reflection, 50mm macro lens, smooth unmarked surfaces",
+    "team_portrait": "Vertical 3:4 warm friendly studio portrait in smart-casual knitwear, soft wraparound lighting, seamless pale ice-blue (light) or deep navy-slate (dark) backdrop, 85mm lens, generous empty headroom"
+  }
+}

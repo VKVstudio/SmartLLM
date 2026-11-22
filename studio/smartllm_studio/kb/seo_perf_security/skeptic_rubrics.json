@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "2026.11.1",
+  "title": "SmartLLM Studio Two-Tier Modular Skeptic Audit Framework",
+  "loop_control": {
+    "max_fix_loops": 2,
+    "temperature": 0.0,
+    "llm_max_input_tokens_per_skeptic": 500,
+    "llm_max_output_tokens": 384,
+    "monotonic_tier1_guard": true,
+    "rerun_only_failed_profiles": true
+  },
+  "verdict_schema": {
+    "required_top": ["schema_version", "route", "loop_count", "overall_pass", "tier1_deterministic", "tier2_skeptics"],
+    "tier2_output_contract": {
+      "pass": "boolean",
+      "checks": {"c1": "boolean", "c2": "boolean", "c3": "boolean"},
+      "defects": [{"id": "cX", "slot": "string", "evidence": "string <=120 chars"}],
+      "fixes": {"slot_or_block_id": "1-sentence concrete targeted rewrite"}
+    }
+  },
+  "profiles": {
+    "P1_arch_sec": {
+      "name": "Architecture & Security (OWASP Top 10:2025 + CSP3)",
+      "tier1_deterministic": [
+        "Recompute SHA-256 of inline <style> & <script>; assert 100% parity with <meta> CSP and _headers.",
+        "Assert ZERO 'unsafe-inline' / 'unsafe-eval', ZERO HTML style='...', ZERO setAttribute('style'), ZERO .cssText, ZERO innerHTML/document.write/eval.",
+        "Assert frame-ancestors 'none' exists in _headers ONLY (absent from <meta> CSP); _headers <= 100 rules and <= 2000 chars/line.",
+        "Assert HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP, CORP, require-trusted-types-for 'script' present.",
+        "Assert every target='_blank' has rel='noopener noreferrer'; ZERO external http(s) scripts/fonts in offline bundle; JSON-LD escapes '</'.",
+        "Assert SVG sanitizer rejects <!DOCTYPE, <!ENTITY, SMIL, <style>, <use>, <foreignObject>, on*, javascript:, data:image/svg+xml."
+      ],
+      "tier2_prompt": "Role: Adversarial Security Auditor (OWASP 2025). Tier-1 already verified CSP/Headers/SVG. Check ONLY: c1 forms/links leak zero PII in query strings; c2 non-static SSR scaffolds verify Sec-Fetch-Site/Origin + Zod schema; c3 legal/privacy copy claims zero fabricated certifications. Flag ONLY verified defects with exact quote. If clean, fixes:{}. Return JSON only."
+    },
+    "P2_visual_a11y": {
+      "name": "Visual Rhythm, Responsive & WCAG 2.2",
+      "tier1_deterministic": [
+        "Parse OKLCH tokens -> assert text/bg & text/surface >= 7.0:1, muted >= 4.5:1, accent_ink/accent >= 4.5:1, border_control/surface >= 3.0:1 (14:1 / 7:1 on 19_calm).",
+        "Assert ZERO bare 100vh (require 100svh/100dvh); interactive targets >= 44px mobile (>= 48px on 19_calm); prefers-reduced-motion query present.",
+        "Assert 08_liquid_glass enforces alpha >= 0.72 + prefers-reduced-transparency + [data-solid-ui] fallback; ZERO body background-attachment: fixed.",
+        "Assert single <main>, skip-link, <html lang>, single <h1>, monotonic headings, labeled inputs, accessible Prev/Next buttons on filmstrip/carousel, pauseable marquee."
+      ],
+      "tier2_prompt": "Role: Adversarial Design/UX Critic. Tier-1 verified contrast/a11y. Check ONLY against canon {canon_id} ({polarity}): c1 copy lengths fit card/hero containers cleanly across 360px/768px/1440px without wall-of-text overflow; c2 primary CTA unmistakably dominates secondary actions; c3 adjacent sections avoid repetitive identical card grids. Return JSON only."
+    },
+    "P3_copy_funnel": {
+      "name": "Conversion Funnel & Anti-AI Copy ({lang})",
+      "tier1_deterministic": [
+        "Assert ZERO template placeholders, ZERO cross-language leaks, ZERO URLs inside team/features/stats prose.",
+        "Assert 100% foundation.json Single Source of Truth parity (brand, contacts, prices, founding year, team roster).",
+        "Run EN_HARD_BAN, EN_PARTICIPLE_SLOP, RU_HARD_BAN, RU_SPLIT_PRED_HARD (skip legal) -> assert 0 hits.",
+        "Run EN_SOFT_WATCH / RU_SOFT_WATCH (<2/block, <4/page), EN_NEG_PARALLEL_BUDGET (<2/page), page-level Burstiness CV >= 0.25 (warn), Specificity >= 0.20 (warn, no hallucinated metrics)."
+      ],
+      "tier2_prompt": "Role: Adversarial Conversion Editor ({lang}). Tier-1 verified facts & anti-AI regexes. Check ONLY: c1 hero states WHO + SPECIFIC OUTCOME + MECHANISM in <=4 elements without debug strings; c2 tone reads as a domain specialist (no generic fluff, NO unverified fabricated awards/stats); c3 pricing/process/FAQ kill real buying objections toward the single-intent CTA. Cite offending phrase; if clean, fixes:{}. Return JSON only."
+    },
+    "P4_seo_geo_cwv": {
+      "name": "SEO / AEO / GEO & Core Web Vitals",
+      "tier1_deterministic": [
+        "Assert unique <title> (30-65 chars) & <meta description> (110-160 chars); ZERO <meta name='keywords'>.",
+        "Assert valid canonical, og:image + twitter:card; hreflang ONLY emitted on distinct crawlable locale URLs; sitemap has <loc>+<lastmod> and 0 <priority>/<changefreq>.",
+        "Assert robots.txt blocks training crawlers (GPTBot, ClaudeBot, Google-Extended, Applebot-Extended) and allows OAI-SearchBot, Claude-SearchBot, PerplexityBot.",
+        "Assert JSON-LD @graph valid, FAQPage verbatim match with visible HTML, 0 homepage BreadcrumbList, 0 bare Product without offers/review, 0 fake price:'0'.",
+        "Assert hero <img> has real PNG width/height + fetchpriority='high', NO loading='lazy', and NO opacity:0 [data-reveal] ancestor; below-fold sections use content-visibility:auto; valid /llms.txt."
+      ],
+      "tier2_prompt": "Role: Adversarial GEO/AEO Auditor. Tier-1 verified tags/schema/CWV. Check ONLY: c1 FAQ and key H2 blocks open with direct 40-60 word answer-first prose; c2 claims pair with foundation units/constraints rather than vague superlatives; c3 title/H1/description align cleanly with buyer search intent without keyword stuffing. Return JSON only."
+    },
+    "P5_art_zimage": {
+      "name": "Z-Image-Turbo Art Direction (8 NFEs, CFG 1.0)",
+      "tier1_deterministic": [
+        "Assert English-only prompts, 45-110 words, ZERO negative-trigger clauses ('no text', 'zero text', 'zero beige'), ZERO #HEX/oklch() tokens, ZERO member names/raw brand words.",
+        "Assert cfg_scale == 1.0 (NEVER 0.0!), steps == 8, dimensions exact multiples of 64 matching slot aspect (team 576x768, logo 512x512).",
+        "Assert gallery[0] vs gallery[1] token Jaccard < 0.55; team gender matches foundation.team[i].gender; rendered PNG exists & luminance std-dev > 8.0."
+      ],
+      "tier2_prompt": "Role: Adversarial Z-Image-Turbo Art Director. Tier-1 verified length/positive-only/dimensions. Check ONLY: c1 hero & gallery depict concrete domain physical scenes (no glowing brains/handshakes) harmonized to {canon_id} & {polarity} lighting; c2 fullbleed hero leaves calm negative space for text scrim; c3 logo describes 1 iconic flat geometric mark without text. Return JSON only."
+    }
+  }
+}

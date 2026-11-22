@@ -1,0 +1,29 @@
+{
+  "id": "02_swiss_international",
+  "name": "Swiss International / Neo-Grid",
+  "name_ru": "Швейцарская типографика / Нео-сетка",
+  "category": "layout",
+  "legacy_ids": ["11_minimalism_revisited", "01_swiss_international_typographic"],
+  "dials": {"variance": 5, "motion": 3, "density": 4},
+  "default_polarity": "light",
+  "marquee_allowed": false,
+  "palettes": {
+    "light": {"bg": "oklch(0.996 0.001 95)", "surface": "oklch(0.952 0.004 95)", "surface_elevated": "oklch(1.000 0.000 0)", "border": "oklch(0.180 0.004 95)", "border_control": "oklch(0.180 0.004 95)", "text": "oklch(0.135 0.004 95)", "muted": "oklch(0.435 0.005 95)", "accent": "oklch(0.515 0.195 27)", "accent_ink": "oklch(0.996 0.001 95)", "accent_2": "oklch(0.445 0.155 260)", "contrast_verified": {"text_bg": 19.79, "text_surface": 17.4, "muted_bg": 7.84, "muted_surface": 6.9, "accent_ink_accent": 6.16, "accent_bg": 6.16, "border_control_surface": 16.35, "accent_2_bg": 7.7}},
+    "dark": {"bg": "oklch(0.125 0.004 95)", "surface": "oklch(0.175 0.005 95)", "surface_elevated": "oklch(0.220 0.005 95)", "border": "oklch(0.380 0.006 95)", "border_control": "oklch(0.560 0.006 95)", "text": "oklch(0.965 0.004 95)", "muted": "oklch(0.715 0.005 95)", "accent": "oklch(0.655 0.195 27)", "accent_ink": "oklch(0.125 0.004 95)", "accent_2": "oklch(0.695 0.145 255)", "contrast_verified": {"text_bg": 18.26, "text_surface": 17.14, "muted_bg": 8.0, "muted_surface": 7.51, "accent_ink_accent": 5.82, "accent_bg": 5.82, "border_control_surface": 4.08, "accent_2_bg": 7.4}}
+  },
+  "fonts": {"heading": "'Golos Text Variable', 'Golos Text', system-ui, sans-serif", "body": "'IBM Plex Sans Variable', 'IBM Plex Sans', system-ui, sans-serif", "mono": "'IBM Plex Mono', monospace", "packages": ["@fontsource-variable/golos-text", "@fontsource-variable/ibm-plex-sans", "@fontsource/ibm-plex-mono"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 0, "radius_button_px": 0, "radius_input_px": 0, "radius_badge_px": 0, "border_width_px": 1, "border_style": "solid", "surface_treatment": "exposed-hairline-grid + edge-to-edge 1px/2px rules", "shadow_light": "none", "shadow_dark": "none"},
+  "motion": {"ease": "cubic-bezier(0.2, 0, 0, 1)", "duration_ms": 180, "stagger_ms": 20, "hover": "border-color -> var(--accent) + sliding 1px rule underline (0 Y-lift)", "press": "bg contrast shift (scale 1.0)", "scroll": "strict editorial stillness; optional 2px top scroll rule", "forbidden": ["drop shadows", "rounded pills", "parallax", "spring overshoot"], "reduced_motion": "0ms instant color/border swap"},
+  "responsive": {
+    "container_max_px": 1344,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 24, "section_py_px": 96, "card_pad_px": 24}, "tablet": {"cols": 8, "gutter_px": 20, "section_py_px": 72, "card_pad_px": 20}, "mobile": {"cols": 4, "gutter_px": 16, "section_py_px": 52, "card_pad_px": 16}},
+    "typography": {"h1": {"clamp": "clamp(2.25rem, 1.583rem + 2.96vw, 4.25rem)", "desktop_px": 68, "tablet_px": 48, "mobile_px": 36, "lh": 1.02, "ls": "-0.035em", "weight": 700, "measure_ch": 18}, "h2": {"clamp": "clamp(1.625rem, 1.292rem + 1.48vw, 2.625rem)", "desktop_px": 42, "tablet_px": 32, "mobile_px": 26, "lh": 1.1, "ls": "-0.025em", "weight": 600, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.6, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "cta_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "label_gap_px": 6, "border": "1px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Flush-left 4/8 asymmetry", "Expose collapsed 1px black grid lines", "Use tabular 01/02/03 section indices"], "avoid": ["Centered marketing hero", "Any border-radius > 0px", "Drop shadows or glass blur"]},
+  "zimage_direction": {
+    "light": "Stark Swiss modernist architectural study of {subject} in concrete and brushed steel on crisp white alabaster plaster, razor-sharp geometric morning shadow, signal-red focal detail, vast negative space, 50mm lens, clean unmarked surfaces",
+    "dark": "High-contrast monochromatic Swiss architectural photograph of {subject} on matte carbon-black backdrop, crisp mathematical light planes and a single vermilion edge reflection, 50mm lens, clean blank geometric forms",
+    "team_portrait": "Vertical 3:4 austere monochrome studio portrait in minimal dark tailored clothing, crisp even softbox lighting, seamless pure white (light) or obsidian (dark) wall, 85mm lens, generous empty headroom"
+  }
+}

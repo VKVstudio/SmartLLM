@@ -1,0 +1,29 @@
+{
+  "id": "12_quiet_luxury_minimal",
+  "name": "Quiet Luxury / Architectural Atelier",
+  "name_ru": "Тихая роскошь и архитектурное ателье",
+  "category": "layout",
+  "legacy_ids": ["05_nordic_architectural_minimal", "06_japanese_ma_wabi_editorial", "16_luxury_horology_atelier_dark"],
+  "dials": {"variance": 6, "motion": 4, "density": 2},
+  "default_polarity": "light",
+  "marquee_allowed": false,
+  "palettes": {
+    "light": {"bg": "oklch(0.972 0.004 242)", "surface": "oklch(0.995 0.002 242)", "surface_elevated": "oklch(0.942 0.006 242)", "border": "oklch(0.865 0.006 242)", "border_control": "oklch(0.555 0.012 242)", "text": "oklch(0.165 0.008 248)", "muted": "oklch(0.440 0.010 245)", "accent": "oklch(0.320 0.052 168)", "accent_ink": "oklch(0.985 0.003 240)", "accent_2": "oklch(0.460 0.016 248)", "contrast_verified": {"text_bg": 17.77, "text_surface": 18.99, "muted_bg": 7.15, "muted_surface": 7.65, "accent_ink_accent": 11.86, "accent_bg": 11.43, "border_control_surface": 4.67, "accent_2_bg": 6.56}},
+    "dark": {"bg": "oklch(0.135 0.006 250)", "surface": "oklch(0.178 0.007 250)", "surface_elevated": "oklch(0.225 0.009 250)", "border": "oklch(0.325 0.010 248)", "border_control": "oklch(0.555 0.012 248)", "text": "oklch(0.945 0.005 240)", "muted": "oklch(0.725 0.009 244)", "accent": "oklch(0.855 0.010 240)", "accent_ink": "oklch(0.135 0.006 250)", "accent_2": "oklch(0.720 0.072 168)", "contrast_verified": {"text_bg": 17.05, "text_surface": 16.07, "muted_bg": 8.23, "muted_surface": 7.76, "accent_ink_accent": 12.89, "accent_bg": 12.89, "border_control_surface": 3.98, "accent_2_bg": 8.34}}
+  },
+  "fonts": {"heading": "'Cormorant Garamond Variable', 'Cormorant Garamond', Georgia, serif", "body": "'Wix Madefor Text Variable', 'Wix Madefor Text', system-ui, sans-serif", "mono": "'Wix Madefor Text Variable', 'Wix Madefor Text', system-ui, sans-serif", "packages": ["@fontsource-variable/cormorant-garamond", "@fontsource-variable/wix-madefor-text"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 0, "radius_button_px": 0, "radius_input_px": 0, "radius_badge_px": 0, "border_width_px": 0, "border_style": "none", "surface_treatment": "borderless-cold-luxury-tonal (border: 0 on cards; separation strictly via surface tonal contrast & 2x negative space; tracked uppercase sans 0.14em instead of monospace)", "shadow_light": "none", "shadow_dark": "none"},
+  "motion": {"ease": "cubic-bezier(0.22, 1, 0.36, 1)", "duration_ms": 500, "stagger_ms": 60, "hover": "ultra-slow opacity 0.78 + subtle inner-plate scale(1.02) (zero Y-jump)", "press": "opacity 0.85", "scroll": "unhurried 500ms opacity fade-in only", "forbidden": ["warm beige+brass #f5f1ea clichés", "monospace labels", "visible card borders", "bouncy springs"], "reduced_motion": "0ms instant render"},
+  "responsive": {
+    "container_max_px": 1280,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 32, "section_py_px": 120, "card_pad_px": 32}, "tablet": {"cols": 8, "gutter_px": 24, "section_py_px": 88, "card_pad_px": 24}, "mobile": {"cols": 4, "gutter_px": 16, "section_py_px": 64, "card_pad_px": 20}},
+    "typography": {"h1": {"clamp": "clamp(2.375rem, 1.583rem + 3.52vw, 4.75rem)", "desktop_px": 76, "tablet_px": 52, "mobile_px": 38, "lh": 1.08, "ls": "-0.02em", "weight": 400, "measure_ch": 18, "min_display_px": 24, "never_bold": true}, "h2": {"clamp": "clamp(1.75rem, 1.292rem + 2.04vw, 3.125rem)", "desktop_px": 50, "tablet_px": 36, "mobile_px": 28, "lh": 1.12, "ls": "-0.015em", "weight": 300, "measure_ch": 30}, "h3": {"desktop_px": 24, "tablet_px": 22, "mobile_px": 20, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.75, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 46, "tablet": 46, "mobile": 48}, "cta_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "label_gap_px": 6, "border": "1px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Restrict Cormorant Garamond strictly to light/regular 300-400 >= 24px", "Separate cards via borderless tonal surfaces and 2x whitespace", "Use Cold Luxury Platinum/Chrome/Deep Pine-Slate tones"], "avoid": ["Warm cream/beige + brass palette slop", "Monospace index tags or heavy 1px black grid cages (belongs to 03)"]},
+  "zimage_direction": {
+    "light": "Cold-luxury architectural gallery still life of {subject} crafted in brushed stainless steel, cool pale limestone, and dark pine glass on a platinum plinth, soft north-window daylight, vast quiet negative space, 50mm lens, clean unmarked surfaces",
+    "dark": "Sculptural monolith study of {subject} in smoked obsidian glass, brushed titanium, and dark alpine slate against a matte obsidian gallery wall, razor-clean silver rim light, architectural stillness, 85mm lens, clean unmarked surfaces",
+    "team_portrait": "Vertical 3:4 restrained low-saturation editorial portrait in tailored black or charcoal wool, soft north-window key light, seamless cool platinum-grey (light) or obsidian (dark) backdrop, 85mm lens, generous empty headroom"
+  }
+}

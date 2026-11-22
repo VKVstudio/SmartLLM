@@ -1,0 +1,141 @@
+{
+  "manifest_version": "2026.11.2",
+  "verified_date": "2026-11-22",
+  "policy": {
+    "offline_self_hosted_only": true,
+    "allowed_js_licenses": ["MIT", "Apache-2.0"],
+    "allowed_font_licenses": ["SIL OFL-1.1"],
+    "mandatory_subsets": ["latin", "cyrillic"],
+    "mandatory_glyphs": ["А-Я", "а-я", "Ёё", "₽", "№", "«»"],
+    "reduced_motion_mandatory": true
+  },
+  "js_libraries_approved_for_bundling": [
+    {
+      "id": "motion",
+      "npm_packages": ["motion", "motion-dom"],
+      "verified_version": "14.14.0",
+      "license": "MIT",
+      "repo": "https://github.com/motiondivision/motion",
+      "bundle_size_gzip_kb": "18.3-19.0",
+      "esm_vanilla_apis": ["animate", "inView", "scroll", "stagger", "spring"],
+      "builder_bundling_safe": true,
+      "exclude_commercial_note": "Bundle MIT core ('motion'/'motion-dom') ONLY; NEVER include paid Motion+ templates/UI Kit.",
+      "recommended_canons": ["01_bento_grid", "08_liquid_glass", "10_industrial_tactile", "11_soft_clay_playful", "18_devtool_command_ui"]
+    },
+    {
+      "id": "animejs",
+      "npm_packages": ["animejs"],
+      "verified_version": "4.5.0",
+      "license": "MIT",
+      "repo": "https://github.com/juliangarnier/anime",
+      "bundle_size_gzip_kb": "11.0-15.0",
+      "esm_vanilla_apis": ["animate", "createTimeline", "stagger", "svg"],
+      "builder_bundling_safe": true,
+      "recommended_canons": ["05_kinetic_typography", "06_neo_brutalism", "07_avant_garde_poster", "16_artisan_craft_zine", "20_maximalist_collage_pop"]
+    },
+    {
+      "id": "lenis",
+      "npm_packages": ["lenis"],
+      "verified_version": "1.3.27",
+      "license": "MIT",
+      "repo": "https://github.com/darkroomengineering/lenis",
+      "bundle_size_gzip_kb": "5.0",
+      "esm_vanilla_apis": ["Lenis"],
+      "builder_bundling_safe": true,
+      "recommended_canons": ["12_quiet_luxury_minimal", "13_cinematic_documentary", "14_spatial_3d_showcase"]
+    },
+    {
+      "id": "three",
+      "npm_packages": ["three"],
+      "verified_version": "0.187.0",
+      "license": "MIT",
+      "repo": "https://github.com/mrdoob/three.js",
+      "bundle_size_gzip_kb": "140.0-150.0",
+      "esm_vanilla_apis": ["WebGLRenderer", "Scene", "PerspectiveCamera", "MeshPhysicalMaterial"],
+      "builder_bundling_safe": true,
+      "recommended_canons": ["14_spatial_3d_showcase"],
+      "notes": "Lazy-load on Canon 14 only (max 1 canvas); ship static Z-Image fallback for reduced-motion/low-power."
+    }
+  ],
+  "native_web_platform_features_late_2026": {
+    "css_scroll_driven_animations": {
+      "apis": ["animation-timeline", "scroll()", "view()", "animation-range"],
+      "baseline_status": "Baseline: Newly Available (October 2026)",
+      "browser_support": {"chrome_edge": "115+", "safari": "26+", "firefox": "159+ (Oct 27, 2026)"},
+      "js_footprint_kb": 0
+    },
+    "view_transitions_same_document": {
+      "apis": ["document.startViewTransition()", "view-transition-name"],
+      "baseline_status": "Baseline: Newly Available",
+      "browser_support": {"chrome_edge": "111+", "safari": "18.2+", "firefox": "144+"},
+      "js_footprint_kb": 0
+    },
+    "view_transitions_cross_document_mpa": {
+      "apis": ["@view-transition { navigation: auto; }"],
+      "baseline_status": "Limited Availability",
+      "browser_support": {"chrome_edge": "126+", "safari": "18.2+", "firefox": "Nightly ~161 behind experimental flag"},
+      "js_footprint_kb": 0
+    }
+  },
+  "excluded_libraries_legal_boundary": [
+    {
+      "id": "gsap",
+      "license": "GSAP Standard 'No Charge' License (Webflow, Inc.)",
+      "builder_bundling_safe": false,
+      "verbatim_license_clauses": {
+        "Prohibited Uses": "any implementation and/or use of GSAP Products in tools that allow users to build visual animations without code that encourages, induces, or materially assists in creating a solution that competes with Webflow's visual animation building capabilities.",
+        "Competitive Products": "any software, tool, or service that enables users to create, edit, or manage animations through a visual interface or builder similar to Webflow.",
+        "Section III": "Users are explicitly restricted from using any GSAP Products for any Prohibited Uses without prior written consent or reverse engineering them to create Competitive Products."
+      },
+      "rule": "NEVER bundle GSAP inside SmartLLM Studio or shipped runtime templates; document as optional user npm dependency only."
+    }
+  ],
+  "fonts_verified_cyrillic_ruble_numero": [
+    {"id": "manrope", "family": "Manrope", "css_name": "'Manrope Variable', 'Manrope'", "pkg": "@fontsource-variable/manrope", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": false, "axes": "wght 200..800"},
+    {"id": "inter", "family": "Inter", "css_name": "'Inter Variable', 'Inter'", "pkg": "@fontsource-variable/inter", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "opsz 14..32, wght 100..900"},
+    {"id": "golos_text", "family": "Golos Text", "css_name": "'Golos Text Variable', 'Golos Text'", "pkg": "@fontsource-variable/golos-text", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": false, "axes": "wght 400..900"},
+    {"id": "ibm_plex_sans", "family": "IBM Plex Sans", "css_name": "'IBM Plex Sans Variable', 'IBM Plex Sans'", "pkg": "@fontsource-variable/ibm-plex-sans", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wdth 75..100, wght 100..700"},
+    {"id": "ibm_plex_mono", "family": "IBM Plex Mono", "css_name": "'IBM Plex Mono'", "pkg": "@fontsource/ibm-plex-mono", "pkg_kind": "static", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "weights": [400, 500, 600]},
+    {"id": "source_serif_4", "family": "Source Serif 4", "css_name": "'Source Serif 4 Variable', 'Source Serif 4'", "pkg": "@fontsource-variable/source-serif-4", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "opsz 8..60, wght 200..900"},
+    {"id": "source_sans_3", "family": "Source Sans 3", "css_name": "'Source Sans 3 Variable', 'Source Sans 3'", "pkg": "@fontsource-variable/source-sans-3", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wght 200..900"},
+    {"id": "source_code_pro", "family": "Source Code Pro", "css_name": "'Source Code Pro Variable', 'Source Code Pro'", "pkg": "@fontsource-variable/source-code-pro", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wght 200..900"},
+    {"id": "geist", "family": "Geist", "css_name": "'Geist Variable', 'Geist'", "pkg": "@fontsource-variable/geist", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wght 100..900"},
+    {"id": "geist_mono", "family": "Geist Mono", "css_name": "'Geist Mono Variable', 'Geist Mono'", "pkg": "@fontsource-variable/geist-mono", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wght 100..900"},
+    {"id": "tektur", "family": "Tektur", "css_name": "'Tektur Variable', 'Tektur'", "pkg": "@fontsource-variable/tektur", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": false, "axes": "wdth 75..100, wght 400..900"},
+    {"id": "commissioner", "family": "Commissioner", "css_name": "'Commissioner Variable', 'Commissioner'", "pkg": "@fontsource-variable/commissioner", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": false, "axes": "FLAR, VOLM, slnt, wght 100..900"},
+    {"id": "jetbrains_mono", "family": "JetBrains Mono", "css_name": "'JetBrains Mono Variable', 'JetBrains Mono'", "pkg": "@fontsource-variable/jetbrains-mono", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wght 100..800"},
+    {"id": "unbounded", "family": "Unbounded", "css_name": "'Unbounded Variable', 'Unbounded'", "pkg": "@fontsource-variable/unbounded", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": false, "axes": "wght 200..900"},
+    {"id": "martian_mono", "family": "Martian Mono", "css_name": "'Martian Mono Variable', 'Martian Mono'", "pkg": "@fontsource-variable/martian-mono", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": false, "axes": "wdth 75..112.5, wght 100..800"},
+    {"id": "alumni_sans", "family": "Alumni Sans", "css_name": "'Alumni Sans Variable', 'Alumni Sans'", "pkg": "@fontsource-variable/alumni-sans", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wght 100..900"},
+    {"id": "pt_mono", "family": "PT Mono", "css_name": "'PT Mono'", "pkg": "@fontsource/pt-mono", "pkg_kind": "static", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": false, "weights": [400]},
+    {"id": "wix_madefor_display", "family": "Wix Madefor Display", "css_name": "'Wix Madefor Display Variable', 'Wix Madefor Display'", "pkg": "@fontsource-variable/wix-madefor-display", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": false, "axes": "wght 400..800"},
+    {"id": "wix_madefor_text", "family": "Wix Madefor Text", "css_name": "'Wix Madefor Text Variable', 'Wix Madefor Text'", "pkg": "@fontsource-variable/wix-madefor-text", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wght 400..800"},
+    {"id": "onest", "family": "Onest", "css_name": "'Onest Variable', 'Onest'", "pkg": "@fontsource-variable/onest", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": false, "axes": "wght 100..900"},
+    {"id": "geologica", "family": "Geologica", "css_name": "'Geologica Variable', 'Geologica'", "pkg": "@fontsource-variable/geologica", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": false, "axes": "CRSV, SHRP, slnt, wght 100..900"},
+    {"id": "fira_code", "family": "Fira Code", "css_name": "'Fira Code Variable', 'Fira Code'", "pkg": "@fontsource-variable/fira-code", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": false, "axes": "wght 300..700"},
+    {"id": "jura", "family": "Jura", "css_name": "'Jura Variable', 'Jura'", "pkg": "@fontsource-variable/jura", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": false, "axes": "wght 300..700"},
+    {"id": "rubik", "family": "Rubik", "css_name": "'Rubik Variable', 'Rubik'", "pkg": "@fontsource-variable/rubik", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wght 300..900"},
+    {"id": "nunito", "family": "Nunito", "css_name": "'Nunito Variable', 'Nunito'", "pkg": "@fontsource-variable/nunito", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wght 200..900"},
+    {"id": "cormorant_garamond", "family": "Cormorant Garamond", "css_name": "'Cormorant Garamond Variable', 'Cormorant Garamond'", "pkg": "@fontsource-variable/cormorant-garamond", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wght 300..700 (restrict >=24px display)"},
+    {"id": "literata", "family": "Literata", "css_name": "'Literata Variable', 'Literata'", "pkg": "@fontsource-variable/literata", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "opsz 7..72, wght 200..900"},
+    {"id": "mulish", "family": "Mulish", "css_name": "'Mulish Variable', 'Mulish'", "pkg": "@fontsource-variable/mulish", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wght 200..900"},
+    {"id": "vollkorn", "family": "Vollkorn", "css_name": "'Vollkorn Variable', 'Vollkorn'", "pkg": "@fontsource-variable/vollkorn", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "wght 400..900"},
+    {"id": "shantell_sans", "family": "Shantell Sans", "css_name": "'Shantell Sans Variable', 'Shantell Sans'", "pkg": "@fontsource-variable/shantell-sans", "pkg_kind": "variable", "license": "SIL OFL-1.1", "cyrillic_verified": true, "ruble_verified": true, "numero_verified": true, "italic": true, "axes": "BNCE, INFM, SPAC, wght 300..800"}
+  ],
+  "rejected_fonts_audit": [
+    {"family": "Archivo Black", "reason": "No Cyrillic subset on Google Fonts / Fontsource (broken in v0.0.4 canon_cards.json:2088)."},
+    {"family": "Dela Gothic One", "reason": "Static 400-only, no variable package, missing Ruble sign U+20BD, extreme 1.03em RU overflow."},
+    {"family": "Bodoni Moda", "reason": "cyrillic=false on Google Fonts."},
+    {"family": "Newsreader", "reason": "No Cyrillic subset on Google Fonts."},
+    {"family": "Space Grotesk", "reason": "No native Cyrillic subset on Fontsource."},
+    {"family": "Playfair Display", "reason": "Missing Ruble sign U+20BD."},
+    {"family": "Sofia Sans", "reason": "Missing Ruble sign U+20BD."},
+    {"family": "Sofia Sans Extra Condensed", "reason": "Missing Ruble sign U+20BD (replaced by Alumni Sans)."},
+    {"family": "Russo One", "reason": "Static 400-only, no variable package, missing Ruble sign U+20BD."},
+    {"family": "Jost", "reason": "Missing Numero sign U+2116."},
+    {"family": "Alegreya Sans", "reason": "Static-only (no @fontsource-variable), missing weight 600."},
+    {"family": "Fredoka", "reason": "No Cyrillic subset."},
+    {"family": "Atkinson Hyperlegible Next", "reason": "No Cyrillic subset."},
+    {"family": "Soyuz Grotesk", "reason": "Not hosted on Google Fonts / Fontsource; non-OFL custom license; lowercase-only."}
+  ]
+}

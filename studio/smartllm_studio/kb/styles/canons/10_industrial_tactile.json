@@ -1,0 +1,29 @@
+{
+  "id": "10_industrial_tactile",
+  "name": "Industrial Tactile Hardware / Braun–TE",
+  "name_ru": "Индустриальный тактильный хардвер / Braun–TE",
+  "category": "experimental",
+  "legacy_ids": ["17_micro_interactions_tactile", "07_industrial_functional_instrument"],
+  "dials": {"variance": 6, "motion": 6, "density": 4},
+  "default_polarity": "light",
+  "marquee_allowed": false,
+  "palettes": {
+    "light": {"bg": "oklch(0.918 0.008 85)", "surface": "oklch(0.968 0.006 85)", "surface_elevated": "oklch(0.990 0.003 85)", "border": "oklch(0.730 0.010 85)", "border_control": "oklch(0.540 0.012 80)", "text": "oklch(0.175 0.008 75)", "muted": "oklch(0.430 0.010 80)", "accent": "oklch(0.520 0.168 38)", "accent_ink": "oklch(0.995 0.002 85)", "accent_2": "oklch(0.470 0.115 148)", "contrast_verified": {"text_bg": 14.88, "text_surface": 17.29, "muted_bg": 6.36, "muted_surface": 7.39, "accent_ink_accent": 5.87, "accent_bg": 4.67, "border_control_surface": 4.62, "accent_2_bg": 5.08}},
+    "dark": {"bg": "oklch(0.165 0.008 75)", "surface": "oklch(0.215 0.009 75)", "surface_elevated": "oklch(0.265 0.010 75)", "border": "oklch(0.365 0.012 75)", "border_control": "oklch(0.575 0.014 75)", "text": "oklch(0.948 0.008 85)", "muted": "oklch(0.720 0.010 82)", "accent": "oklch(0.695 0.185 42)", "accent_ink": "oklch(0.145 0.008 75)", "accent_2": "oklch(0.755 0.140 148)", "contrast_verified": {"text_bg": 16.56, "text_surface": 15.06, "muted_bg": 7.77, "muted_surface": 7.06, "accent_ink_accent": 6.77, "accent_bg": 6.59, "border_control_surface": 4.0, "accent_2_bg": 9.3}}
+  },
+  "fonts": {"heading": "'Jura Variable', 'Jura', system-ui, sans-serif", "body": "'Source Sans 3 Variable', 'Source Sans 3', system-ui, sans-serif", "mono": "'Fira Code Variable', 'Fira Code', monospace", "packages": ["@fontsource-variable/jura", "@fontsource-variable/source-sans-3", "@fontsource-variable/fira-code"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 10, "radius_button_px": 8, "radius_input_px": 6, "radius_badge_px": 4, "border_width_px": 1, "border_style": "solid", "surface_treatment": "anodized-machined-bevel + recessed input well + precision chassis seams", "shadow_light": "inset 0 1px 0 oklch(1 0 0 / 0.80), inset 0 -2px 0 oklch(0.25 0.01 80 / 0.14), 0 3px 8px -2px oklch(0.25 0.01 80 / 0.12)", "shadow_dark": "inset 0 1px 0 oklch(1 0 0 / 0.11), inset 0 -2px 0 oklch(0 0 0 / 0.45), 0 4px 12px -2px oklch(0 0 0 / 0.34)"},
+  "motion": {"ease": "cubic-bezier(0.34, 1.45, 0.64, 1)", "duration_ms": 170, "stagger_ms": 30, "hover": "keycap micro-lift translateY(-1px) + specular edge sharpen", "press": "mechanical keycap travel translateY(2px) + inset 0 2px 5px oklch(0 0 0 / 0.28)", "scroll": "none (physical chassis stays bolted)", "forbidden": ["mushy neumorphism", "floaty parallax", "huge 32px pills"], "reduced_motion": "0 translateY; instant recessed border press state"},
+  "responsive": {
+    "container_max_px": 1280,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 18, "section_py_px": 80, "card_pad_px": 24}, "tablet": {"cols": 8, "gutter_px": 16, "section_py_px": 60, "card_pad_px": 20}, "mobile": {"cols": 4, "gutter_px": 12, "section_py_px": 44, "card_pad_px": 16}},
+    "typography": {"h1": {"clamp": "clamp(2rem, 1.583rem + 1.85vw, 3.25rem)", "desktop_px": 52, "tablet_px": 40, "mobile_px": 32, "lh": 1.08, "ls": "-0.02em", "weight": 700, "measure_ch": 24}, "h2": {"clamp": "clamp(1.5rem, 1.292rem + 0.93vw, 2.125rem)", "desktop_px": 34, "tablet_px": 28, "mobile_px": 24, "lh": 1.16, "ls": "-0.015em", "weight": 600, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.6, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "cta_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "label_gap_px": 6, "border": "1px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Use recessed inset shadows on inputs vs raised bevels on keycap CTAs", "Use crisp 11px mono telemetry markers (CH-01, SPEC)", "Keep 6-10px machined corners"], "avoid": ["Low-contrast 2020 neumorphism", "Glass blur over tactile controls"]},
+  "zimage_direction": {
+    "light": "Macro studio product study of {subject} featuring bead-blasted warm aluminum chassis, tactile matte ceramic switches, knurled rotary dials, and signal-orange mechanical toggle, overhead softbox light, 90mm macro lens, clean unmarked hardware",
+    "dark": "Macro studio photograph of {subject} in matte dark anodized titanium with knurled charcoal encoder knobs and signal-orange tactile mechanical buttons, crisp rim light, 90mm macro lens, clean unmarked surfaces",
+    "team_portrait": "Vertical 3:4 warm studio portrait in textured knitwear, soft window daylight, seamless warm light stone (light) or dark titanium-slate (dark) backdrop, 85mm lens, generous empty headroom"
+  }
+}

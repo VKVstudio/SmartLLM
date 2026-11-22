@@ -1,0 +1,29 @@
+{
+  "id": "15_organic_biophilic_eco",
+  "name": "Organic Biophilic & Low-Carbon Web",
+  "name_ru": "Органическая биофилия и низкоуглеродный веб",
+  "category": "accessible",
+  "legacy_ids": ["08_sustainable_eco", "17_sustainable_climate_botanical"],
+  "dials": {"variance": 5, "motion": 3, "density": 3},
+  "default_polarity": "light",
+  "marquee_allowed": false,
+  "palettes": {
+    "light": {"bg": "oklch(0.966 0.010 152)", "surface": "oklch(0.992 0.005 152)", "surface_elevated": "oklch(0.932 0.016 152)", "border": "oklch(0.815 0.022 152)", "border_control": "oklch(0.530 0.028 156)", "text": "oklch(0.195 0.024 158)", "muted": "oklch(0.440 0.024 158)", "accent": "oklch(0.405 0.095 152)", "accent_ink": "oklch(0.988 0.005 150)", "accent_2": "oklch(0.460 0.068 205)", "contrast_verified": {"text_bg": 16.53, "text_surface": 17.8, "muted_bg": 6.97, "muted_surface": 7.51, "accent_ink_accent": 8.34, "accent_bg": 7.84, "border_control_surface": 5.1, "accent_2_bg": 6.28}},
+    "dark": {"bg": "oklch(0.148 0.018 158)", "surface": "oklch(0.196 0.022 158)", "surface_elevated": "oklch(0.246 0.024 158)", "border": "oklch(0.345 0.028 158)", "border_control": "oklch(0.560 0.028 156)", "text": "oklch(0.948 0.012 148)", "muted": "oklch(0.745 0.020 152)", "accent": "oklch(0.775 0.115 146)", "accent_ink": "oklch(0.148 0.020 158)", "accent_2": "oklch(0.740 0.075 205)", "contrast_verified": {"text_bg": 16.96, "text_surface": 15.66, "muted_bg": 8.76, "muted_surface": 8.08, "accent_ink_accent": 10.07, "accent_bg": 10.08, "border_control_surface": 3.96, "accent_2_bg": 8.78}}
+  },
+  "fonts": {"heading": "'Geologica Variable', 'Geologica', system-ui, sans-serif", "body": "'Mulish Variable', 'Mulish', system-ui, sans-serif", "mono": "'Source Code Pro Variable', 'Source Code Pro', monospace", "packages": ["@fontsource-variable/geologica", "@fontsource-variable/mulish", "@fontsource-variable/source-code-pro"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 20, "radius_button_px": 9999, "radius_input_px": 12, "radius_badge_px": 9999, "border_width_px": 1, "border_style": "solid", "surface_treatment": "low-carbon-mineral (zero backdrop-filter, zero SVG noise filters, <=400KB page budget)", "shadow_light": "0 10px 26px -10px rgba(15,48,28,0.08)", "shadow_dark": "0 14px 32px -12px rgba(0,8,4,0.52)"},
+  "motion": {"ease": "cubic-bezier(0.22, 1, 0.36, 1)", "duration_ms": 300, "stagger_ms": 45, "hover": "translateY(-2px) + botanical border darken", "press": "scale(0.98)", "scroll": "once-only IntersectionObserver opacity+12px rise (0 scroll listeners)", "forbidden": ["background videos", "WebGL", "heavy blur/noise overlays", "warm beige+brass cliché"], "reduced_motion": "0ms settled layout"},
+  "responsive": {
+    "container_max_px": 1312,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 22, "section_py_px": 96, "card_pad_px": 28}, "tablet": {"cols": 8, "gutter_px": 18, "section_py_px": 72, "card_pad_px": 22}, "mobile": {"cols": 4, "gutter_px": 14, "section_py_px": 52, "card_pad_px": 18}},
+    "typography": {"h1": {"clamp": "clamp(2rem, 1.5rem + 2.22vw, 3.5rem)", "desktop_px": 56, "tablet_px": 42, "mobile_px": 32, "lh": 1.12, "ls": "-0.02em", "weight": 600, "measure_ch": 22}, "h2": {"clamp": "clamp(1.5rem, 1.25rem + 1.11vw, 2.25rem)", "desktop_px": 36, "tablet_px": 28, "mobile_px": 24, "lh": 1.18, "ls": "-0.015em", "weight": 600, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.66, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 46, "tablet": 46, "mobile": 48}, "cta_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "label_gap_px": 6, "border": "1px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Keep total page weight <= 400KB (low-carbon mineral aesthetic)", "Pair Geologica humanist sans with Mulish body", "Use smooth 20px pebble cards and clear impact telemetry"], "avoid": ["SVG paper grain filters (belongs to 16_craft_zine)", "Autoplay media or GPU-heavy blur"]},
+  "zimage_direction": {
+    "light": "Natural overcast daylight editorial photograph of {subject} beside pale Nordic ash timber, cool river slate, celadon ceramic, and deep pine botanical leaves on pale sage mineral stone, 50mm lens, clean blank unmarked surfaces",
+    "dark": "Serene botanical nocturnal still life of {subject} resting on wet dark basalt and deep forest moss under soft cool moonlight, matte glass and pale sage foliage, 50mm lens, clean unmarked surfaces",
+    "team_portrait": "Vertical 3:4 natural overcast daylight portrait in organic linen knitwear, calm authentic expression, seamless pale sage-mist (light) or deep forest-slate (dark) wall, 50mm lens, generous empty headroom"
+  }
+}

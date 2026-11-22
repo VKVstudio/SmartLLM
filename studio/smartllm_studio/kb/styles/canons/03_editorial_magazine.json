@@ -1,0 +1,29 @@
+{
+  "id": "03_editorial_magazine",
+  "name": "Editorial Monograph / Broadsheet",
+  "name_ru": "Редакционная периодика и монография",
+  "category": "typography",
+  "legacy_ids": ["04_experimental_display_typography", "04_editorial_broadsheet_serif", "25_academic_journal_monograph"],
+  "dials": {"variance": 8, "motion": 5, "density": 4},
+  "default_polarity": "light",
+  "marquee_allowed": true,
+  "palettes": {
+    "light": {"bg": "oklch(0.968 0.010 85)", "surface": "oklch(0.935 0.013 83)", "surface_elevated": "oklch(0.988 0.005 85)", "border": "oklch(0.195 0.008 60)", "border_control": "oklch(0.320 0.010 60)", "text": "oklch(0.165 0.008 60)", "muted": "oklch(0.435 0.014 65)", "accent": "oklch(0.495 0.175 24)", "accent_ink": "oklch(0.988 0.005 85)", "accent_2": "oklch(0.420 0.085 245)", "contrast_verified": {"text_bg": 17.58, "text_surface": 15.93, "muted_bg": 7.25, "muted_surface": 6.57, "accent_ink_accent": 6.49, "accent_bg": 6.13, "border_control_surface": 10.5, "accent_2_bg": 7.66}},
+    "dark": {"bg": "oklch(0.145 0.008 60)", "surface": "oklch(0.195 0.010 60)", "surface_elevated": "oklch(0.242 0.012 60)", "border": "oklch(0.460 0.014 70)", "border_control": "oklch(0.580 0.016 70)", "text": "oklch(0.945 0.012 85)", "muted": "oklch(0.730 0.016 78)", "accent": "oklch(0.665 0.175 24)", "accent_ink": "oklch(0.135 0.008 60)", "accent_2": "oklch(0.720 0.105 245)", "contrast_verified": {"text_bg": 16.86, "text_surface": 15.59, "muted_bg": 8.27, "muted_surface": 7.65, "accent_ink_accent": 6.05, "accent_bg": 5.98, "border_control_surface": 4.26, "accent_2_bg": 8.07}}
+  },
+  "fonts": {"heading": "'Source Serif 4 Variable', 'Source Serif 4', Georgia, serif", "body": "'Source Sans 3 Variable', 'Source Sans 3', system-ui, sans-serif", "mono": "'Source Code Pro Variable', 'Source Code Pro', monospace", "packages": ["@fontsource-variable/source-serif-4", "@fontsource-variable/source-sans-3", "@fontsource-variable/source-code-pro"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 0, "radius_button_px": 0, "radius_input_px": 0, "radius_badge_px": 0, "border_width_px": 1, "border_style": "solid", "surface_treatment": "broadsheet-ink-rules (2px double masthead + 1px column dividers)", "shadow_light": "none", "shadow_dark": "none"},
+  "motion": {"ease": "cubic-bezier(0.22, 1, 0.36, 1)", "duration_ms": 220, "stagger_ms": 30, "hover": "crisp editorial underline draw + image scale(1.025) inside overflow:hidden plate", "press": "opacity 0.85", "scroll": "optional @supports(animation-timeline: view()) crisp clip reveal", "forbidden": ["borderless floating soft cards (reserved for 12_quiet_luxury)", "bouncy springs", "blurry glass"], "reduced_motion": "0ms instant state; static broadsheet plates"},
+  "responsive": {
+    "container_max_px": 1320,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 24, "section_py_px": 84, "card_pad_px": 24}, "tablet": {"cols": 8, "gutter_px": 20, "section_py_px": 64, "card_pad_px": 20}, "mobile": {"cols": 4, "gutter_px": 16, "section_py_px": 48, "card_pad_px": 16}},
+    "typography": {"h1": {"clamp": "clamp(2.25rem, 1.5rem + 3.33vw, 4.5rem)", "desktop_px": 72, "tablet_px": 50, "mobile_px": 36, "lh": 1.02, "ls": "-0.025em", "weight": 700, "measure_ch": 18}, "h2": {"clamp": "clamp(1.625rem, 1.25rem + 1.67vw, 2.75rem)", "desktop_px": 44, "tablet_px": 34, "mobile_px": 26, "lh": 1.08, "ls": "-0.02em", "weight": 700, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.6, "ls": "0em", "weight": 400, "measure_ch": 62}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "cta_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "label_gap_px": 6, "border": "1px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Use bold 700-800 Source Serif 4 headlines + italic emphasis (lh>=1.1)", "Expose 2px top rules & 1px vertical column dividers", "Use mono datelines & spec tables"], "avoid": ["Borderless 2x-whitespace luxury styling (belongs to 12)", "Tiny serif body < 16px", "Drop shadows"]},
+  "zimage_direction": {
+    "light": "Editorial broadsheet architectural photography of {subject} on archival bone-ivory paper tone, dramatic natural daylight chiaroscuro, crisp stone and dark walnut textures with subtle vermilion editorial accent, 35mm Leica film look, unmarked surfaces",
+    "dark": "Low-key editorial broadsheet still life of {subject} on dark espresso slate, sculpted directional key light, brushed bronze and ink tones with crisp vermilion highlight, 35mm medium-format grain, clean blank surfaces",
+    "team_portrait": "Vertical 3:4 documentary magazine portrait in crisp tailored attire, dramatic soft side light, seamless warm newsprint-grey (light) or dark espresso (dark) backdrop, 85mm lens, generous empty headroom"
+  }
+}

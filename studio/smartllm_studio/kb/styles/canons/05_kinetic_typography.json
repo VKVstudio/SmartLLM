@@ -1,0 +1,29 @@
+{
+  "id": "05_kinetic_typography",
+  "name": "Kinetic & Variable Typography",
+  "name_ru": "Кинетическая и вариативная типографика",
+  "category": "typography",
+  "legacy_ids": ["02_kinetic_typography", "14_kinetic_cultural_exhibition"],
+  "dials": {"variance": 9, "motion": 8, "density": 3},
+  "default_polarity": "dark",
+  "marquee_allowed": true,
+  "palettes": {
+    "dark": {"bg": "oklch(0.115 0.004 260)", "surface": "oklch(0.165 0.006 260)", "surface_elevated": "oklch(0.215 0.008 260)", "border": "oklch(0.370 0.008 260)", "border_control": "oklch(0.570 0.008 260)", "text": "oklch(0.975 0.003 95)", "muted": "oklch(0.720 0.006 260)", "accent": "oklch(0.675 0.205 18)", "accent_ink": "oklch(0.115 0.004 260)", "accent_2": "oklch(0.875 0.195 126)", "contrast_verified": {"text_bg": 18.96, "text_surface": 17.93, "muted_bg": 8.22, "muted_surface": 7.77, "accent_ink_accent": 6.29, "accent_bg": 6.29, "border_control_surface": 4.32, "accent_2_bg": 14.59}},
+    "light": {"bg": "oklch(0.992 0.002 95)", "surface": "oklch(0.942 0.004 95)", "surface_elevated": "oklch(1.000 0.000 0)", "border": "oklch(0.140 0.004 260)", "border_control": "oklch(0.140 0.004 260)", "text": "oklch(0.130 0.004 260)", "muted": "oklch(0.430 0.006 260)", "accent": "oklch(0.505 0.195 18)", "accent_ink": "oklch(0.995 0.001 95)", "accent_2": "oklch(0.470 0.125 248)", "contrast_verified": {"text_bg": 19.66, "text_surface": 16.98, "muted_bg": 7.92, "muted_surface": 6.84, "accent_ink_accent": 6.44, "accent_bg": 6.38, "border_control_surface": 16.8, "accent_2_bg": 6.65}}
+  },
+  "fonts": {"heading": "'Tektur Variable', 'Tektur', system-ui, sans-serif", "body": "'Commissioner Variable', 'Commissioner', system-ui, sans-serif", "mono": "'JetBrains Mono Variable', 'JetBrains Mono', monospace", "packages": ["@fontsource-variable/tektur", "@fontsource-variable/commissioner", "@fontsource-variable/jetbrains-mono"], "license": "SIL OFL-1.1", "cyrillic_verified": true},
+  "geometry": {"radius_card_px": 2, "radius_button_px": 2, "radius_input_px": 2, "radius_badge_px": 2, "border_width_px": 2, "border_style": "solid", "surface_treatment": "exhibition-stage + Tektur wdth/wght kinetic emphasis", "shadow_light": "none", "shadow_dark": "none"},
+  "motion": {"ease": "cubic-bezier(0.16, 1, 0.3, 1)", "duration_ms": 200, "stagger_ms": 30, "hover": "flood inversion (bg->accent, ink->accent-ink)", "press": "scale(0.97) 90ms", "scroll": "@supports(animation-timeline: view()) clip-path wipe + pauseable marquee w/ explicit Pause button", "forbidden": ["animating flowing paragraph font-size", "unpausable flashing motion", "blurry shadows"], "reduced_motion": "marquee paused; clip-path: none; opacity: 1"},
+  "responsive": {
+    "container_max_px": 1360,
+    "grid": {"desktop": {"cols": 12, "gutter_px": 20, "section_py_px": 88, "card_pad_px": 26}, "tablet": {"cols": 8, "gutter_px": 16, "section_py_px": 64, "card_pad_px": 20}, "mobile": {"cols": 4, "gutter_px": 12, "section_py_px": 48, "card_pad_px": 16}},
+    "typography": {"h1": {"clamp": "clamp(1.75rem, 0.75rem + 4.44vw, 4.75rem)", "desktop_px": 76, "tablet_px": 52, "mobile_px": 28, "lh": 0.96, "ls": "-0.03em", "weight": 800, "measure_ch": 14, "transform": "uppercase"}, "h2": {"clamp": "clamp(1.5rem, 1rem + 2.22vw, 3rem)", "desktop_px": 48, "tablet_px": 34, "mobile_px": 24, "lh": 1.04, "ls": "-0.025em", "weight": 700, "measure_ch": 30}, "h3": {"desktop_px": 21, "tablet_px": 19, "mobile_px": 18, "lh": 1.25, "ls": "-0.01em", "weight": 600, "measure_ch": 36}, "body": {"desktop_px": 16, "tablet_px": 16, "mobile_px": 16, "lh": 1.6, "ls": "0em", "weight": 400, "measure_ch": 60}, "small": {"desktop_px": 12, "tablet_px": 12, "mobile_px": 12, "lh": 1.4, "ls": "0.06em", "weight": 600, "transform": "uppercase"}},
+    "form": {"input_h_px": {"desktop": 44, "tablet": 46, "mobile": 48}, "cta_h_px": {"desktop": 46, "tablet": 48, "mobile": 48}, "label_gap_px": 6, "border": "2px solid var(--border-control)", "focus_ring": "outline: 2px solid var(--accent); outline-offset: 3px"}
+  },
+  "rules": {"do": ["Let display headline claim 55% of hero fold", "Narrow Tektur wdth at 360px for long Russian words", "Provide explicit Pause control on marquee"], "avoid": ["Uppercase display face in body paragraphs", "Unpausable tickers (violates SC 2.2.2)"]},
+  "zimage_direction": {
+    "dark": "High-contrast monochromatic exhibition photograph of {subject} sliced by razor diagonal studio light beams across brushed titanium and matte carbon concrete with one vivid crimson highlight, 50mm lens, clean blank surfaces",
+    "light": "Stark white exhibition gallery space displaying {subject} under crisp diagonal architectural shadow, matte plaster and dark steel with one scarlet sculptural plane, 50mm lens, clean unmarked surfaces",
+    "team_portrait": "Vertical 3:4 high-contrast studio portrait with crisp directional side light against seamless matte obsidian (dark) or gallery white (light) backdrop, 85mm lens, generous empty headroom"
+  }
+}
