@@ -267,26 +267,34 @@ def _run_all_tests_inner(results: dict[str, object]) -> dict[str, object]:
         assert Path(p_stale["llama_server_bin"]) == fresh, p_stale["llama_server_bin"]
 
     # 2d. File-serving containment: drive-letter injection & traversal must never escape base dirs
-    srv_t, state_t = create_studio_server(host="127.0.0.1", port=18195, repo_root=REPO_ROOT, allow_lock_write=False)
-    thr_t = threading.Thread(target=srv_t.serve_forever, daemon=True)
-    thr_t.start()
-    try:
-        for evil in (
-            "/preview/default/C:/Windows/win.ini",
-            "/preview/default/..%2f..%2fserver.py",
-            "/api/image/files/C:/Windows/win.ini",
-            "/static/../smartllm_studio/server.py",
-            "/assets/../../CLAUDE.md",
-        ):
-            code, _ = _http_req(f"http://127.0.0.1:18195{evil}")
-            assert code in (403, 404), f"traversal {evil} returned {code}"
-        code_ok, _ = _http_req("http://127.0.0.1:18195/static/app.js")
-        assert code_ok == 200
-        code_prog, body_prog = _http_req("http://127.0.0.1:18195/api/setup/progress")
-        assert code_prog == 200 and json.loads(body_prog)["running"] is False
-    finally:
-        srv_t.shutdown()
-        srv_t.server_close()
+    with tempfile.TemporaryDirectory(prefix="smartllm_contain_") as td_c:
+        srv_t, state_t = create_studio_server(
+            host="127.0.0.1",
+            port=18195,
+            repo_root=REPO_ROOT,
+            allow_lock_write=False,
+            projects_root_override=Path(td_c) / "projects",
+            lock_path_override=Path(td_c) / "gpu.lock",
+        )
+        thr_t = threading.Thread(target=srv_t.serve_forever, daemon=True)
+        thr_t.start()
+        try:
+            for evil in (
+                "/preview/default/C:/Windows/win.ini",
+                "/preview/default/..%2f..%2fserver.py",
+                "/api/image/files/C:/Windows/win.ini",
+                "/static/../smartllm_studio/server.py",
+                "/assets/../../CLAUDE.md",
+            ):
+                code, _ = _http_req(f"http://127.0.0.1:18195{evil}")
+                assert code in (403, 404), f"traversal {evil} returned {code}"
+            code_ok, _ = _http_req("http://127.0.0.1:18195/static/app.js")
+            assert code_ok == 200
+            code_prog, body_prog = _http_req("http://127.0.0.1:18195/api/setup/progress")
+            assert code_prog == 200 and json.loads(body_prog)["running"] is False
+        finally:
+            srv_t.shutdown()
+            srv_t.server_close()
 
     # 2d-2. Auto-setup skip logic: only download what is actually missing
     from smartllm_studio.server import _setup_skip_flags
@@ -377,21 +385,28 @@ def _run_all_tests_inner(results: dict[str, object]) -> dict[str, object]:
     assert resolve_primary_lang("en+ru", "Русский бриф для VKVstudio") == "ru"
     assert _normalize_routes([{"slug": "Доставка", "title": "Доставка"}], "ru")[0]["filename"] == "dostavka.html"
 
-    cyr_preview_file = state_t.project_dir("default") / "доставка.html"
-    cyr_preview_file.parent.mkdir(parents=True, exist_ok=True)
-    cyr_preview_file.write_text("<!doctype html><title>Доставка</title>", encoding="utf-8")
-
-    # Re-verify URL-encoded Cyrillic GET on a running test server
-    srv_cyr, _ = create_studio_server(host="127.0.0.1", port=18196, repo_root=REPO_ROOT, allow_lock_write=False)
-    thr_cyr = threading.Thread(target=srv_cyr.serve_forever, daemon=True)
-    thr_cyr.start()
-    try:
-        code_cyr, body_cyr = _http_req(f"http://127.0.0.1:18196/preview/default/{_urlparse.quote('доставка.html')}")
-        assert code_cyr == 200 and "Доставка" in body_cyr.decode("utf-8"), f"Cyrillic preview GET returned {code_cyr}"
-    finally:
-        srv_cyr.shutdown()
-        srv_cyr.server_close()
-        cyr_preview_file.unlink(missing_ok=True)
+    # Re-verify URL-encoded Cyrillic GET on an isolated running test server
+    with tempfile.TemporaryDirectory(prefix="smartllm_cyr_") as td_cyr:
+        srv_cyr, state_cyr = create_studio_server(
+            host="127.0.0.1",
+            port=18196,
+            repo_root=REPO_ROOT,
+            allow_lock_write=False,
+            projects_root_override=Path(td_cyr) / "projects",
+            lock_path_override=Path(td_cyr) / "gpu.lock",
+        )
+        cyr_preview_file = state_cyr.project_dir("default") / "доставка.html"
+        cyr_preview_file.parent.mkdir(parents=True, exist_ok=True)
+        cyr_preview_file.write_text("<!doctype html><title>Доставка</title>", encoding="utf-8")
+        thr_cyr = threading.Thread(target=srv_cyr.serve_forever, daemon=True)
+        thr_cyr.start()
+        try:
+            code_cyr, body_cyr = _http_req(f"http://127.0.0.1:18196/preview/default/{_urlparse.quote('доставка.html')}")
+            assert code_cyr == 200 and "Доставка" in body_cyr.decode("utf-8"), f"Cyrillic preview GET returned {code_cyr}"
+        finally:
+            srv_cyr.shutdown()
+            srv_cyr.server_close()
+            cyr_preview_file.unlink(missing_ok=True)
 
     class _AutocompleteParser(_html_parser.HTMLParser):
         def __init__(self) -> None:

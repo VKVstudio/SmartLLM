@@ -187,7 +187,21 @@ def harden_zimage_prompt(prompt: str, brand: str = "", member_names: list[str] |
     for rule in spec["text_replace_map"]:
         out = re.sub(rule["pattern"], rule["replace"], out)
     out = re.sub(r"(?:^|(?<=\s))-[a-z]+\b", "", out, flags=re.I)
+    out = re.sub(r"(?<=\w)-\s+(?=\w)|\s+-(?=\w)", " ", out)
     out = re.sub(r"(?i)\b(?:with|without|featuring|and|or|of)\s*(?=[,.;]|$)", "", out)
+    dep_m = re.search(r",?\s*\bdepicting\s+([^.;]+)$", out, flags=re.I)
+    if dep_m:
+        before_set = set(re.findall(r"[a-z0-9]{3,}", out[: dep_m.start()].lower()))
+        dep_words = re.findall(r"[a-z0-9]{3,}", dep_m.group(1).lower())
+        if dep_words and (sum(1 for w in dep_words if w in before_set) / len(dep_words)) > 0.45:
+            out = out[: dep_m.start()]
+    if re.search(r"(?i)\b(?:optical|diffuser|led|lamp|fixture|luminaire|lighting|glass|prism|circuit)\b", out):
+        out = re.sub(
+            r",?\s*\b(?:\d{2,3}mm(?:\s+macro)?\s+lens|camera\s+lens)\b",
+            lambda m: ", shallow depth of field" if "macro" in m.group(0).lower() else ", crisp editorial photography",
+            out,
+            flags=re.I,
+        )
     out = re.sub(r"\s*,\s*(?:,\s*)+", ", ", out)
     out = re.sub(r"\s+([,.;:])", r"\1", out)
     cleaned = re.sub(r"\s+", " ", out).strip(" ,.;:-")

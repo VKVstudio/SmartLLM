@@ -26,6 +26,7 @@ from smartllm_studio.blueprint import compile_project_blueprint, default_project
 from smartllm_studio.catalog import AI_CRAWLERS_DEFAULT, MOTION_CATALOG, STACK_CATALOG, load_studio_catalog  # noqa: E402
 from smartllm_studio.kb_loader import (  # noqa: E402
     compute_real_scorecard,
+    get_slot_recipes,
     harden_zimage_prompt,
     lint_anti_ai_copy,
     list_canon_ids,
@@ -34,8 +35,10 @@ from smartllm_studio.kb_loader import (  # noqa: E402
     route_block_variants,
 )
 from smartllm_studio.orchestrator import LOGO_FINISHERS, _LOGO_FALLBACK_SPECS, ProjectOrchestrator  # noqa: E402
-from smartllm_studio.pipeline import _sanitize_zimage_prompt  # noqa: E402
+from smartllm_studio.os_compat import CrossPlatformFileLock  # noqa: E402
+from smartllm_studio.pipeline import _enforce_portrait_gender, _sanitize_zimage_prompt  # noqa: E402
 from smartllm_studio.sanitizer import sanitize_svg_bytes  # noqa: E402
+from smartllm_studio.server import create_studio_server  # noqa: E402
 
 
 REJECTED_FONTS = {
@@ -338,6 +341,85 @@ def run_all_tests() -> dict[str, object]:
     assert "main, .hero-shell, .section-block, .price-table-wrap { min-width: 0; max-width: 100%; }" in css_txt
     assert "revealVisible" in sample_js_txt and "setTimeout(revealVisible" in sample_js_txt
     assert sample_js_txt.index("revealVisible();") < sample_js_txt.index('root.classList.add("js");')
+
+    # 13. Live-QA Z-Image hygiene, lock thread safety, and Downloads-only ZIP export regressions
+    import io as _io_mod
+    import threading as _thr_mod
+    import urllib.request as _url_req
+    import zipfile as _zip_mod
+
+    lut_dump = json.dumps(get_slot_recipes()["oklch_material_palette_lut"], ensure_ascii=False).lower()
+    for bad_prop in ("eucalyptus", "pistachio", "apricot", "aubergine"):
+        assert bad_prop not in lut_dump, f"Prop trap {bad_prop!r} still in oklch_material_palette_lut"
+
+    clean_stage = harden_zimage_prompt("Sculptural beam inside museum-poster stage")
+    assert "museum- " not in clean_stage.lower() and "poster" not in clean_stage.lower(), clean_stage
+
+    clean_no_p = harden_zimage_prompt("Studio workspace, no close-up portraits, crisp lighting")
+    assert "portrait" not in clean_no_p.lower() and "close-up" not in clean_no_p.lower(), clean_no_p
+
+    clean_dep = harden_zimage_prompt("Editorial photo of light installation, 50mm lens, depicting light installation")
+    assert "depicting" not in clean_dep.lower(), clean_dep
+
+    clean_opt = harden_zimage_prompt("Macro detail of optical diffuser and LED module, 50mm lens")
+    assert "50mm lens" not in clean_opt.lower(), clean_opt
+
+    p_once = _enforce_portrait_gender("Vertical 3:4 high-contrast studio portrait of a 29-year-old woman", "female")
+    assert p_once.count("Vertical 3:4") == 1 and "headroom" in p_once.lower(), p_once
+
+    lock_errors: list[str] = []
+    with tempfile.TemporaryDirectory() as lock_td:
+        lock_obj = CrossPlatformFileLock(Path(lock_td) / "gpu.lock")
+
+        def _lock_worker() -> None:
+            try:
+                for _ in range(15):
+                    if lock_obj.acquire():
+                        lock_obj.release()
+            except Exception as exc:
+                lock_errors.append(repr(exc))
+
+        threads = [_thr_mod.Thread(target=_lock_worker) for _ in range(20)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join(timeout=10.0)
+        assert not lock_errors, f"Concurrent CrossPlatformFileLock errors: {lock_errors}"
+
+        srv_exp, state_exp = create_studio_server(
+            host="127.0.0.1",
+            port=0,
+            repo_root=REPO_ROOT,
+            projects_root_override=Path(lock_td) / "projects",
+            lock_path_override=Path(lock_td) / "srv_gpu.lock",
+        )
+        exp_port = srv_exp.server_address[1]
+        exp_thr = _thr_mod.Thread(target=srv_exp.serve_forever, daemon=True)
+        exp_thr.start()
+        try:
+            proj_dir_exp = state_exp.project_dir("default")
+            for extra_payload in ({}, {"target_dir": str(proj_dir_exp)}):
+                req_p = _url_req.Request(
+                    f"http://127.0.0.1:{exp_port}/api/export/default",
+                    data=json.dumps({"as_zip": True, **extra_payload}).encode("utf-8"),
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+                with _url_req.urlopen(req_p, timeout=5.0) as r_post:
+                    exp_res = json.loads(r_post.read().decode("utf-8"))
+                exp_zip_path = Path(exp_res["path"]).resolve()
+                assert not exp_zip_path.is_relative_to(proj_dir_exp.resolve()), f"ZIP polluted project_dir: {exp_zip_path}"
+                assert exp_zip_path.is_relative_to(state_exp.exports_dir.resolve()), exp_zip_path
+                assert not list(proj_dir_exp.glob("*.zip")), list(proj_dir_exp.glob("*.zip"))
+                with _url_req.urlopen(f"http://127.0.0.1:{exp_port}{exp_res['download_url']}", timeout=5.0) as r_dl:
+                    assert r_dl.status == 200
+                    assert "attachment;" in (r_dl.headers.get("Content-Disposition") or "")
+                    zbytes = r_dl.read()
+                with _zip_mod.ZipFile(_io_mod.BytesIO(zbytes), "r") as zf_dl:
+                    assert "index.html" in zf_dl.namelist()
+        finally:
+            srv_exp.shutdown()
+            srv_exp.server_close()
 
     results["status"] = "ALL_PHASE2_GATES_PASSED"
     return results

@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import signal
 import subprocess
+import threading
 from typing import Any
 
 from ..os_compat import CrossPlatformFileLock, get_system_telemetry, is_linux, is_windows, subprocess_kwargs
@@ -67,21 +68,23 @@ class GPUEngineController:
         self.state: GPUState = GPUState.IDLE
         self.last_error: str | None = None
         self.tok_per_sec: float = 0.0
+        self._state_lock = threading.RLock()
         self._lock = CrossPlatformFileLock(lock_path) if allow_lock_write else None
         self._children: list[subprocess.Popen[Any]] = []
         atexit.register(self.cleanup_children)
 
     def check_lock_owner(self) -> str | None:
-        if self.allow_lock_write and self._lock is not None and self._lock._fh is not None:
-            return "self"
-        holder = inspect_lock_holder_non_destructive(self.lock_path)
-        if holder:
-            return holder
-        if self.allow_lock_write and self._lock is not None:
-            if not self._lock.acquire():
-                return "external_lock_holder"
-            self._lock.release()
-        return None
+        with self._state_lock:
+            if self.allow_lock_write and self._lock is not None and self._lock.is_held:
+                return "self"
+            holder = inspect_lock_holder_non_destructive(self.lock_path)
+            if holder:
+                return holder
+            if self.allow_lock_write and self._lock is not None:
+                if not self._lock.acquire():
+                    return "external_lock_holder"
+                self._lock.release()
+            return None
 
     def check_memory_guard(self, model_host_bytes: int | None = None) -> dict[str, Any]:
         """Enforce MemAvailable >= model_host_bytes + 3 GiB (Q6)."""
@@ -97,22 +100,24 @@ class GPUEngineController:
         return {"passed": True, "mem_avail_gib": tel["mem_avail_gib"], "required_gib": round(min_required / (1024**3), 2)}
 
     def acquire_or_raise(self, model_host_bytes: int | None = None) -> None:
-        holder = self.check_lock_owner()
-        if holder:
-            raise GPULockBusyError(f"GPU busy: {holder}")
-        if self.allow_lock_write and self._lock is not None:
-            if not self._lock.acquire():
-                raise GPULockBusyError(f"GPU busy: {self.lock_path.name}")
-        try:
-            self.check_memory_guard(model_host_bytes=model_host_bytes)
-        except Exception:
+        with self._state_lock:
+            holder = self.check_lock_owner()
+            if holder:
+                raise GPULockBusyError(f"GPU busy: {holder}")
             if self.allow_lock_write and self._lock is not None:
-                self._lock.release()
-            raise
+                if not self._lock.acquire():
+                    raise GPULockBusyError(f"GPU busy: {self.lock_path.name}")
+            try:
+                self.check_memory_guard(model_host_bytes=model_host_bytes)
+            except Exception:
+                if self.allow_lock_write and self._lock is not None:
+                    self._lock.release()
+                raise
 
     def release_lock(self) -> None:
-        if self.allow_lock_write and self._lock is not None:
-            self._lock.release()
+        with self._state_lock:
+            if self.allow_lock_write and self._lock is not None:
+                self._lock.release()
 
     def transition(self, next_state: GPUState, error: str | None = None) -> GPUState:
         self.state = next_state

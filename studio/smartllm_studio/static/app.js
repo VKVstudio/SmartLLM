@@ -1117,7 +1117,7 @@
     el("exp-canon-select").addEventListener("change", function () {});
     el("exp-generate-btn").addEventListener("click", function () { runOrchestratorBuild("auto"); });
     el("exp-open-folder-btn").addEventListener("click", function () {
-      revealProjectFolder(el("exp-folder-input").value, "exp-status-readout");
+      revealProjectFolder(el("exp-folder-input").value || (store.draft && store.draft.output_dir) || "", "exp-status-readout");
     });
 
     // Step 1 controls
@@ -1225,7 +1225,7 @@
       fetch("/api/export/" + encodeURIComponent(pid), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ target_dir: el("s1-folder-input").value, as_zip: true })
+        body: JSON.stringify({ project_dir: el("s1-folder-input").value || (store.draft && store.draft.output_dir) || "", as_zip: true })
       })
         .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
         .then(function (resp) {
@@ -1234,18 +1234,32 @@
             if (statusEl) statusEl.textContent = (store.lang === "ru" ? "Ошибка экспорта ZIP: " : "ZIP export error: ") + (res.message || res.error || "failed");
             return;
           }
-          if (res.download_url) {
-            var a = document.createElement("a");
-            a.href = res.download_url;
-            a.download = "";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+          var dlName = res.filename || "site_bundle.zip";
+          if (!res.download_url) {
+            if (statusEl) statusEl.textContent = store.lang === "ru" ? "Ошибка экспорта ZIP: нет ссылки скачивания." : "ZIP export error: missing download URL.";
+            return;
           }
-          if (statusEl) {
-            statusEl.textContent = (store.lang === "ru" ? "ZIP скачан и сохранён: " : "ZIP downloaded & saved: ") + (res.path || "");
-          }
-          if (res.show_support_card) el("pwyw-post-export-card").hidden = false;
+          return fetch(res.download_url)
+            .then(function (dlResp) {
+              if (!dlResp.ok) throw new Error("HTTP " + dlResp.status);
+              return dlResp.blob();
+            })
+            .then(function (blob) {
+              var objUrl = URL.createObjectURL(blob);
+              var a = document.createElement("a");
+              a.href = objUrl;
+              a.download = dlName;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              setTimeout(function () { URL.revokeObjectURL(objUrl); }, 2000);
+              if (statusEl) {
+                statusEl.textContent = store.lang === "ru"
+                  ? ("ZIP-архив «" + dlName + "» скачан в папку «Загрузки» браузера.")
+                  : ('ZIP archive "' + dlName + '" downloaded to your browser\'s Downloads folder.');
+              }
+              if (res.show_support_card) el("pwyw-post-export-card").hidden = false;
+            });
         })
         .catch(function (err) {
           if (statusEl) statusEl.textContent = (store.lang === "ru" ? "Ошибка скачивания ZIP: " : "ZIP download failed: ") + (err && err.message ? err.message : String(err));
@@ -1255,7 +1269,7 @@
         });
     });
     el("s5-reveal-folder-btn").addEventListener("click", function () {
-      revealProjectFolder(el("s1-folder-input").value, "s5-build-status");
+      revealProjectFolder(el("s1-folder-input").value || (store.draft && store.draft.output_dir) || "", "s5-build-status");
     });
 
     // Support & PWYW VKVstudio buttons + direct crypto wallet copy controls

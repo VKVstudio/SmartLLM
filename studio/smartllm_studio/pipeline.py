@@ -14,7 +14,7 @@ from pathlib import Path
 import re
 from typing import Any, Callable
 
-from .kb_loader import harden_zimage_prompt, lint_anti_ai_copy, load_canon_kb, load_stage_context, palette_to_material_summary
+from .kb_loader import get_slot_recipes, harden_zimage_prompt, lint_anti_ai_copy, load_canon_kb, load_stage_context, palette_to_material_summary
 from .pages import BLOCK_MAP, PAGE_MAP, build_default_company, company_block_prompt, infer_gender, page_title, resolve_primary_lang
 
 ReportFn = Callable[[int, int, str, str, str], None]
@@ -56,7 +56,7 @@ LATIN_WHITELIST = {
     "sla", "nvme", "nvlink", "gpu", "cpu", "llm", "lora", "soc", "iso", "api", "cad", "cnc",
 }
 COPY_BATCH_SIZE = 6
-PIPELINE_VERSION = 13
+PIPELINE_VERSION = 14
 
 BLOCK_FORMAT_HINTS_RU = {
     "manifesto": "<Девиз> | <Одно конкретное предложение позиционирования этой страницы>",
@@ -443,7 +443,10 @@ def _enforce_portrait_gender(prompt: str, gender: str) -> str:
         else:
             p = f"{target_cue}, {p}" if p else f"{target_cue}, natural softbox lighting, 85mm lens, neutral seamless backdrop"
     if "headroom" not in p.lower() or "chest-up" not in p.lower():
-        p = f"Vertical 3:4 medium chest-up studio portrait with generous empty headroom above the top of the head, {p}"
+        if re.match(r"^vertical\s+3:4\b", p, re.I):
+            p = f"{p}, medium chest-up framing, generous empty headroom above the top of the head"
+        else:
+            p = f"Vertical 3:4 medium chest-up studio portrait with generous empty headroom above the top of the head, {p}"
     return _clean(p)
 
 
@@ -898,7 +901,7 @@ def run_content_pipeline(
             f"Write all user-facing values in {target_lang}. Nav labels: 1-2 words, no clichés.\n"
             "Rules:\n"
             "- Every page must have a distinct editorial 'angle', distinct English 'hero_subject', and explicit 'quest' telling copy agents which truth items (capabilities vs pricing vs team vs proof) belong on that page without mixing pricing into features or changing team/stats facts.\n"
-            "- 'hero_subject': physical architectural environment, hardware installation, studio workspace, or flagship product scene in English — NEVER a close-up person portrait or human headshot.\n"
+            "- 'hero_subject': physical scene rooted 100% in this company's real work in English — NEVER include font names (Tektur, Inter, etc.), CSS/layout words (typography, poster, stage, variable-width, display), or negative phrases (no portraits). Each page MUST depict a DIFFERENT real scene and camera angle: 'index' = flagship completed installation/result, 'about' = client studio/workshop/atelier interior, 'portfolio' = finished client installation in real architectural space, 'services' = live installation/craft execution, 'pricing' = packaged flagship system/solution showcase, 'team' = wide candid collaborative studio table scene with blueprints and material samples.\n"
             "- 'gallery_subjects': 2 CLEARLY DIFFERENT physical scene descriptions in English (Scene 1 wide flagship project/environment, Scene 2 close-up material/engineering detail).\n"
             "Return JSON:\n"
             '{"nav_labels": {"slug": "label"}, "footer_text": "one-line colophon with brand promise", '
@@ -1166,13 +1169,19 @@ def run_content_pipeline(
     if visuals is None:
         memory.mark("visuals", "running")
         from .orchestrator import ZIMAGE_LOGO_CANON_2026, _default_logo_base_prompt
-        imagery = canon_card.get("imagery") or {}
+        recipes = get_slot_recipes()
         req_pol = str(merged.get("polarity") or "auto").strip().lower()
         def_pol = str(canon_card.get("default_polarity") or "light").strip().lower()
         active_pol = req_pol if req_pol in ("light", "dark") else (def_pol if def_pol in ("light", "dark") else "light")
         canon_kb = load_canon_kb(canon_id)
         zdir_map = canon_kb.get("zimage_direction") if isinstance(canon_kb.get("zimage_direction"), dict) else {}
-        zdir_pol = _clean(zdir_map.get(active_pol) or zdir_map.get("light") or dossier.get("imagery"))
+        pol_mod = (recipes.get("theme_polarity_modifiers") or {}).get(active_pol) or {}
+        pol_lighting = _clean(pol_mod.get("lighting_clause")) or (
+            "Low-key sculpted studio lighting with controlled dark shadows"
+            if active_pol == "dark"
+            else "Bright diffused natural architectural daylight with clean contact shadows"
+        )
+        canon_lighting_mood = _clean((recipes.get("canon_art_direction_overrides") or {}).get(canon_id)) or _clean(dossier.get("imagery"))
         active_pal = (canon_card.get("palettes") or {}).get(active_pol) or canon_card.get("palette") or {}
         scene_surface_tones = palette_to_material_summary(active_pal, keys=("bg", "surface")) or "matte architectural stone, clean studio neutral surface"
         logo_palette_tones = palette_to_material_summary(active_pal) or "deep charcoal matte, warm alabaster, terracotta brick"
@@ -1200,7 +1209,8 @@ def run_content_pipeline(
         )
         user_msg = (
             f"Brand: {brand}\nBrief: {brief[:240]}\nActive polarity: {active_pol}\n"
-            f"Canon imagery direction ({active_pol}): {_sanitize_zimage_prompt(zdir_pol[:240], brand=brand)}\n"
+            f"Canon photographic lighting & mood ({active_pol}): {_sanitize_zimage_prompt(canon_lighting_mood[:240], brand=brand)}\n"
+            f"Polarity lighting discipline ({active_pol}): {pol_lighting[:180]}\n"
             f"Canon team portrait direction: {_sanitize_zimage_prompt(_clean(zdir_map.get('team_portrait') or dossier.get('team'))[:180], brand=brand)}\n"
             f"Architectural photography neutral environment tones: {scene_surface_tones}\n"
             f"Brand logo pigment colors: {logo_palette_tones}\n"
@@ -1212,7 +1222,7 @@ def run_content_pipeline(
             "Write prompts IN ENGLISH, 40-75 words each.\n"
             "CRITICAL RULES FOR Z-IMAGE-TURBO:\n"
             "1. 'brand_logo': follow " + ZIMAGE_LOGO_CANON_2026 + " Design ONE minimalist flat vector emblem uniquely symbolizing THIS company's industry on a solid neutral backdrop, 2-3 crisp geometric pigment colors from logo palette. Never mention brand letters, initials, or words.\n"
-            "2. 'heroes' and 'gallery': photorealistic architectural/hardware/environment/product scenes matching each slot and its finalized hero headline/features copy using authentic real-world material tones (NEVER paint real concrete/stone/buildings neon UI accent colors); single wide scene without portraits. 'gallery[0]' MUST clearly differ in framing and subject from 'gallery[1]'.\n"
+            "2. 'heroes' and 'gallery': photorealistic scenes belonging 100% to this client's actual business and finalized hero headline/features copy using authentic real-world materials — NEVER inject unrelated titanium beams, red triangles, lab rigs, camera lenses, or botanical twigs, and NEVER repeat the same sentence across pages or append ', depicting ...'. 'gallery[0]' MUST clearly differ in framing and subject from 'gallery[1]'. For optical, lighting, or glass close-ups, describe natural macro framing and shallow depth of field instead of writing camera-lens focal lengths (like '50mm lens' or '90mm lens').\n"
             "3. 'team': one distinct vertical 3:4 medium chest-up editorial portrait per slot on a seamless neutral studio backdrop with generous empty headroom above the top of the head so full hair, head, and shoulders sit comfortably inside frame. Each person MUST clearly match their assigned distinct age, hair, glasses/beard/clean-shaven look, attire, and pose from 'team_roles' without repeating the same appearance across slots. For EVERY FEMALE slot describe the adult woman's exact look; for EVERY MALE slot describe the adult man's exact look. Omit person names, nameplates, watermarks, or words.\n"
             "Keep 'style_suffix' <= 10 words and NEVER repeat lens/lighting terms already inside hero/gallery prompts.\n"
             'Return JSON: {"brand_logo": "...", "heroes": {"slug": "..."}, "gallery": ["distinct scene 1", "distinct scene 2"], "team": ["...", ...], "style_suffix": "short positive lighting mood clause"}'
@@ -1220,12 +1230,16 @@ def run_content_pipeline(
         raw = _llm_json(state, gpu_ok, sys_msg, user_msg, max_tokens=3200, required_keys=["brand_logo", "heroes", "gallery", "team"])
         if raw:
             agents_run += 1
-        tmpl = _clean(imagery.get("prompt_tmpl"))
         heroes_raw = raw.get("heroes") or {}
         heroes = {}
+        fallback_light = (
+            "low-key sculpted architectural studio lighting with dark atmospheric falloff"
+            if active_pol == "dark"
+            else "bright diffused natural architectural daylight with clean soft contact shadows"
+        )
         for slug in pages:
             subj = subjects[slug]
-            raw_h = _clean(heroes_raw.get(slug)) or tmpl.replace("{subject}", subj) or f"Editorial architectural photograph of {subj}, crisp directional studio lighting, 35mm lens"
+            raw_h = _clean(heroes_raw.get(slug)) or f"Editorial architectural photograph of {subj}, {fallback_light}, natural real-world materials, clean unmarked surfaces"
             heroes[slug] = _sanitize_zimage_prompt(raw_h, member_names, brand=brand)
         gallery_raw = [_sanitize_zimage_prompt(_clean(x), member_names, brand=brand) for x in (raw.get("gallery") or []) if _clean(x)]
         if len(gallery_raw) < 2 or gallery_raw[0].lower() == gallery_raw[1].lower():

@@ -69,6 +69,8 @@ class StudioState:
         self.projects_root.mkdir(parents=True, exist_ok=True)
         self.preview_dirs: dict[str, Path] = {}
         self.exported_zips: dict[str, Path] = {}
+        self.exports_dir = (self.projects_root / "_exports").resolve()
+        self.exports_dir.mkdir(parents=True, exist_ok=True)
 
         lock_p = lock_path_override or Path(paths["gpu_lock_path"])
         self.gpu = GPUEngineController(lock_path=lock_p, allow_lock_write=allow_lock_write)
@@ -346,9 +348,13 @@ def create_studio_server(
                 if zip_path is None or not zip_path.is_file():
                     draft_exp = state.load_project(pid_exp)
                     pdir_exp = Path(str(draft_exp.get("output_dir") or state.project_dir(pid_exp)))
-                    cand_exp = pdir_exp / f"{pdir_exp.name}_bundle.zip"
-                    if cand_exp.is_file():
-                        zip_path = cand_exp
+                    for cand_exp in (
+                        state.exports_dir / f"{pdir_exp.name}_bundle.zip",
+                        pdir_exp / f"{pdir_exp.name}_bundle.zip",
+                    ):
+                        if cand_exp.is_file():
+                            zip_path = cand_exp
+                            break
                 if zip_path is None or not zip_path.is_file() or zip_path.suffix.lower() != ".zip":
                     return self._send_json(404, {"error": "EXPORT_ZIP_NOT_FOUND", "project_id": pid_exp})
                 safe_name = re.sub(r"[^A-Za-z0-9._-]+", "_", zip_path.name).strip("_") or "site_bundle.zip"
@@ -605,18 +611,41 @@ def create_studio_server(
                 if path.startswith("/api/export/"):
                     pid = path.split("/")[3] or "default"
                     draft = state.load_project(pid)
-                    bp = compile_project_blueprint(draft, repo_root=state.repo_root)
-                    target = _safe_project_dir(body.get("target_dir"), Path(bp["project_dir"])) if body.get("target_dir") else Path(bp["project_dir"])
-                    exp = export_project_bundle(Path(bp["project_dir"]), target_dir=target, as_zip=bool(body.get("as_zip", False)))
+                    fallback_dir = Path(str(draft.get("output_dir") or state.project_dir(pid))).resolve()
+                    src_dir = _safe_project_dir(body.get("project_dir"), fallback_dir) if body.get("project_dir") else fallback_dir
+                    bp_file = src_dir / "project_blueprint.json"
+                    bp: dict[str, Any] = {}
+                    if (src_dir / "index.html").is_file() and bp_file.is_file():
+                        try:
+                            cand_bp = json.loads(bp_file.read_text(encoding="utf-8"))
+                            if isinstance(cand_bp, dict) and cand_bp.get("audit_scorecard"):
+                                bp = cand_bp
+                        except Exception:
+                            bp = {}
+                    if not bp:
+                        if str(draft.get("output_dir") or "") != str(src_dir):
+                            draft = {**draft, "output_dir": str(src_dir)}
+                        bp = compile_project_blueprint(draft, repo_root=state.repo_root)
+                        src_dir = Path(bp["project_dir"]).resolve()
+                    as_zip = bool(body.get("as_zip", False))
+                    if as_zip:
+                        raw_target = str(body.get("target_dir") or "").strip().strip("`\"'")
+                        cand_target = _safe_project_dir(raw_target, state.exports_dir) if raw_target else state.exports_dir
+                        target = cand_target if cand_target.resolve() != src_dir.resolve() else state.exports_dir
+                    else:
+                        target = _safe_project_dir(body.get("target_dir"), src_dir) if body.get("target_dir") else src_dir
+                    exp = export_project_bundle(src_dir, target_dir=target, as_zip=as_zip)
                     if exp.get("format") == "zip" and exp.get("path"):
-                        state.exported_zips[pid] = Path(exp["path"]).resolve()
+                        zip_file = Path(exp["path"]).resolve()
+                        state.exported_zips[pid] = zip_file
+                        exp["filename"] = zip_file.name
                         exp["download_url"] = f"/api/export/{quote(pid, safe='')}/download"
                     settings = load_user_settings(repo_root=state.repo_root)
                     exports_cnt = int(settings.get("exports_completed", 0)) + 1
                     save_user_settings({"exports_completed": exports_cnt}, repo_root=state.repo_root)
                     edition = load_edition_config()
                     show_support_card = (edition.get("support", {}).get("mode") == "pwyw" or settings.get("support_mode") == "pwyw") and exports_cnt == 1 and not settings.get("support_card_dismissed", False)
-                    return self._send_json(200, {**exp, "exports_completed": exports_cnt, "show_support_card": show_support_card, "audit_scorecard": bp["audit_scorecard"]})
+                    return self._send_json(200, {**exp, "exports_completed": exports_cnt, "show_support_card": show_support_card, "audit_scorecard": bp.get("audit_scorecard") or {}})
                 if path in ("/api/build/express", "/api/build/blueprint"):
                     pid = str(body.get("id") or "default")
                     bp = compile_project_blueprint(body, repo_root=state.repo_root)

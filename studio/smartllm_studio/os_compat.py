@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import threading
 import time
 from typing import Any
 import webbrowser
@@ -81,44 +82,60 @@ class CrossPlatformFileLock:
     def __init__(self, lock_path: Path) -> None:
         self.lock_path = lock_path
         self._fh: Any = None
+        self._mutex = threading.RLock()
+
+    @property
+    def is_held(self) -> bool:
+        with self._mutex:
+            return self._fh is not None
 
     def acquire(self) -> bool:
-        self.lock_path.parent.mkdir(parents=True, exist_ok=True)
-        self._fh = open(self.lock_path, "a+", encoding="utf-8")
-        try:
-            if is_windows():
-                import msvcrt  # type: ignore
-
-                self._fh.seek(0)
-                msvcrt.locking(self._fh.fileno(), msvcrt.LK_NBLCK, 1)
-            else:
-                import fcntl
-
-                fcntl.flock(self._fh.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
-            return True
-        except OSError:
-            self.release()
-            return False
-
-    def release(self) -> None:
-        if self._fh is not None:
+        with self._mutex:
+            if self._fh is not None:
+                return True
+            self.lock_path.parent.mkdir(parents=True, exist_ok=True)
+            fh = open(self.lock_path, "a+", encoding="utf-8")
             try:
                 if is_windows():
                     import msvcrt  # type: ignore
 
-                    self._fh.seek(0)
-                    msvcrt.locking(self._fh.fileno(), msvcrt.LK_UNLCK, 1)
+                    fh.seek(0)
+                    msvcrt.locking(fh.fileno(), msvcrt.LK_NBLCK, 1)
                 else:
                     import fcntl
 
-                    fcntl.flock(self._fh.fileno(), fcntl.LOCK_UN)
+                    fcntl.flock(fh.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                self._fh = fh
+                return True
             except OSError:
-                pass
-            try:
-                self._fh.close()
-            except OSError:
-                pass
+                try:
+                    fh.close()
+                except OSError:
+                    pass
+                self._fh = None
+                return False
+
+    def release(self) -> None:
+        with self._mutex:
+            fh = self._fh
             self._fh = None
+            if fh is not None:
+                try:
+                    if is_windows():
+                        import msvcrt  # type: ignore
+
+                        fh.seek(0)
+                        msvcrt.locking(fh.fileno(), msvcrt.LK_UNLCK, 1)
+                    else:
+                        import fcntl
+
+                        fcntl.flock(fh.fileno(), fcntl.LOCK_UN)
+                except OSError:
+                    pass
+                try:
+                    fh.close()
+                except OSError:
+                    pass
 
 
 def get_system_telemetry() -> dict[str, Any]:
@@ -291,7 +308,7 @@ def pick_os_dialog(
             start_dir = _resolve_dialog_initial_dir(initial_dir)
             tk_mode = "file" if kind == "file" else "folder"
             tk_script = (
-                "import ctypes, sys, tkinter as tk\n"
+                "import ctypes, ctypes.wintypes, sys, threading, time, tkinter as tk\n"
                 "from tkinter import filedialog\n"
                 "try:\n"
                 "    sys.stdout.reconfigure(encoding='utf-8', errors='replace')\n"
@@ -301,16 +318,59 @@ def pick_os_dialog(
                 "    ctypes.windll.shcore.SetProcessDpiAwareness(1)\n"
                 "except Exception:\n"
                 "    pass\n"
+                "u32 = ctypes.windll.user32\n"
+                "k32 = ctypes.windll.kernel32\n"
+                "def _force_front(hwnd):\n"
+                "    if not hwnd:\n"
+                "        return\n"
+                "    try:\n"
+                "        u32.AllowSetForegroundWindow(0xFFFFFFFF)\n"
+                "        fg = u32.GetForegroundWindow()\n"
+                "        cur_tid = k32.GetCurrentThreadId()\n"
+                "        fg_tid = u32.GetWindowThreadProcessId(fg, None) if fg else 0\n"
+                "        attached = bool(fg_tid and fg_tid != cur_tid and u32.AttachThreadInput(cur_tid, fg_tid, True))\n"
+                "        u32.ShowWindow(hwnd, 5)\n"
+                "        u32.SetWindowPos(hwnd, -1, 0, 0, 0, 0, 0x0003 | 0x0040)\n"
+                "        u32.SetForegroundWindow(hwnd)\n"
+                "        u32.BringWindowToTop(hwnd)\n"
+                "        if attached:\n"
+                "            u32.AttachThreadInput(cur_tid, fg_tid, False)\n"
+                "    except Exception:\n"
+                "        pass\n"
                 "start_dir = sys.argv[1] if len(sys.argv) > 1 else ''\n"
                 "mode = sys.argv[2] if len(sys.argv) > 2 else 'folder'\n"
                 "root = tk.Tk()\n"
-                "root.withdraw()\n"
+                "root.overrideredirect(True)\n"
+                "root.geometry('1x1+400+300')\n"
+                "root.attributes('-alpha', 0.0)\n"
                 "root.attributes('-topmost', True)\n"
+                "root.deiconify()\n"
+                "root.update_idletasks()\n"
                 "root.update()\n"
-                "try:\n"
-                "    ctypes.windll.user32.SetForegroundWindow(root.winfo_id())\n"
-                "except Exception:\n"
-                "    pass\n"
+                "owner_hwnd = u32.GetParent(root.winfo_id()) or root.winfo_id()\n"
+                "tk_tid = k32.GetCurrentThreadId()\n"
+                "_force_front(owner_hwnd)\n"
+                "stop_ev = threading.Event()\n"
+                "def _promote_dialog():\n"
+                "    WNDENUM = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)\n"
+                "    found = []\n"
+                "    def _cb(hwnd, _lparam):\n"
+                "        if u32.IsWindowVisible(hwnd):\n"
+                "            buf = ctypes.create_unicode_buffer(64)\n"
+                "            u32.GetClassNameW(hwnd, buf, 64)\n"
+                "            if buf.value == '#32770':\n"
+                "                found.append(hwnd)\n"
+                "        return True\n"
+                "    cb = WNDENUM(_cb)\n"
+                "    deadline = time.monotonic() + 2.5\n"
+                "    while not stop_ev.is_set() and time.monotonic() < deadline:\n"
+                "        found.clear()\n"
+                "        u32.EnumThreadWindows(tk_tid, cb, 0)\n"
+                "        if found:\n"
+                "            _force_front(found[0])\n"
+                "            break\n"
+                "        stop_ev.wait(0.08)\n"
+                "threading.Thread(target=_promote_dialog, daemon=True).start()\n"
                 "if mode == 'file':\n"
                 "    picked = filedialog.askopenfilename(\n"
                 "        parent=root,\n"
@@ -325,6 +385,7 @@ def pick_os_dialog(
                 "        title='Select Project Folder',\n"
                 "        mustexist=False,\n"
                 "    )\n"
+                "stop_ev.set()\n"
                 "root.destroy()\n"
                 "if isinstance(picked, str) and picked.strip():\n"
                 "    print(picked.strip())\n"
@@ -338,6 +399,13 @@ def pick_os_dialog(
             if res.returncode == 0:
                 chosen_tk = res.stdout.strip()
                 return os.path.normpath(chosen_tk) if chosen_tk else None
+            try:
+                (get_log_dir() / "os-dialog.log").write_text(
+                    f"tk_rc={res.returncode} stderr={res.stderr[:500]}\n",
+                    encoding="utf-8",
+                )
+            except Exception:
+                pass
 
             owner_setup = (
                 "[Console]::OutputEncoding=[Text.Encoding]::UTF8; "
@@ -350,6 +418,7 @@ def pick_os_dialog(
                 "$owner.StartPosition = 'CenterScreen'; "
                 "$owner.Size = New-Object System.Drawing.Size(1,1); "
                 "$owner.Show(); "
+                "$owner.BringToFront(); "
                 "$owner.Activate(); "
             )
             if kind == "file":
@@ -420,24 +489,102 @@ def pick_folder_native(initial_dir: str = "", dry_run: bool = False) -> str | No
     return pick_os_dialog(kind="folder", initial_dir=initial_dir, dry_run=dry_run)
 
 
+def _win_list_explorer_hwnds() -> list[tuple[int, str]]:
+    """Snapshot visible Explorer (CabinetWClass) HWNDs and titles on Windows."""
+    import ctypes.wintypes
+
+    u32 = ctypes.windll.user32  # type: ignore[attr-defined]
+    rows: list[tuple[int, str]] = []
+    WNDENUM = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
+
+    def _cb(hwnd: int, _lparam: int) -> bool:
+        if u32.IsWindowVisible(hwnd):
+            cls = ctypes.create_unicode_buffer(64)
+            u32.GetClassNameW(hwnd, cls, 64)
+            if cls.value == "CabinetWClass":
+                tbuf = ctypes.create_unicode_buffer(256)
+                u32.GetWindowTextW(hwnd, tbuf, 256)
+                rows.append((int(hwnd), tbuf.value))
+        return True
+
+    u32.EnumWindows(WNDENUM(_cb), 0)
+    return rows
+
+
+def _win_bring_hwnd_to_front(hwnd: int) -> None:
+    """Bring an Explorer HWND above browser windows bypassing Win11 foreground lock."""
+    u32 = ctypes.windll.user32  # type: ignore[attr-defined]
+    k32 = ctypes.windll.kernel32  # type: ignore[attr-defined]
+    fg = u32.GetForegroundWindow()
+    cur_tid = k32.GetCurrentThreadId()
+    fg_tid = u32.GetWindowThreadProcessId(fg, None) if fg else 0
+    tgt_tid = u32.GetWindowThreadProcessId(hwnd, None)
+    att_fg = bool(fg_tid and fg_tid != cur_tid and u32.AttachThreadInput(cur_tid, fg_tid, True))
+    att_tgt = bool(tgt_tid and tgt_tid != cur_tid and tgt_tid != fg_tid and u32.AttachThreadInput(cur_tid, tgt_tid, True))
+    try:
+        u32.AllowSetForegroundWindow(0xFFFFFFFF)
+        u32.ShowWindow(hwnd, 9)
+        u32.SetWindowPos(hwnd, -1, 0, 0, 0, 0, 0x0003)
+        u32.SetWindowPos(hwnd, -2, 0, 0, 0, 0, 0x0003)
+        u32.SetForegroundWindow(hwnd)
+        u32.BringWindowToTop(hwnd)
+    finally:
+        if att_tgt:
+            u32.AttachThreadInput(cur_tid, tgt_tid, False)
+        if att_fg:
+            u32.AttachThreadInput(cur_tid, fg_tid, False)
+
+
+def _focus_win_explorer_window(folder_name: str, existing_hwnds: set[int]) -> None:
+    """Poll briefly for the newly opened/reused Explorer window and promote it to front."""
+    deadline = time.monotonic() + 2.5
+    low_name = folder_name.lower()
+    while time.monotonic() < deadline:
+        time.sleep(0.15)
+        try:
+            current = _win_list_explorer_hwnds()
+            for hwnd, _title in current:
+                if hwnd not in existing_hwnds:
+                    _win_bring_hwnd_to_front(hwnd)
+                    return
+            if low_name:
+                for hwnd, title in current:
+                    if low_name in title.lower():
+                        _win_bring_hwnd_to_front(hwnd)
+                        return
+        except Exception:
+            return
+
+
 def reveal_in_file_manager(target_path: Path, dry_run: bool = False) -> bool:
-    """Open target directory in OS file manager (Win32 ShellExecute on Windows, xdg-open on Linux)."""
+    """Open target directory in OS file manager and bring it to foreground."""
     if dry_run or os.environ.get("SMARTLLM_STUDIO_HEADLESS") == "1":
         return True
     try:
         target_path = Path(target_path)
         if is_windows():
-            if not target_path.suffix:
+            is_file_target = target_path.exists() and target_path.is_file()
+            if not is_file_target:
                 target_path.mkdir(parents=True, exist_ok=True)
             norm_path = os.path.normpath(str(target_path.resolve()))
             try:
-                os.startfile(norm_path)  # type: ignore[attr-defined]
-                return True
+                existing_hwnds = {h for h, _ in _win_list_explorer_hwnds()}
+                ctypes.windll.user32.AllowSetForegroundWindow(0xFFFFFFFF)  # type: ignore[attr-defined]
             except Exception:
-                subprocess.Popen(["explorer.exe", norm_path])
-                return True
+                existing_hwnds = set()
+            args = ["explorer.exe", f"/select,{norm_path}"] if is_file_target else ["explorer.exe", norm_path]
+            subprocess.Popen(args)
+            folder_label = target_path.parent.name if is_file_target else target_path.name
+            threading.Thread(
+                target=_focus_win_explorer_window,
+                args=(folder_label, existing_hwnds),
+                daemon=True,
+            ).start()
+            return True
         elif shutil.which("xdg-open"):
-            subprocess.Popen(["xdg-open", str(target_path)])
+            target_dir = target_path.parent if target_path.exists() and target_path.is_file() else target_path
+            target_dir.mkdir(parents=True, exist_ok=True)
+            subprocess.Popen(["xdg-open", str(target_dir)])
         return True
     except Exception:
         return False
