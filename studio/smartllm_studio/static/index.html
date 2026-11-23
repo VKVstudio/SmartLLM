@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SmartLLM Studio</title>
   <link rel="icon" href="/assets/smartllm-logo.svg">
-  <link rel="stylesheet" href="/static/styles.css?v=0.0.5-r2">
+  <link rel="stylesheet" href="/static/styles.css?v=0.0.5-r3">
 </head>
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
@@ -42,6 +42,7 @@
     </div>
 
     <div class="topbar-actions">
+      <button class="btn btn-primary" id="btn-topbar-random-template" type="button" data-i18n="btn_random_template">✦ Случайный шаблон</button>
       <button class="btn" id="btn-lang-switch" type="button">
         <svg class="icon-24"><use href="#icon-globe"/></svg>
         <span id="lang-indicator">RU | EN</span>
@@ -155,9 +156,15 @@
             </div>
           </div>
 
-          <div class="field">
-            <label for="exp-motion-select" data-i18n="lbl_exp_motion">Движок анимации лендинга (MIT / CSS)</label>
-            <select id="exp-motion-select"></select>
+          <div class="form-grid-2">
+            <div class="field">
+              <label for="exp-landing-preset" data-i18n="lbl_landing_preset">Формат лендинга (GSAP-класс)</label>
+              <select id="exp-landing-preset"></select>
+            </div>
+            <div class="field">
+              <label for="exp-motion-select" data-i18n="lbl_exp_motion">Движок анимации лендинга (MIT / CSS)</label>
+              <select id="exp-motion-select"></select>
+            </div>
           </div>
 
           <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
@@ -247,6 +254,7 @@
                   <button class="btn" id="s2-upload-logo-btn" type="button">
                     <span data-i18n="btn_upload_custom_logo">Загрузить свой файл (SVG/PNG)</span>
                   </button>
+                  <button class="btn" id="s2-random-template-btn" type="button" data-i18n="btn_random_brand_style">✦ Придумать бренд + стиль</button>
                   <input id="s2-logo-file" type="file" name="studio_logo_file" accept=".svg,.png,.webp" aria-label="Logo File" hidden>
                 </div>
               </div>
@@ -303,6 +311,11 @@
                 <select id="s3-motion-select"></select>
                 <p class="sub-lead" style="margin:6px 0 0 0; font-size:12px;" data-i18n="lbl_motion_hint">Motion 14 + Lenis или Anime.js создают плавный GSAP-класс скролл-хореографии и стэггер без лицензии GSAP.</p>
               </div>
+            </div>
+
+            <div class="field" style="margin-bottom:14px;">
+              <label data-i18n="lbl_landing_presets_heading">Формат анимированного лендинга (GSAP-класс, MIT)</label>
+              <div id="s3-landing-presets" class="landing-preset-grid"></div>
             </div>
 
             <div id="s3-canon-gallery" class="canon-gallery-grid"></div>
@@ -402,6 +415,18 @@
             </div>
 
             <h3 class="s5-blocks-title" data-i18n="s5_blocks_title">Описания блоков по страницам</h3>
+            <div id="s5-starter-summary" class="starter-summary-card" hidden>
+              <div class="starter-summary-head">
+                <strong data-i18n="starter_summary_title">Связный шаблон (Шаги 1–4 подготовлены)</strong>
+                <span id="s5-starter-badge" class="canon-polarity-badge"></span>
+              </div>
+              <p id="s5-starter-summary-body" class="sub-lead" style="margin:6px 0 10px 0; font-size:12px;"></p>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn" id="s5-goto-step2-btn" type="button" data-i18n="btn_goto_step2_logo">Перейти к логотипу (Шаг 2)</button>
+                <button class="btn" id="s5-goto-step3-btn" type="button" data-i18n="btn_goto_step3_style">Сменить стиль (Шаг 3)</button>
+                <button class="btn" id="s5-reroll-starter-btn" type="button" data-i18n="btn_reroll_starter">✦ Другой случайный шаблон</button>
+              </div>
+            </div>
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
               <button class="btn" id="s5-autofill-btn" type="button" data-i18n="btn_autofill_blocks">Заполнить бренд-основу и блоки автоматически</button>
             </div>
@@ -607,6 +632,61 @@
     </div>
   </div>
 
-  <script src="/static/app.js?v=0.0.5-r2"></script>
+  <!-- FOLDER PICKER / EXPLORER FALLBACK MODAL -->
+  <div class="overlay-backdrop" id="modal-folder-picker" hidden>
+    <div class="modal-dialog folder-picker-dialog" role="dialog" aria-labelledby="fp-title">
+      <h2 class="display-h2" id="fp-title" data-i18n="fp_title">Выбор папки проекта на диске</h2>
+      <p class="sub-lead" style="margin-bottom:10px; font-size:12px;" data-i18n="fp_sub">Проводник встроен прямо в студию (работает в любой среде и песочнице без системных окон).</p>
+      <div id="fp-drives" class="fp-drives"></div>
+      <div class="fp-path-bar">
+        <button class="btn" id="fp-up-btn" type="button" data-i18n="fp_up">↑ Вверх</button>
+        <input id="fp-current-path" type="text" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" readonly aria-label="Current Directory Path">
+        <button class="btn" id="fp-copy-btn" type="button" data-i18n="fp_copy">Копировать путь</button>
+      </div>
+      <div class="fp-mkdir-row">
+        <input id="fp-new-name" type="text" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" data-i18n-attr="placeholder:fp_new_ph" placeholder="Имя новой папки...">
+        <button class="btn" id="fp-mkdir-btn" type="button" data-i18n="fp_mkdir">Создать папку</button>
+      </div>
+      <div class="fp-panes">
+        <div>
+          <p class="fp-pane-label" data-i18n="fp_dirs_lbl">Папки</p>
+          <div id="fp-dir-list" class="folder-picker-list"></div>
+        </div>
+        <div>
+          <p class="fp-pane-label" data-i18n="fp_files_lbl">Файлы в папке</p>
+          <div id="fp-file-list" class="folder-picker-list"></div>
+        </div>
+      </div>
+      <p id="fp-status" class="sub-lead" style="margin:8px 0 0 0; font-family:var(--font-code); font-size:12px;" aria-live="polite"></p>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; justify-content:flex-end;">
+        <button class="btn" id="fp-close-btn" type="button" data-i18n="btn_support_close">Закрыть</button>
+        <button class="btn btn-primary" id="fp-select-btn" type="button" data-i18n="fp_select">Выбрать эту папку</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STARTUP RANDOM TEMPLATE PRELOADER -->
+  <div class="overlay-backdrop" id="starter-preloader" hidden>
+    <div class="modal-dialog starter-dialog" role="dialog" aria-labelledby="starter-title" aria-live="polite">
+      <div class="starter-wheel-wrap">
+        <span class="starter-wheel" aria-hidden="true"></span>
+        <span class="starter-timer" id="starter-timer">00:00</span>
+      </div>
+      <h2 class="display-h2" id="starter-title" data-i18n="starter_title">Создаём случайный связный шаблон…</h2>
+      <p id="starter-status" class="sub-lead" style="margin-bottom:12px;" data-i18n="starter_status_init">Подбираем бренд, логотип-промпт, стиль и структуру под ваши шаги 2–5 (без долгого автозаполнения блоков)…</p>
+      <div class="starter-pills">
+        <span class="starter-pill is-active" data-starter-pill="2" data-i18n="starter_pill_2">02 Бренд и логотип</span>
+        <span class="starter-pill" data-starter-pill="3" data-i18n="starter_pill_3">03 Стиль и анимация</span>
+        <span class="starter-pill" data-starter-pill="4" data-i18n="starter_pill_4">04 Страницы</span>
+        <span class="starter-pill" data-starter-pill="5" data-i18n="starter_pill_5">05 Шаг 5: блоки</span>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; justify-content:center;">
+        <button class="btn btn-primary" id="starter-instant-btn" type="button" data-i18n="starter_instant_btn">Быстрый шаблон (мгновенно)</button>
+        <button class="btn" id="starter-skip-btn" type="button" data-i18n="starter_skip_btn">Оставить текущий проект</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js?v=0.0.5-r3"></script>
 </body>
 </html>

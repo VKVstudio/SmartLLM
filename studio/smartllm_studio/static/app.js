@@ -19,8 +19,12 @@
     siteType: "single",
     polarity: "auto",
     motion: "motion",
+    landingPreset: "gsap_scrollytelling",
     stageOpen: false,
-    blockPrompts: {}
+    blockPrompts: {},
+    starterHistory: [],
+    starterTimer: null,
+    starterAbort: null
   };
 
   var previewTimer = null;
@@ -32,7 +36,7 @@
 
   function scheduleLivePreviewRefresh(openStage) {
     if (!store.draft || store.autofillBusy || store.logoBusy) return;
-    if (el("s5-build-btn") && el("s5-build-btn").disabled) return;
+    if (el("s5-build-site-btn") && el("s5-build-site-btn").disabled) return;
     clearTimeout(previewTimer);
     previewTimer = setTimeout(function () {
       var mySeq = ++previewSeq;
@@ -45,6 +49,7 @@
           canon_id: (store.draft && store.draft.canon_id) || "01_bento_grid",
           polarity: store.polarity,
           motion: store.motion,
+          landing_preset: store.landingPreset,
           output_dir: outDir
         })
       })
@@ -148,6 +153,80 @@
     if (fromUser === true) scheduleLivePreviewRefresh(true);
   }
 
+  var LANDING_PRESET_FALLBACKS = [
+    { id: "gsap_scrollytelling", name_en: "GSAP-Class Scrollytelling Landing", name_ru: "Скроллтеллинг-лендинг (GSAP-класс)", badge_en: "Motion 14 + Lenis", badge_ru: "Motion 14 + Lenis", desc_en: "Sticky pinned stage, numbered chapters, marquee ribbon & counters.", desc_ru: "Липкая сцена с главами при скролле, бегущая строка, счётчики и параллакс.", motion: "motion" },
+    { id: "kinetic_showreel", name_en: "Kinetic Showreel & Filmstrip", name_ru: "Кинетический шоурил (Anime.js)", badge_en: "Anime.js 4.5 + Lenis", badge_ru: "Anime.js 4.5 + Lenis", desc_en: "Timeline headline stagger, scroll chapters & 3D tilt frame.", desc_ru: "Таймлайн-каскад заголовков, скролл-главы и 3D-наклон сцены.", motion: "animejs" },
+    { id: "bento_interactive", name_en: "Interactive Modular Bento", name_ru: "Интерактивный Bento-лендинг", badge_en: "Motion 14 + Lenis", badge_ru: "Motion 14 + Lenis", desc_en: "Asymmetric 12-col bento modules & spring counters.", desc_ru: "Асимметричная 12-колоночная сетка, модули и пружинный отклик.", motion: "motion" },
+    { id: "css_scroll_native", name_en: "Zero-JS Native CSS Scroll-Driven", name_ru: "Нативный CSS Scroll-Driven", badge_en: "0 KB JS", badge_ru: "0 КБ JS", desc_en: "Pure browser compositor timeline with zero JS runtime.", desc_ru: "Чистый композиторный скролл-таймлайн без JS-рантайма.", motion: "css_scroll_driven" },
+    { id: "classic_corporate", name_en: "Structured Editorial Architecture", name_ru: "Классический корпоративный", badge_en: "Balanced", badge_ru: "Спокойный ритм", desc_en: "High-readability hierarchy focused on proof & pricing.", desc_ru: "Чёткая деловая иерархия разделов, матриц и максимальная читаемость.", motion: "css_scroll_driven" }
+  ];
+
+  function getLandingPresetsList() {
+    return (store.catalog && store.catalog.landing_presets && store.catalog.landing_presets.length)
+      ? store.catalog.landing_presets
+      : LANDING_PRESET_FALLBACKS;
+  }
+
+  function renderLandingPresets() {
+    var list = getLandingPresetsList();
+    var expSel = el("exp-landing-preset");
+    if (expSel) {
+      expSel.innerHTML = "";
+      list.forEach(function (p) {
+        var opt = document.createElement("option");
+        opt.value = p.id;
+        opt.textContent = store.lang === "ru" ? (p.name_ru || p.name_en || p.id) : (p.name_en || p.id);
+        expSel.appendChild(opt);
+      });
+      expSel.value = store.landingPreset;
+    }
+    var grid = el("s3-landing-presets");
+    if (!grid) return;
+    grid.innerHTML = "";
+    list.forEach(function (p) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "landing-preset-card";
+      btn.setAttribute("aria-pressed", store.landingPreset === p.id ? "true" : "false");
+      var head = document.createElement("div");
+      head.className = "landing-preset-head";
+      var ttl = document.createElement("strong");
+      ttl.textContent = store.lang === "ru" ? (p.name_ru || p.name_en || p.id) : (p.name_en || p.id);
+      var badge = document.createElement("span");
+      badge.className = "landing-preset-badge";
+      badge.textContent = store.lang === "ru" ? (p.badge_ru || p.badge_en || "") : (p.badge_en || "");
+      head.appendChild(ttl);
+      head.appendChild(badge);
+      var desc = document.createElement("span");
+      desc.className = "landing-preset-desc";
+      desc.textContent = store.lang === "ru" ? (p.desc_ru || p.desc_en || "") : (p.desc_en || "");
+      btn.appendChild(head);
+      btn.appendChild(desc);
+      btn.addEventListener("click", function () {
+        setLandingPreset(p.id, true);
+      });
+      grid.appendChild(btn);
+    });
+  }
+
+  function setLandingPreset(presetId, fromUser) {
+    var list = getLandingPresetsList();
+    var chosen = list[0];
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === presetId) {
+        chosen = list[i];
+        break;
+      }
+    }
+    store.landingPreset = chosen.id;
+    if (store.draft) store.draft.landing_preset = chosen.id;
+    var expSel = el("exp-landing-preset");
+    if (expSel && expSel.value !== chosen.id) expSel.value = chosen.id;
+    if (chosen.motion) setMotion(chosen.motion, false);
+    renderLandingPresets();
+    if (fromUser === true) scheduleLivePreviewRefresh(true);
+  }
+
   function syncProjectPathDisplay(pathStr) {
     var clean = String(pathStr || "").trim();
     if (el("s1-folder-input") && el("s1-folder-input").value !== clean) el("s1-folder-input").value = clean;
@@ -162,6 +241,116 @@
     }
   }
 
+  var fpState = { currentDir: "", parentDir: "", mode: "pick", onPicked: null };
+
+  function formatFileBytes(bytes) {
+    var n = Number(bytes) || 0;
+    if (n < 1024) return n + " B";
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + " KB";
+    return (n / (1024 * 1024)).toFixed(1) + " MB";
+  }
+
+  function loadDirectoryIntoPicker(dirPath) {
+    var statusEl = el("fp-status");
+    if (statusEl) statusEl.textContent = store.lang === "ru" ? "Загрузка каталога..." : "Loading directory...";
+    fetch("/api/fs/list?dir=" + encodeURIComponent(dirPath || ""), { cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d || d.error) {
+          if (statusEl) statusEl.textContent = (d && d.message) || (d && d.error) || "Error";
+          return;
+        }
+        fpState.currentDir = d.current_dir || "";
+        fpState.parentDir = d.parent_dir || "";
+        if (el("fp-current-path")) el("fp-current-path").value = fpState.currentDir;
+        if (el("fp-up-btn")) el("fp-up-btn").disabled = !fpState.parentDir;
+
+        var drvWrap = el("fp-drives");
+        if (drvWrap) {
+          drvWrap.innerHTML = "";
+          (d.drives || []).forEach(function (drv) {
+            var b = document.createElement("button");
+            b.type = "button";
+            var isCur = fpState.currentDir.toLowerCase().indexOf(drv.toLowerCase()) === 0;
+            b.className = isCur ? "btn btn-primary" : "btn";
+            b.textContent = drv;
+            b.addEventListener("click", function () { loadDirectoryIntoPicker(drv); });
+            drvWrap.appendChild(b);
+          });
+        }
+
+        var dirList = el("fp-dir-list");
+        if (dirList) {
+          dirList.innerHTML = "";
+          var dirs = d.dirs || [];
+          if (!dirs.length) {
+            var emp = document.createElement("div");
+            emp.className = "fp-row fp-row-static";
+            emp.textContent = store.lang === "ru" ? "(подпапок нет)" : "(no subfolders)";
+            dirList.appendChild(emp);
+          } else {
+            dirs.forEach(function (item) {
+              var row = document.createElement("button");
+              row.type = "button";
+              row.className = "fp-row";
+              var nm = document.createElement("span");
+              nm.textContent = item.name;
+              var tag = document.createElement("span");
+              tag.className = "landing-preset-badge";
+              tag.textContent = "DIR";
+              row.appendChild(nm);
+              row.appendChild(tag);
+              row.addEventListener("click", function () { loadDirectoryIntoPicker(item.path); });
+              dirList.appendChild(row);
+            });
+          }
+        }
+
+        var fileList = el("fp-file-list");
+        if (fileList) {
+          fileList.innerHTML = "";
+          var files = d.files || [];
+          if (!files.length) {
+            var fEmp = document.createElement("div");
+            fEmp.className = "fp-row fp-row-static";
+            fEmp.textContent = store.lang === "ru" ? "(файлов нет)" : "(no files)";
+            fileList.appendChild(fEmp);
+          } else {
+            files.forEach(function (item) {
+              var fRow = document.createElement("div");
+              fRow.className = "fp-row fp-row-static";
+              var fnm = document.createElement("span");
+              fnm.textContent = item.name;
+              var fsz = document.createElement("span");
+              fsz.textContent = formatFileBytes(item.size);
+              fRow.appendChild(fnm);
+              fRow.appendChild(fsz);
+              fileList.appendChild(fRow);
+            });
+          }
+        }
+        if (statusEl) {
+          statusEl.textContent = (store.lang === "ru" ? "Папок: " : "Folders: ") + (d.dirs || []).length + " · " + (store.lang === "ru" ? "Файлов: " : "Files: ") + (d.files || []).length;
+        }
+      })
+      .catch(function (err) {
+        if (statusEl) statusEl.textContent = err && err.message ? err.message : String(err);
+      });
+  }
+
+  function openFolderPickerModal(initialDir, mode, onPicked) {
+    fpState.mode = mode || "pick";
+    fpState.onPicked = typeof onPicked === "function" ? onPicked : null;
+    if (el("fp-title")) {
+      el("fp-title").textContent = fpState.mode === "browse"
+        ? (store.lang === "ru" ? "Просмотр папки проекта" : "Inspect Project Folder")
+        : (store.lang === "ru" ? "Выбор папки проекта на диске" : "Choose Project Folder on Disk");
+    }
+    if (el("fp-select-btn")) el("fp-select-btn").hidden = !fpState.onPicked;
+    if (el("modal-folder-picker")) el("modal-folder-picker").hidden = false;
+    loadDirectoryIntoPicker(initialDir || "");
+  }
+
   function pickProjectFolder(btnId, statusId, sourceInputId) {
     var btn = el(btnId);
     var statusEl = el(statusId);
@@ -169,8 +358,8 @@
     if (btn) btn.disabled = true;
     if (statusEl) {
       statusEl.textContent = store.lang === "ru"
-        ? "Открыт системный диалог выбора папки..."
-        : "Waiting for system folder dialog...";
+        ? "Открыт диалог выбора папки..."
+        : "Waiting for folder dialog...";
     }
     fetch("/api/os/pick", {
       method: "POST",
@@ -185,6 +374,19 @@
           if (statusEl) {
             statusEl.textContent = (store.lang === "ru" ? "Выбрана папка: " : "Selected folder: ") + d.path;
           }
+        } else if (d && (d.fallback === "web_picker" || d.interactive_desktop === false)) {
+          if (statusEl) {
+            statusEl.textContent = store.lang === "ru"
+              ? "Открыт встроенный проводник выбора папки."
+              : "Opened built-in studio folder browser.";
+          }
+          openFolderPickerModal(initial, "pick", function (pickedPath) {
+            syncProjectPathDisplay(pickedPath);
+            if (store.draft) store.draft.output_dir = pickedPath;
+            if (statusEl) {
+              statusEl.textContent = (store.lang === "ru" ? "Выбрана папка: " : "Selected folder: ") + pickedPath;
+            }
+          });
         } else if (statusEl) {
           statusEl.textContent = store.lang === "ru"
             ? "Выбор папки отменён."
@@ -211,17 +413,184 @@
     })
       .then(function (r) { return r.json(); })
       .then(function (d) {
-        if (!statusEl) return;
         if (d && d.opened) {
-          statusEl.textContent = (store.lang === "ru" ? "Открыта папка: " : "Opened folder: ") + (d.path || target);
+          if (statusEl) statusEl.textContent = (store.lang === "ru" ? "Открыта папка: " : "Opened folder: ") + (d.path || target);
         } else {
-          statusEl.textContent = (store.lang === "ru" ? "Не удалось открыть папку: " : "Could not open folder: ") + ((d && (d.message || d.path)) || target);
+          var browseTarget = (d && d.path) || target;
+          if (statusEl) {
+            statusEl.textContent = (store.lang === "ru" ? "Просмотр папки в проводнике студии: " : "Opened folder in studio browser: ") + browseTarget;
+          }
+          openFolderPickerModal(browseTarget, "browse", function (pickedPath) {
+            syncProjectPathDisplay(pickedPath);
+            if (store.draft) store.draft.output_dir = pickedPath;
+            if (statusEl) {
+              statusEl.textContent = (store.lang === "ru" ? "Выбрана папка: " : "Selected folder: ") + pickedPath;
+            }
+          });
         }
       })
       .catch(function (err) {
         if (statusEl) {
           statusEl.textContent = (store.lang === "ru" ? "Ошибка открытия папки: " : "Open folder error: ") + (err && err.message ? err.message : String(err));
         }
+      });
+  }
+
+  function stopStarterPreloader(ctrlRef) {
+    if (ctrlRef && store.starterAbort !== ctrlRef) return;
+    clearInterval(store.starterTimer);
+    store.starterTimer = null;
+    if (el("starter-preloader")) el("starter-preloader").hidden = true;
+  }
+
+  function runRandomStarterTemplate(useLlm) {
+    if (store.starterAbort) {
+      try { store.starterAbort.abort(); } catch (e) {}
+    }
+    clearInterval(store.starterTimer);
+    var ctrl = new AbortController();
+    store.starterAbort = ctrl;
+    var overlay = el("starter-preloader");
+    if (overlay) overlay.hidden = false;
+    var startedAt = Date.now();
+    if (el("starter-timer")) el("starter-timer").textContent = "00:00";
+    if (el("starter-status")) {
+      el("starter-status").textContent = useLlm
+        ? (store.lang === "ru"
+            ? "SmartLLM придумывает бренд, логотип-промпт, стиль и страницы под шаги 2–5…"
+            : "SmartLLM is crafting brand brief, logo cue, style & pages for Steps 2–5…")
+        : (store.lang === "ru"
+            ? "Применяем связный быстрый шаблон…"
+            : "Applying cohesive instant template…");
+    }
+    var pills = document.querySelectorAll("#starter-preloader [data-starter-pill]");
+    var tickCount = 0;
+    store.starterTimer = setInterval(function () {
+      if (store.starterAbort !== ctrl) return;
+      if (el("starter-timer")) el("starter-timer").textContent = formatElapsed(Date.now() - startedAt);
+      tickCount += 1;
+      var activeIdx = tickCount % Math.max(1, pills.length);
+      for (var i = 0; i < pills.length; i++) {
+        pills[i].classList.toggle("is-active", i <= activeIdx);
+      }
+    }, 350);
+
+    var reqLang = el("s1-lang") ? el("s1-lang").value : store.lang;
+    fetch("/api/orchestrator/random-template", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal: ctrl.signal,
+      body: JSON.stringify({
+        lang: reqLang || "ru",
+        use_llm: Boolean(useLlm),
+        exclude_names: store.starterHistory.slice(-8)
+      })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (store.starterAbort !== ctrl) return;
+        stopStarterPreloader(ctrl);
+        if (!data || data.error || !data.template) return;
+        var tpl = data.template;
+        if (tpl.name) store.starterHistory.push(tpl.name);
+
+        store.logoVariants = [];
+        if (el("s2-logo-grid")) el("s2-logo-grid").innerHTML = "";
+        if (el("s2-logo-status")) {
+          el("s2-logo-status").textContent = store.lang === "ru"
+            ? "Промпт логотипа подготовлен. При желании нажмите «Сгенерировать 6 вариантов 512×512»."
+            : "Logo prompt is ready. Click 'Generate 6 Logo Variants' when you want Z-Image logos.";
+        }
+
+        store.draft = Object.assign({}, store.draft || {}, {
+          id: "starter",
+          revision: 1,
+          name: tpl.name,
+          brief: tpl.brief,
+          goal: tpl.brief,
+          logo_prompt: tpl.logo_prompt || "",
+          languages: tpl.languages || "ru",
+          canon_id: tpl.canon_id || "01_bento_grid",
+          polarity: tpl.polarity || "auto",
+          landing_preset: tpl.landing_preset || "gsap_scrollytelling",
+          motion: tpl.motion || "motion",
+          site_type: tpl.site_type || "multi",
+          selected_pages: (tpl.selected_pages || ["index"]).slice(),
+          page_blocks: tpl.page_blocks || {},
+          selected_blocks: (tpl.selected_blocks || []).slice(),
+          page_block_prompts: tpl.page_block_prompts || {},
+          block_prompts: tpl.block_prompts || {},
+          company: tpl.company || {},
+          output_dir: tpl.output_dir || "",
+          selected_logo_path: "",
+          routes: tpl.selected_pages
+            ? tpl.selected_pages.map(function (s) {
+                var pp = presetPage(s);
+                return {
+                  slug: s,
+                  filename: s === "index" ? "index.html" : s + ".html",
+                  title: pp ? (store.lang === "ru" ? pp.title_ru : pp.title_en) : s
+                };
+              })
+            : []
+        });
+
+        if (el("s1-lang") && (tpl.languages === "ru" || tpl.languages === "en" || tpl.languages === "en+ru")) {
+          el("s1-lang").value = tpl.languages;
+        }
+        if (tpl.output_dir) syncProjectPathDisplay(tpl.output_dir);
+        if (el("s2-name")) el("s2-name").value = tpl.name || "";
+        if (el("s2-desc")) el("s2-desc").value = tpl.brief || "";
+        if (el("s2-logo-prompt")) el("s2-logo-prompt").value = tpl.logo_prompt || "";
+
+        setPolarity(tpl.polarity || "auto", false);
+        setLandingPreset(tpl.landing_preset || "gsap_scrollytelling", false);
+        setMotion(tpl.motion || "motion", false);
+        renderCanons();
+
+        store.siteType = tpl.site_type === "single" ? "single" : "multi";
+        store.selectedPages = (tpl.selected_pages || ["index"]).slice();
+        store.pageBlocks = tpl.page_blocks || {};
+        store.pageBlockPrompts = tpl.page_block_prompts || {};
+        store.blockPrompts = tpl.block_prompts || {};
+        store.company = tpl.company || {};
+        renderCompanyFields();
+        renderPagesAndBlocksChecklists();
+        syncRouteSelectFromDraft(store.draft);
+
+        var sumBox = el("s5-starter-summary");
+        if (sumBox) {
+          sumBox.hidden = false;
+          var badgeEl = el("s5-starter-badge");
+          if (badgeEl) {
+            badgeEl.textContent = data.source === "llm"
+              ? (store.lang === "ru" ? "SmartLLM ИИ" : "SmartLLM AI")
+              : (store.lang === "ru" ? "Быстрый шаблон" : "Quick Preset");
+          }
+          var bodyEl = el("s5-starter-summary-body");
+          if (bodyEl) {
+            var canonObj = (store.catalog.canons || []).filter(function (c) { return c.id === tpl.canon_id; })[0];
+            var canonTitle = canonObj ? canonName(canonObj) : tpl.canon_id;
+            var lpObj = getLandingPresetsList().filter(function (p) { return p.id === store.landingPreset; })[0];
+            var lpTitle = lpObj ? (store.lang === "ru" ? lpObj.name_ru : lpObj.name_en) : store.landingPreset;
+            bodyEl.textContent = tpl.name + " · " + canonTitle + " · " + lpTitle + " → " + (tpl.output_dir || "");
+          }
+        }
+
+        if (data.preview_url && el("live-stage-iframe")) {
+          var sep = data.preview_url.indexOf("?") === -1 ? "?" : "&";
+          el("live-stage-iframe").src = data.preview_url + sep + "t=" + Date.now();
+          setStageOpen(true);
+        }
+        setStep(5);
+        var sumTarget = el("s5-starter-summary") || el("s5-autofill-btn");
+        if (sumTarget && typeof sumTarget.scrollIntoView === "function") {
+          sumTarget.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      })
+      .catch(function (err) {
+        if (err && err.name === "AbortError") return;
+        stopStarterPreloader(ctrl);
       });
   }
 
@@ -249,6 +618,7 @@
     if (ind) ind.textContent = store.lang === "ru" ? "RU | EN" : "EN | RU";
     renderCanons();
     renderMotionSelects();
+    renderLandingPresets();
     renderPagesAndBlocksChecklists();
     renderBlockDescriptionInputs();
     if (el("s1-folder-input")) syncProjectPathDisplay(el("s1-folder-input").value);
@@ -1007,6 +1377,7 @@
           canon_id: el("exp-canon-select").value || undefined,
           polarity: store.polarity,
           motion: store.motion,
+          landing_preset: store.landingPreset,
           render_images: true
         }
       : {
@@ -1021,6 +1392,7 @@
           canon_id: store.draft ? store.draft.canon_id : "01_bento_grid",
           polarity: store.polarity,
           motion: store.motion,
+          landing_preset: store.landingPreset,
           site_type: store.siteType,
           selected_pages: activePageSlugs(),
           page_blocks: store.pageBlocks,
@@ -1183,6 +1555,85 @@
     el("btn-toggle-stage-drawer").addEventListener("click", function () {
       setStageOpen(!store.stageOpen);
     });
+    if (el("btn-topbar-random-template")) {
+      el("btn-topbar-random-template").addEventListener("click", function () { runRandomStarterTemplate(true); });
+    }
+    if (el("s2-random-template-btn")) {
+      el("s2-random-template-btn").addEventListener("click", function () { runRandomStarterTemplate(true); });
+    }
+    if (el("s5-reroll-starter-btn")) {
+      el("s5-reroll-starter-btn").addEventListener("click", function () { runRandomStarterTemplate(true); });
+    }
+    if (el("s5-goto-step2-btn")) {
+      el("s5-goto-step2-btn").addEventListener("click", function () { setStep(2); });
+    }
+    if (el("s5-goto-step3-btn")) {
+      el("s5-goto-step3-btn").addEventListener("click", function () { setStep(3); });
+    }
+    if (el("starter-instant-btn")) {
+      el("starter-instant-btn").addEventListener("click", function () { runRandomStarterTemplate(false); });
+    }
+    if (el("starter-skip-btn")) {
+      el("starter-skip-btn").addEventListener("click", function () {
+        if (store.starterAbort) {
+          try { store.starterAbort.abort(); } catch (e) {}
+        }
+        stopStarterPreloader(store.starterAbort);
+      });
+    }
+    if (el("fp-up-btn")) {
+      el("fp-up-btn").addEventListener("click", function () {
+        if (fpState.parentDir) loadDirectoryIntoPicker(fpState.parentDir);
+      });
+    }
+    if (el("fp-mkdir-btn")) {
+      el("fp-mkdir-btn").addEventListener("click", function () {
+        var inp = el("fp-new-name");
+        var fname = inp ? inp.value.trim() : "";
+        if (!fname || !fpState.currentDir) return;
+        fetch("/api/fs/mkdir", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ parent_dir: fpState.currentDir, name: fname })
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (res) {
+            if (res && res.path) {
+              if (inp) inp.value = "";
+              loadDirectoryIntoPicker(res.path);
+            } else if (el("fp-status")) {
+              el("fp-status").textContent = (res && res.message) || (res && res.error) || "Error";
+            }
+          });
+      });
+    }
+    if (el("fp-new-name")) {
+      el("fp-new-name").addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter" && el("fp-mkdir-btn")) {
+          ev.preventDefault();
+          el("fp-mkdir-btn").click();
+        }
+      });
+    }
+    if (el("fp-copy-btn")) {
+      el("fp-copy-btn").addEventListener("click", function () {
+        if (fpState.currentDir && navigator.clipboard) {
+          navigator.clipboard.writeText(fpState.currentDir).catch(function () {});
+        }
+        if (el("fp-status")) el("fp-status").textContent = (store.lang === "ru" ? "Скопировано: " : "Copied: ") + fpState.currentDir;
+      });
+    }
+    if (el("fp-select-btn")) {
+      el("fp-select-btn").addEventListener("click", function () {
+        if (fpState.onPicked && fpState.currentDir) fpState.onPicked(fpState.currentDir);
+        if (el("modal-folder-picker")) el("modal-folder-picker").hidden = true;
+      });
+    }
+    if (el("fp-close-btn")) {
+      el("fp-close-btn").addEventListener("click", function () {
+        if (el("modal-folder-picker")) el("modal-folder-picker").hidden = true;
+      });
+    }
 
     for (var s = 1; s <= 5; s++) {
       (function (stepIdx) {
@@ -1211,7 +1662,8 @@
     });
     el("exp-brief-input").addEventListener("input", function () {});
     el("exp-lang-select").addEventListener("change", function () {});
-    el("exp-canon-select").addEventListener("change", function () {});
+    if (el("exp-canon-select")) el("exp-canon-select").addEventListener("change", function () {});
+    if (el("exp-landing-preset")) el("exp-landing-preset").addEventListener("change", function (ev) { setLandingPreset(ev.target.value, false); });
     if (el("exp-motion-select")) el("exp-motion-select").addEventListener("change", function (ev) { setMotion(ev.target.value); });
     el("exp-generate-btn").addEventListener("click", function () { runOrchestratorBuild("auto"); });
     el("exp-open-folder-btn").addEventListener("click", function () {
@@ -1474,6 +1926,13 @@
       if (ev.key === "Escape") {
         el("modal-settings").hidden = true;
         el("modal-support").hidden = true;
+        if (el("modal-folder-picker")) el("modal-folder-picker").hidden = true;
+        if (el("starter-preloader") && !el("starter-preloader").hidden) {
+          if (store.starterAbort) {
+            try { store.starterAbort.abort(); } catch (e) {}
+          }
+          stopStarterPreloader(store.starterAbort);
+        }
       }
     });
   }
@@ -1543,6 +2002,7 @@
         var initLang = (st && st.settings && st.settings.language) || "ru";
         setStageOpen(false);
         setPolarity((store.draft && store.draft.polarity) || "auto");
+        setLandingPreset((store.draft && store.draft.landing_preset) || "gsap_scrollytelling", false);
         var initMotion = (store.draft && store.draft.motion) || "motion";
         if (store.draft && store.draft.name === "Quartz-Field Atelier" && (store.draft.revision || 1) <= 1 && initMotion === "css_scroll_driven") {
           initMotion = "motion";
@@ -1558,6 +2018,14 @@
         }
         refreshEngineHUD();
         setInterval(refreshEngineHUD, 2500);
+
+        var skipStarter = window.location.search.indexOf("skip_starter=1") !== -1;
+        var alreadyInited = false;
+        try { alreadyInited = window.sessionStorage.getItem("smartllm_starter_init") === "1"; } catch (e0) {}
+        if (!skipStarter && !alreadyInited) {
+          try { window.sessionStorage.setItem("smartllm_starter_init", "1"); } catch (e1) {}
+          runRandomStarterTemplate(true);
+        }
       })
       .catch(function () {});
   });

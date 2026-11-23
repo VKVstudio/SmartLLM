@@ -85,6 +85,7 @@ def default_project_draft(project_id: str = "default", repo_root: Path | None = 
         "compare_canon_id": "18_devtool_command_ui",
         "stack": "astro",
         "motion": "css_scroll_driven",
+        "landing_preset": "gsap_scrollytelling",
         "output_dir": str(projects_root / safe_id),
         "site_type": "multi",
         "selected_pages": list(DEFAULT_PAGE_SLUGS),
@@ -200,6 +201,16 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
     base_url = str(seo_cfg.get("base_url") or payload.get("base_url") or "https://smartllm-studio.example.org").rstrip("/")
     stack = normalize_stack_id(str(payload.get("stack") or "astro"))
     motion = normalize_motion_id(str(payload.get("motion") or "css_scroll_driven"))
+    valid_landings = {"gsap_scrollytelling", "kinetic_showreel", "bento_interactive", "css_scroll_native", "classic_corporate"}
+    raw_landing = str(payload.get("landing_preset") or "").strip().lower()
+    if raw_landing in valid_landings:
+        landing_preset = raw_landing
+    elif motion == "motion":
+        landing_preset = "gsap_scrollytelling"
+    elif motion == "animejs":
+        landing_preset = "kinetic_showreel"
+    else:
+        landing_preset = "css_scroll_native"
     raw_routes = payload.get("routes")
     if not raw_routes and payload.get("selected_pages"):
         routes = build_routes_from_pages(
@@ -310,7 +321,7 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
         + theme_css
         + "\n"
         + _build_tokens_css(pal, fonts, card.get("layout", {}), polarity=resolved_polarity, canon_responsive=card.get("responsive"))
-        + _build_canon_css(card, dossier, polarity=resolved_polarity)
+        + _build_canon_css(card, dossier, polarity=resolved_polarity, motion=motion, landing_preset=landing_preset)
     )
     style_hash = sha256_csp(css_text)
     bilingual = lang_pref == "en+ru"
@@ -401,12 +412,13 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
             page_idx=page_idx,
             polarity=resolved_polarity,
             vendor_scripts=vendor_bundle.get("js_relpaths") or [],
+            landing_preset=landing_preset,
         )
         rendered_docs.append((route, html_doc))
         if route["filename"] not in written_files:
             written_files.insert(0, route["filename"])
 
-    js_text = _build_motion_and_ui_js(stack=stack, motion=motion, lang=resolved_lang, d=dossier, i18n=i18n, bilingual=bilingual, canon_id=card["id"])
+    js_text = _build_motion_and_ui_js(stack=stack, motion=motion, lang=resolved_lang, d=dossier, i18n=i18n, bilingual=bilingual, canon_id=card["id"], landing_preset=landing_preset)
     script_hash = sha256_csp(js_text)
     csp_header = csp_meta.replace(hash_placeholder, script_hash).replace("object-src 'none';", "frame-ancestors 'none'; object-src 'none';")
     (project_dir / "tokens.css").write_text(css_text, encoding="utf-8")
@@ -472,6 +484,7 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
         "languages": lang_pref,
         "stack": stack,
         "motion": motion,
+        "landing_preset": landing_preset,
         "canon_id": card["id"],
         "canon_name": card["name"],
         "polarity": resolved_polarity,

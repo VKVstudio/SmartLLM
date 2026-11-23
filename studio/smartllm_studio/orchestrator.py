@@ -8,14 +8,16 @@ import json
 import math
 import os
 from pathlib import Path
+import random
 import re
+import secrets
 import shutil
 import subprocess
 from typing import Any, Callable
 import uuid
 
 from .adapters import get_rag_selector
-from .catalog import AI_CRAWLERS_DEFAULT
+from .catalog import AI_CRAWLERS_DEFAULT, LANDING_PRESET_CATALOG
 from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT
 from .engines.llm import _PageCacheTrimmer
 from .kb_loader import harden_zimage_prompt, palette_to_material_summary
@@ -799,6 +801,408 @@ def auto_plan_from_prompt(prompt: str, lang_pref: str = "auto", repo_root: Path 
     }
 
 
+CURATED_STARTER_SCENARIOS: list[dict[str, Any]] = [
+    {
+        "id": "tactile_audio",
+        "name_ru": "Волна-08 Акустика",
+        "name_en": "Wave-08 Field Audio",
+        "brief_ru": "Производство модульных полевых рекордеров, аналоговых синтезаторов и тактильных микшерных пультов с фрезерованным алюминиевым корпусом.",
+        "brief_en": "Precision modular field recorders, analog synthesizers and tactile CNC-machined aluminum mixing consoles for sound engineers.",
+        "logo_prompt_ru": "Минималистичная квадратная пиктограмма поворотного энкодера с одной оранжевой точкой-индикатором, строгая геометрия",
+        "logo_prompt_en": "Minimalist geometric rotary encoder emblem with one crisp signal-orange dot indicator, clean flat precision symbol",
+        "canon_id": "10_industrial_tactile",
+        "polarity": "light",
+        "landing_preset": "gsap_scrollytelling",
+        "motion": "motion",
+        "site_type": "multi",
+        "selected_pages": ["index", "about", "services", "portfolio", "pricing", "contact"],
+        "tagline_ru": "Точная механика звука без цифрового шума",
+        "tagline_en": "Tactile acoustic instruments built to last decades",
+    },
+    {
+        "id": "quiet_light_arch",
+        "name_ru": "Люмен Ателье",
+        "name_en": "Lumen Atelier",
+        "brief_ru": "Студия архитектурного освещения и кастомных стеклянных световых инсталляций для галерей, отелей и частных резиденций.",
+        "brief_en": "Architectural lighting studio designing bespoke blown-glass luminous installations for galleries, hotels and private residences.",
+        "logo_prompt_ru": "Тонкий геометрический абрис подвесного светового кольца из двух дуг с мягким тёпло-золотым акцентом",
+        "logo_prompt_en": "Refined geometric pendant light silhouette formed by two concentric arcs in deep graphite and warm gold",
+        "canon_id": "12_quiet_luxury_minimal",
+        "polarity": "light",
+        "landing_preset": "gsap_scrollytelling",
+        "motion": "motion",
+        "site_type": "multi",
+        "selected_pages": ["index", "about", "portfolio", "services", "pricing", "contact"],
+        "tagline_ru": "Свет, выверенный до градуса и люмена",
+        "tagline_en": "Quiet architectural light calibrated to the room",
+    },
+    {
+        "id": "brutal_street_lab",
+        "name_ru": "ЦЕХ-14 Принт",
+        "name_en": "PRESS-14 Studio",
+        "brief_ru": "Независимая лаборатория шелкографии, малотиражных арт-зинов, плотного текстиля и экспериментальной уличной графики.",
+        "brief_en": "Independent screenprinting workshop, limited risograph zine press, heavyweight apparel and bold graphic direction.",
+        "logo_prompt_ru": "Жирный бруталистский прямоугольный штамп с двумя сдвинутыми диагональными прорезями, контрастный красный и чёрный",
+        "logo_prompt_en": "Bold brutalist rectangular stamp icon sliced by two diagonal notches, stark black and vermilion ink",
+        "canon_id": "06_neo_brutalism",
+        "polarity": "light",
+        "landing_preset": "kinetic_showreel",
+        "motion": "animejs",
+        "site_type": "multi",
+        "selected_pages": ["index", "portfolio", "services", "pricing", "contact"],
+        "tagline_ru": "Сырая фактура краски и тиражи без компромиссов",
+        "tagline_en": "Raw ink weight, sharp edges and numbered editions",
+    },
+    {
+        "id": "liquid_spatial_robotics",
+        "name_ru": "Кристалл Роботикс",
+        "name_en": "Vesper Spatial AI",
+        "brief_ru": "Оптические лидарные сенсоры, автономная пространственная навигация дронов и программная платформа реального времени.",
+        "brief_en": "Solid-state optical LiDAR sensors, autonomous drone spatial mapping and real-time edge perception software.",
+        "logo_prompt_ru": "Гладкая граненая призма-линза из двух перетекающих кривых, циановый и глубокий графитовый оттенки",
+        "logo_prompt_en": "Sleek faceted optical prism mark shaped from two fluid curves in luminous cyan and obsidian slate",
+        "canon_id": "08_liquid_glass",
+        "polarity": "dark",
+        "landing_preset": "bento_interactive",
+        "motion": "motion",
+        "site_type": "multi",
+        "selected_pages": ["index", "about", "services", "pricing", "faq", "contact"],
+        "tagline_ru": "Пространственное зрение за миллисекунды",
+        "tagline_en": "Sub-millisecond optical perception at the edge",
+    },
+    {
+        "id": "craft_roastery",
+        "name_ru": "Жёрнов и Винил",
+        "name_en": "Kiln & Vinyl Roasters",
+        "brief_ru": "Маленькая городская обжарка спешелти-кофе, зал с рупорной акустикой и дегустационные сеты по подписке.",
+        "brief_en": "Micro-lot specialty coffee roastery, analog horn-speaker listening bar and weekly single-origin tasting boxes.",
+        "logo_prompt_ru": "Рубленая ремесленная печать с половинкой кофейного зерна и виниловой дорожкой, терракота и тёплый графит",
+        "logo_prompt_en": "Hand-carved artisan seal merging a single coffee bean and vinyl groove arc in burnt terracotta and charcoal",
+        "canon_id": "16_artisan_craft_zine",
+        "polarity": "light",
+        "landing_preset": "gsap_scrollytelling",
+        "motion": "motion",
+        "site_type": "multi",
+        "selected_pages": ["index", "about", "portfolio", "pricing", "blog", "contact"],
+        "tagline_ru": "Обжарка малых партий под живой винил",
+        "tagline_en": "Small-batch roast profiles pressed alongside analog sound",
+    },
+    {
+        "id": "swiss_horology",
+        "name_ru": "ХРОНО-04 Бюро",
+        "name_en": "Helvetia Calibre 04",
+        "brief_ru": "Независимое часовое ателье: механические калибры ручной сборки, титановые корпуса и открытая техническая спецификация.",
+        "brief_en": "Independent mechanical watchmaker crafting grade-5 titanium chronometers with transparent technical calibration sheets.",
+        "logo_prompt_ru": "Строгий швейцарский крест, вписанный в разметку циферблата на 12 делений, тёмно-серый и алый",
+        "logo_prompt_en": "Crisp Swiss cross aligned inside a twelve-tick dial ring in charcoal ink and signal scarlet",
+        "canon_id": "02_swiss_international",
+        "polarity": "light",
+        "landing_preset": "kinetic_showreel",
+        "motion": "animejs",
+        "site_type": "multi",
+        "selected_pages": ["index", "about", "portfolio", "services", "pricing", "contact"],
+        "tagline_ru": "Механика точности в модульной сетке",
+        "tagline_en": "Swiss grid discipline measured in beats per hour",
+    },
+    {
+        "id": "biophilic_timber",
+        "name_ru": "Хвоя Архитектура",
+        "name_en": "Larch & Moss Studio",
+        "brief_ru": "Экологичные модульные дома из перекрёстно-клееной лиственницы, пассивное теплосбережение и ландшафтное восстановление.",
+        "brief_en": "Low-carbon cross-laminated timber pavilions, passive solar architecture and native ecological landscape restoration.",
+        "logo_prompt_ru": "Чистый знак из трёх годовых колец с мягким вырезом листа, глубокий хвойно-зелёный и кремовый",
+        "logo_prompt_en": "Clean emblem of three concentric wood growth rings intersected by a single leaf contour in pine green",
+        "canon_id": "15_organic_biophilic_eco",
+        "polarity": "light",
+        "landing_preset": "gsap_scrollytelling",
+        "motion": "motion",
+        "site_type": "multi",
+        "selected_pages": ["index", "about", "portfolio", "services", "contact"],
+        "tagline_ru": "Живое дерево и архитектура с нулевым следом",
+        "tagline_en": "Carbon-negative timber architecture rooted in terrain",
+    },
+    {
+        "id": "fintech_clearing",
+        "name_ru": "Норд Клиринг",
+        "name_en": "Nordic Ledger Treasury",
+        "brief_ru": "Институциональная система казначейского расчёта, мультивалютный комплаенс и сквозной аудит ликвидности.",
+        "brief_en": "Institutional corporate treasury settlement engine with automated liquidity audits and multi-currency compliance.",
+        "logo_prompt_ru": "Устойчивая геометрическая монограмма из трёх параллельных ступенчатых линий в глубоком сапфировом цвете",
+        "logo_prompt_en": "Balanced geometric monogram of three ascending stepped bars inside an octagon in deep sapphire blue",
+        "canon_id": "17_fintech_institutional",
+        "polarity": "light",
+        "landing_preset": "bento_interactive",
+        "motion": "motion",
+        "site_type": "multi",
+        "selected_pages": ["index", "about", "services", "pricing", "legal", "contact"],
+        "tagline_ru": "Предсказуемый расчёт без скрытых комиссий",
+        "tagline_en": "Deterministic liquidity settlement for institutional teams",
+    },
+    {
+        "id": "gpu_devtools",
+        "name_ru": "Кернел-GPU Клауд",
+        "name_en": "TensorMesh CLI",
+        "brief_ru": "Локальный оркестратор GPU-кластеров, нулевой оверхед NVMe-кэширования и трассировка инференса из терминала.",
+        "brief_en": "Local-first GPU cluster orchestrator with direct NVMe tensor streaming, sub-ms tracing and CLI workflows.",
+        "logo_prompt_ru": "Резкий монохромный знак из скобок командной строки и вложенного куба, неоново-зелёный на графите",
+        "logo_prompt_en": "Sharp terminal chevron brackets framing an isometric micro-cube in crisp emerald neon and graphite",
+        "canon_id": "18_devtool_command_ui",
+        "polarity": "dark",
+        "landing_preset": "bento_interactive",
+        "motion": "motion",
+        "site_type": "multi",
+        "selected_pages": ["index", "services", "pricing", "blog", "faq", "contact"],
+        "tagline_ru": "Чистый пропускной канал от NVMe до тензорных ядер",
+        "tagline_en": "Zero-overhead tensor pipelines straight from your terminal",
+    },
+    {
+        "id": "cinema_documentary",
+        "name_ru": "Киноцех Кадр",
+        "name_en": "ReelFrame Documentary",
+        "brief_ru": "Документальный продакшн полного цикла, анаморфотная оптика 35 мм, цветокоррекция и звуковой дизайн для кинотеатров.",
+        "brief_en": "Feature documentary production house shooting 35mm anamorphic stories with theatrical grading and spatial mix.",
+        "logo_prompt_ru": "Строгий прямоугольный знак соотношения кадра 2.39:1 с двумя угловыми видоискателями в тёплом янтарном тоне",
+        "logo_prompt_en": "Crisp 2.39:1 wide cinema viewfinder frame with minimal corner crop marks in warm amber",
+        "canon_id": "13_cinematic_documentary",
+        "polarity": "dark",
+        "landing_preset": "kinetic_showreel",
+        "motion": "animejs",
+        "site_type": "multi",
+        "selected_pages": ["index", "about", "portfolio", "services", "team", "contact"],
+        "tagline_ru": "Документальное кино с дыханием плёнки",
+        "tagline_en": "Long-form cinema framed for the quiet dark room",
+    },
+    {
+        "id": "spatial_3d_design",
+        "name_ru": "Орбита Прототип",
+        "name_en": "Kinetix 3D Lab",
+        "brief_ru": "Промышленное 3D-прототипирование, параметрическая аэродинамика деталей и карбоновые корпуса под малые серии.",
+        "brief_en": "Industrial CAD prototyping studio specializing in parametric aerodynamics and forged carbon fiber enclosures.",
+        "logo_prompt_ru": "Чистый изометрический векторный каркас тора или орбитального кольца из трёх плавных граней в сине-фиолетовом",
+        "logo_prompt_en": "Clean isometric wireframe ring composed of three floating planes in electric indigo and titanium",
+        "canon_id": "14_spatial_3d_showcase",
+        "polarity": "dark",
+        "landing_preset": "gsap_scrollytelling",
+        "motion": "motion",
+        "site_type": "multi",
+        "selected_pages": ["index", "about", "portfolio", "services", "pricing", "contact"],
+        "tagline_ru": "От параметрической сетки до карбоновой оснастки",
+        "tagline_en": "Parametric geometry engineered into forged enclosures",
+    },
+    {
+        "id": "editorial_monograph",
+        "name_ru": "Бумага и Знак",
+        "name_en": "Folio Press Monographs",
+        "brief_ru": "Независимое издательство художественных монографий, тиражная типографика и коллекционные переплёты на хлопковой бумаге.",
+        "brief_en": "Independent publisher of architectural art monographs bound in Japanese linen and archival cotton rag paper.",
+        "logo_prompt_ru": "Изящный типографский экслибрис в виде открытого разворота книги и тонкой засечки, глубокий бордовый и слоновая кость",
+        "logo_prompt_en": "Refined editorial bookplate mark depicting an open folio spread with a crisp hairline spine in deep burgundy",
+        "canon_id": "03_editorial_magazine",
+        "polarity": "light",
+        "landing_preset": "css_scroll_native",
+        "motion": "css_scroll_driven",
+        "site_type": "multi",
+        "selected_pages": ["index", "about", "portfolio", "blog", "contact"],
+        "tagline_ru": "Медленное чтение и долговечная типографика",
+        "tagline_en": "Archival monographs composed for unhurried reading",
+    },
+]
+
+_STARTER_SLUG_TRANSLIT: dict[str, str] = {
+    "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ё": "e", "ж": "zh",
+    "з": "z", "и": "i", "й": "y", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o",
+    "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "kh", "ц": "ts",
+    "ч": "ch", "ш": "sh", "щ": "shch", "ъ": "", "ы": "y", "ь": "", "э": "e", "ю": "yu", "я": "ya",
+}
+
+
+def generate_random_starter_template(
+    state: Any,
+    lang: str = "ru",
+    use_llm: bool = True,
+    exclude_names: list[str] | None = None,
+) -> dict[str, Any]:
+    """Generate a single cohesive Steps 2->4 starter template (fast single LLM JSON call or instant curated pool)."""
+    from .kb_loader import resolve_canon_id
+    from .templates_engine import normalize_motion_id
+
+    raw_lang = str(lang or "ru").strip().lower()
+    eff_lang = "en" if raw_lang == "en" else "ru"
+    languages_val = "en+ru" if raw_lang == "en+ru" else eff_lang
+    excluded = {str(x).strip().lower() for x in (exclude_names or []) if str(x).strip()}
+
+    root = state.repo_root if state is not None and getattr(state, "repo_root", None) else DEFAULT_REPO_ROOT
+    selector = get_rag_selector(repo_root=root)
+    valid_canons = set(selector.canon_cards.keys())
+    preset_motion_map = {p["id"]: str(p.get("motion") or "motion") for p in LANDING_PRESET_CATALOG}
+    valid_presets = set(preset_motion_map.keys())
+    valid_page_slugs = {p["slug"] for p in PRESET_PAGES}
+
+    candidates = [
+        sc for sc in CURATED_STARTER_SCENARIOS
+        if str(sc.get(f"name_{eff_lang}") or "").strip().lower() not in excluded
+    ] or CURATED_STARTER_SCENARIOS
+    chosen = random.choice(candidates)
+
+    name = str(chosen[f"name_{eff_lang}"]).strip()
+    brief = str(chosen[f"brief_{eff_lang}"]).strip()
+    logo_prompt = str(chosen[f"logo_prompt_{eff_lang}"]).strip()
+    canon_id = str(chosen["canon_id"])
+    polarity = str(chosen["polarity"]) if chosen.get("polarity") in ("light", "dark", "auto") else "auto"
+    landing_preset = str(chosen["landing_preset"]) if chosen.get("landing_preset") in valid_presets else "gsap_scrollytelling"
+    motion = normalize_motion_id(str(chosen.get("motion") or preset_motion_map.get(landing_preset, "motion")))
+    site_type = str(chosen.get("site_type") or "multi")
+    selected_pages = [s for s in chosen.get("selected_pages", []) if s in valid_page_slugs] or list(DEFAULT_PAGE_SLUGS)
+    tagline = str(chosen.get(f"tagline_{eff_lang}") or "").strip()
+    source = "curated"
+
+    if use_llm and not is_cpu_test_mode() and _can_use_gpu(state):
+        domains = [
+            "modular industrial audio gear",
+            "architectural daylight & glass studio",
+            "specialty coffee & vinyl roastery",
+            "aerospace composite prototyping",
+            "botanical fragrance apothecary",
+            "independent documentary cinema",
+            "precision mechanical horology",
+            "urban electric micro-mobility",
+            "editorial risograph bookshop",
+            "acoustic ceramic resonators",
+            "nordic timber architecture",
+            "optical microscope & lab hardware",
+        ]
+        nudge = random.choice(domains)
+        target_lang_name = "Russian" if eff_lang == "ru" else "English"
+        sys_msg = (
+            f"You are SmartLLM v2 Creative Director. Invent ONE cohesive, original fictional business in {target_lang_name} "
+            f"(domain hint: {nudge}), match it with the single best canon style and animated landing preset from the allowed IDs, "
+            "and return ONLY valid JSON without markdown."
+        )
+        avoid_txt = f"Avoid these brand names: {', '.join(sorted(excluded)[:8])}." if excluded else ""
+        user_msg = (
+            f"Allowed canon_id values: {', '.join(sorted(valid_canons))}\n"
+            f"Allowed landing_preset values: {', '.join(sorted(valid_presets))}\n"
+            f"Allowed selected_pages slugs: {', '.join(p['slug'] for p in PRESET_PAGES)}\n"
+            f"{avoid_txt}\n"
+            "Return JSON with exact keys:\n"
+            "{\n"
+            '  "name": "Original 1-3 word brand name",\n'
+            '  "brief": "Specific 1-2 sentence description of products/services (60-180 chars)",\n'
+            '  "logo_prompt": "Concrete visual icon shape + 2 clean colors, no text (45-120 chars)",\n'
+            '  "canon_id": "exact canon_id from list",\n'
+            '  "polarity": "light or dark or auto",\n'
+            '  "landing_preset": "exact preset id from list",\n'
+            '  "motion": "motion or animejs or css_scroll_driven",\n'
+            '  "site_type": "multi",\n'
+            '  "selected_pages": ["index", "about", "services", "portfolio", "pricing", "contact"],\n'
+            '  "tagline": "Crisp 4-8 word tagline"\n'
+            "}"
+        )
+        try:
+            raw_obj = state.llm.generate_structured_json(sys_msg, user_msg, max_tokens=512, temperature=0.85)
+            if isinstance(raw_obj, dict):
+                cand_name = _clean(raw_obj.get("name"))
+                cand_brief = _clean(raw_obj.get("brief"))
+                cand_logo = _clean(raw_obj.get("logo_prompt"))
+                if 2 <= len(cand_name) <= 48 and cand_name.lower() not in excluded and len(cand_brief) >= 24 and len(cand_logo) >= 12:
+                    name = cand_name
+                    brief = cand_brief[:260]
+                    logo_prompt = cand_logo[:240]
+                    cand_canon = resolve_canon_id(str(raw_obj.get("canon_id") or ""))
+                    if cand_canon in valid_canons:
+                        canon_id = cand_canon
+                    cand_pol = str(raw_obj.get("polarity") or "").strip().lower()
+                    if cand_pol in ("light", "dark", "auto"):
+                        polarity = cand_pol
+                    cand_preset = str(raw_obj.get("landing_preset") or "").strip().lower()
+                    if cand_preset in valid_presets:
+                        landing_preset = cand_preset
+                    cand_motion = str(raw_obj.get("motion") or preset_motion_map.get(landing_preset, "motion"))
+                    motion = normalize_motion_id(cand_motion)
+                    cand_stype = str(raw_obj.get("site_type") or "").strip().lower()
+                    if cand_stype in ("single", "multi"):
+                        site_type = cand_stype
+                    cand_pages = [str(p).strip().lower() for p in (raw_obj.get("selected_pages") or []) if str(p).strip().lower() in valid_page_slugs]
+                    if cand_pages:
+                        if "index" not in cand_pages:
+                            cand_pages.insert(0, "index")
+                        if site_type == "single":
+                            selected_pages = ["index"]
+                        else:
+                            if "contact" not in cand_pages:
+                                cand_pages.append("contact")
+                            selected_pages = list(dict.fromkeys(cand_pages))[:6]
+                    cand_tag = _clean(raw_obj.get("tagline"))
+                    if cand_tag:
+                        tagline = cand_tag[:120]
+                    source = "llm"
+        except Exception:
+            pass
+
+    if site_type == "single":
+        selected_pages = ["index"]
+    else:
+        if "index" not in selected_pages:
+            selected_pages.insert(0, "index")
+        if len(selected_pages) < 3:
+            for p_slug in DEFAULT_PAGE_SLUGS:
+                if p_slug not in selected_pages:
+                    selected_pages.append(p_slug)
+                    if len(selected_pages) >= 5:
+                        break
+        selected_pages = list(dict.fromkeys(selected_pages))[:6]
+
+    page_blocks = clean_page_blocks(default_page_blocks(selected_pages), selected_pages)
+    idx_allowed = set(page_available_blocks("index"))
+    idx_blocks = list(page_blocks.get("index") or ["hero", "features", "contact", "footer"])
+    if "stats" in idx_allowed and "stats" not in idx_blocks:
+        ins_pos = idx_blocks.index("features") + 1 if "features" in idx_blocks else 1
+        idx_blocks.insert(ins_pos, "stats")
+    if "cta" in idx_allowed and "cta" not in idx_blocks:
+        cta_pos = idx_blocks.index("contact") if "contact" in idx_blocks else len(idx_blocks) - 1
+        idx_blocks.insert(max(1, cta_pos), "cta")
+    page_blocks["index"] = idx_blocks
+
+    all_blocks: list[str] = []
+    for slug in selected_pages:
+        for bid in page_blocks.get(slug, []):
+            if bid != "footer" and bid not in all_blocks:
+                all_blocks.append(bid)
+
+    company = build_default_company(name, brief, eff_lang)
+    if tagline:
+        company["tagline"] = tagline
+    page_block_prompts = build_page_block_prompts(name, brief, page_blocks, eff_lang, company)
+    block_prompts = build_default_block_descriptions(name, brief, all_blocks, eff_lang, company)
+
+    translit_name = "".join(_STARTER_SLUG_TRANSLIT.get(c, c) for c in name.lower())
+    safe_slug = re.sub(r"[^a-z0-9_-]+", "_", translit_name).strip("_")[:18] or "project"
+    projects_root = Path(state.projects_root) if state is not None and getattr(state, "projects_root", None) else (DEFAULT_REPO_ROOT / "eval" / "studio_projects")
+    out_dir = str((projects_root / f"starter_{safe_slug}_{secrets.token_hex(2)}").resolve())
+
+    return {
+        "id": "starter",
+        "name": name,
+        "brief": brief,
+        "goal": brief,
+        "logo_prompt": logo_prompt,
+        "languages": languages_val,
+        "canon_id": canon_id,
+        "polarity": polarity,
+        "landing_preset": landing_preset,
+        "motion": motion,
+        "site_type": site_type,
+        "selected_pages": selected_pages,
+        "page_blocks": page_blocks,
+        "selected_blocks": all_blocks,
+        "page_block_prompts": page_block_prompts,
+        "block_prompts": block_prompts,
+        "company": company,
+        "output_dir": out_dir,
+        "source": source,
+    }
+
+
 def build_default_block_descriptions(
     brand_name: str,
     brief: str,
@@ -1419,6 +1823,8 @@ class ProjectOrchestrator:
                     merged["stack"] = str(payload["stack"])
                 if payload.get("motion"):
                     merged["motion"] = str(payload["motion"])
+                if payload.get("landing_preset"):
+                    merged["landing_preset"] = str(payload["landing_preset"])
             else:
                 saved_def = self.state.load_project("default")
                 merged = {**saved_def, **payload}

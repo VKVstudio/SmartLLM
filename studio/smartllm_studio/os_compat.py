@@ -5,6 +5,7 @@ from __future__ import annotations
 import ctypes
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -25,6 +26,26 @@ def is_windows(platform_override: str | None = None) -> bool:
 def is_linux(platform_override: str | None = None) -> bool:
     plat = (platform_override or sys.platform).lower()
     return plat.startswith("linux")
+
+
+def is_interactive_win_desktop() -> bool:
+    """True unless running on Windows inside a non-interactive sandbox/service desktop (not 'Default')."""
+    if not is_windows():
+        return True
+    try:
+        u32 = ctypes.windll.user32  # type: ignore[attr-defined]
+        k32 = ctypes.windll.kernel32  # type: ignore[attr-defined]
+        hdesk = u32.GetThreadDesktop(k32.GetCurrentThreadId())
+        if not hdesk:
+            return True
+        buf = ctypes.create_unicode_buffer(256)
+        needed = ctypes.c_uint(0)
+        ok = u32.GetUserObjectInformationW(hdesk, 2, buf, ctypes.sizeof(buf), ctypes.byref(needed))
+        if not ok:
+            return True
+        return buf.value.strip().lower() == "default"
+    except Exception:
+        return True
 
 
 def subprocess_kwargs(new_session: bool = False) -> dict[str, Any]:
@@ -291,6 +312,75 @@ def _resolve_dialog_initial_dir(initial_dir: str) -> str:
     return str(Path.home())
 
 
+def list_directory_entries(target_dir: str = "", fallback_dir: Path | None = None) -> dict[str, Any]:
+    """List drives, subdirectories, and files cleanly for the built-in Studio folder picker."""
+    cur: Path | None = None
+    raw = str(target_dir or "").strip().strip("`\"'")
+    if raw:
+        cand = Path(raw)
+        for p in (cand, *cand.parents):
+            try:
+                if p.exists() and p.is_dir():
+                    cur = p.resolve()
+                    break
+            except OSError:
+                continue
+    if cur is None:
+        fb = fallback_dir or Path.home()
+        try:
+            cur = fb.resolve() if fb.exists() and fb.is_dir() else Path.home().resolve()
+        except OSError:
+            cur = Path.home()
+
+    if is_windows():
+        drives = [f"{chr(code)}:\\" for code in range(65, 91) if Path(f"{chr(code)}:\\").exists()]
+    else:
+        drives = ["/"]
+
+    skip_names = {"$recycle.bin", "system volume information"}
+    dirs: list[dict[str, str]] = []
+    files: list[dict[str, Any]] = []
+    try:
+        for child in cur.iterdir():
+            try:
+                if child.name.lower() in skip_names:
+                    continue
+                if child.is_dir():
+                    dirs.append({"name": child.name, "path": str(child)})
+                elif child.is_file():
+                    files.append({"name": child.name, "size": int(child.stat().st_size)})
+            except (PermissionError, OSError):
+                continue
+    except (PermissionError, OSError):
+        pass
+
+    dirs.sort(key=lambda item: item["name"].lower())
+    files.sort(key=lambda item: item["name"].lower())
+    parent_dir = str(cur.parent) if cur.parent != cur else ""
+    return {
+        "current_dir": str(cur),
+        "parent_dir": parent_dir,
+        "drives": drives,
+        "dirs": dirs[:200],
+        "files": files[:60],
+    }
+
+
+def create_directory_safe(parent_dir: str, folder_name: str) -> dict[str, Any]:
+    """Create a child directory safely inside an existing parent directory."""
+    parent = Path(str(parent_dir or "").strip().strip("`\"'")).resolve()
+    if not parent.exists() or not parent.is_dir():
+        raise ValueError("PARENT_DIR_NOT_FOUND")
+    cleaned = re.sub(r'[<>:"/\\|?*\x00-\x1f]+', "_", str(folder_name or "").strip()).strip(". ")
+    if not cleaned or cleaned in (".", ".."):
+        raise ValueError("INVALID_FOLDER_NAME")
+    target = (parent / cleaned).resolve()
+    if target.parent != parent:
+        raise ValueError("INVALID_FOLDER_NAME")
+    target.mkdir(parents=True, exist_ok=True)
+    return {"path": str(target), "name": target.name, "created": True}
+
+
 def pick_os_dialog(
     kind: str = "folder",
     filters: str = "*.svg *.png *.webp",
@@ -302,6 +392,9 @@ def pick_os_dialog(
         if kind == "file":
             return str(Path(initial_dir or Path.home()) / "brand-logo.svg")
         return initial_dir or str(Path.home() / "SmartLLMProjects")
+
+    if is_windows() and not is_interactive_win_desktop():
+        return None
 
     try:
         if is_windows():
@@ -566,6 +659,8 @@ def reveal_in_file_manager(target_path: Path, dry_run: bool = False) -> bool:
             is_file_target = target_path.exists() and target_path.is_file()
             if not is_file_target:
                 target_path.mkdir(parents=True, exist_ok=True)
+            if not is_interactive_win_desktop():
+                return False
             norm_path = os.path.normpath(str(target_path.resolve()))
             try:
                 existing_hwnds = {h for h, _ in _win_list_explorer_hwnds()}

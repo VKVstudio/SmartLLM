@@ -983,6 +983,199 @@ textarea { min-height: 76px; resize: vertical; }
 
 [hidden] { display: none !important; }
 
+.landing-preset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+.landing-preset-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--s1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: border-color var(--ease-atelier), background var(--ease-atelier), transform var(--ease-atelier);
+}
+.landing-preset-card:hover {
+  border-color: rgba(192, 132, 252, 0.45);
+  background: var(--s2);
+  transform: translateY(-1px);
+}
+.landing-preset-card[aria-pressed="true"] {
+  border-color: var(--violet);
+  background: var(--violet-tint);
+  box-shadow: 0 0 0 1px var(--violet);
+}
+.landing-preset-head {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.landing-preset-head strong {
+  font-size: 13px;
+  color: var(--text-1);
+}
+.landing-preset-badge {
+  font-family: var(--font-code);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--s3);
+  color: var(--gold);
+  border: 1px solid var(--hairline);
+}
+.landing-preset-desc {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.starter-summary-card {
+  background: var(--violet-tint);
+  border: 1px solid rgba(192, 132, 252, 0.45);
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+.starter-summary-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.folder-picker-dialog {
+  max-width: 720px;
+  width: min(94vw, 720px);
+}
+.fp-drives {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.fp-path-bar, .fp-mkdir-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.fp-path-bar input, .fp-mkdir-row input {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-code);
+  font-size: 12px;
+}
+.fp-panes {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 10px;
+}
+.fp-pane-label {
+  margin: 0 0 4px 0;
+  font-size: 11px;
+  font-family: var(--font-code);
+  color: var(--text-2);
+  text-transform: uppercase;
+}
+.folder-picker-list {
+  height: 230px;
+  overflow-y: auto;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  background: var(--bg);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  padding: 6px 8px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-1);
+  cursor: pointer;
+  font-size: 12px;
+  font-family: var(--font-code);
+}
+.fp-row:hover {
+  background: var(--s2);
+  border-color: var(--hairline);
+}
+.fp-row-static {
+  cursor: default;
+  color: var(--text-2);
+}
+
+.starter-dialog {
+  max-width: 520px;
+  width: min(92vw, 520px);
+  text-align: center;
+}
+.starter-wheel-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.starter-wheel {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 3px solid var(--s3);
+  border-top-color: var(--violet);
+  border-right-color: var(--gold);
+  animation: starterSpin 0.85s linear infinite;
+}
+.starter-timer {
+  font-family: var(--font-code);
+  font-size: 12px;
+  color: var(--gold);
+}
+.starter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+.starter-pill {
+  font-family: var(--font-code);
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--s2);
+  border: 1px solid var(--hairline);
+  color: var(--text-2);
+}
+.starter-pill.is-active {
+  border-color: var(--violet);
+  background: var(--violet-tint);
+  color: var(--text-1);
+}
+@keyframes starterSpin {
+  to { transform: rotate(360deg); }
+}
+@media (max-width: 720px) {
+  .fp-panes { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 1279px) {
   .atelier-shell { grid-template-columns: 240px 1fr; }
   .atelier-stage {

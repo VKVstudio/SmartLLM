@@ -13,7 +13,7 @@ import sys
 import threading
 from typing import Any
 import urllib.request
-from urllib.parse import quote, unquote, urlparse
+from urllib.parse import parse_qs, quote, unquote, urlparse
 import uuid
 
 from . import __version__
@@ -21,8 +21,8 @@ from .blueprint import _safe_project_dir, compile_project_blueprint, default_pro
 from .catalog import load_studio_catalog
 from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT, discover_studio_paths, load_edition_config, load_user_settings, save_user_settings
 from .engines import GPUEngineController, GPULockBusyError, ImageJobManager, LLMEngineClient, MemoryGuardError
-from .orchestrator import AVAILABLE_BLOCKS, PRESET_PAGES, ProjectOrchestrator, autofill_blocks_smart, build_default_block_descriptions, generate_six_logo_variants_512
-from .os_compat import get_system_telemetry, pick_os_dialog, reveal_in_file_manager, subprocess_kwargs
+from .orchestrator import AVAILABLE_BLOCKS, PRESET_PAGES, ProjectOrchestrator, autofill_blocks_smart, build_default_block_descriptions, generate_random_starter_template, generate_six_logo_variants_512
+from .os_compat import create_directory_safe, get_system_telemetry, is_cpu_test_mode, is_interactive_win_desktop, is_linux, list_directory_entries, pick_os_dialog, reveal_in_file_manager, subprocess_kwargs
 from .pages import DEFAULT_PAGE_SLUGS, build_default_company, clean_page_blocks, default_page_blocks
 from .sanitizer import ingest_brand_logo
 
@@ -103,6 +103,9 @@ class StudioState:
             return False
         self.operation_name = name
         return True
+
+    def try_begin_operation(self, name: str) -> bool:
+        return self.begin_operation(name)
 
     def end_operation(self) -> None:
         self.operation_name = ""
@@ -379,6 +382,9 @@ def create_studio_server(
                 except (BrokenPipeError, ConnectionResetError):
                     pass
                 return
+            if path == "/api/fs/list":
+                q_dir = parse_qs(urlparse(self.path).query).get("dir", [""])[0]
+                return self._send_json(200, list_directory_entries(q_dir, fallback_dir=state.projects_root))
             if path.startswith("/api/projects/"):
                 pid = path.split("/")[3] or "default"
                 return self._send_json(200, state.load_project(pid))
@@ -522,11 +528,60 @@ def create_studio_server(
                         state.end_operation()
                 if path in ("/api/os/pick", "/api/fs/pick-folder"):
                     kind = str(body.get("kind") or "folder")
-                    chosen = pick_os_dialog(kind=kind, filters=str(body.get("filters") or "*.svg *.png *.webp"), initial_dir=str(body.get("initial_dir") or ""), dry_run=bool(body.get("dry_run", False)))
-                    return self._send_json(200, {"path": chosen, "selected_dir": chosen})
+                    dry = bool(body.get("dry_run", False))
+                    interactive = is_interactive_win_desktop()
+                    chosen = pick_os_dialog(kind=kind, filters=str(body.get("filters") or "*.svg *.png *.webp"), initial_dir=str(body.get("initial_dir") or ""), dry_run=dry)
+                    fb = "web_picker" if (chosen is None and not dry and (not interactive or is_linux())) else ""
+                    return self._send_json(200, {"path": chosen, "selected_dir": chosen, "interactive_desktop": interactive, "fallback": fb})
                 if path in ("/api/os/reveal", "/api/fs/open-folder"):
+                    dry_rev = bool(body.get("dry_run", False))
                     target = Path(str(body.get("path") or state.projects_root))
-                    return self._send_json(200, {"opened": reveal_in_file_manager(target, dry_run=bool(body.get("dry_run", False))), "path": str(target)})
+                    opened = reveal_in_file_manager(target, dry_run=dry_rev)
+                    fb_rev = "web_picker" if (not opened and not dry_rev) else ""
+                    return self._send_json(200, {"opened": opened, "path": str(target), "fallback": fb_rev})
+                if path == "/api/fs/mkdir":
+                    parent_dir = str(body.get("parent_dir") or state.projects_root)
+                    folder_name = str(body.get("name") or "")
+                    return self._send_json(200, create_directory_safe(parent_dir, folder_name))
+                if path == "/api/orchestrator/random-template":
+                    req_lang = str(body.get("lang") or "ru").strip() or "ru"
+                    req_use_llm = bool(body.get("use_llm", True))
+                    excl = [str(x) for x in (body.get("exclude_names") or []) if str(x).strip()]
+                    tpl: dict[str, Any] | None = None
+                    if req_use_llm and not is_cpu_test_mode() and state.try_begin_operation("random_template"):
+                        try:
+                            tpl = generate_random_starter_template(state, lang=req_lang, use_llm=True, exclude_names=excl)
+                        finally:
+                            state.end_operation()
+                    if tpl is None:
+                        tpl = generate_random_starter_template(state, lang=req_lang, use_llm=False, exclude_names=excl)
+                    starter_payload = {
+                        "id": "starter",
+                        "name": tpl["name"],
+                        "brief": tpl["brief"],
+                        "goal": tpl["brief"],
+                        "logo_prompt": tpl["logo_prompt"],
+                        "languages": tpl["languages"],
+                        "canon_id": tpl["canon_id"],
+                        "polarity": tpl["polarity"],
+                        "landing_preset": tpl["landing_preset"],
+                        "motion": tpl["motion"],
+                        "site_type": tpl["site_type"],
+                        "selected_pages": tpl["selected_pages"],
+                        "page_blocks": tpl["page_blocks"],
+                        "selected_blocks": tpl["selected_blocks"],
+                        "company": tpl["company"],
+                        "output_dir": tpl["output_dir"],
+                        "revision": 1,
+                    }
+                    bp_starter = compile_project_blueprint(starter_payload, repo_root=state.repo_root)
+                    prev_starter = state.register_preview("starter", Path(bp_starter["project_dir"]), rev=1)
+                    return self._send_json(200, {
+                        "template": tpl,
+                        "source": tpl["source"],
+                        "preview_url": prev_starter,
+                        "project_dir": bp_starter["project_dir"],
+                    })
                 if path == "/api/logo/generate":
                     if not begin_operation("logo"):
                         return

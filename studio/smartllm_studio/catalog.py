@@ -27,6 +27,64 @@ MOTION_CATALOG: list[dict[str, Any]] = [
     {"id": "reduced_motion_instant", "name_en": "Zero-Motion Instant Settled Layout", "name_ru": "Мгновенная статика без анимаций"},
 ]
 
+LANDING_PRESET_CATALOG: list[dict[str, Any]] = [
+    {
+        "id": "gsap_scrollytelling",
+        "name_en": "GSAP-Class Scrollytelling Landing",
+        "name_ru": "Скроллтеллинг-лендинг (GSAP-класс)",
+        "badge_en": "Motion 14 + Lenis",
+        "badge_ru": "Motion 14 + Lenis",
+        "desc_en": "Sticky pinned visual stage, numbered scroll chapters, marquee ribbon, counters & parallax.",
+        "desc_ru": "Липкая сцена с главами при скролле, бегущая строка, живые счётчики и параллакс.",
+        "motion": "motion",
+        "recommended_canons": ["10_industrial_tactile", "12_quiet_luxury_minimal", "14_spatial_3d_showcase", "15_organic_biophilic_eco"],
+    },
+    {
+        "id": "kinetic_showreel",
+        "name_en": "Kinetic Showreel & Filmstrip",
+        "name_ru": "Кинетический шоурил (Anime.js)",
+        "badge_en": "Anime.js 4.5 + Lenis",
+        "badge_ru": "Anime.js 4.5 + Lenis",
+        "desc_en": "Timeline headline stagger, sticky narrative chapters, 3D tilt frame & magnetic CTA.",
+        "desc_ru": "Таймлайн-каскад заголовков, скролл-главы, 3D-наклон сцены и магнитные кнопки.",
+        "motion": "animejs",
+        "recommended_canons": ["06_neo_brutalism", "05_kinetic_typography", "13_cinematic_documentary", "02_swiss_international"],
+    },
+    {
+        "id": "bento_interactive",
+        "name_en": "Interactive Modular Bento",
+        "name_ru": "Интерактивный Bento-лендинг",
+        "badge_en": "Motion 14 + Lenis",
+        "badge_ru": "Motion 14 + Lenis",
+        "desc_en": "Asymmetric 12-column bento modules, KPI stat counters, crisp elevation & spring hover.",
+        "desc_ru": "Асимметричная 12-колоночная сетка, модульные карточки, счётчики и пружинный отклик.",
+        "motion": "motion",
+        "recommended_canons": ["01_bento_grid", "08_liquid_glass", "17_fintech_institutional", "18_devtool_command_ui"],
+    },
+    {
+        "id": "css_scroll_native",
+        "name_en": "Zero-JS Native CSS Scroll-Driven",
+        "name_ru": "Нативный CSS Scroll-Driven",
+        "badge_en": "0 KB JS · CLS 0.00",
+        "badge_ru": "0 КБ JS · CLS 0.00",
+        "desc_en": "Pure browser compositor animation-timeline: view() & scroll() with zero runtime JS overhead.",
+        "desc_ru": "Чистый композиторный скролл-таймлайн браузера без лишнего JS-рантайма.",
+        "motion": "css_scroll_driven",
+        "recommended_canons": ["03_editorial_magazine", "04_hyper_minimal_speed", "19_calm_human_accessible"],
+    },
+    {
+        "id": "classic_corporate",
+        "name_en": "Structured Editorial Architecture",
+        "name_ru": "Классический корпоративный",
+        "badge_en": "Balanced Rhythm",
+        "badge_ru": "Спокойный ритм",
+        "desc_en": "High-readability multi-page hierarchy focused on dense proof, pricing matrices & SEO.",
+        "desc_ru": "Чёткая деловая иерархия разделов, матрицы тарифов и максимальная читаемость.",
+        "motion": "css_scroll_driven",
+        "recommended_canons": ["02_swiss_international", "12_quiet_luxury_minimal", "17_fintech_institutional"],
+    },
+]
+
 BRICK_CATALOG: list[dict[str, Any]] = [
     {"id": "hero", "name_en": "Hero Viewport (100svh + Z-Image)", "name_ru": "Главный экран (100svh + Z-Image)"},
     {"id": "manifesto", "name_en": "Tagline, Positioning & Brand Promise", "name_ru": "Девиз, позиционирование и обещание бренда"},
@@ -141,6 +199,7 @@ def load_studio_catalog(repo_root: Path | None = None) -> dict[str, Any]:
         "checklists_count": len(checklists),
         "stacks": STACK_CATALOG,
         "motions": MOTION_CATALOG,
+        "landing_presets": LANDING_PRESET_CATALOG,
         "bricks": BRICK_CATALOG,
         "ai_crawlers_default": AI_CRAWLERS_DEFAULT,
     }

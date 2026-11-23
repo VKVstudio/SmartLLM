@@ -354,6 +354,7 @@ class LLMEngineClient:
         system_prompt: str,
         user_prompt: str,
         max_tokens: int = 2048,
+        temperature: float = 0.4,
     ) -> dict[str, Any]:
         """Auto-start llama-server if needed and return parsed JSON object from /v1/chat/completions."""
         if not self.is_healthy():
@@ -372,7 +373,7 @@ class LLMEngineClient:
                 ],
                 "stream": False,
                 "max_tokens": eff_max_tokens,
-                "temperature": 0.4,
+                "temperature": float(temperature),
                 "top_k": 20,
                 "top_p": 0.95,
                 "min_p": 0.0,

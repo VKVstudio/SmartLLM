@@ -496,6 +496,61 @@ def run_all_tests() -> dict[str, object]:
     assert "logo_prompt:" in app_js_src and "s2-logo-prompt" in app_js_src
     assert "flex-wrap: wrap;" in studio_css_src and ".canon-card-head strong" in studio_css_src
 
+    # 15. Folder Browser Fallback, 5 Animated Landing Presets, Cohesive Starter & Tactile/Scrolly Architecture
+    from smartllm_studio.catalog import LANDING_PRESET_CATALOG
+    from smartllm_studio.orchestrator import generate_random_starter_template
+    from smartllm_studio.os_compat import create_directory_safe, list_directory_entries
+
+    cat_v5 = load_studio_catalog(REPO_ROOT)
+    assert cat_v5["canons_count"] == 20 and len(cat_v5["canons"]) == 20
+    assert len(cat_v5["landing_presets"]) == 5 and len(LANDING_PRESET_CATALOG) == 5
+
+    with tempfile.TemporaryDirectory(prefix="smartllm_fs_starter_") as ftd:
+        ftd_p = Path(ftd)
+        created_dir = create_directory_safe(str(ftd_p), "demo_sub")
+        assert Path(created_dir["path"]).is_dir() and created_dir["created"] is True
+        listing = list_directory_entries(str(ftd_p))
+        assert any(d["name"] == "demo_sub" for d in listing["dirs"]), listing
+
+        tpl = generate_random_starter_template(None, lang="ru", use_llm=False)
+        valid_canon_ids = {c["id"] for c in cat_v5["canons"]}
+        valid_preset_ids = {p["id"] for p in cat_v5["landing_presets"]}
+        assert tpl["canon_id"] in valid_canon_ids, tpl
+        assert tpl["landing_preset"] in valid_preset_ids, tpl
+        assert tpl["motion"] in {"motion", "animejs", "css_scroll_driven", "lenis", "three", "reduced_motion_instant"}
+        assert tpl["name"] and tpl["brief"] and tpl["logo_prompt"]
+        assert "starter_" in Path(tpl["output_dir"]).name
+
+        scrolly_dir = ftd_p / "scrolly_tactile"
+        bp_sc = compile_project_blueprint(
+            {
+                "id": "scrolly_tactile",
+                "name": "Волна-08 Акустика",
+                "brief": "Модульные полевые рекордеры и тактильные микшеры в алюминиевом корпусе.",
+                "languages": "ru",
+                "canon_id": "10_industrial_tactile",
+                "polarity": "light",
+                "landing_preset": "gsap_scrollytelling",
+                "motion": "motion",
+                "output_dir": str(scrolly_dir),
+                "site_type": "single",
+                "selected_blocks": ["hero", "features", "stats", "pricing", "cta", "contact"],
+            },
+            repo_root=REPO_ROOT,
+        )
+        assert bp_sc["landing_preset"] == "gsap_scrollytelling"
+        sc_html = (scrolly_dir / "index.html").read_text(encoding="utf-8")
+        assert 'data-landing="gsap_scrollytelling"' in sc_html
+        assert "hw-console-bar" in sc_html and "hw-screen-bezel" in sc_html
+        assert "scrolly-stage" in sc_html and "scrolly-pin" in sc_html
+        assert "assets/vendor/lenis/lenis.min.js" in sc_html
+        assert "assets/vendor/motion/motion.js" in sc_html
+        assert " style=" not in sc_html, "CSP style-src-attr 'none' violation: inline style attribute found"
+
+    assert 'id="modal-folder-picker"' in index_src and 'id="starter-preloader"' in index_src
+    assert 'id="s3-landing-presets"' in index_src and 'id="btn-topbar-random-template"' in index_src
+    assert "runRandomStarterTemplate" in app_js_src and "openFolderPickerModal" in app_js_src and "setLandingPreset" in app_js_src
+
     results["status"] = "ALL_PHASE2_GATES_PASSED"
     return results
 

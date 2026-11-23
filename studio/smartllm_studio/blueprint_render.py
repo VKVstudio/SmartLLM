@@ -185,7 +185,7 @@ h3 {{ font-family: var(--font-heading); font-size: 1.25rem; margin: 0 0 0.5rem 0
 .btn-secondary {{ background: var(--surface-elevated); color: var(--text); }}
 .btn.nav-toggle {{ display: none; min-height: 44px; min-width: 44px; }}
 .section-block {{ padding-block: var(--pad-section); border-bottom: 1px solid var(--border); container-type: inline-size; }}
-.section-block:not(#hero) {{ content-visibility: auto; contain-intrinsic-size: auto 600px; }}
+html[data-motion="reduced_motion_instant"] .section-block:not(#hero) {{ content-visibility: auto; contain-intrinsic-size: auto 600px; }}
 .spec-card, .price-card, .review-card {{ grid-column: span 4; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 1.5rem; gap: 0.75rem; min-width: 0; box-shadow: var(--shadow); backdrop-filter: blur(var(--surface-blur)); -webkit-backdrop-filter: blur(var(--surface-blur)); }}
 .stat-card, .team-card, .blog-card {{ grid-column: span 4; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 1.5rem; min-width: 0; box-shadow: var(--shadow); backdrop-filter: blur(var(--surface-blur)); -webkit-backdrop-filter: blur(var(--surface-blur)); }}
 .stat-value {{ font-family: var(--font-heading); font-size: clamp(1.9rem, 3vw, 2.6rem); line-height: 1; margin: 0 0 0.5rem 0; color: var(--accent); }}
@@ -274,12 +274,21 @@ def _build_canon_signature_css(canon_id: str, polarity: str, d: dict[str, Any]) 
 .brand-link span::before {{ content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-2); border: 1px solid var(--border-control); flex-shrink: 0; }}
 .nav-list a {{ background: var(--surface); border: 1px solid var(--border); box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -2px 0 rgba(0,0,0,0.08); font-family: var(--font-mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.04em; }}
 .nav-list a[aria-current="page"] {{ background: var(--bg); border-color: var(--accent); box-shadow: inset 0 2px 5px rgba(0,0,0,0.20); color: var(--text); }}
+.hw-chassis {{ position: relative; background: var(--surface); border: 2px solid var(--border-control); border-radius: calc(var(--radius-card) + 4px); padding: clamp(1.25rem, 2.8vw, 2.25rem); box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), inset 0 -3px 0 rgba(0,0,0,0.16), 0 18px 36px -14px rgba(0,0,0,0.22); background-image: radial-gradient(circle at 12px 12px, var(--border-control) 2px, transparent 2.5px), radial-gradient(circle at calc(100% - 12px) 12px, var(--border-control) 2px, transparent 2.5px), radial-gradient(circle at 12px calc(100% - 12px), var(--border-control) 2px, transparent 2.5px), radial-gradient(circle at calc(100% - 12px) calc(100% - 12px), var(--border-control) 2px, transparent 2.5px); }}
+.hw-console-bar {{ display: flex; flex-wrap: wrap; align-items: center; gap: 0.65rem 1rem; padding-bottom: 0.85rem; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-control); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }}
+.hw-led {{ width: 9px; height: 9px; border-radius: 50%; background: var(--accent-2); border: 1px solid var(--border-control); box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent-2) 25%, transparent); animation: hwPulse 2.4s ease-in-out infinite; }}
+@keyframes hwPulse {{ 0%, 100% {{ opacity: 1; }} 50% {{ opacity: 0.45; }} }}
+.hw-ch-pill {{ margin-left: auto; padding: 0.2rem 0.55rem; border: 1px solid var(--border-control); border-radius: 4px; background: var(--bg); color: var(--text); box-shadow: inset 0 1px 3px rgba(0,0,0,0.16); }}
+.hw-screen-bezel, .hero-figure.hw-screen-bezel {{ background: #17191c; color: #f3f4f6; padding: 14px; border: 2px solid var(--border-control); border-radius: var(--radius-card); box-shadow: inset 0 4px 14px rgba(0,0,0,0.55), 0 1px 0 rgba(255,255,255,0.55); }}
+.hw-screen-bezel img {{ border: 1px solid #2b3038; border-radius: calc(var(--radius-card) - 4px); box-shadow: none; }}
 .btn {{ background-image: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, transparent 50%, rgba(0,0,0,0.08) 100%); border: 1px solid var(--border-control); box-shadow: inset 0 1px 0 rgba(255,255,255,0.38), inset 0 -3px 0 rgba(0,0,0,0.26), 0 3px 8px -2px rgba(0,0,0,0.16); text-transform: uppercase; letter-spacing: 0.04em; transition: transform 140ms cubic-bezier(0.34, 1.45, 0.64, 1), box-shadow 140ms ease; }}
 @media (hover: hover) {{ .btn:hover {{ transform: translateY(-1px); }} }}
 .btn:active {{ transform: translateY(2px); box-shadow: inset 0 2px 5px rgba(0,0,0,0.28); }}
 {nf_is} {{ border: 1px solid var(--border); border-top: 2px solid var(--border-control); box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -2px 0 rgba(0,0,0,0.12), var(--shadow); }}
-.hero-figure, .gallery-card {{ background: var(--surface-elevated); border: 1px solid var(--border-control); padding: 0.85rem; box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), inset 0 -2px 0 rgba(0,0,0,0.16), var(--shadow); }}
-.hero-figure img, .gallery-card img {{ border: 2px solid var(--border-control); box-shadow: inset 0 2px 6px rgba(0,0,0,0.22); border-radius: calc(var(--radius-card) - 4px); }}
+.gallery-card, .scrolly-pin {{ background: var(--surface-elevated); border: 1px solid var(--border-control); padding: 0.85rem; box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), inset 0 -2px 0 rgba(0,0,0,0.16), var(--shadow); }}
+.gallery-card img, .scrolly-pin img {{ border: 2px solid var(--border-control); box-shadow: inset 0 2px 6px rgba(0,0,0,0.22); border-radius: calc(var(--radius-card) - 4px); }}
+.stat-value {{ display: grid; gap: 0.45rem; }}
+.stat-value::after {{ content: ""; display: block; height: 6px; border-radius: 3px; border: 1px solid var(--border-control); background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 68%, var(--bg) 68%); box-shadow: inset 0 1px 2px rgba(0,0,0,0.24); }}
 .section-block > .container > h2, .contact-layout > div > h2 {{ display: flex; align-items: center; gap: 0.6rem; }}
 .section-block > .container > h2::before, .contact-layout > div > h2::before {{ content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: inset 0 1px 1px rgba(255,255,255,0.45), 0 0 0 2px color-mix(in oklab, var(--accent) 20%, transparent); flex-shrink: 0; }}
 .cta-banner {{ position: relative; overflow: hidden; border: 1px solid var(--border-control); border-top: 3px solid var(--accent); padding-right: clamp(3.75rem, 6.5vw, 6rem); }}
@@ -287,10 +296,11 @@ def _build_canon_signature_css(canon_id: str, polarity: str, d: dict[str, Any]) 
 .cta-banner::after {{ content: ""; position: absolute; right: 1rem; top: 0.85rem; bottom: 0.85rem; width: 42px; opacity: 0.42; pointer-events: none; background-image: radial-gradient(circle, var(--border-control) 1.35px, transparent 1.6px); background-size: 8px 8px; }}
 .intake-form input, .intake-form textarea {{ background: var(--bg); box-shadow: inset 0 2px 5px rgba(0,0,0,0.14); border: 1px solid var(--border-control); }}
 .site-footer {{ background: var(--surface); border-top: 2px solid var(--border-control); }}
-@media (max-width: 767px) {{ .cta-banner {{ padding-right: clamp(1.5rem, 3vw, 2.5rem); }} .cta-banner::after {{ display: none; }} }}
+@media (max-width: 767px) {{ .cta-banner {{ padding-right: clamp(1.5rem, 3vw, 2.5rem); }} .cta-banner::after {{ display: none; }} .hw-ch-pill {{ margin-left: 0; }} }}
 """
     if cid == "01_bento_grid":
         return f"""
+.hero-bento .hero-lead {{ background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: clamp(1.5rem, 3vw, 2.25rem); box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), var(--shadow); }}
 .hero-figure, .canon-grid > :first-child {{ background: var(--surface-elevated); }}
 {nf_is} {{ box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), var(--shadow); }}
 .eyebrow {{ display: inline-block; padding: 0.2rem 0.55rem; border-radius: var(--radius-badge); background: color-mix(in oklab, var(--accent) 12%, var(--surface-elevated)); border: 1px solid color-mix(in oklab, var(--accent) 26%, var(--border)); color: var(--text); }}
@@ -299,6 +309,9 @@ def _build_canon_signature_css(canon_id: str, polarity: str, d: dict[str, Any]) 
         return f"""
 {nf_is}, .faq-item, .hero-figure, .btn, .intake-form, .intake-form input, .intake-form textarea, .price-table-wrap, .cta-banner, .contact-details {{ border-radius: 0; box-shadow: none; }}
 .hero-shell, .section-block {{ border-bottom: 2px solid var(--border); }}
+.section-block .canon-grid {{ counter-reset: swissCard; }}
+.spec-card, .stat-card {{ counter-increment: swissCard; border-top: 2px solid var(--text); }}
+.spec-card h3::before {{ content: "0" counter(swissCard) " · "; font-family: var(--font-mono); color: var(--accent); }}
 .section-block .container > h2 {{ border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }}
 .spec-card h3, .price-card h3 {{ font-family: var(--font-mono); font-size: 0.9375rem; text-transform: uppercase; letter-spacing: 0.06em; }}
 """
@@ -321,9 +334,10 @@ def _build_canon_signature_css(canon_id: str, polarity: str, d: dict[str, Any]) 
 """
     if cid == "06_neo_brutalism":
         return f"""
-{nf_is}, .hero-figure, .cta-banner, .contact-details, .intake-form {{ border: 3px solid var(--text); box-shadow: 6px 6px 0 var(--border); border-top-width: 6px; }}
+{nf_is}, .hero-figure, .cta-banner, .contact-details, .intake-form, .scrolly-step, .scrolly-pin {{ border: 3px solid var(--text); box-shadow: 7px 7px 0 var(--border); border-top-width: 6px; }}
 {nf_is}:nth-child(odd) {{ border-top-color: var(--accent); }}
 {nf_is}:nth-child(even) {{ border-top-color: var(--accent-2); }}
+.hero-shell .eyebrow {{ display: inline-block; padding: 0.25rem 0.65rem; background: var(--accent); color: var(--accent-ink); border: 2px solid var(--text); box-shadow: 3px 3px 0 var(--text); transform: rotate(-1.5deg); }}
 .marquee {{ border-bottom: 3px solid var(--text); background: var(--accent); color: var(--accent-ink); }}
 .marquee-track span {{ color: var(--accent-ink); }}
 """
@@ -336,13 +350,14 @@ def _build_canon_signature_css(canon_id: str, polarity: str, d: dict[str, Any]) 
 """
     if cid == "08_liquid_glass":
         return f"""
-body::before {{ content: ""; position: fixed; inset: -10%; z-index: -1; pointer-events: none; background: radial-gradient(40% 42% at 18% 22%, color-mix(in oklab, var(--accent) 26%, transparent), transparent 70%), radial-gradient(36% 40% at 82% 72%, color-mix(in oklab, var(--accent-2) 22%, transparent), transparent 72%); opacity: 0.72; }}
-.hero-figure, .cta-banner, .contact-details, .intake-form {{ background: color-mix(in oklab, var(--surface) 76%, transparent); backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), var(--shadow); }}
-@media (max-width: 767px) {{ {nf_is}, .hero-figure, .cta-banner {{ backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); }} }}
+body::before {{ content: ""; position: fixed; inset: -10%; z-index: -1; pointer-events: none; background: radial-gradient(40% 42% at 18% 22%, color-mix(in oklab, var(--accent) 28%, transparent), transparent 70%), radial-gradient(36% 40% at 82% 72%, color-mix(in oklab, var(--accent-2) 24%, transparent), transparent 72%); opacity: 0.78; }}
+.hero-lead, .hero-figure, .cta-banner, .contact-details, .intake-form, .scrolly-step, .scrolly-pin {{ background: color-mix(in oklab, var(--surface) 76%, transparent); border: 1px solid color-mix(in oklab, rgba(255,255,255,0.34) 45%, var(--border)); backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6); box-shadow: inset 0 1px 0 rgba(255,255,255,0.34), var(--shadow); border-radius: var(--radius-card); padding: clamp(1.25rem, 2.4vw, 1.85rem); }}
+@media (max-width: 767px) {{ {nf_is}, .hero-lead, .hero-figure, .cta-banner {{ backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); }} }}
 """
     if cid == "09_aurora_obsidian_mesh":
         return f"""
-{nf_is}, .hero-figure, .cta-banner {{ backdrop-filter: none; -webkit-backdrop-filter: none; }}
+.hero-lead {{ background: color-mix(in oklab, var(--surface) 78%, transparent); border: 1px solid var(--border); border-radius: var(--radius-card); padding: clamp(1.25rem, 2.4vw, 1.85rem); box-shadow: inset 0 1px 0 rgba(255,255,255,0.20), var(--shadow); }}
+{nf_is}, .hero-figure, .cta-banner {{ backdrop-filter: none; -webkit-backdrop-filter: none; border-color: color-mix(in oklab, var(--accent) 32%, var(--border)); }}
 """
     if cid == "11_soft_clay_playful":
         return f"""
@@ -404,7 +419,8 @@ main a:not(.btn) {{ text-decoration: underline; text-underline-offset: 3px; }}
     return ""
 
 
-def _build_canon_css(card: dict[str, Any], d: dict[str, Any], polarity: str = "light") -> str:
+def _build_canon_css(card: dict[str, Any], d: dict[str, Any], polarity: str = "light", motion_mode: str = "motion", landing_preset: str = "gsap_scrollytelling", **kwargs: Any) -> str:
+    _ = kwargs
     motion = d.get("motion") or {}
     micro = d.get("micro") or {}
     surface = str(d.get("surface") or "clean")
@@ -536,12 +552,22 @@ html.lenis { scroll-behavior: auto; }
 .timeline li { position: relative; padding: 0 0 1.5rem 0.75rem; }
 .timeline li::before { content: ""; position: absolute; left: -1.75rem; top: 0.35rem; width: 0.9rem; height: 0.9rem; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
 .timeline .step-index { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); margin: 0 0 0.25rem 0; }
-@media (max-width: 900px) { .canon-grid[data-count] > *, .feat-asym .spec-card, .feat-bento .spec-card, .gal-mosaic .gallery-card, .gal-collage .gallery-card { grid-column: span 12 !important; grid-row: auto !important; transform: none; } }
+.scrolly-stage { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(1.5rem, 3.5vw, 3rem); align-items: start; }
+.scrolly-steps { display: grid; gap: clamp(1.25rem, 2.6vw, 2rem); }
+.scrolly-step { background: var(--surface); border: var(--border-w) solid var(--border); border-left: 4px solid var(--border); border-radius: var(--radius-card); padding: clamp(1.25rem, 2.4vw, 1.75rem); box-shadow: var(--shadow); transition: border-color 240ms ease, transform 240ms ease, background-color 240ms ease; }
+.scrolly-step.is-active { border-left-color: var(--accent); background: var(--surface-elevated); transform: translateX(4px); }
+.scrolly-pin { position: sticky; top: 96px; margin: 0; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 1rem; box-shadow: var(--shadow); overflow: hidden; }
+.scrolly-pin img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; display: block; border-radius: calc(var(--radius-card) - 2px); transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1); }
+.scrolly-pin-hud { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+.scrolly-counter { font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+.scrolly-caption { margin: 0; font-family: var(--font-heading); font-size: 1.05rem; color: var(--text); text-align: right; }
+@media (max-width: 900px) { .canon-grid[data-count] > *, .feat-asym .spec-card, .feat-bento .spec-card, .gal-mosaic .gallery-card, .gal-collage .gallery-card { grid-column: span 12 !important; grid-row: auto !important; transform: none; } .scrolly-stage { grid-template-columns: 1fr; } .scrolly-pin { position: static; } .scrolly-step.is-active { transform: none; } }
 @media (max-width: 767px) { .hero-overlay .hero-figure { position: relative; inset: auto; margin-bottom: 1rem; } .hero-overlay .hero-figure img { opacity: 1; height: auto; } .hero-overlay::after { display: none; } }
 """
     signature_css = _build_canon_signature_css(str(card.get("id") or ""), polarity, d)
     return f""":root {{ --reveal-dur: {dur}ms; --reveal-ease: {ease}; --reveal-stagger: {stagger}ms; --press-scale: {press}; }}
-.js .section-block [data-reveal] {{ opacity: 0.99; transform: {reveal_from}; {clip_done} transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease), clip-path var(--reveal-dur) var(--reveal-ease); transition-delay: var(--rd, 0ms); }}
+.js .section-block [data-reveal] {{ transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease), clip-path var(--reveal-dur) var(--reveal-ease); transition-delay: var(--rd, 0ms); }}
+.js .section-block [data-reveal].slm-pending {{ opacity: 0; transform: translateY(34px) scale(0.975); {clip_extra} }}
 .js .section-block [data-reveal].is-revealed {{ opacity: 1; transform: none; {clip_done} }}
 {hover_css}
 {press_css}
@@ -552,7 +578,7 @@ html.lenis { scroll-behavior: auto; }
 """
 
 
-def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any], i18n: dict[str, dict[str, str]], bilingual: bool, canon_id: str = "") -> str:
+def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any], i18n: dict[str, dict[str, str]], bilingual: bool, canon_id: str = "", landing_preset: str = "gsap_scrollytelling") -> str:
     motion_cfg = d.get("motion") or {}
     stagger = int(motion_cfg.get("stagger_ms", 40))
     parallax = bool(motion_cfg.get("parallax"))
@@ -722,13 +748,23 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
   }}
   if (!reduced && MOTION_MODE !== "reduced_motion_instant") {{
     var revealEls = Array.prototype.slice.call(document.querySelectorAll(".section-block [data-reveal]"));
+    var markRevealed = function (el) {{
+      el.classList.remove("slm-pending");
+      el.classList.add("is-revealed");
+    }};
     if (revealEls.length) {{
       var groups = {{}};
+      var vhInit = window.innerHeight || root.clientHeight || 900;
       revealEls.forEach(function (el) {{
         var sec = el.closest("section") || root;
         var key = sec.id || "root";
         groups[key] = groups[key] || 0;
         el.style.setProperty("--rd", (groups[key]++ * {stagger}) + "ms");
+        if (el.getBoundingClientRect().top <= vhInit * 0.92) {{
+          markRevealed(el);
+        }} else {{
+          el.classList.add("slm-pending");
+        }}
       }});
       var io = null;
       var cleanupReveal = function () {{
@@ -741,8 +777,8 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
         for (var idx = 0; idx < revealEls.length; idx++) {{
           var el = revealEls[idx];
           if (el.classList.contains("is-revealed")) continue;
-          if (el.getBoundingClientRect().top <= vh + 160) {{
-            el.classList.add("is-revealed");
+          if (el.getBoundingClientRect().top <= vh + 80) {{
+            markRevealed(el);
             if (io) io.unobserve(el);
           }} else {{
             remaining++;
@@ -756,11 +792,11 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
         io = new IntersectionObserver(function (entries) {{
           entries.forEach(function (en) {{
             if (en.isIntersecting) {{
-              en.target.classList.add("is-revealed");
+              markRevealed(en.target);
               io.unobserve(en.target);
             }}
           }});
-        }}, {{ threshold: 0.01, rootMargin: "0px 0px 80px 0px" }});
+        }}, {{ threshold: 0.01, rootMargin: "0px 0px 40px 0px" }});
         var pendingReveal = 0;
         revealEls.forEach(function (el) {{
           if (!el.classList.contains("is-revealed")) {{
@@ -770,16 +806,53 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
         }});
         if (pendingReveal > 0) {{
           window.requestAnimationFrame(revealVisible);
-          window.setTimeout(revealVisible, 450);
+          window.setTimeout(revealVisible, 550);
           window.addEventListener("scroll", revealVisible, {{ passive: true }});
           window.addEventListener("resize", revealVisible, {{ passive: true }});
         }}
       }} else {{
-        revealEls.forEach(function (el) {{ el.classList.add("is-revealed"); }});
+        revealEls.forEach(function (el) {{ markRevealed(el); }});
         root.classList.add("js");
       }}
     }} else {{
       root.classList.add("js");
+    }}
+    var scrollySteps = Array.prototype.slice.call(document.querySelectorAll(".scrolly-stage .scrolly-step"));
+    if (scrollySteps.length) {{
+      var scCounter = document.getElementById("scrolly-counter");
+      var scCaption = document.getElementById("scrolly-caption");
+      var scPinImg = document.querySelector(".scrolly-pin img");
+      var activateStep = function (stepEl, idx) {{
+        scrollySteps.forEach(function (st, j) {{
+          st.classList.toggle("is-active", j === idx);
+        }});
+        var total = String(scrollySteps.length).padStart(2, "0");
+        var curNum = String(idx + 1).padStart(2, "0");
+        if (scCounter) scCounter.textContent = curNum + " / " + total;
+        var ttl = stepEl.getAttribute("data-step-title");
+        if (scCaption && ttl) scCaption.textContent = ttl;
+        if (scPinImg) {{
+          var scScale = 1 + (idx * 0.018);
+          if (window.Motion && typeof window.Motion.animate === "function") {{
+            window.Motion.animate(scPinImg, {{ scale: scScale }}, {{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }});
+          }} else {{
+            scPinImg.style.transform = "scale(" + scScale.toFixed(3) + ")";
+          }}
+        }}
+      }};
+      if ("IntersectionObserver" in window) {{
+        var stepIo = new IntersectionObserver(function (entries) {{
+          entries.forEach(function (en) {{
+            if (!en.isIntersecting) return;
+            var idx = scrollySteps.indexOf(en.target);
+            if (idx >= 0) activateStep(en.target, idx);
+          }});
+        }}, {{ rootMargin: "-30% 0px -30% 0px", threshold: 0.05 }});
+        scrollySteps.forEach(function (st) {{ stepIo.observe(st); }});
+      }}
+      scrollySteps.forEach(function (st, idx) {{
+        st.addEventListener("pointerenter", function () {{ activateStep(st, idx); }});
+      }});
     }}
     var bar = document.querySelector(".scroll-progress");
     var heroImg = document.querySelector(".hero-figure img");
@@ -802,7 +875,7 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
     animateStatCounters();
     setupPointerInteractions();
   }} else {{
-    document.querySelectorAll("[data-reveal]").forEach(function (el) {{ el.classList.add("is-revealed"); }});
+    document.querySelectorAll("[data-reveal]").forEach(function (el) {{ el.classList.remove("slm-pending"); el.classList.add("is-revealed"); }});
     root.classList.add("js");
     root.setAttribute("data-motion-active", "reduced");
   }}
@@ -842,11 +915,15 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
         }}
         if (typeof M.inView === "function" && typeof M.stagger === "function") {{
           document.querySelectorAll(".section-block").forEach(function (sec) {{
-            var cards = Array.prototype.slice.call(sec.querySelectorAll("[data-reveal]"));
-            if (!cards.length) return;
+            var pendingCards = Array.prototype.slice.call(sec.querySelectorAll("[data-reveal].slm-pending"));
+            if (!pendingCards.length) return;
             M.inView(sec, function () {{
-              cards.forEach(function (c) {{ c.classList.add("is-revealed"); }});
-              M.animate(cards, {{ opacity: [0.001, 1], y: [24, 0] }}, {{ duration: 0.52, delay: M.stagger(Math.max(0.03, STAGGER_MS / 1000)), ease: [0.22, 1, 0.36, 1] }});
+              var allCards = Array.prototype.slice.call(sec.querySelectorAll("[data-reveal]"));
+              allCards.forEach(function (c) {{
+                c.classList.remove("slm-pending");
+                c.classList.add("is-revealed");
+              }});
+              M.animate(allCards, {{ opacity: [0.001, 1], y: [32, 0], scale: [0.975, 1] }}, {{ duration: 0.56, delay: M.stagger(Math.max(0.035, STAGGER_MS / 1000)), ease: [0.22, 1, 0.36, 1] }});
             }}, {{ amount: 0.12 }});
           }});
         }}
@@ -877,8 +954,11 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
               if (!en.isIntersecting) return;
               var items = en.target.querySelectorAll("[data-reveal]");
               if (items.length) {{
-                items.forEach(function (it) {{ it.classList.add("is-revealed"); }});
-                A.animate(items, {{ opacity: [0.001, 1], translateY: [24, 0], duration: 540, delay: typeof A.stagger === "function" ? A.stagger(Math.max(30, STAGGER_MS)) : 0, ease: "outExpo" }});
+                items.forEach(function (it) {{
+                  it.classList.remove("slm-pending");
+                  it.classList.add("is-revealed");
+                }});
+                A.animate(items, {{ opacity: [0.001, 1], translateY: [32, 0], scale: [0.975, 1], duration: 560, delay: typeof A.stagger === "function" ? A.stagger(Math.max(35, STAGGER_MS)) : 0, ease: "outExpo" }});
               }}
               aio.unobserve(en.target);
             }});
@@ -987,6 +1067,7 @@ def _render_route_html(
     page_idx: int = 0,
     polarity: str = "light",
     vendor_scripts: list[str] | None = None,
+    landing_preset: str = "gsap_scrollytelling",
 ) -> str:
     d = dossier or load_canon_dossier(card.get("id", ""))
     ctx: dict[str, Any] = {"bilingual": bilingual, "lang": lang, "alt_lang": alt_lang, "i18n": i18n if i18n is not None else {}}
@@ -1173,7 +1254,12 @@ def _render_route_html(
     hero_rel = (page_images or {}).get(slug) or "assets/hero_primary.png"
     route_dims = (image_dims or {}).get(hero_rel) or ((1024, 576) if (page_images or {}).get(slug) else hero_dims)
     hero_alt_meta = str(seo_pm.get("hero_alt") or "").strip() or f"{project_name} — {route['title']}"
+    canon_id_cur = str(card.get("id") or "")
     hero_variant = _variant(pm, d, "hero", page_idx)
+    if slug == "index" and canon_id_cur in ("10_industrial_tactile", "02_swiss_international"):
+        hero_variant = "split"
+    elif slug == "index" and (canon_id_cur == "01_bento_grid" or landing_preset == "bento_interactive"):
+        hero_variant = "bento_showcase"
     hero_cls = {
         "centered": " hero-centered",
         "editorial_poster": " hero-centered",
@@ -1183,7 +1269,7 @@ def _render_route_html(
         "bento_showcase": " hero-bento",
     }.get(hero_variant, "")
     marquee_html = ""
-    if d.get("motion", {}).get("marquee"):
+    if d.get("motion", {}).get("marquee") or (slug == "index" and landing_preset in ("gsap_scrollytelling", "kinetic_showreel")):
         mq_base = str(company_cfg.get("tagline") or project_name)
         mq = f"{mq_base} · {project_name} · "
         mtx, mat = _t(ctx, "chrome:marquee", mq, _loc_get(loc_chrome, "marquee") or mq)
@@ -1217,9 +1303,9 @@ def _render_route_html(
             ltx, lat = _t(ctx, f"{slug}:hero:lead", lead_copy, _loc_get(loc, "hero", "subhead"))
             ctx1, cta1 = _t(ctx, f"{slug}:hero:cta1", cta_primary, _loc_get(loc, "hero", "cta_label"))
             altx, altat = _t(ctx, f"{slug}:hero:alt", hero_alt, _loc_get(loc, "seo", "hero_alt"))
-            sections_html.append(
-                f"""    <section class="hero-shell{hero_cls}" id="hero" data-variant="{html.escape(hero_variant, quote=True)}">
-      <div class="container canon-grid">
+            fig_cls = "hero-figure hw-screen-bezel" if canon_id_cur == "10_industrial_tactile" else "hero-figure"
+            hero_inner = (
+                f"""      <div class="canon-grid">
         <div class="hero-lead">
           <p class="eyebrow"{eat}>{etx}</p>
           <h1{hat}>{htx}</h1>
@@ -1229,10 +1315,25 @@ def _render_route_html(
             {secondary_html}
           </div>
         </div>
-        <figure class="hero-figure">
+        <figure class="{fig_cls}">
           <img src="{html.escape(hero_rel, quote=True)}?v={asset_rev}" width="{route_dims[0]}" height="{route_dims[1]}" alt="{altx}"{altat.replace('data-i18n=', 'data-i18n-alt=')} fetchpriority="high" loading="eager" decoding="sync">
         </figure>
-      </div>
+      </div>"""
+            )
+            if canon_id_cur == "10_industrial_tactile":
+                hero_container = (
+                    f"""      <div class="container hw-chassis">
+        <div class="hw-console-bar"><span class="hw-led" aria-hidden="true"></span><span>UNIT // {html.escape(project_name.upper()[:24])}</span><span class="hw-ch-pill">CH-01 · TACTILE-10</span></div>
+{hero_inner}
+      </div>"""
+                )
+            else:
+                hero_container = f"""      <div class="container">
+{hero_inner}
+      </div>"""
+            sections_html.append(
+                f"""    <section class="hero-shell{hero_cls}" id="hero" data-variant="{html.escape(hero_variant, quote=True)}">
+{hero_container}
     </section>"""
             )
         elif brick == "manifesto":
@@ -1353,13 +1454,52 @@ def _render_route_html(
                 "bento_asymmetric": " feat-bento",
                 "hairline_matrix": " feat-matrix",
             }.get(fv, "")
-            cards = []
-            for i, item in enumerate(f_items[:6]):
-                itx, iat = _t(ctx, f"{slug}:features:item:{i}", item, loc_f[i] if i < len(loc_f) else "")
-                cards.append(f'          <article class="spec-card" data-reveal><h3>0{i+1} / {"НАПРАВЛЕНИЕ" if lang == "ru" else "CAPABILITY"}</h3><p{iat}>{itx}</p></article>')
             htx, hat = h2_for("features", "Преимущества и ключевые направления" if lang == "ru" else "Key Capabilities & Services")
-            sections_html.append(
-                f"""    <section class="section-block{f_cls}" id="features" data-variant="{html.escape(fv, quote=True)}">
+            if slug == "index" and landing_preset in ("gsap_scrollytelling", "kinetic_showreel"):
+                scrolly_img = (gallery_images[0] if gallery_images else "") or hero_rel
+                scrolly_dims = (image_dims or {}).get(scrolly_img) or route_dims
+                scrolly_steps: list[str] = []
+                first_step_title = ""
+                scrolly_items = f_items[:5]
+                for i, item in enumerate(scrolly_items):
+                    itx, iat = _t(ctx, f"{slug}:features:item:{i}", item, loc_f[i] if i < len(loc_f) else "")
+                    s_head, s_body = _split_pair(item, item)
+                    if s_body == item:
+                        s_head = f"{"Глава" if lang == "ru" else "Chapter"} {i + 1:02d}"
+                    s_head = _word_trim(s_head, 52)
+                    if i == 0:
+                        first_step_title = s_head
+                    active_cls = " is-active" if i == 0 else ""
+                    scrolly_steps.append(
+                        f'          <article class="scrolly-step{active_cls}" data-reveal data-step-idx="{i}" data-step-title="{html.escape(s_head, quote=True)}"><p class="eyebrow">{"ГЛАВА" if lang == "ru" else "CHAPTER"} {i + 1:02d}</p><h3>{html.escape(s_head)}</h3><p{iat}>{itx}</p></article>'
+                    )
+                pin_cls = "scrolly-pin hw-screen-bezel" if canon_id_cur == "10_industrial_tactile" else "scrolly-pin"
+                sections_html.append(
+                    f"""    <section class="section-block{f_cls}" id="features" data-variant="scrolly">
+      <div class="container">
+        <h2{hat}>{htx}</h2>
+        <div class="scrolly-stage">
+          <div class="scrolly-steps">
+{chr(10).join(scrolly_steps)}
+          </div>
+          <aside class="{pin_cls}" aria-label="Interactive showcase stage">
+            <img src="{html.escape(scrolly_img, quote=True)}?v={asset_rev}" width="{scrolly_dims[0]}" height="{scrolly_dims[1]}" alt="{html.escape(first_step_title or htx, quote=True)}" loading="lazy">
+            <div class="scrolly-pin-hud">
+              <span class="scrolly-counter" id="scrolly-counter">01 / {len(scrolly_items):02d}</span>
+              <p class="scrolly-caption" id="scrolly-caption">{html.escape(first_step_title)}</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>"""
+                )
+            else:
+                cards = []
+                for i, item in enumerate(f_items[:6]):
+                    itx, iat = _t(ctx, f"{slug}:features:item:{i}", item, loc_f[i] if i < len(loc_f) else "")
+                    cards.append(f'          <article class="spec-card" data-reveal><h3>0{i+1} / {"НАПРАВЛЕНИЕ" if lang == "ru" else "CAPABILITY"}</h3><p{iat}>{itx}</p></article>')
+                sections_html.append(
+                    f"""    <section class="section-block{f_cls}" id="features" data-variant="{html.escape(fv, quote=True)}">
       <div class="container">
         <h2{hat}>{htx}</h2>
         <div class="canon-grid" data-count="{len(cards)}">
@@ -1367,7 +1507,7 @@ def _render_route_html(
         </div>
       </div>
     </section>"""
-            )
+                )
         elif brick == "about":
             ab_items = _split_user_items(bp_map.get("about", ""), c_fallbacks, min_items=3)
             loc_ab = _loc_items(loc, "about")
@@ -1804,7 +1944,7 @@ def _render_route_html(
         vendor_script_tags += "\n"
 
     return f"""<!DOCTYPE html>
-<html lang="{lang}" data-theme="{polarity}" data-canon="{html.escape(str(card.get('id') or ''), quote=True)}" data-surface="{html.escape(str(d.get('surface') or 'clean'), quote=True)}" data-motion="{html.escape(str(motion), quote=True)}">
+<html lang="{lang}" data-theme="{polarity}" data-canon="{html.escape(str(card.get('id') or ''), quote=True)}" data-surface="{html.escape(str(d.get('surface') or 'clean'), quote=True)}" data-motion="{html.escape(str(motion), quote=True)}" data-landing="{html.escape(str(landing_preset), quote=True)}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
