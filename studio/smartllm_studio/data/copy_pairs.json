@@ -1,0 +1,2858 @@
+[
+  {
+    "id": "vp_001",
+    "category": "value_prop",
+    "domain": "nvme_telemetry",
+    "canon_id": "01_swiss_international_typographic",
+    "en_slop_before": "Unleash the future of seamless cloud-scale storage monitoring with our revolutionary AI-powered platform.",
+    "en_canon_after": "Sample SMART and queue-depth telemetry across 10,000 NVMe drives every 100 ms with zero kernel modules.",
+    "ru_slop_before": "Откройте будущее бесшовного мониторинга хранилищ в современном мире с нашей революционной платформой.",
+    "ru_canon_after": "Снимайте телеметрию SMART и глубину очередей с 10 000 NVMe-дисков каждые 100 мс без установки ядерных модулей.",
+    "anti_slop_rule": "Replace abstract future-tense hype with sampling interval, fleet scale, and deployment constraint.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_002",
+    "category": "value_prop",
+    "domain": "ebpf_observability",
+    "canon_id": "03_dark_precision_saas_linear",
+    "en_slop_before": "Elevate your engineering team's observability journey and unlock actionable insights effortlessly.",
+    "en_canon_after": "Pinpoint p99 syscall and TLS handshake stalls across Kubernetes pods in under 1.2% CPU overhead.",
+    "ru_slop_before": "Выведите наблюдаемость вашей команды на новый уровень и раскройте потенциал инсайтов без усилий.",
+    "ru_canon_after": "Находите задержки p99 в системных вызовах и TLS-рукопожатиях внутри кластеров Kubernetes при нагрузке на CPU ниже 1,2%.",
+    "anti_slop_rule": "Name the exact fault class (p99 syscall/TLS stalls) and resource ceiling (<1.2% CPU).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_003",
+    "category": "value_prop",
+    "domain": "sqlite_sync_sdk",
+    "canon_id": "02_neo_brutalism_tactile",
+    "en_slop_before": "A game-changer for modern app developers seeking seamless offline-first database synchronization.",
+    "en_canon_after": "Embed deterministic SQLite WAL replication in 42 KB of WebAssembly with sub-millisecond local reads.",
+    "ru_slop_before": "Настоящий прорыв для разработчиков, которым нужна бесшовная синхронизация баз данных нового поколения.",
+    "ru_canon_after": "Встройте детерминированную репликацию SQLite WAL весом 42 КБ на WebAssembly с локальным чтением быстрее 1 мс.",
+    "anti_slop_rule": "State binary footprint (42 KB), replication mechanism (WAL), and local read latency (<1 ms).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_004",
+    "category": "value_prop",
+    "domain": "treasury_clearing",
+    "canon_id": "08_fintech_institutional_ledger",
+    "en_slop_before": "Empowering global enterprises to reimagine cross-border liquidity and treasury management.",
+    "en_canon_after": "Settle multi-currency EUR, USD, and KZT vendor payouts via direct SEPA and SWIFT rails with T+0 ledger reconciliation.",
+    "ru_slop_before": "Помогаем глобальному бизнесу переосмыслить управление ликвидностью и казначейскими потоками под ключ.",
+    "ru_canon_after": "Проводите мультивалютные выплаты поставщикам в EUR, USD и KZT со сверкой главной книги в день расчёта T+0.",
+    "anti_slop_rule": "Specify supported currencies, payment rails, and exact settlement window (T+0).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_005",
+    "category": "value_prop",
+    "domain": "acoustic_architecture",
+    "canon_id": "05_nordic_architectural_minimal",
+    "en_slop_before": "Crafting harmonious, breathtaking architectural spaces that elevate human connection and well-being.",
+    "en_canon_after": "Timber acoustic interiors engineered to hold speech reverberation (RT60) between 0.45 and 0.60 seconds.",
+    "ru_slop_before": "Создаём уникальные гармоничные пространства, которые вдохновляют людей и дарят незабываемый комфорт.",
+    "ru_canon_after": "Проектируем акустические интерьеры из массива берёзы со временем реверберации речи RT60 в коридоре 0,45-0,60 с.",
+    "anti_slop_rule": "Anchor spatial design in physical material and measurable reverberation corridor (RT60).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_006",
+    "category": "value_prop",
+    "domain": "clinical_genomics",
+    "canon_id": "12_clinical_biotech_cleanroom",
+    "en_slop_before": "Revolutionizing precision medicine with cutting-edge genomic diagnostics for a healthier tomorrow.",
+    "en_canon_after": "Whole-exome variant calling from 2 mL EDTA blood in 36 hours at 99.6% analytical sensitivity.",
+    "ru_slop_before": "Революционный подход к прецизионной медицине и генетической диагностике будущего.",
+    "ru_canon_after": "Полноэкзомное выявление вариантов из 2 мл венозной крови с ЭДТА за 36 часов при аналитической чувствительности 99,6%.",
+    "anti_slop_rule": "State specimen volume, turnaround hours, and validated analytical sensitivity.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_007",
+    "category": "value_prop",
+    "domain": "zero_trust_vpn",
+    "canon_id": "27_cybersecurity_zero_trust_ops",
+    "en_slop_before": "Military-grade unhackable cybersecurity that keeps your remote workforce completely safe anywhere.",
+    "en_canon_after": "Point-to-point WireGuard mesh authenticated by hardware FIDO2 keys with zero central relay decryption.",
+    "ru_slop_before": "Непробиваемая защита военного уровня для абсолютной безопасности удалённых сотрудников в любой точке.",
+    "ru_canon_after": "Прямая ячеистая сеть WireGuard с проверкой аппаратных FIDO2-ключей без расшифровки трафика на промежуточных узлах.",
+    "anti_slop_rule": "Replace 'military-grade unhackable' with exact protocol, hardware auth factor, and trust boundary.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_008",
+    "category": "value_prop",
+    "domain": "industrial_plc",
+    "canon_id": "07_industrial_functional_instrument",
+    "en_slop_before": "Unlocking Industry 4.0 smart factory transformation through seamless IoT connectivity.",
+    "en_canon_after": "DIN-rail Modbus-TCP and OPC-UA gateway rated from -40 C to +75 C with 72-hour local ring-buffer retention.",
+    "ru_slop_before": "Инновационный подход к цифровой трансформации умного производства в эпоху Индустрии 4.0.",
+    "ru_canon_after": "Промышленный шлюз Modbus-TCP и OPC-UA на DIN-рейку для диапазона от -40 до +75 C с локальным кольцевым буфером на 72 часа.",
+    "anti_slop_rule": "Give mounting standard, fieldbus protocols, thermal rating, and offline buffer hours.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_009",
+    "category": "value_prop",
+    "domain": "grid_storage",
+    "canon_id": "17_sustainable_climate_botanical",
+    "en_slop_before": "Pioneering eco-friendly green energy solutions to build a sustainable planet for future generations.",
+    "en_canon_after": "Containerized 4 MWh LFP grid battery blocks delivering 140 ms frequency response and audited ISO-14064 lifecycle reports.",
+    "ru_slop_before": "Создаём экологичные зелёные технологии ради устойчивого будущего нашей планеты.",
+    "ru_canon_after": "Контейнерные LFP-накопители ёмкостью 4 МВт·ч с откликом по частоте за 140 мс и верифицированным расчётом по ISO-14064.",
+    "anti_slop_rule": "State chemistry (LFP), MWh capacity, grid response time, and LCA audit standard.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_010",
+    "category": "value_prop",
+    "domain": "cli_build_system",
+    "canon_id": "09_monospace_cli_devtools",
+    "en_slop_before": "Supercharge developer velocity with our blazingly fast next-gen build orchestration tool.",
+    "en_canon_after": "Content-addressed C++ and Rust monorepo builds cached over local NVMe and S3, cutting clean CI runs from 28 min to 4.1 min.",
+    "ru_slop_before": "Ускорьте разработку до предела с помощью нашего ультрасовременного инструмента сборки проектов.",
+    "ru_canon_after": "Контентно-адресуемая сборка монорепозиториев C++ и Rust с кэшем на NVMe и S3 сокращает прогон CI с 28 до 4,1 минуты.",
+    "anti_slop_rule": "Replace 'blazingly fast' with content-addressing mechanism and before/after minutes.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_011",
+    "category": "value_prop",
+    "domain": "regulatory_legal",
+    "canon_id": "22_legal_advisory_chancery",
+    "en_slop_before": "Your trusted legal partner navigating the ever-evolving landscape of complex international regulations.",
+    "en_canon_after": "Cross-border M&A antitrust filings, sanctions screening, and English-law shareholder agreements led by Chambers-ranked partners.",
+    "ru_slop_before": "Ваш надёжный юридический партнёр в динамично меняющемся мире международного права.",
+    "ru_canon_after": "Согласование трансграничных сделок M&A, санкционный комплаенс и акционерные соглашения по английскому праву силами партнёров практики.",
+    "anti_slop_rule": "List exact legal instruments and partner-led execution instead of 'navigating landscapes'.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_012",
+    "category": "value_prop",
+    "domain": "audio_dsp_plugin",
+    "canon_id": "23_audio_dsp_modular_rack",
+    "en_slop_before": "Unleash studio magic and elevate your mixes with warm analog soul.",
+    "en_canon_after": "32-band linear-phase mastering equalizer in CLAP and VST3 formats with 0.8 ms zero-latency tracking mode.",
+    "ru_slop_before": "Раскройте магию студийного звука и подарите вашим миксам тёплую аналоговую душу.",
+    "ru_canon_after": "32-полосный линейно-фазовый мастеринговый эквалайзер в форматах CLAP и VST3 с режимом мониторинга 0,8 мс.",
+    "anti_slop_rule": "Specify band count, phase topology, plugin formats, and lookahead latency.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_013",
+    "category": "value_prop",
+    "domain": "geospatial_lidar",
+    "canon_id": "24_cartographic_field_expedition",
+    "en_slop_before": "Transforming spatial intelligence with cutting-edge drone mapping solutions.",
+    "en_canon_after": "Drone RTK-LiDAR corridor surveys delivering 40 pts/m2 classified LAS point clouds at +/-2.5 cm vertical RMSE.",
+    "ru_slop_before": "Трансформируем геопространственную аналитику с помощью передовых беспилотных технологий.",
+    "ru_canon_after": "Коридорная съёмка с БПЛА RTK-LiDAR выдаёт классифицированное облако 40 точек/м2 с вертикальной точностью +/-2,5 см RMSE.",
+    "anti_slop_rule": "State point density, file standard (LAS), and vertical root-mean-square error.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_014",
+    "category": "value_prop",
+    "domain": "specialty_roastery",
+    "canon_id": "28_craft_roastery_packaging",
+    "en_slop_before": "Experience artisanal coffee perfection crafted with passion in every unforgettable sip.",
+    "en_canon_after": "Single-producer washed Pink Bourbon from Huila (1,920 masl), roasted every Tuesday to Agtron 68 and shipped within 18 hours.",
+    "ru_slop_before": "Окунитесь в мир безупречного авторского кофе, созданного со страстью в каждом глотке.",
+    "ru_canon_after": "Фермерский мытый Розовый Бурбон из Уила (1920 м), обжаренный по вторникам до Agtron 68 и отправленный за 18 часов.",
+    "anti_slop_rule": "Replace sensory cliches with varietal, altitude, roast curve reading, and dispatch SLA.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_015",
+    "category": "value_prop",
+    "domain": "civic_permits",
+    "canon_id": "15_high_contrast_civic_gov_wcag_aaa",
+    "en_slop_before": "Welcome to our modern digital citizen portal designed to make municipal services better.",
+    "en_canon_after": "Submit residential building modification permits online in 12 minutes and track statutory 10-business-day review status.",
+    "ru_slop_before": "Добро пожаловать на современный цифровой портал, созданный для повышения качества городских услуг.",
+    "ru_canon_after": "Подайте заявление на перепланировку жилья за 12 минут и отслеживайте решение по регламенту 10 рабочих дней.",
+    "anti_slop_rule": "Lead civic portals with exact service action, completion minutes, and statutory turnaround.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_016",
+    "category": "value_prop",
+    "domain": "server_hardware",
+    "canon_id": "18_bento_hardware_showcase",
+    "en_slop_before": "Redefining on-premise cloud computing with groundbreaking modular server architecture.",
+    "en_canon_after": "Blind-mate 2U NVMe compute sleds with cableless 48V busbars and tool-free hot-swap fan cassettes.",
+    "ru_slop_before": "Меняем представление о локальной облачной инфраструктуре благодаря инновационной серверной архитектуре.",
+    "ru_canon_after": "Вычислительные модули 2U NVMe со слепой стыковкой к шине 48 В без кабелей и горячей заменой вентиляторов без инструмента.",
+    "anti_slop_rule": "Describe mechanical/electrical differentiators (blind-mate 48V busbar, tool-free hot-swap).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_017",
+    "category": "value_prop",
+    "domain": "quant_market_data",
+    "canon_id": "19_quant_analytics_dense_terminal",
+    "en_slop_before": "Unlock institutional-grade market alpha with real-time financial intelligence.",
+    "en_canon_after": "Nanosecond-timestamped L3 orderbook replay and tick-by-tick Parquet exports across 18 equity and futures venues.",
+    "ru_slop_before": "Откройте доступ к рыночной аналитике институционального уровня в режиме реального времени.",
+    "ru_canon_after": "Воспроизведение стакана заявок L3 с наносекундными метками и выгрузка тиков в Parquet с 18 фондовых и срочных площадок.",
+    "anti_slop_rule": "Specify orderbook depth (L3), timestamp precision, export format, and venue count.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_018",
+    "category": "value_prop",
+    "domain": "technical_apparel",
+    "canon_id": "26_ecommerce_lookbook_grid",
+    "en_slop_before": "Elevate your everyday wardrobe with timeless luxury outerwear built for modern explorers.",
+    "en_canon_after": "3-layer 165 gsm high-tenacity nylon shell with 28,000 mm hydrostatic head, taped 8 mm micro-seams, and lifetime seam repair.",
+    "ru_slop_before": "Обновите повседневный гардероб стильной верхней одеждой премиум-класса для современных исследователей.",
+    "ru_canon_after": "Трёхслойная мембранная куртка из нейлона 165 г/м2 с водостойкостью 28 000 мм, проклейкой швов 8 мм и пожизненным ремонтом.",
+    "anti_slop_rule": "Replace lifestyle fluff with fabric GSM, hydrostatic column mm, seam tape width, and repair guarantee.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_019",
+    "category": "value_prop",
+    "domain": "mechanical_horology",
+    "canon_id": "16_luxury_horology_atelier_dark",
+    "en_slop_before": "A timeless testament to uncompromising craftsmanship and luxury watchmaking heritage.",
+    "en_canon_after": "In-house manual-wind Caliber K-04 regulated in six positions to -1/+2 seconds per day inside a 38.5 mm Grade-5 titanium case.",
+    "ru_slop_before": "Вечное воплощение бескомпромиссного мастерства и богатого часового наследия.",
+    "ru_canon_after": "Мануфактурный калибр K-04 с ручным заводом, отрегулированный в шести положениях до -1/+2 с/сутки в корпусе 38,5 мм из титана Grade-5.",
+    "anti_slop_rule": "Eliminate 'timeless testament' and state caliber ID, positional regulation accuracy, and case alloy/mm.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_020",
+    "category": "value_prop",
+    "domain": "desktop_editor",
+    "canon_id": "20_spatial_glass_dark_instrument",
+    "en_slop_before": "Meet the AI-first code editor that transforms how teams collaborate seamlessly.",
+    "en_canon_after": "GPU-rasterized code editor opening 2 GB log files in 40 ms at 120 fps with CRDT peer-to-peer co-editing.",
+    "ru_slop_before": "Встречайте редактор кода нового поколения для бесшовной командной работы.",
+    "ru_canon_after": "Редактор кода с GPU-растеризацией открывает лог-файлы на 2 ГБ за 40 мс при 120 кадрах/с и совместном редактировании через CRDT.",
+    "anti_slop_rule": "Cite rendering pipeline, max file size/open latency, frame rate, and sync data structure.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "vp_021",
+    "category": "value_prop",
+    "domain": "constructivist_cad",
+    "canon_id": "21_constructivist_editorial_ru",
+    "en_slop_before": "Comprehensive BIM engineering services delivering innovative turnkey construction designs.",
+    "en_canon_after": "Finite-element steel truss verification and LOD-400 fabrication drawings compliant with Eurocode 3 and SP 16.13330.",
+    "ru_slop_before": "Комплексное проектирование металлоконструкций под ключ с применением инновационных BIM-технологий.",
+    "ru_canon_after": "Расчёт стальных ферм методом конечных элементов и рабочие чертежи КМД детализации LOD-400 по СП 16.13330 и Eurocode 3.",
+    "anti_slop_rule": "Replace 'innovative turnkey BIM' with calculation method, LOD level, and structural codes.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_001",
+    "category": "pain_mechanism_proof",
+    "domain": "postgres_failover",
+    "canon_id": "03_dark_precision_saas_linear",
+    "en_slop_before": "Database downtime hurts revenue. Our smart cloud failover seamlessly keeps your business online 24/7.",
+    "en_canon_after": "DNS-based Postgres failovers stall clients for 45-90 seconds on stale TTLs. Our connection proxy holds client sockets in memory while promoting the Raft standby via WAL replay. Across 1,400 production switchovers, median write pause measured 310 ms with zero dropped transactions.",
+    "ru_slop_before": "Простои базы данных ведут к убыткам, но наше умное облачное решение обеспечит бесперебойную работу 24/7.",
+    "ru_canon_after": "Переключение Postgres через DNS замораживает клиентов на 45-90 секунд из-за кэша TTL. Наш прокси удерживает клиентские сокеты в памяти, пока резервная реплика Raft догоняет журнал WAL. На выборке из 1400 переключений медианная пауза записи составила 310 мс без потери транзакций.",
+    "anti_slop_rule": "Quantify failure duration (45-90s TTL), explain socket-holding mechanism, prove with N=1,400 median ms.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_002",
+    "category": "pain_mechanism_proof",
+    "domain": "cold_chain_pharma",
+    "canon_id": "12_clinical_biotech_cleanroom",
+    "en_slop_before": "Stop losing valuable vaccine shipments with our innovative end-to-end IoT tracking ecosystem.",
+    "en_canon_after": "Biologic pallets spoil silently when dry-ice sublimation breaches -65 C inside customs warehouses without cellular signal. Dual-probe platinum RTD loggers buffer 90 days of 1-minute readings over sub-GHz LoRaWAN to pallet-door gateways. Validated across 8,200 cold-chain lanes, excursion write-offs fell from 3.4% to 0.18%.",
+    "ru_slop_before": "Забудьте о потерях ценных фармпрепаратов благодаря нашей комплексной экосистеме мониторинга.",
+    "ru_canon_after": "Биопрепараты теряют активность при сублимации сухого льда выше -65 C на таможенных складах без сотовой связи. Двухзондовые платиновые регистраторы RTD хранят 90 суток минутных замеров и передают их по LoRaWAN на ворота склада. На 8200 рейсах доля списаний снизилась с 3,4% до 0,18%.",
+    "anti_slop_rule": "Name physical failure mode (-65 C sublimation + RF dead zone), sensor hardware, and write-off delta.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_003",
+    "category": "pain_mechanism_proof",
+    "domain": "invoice_ap_automation",
+    "canon_id": "08_fintech_institutional_ledger",
+    "en_slop_before": "Manual invoice processing is slow and error-prone. Automate AP effortlessly with AI.",
+    "en_canon_after": "Three-way matching breaks when freight surcharges or partial deliveries split a single PO across four vendor PDFs. Line-item SKU tolerances match purchase orders, signed receiving slips, and tax IDs before queuing net-30 SEPA batches. Finance teams processing 12,000 monthly invoices cut manual exception review from 19 minutes to 95 seconds per voucher.",
+    "ru_slop_before": "Ручная сверка счетов отнимает массу времени, поэтому автоматизируйте бухгалтерию с помощью ИИ.",
+    "ru_canon_after": "Трёхсторонняя сверка даёт сбой, когда транспортные надбавки и частичные отгрузки дробят один заказ на четыре закрывающих акта. Алгоритм сопоставляет строки номенклатуры, приходные ордера и ИНН в пределах заданного допуска перед формированием платёжного реестра. В командах с потоком 12 000 счетов в месяц разбор расхождений сократился с 19 минут до 95 секунд.",
+    "anti_slop_rule": "Explain why 3-way matching fails in reality, show SKU tolerance mechanism, give time per voucher.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_004",
+    "category": "pain_mechanism_proof",
+    "domain": "cnc_spindle_vibration",
+    "canon_id": "07_industrial_functional_instrument",
+    "en_slop_before": "Prevent unexpected machine breakdowns with our revolutionary predictive maintenance solution.",
+    "en_canon_after": "Unplanned CNC spindle bearing seizure scraps titanium workpieces worth $18,000 per incident. Triaxial MEMS accelerometers mounted on the spindle housing compute 20 kHz FFT envelope spectra locally on an STM32H7 edge node. Across 64 five-axis mills over 14 months, 11 bearing spalls were flagged 96+ hours before surface finish exceeded Ra 0.8 um.",
+    "ru_slop_before": "Предотвращайте внезапные поломки оборудования с нашей инновационной системой предиктивной аналитики.",
+    "ru_canon_after": "Клин подшипника шпинделя ЧПУ отправляет в брак титановую заготовку стоимостью 1,6 млн рублей. Трёхосевой MEMS-акселерометр на корпусе шпинделя считает спектр огибающей БПФ в полосе 20 кГц прямо на контроллере STM32H7. На парке из 64 пятикоординатных станков за 14 месяцев все 11 питтингов выявлены минимум за 96 часов до выхода шероховатости за Ra 0,8 мкм.",
+    "anti_slop_rule": "State scrap cost, FFT bandwidth + MCU, fleet size, observation months, and surface roughness threshold.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_005",
+    "category": "pain_mechanism_proof",
+    "domain": "web_cls_fonts",
+    "canon_id": "01_swiss_international_typographic",
+    "en_slop_before": "Slow websites lose visitors. Optimize your frontend experience seamlessly for maximum conversions.",
+    "en_canon_after": "External webfont waterfalls trigger late layout reflows (CLS > 0.22) and block LCP on 4G mobile links. Subsetting SIL OFL variable WOFF2 files locally with metric-matched `size-adjust` fallbacks eliminates layout shift completely. Audited across 50 pages on throttled Moto G4 profiles, p75 LCP dropped from 3.4s to 1.1s at CLS 0.00.",
+    "ru_slop_before": "Медленные сайты теряют клиентов, поэтому оптимизируйте интерфейс для максимальной конверсии.",
+    "ru_canon_after": "Внешние шрифтовые CDN вызывают скачки вёрстки CLS выше 0,22 и задерживают отрисовку первого экрана в сетях 4G. Локальная нарезка WOFF2 со шрифтами SIL OFL и выравниванием метрик через `size-adjust` полностью убирает сдвиг строк. На тесте из 50 страниц в профиле Moto G4 показатель p75 LCP снизился с 3,4 до 1,1 с при CLS 0,00.",
+    "anti_slop_rule": "Connect network waterfall -> CSS `size-adjust` + WOFF2 subsetting -> exact p75 LCP & CLS.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_006",
+    "category": "pain_mechanism_proof",
+    "domain": "llm_swap_oom",
+    "canon_id": "09_monospace_cli_devtools",
+    "en_slop_before": "Run massive AI models smoothly on consumer laptops with our groundbreaking memory technology.",
+    "en_canon_after": "Mapping 28 GB embedding tables via OS `mmap` evicts active KV-cache pages and triggers Linux swap storms on 32 GB hosts. Keeping transformer layers locked in RAM while issuing 24 KB `pread` syscalls to NVMe only for the active token ID bounds embedding RAM to 0 bytes. Sustained generation holds 42 tok/s with `pswpout = 0`.",
+    "ru_slop_before": "Запускайте огромные нейросети на обычных ноутбуках благодаря нашей уникальной технологии памяти.",
+    "ru_canon_after": "Отображение таблиц эмбеддингов весом 28 ГБ через `mmap` вытесняет KV-кэш и вызывает лавинный свопинг на машинах с 32 ГБ ОЗУ. Прямое чтение нужных 24 КБ с NVMe через `pread` только для текущего токена удерживает расход ОЗУ под таблицу на уровне 0 байт. Генерация идёт со скоростью 42 ток/с при `pswpout = 0`.",
+    "anti_slop_rule": "Explain OS page-cache eviction vs direct `pread` byte math and `pswpout = 0` proof.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_007",
+    "category": "pain_mechanism_proof",
+    "domain": "ci_flaky_browser",
+    "canon_id": "02_neo_brutalism_tactile",
+    "en_slop_before": "Say goodbye to frustrating flaky tests forever with intelligent test automation.",
+    "en_canon_after": "Playwright E2E suites fail randomly when animations, network timers, and wall-clock dates race DOM assertions. Freezing virtual clock ticks, stubbing outbound sockets at loopback, and enforcing `prefers-reduced-motion: reduce` turns UI runs deterministic. Across 10,000 consecutive CI runs on 120 specs, false-red failures dropped from 6.8% to 0.0%.",
+    "ru_slop_before": "Навсегда забудьте о нестабильных автотестах благодаря интеллектуальной платформе тестирования.",
+    "ru_canon_after": "Браузерные тесты Playwright случайно падают, когда CSS-анимации и сетевые таймеры обгоняют проверки DOM. Заморозка виртуальных часов, замыкание сокетов на `127.0.0.1` и режим `prefers-reduced-motion: reduce` делают рендер детерминированным. На серии из 10 000 прогонов CI по 120 сценариям доля ложных падений снизилась с 6,8% до 0,0%.",
+    "anti_slop_rule": "Identify race conditions, name deterministic harness controls, prove over 10,000 CI runs.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_008",
+    "category": "pain_mechanism_proof",
+    "domain": "xss_csp_security",
+    "canon_id": "27_cybersecurity_zero_trust_ops",
+    "en_slop_before": "Protect your web applications from sophisticated cyber threats with comprehensive frontend defense.",
+    "en_canon_after": "Allowlisting `'unsafe-inline'` in Content-Security-Policy lets any reflected markup bug execute arbitrary session-stealing scripts. Computing exact SHA-256 digests for static `<script>` blocks and enforcing `require-trusted-types-for 'script'` blocks DOM sink injection at the browser parser. Penetration audits across 14 releases recorded zero exploitable XSS sinks.",
+    "ru_slop_before": "Защитите веб-приложения от современных киберугроз с помощью комплексной системы безопасности.",
+    "ru_canon_after": "Директива `'unsafe-inline'` в заголовке CSP позволяет любой инъекции разметки выполнить произвольный скрипт и украсть сессию. Расчёт точных хэшей SHA-256 для встроенных блоков `<script>` вместе с `require-trusted-types-for 'script'` блокирует DOM-XSS на уровне парсера браузера. В ходе 14 пентестов релизов не выявлено ни одного эксплуатируемого стока XSS.",
+    "anti_slop_rule": "Contrast `'unsafe-inline'` failure with SHA-256 + Trusted Types parser enforcement.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_009",
+    "category": "pain_mechanism_proof",
+    "domain": "editorial_aeo_traffic",
+    "canon_id": "04_editorial_broadsheet_serif",
+    "en_slop_before": "Boost your brand visibility in AI search engines with next-generation GEO content strategies.",
+    "en_canon_after": "Retrieval crawlers skip pages that bury factual answers beneath 400 words of narrative preamble or mismatch JSON-LD FAQ strings. Placing a 45-word metric-backed answer right below semantic H2 question headers with character-exact `FAQPage` `@graph` parity enables lossless citation extraction. Technical docs adopting this layout raised verified search citations by 2.4x over 90 days.",
+    "ru_slop_before": "Повысьте узнаваемость бренда в нейросетевом поиске с помощью передовых GEO-стратегий.",
+    "ru_canon_after": "Поисковые краулеры пропускают страницы, где ответ спрятан за четырьмя абзацами вступления или расходится с разметкой JSON-LD. Прямой ответ из 45 слов с цифрами сразу под вопросительным заголовком H2 и посимвольным совпадением в `FAQPage` `@graph` даёт чистое извлечение цитат. В технической документации частота цитирования выросла в 2,4 раза за 90 дней.",
+    "anti_slop_rule": "Specify inverted-pyramid word count, H2 structure, and verbatim JSON-LD parity.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_010",
+    "category": "pain_mechanism_proof",
+    "domain": "district_heating",
+    "canon_id": "17_sustainable_climate_botanical",
+    "en_slop_before": "Smart AI heating optimization helps buildings save energy effortlessly.",
+    "en_canon_after": "Fixed return-water curves overheat south-facing apartments by +3.2 C during sunny winter afternoons while wasting megawatt-hours. Model-predictive valve controllers blend 15-minute solar irradiance forecasts with thermal mass decay constants per riser. Across 48 municipal housing blocks in Helsinki, seasonal district-heat MWh consumption dropped 16.4% without comfort complaints.",
+    "ru_slop_before": "Умная оптимизация отопления на базе ИИ помогает зданиям легко экономить теплоэнергию.",
+    "ru_canon_after": "Жёсткий температурный график перегревает южные секции зданий на +3,2 C в солнечные зимние часы и сжигает лишние гигакалории. Предиктивный контроллер клапанов учитывает 15-минутный прогноз инсоляции и тепловую инерцию каждого стояка. На выборке из 48 жилых корпусов сезонный расход тепла снизился на 16,4% без жалоб жильцов.",
+    "anti_slop_rule": "Detail physical thermal mechanism (solar irradiance + riser thermal mass) and seasonal MWh delta.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_011",
+    "category": "pain_mechanism_proof",
+    "domain": "scientific_repro",
+    "canon_id": "25_academic_journal_monograph",
+    "en_slop_before": "Make your scientific research more accessible and impactful with modern publishing tools.",
+    "en_canon_after": "Static two-column PDFs sever equations from parameter sweeps and rot when external repository links die. Self-contained HTML monographs bundle SVG plots, pinned dataset SHA-256 manifests, and inline parameter sensitivity tables with zero external CDN requests. Reviewers reproduced all 19 benchmark figures offline in under 6 minutes.",
+    "ru_slop_before": "Сделайте научные публикации нагляднее и эффективнее с помощью современных инструментов вёрстки.",
+    "ru_canon_after": "Двухколоночные PDF-файлы отрывают формулы от таблиц чувствительности и теряют воспроизводимость при поломке внешних ссылок. Автономная HTML-монография хранит векторные графики SVG, манифесты SHA-256 датасетов и интерактивные срезы параметров без обращений к CDN. Рецензенты воспроизвели все 19 графиков офлайн быстрее чем за 6 минут.",
+    "anti_slop_rule": "Contrast dead PDF links with self-contained HTML+SVG+SHA-256 offline reproducibility.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_012",
+    "category": "pain_mechanism_proof",
+    "domain": "mobile_viewport_checkout",
+    "canon_id": "26_ecommerce_lookbook_grid",
+    "en_slop_before": "Deliver a frictionless mobile shopping experience that delights customers everywhere.",
+    "en_canon_after": "Sizing mobile drawers with `100vh` pushes sticky checkout buttons underneath Safari and Chrome dynamic address bars on 375 px viewports. Switching sheet containers to `100dvh` with `min-height: 44px` tap targets and `autocomplete='shipping street-address'` keeps the submit button visible above the keyboard. Mobile checkout completion rose from 61.2% to 74.8% across 22,000 sessions.",
+    "ru_slop_before": "Подарите покупателям безупречный мобильный шопинг и увеличьте продажи с любого устройства.",
+    "ru_canon_after": "Высота корзины в `100vh` прячет кнопку оплаты под динамическую адресную строку мобильных браузеров на экранах 375 px. Переход на `100dvh`, зоны нажатия не менее 44 px и разметку `autocomplete` удерживает кнопку заказа над экранной клавиатурой. На выборке из 22 000 сессий доля завершённых мобильных заказов выросла с 61,2% до 74,8%.",
+    "anti_slop_rule": "Name exact CSS viewport bug (`100vh` vs `100dvh`), tap target px, and session conversion delta.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_013",
+    "category": "pain_mechanism_proof",
+    "domain": "audio_aliasing",
+    "canon_id": "23_audio_dsp_modular_rack",
+    "en_slop_before": "Eliminate harsh digital distortion and experience crystal-clear analog warmth.",
+    "en_canon_after": "Non-linear waveshapers operating at 48 kHz fold harmonic partials back into the audible 2-8 kHz band as metallic intermodulation aliasing. Polyphase 8x oversampling with Kaiser-windowed FIR anti-imaging filters suppresses foldback below -118 dBFS. Measured on a 1 kHz + 7.3 kHz twin-tone test, alias spurs sit 34 dB cleaner than standard 2x saturators.",
+    "ru_slop_before": "Избавьтесь от неприятных цифровых искажений и наслаждайтесь кристально чистым аналоговым звуком.",
+    "ru_canon_after": "Нелинейные сатураторы на частоте 48 кГц отражают высшие гармоники обратно в слышимый диапазон 2-8 кГц в виде металлического алиасинга. Полифазная восьмикратная передискретизация с КИХ-фильтром Кайзера подавляет зеркальные составляющие ниже -118 dBFS. На двухтональном тесте 1 кГц + 7,3 кГц побочные гармоники на 34 дБ тише двухкратных схем.",
+    "anti_slop_rule": "Explain Nyquist foldback, FIR filter architecture, and dBFS measurement on twin-tone test.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_014",
+    "category": "pain_mechanism_proof",
+    "domain": "sanctions_kyc",
+    "canon_id": "22_legal_advisory_chancery",
+    "en_slop_before": "Streamline compliance workflows and mitigate global risk with intelligent screening.",
+    "en_canon_after": "Exact-string watchlist checks miss transliterated Cyrillic, Arabic, and Latin corporate beneficial owners while drowning analysts in phonetic false positives. Morphological stem normalization paired with LEI ownership-graph traversal resolves 50%-rule indirect control chains deterministically. Compliance teams cut false-positive alert queues by 63% while passing external OFAC/EU audit sampling at 100% recall.",
+    "ru_slop_before": "Упростите процедуры комплаенса и минимизируйте риски с помощью интеллектуального скрининга.",
+    "ru_canon_after": "Строгий поиск по подстрокам пропускает транслитерацию ФИО бенефициаров между кириллицей и латиницей, перегружая аналитиков ложными совпадениями. Морфологическая нормализация в связке с обходом графа владения по кодам LEI автоматически проверяет правило косвенного контроля 50%. Очередь ложных срабатываний сократилась на 63% при 100% полноте на внешнем аудите.",
+    "anti_slop_rule": "Detail transliteration + 50%-rule ownership graph mechanism and recall/false-positive stats.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_015",
+    "category": "pain_mechanism_proof",
+    "domain": "hospitality_direct_booking",
+    "canon_id": "11_warm_artisan_hospitality",
+    "en_slop_before": "Grow direct hotel bookings and delight guests with a captivating digital storefront.",
+    "en_canon_after": "Aggregator commissions consume 18-22% of room margin when guests cannot compare room square footage, quiet courtyard orientation, and cancellation cutoffs on your site. Publishing floor-plan SVGs, transparent tax-inclusive rates, and a 3-field no-account booking sheet removes comparison uncertainty. Direct web share across 14 boutique properties climbed from 29% to 54% in two seasons.",
+    "ru_slop_before": "Увеличьте прямые бронирования отеля с помощью привлекательного современного сайта.",
+    "ru_canon_after": "Комиссии агрегаторов забирают 18-22% выручки номерного фонда, если гость не видит на сайте площадь комнаты, сторону света и точный срок бесплатной отмены. Схемы этажей в SVG, конечная цена со всеми сборами и форма бронирования из трёх полей без регистрации снимают барьер выбора. Доля прямых броней в 14 камерных отелях выросла с 29% до 54% за два сезона.",
+    "anti_slop_rule": "Quantify OTA commission drag, show transparent room metadata, prove direct booking share.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_016",
+    "category": "pain_mechanism_proof",
+    "domain": "geodetic_datum",
+    "canon_id": "24_cartographic_field_expedition",
+    "en_slop_before": "Eliminate costly construction rework with seamless GIS data integration.",
+    "en_canon_after": "Mixing local municipal grid coordinates with unprojected WGS84 drone orthophotos shifts trench alignments by up to 1.4 meters on linear utility corridors. Locking project ingestion to explicit EPSG Helmert 7-parameter grid-shift matrices catches datum mismatches at upload time. Across 310 km of fiber and water trenching, survey stakeout rework dropped to zero.",
+    "ru_slop_before": "Исключите дорогостоящие строительные переделки благодаря бесшовной интеграции ГИС-данных.",
+    "ru_canon_after": "Смешение местных систем координат МСК с непересчитанными ортофотопланами WGS84 сдвигает ось траншеи до 1,4 метра на линейных объектах. Принудительная проверка ключей перехода Гельмерта по кодам EPSG при загрузке файлов отсекает ошибки датума до выхода геодезистов в поле. На 310 км трасс связи и водопровода число повторных разбивок снизилось до нуля.",
+    "anti_slop_rule": "Cite exact meter offset error, 7-parameter Helmert EPSG check, and linear km verified.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_017",
+    "category": "pain_mechanism_proof",
+    "domain": "command_palette_latency",
+    "canon_id": "20_spatial_glass_dark_instrument",
+    "en_slop_before": "Work faster than ever before with lightning-fast search across all your tools.",
+    "en_canon_after": "Electron wrapper apps stall keystrokes for 180-300 ms while marshaling IPC JSON payloads to remote search APIs. Indexing local SQLite FTS5 trigram tables in memory-mapped Rust threads renders ranked results inside a single 8.3 ms 120 Hz frame. Measured across 250,000 indexed local documents, p99 keystroke-to-paint latency holds at 4.6 ms.",
+    "ru_slop_before": "Работайте быстрее, чем когда-либо, с молниеносным поиском по всем вашим рабочим инструментам.",
+    "ru_canon_after": "Оболочки на Electron задерживают отклик клавиш на 180-300 мс из-за сериализации JSON между процессами и сетевых запросов. Локальный триграммный индекс SQLite FTS5 в потоке Rust укладывает ранжирование и отрисовку в один кадр 8,3 мс при 120 Гц. На базе из 250 000 документов задержка p99 от нажатия до пикселя составляет 4,6 мс.",
+    "anti_slop_rule": "Contrast IPC/network stall with FTS5 trigram index inside 8.3 ms 120 Hz frame budget.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_018",
+    "category": "pain_mechanism_proof",
+    "domain": "bento_thermal_rack",
+    "canon_id": "18_bento_hardware_showcase",
+    "en_slop_before": "Next-gen liquid cooling maximizes data center efficiency and AI density.",
+    "en_canon_after": "Air-cooled 700W GPU racks throttle clocks by 18% when hot-aisle recirculation pushes inlet temperatures past 32 C. Direct-to-chip microchannel copper coldplates operating at 40 C supply water capture 88% of rack heat into closed-loop dry coolers without chillers. Measured in a 32-rack deployment, annualized facility PUE fell from 1.48 to 1.11.",
+    "ru_slop_before": "Жидкостное охлаждение нового поколения максимизирует энергоэффективность современных ЦОД.",
+    "ru_canon_after": "Воздушное охлаждение стоек с ускорителями по 700 Вт сбрасывает частоты на 18% при рециркуляции горячего коридора выше 32 C. Медные микроканальные водоблоки с подачей теплоносителя 40 C отводят 88% тепла на сухие градирни без фреоновых чиллеров. В зале на 32 стойки среднегодовой коэффициент PUE снизился с 1,48 до 1,11.",
+    "anti_slop_rule": "Give TDP watts, supply water temp, heat capture %, chiller elimination, and measured PUE.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_019",
+    "category": "pain_mechanism_proof",
+    "domain": "civic_form_drop",
+    "canon_id": "15_high_contrast_civic_gov_wcag_aaa",
+    "en_slop_before": "Making public benefit applications easier and more inclusive for every citizen.",
+    "en_canon_after": "Applicants abandon multi-page municipal benefit forms when session timeouts wipe 25 minutes of typed household records or reject scanned PDFs over 2 MB. Auto-saving draft fields in encrypted server sessions and accepting smartphone JPEG photos up to 15 MB preserves progress across interrupted visits. First-attempt completion among applicants aged 65+ rose from 48% to 86%.",
+    "ru_slop_before": "Делаем получение социальных выплат удобнее и доступнее для каждого жителя региона.",
+    "ru_canon_after": "Заявители бросают многошаговые анкеты на субсидию, когда тайм-аут сессии стирает 25 минут ввода или форма отвергает скан тяжелее 2 МБ. Автосохранение черновика на сервере и приём фотографий со смартфона до 15 МБ сохраняют прогресс при повторном входе. Доля успешной подачи с первой попытки среди граждан старше 65 лет выросла с 48% до 86%.",
+    "anti_slop_rule": "Pinpoint real UX blocker (timeout + 2 MB upload cap), fix mechanism, and demographic completion gain.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_020",
+    "category": "pain_mechanism_proof",
+    "domain": "coffee_water_chemistry",
+    "canon_id": "28_craft_roastery_packaging",
+    "en_slop_before": "Brew cafe-quality specialty coffee at home every single morning effortlessly.",
+    "en_canon_after": "High-bicarbonate tap water (>180 ppm CaCO3) neutralizes fruit acids and flattens washed Ethiopian and Colombian filter roasts into chalky bitterness. Dosing distilled water with measured MgSO4 and KHCO3 mineral sachets locks total hardness at 65 ppm and alkalinity at 25 ppm. Blind triangle cuppings across 90 home brewers achieved 84% preference over carbon-filtered municipal water.",
+    "ru_slop_before": "Готовьте идеальный спешелти-кофе как в любимой кофейне каждое утро без лишних усилий.",
+    "ru_canon_after": "Водопроводная вода с гидрокарбонатами выше 180 мг/л гасит ягодную кислотность мытой Эфиопии и Колумбии, оставляя меловой привкус. Минеральные саше MgSO4 и KHCO3 для дистиллята фиксируют общую жёсткость на уровне 65 мг/л и щёлочность 25 мг/л. На слепых триангуляционных каппингах 84% из 90 участников выбрали эту воду против бытового угольного фильтра.",
+    "anti_slop_rule": "State ppm carbonate chemistry, mineral salt buffer, and blind triangle cupping score.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "pmp_021",
+    "category": "pain_mechanism_proof",
+    "domain": "structural_bim_clash",
+    "canon_id": "21_constructivist_editorial_ru",
+    "en_slop_before": "Avoid construction delays with our collaborative 3D coordination workflow.",
+    "en_canon_after": "Unresolved intersections between HV cable trays, fire-sprinkler mains, and steel gusset plates stall site erection for weeks of field torch-cutting. Automated boolean solid-collision checks run nightly across IFC4 discipline models with +/-5 mm clearance rules before shop fabrication starts. Across 140,000 m2 of industrial hall steelwork, on-site MEP penetration rework fell by 91%.",
+    "ru_slop_before": "Избегайте срывов сроков строительства с помощью нашей системы 3D-координации проектов.",
+    "ru_canon_after": "Неучтённые пересечения кабельных лотков, магистралей пожаротушения и фасонок стальных ферм останавливают монтаж на недели ради резки по месту. Ежедневная булева проверка твёрдых тел в моделях IFC4 с допуском +/-5 мм выявляет коллизии до запуска чертежей КМД в цех. На объектах площадью 140 000 м2 объём переделок проходок на площадке сократился на 91%.",
+    "anti_slop_rule": "Name physical clash components, IFC4 +/-5 mm boolean check, and m2 rework reduction.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_001",
+    "category": "cta_transform",
+    "domain": "cli_devtools",
+    "canon_id": "09_monospace_cli_devtools",
+    "en_slop_before": "Get Started Free Today!",
+    "en_canon_after": "Copy single-binary install command (Linux x86_64, 14 MB, no signup)",
+    "ru_slop_before": "Начать бесплатно прямо сейчас!",
+    "ru_canon_after": "Скопировать команду установки бинарника (Linux x86_64, 14 МБ, без регистрации)",
+    "anti_slop_rule": "Name exact artifact, OS, file size, and zero-account guarantee.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_002",
+    "category": "cta_transform",
+    "domain": "b2b_enterprise_demo",
+    "canon_id": "01_swiss_international_typographic",
+    "en_slop_before": "Book a Revolutionary Demo",
+    "en_canon_after": "Schedule a 25-minute live architecture review with a principal engineer",
+    "ru_slop_before": "Заказать уникальную демонстрацию",
+    "ru_canon_after": "Назначить 25-минутный разбор архитектуры с ведущим инженером",
+    "anti_slop_rule": "Specify call duration (25 min) and interlocutor role (principal engineer, not SDR).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_003",
+    "category": "cta_transform",
+    "domain": "saas_sandbox",
+    "canon_id": "03_dark_precision_saas_linear",
+    "en_slop_before": "Unlock Your Trial Now",
+    "en_canon_after": "Open live read-only trace sandbox (preloaded 50M spans, zero card required)",
+    "ru_slop_before": "Разблокировать пробный период",
+    "ru_canon_after": "Открыть интерактивный стенд трассировок (50 млн спанов, без привязки карты)",
+    "anti_slop_rule": "Offer immediate preloaded interactive sandbox without credit card friction.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_004",
+    "category": "cta_transform",
+    "domain": "fintech_pricing",
+    "canon_id": "08_fintech_institutional_ledger",
+    "en_slop_before": "Contact Us to Learn More",
+    "en_canon_after": "Download 2026 SEPA & SWIFT fee schedule (CSV + signed PDF, 180 KB)",
+    "ru_slop_before": "Свяжитесь с нами, чтобы узнать больше",
+    "ru_canon_after": "Скачать тарифную сетку расчётов 2026 (CSV и подписанный PDF, 180 КБ)",
+    "anti_slop_rule": "Deliver transparent fee schedule immediately instead of forcing an opaque sales inquiry.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_005",
+    "category": "cta_transform",
+    "domain": "security_audit",
+    "canon_id": "27_cybersecurity_zero_trust_ops",
+    "en_slop_before": "Discover Our Security",
+    "en_canon_after": "Read unredacted Cure53 penetration test report (42 pages, SHA-256 verified)",
+    "ru_slop_before": "Узнать всё о нашей безопасности",
+    "ru_canon_after": "Прочитать полный отчёт пентеста без купюр (42 страницы, сверка SHA-256)",
+    "anti_slop_rule": "Point to unredacted third-party audit report with page count.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_006",
+    "category": "cta_transform",
+    "domain": "industrial_datasheet",
+    "canon_id": "07_industrial_functional_instrument",
+    "en_slop_before": "Explore Technical Capabilities",
+    "en_canon_after": "Download STEP 3D CAD model & pinout datasheet (Rev 3.2, 2.4 MB)",
+    "ru_slop_before": "Изучить технические возможности",
+    "ru_canon_after": "Скачать 3D-модель STEP и схему распиновки (редакция 3.2, 2,4 МБ)",
+    "anti_slop_rule": "Provide exact CAD STEP + pinout revision engineers actually need.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_007",
+    "category": "cta_transform",
+    "domain": "hospitality_table",
+    "canon_id": "11_warm_artisan_hospitality",
+    "en_slop_before": "Reserve Your Unforgettable Experience",
+    "en_canon_after": "Check dinner availability for 2-6 guests (instant confirmation, free changes up to 24h)",
+    "ru_slop_before": "Забронировать незабываемый вечер",
+    "ru_canon_after": "Проверить свободные столы на 2-6 гостей (мгновенное подтверждение, отмена за 24 ч)",
+    "anti_slop_rule": "State party size range, instant confirmation, and cancellation cutoff.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_008",
+    "category": "cta_transform",
+    "domain": "architectural_consult",
+    "canon_id": "05_nordic_architectural_minimal",
+    "en_slop_before": "Start Your Dream Project",
+    "en_canon_after": "Send room dimensions & floor plan for preliminary RT60 acoustic calculation",
+    "ru_slop_before": "Начать проект вашей мечты",
+    "ru_canon_after": "Отправить габариты зала и план БТИ для предварительного расчёта RT60",
+    "anti_slop_rule": "Ask for concrete engineering inputs and promise a concrete preliminary calculation.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_009",
+    "category": "cta_transform",
+    "domain": "clinical_requisition",
+    "canon_id": "12_clinical_biotech_cleanroom",
+    "en_slop_before": "Partner With Our Lab",
+    "en_canon_after": "Order validated blood collection kits (dispatch within 24h to licensed clinics)",
+    "ru_slop_before": "Стать партнёром лаборатории",
+    "ru_canon_after": "Заказать вакуумные наборы пробирок (отгрузка в клиники за 24 часа)",
+    "anti_slop_rule": "Specify physical kit dispatch SLA and clinical eligibility.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_010",
+    "category": "cta_transform",
+    "domain": "newsletter_digest",
+    "canon_id": "04_editorial_broadsheet_serif",
+    "en_slop_before": "Subscribe to Stay Ahead of the Curve!",
+    "en_canon_after": "Receive one Sunday Systems Essay per week (zero sponsors, 1-click unsubscribe)",
+    "ru_slop_before": "Подпишитесь, чтобы всегда быть в тренде!",
+    "ru_canon_after": "Получать один инженерный разбор по воскресеньям (без рекламы, отписка в 1 клик)",
+    "anti_slop_rule": "State exact cadence, day of week, ad policy, and 1-click exit.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_011",
+    "category": "cta_transform",
+    "domain": "devtools_pricing_calc",
+    "canon_id": "02_neo_brutalism_tactile",
+    "en_slop_before": "See Flexible Plans",
+    "en_canon_after": "Calculate exact monthly bill from daily row writes ($0 idle floor)",
+    "ru_slop_before": "Посмотреть гибкие тарифы",
+    "ru_canon_after": "Рассчитать точный счёт за месяц по числу записей (база 0 ₽ в простое)",
+    "anti_slop_rule": "Point to deterministic unit-cost calculator and $0/0 RUB idle guarantee.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_012",
+    "category": "cta_transform",
+    "domain": "legal_intake",
+    "canon_id": "22_legal_advisory_chancery",
+    "en_slop_before": "Speak With an Attorney Today",
+    "en_canon_after": "Submit encrypted conflict-check inquiry (response within 4 business hours)",
+    "ru_slop_before": "Получить консультацию юриста",
+    "ru_canon_after": "Направить запрос на проверку конфликта интересов (ответ за 4 рабочих часа)",
+    "anti_slop_rule": "Use accurate legal intake step (conflict check) + 4-business-hour SLA.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_013",
+    "category": "cta_transform",
+    "domain": "audio_demo_plugin",
+    "canon_id": "23_audio_dsp_modular_rack",
+    "en_slop_before": "Try the Magic Free",
+    "en_canon_after": "Download 14-day unrestricted CLAP/VST3 installer (offline, no iLok dongle)",
+    "ru_slop_before": "Попробовать магию звука бесплатно",
+    "ru_canon_after": "Скачать полную 14-дневную версию CLAP/VST3 (работает офлайн, без USB-ключа)",
+    "anti_slop_rule": "Address the #1 audio engineer fear (iLok/dongles/online DRM) directly in the CTA.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_014",
+    "category": "cta_transform",
+    "domain": "academic_repro",
+    "canon_id": "25_academic_journal_monograph",
+    "en_slop_before": "Learn More About Our Research",
+    "en_canon_after": "Clone reproducible evaluation harness & seed manifests (Apache-2.0, 3.8 MB)",
+    "ru_slop_before": "Подробнее о нашем исследовании",
+    "ru_canon_after": "Клонировать стенд воспроизводимости и манифесты сидов (Apache-2.0, 3,8 МБ)",
+    "anti_slop_rule": "Give license and exact reproducibility artifact size.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_015",
+    "category": "cta_transform",
+    "domain": "civic_status",
+    "canon_id": "15_high_contrast_civic_gov_wcag_aaa",
+    "en_slop_before": "Click Here to Continue",
+    "en_canon_after": "Look up application status by 10-digit registration number",
+    "ru_slop_before": "Нажмите здесь для продолжения",
+    "ru_canon_after": "Проверить статус заявления по 10-значному входящему номеру",
+    "anti_slop_rule": "Never write 'Click Here'; state exact lookup action and required identifier.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_016",
+    "category": "cta_transform",
+    "domain": "ecommerce_cart",
+    "canon_id": "26_ecommerce_lookbook_grid",
+    "en_slop_before": "Grab Yours Before It's Gone!",
+    "en_canon_after": "Add Size M Field Shell to bag ($340, ships today from Tallinn, 30-day returns)",
+    "ru_slop_before": "Успейте забрать со скидкой!",
+    "ru_canon_after": "Добавить куртку размера M в корзину (32 000 ₽, отгрузка сегодня, возврат 30 дней)",
+    "anti_slop_rule": "Replace fake scarcity with SKU size, exact price, dispatch day, and return window.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_017",
+    "category": "cta_transform",
+    "domain": "climate_lca",
+    "canon_id": "17_sustainable_climate_botanical",
+    "en_slop_before": "Join Our Green Mission",
+    "en_canon_after": "Inspect third-party DNV lifecycle verification dossier (ISO-14064-3)",
+    "ru_slop_before": "Присоединяйтесь к зелёной миссии",
+    "ru_canon_after": "Открыть заключение верификатора по жизненному циклу ISO-14064-3",
+    "anti_slop_rule": "Direct skeptical buyers straight to independent verification dossiers.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_018",
+    "category": "cta_transform",
+    "domain": "exhibition_tickets",
+    "canon_id": "14_kinetic_cultural_exhibition",
+    "en_slop_before": "Experience the Exhibition",
+    "en_canon_after": "Book timed-entry ticket for Hall B (600 RUB, wheelchair step-free route included)",
+    "ru_slop_before": "Погрузиться в мир искусства",
+    "ru_canon_after": "Купить билет по сеансам в Павильон Б (600 ₽, безбарьерный вход с пандусом)",
+    "anti_slop_rule": "Include hall name, exact ticket price, and physical accessibility route note.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_019",
+    "category": "cta_transform",
+    "domain": "horology_appointment",
+    "canon_id": "16_luxury_horology_atelier_dark",
+    "en_slop_before": "Inquire About Exclusivity",
+    "en_canon_after": "Reserve private movement inspection at Glashutte or Zurich salon",
+    "ru_slop_before": "Узнать об эксклюзивной коллекции",
+    "ru_canon_after": "Записаться на личный осмотр калибра в ателье с часовщиком-мастером",
+    "anti_slop_rule": "Replace pretentious 'exclusivity' talk with concrete salon inspection.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_020",
+    "category": "cta_transform",
+    "domain": "roastery_subscription",
+    "canon_id": "28_craft_roastery_packaging",
+    "en_slop_before": "Join the Coffee Club!",
+    "en_canon_after": "Start bi-weekly 2x250g filter dispatch (pause or cancel in 1 click anytime)",
+    "ru_slop_before": "Вступить в закрытый кофейный клуб!",
+    "ru_canon_after": "Оформить доставку 2×250 г под фильтр раз в 2 недели (пауза в 1 клик без звонков)",
+    "anti_slop_rule": "Specify gram weight, dispatch frequency, and zero-friction cancellation.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "cta_021",
+    "category": "cta_transform",
+    "domain": "quant_historical_sample",
+    "canon_id": "19_quant_analytics_dense_terminal",
+    "en_slop_before": "Request Data Access",
+    "en_canon_after": "Download 24-hour NASDAQ ITCH 5.0 sample Parquet (410 MB, schema included)",
+    "ru_slop_before": "Запросить доступ к витрине данных",
+    "ru_canon_after": "Скачать суточный срез стакана в формате Parquet (410 МБ со схемой полей)",
+    "anti_slop_rule": "Provide immediate sample dataset format and byte size.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_001",
+    "category": "b2b_metric_proof",
+    "domain": "cdn_edge_tls",
+    "canon_id": "03_dark_precision_saas_linear",
+    "en_slop_before": "Customers love how dramatically faster their APIs run on our global edge network.",
+    "en_canon_after": "Migrating 420M daily checkout requests from single-region Frankfurt ALBs to TLS 1.3 0-RTT edge PoPs cut p95 round-trip latency from 184 ms to 29 ms (measured over 30 days via Catchpoint synthetic probes).",
+    "ru_slop_before": "Клиенты в восторге от невероятного ускорения работы своих сервисов в нашей глобальной сети.",
+    "ru_canon_after": "Перенос 420 млн ежедневных запросов корзины с балансировщиков во Франкфурте на узлы TLS 1.3 снизил задержку p95 со 184 до 29 мс по данным 30-дневного внешнего мониторинга.",
+    "anti_slop_rule": "Include request volume, baseline topology, target topology, p95 delta, and measurement window.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_002",
+    "category": "b2b_metric_proof",
+    "domain": "warehouse_pick",
+    "canon_id": "07_industrial_functional_instrument",
+    "en_slop_before": "Warehouse productivity skyrocketed after implementing our smart picking system.",
+    "en_canon_after": "Batching multi-aisle grocery orders via wave-zone pathing reduced picker walking distance from 14.2 km to 8.1 km per 8-hour shift and raised verified lines-per-hour from 92 to 146 across 3 fulfillment centers.",
+    "ru_slop_before": "Производительность склада взлетела до небес после внедрения нашей умной системы сборки.",
+    "ru_canon_after": "Волновая маршрутизация заказов сократила пробег комплектовщика за 8-часовую смену с 14,2 до 8,1 км и подняла выработку с 92 до 146 строк в час на трёх распределительных центрах.",
+    "anti_slop_rule": "Replace 'skyrocketed' with km walked per shift, lines/hour, and facility count.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_003",
+    "category": "b2b_metric_proof",
+    "domain": "chargeback_fraud",
+    "canon_id": "08_fintech_institutional_ledger",
+    "en_slop_before": "Our AI fraud engine slashes chargebacks while boosting approval rates seamlessly.",
+    "en_canon_after": "Selective 3DS2 step-up triggered only on ASN/BIN velocity anomalies lowered Visa chargeback ratio from 0.84% to 0.19% while lifting legitimate card authorization rate by +2.1 percentage points ($14.6M annualized recovered GMV).",
+    "ru_slop_before": "Наш антифрод-движок радикально снижает чарджбэки и одновременно повышает конверсию оплат.",
+    "ru_canon_after": "Выборочный запрос 3DS2 только при аномалиях подсети ASN и BIN снизил долю чарджбэков с 0,84% до 0,19% и одновременно повысил успешную авторизацию карт на +2,1 п.п.",
+    "anti_slop_rule": "Report both error directions (chargeback % AND card authorization lift in percentage points).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_004",
+    "category": "b2b_metric_proof",
+    "domain": "log_compression",
+    "canon_id": "09_monospace_cli_devtools",
+    "en_slop_before": "Save massive cloud storage costs with next-level log compression.",
+    "en_canon_after": "Columnar dictionary encoding + Zstandard level-6 packed 48 TB/day of Envoy access logs into 3.1 TB on S3 (15.4:1 ratio), cutting monthly AWS storage + egress spend from $68,400 to $9,200.",
+    "ru_slop_before": "Экономьте огромные бюджеты на облачном хранении логов благодаря инновационному сжатию.",
+    "ru_canon_after": "Колоночное словарное кодирование со сжатием Zstandard уровня 6 упаковало 48 ТБ/сутки логов Envoy в 3,1 ТБ (коэффициент 15,4:1), снизив ежемесячный счёт за объектное хранилище с 6,1 млн до 820 тыс. рублей.",
+    "anti_slop_rule": "Show raw TB/day -> compressed TB, exact codec, compression ratio, and currency delta.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_005",
+    "category": "b2b_metric_proof",
+    "domain": "clinical_triage",
+    "canon_id": "12_clinical_biotech_cleanroom",
+    "en_slop_before": "Faster lab turnaround empowers doctors to deliver better patient outcomes.",
+    "en_canon_after": "Direct bedside barcode accessioning eliminated manual tube relabeling across 4 emergency departments (N=31,400 blood cultures), cutting median collection-to-Gram-stain reporting from 4h 12m to 1h 48m with zero mislabeled specimens.",
+    "ru_slop_before": "Ускорение лабораторной диагностики помогает врачам спасать пациентов гораздо быстрее.",
+    "ru_canon_after": "Штрихкодирование пробирок прямо у постели пациента в четырёх приёмных отделениях (N=31 400 посевов крови) сократило медиану выдачи окраски по Граму с 4 ч 12 мин до 1 ч 48 мин при нуле ошибок маркировки.",
+    "anti_slop_rule": "Report sample N, clinical workflow step removed, median hours/minutes, and error count.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_006",
+    "category": "b2b_metric_proof",
+    "domain": "compiler_upgrade",
+    "canon_id": "02_neo_brutalism_tactile",
+    "en_slop_before": "Migrating to our SDK makes mobile apps way smaller and faster.",
+    "en_canon_after": "Replacing three legacy analytics frameworks with our zero-dependency C99 core shrank iOS IPA download size by 11.4 MB and reduced cold `application:didFinishLaunching` time on iPhone 13 Mini from 640 ms to 190 ms.",
+    "ru_slop_before": "Переход на наш SDK делает мобильные приложения заметно легче и быстрее.",
+    "ru_canon_after": "Замена трёх сторонних аналитических библиотек нашим ядром на C99 без зависимостей уменьшила размер сборки IPA на 11,4 МБ и сократила холодный старт на iPhone 13 Mini с 640 до 190 мс.",
+    "anti_slop_rule": "Name reference test hardware (iPhone 13 Mini), binary MB saved, and lifecycle hook ms.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_007",
+    "category": "b2b_metric_proof",
+    "domain": "acoustic_office",
+    "canon_id": "05_nordic_architectural_minimal",
+    "en_slop_before": "Our acoustic panels transformed a noisy open office into a calm workspace.",
+    "en_canon_after": "Installing 180 m2 of perforated birch Helmholtz ceiling baffles (NRC 0.85) across a 60-desk trading floor reduced speech transmission index (STI) at 4 meters from 0.64 to 0.31 and ambient peak SPL by 7.5 dBA.",
+    "ru_slop_before": "Наши акустические панели превратили шумный опенспейс в тихое и уютное рабочее пространство.",
+    "ru_canon_after": "Монтаж 180 м2 перфорированных берёзовых потолочных экранов Гельмгольца (NRC 0,85) в зале на 60 рабочих мест снизил индекс разборчивости фоновой речи STI на дистанции 4 м с 0,64 до 0,31, а пиковый шум на 7,5 дБА.",
+    "anti_slop_rule": "Cite installed m2, NRC rating, STI speech privacy drop at 4 m, and dBA reduction.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_008",
+    "category": "b2b_metric_proof",
+    "domain": "solar_soiling",
+    "canon_id": "17_sustainable_climate_botanical",
+    "en_slop_before": "Smart cleaning schedules maximize solar farm output all year round.",
+    "en_canon_after": "Scheduling waterless robotic brush passes by real-time short-circuit current (`Isc`) soiling-ratio thresholds instead of fixed monthly calendars recovered +4.7% annual GWh yield across a 120 MWp Atacama PV array.",
+    "ru_slop_before": "Умное планирование очистки солнечных панелей максимизирует выработку круглый год.",
+    "ru_canon_after": "Запуск безводных роботов-щёток по порогу падения тока короткого замыкания `Isc` вместо календарного графика вернул +4,7% годовой выработки ГВт·ч на солнечной станции мощностью 120 МВт.",
+    "anti_slop_rule": "State trigger metric (`Isc` soiling ratio), array MWp scale, and annual GWh yield recovery.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_009",
+    "category": "b2b_metric_proof",
+    "domain": "ddos_scrubbing",
+    "canon_id": "27_cybersecurity_zero_trust_ops",
+    "en_slop_before": "Unmatched DDoS protection that stops even the biggest attacks instantly.",
+    "en_canon_after": "XDP/eBPF packet filters at NIC driver ingress dropped a 1.8 Tbps / 410 Mpps UDP amplification flood in 1.4 seconds while keeping legitimate BGP customer sessions below 0.01% packet loss.",
+    "ru_slop_before": "Непревзойдённая защита от DDoS-атак мгновенно отражает угрозы любой мощности.",
+    "ru_canon_after": "Пакетные фильтры XDP/eBPF на входе сетевой карты отсекли UDP-флуд мощностью 1,8 Тбит/с (410 млн пакетов/с) за 1,4 секунды, удержав потери легитимного трафика ниже 0,01%.",
+    "anti_slop_rule": "Specify Tbps + Mpps flood volume, kernel ingress layer (XDP), time to mitigate, and clean traffic loss.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_010",
+    "category": "b2b_metric_proof",
+    "domain": "contract_redline",
+    "canon_id": "22_legal_advisory_chancery",
+    "en_slop_before": "Accelerate legal deal velocity and close enterprise contracts faster.",
+    "en_canon_after": "Standardizing pre-approved fallback clauses for limitation-of-liability and GDPR DPA schedules shortened median SaaS enterprise procurement legal review from 26 calendar days to 7 calendar days across 190 deals.",
+    "ru_slop_before": "Ускорьте согласование договоров и закрывайте крупные корпоративные сделки быстрее.",
+    "ru_canon_after": "Библиотека предсогласованных резервных формулировок об ограничении ответственности и поручении обработки ПДн сократила медиану юридического согласования корпоративных контрактов с 26 до 7 календарных дней на выборке из 190 сделок.",
+    "anti_slop_rule": "Name exact legal bottleneck clauses, deal sample size (190), and median calendar days.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_011",
+    "category": "b2b_metric_proof",
+    "domain": "editorial_retention",
+    "canon_id": "04_editorial_broadsheet_serif",
+    "en_slop_before": "Readers stay engaged much longer on our redesigned content experience.",
+    "en_canon_after": "Removing mid-article sticky video ads, tightening body measure to 62ch, and adding a sticky section outline raised scroll-to-end completion on 4,000-word technical essays from 28% to 51% (N=180,000 readers).",
+    "ru_slop_before": "Читатели гораздо дольше остаются вовлечёнными благодаря нашему обновлённому дизайну статей.",
+    "ru_canon_after": "Отказ от плавающих видеовставок, сужение текстовой колонки до 62 знаков и боковое оглавление подняли долю дочитывания лонгридов на 4000 слов с 28% до 51% (выборка 180 000 чтений).",
+    "anti_slop_rule": "Attribute scroll completion gain to specific typographic & layout interventions + sample N.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_012",
+    "category": "b2b_metric_proof",
+    "domain": "sqlite_edge_latency",
+    "canon_id": "19_quant_analytics_dense_terminal",
+    "en_slop_before": "Experience ultra-low latency analytics queries at any scale.",
+    "en_canon_after": "SIMD AVX2 vectorized scans over Zstd-compressed Parquet partitions evaluated 12-month cohort retention across 1.1 billion event rows in 380 ms on a single 16-core bare-metal node.",
+    "ru_slop_before": "Оцените сверхнизкую задержку аналитических запросов при любых объёмах данных.",
+    "ru_canon_after": "Векторизованное сканирование AVX2 по партициям Parquet рассчитало 12-месячное удержание когорт на 1,1 млрд событий за 380 мс на одном 16-ядерном выделенном сервере.",
+    "anti_slop_rule": "Always anchor query latency to row count, compression format, and core count.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_013",
+    "category": "b2b_metric_proof",
+    "domain": "accessibility_remediation",
+    "canon_id": "15_high_contrast_civic_gov_wcag_aaa",
+    "en_slop_before": "Our accessible redesign ensures everyone can use the portal seamlessly.",
+    "en_canon_after": "Remediating 42 low-contrast tokens to >= 7.2:1 OKLCH AAA, adding `<label for>` bindings, and fixing focus-trap modals eliminated 100% of axe-core critical/serious violations and cut NVDA screen-reader task time by 44%.",
+    "ru_slop_before": "Наш инклюзивный редизайн сделал портал максимально удобным для всех категорий пользователей.",
+    "ru_canon_after": "Доведение 42 цветовых токенов OKLCH до контраста >= 7,2:1 AAA, явная привязка `<label for>` и устранение ловушек фокуса убрали 100% критических ошибок axe-core и ускорили прохождение сценария через экранный диктор NVDA на 44%.",
+    "anti_slop_rule": "Verify accessibility via axe-core defect count AND assistive-technology task completion time.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_014",
+    "category": "b2b_metric_proof",
+    "domain": "hardware_rma_rate",
+    "canon_id": "18_bento_hardware_showcase",
+    "en_slop_before": "Built with uncompromising reliability for mission-critical deployments.",
+    "en_canon_after": "Replacing soldered electrolytic capacitors with automotive-grade polymer tantalums and potting RJ45 magnetics lowered 36-month field RMA rates across 19,500 deployed industrial switches from 2.1% to 0.24%.",
+    "ru_slop_before": "Оборудование создано с бескомпромиссной надёжностью для критически важных объектов.",
+    "ru_canon_after": "Замена электролитических конденсаторов на полимерные танталовые и компаундирование трансформаторов RJ45 снизили долю гарантийных возвратов RMA за 36 месяцев с 2,1% до 0,24% на партии из 19 500 коммутаторов.",
+    "anti_slop_rule": "Back reliability claims with component changes, deployed fleet size, and 36-month RMA %.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_015",
+    "category": "b2b_metric_proof",
+    "domain": "garment_return_rate",
+    "canon_id": "26_ecommerce_lookbook_grid",
+    "en_slop_before": "Customers find their perfect fit effortlessly with our sizing guide.",
+    "en_canon_after": "Publishing flat-lay garment chest, shoulder, and sleeve measurements in millimeters alongside model height/weight specs reduced size-exchange returns on technical shells from 24.5% to 9.8% year-over-year.",
+    "ru_slop_before": "Покупатели легко подбирают идеальную посадку благодаря нашей размерной сетке.",
+    "ru_canon_after": "Публикация обмеров готового изделия в миллиметрах по груди, плечам и рукаву вместе с параметрами модели снизила долю возвратов из-за непопадания в размер с 24,5% до 9,8% год к году.",
+    "anti_slop_rule": "Connect exact garment measurement table to return-rate percentage drop.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_016",
+    "category": "b2b_metric_proof",
+    "domain": "moe_expert_pruning",
+    "canon_id": "25_academic_journal_monograph",
+    "en_slop_before": "Our compressed AI model keeps almost all quality while using way less memory.",
+    "en_canon_after": "Domain-calibrated expert pruning (512 -> 256 experts per layer) with router bias healing cut GGUF checkpoint size by 46.8% while retaining 99.1% HumanEval+ pass@1 and 98.7% bilingual RU/EN rubric parity.",
+    "ru_slop_before": "Наша сжатая языковая модель сохраняет почти всё качество при минимальном расходе памяти.",
+    "ru_canon_after": "Доменно-калиброванный прунинг экспертов (512 -> 256 на слой) с коррекцией смещений роутера уменьшил размер чекпойнта GGUF на 46,8%, сохранив 99,1% результата на HumanEval+ и 98,7% паритета на двуязычном бенчмарке RU/EN.",
+    "anti_slop_rule": "Replace 'almost all quality' with exact expert counts, checkpoint %, and benchmark retention %.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_017",
+    "category": "b2b_metric_proof",
+    "domain": "lidar_vegetative_canopy",
+    "canon_id": "24_cartographic_field_expedition",
+    "en_slop_before": "See right through dense forests with unmatched aerial mapping accuracy.",
+    "en_canon_after": "5-echo waveform LiDAR at 120 m AGL penetrated closed boreal spruce canopy (LAI 4.6) to yield 6.8 bare-earth ground returns per m2, verified against 142 total-station ground control monuments (+/-3.1 cm RMSE).",
+    "ru_slop_before": "Просвечивайте густые лесные массивы с непревзойдённой точностью воздушного сканирования.",
+    "ru_canon_after": "Пятикратное отражение импульса LiDAR с высоты 120 м пробило сомкнутый еловый полог (LAI 4,6), обеспечив 6,8 точек рельефа на м2 по сверке со 142 тахеометрическими реперами (+/-3,1 см RMSE).",
+    "anti_slop_rule": "State echo count, flight altitude, leaf-area index, ground returns/m2, and monument check count.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_018",
+    "category": "b2b_metric_proof",
+    "domain": "horology_isochronism",
+    "canon_id": "16_luxury_horology_atelier_dark",
+    "en_slop_before": "Engineered for extraordinary timekeeping precision across every moment.",
+    "en_canon_after": "Free-sprung Breguet overcoil hairspring paired with twin series-coupled mainspring barrels holds amplitude between 275 and 292 degrees across the first 60 hours of its 72-hour reserve (chronometer certificate attached per serial).",
+    "ru_slop_before": "Механизм спроектирован для исключительной точности хода в любой ситуации.",
+    "ru_canon_after": "Свободная спираль со взведённым концевым витком Бреге и два последовательных заводных барабана удерживают амплитуду баланса в коридоре 275-292 градуса на протяжении первых 60 часов из 72-часового запаса хода.",
+    "anti_slop_rule": "Provide balance amplitude degrees over hours of power reserve instead of generic praise.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_019",
+    "category": "b2b_metric_proof",
+    "domain": "museum_ticketing_queue",
+    "canon_id": "14_kinetic_cultural_exhibition",
+    "en_slop_before": "Visitors enjoy a smooth, hassle-free entry experience at major exhibitions.",
+    "en_canon_after": "15-minute QR timed-entry cohorts with offline-capable Apple/Google Wallet passes cut Saturday atrium queue wait times from 42 minutes to under 4 minutes across 118,000 biennale admissions.",
+    "ru_slop_before": "Посетители проходят на крупные выставки быстро и без очередей благодаря новой системе билетов.",
+    "ru_canon_after": "Сеансы входа с шагом 15 минут и офлайн-билеты с QR-кодом сократили субботнее ожидание в атриуме с 42 до 4 минут на потоке 118 000 посетителей биеннале.",
+    "anti_slop_rule": "Report slot interval, peak-day wait-time drop, and total admission volume.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_020",
+    "category": "b2b_metric_proof",
+    "domain": "steel_preassembly",
+    "canon_id": "21_constructivist_editorial_ru",
+    "en_slop_before": "High-precision fabrication accelerates industrial roof installation.",
+    "en_canon_after": "CNC plasma-drilled bolt groups held to +/-0.5 mm hole-pitch tolerance allowed 48-meter span roof trusses to bolt up on crane hooks without reaming, cutting bay erection cycle from 4.5 shifts to 1.5 shifts.",
+    "ru_slop_before": "Высокоточное заводское изготовление значительно ускоряет монтаж большепролётных кровель.",
+    "ru_canon_after": "Сверловка болтовых групп на станках ЧПУ с допуском межцентрового шага +/-0,5 мм позволила собирать 48-метровые стропильные фермы без рассверловки на весу, сократив цикл монтажа пролёта с 4,5 до 1,5 смены.",
+    "anti_slop_rule": "Give machining tolerance (+/-0.5 mm), span meters, eliminated field operation, and shift count.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "bmp_021",
+    "category": "b2b_metric_proof",
+    "domain": "dsp_cpu_headroom",
+    "canon_id": "23_audio_dsp_modular_rack",
+    "en_slop_before": "Run hundreds of plugin instances without slowing down your DAW.",
+    "en_canon_after": "Hand-tuned NEON and AVX2 biquad filter cascades process 128 stereo tracks at 96 kHz / 64-sample buffer while consuming 6.4% single-core DSP load on Apple M2 Pro and Intel i7-13700K.",
+    "ru_slop_before": "Запускайте сотни плагинов одновременно без тормозов и перегрузки процессора.",
+    "ru_canon_after": "Векторизованные на NEON и AVX2 каскады биквадратных фильтров обрабатывают 128 стереодорожек при 96 кГц и буфере 64 сэмпла, занимая 6,4% ресурса на чипах M2 Pro и i7-13700K.",
+    "anti_slop_rule": "Specify track count, sample rate, buffer size, % DSP load, and exact test CPUs.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_001",
+    "category": "aeo_faq_answer",
+    "domain": "nvme_telemetry",
+    "canon_id": "01_swiss_international_typographic",
+    "en_slop_before": "Great question! Our platform is designed with security and offline support in mind so air-gapped teams can use it.",
+    "en_canon_after": "Yes, Quartz-Kontur operates 100% offline inside air-gapped networks without external telemetry calls. The collector binary ships as a static 14 MB Linux ELF package verified by an offline Ed25519 signature.",
+    "ru_slop_before": "Отличный вопрос! Наша платформа безусловно поддерживает работу в закрытых контурах для вашего удобства.",
+    "ru_canon_after": "Да, агент «Кварц-Контур» работает полностью автономно в изолированных сетях без внешних соединений. Сборщик поставляется единым статическим ELF-файлом весом 14 МБ с офлайн-подписью Ed25519.",
+    "anti_slop_rule": "Open sentence 1 with Yes/No + direct constraint; sentence 2 gives artifact format, size, and verification.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_002",
+    "category": "aeo_faq_answer",
+    "domain": "ebpf_observability",
+    "canon_id": "03_dark_precision_saas_linear",
+    "en_slop_before": "We support a wide range of modern Linux distributions to make deployment seamless.",
+    "en_canon_after": "ChronoTrace runs on any Linux host with kernel 5.10 LTS or newer that exposes BTF (BPF Type Format) headers. No kernel module compilation, DKMS package, or application container restart is required.",
+    "ru_slop_before": "Мы поддерживаем широкий спектр популярных дистрибутивов Linux для лёгкого внедрения.",
+    "ru_canon_after": "Агент запускается на любом узле Linux с ядром 5.10 LTS и новее при наличии заголовков BTF. Сборка модулей ядра через DKMS и перезапуск прикладных контейнеров не требуются.",
+    "anti_slop_rule": "State exact minimum Linux kernel version (5.10 LTS), BTF requirement, and zero-restart guarantee.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_003",
+    "category": "aeo_faq_answer",
+    "domain": "sqlite_sync_sdk",
+    "canon_id": "02_neo_brutalism_tactile",
+    "en_slop_before": "Conflicts are handled intelligently in the background so users never notice any issues.",
+    "en_canon_after": "Concurrent offline edits resolve deterministically via per-column Hybrid Logical Clock (HLC) last-writer-wins registers or custom merge hooks. Every superseded row version remains queryable in a local `_conflict_log` table for 30 days.",
+    "ru_slop_before": "Конфликты данных интеллектуально разрешаются в фоновом режиме без потерь для пользователя.",
+    "ru_canon_after": "Параллельные офлайн-правки сводятся детерминированно по поколоночным меткам гибридных логических часов HLC или через пользовательскую функцию слияния. Вытесненные версии строк сохраняются в локальной таблице `_conflict_log` на 30 суток.",
+    "anti_slop_rule": "Name exact conflict algorithm (per-column HLC) and auditability retention window.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_004",
+    "category": "aeo_faq_answer",
+    "domain": "treasury_clearing",
+    "canon_id": "08_fintech_institutional_ledger",
+    "en_slop_before": "Funds are safeguarded using industry-leading banking standards for your peace of mind.",
+    "en_canon_after": "Client EUR and USD operating balances sit in segregated safeguarding accounts at Tier-1 central-bank-member institutions rather than on our corporate balance sheet. Intraday sweep rules diversify holdings across up to three custodian banks automatically.",
+    "ru_slop_before": "Средства клиентов надёжно защищены по передовым банковским стандартам для вашего спокойствия.",
+    "ru_canon_after": "Операционные остатки клиентов учитываются на обособленных номинальных счетах в расчётных банках первого эшелона отдельно от собственного баланса оператора. Внутридневные лимиты автоматически распределяют ликвидность между тремя банками-кастодианами.",
+    "anti_slop_rule": "Distinguish segregated safeguarding custody vs corporate balance-sheet exposure.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_005",
+    "category": "aeo_faq_answer",
+    "domain": "acoustic_architecture",
+    "canon_id": "05_nordic_architectural_minimal",
+    "en_slop_before": "Yes, all of our natural wood materials meet strict fire safety regulations.",
+    "en_canon_after": "All slatted birch ceiling and wall assemblies carry certified Euroclass B-s1,d0 fire-retardant impregnation tested under EN 13501-1. Signed chamber emission reports (TVOC < 0.05 mg/m3) accompany every batch.",
+    "ru_slop_before": "Да, все наши натуральные древесные материалы полностью соответствуют строгим нормам пожарной безопасности.",
+    "ru_canon_after": "Все реечные потолочные и стеновые панели из берёзы проходят антипиреновую пропитку с сертификатом КМ1 (Г1, В1, Д2, Т1) и европейским классом B-s1,d0. К каждой партии прилагается протокол испытаний с эмиссией ЛОС ниже 0,05 мг/м3.",
+    "anti_slop_rule": "Cite exact fire classification code (Euroclass B-s1,d0 / KM1) and TVOC mg/m3 limit.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_006",
+    "category": "aeo_faq_answer",
+    "domain": "clinical_genomics",
+    "canon_id": "12_clinical_biotech_cleanroom",
+    "en_slop_before": "Patient genomic data is kept strictly confidential in compliance with healthcare laws.",
+    "en_canon_after": "Raw FASTQ and BAM sequencing files are encrypted at rest with AES-256-GCM inside Frankfurt ISO-27001 dedicated cages and purged 90 days after signed VCF report delivery unless extended biobanking consent is on file.",
+    "ru_slop_before": "Генетические данные пациентов хранятся в строгой конфиденциальности согласно законодательству.",
+    "ru_canon_after": "Первичные файлы секвенирования FASTQ и BAM шифруются алгоритмом AES-256-GCM на выделенных серверах контура ФЗ-152 и удаляются через 90 суток после выдачи отчёта VCF при отсутствии отдельного согласия на биобанкинг.",
+    "anti_slop_rule": "Specify file types, cipher, physical jurisdiction/compliance standard, and purge day count.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_007",
+    "category": "aeo_faq_answer",
+    "domain": "zero_trust_vpn",
+    "canon_id": "27_cybersecurity_zero_trust_ops",
+    "en_slop_before": "Our network prepares your organization for the quantum computing era.",
+    "en_canon_after": "Tunnel key exchange combines X25519 elliptic-curve Diffie-Hellman with NIST FIPS-203 ML-KEM-768 post-quantum encapsulation on every 120-second session rekey. Capturing encrypted traffic today yields zero plaintext even if classical ECDH is broken later.",
+    "ru_slop_before": "Наша сеть надёжно готовит инфраструктуру вашей компании к наступлению квантовой эры.",
+    "ru_canon_after": "Обмен ключами туннеля объединяет классический алгоритм X25519 и постквантовую инкапсуляцию ML-KEM-768 (FIPS-203) при каждой смене сессионного ключа раз в 120 секунд. Перехват зашифрованного трафика сегодня не позволит раскрыть полезную нагрузку в будущем.",
+    "anti_slop_rule": "Name exact hybrid PQ algorithm (X25519 + ML-KEM-768) and rekey interval (120s).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_008",
+    "category": "aeo_faq_answer",
+    "domain": "industrial_plc",
+    "canon_id": "07_industrial_functional_instrument",
+    "en_slop_before": "The gateway keeps working reliably even if internet connectivity drops.",
+    "en_canon_after": "During WAN outages, the gateway writes timestamped OPC-UA tag changes into a wear-leveled 32 GB industrial pSLC flash ring buffer. Once upstream MQTT-TLS reconnects, buffered frames replay in chronological order without dropping live polling.",
+    "ru_slop_before": "Шлюз продолжает надёжно работать даже при полной потере интернет-соединения на объекте.",
+    "ru_canon_after": "При обрыве внешнего канала шлюз записывает изменения тегов OPC-UA с метками времени в кольцевой буфер промышленной памяти pSLC объёмом 32 ГБ. После восстановления связи MQTT-TLS накопленные кадры досылаются в хронологическом порядке параллельно текущему опросу.",
+    "anti_slop_rule": "Name flash endurance type (pSLC), capacity (32 GB), and chronological replay behavior.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_009",
+    "category": "aeo_faq_answer",
+    "domain": "web_csp_headers",
+    "canon_id": "01_swiss_international_typographic",
+    "en_slop_before": "Cloudflare Pages headers are easy to configure using standard comment blocks.",
+    "en_canon_after": "Cloudflare Pages `_headers` files allow only `#` line comments starting at column zero; C-style `/* ... */` comments are parsed as literal URL route matchers and corrupt downstream header rules. Always place `/*` alone on an unindented route line followed by two-space indented header pairs.",
+    "ru_slop_before": "Заголовки в Cloudflare Pages легко настраиваются с помощью привычных комментариев.",
+    "ru_canon_after": "Формат файла `_headers` в Cloudflare Pages допускает только строчные комментарии с символа `#` в начале строки, тогда как конструкции `/* ... */` интерпретируются парсером как маршрут URL и ломают правила безопасности. Маршрут `/*` пишется отдельной строкой без отступа, а заголовки под ним отбиваются двумя пробелами.",
+    "anti_slop_rule": "Document exact parser pitfall (`#` valid vs `/* ... */` broken route matcher).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_010",
+    "category": "aeo_faq_answer",
+    "domain": "ai_robots_crawlers",
+    "canon_id": "04_editorial_broadsheet_serif",
+    "en_slop_before": "You can block AI bots in `robots.txt` while keeping search visibility.",
+    "en_canon_after": "To opt out of foundation-model weight training while remaining cited in live AI search answers, disallow `GPTBot`, `ClaudeBot`, and `Google-Extended` in `/robots.txt` while explicitly allowing `OAI-SearchBot`, `Claude-SearchBot`, `PerplexityBot`, and `Googlebot`.",
+    "ru_slop_before": "Вы можете гибко управлять доступом нейросетевых роботов через файл `robots.txt`.",
+    "ru_canon_after": "Чтобы запретить дообучение базовых моделей на текстах сайта и сохранить цитирование в поисковых ответах, закройте доступ для `GPTBot`, `ClaudeBot` и `Google-Extended` в `/robots.txt`, оставив разрешение `Allow: /` для поисковых агентов `OAI-SearchBot`, `Claude-SearchBot`, `PerplexityBot` и `Googlebot`.",
+    "anti_slop_rule": "Explicitly separate training user-agents from live retrieval user-agents.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_011",
+    "category": "aeo_faq_answer",
+    "domain": "wcag_target_size",
+    "canon_id": "15_high_contrast_civic_gov_wcag_aaa",
+    "en_slop_before": "Buttons should be big enough for mobile users to tap comfortably.",
+    "en_canon_after": "WCAG 2.2 Success Criterion 2.5.8 (Target Size Minimum, Level AA) requires every interactive pointer control outside inline prose sentences to measure at least 24 by 24 CSS pixels or maintain an equivalent 24 px spacing circle around its center.",
+    "ru_slop_before": "Кнопки интерфейса должны быть достаточно крупными для удобного нажатия со смартфона.",
+    "ru_canon_after": "Критерий WCAG 2.2 2.5.8 (уровень AA) требует, чтобы каждый интерактивный элемент вне текстовых абзацев имел область нажатия не менее 24×24 CSS-пикселей либо свободный радиус 24 пикселя вокруг центра мишени.",
+    "anti_slop_rule": "Cite exact WCAG 2.2 criterion number (2.5.8), 24x24 CSS px rule, and inline-prose exception.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_012",
+    "category": "aeo_faq_answer",
+    "domain": "audio_dsp_licensing",
+    "canon_id": "23_audio_dsp_modular_rack",
+    "en_slop_before": "Our licensing system is super friendly and hassle-free for studio musicians.",
+    "en_canon_after": "A single personal license authorizes up to three offline studio machines simultaneously via a signed 2 KB keyfile with zero background daemon, zero network phone-home, and zero USB dongle requirement.",
+    "ru_slop_before": "Наша система лицензирования максимально дружелюбна для студийных звукорежиссёров.",
+    "ru_canon_after": "Одна персональная лицензия активирует до трёх офлайн-станций с помощью подписанного файла ключа весом 2 КБ без фоновых служб, сетевых проверок и аппаратных USB-ключей.",
+    "anti_slop_rule": "State machine seat count, keyfile size, and explicit absence of daemons/dongles.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_013",
+    "category": "aeo_faq_answer",
+    "domain": "specialty_roastery",
+    "canon_id": "28_craft_roastery_packaging",
+    "en_slop_before": "Wait a little bit after roasting before brewing for the best flavor.",
+    "en_canon_after": "Rest lightwashed filter roasts (Agtron 65-70) in their unopened one-way valve pouch for 10 to 14 days post-roast so trapped CO2 degasses evenly and channel-free extraction reaches 20-21% TDS yield.",
+    "ru_slop_before": "Дайте зёрнам немного отдохнуть после обжарки для раскрытия лучшего вкуса.",
+    "ru_canon_after": "Выдерживайте светлую обжарку под фильтр (Agtron 65-70) в закрытой пачке с дегазационным клапаном от 10 до 14 дней с даты обжарки для равномерного выхода CO2 и ровной экстракции 20-21%.",
+    "anti_slop_rule": "Give exact rest days, Agtron range, packaging state, and extraction % mechanism.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_014",
+    "category": "aeo_faq_answer",
+    "domain": "technical_apparel",
+    "canon_id": "26_ecommerce_lookbook_grid",
+    "en_slop_before": "Wash your waterproof jacket gently to keep it working like new.",
+    "en_canon_after": "Machine-wash the 3-layer membrane shell every 12-15 field days at 30 C with liquid residue-free detergent (zero fabric softener), then tumble-dry warm for 20 minutes to reactivate the PFC-free C0 DWR water-repellent finish.",
+    "ru_slop_before": "Стирайте мембранную куртку бережно, чтобы она долго сохраняла свои защитные свойства.",
+    "ru_canon_after": "Стирайте трёхслойную мембрану каждые 12-15 ходовых дней при 30 C жидким гелем без кондиционера, затем прогрейте 20 минут в сушильном барабане на тёплом режиме для реактивации водоотталкивающей пропитки C0 DWR.",
+    "anti_slop_rule": "Specify wash interval, Celsius temperature, banned additive (softener), and 20-min DWR heat step.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_015",
+    "category": "aeo_faq_answer",
+    "domain": "server_hardware",
+    "canon_id": "18_bento_hardware_showcase",
+    "en_slop_before": "Firmware updates are open and secure on every compute sled.",
+    "en_canon_after": "Every compute sled boots open-source coreboot + LinuxBoot firmware measured into discrete SPI Root-of-Trust silicon; operators can audit, compile, and sign their own firmware images offline.",
+    "ru_slop_before": "Обновления прошивки на наших серверах полностью открыты и безопасны.",
+    "ru_canon_after": "Каждый вычислительный модуль загружает открытую прошивку coreboot и LinuxBoot с криптографической сверкой через дискретный аппаратный корень доверия SPI, позволяя заказчику самостоятельно собирать и подписывать образы офлайн.",
+    "anti_slop_rule": "Name firmware stack (coreboot + LinuxBoot), hardware RoT, and customer self-signing right.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_016",
+    "category": "aeo_faq_answer",
+    "domain": "grid_storage",
+    "canon_id": "17_sustainable_climate_botanical",
+    "en_slop_before": "Our battery systems are built to last safely for many years.",
+    "en_canon_after": "Prismatic lithium-iron-phosphate (LiFePO4) cells retain >= 80% nameplate energy capacity after 7,000 cycles at 0.5C and pass UL 9540A cell-to-cell thermal-runaway propagation testing without flaming ejection.",
+    "ru_slop_before": "Наши аккумуляторные системы рассчитаны на долгие годы безопасной эксплуатации.",
+    "ru_canon_after": "Призматические литий-железо-фосфатные ячейки LiFePO4 сохраняют не менее 80% номинальной ёмкости после 7000 циклов при токе 0,5C и проходят испытания UL 9540A на нераспространение теплового разгона.",
+    "anti_slop_rule": "State cycle life (7,000), C-rate, state-of-health floor (80%), and UL 9540A test.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_017",
+    "category": "aeo_faq_answer",
+    "domain": "geospatial_lidar",
+    "canon_id": "24_cartographic_field_expedition",
+    "en_slop_before": "Deliverables work smoothly with all major engineering CAD tools.",
+    "en_canon_after": "Survey packages ship in non-proprietary LAZ 1.4 point clouds, Cloud-Optimized GeoTIFF (COG) 32-bit DEM rasters, and DXF breakline contours referenced to your specified EPSG vertical and horizontal datums.",
+    "ru_slop_before": "Результаты съёмки легко открываются во всех популярных инженерных САПР.",
+    "ru_canon_after": "Камеральный пакет сдаётся в открытых форматах облаков точек LAZ 1.4, высотных матриц Cloud-Optimized GeoTIFF 32-bit и структурных линий DXF в заданной системе координат и высот по коду EPSG.",
+    "anti_slop_rule": "List exact open file formats (LAZ 1.4, COG 32-bit, DXF) and EPSG datum binding.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_018",
+    "category": "aeo_faq_answer",
+    "domain": "legal_arbitration",
+    "canon_id": "22_legal_advisory_chancery",
+    "en_slop_before": "We offer transparent billing models tailored to client needs.",
+    "en_canon_after": "Pre-filing merger-control assessments and standard SHA drafting are billed on capped fixed-phase fees agreed upfront in the engagement letter, while contested Phase-II proceedings follow itemized partner/associate hourly caps.",
+    "ru_slop_before": "Мы предлагаем прозрачные условия оплаты с учётом потребностей каждого доверителя.",
+    "ru_canon_after": "Предварительный антимонопольный анализ и подготовка акционерного соглашения тарифицируются по твёрдой поэтапной ставке в письме о поручении, а сопровождение углублённых разбирательств ограничено верхним потолком почасовых ставок.",
+    "anti_slop_rule": "Distinguish fixed-fee phases from capped hourly phases explicitly.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_019",
+    "category": "aeo_faq_answer",
+    "domain": "horology_service",
+    "canon_id": "16_luxury_horology_atelier_dark",
+    "en_slop_before": "Regular servicing keeps your mechanical timepiece running beautifully.",
+    "en_canon_after": "Caliber K-04 requires full ultrasonic movement disassembly, synthetic epilame lubrication, and gasket replacement every 6 to 7 years at a published tariff of CHF 680 including 24-month service warranty.",
+    "ru_slop_before": "Регулярное обслуживание позволит вашим механическим часам служить поколениями.",
+    "ru_canon_after": "Калибр K-04 требует полной ультразвуковой мойки ангренажа, нанесения синтетической смазки с эпиламом и замены уплотнений раз в 6-7 лет по открытому прейскуранту с гарантией 24 месяца на работы.",
+    "anti_slop_rule": "State year interval, exact horological operations, published price, and service warranty months.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_020",
+    "category": "aeo_faq_answer",
+    "domain": "hospitality_allergens",
+    "canon_id": "11_warm_artisan_hospitality",
+    "en_slop_before": "Our kitchen is happy to accommodate dietary preferences whenever possible.",
+    "en_canon_after": "The seven-course autumn tasting menu can be prepared celiac-safe gluten-free or pescatarian with 24 hours advance notice on your reservation; severe allium or dairy anaphylaxis cannot be accommodated due to shared stock reductions.",
+    "ru_slop_before": "Наша кухня с радостью учтёт ваши вкусовые предпочтения и аллергии при визите.",
+    "ru_canon_after": "Осенний дегустационный сет из семи подач готовится в безглютеновой или пескетарианской версии при предупреждении за 24 часа в форме бронирования, однако при тяжёлой анафилаксии на молочный белок и лук замена невозможна из-за базовых соусов.",
+    "anti_slop_rule": "Be honest about both what CAN and CANNOT be safely accommodated, plus notice hours.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "faq_021",
+    "category": "aeo_faq_answer",
+    "domain": "quant_historical_ticks",
+    "canon_id": "19_quant_analytics_dense_terminal",
+    "en_slop_before": "Historical market data goes back many years with clean formatting.",
+    "en_canon_after": "Full-depth ITCH/OUCH and CME MDP 3.0 PCAP-derived Parquet archives cover January 2018 through yesterday (T-1 23:59 UTC), adjusted for corporate splits and symbol Ticker-to-FIGI lineage.",
+    "ru_slop_before": "Исторические биржевые данные доступны за много лет в удобном очищенном виде.",
+    "ru_canon_after": "Полные архивы стакана из первичных дампов PCAP в формате Parquet охватывают период с января 2018 года по вчерашнюю сессию T-1 (23:59 UTC) со сквозной привязкой тикеров к идентификаторам FIGI и учётом дробления бумаг.",
+    "anti_slop_rule": "State feed protocols, start month/year, T-1 cutoff, and FIGI corporate-action lineage.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_001",
+    "category": "ux_microcopy_state",
+    "domain": "form_validation",
+    "canon_id": "15_high_contrast_civic_gov_wcag_aaa",
+    "en_slop_before": "Oops! Invalid input. Please try again.",
+    "en_canon_after": "Enter a 10-digit tax ID containing digits only (example: 7707083893). Spaces and hyphens are stripped automatically.",
+    "ru_slop_before": "Ой! Поле заполнено неверно. Попробуйте ещё раз.",
+    "ru_canon_after": "Введите 10 цифр ИНН организации без букв (пример: 7707083893). Пробелы и дефисы удаляются автоматически.",
+    "anti_slop_rule": "Never blame the user with 'Invalid input'; state exact digit count, concrete example, and auto-formatting behavior.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_002",
+    "category": "ux_microcopy_state",
+    "domain": "empty_state_traces",
+    "canon_id": "03_dark_precision_saas_linear",
+    "en_slop_before": "Nothing to see here yet! Start sending data to unlock magic.",
+    "en_canon_after": "0 spans received in the last 15 minutes for environment `prod-eu`. Run `chronotrace doctor --endpoint localhost:4317` to verify OTLP gRPC connectivity.",
+    "ru_slop_before": "Здесь пока пусто! Отправьте первые данные, чтобы увидеть аналитику.",
+    "ru_canon_after": "За последние 15 минут из окружения `prod-eu` не поступило ни одного спана. Выполните `chronotrace doctor --endpoint localhost:4317` для проверки соединения OTLP gRPC.",
+    "anti_slop_rule": "Turn empty states into diagnostic status + exact copy-paste verification command.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_003",
+    "category": "ux_microcopy_state",
+    "domain": "rate_limit_429",
+    "canon_id": "09_monospace_cli_devtools",
+    "en_slop_before": "Whoa, slow down! Too many requests right now.",
+    "en_canon_after": "HTTP 429: Token bucket exhausted (600 req/min limit for key `ak_live_9f2a`). Next slot opens in 4.2 seconds (`Retry-After: 5`).",
+    "ru_slop_before": "Подождите немного! Слишком много запросов к серверу.",
+    "ru_canon_after": "Код 429: исчерпан лимит 600 запросов/мин для ключа `ak_live_9f2a`. Следующее окно откроется через 4,2 с (заголовок `Retry-After: 5`).",
+    "anti_slop_rule": "Report quota ceiling, masked key prefix, and exact seconds until retry.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_004",
+    "category": "ux_microcopy_state",
+    "domain": "offline_sync_banner",
+    "canon_id": "02_neo_brutalism_tactile",
+    "en_slop_before": "You are offline. Some features might not work properly.",
+    "en_canon_after": "Offline mode: 14 local edits saved to IndexedDB WAL. Changes will sync automatically when network reachability returns.",
+    "ru_slop_before": "Нет подключения к сети. Часть функций может быть недоступна.",
+    "ru_canon_after": "Автономный режим: 14 локальных правок записаны в журнал IndexedDB WAL и отправятся автоматически при появлении сети.",
+    "anti_slop_rule": "Reassure with exact queued edit count and storage durability location.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_005",
+    "category": "ux_microcopy_state",
+    "domain": "destructive_delete",
+    "canon_id": "27_cybersecurity_zero_trust_ops",
+    "en_slop_before": "Are you sure you want to delete this item?",
+    "en_canon_after": "Revoke signing key `ed25519:4b81`? 3 active CI runners authenticating with this key will fail deploys immediately. This action cannot be undone.",
+    "ru_slop_before": "Вы уверены, что хотите удалить этот элемент?",
+    "ru_canon_after": "Отозвать ключ подписи `ed25519:4b81`? Три активных сборочных агента CI мгновенно потеряют доступ к выкладке. Отменить отзыв невозможно.",
+    "anti_slop_rule": "Name the exact resource ID, blast-radius count (3 active CI runners), and irreversibility.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_006",
+    "category": "ux_microcopy_state",
+    "domain": "password_passkey",
+    "canon_id": "15_high_contrast_civic_gov_wcag_aaa",
+    "en_slop_before": "Password does not meet complexity rules.",
+    "en_canon_after": "Use at least 14 characters (paste from your password manager is enabled, and no special-symbol gymnastics are required), or register a hardware passkey.",
+    "ru_slop_before": "Пароль не соответствует требованиям сложности системы.",
+    "ru_canon_after": "Введите минимум 14 символов (вставка из менеджера паролей разрешена, обязательных спецсимволов нет) либо привяжите аппаратный ключ Passkey.",
+    "anti_slop_rule": "Follow WCAG 2.2 3.3.8 + NIST SP 800-63B: allow paste, length >=14, passkeys.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_007",
+    "category": "ux_microcopy_state",
+    "domain": "payment_wire_cutoff",
+    "canon_id": "08_fintech_institutional_ledger",
+    "en_slop_before": "Your transfer is being processed and will arrive soon.",
+    "en_canon_after": "Submitted at 16:42 CET (past the 16:00 SEPA same-day cutoff). Settlement scheduled for Tuesday, 17 Nov at 08:30 CET; UETR reference `91f4-88c2`.",
+    "ru_slop_before": "Ваш перевод успешно принят в обработку и скоро поступит получателю.",
+    "ru_canon_after": "Платёж принят в 16:42 МСК после закрытия дневного рейса 16:00. Зачисление пройдёт во вторник, 17 ноября, в 08:30 МСК; код отслеживания `91f4-88c2`.",
+    "anti_slop_rule": "State cutoff reason, exact next settlement date/time, and tracking reference.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_008",
+    "category": "ux_microcopy_state",
+    "domain": "file_upload_dropzone",
+    "canon_id": "24_cartographic_field_expedition",
+    "en_slop_before": "Drop your files here to upload.",
+    "en_canon_after": "Drop `.laz`, `.las`, or `.tif` survey files up to 4 GB each. SHA-256 checksum and EPSG header are verified locally in your browser before upload starts.",
+    "ru_slop_before": "Перетащите файлы в эту область для загрузки на сервер.",
+    "ru_canon_after": "Перетащите файлы съёмки `.laz`, `.las` или `.tif` объёмом до 4 ГБ. Контрольная сумма SHA-256 и заголовок EPSG проверяются локально в браузере до отправки.",
+    "anti_slop_rule": "List extensions, max GB size, and client-side preflight check.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_009",
+    "category": "ux_microcopy_state",
+    "domain": "pricing_annual_toggle",
+    "canon_id": "01_swiss_international_typographic",
+    "en_slop_before": "Save Big With Annual!",
+    "en_canon_after": "Annual billing ($40/seat/mo billed $480 yearly, saves 2 months vs $48 monthly)",
+    "ru_slop_before": "Выгодная годовая подписка!",
+    "ru_canon_after": "Годовая оплата (3800 ₽ за место в месяц, счёт 45 600 ₽ на год, экономия 2 месяцев)",
+    "anti_slop_rule": "Show exact monthly equivalent, total annual invoice charge, and exact savings math.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_010",
+    "category": "ux_microcopy_state",
+    "domain": "honeypot_privacy_note",
+    "canon_id": "22_legal_advisory_chancery",
+    "en_slop_before": "We value your privacy and never spam.",
+    "en_canon_after": "Protected without third-party CAPTCHA trackers. Your inquiry goes straight to our intake desk over TLS 1.3 and is purged after 90 days if no engagement is opened.",
+    "ru_slop_before": "Мы бережно относимся к вашим персональным данным и не рассылаем спам.",
+    "ru_canon_after": "Форма защищена без сторонних трекеров и капчи. Заявка поступает напрямую дежурному партнёру по TLS 1.3 и удаляется через 90 суток, если договор не заключён.",
+    "anti_slop_rule": "Highlight zero-tracker anti-spam and concrete 90-day non-engagement purge.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_011",
+    "category": "ux_microcopy_state",
+    "domain": "search_no_results",
+    "canon_id": "10_scientific_documentation_tufte",
+    "en_slop_before": "Sorry, we couldn't find anything matching your search.",
+    "en_canon_after": "0 entries matched `\"eigenvalue clamp\"` across 284 monographs. Try stem query `eigenvalue` or browse §4 Numerical Stability (`19` notes).",
+    "ru_slop_before": "К сожалению, по вашему запросу ничего не найдено.",
+    "ru_canon_after": "По точной фразе `«ограничение спектра»` в 284 статьях совпадений нет. Снимите кавычки или откройте раздел §4 «Численная устойчивость» (19 заметок).",
+    "anti_slop_rule": "Echo the exact query, corpus count, why it missed (exact phrase quotes), and a populated fallback section.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_012",
+    "category": "ux_microcopy_state",
+    "domain": "export_csv_progress",
+    "canon_id": "19_quant_analytics_dense_terminal",
+    "en_slop_before": "Please wait while we prepare your download...",
+    "en_canon_after": "Streaming partition 6 of 8 (1.42M rows, 68 MB Zstd Parquet). Keep this tab open (~3 seconds remaining).",
+    "ru_slop_before": "Пожалуйста, подождите, идёт подготовка вашего файла...",
+    "ru_canon_after": "Выгрузка партиции 6 из 8 (1,42 млн строк, 68 МБ Parquet Zstd). Не закрывайте вкладку, осталось около 3 секунд.",
+    "anti_slop_rule": "Show partition counter, row count, MB size, and remaining seconds.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_013",
+    "category": "ux_microcopy_state",
+    "domain": "cookie_zero_banner",
+    "canon_id": "27_cybersecurity_zero_trust_ops",
+    "en_slop_before": "We use cookies to enhance your browsing experience. Accept All.",
+    "en_canon_after": "Zero tracking cookies, zero ad pixels, zero cross-site scripts: no consent banner required.",
+    "ru_slop_before": "Мы используем файлы cookie для улучшения работы сайта.",
+    "ru_canon_after": "Сайт работает без рекламных пикселей, сторонних скриптов и аналитических cookie.",
+    "anti_slop_rule": "Eliminate cookie-banner bloat entirely by running zero tracking cookies.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_014",
+    "category": "ux_microcopy_state",
+    "domain": "calibration_slider",
+    "canon_id": "23_audio_dsp_modular_rack",
+    "en_slop_before": "Adjust threshold setting.",
+    "en_canon_after": "Limiter Ceiling: -1.0 dBTP (ITU-R BS.1770-4 streaming true-peak safe)",
+    "ru_slop_before": "Настройте уровень порога срабатывания.",
+    "ru_canon_after": "Потолок лимитера: -1,0 dBTP (запас истинного пика по стандарту ITU-R BS.1770-4)",
+    "anti_slop_rule": "Include exact engineering unit (dBTP) and broadcast standard reference.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_015",
+    "category": "ux_microcopy_state",
+    "domain": "stock_low_honest",
+    "canon_id": "26_ecommerce_lookbook_grid",
+    "en_slop_before": "Hurry! Selling fast! 14 people are looking at this right now!",
+    "en_canon_after": "Size L: 3 jackets in Tallinn warehouse (ships today). Next production batch arrives 12 December.",
+    "ru_slop_before": "Торопитесь! Сейчас этот товар смотрят ещё 14 человек!",
+    "ru_canon_after": "Размер L: 3 куртки на складе в Твери (отгрузка сегодня). Следующая партия поступит из пошивочного цеха 12 декабря.",
+    "anti_slop_rule": "Replace dark-pattern viewer counters with verifiable warehouse stock + restock date.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_016",
+    "category": "ux_microcopy_state",
+    "domain": "specimen_rejection",
+    "canon_id": "12_clinical_biotech_cleanroom",
+    "en_slop_before": "Sample error detected.",
+    "en_canon_after": "Accession #88412 flagged: hemolysis index H=4 exceeds assay ceiling (H<=2). Request redraw in lavender-top K2-EDTA 4 mL tube at zero repeat charge.",
+    "ru_slop_before": "Обнаружена ошибка биоматериала.",
+    "ru_canon_after": "Проба №88412 отклонена: индекс гемолиза H=4 превышает порог методики (H<=2). Оформите бесплатный перезабор в пробирку K2-ЭДТА 4 мл с сиреневой крышкой.",
+    "anti_slop_rule": "Give quantitative rejection threshold, required tube cap/anticoagulant, and zero-fee redraw.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_017",
+    "category": "ux_microcopy_state",
+    "domain": "keyboard_shortcut_hint",
+    "canon_id": "20_spatial_glass_dark_instrument",
+    "en_slop_before": "Pro tip: use shortcuts to navigate faster!",
+    "en_canon_after": "Press `1`-`3` to switch latency percentiles, `/` to filter services, or `Esc` to clear selection.",
+    "ru_slop_before": "Совет: используйте горячие клавиши для быстрой навигации!",
+    "ru_canon_after": "Клавиши `1`-`3` переключают перцентили задержки, `/` фокусирует фильтр сервисов, `Esc` сбрасывает выбор.",
+    "anti_slop_rule": "List exact bound keys and actions directly without 'Pro tip!' fluff.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_018",
+    "category": "ux_microcopy_state",
+    "domain": "brew_calculator_out",
+    "canon_id": "28_craft_roastery_packaging",
+    "en_slop_before": "Recommended coffee recipe calculated.",
+    "en_canon_after": "18.0 g dose -> 300 ml water at 94 C (1:16.7 ratio; pour 50 ml bloom at 0:00, two 125 ml pulses at 0:40 and 1:25, target drawdown 2:45).",
+    "ru_slop_before": "Рекомендуемый рецепт заваривания рассчитан.",
+    "ru_canon_after": "18,0 г зерна -> 300 мл воды при 94 C (пропорция 1:16,7: предсмачивание 50 мл на 0:00, два вливания по 125 мл на 0:40 и 1:25, общее время 2:45).",
+    "anti_slop_rule": "Output actionable gram/ml/Celsius/timestamp steps.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_019",
+    "category": "ux_microcopy_state",
+    "domain": "thermal_derating_warn",
+    "canon_id": "07_industrial_functional_instrument",
+    "en_slop_before": "Warning: High temperature.",
+    "en_canon_after": "WARN [CH-03]: Enclosure ambient reached 68.4 C (derating threshold 65.0 C). PoE+ budget capped to 60 W until cabinet temperature drops below 60.0 C.",
+    "ru_slop_before": "Внимание: превышена температура устройства.",
+    "ru_canon_after": "ПРЕДУПРЕЖДЕНИЕ [CH-03]: температура в шкафу достигла 68,4 C (порог снижения мощности 65,0 C). Бюджет PoE+ ограничен до 60 Вт до остывания ниже 60,0 C.",
+    "anti_slop_rule": "Include text severity prefix (`WARN`), sensor reading, threshold, automatic protective action, and hysteresis reset.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_020",
+    "category": "ux_microcopy_state",
+    "domain": "reduced_motion_badge",
+    "canon_id": "14_kinetic_cultural_exhibition",
+    "en_slop_before": "Animations paused.",
+    "en_canon_after": "OS Reduced Motion detected: kinetic gallery transitions disabled; static high-contrast floor index active.",
+    "ru_slop_before": "Анимации отключены.",
+    "ru_canon_after": "Обнаружена системная настройка снижения движения: переходы отключены, включён статический указатель залов.",
+    "anti_slop_rule": "Acknowledge OS `prefers-reduced-motion` respectfully and confirm full functional parity.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ux_021",
+    "category": "ux_microcopy_state",
+    "domain": "bibtex_copied",
+    "canon_id": "25_academic_journal_monograph",
+    "en_slop_before": "Copied!",
+    "en_canon_after": "Copied BibTeX entry (`@article{kuznetsov2026rco}`, 8 lines) + artifact SHA-256 to clipboard.",
+    "ru_slop_before": "Скопировано!",
+    "ru_canon_after": "Карточка BibTeX (`@article{kuznetsov2026rco}`, 8 строк) и контрольная сумма SHA-256 скопированы в буфер.",
+    "anti_slop_rule": "Confirm exact citation key and payload copied.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_001",
+    "category": "editorial_lead",
+    "domain": "swiss_grid_history",
+    "canon_id": "01_swiss_international_typographic",
+    "en_slop_before": "In today's fast-paced digital world, typography plays a crucial role in creating seamless user experiences.",
+    "en_canon_after": "When Josef Muller-Brockmann drafted the Zurich Tonhalle concert posters in 1955, every type size and column gutter derived from a single integer module of the sheet's short edge.",
+    "ru_slop_before": "В современном динамично развивающемся цифровом мире типографика играет важнейшую роль в создании интерфейсов.",
+    "ru_canon_after": "Когда Йозеф Мюллер-Брокман чертил афиши для цюрихского зала Тонхалле в 1955 году, каждый кегль и межколонник выводились из единого целочисленного модуля короткой стороны листа.",
+    "anti_slop_rule": "Cut throat-clearing 'In today's world'; open on a dated historical scene and concrete geometric rule.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_002",
+    "category": "editorial_lead",
+    "domain": "timber_acoustics",
+    "canon_id": "05_nordic_architectural_minimal",
+    "en_slop_before": "Let's delve into the fascinating intersection of architecture and sound design.",
+    "en_canon_after": "Poured concrete and triple-glazed curtain walls give northern daylight halls crisp thermal envelopes while stretching mid-frequency speech decay past 1.9 seconds.",
+    "ru_slop_before": "Давайте погрузимся в удивительный мир архитектурной акустики современных общественных зданий.",
+    "ru_canon_after": "Монолитный бетон и трёхкамерное панорамное остекление берегут тепло в северных залах, но растягивают затухание речевых частот за отметку 1,9 секунды.",
+    "anti_slop_rule": "Never write 'Let's delve / Погрузимся'; open directly with the physical tension and measured seconds.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_003",
+    "category": "editorial_lead",
+    "domain": "flash_translation_layer",
+    "canon_id": "09_monospace_cli_devtools",
+    "en_slop_before": "Modern SSDs are marvels of engineering that power the cloud revolution.",
+    "en_canon_after": "Every 4 KB random overwrite on a TLC NAND drive forces the flash translation layer to relocate valid pages before erasing a multi-megabyte block, turning steady sequential bandwidth into 18 ms tail-latency spikes.",
+    "ru_slop_before": "Современные твердотельные накопители стали настоящим чудом инженерной мысли в эпоху облаков.",
+    "ru_canon_after": "Каждая случайная перезапись блока 4 КБ на чипах TLC NAND заставляет транслятор адресов переносить живые страницы перед стиранием мегабайтного блока, превращая ровную полосу пропускания в пики задержки по 18 мс.",
+    "anti_slop_rule": "Start directly inside the hardware mechanism causing tail latency.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_004",
+    "category": "editorial_lead",
+    "domain": "broadsheet_economics",
+    "canon_id": "04_editorial_broadsheet_serif",
+    "en_slop_before": "Global supply chains are evolving rapidly amidst unprecedented transformation.",
+    "en_canon_after": "Three transformer factories in Vaasa, Linz, and Changzhou now hold 38-month order backlogs for 400 kV grain-oriented silicon-steel cores, setting the hard ceiling on European grid interconnection.",
+    "ru_slop_before": "Глобальные цепочки поставок стремительно меняются в условиях беспрецедентных вызовов.",
+    "ru_canon_after": "Три трансформаторных завода в Ваасе, Линце и Чанчжоу расписали квоты на сердечники из анизотропной электротехнической стали 400 кВ на 38 месяцев вперёд, задав жёсткий предел ввода новых подстанций.",
+    "anti_slop_rule": "Name the three cities, voltage rating, alloy, and month backlog in sentence one.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_005",
+    "category": "editorial_lead",
+    "domain": "ma_ceramics",
+    "canon_id": "06_japanese_ma_wabi_editorial",
+    "en_slop_before": "Minimalism is more than just a style; it is a timeless philosophy of simplicity.",
+    "en_canon_after": "Unwashed Shigaraki feldspar clay vitrifies unevenly at 1,280 C in a wood-fired anagama tunnel, leaving quartz grains proud of the rim where wood ash settles naturally.",
+    "ru_slop_before": "Минимализм давно перестал быть просто стилем и превратился в вечную философию простоты.",
+    "ru_canon_after": "Неотмученная полевошпатовая глина Сигараки спекается неравномерно при 1280 C в дровяной печи анагама, оставляя зёрна кварца на кромке там, где оседает летучая зола.",
+    "anti_slop_rule": "Replace 'philosophy of simplicity' clichés with mineral, kiln temperature, and firing physics.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_006",
+    "category": "editorial_lead",
+    "domain": "tufte_sparklines",
+    "canon_id": "10_scientific_documentation_tufte",
+    "en_slop_before": "Data visualization has become increasingly important for making smart decisions.",
+    "en_canon_after": "An ICU bedside chart printing a single glucose number (`142 mg/dL`) without its 24-hour trajectory hides whether insulin resistance is stabilizing or accelerating at 18 mg/dL per hour.",
+    "ru_slop_before": "Визуализация данных приобретает всё большее значение для принятия взвешенных решений.",
+    "ru_canon_after": "Реанимационный лист с одиночной цифрой глюкозы `7,9 ммоль/л` без суточной кривой скрывает главное: стабилизируется ли пациент или показатель растёт со скоростью 1,0 ммоль/л в час.",
+    "anti_slop_rule": "Demonstrate why visualization matters through a single high-stakes clinical number vs slope.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_007",
+    "category": "editorial_lead",
+    "domain": "fermentation_terroir",
+    "canon_id": "11_warm_artisan_hospitality",
+    "en_slop_before": "At our restaurant, passion for local ingredients meets culinary innovation.",
+    "en_canon_after": "Rye milled 40 kilometers east of Pskov carries wild *Kazachstania humilis* yeasts that stall below 24 C, requiring cast-iron proof boxes held at 27.5 C before dawn bake.",
+    "ru_slop_before": "В нашем ресторане любовь к локальным фермерским продуктам встречается с кулинарными инновациями.",
+    "ru_canon_after": "Озимая рожь помола из-под Пскова несёт дикие дрожжи *Kazachstania humilis*, которые засыпают ниже 24 C и требуют расстойки при 27,5 C за четыре часа до утренней выпечки.",
+    "anti_slop_rule": "Ground culinary prose in grain origin, microbiology, and exact proofing temperature.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_008",
+    "category": "editorial_lead",
+    "domain": "constructivist_truss",
+    "canon_id": "21_constructivist_editorial_ru",
+    "en_slop_before": "Russian engineering heritage is a rich tapestry of bold architectural achievements.",
+    "en_canon_after": "Vladimir Shukhov covered the 1896 Nizhny Novgorod exhibition pavilions with doubly curved steel tension-strips 5 millimeters thick, cutting roof dead-weight per square meter to one-third of contemporary riveted arches.",
+    "ru_slop_before": "Инженерное наследие представляет собой богатое полотно смелых архитектурных достижений.",
+    "ru_canon_after": "В 1896 году Владимир Шухов перекрыл павильоны Всероссийской выставки в Нижнем Новгороде двояковыпуклой сеткой из стальных полос толщиной 5 мм, снизив металлоёмкость кровли втрое против клёпаных арок.",
+    "anti_slop_rule": "Ban 'rich tapestry'; cite year, city, 5 mm strip geometry, and 3x weight ratio.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_009",
+    "category": "editorial_lead",
+    "domain": "oklch_color_science",
+    "canon_id": "03_dark_precision_saas_linear",
+    "en_slop_before": "Choosing colors in web design used to be hard until modern CSS arrived.",
+    "en_canon_after": "In legacy `hsl()`, setting `50%` lightness yields a glaring `0.88` relative luminance in yellow (`hsl(60 100% 50%)`) next to a murky `0.07` in royal blue (`hsl(240 100% 50%)`), breaking badge contrast whenever hues rotate.",
+    "ru_slop_before": "Подбор цветовой палитры для интерфейсов долгое время оставался непростой задачей для дизайнеров.",
+    "ru_canon_after": "В старом пространстве `hsl()` одинаковая светлота `50%` даёт слепящую относительную яркость `0,88` на жёлтом тоне и глухие `0,07` на синем, ломая контраст текста при любой смене оттенка.",
+    "anti_slop_rule": "Show the exact mathematical bug in `hsl()` luminance (0.88 vs 0.07) that motivates `oklch()`.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_010",
+    "category": "editorial_lead",
+    "domain": "horology_escapement",
+    "canon_id": "16_luxury_horology_atelier_dark",
+    "en_slop_before": "Every mechanical watch tells a story of passion and artistry.",
+    "en_canon_after": "At 21,600 vibrations per hour, a Swiss lever pallet fork unlocks and locks the escape wheel 518,400 times every day, sliding synthetic corundum across a 0.14 mm oil film.",
+    "ru_slop_before": "Каждые механические часы рассказывают удивительную историю страсти и высокого искусства.",
+    "ru_canon_after": "На частоте 21 600 полуколебаний в час анкерная вилка освобождает и запирает спусковое колесо 518 400 раз за сутки, скользя синтетическим корундом по масляной плёнке толщиной 0,14 мм.",
+    "anti_slop_rule": "Count the daily impulses (518,400) and film thickness (0.14 mm) instead of 'passion and artistry'.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_011",
+    "category": "editorial_lead",
+    "domain": "zero_trust_perimeter",
+    "canon_id": "27_cybersecurity_zero_trust_ops",
+    "en_slop_before": "Traditional castle-and-moat security is dead in the era of hybrid work.",
+    "en_canon_after": "Once a single developer laptop joins a flat `/16` corporate VPN subnet, any compromised npm postinstall script inherits lateral TCP reachability to staging databases and internal Jenkins runners.",
+    "ru_slop_before": "Традиционная периметровая защита окончательно устарела в эпоху гибридной удалённой работы.",
+    "ru_canon_after": "Как только ноутбук разработчика получает адрес в плоской корпоративной VPN-подсети `/16`, любой заражённый скрипт установки пакета обретает прямую TCP-видимость тестовых баз и сборочных узлов.",
+    "anti_slop_rule": "Replace 'castle-and-moat is dead' cliche with concrete `/16` subnet lateral-movement vector.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_012",
+    "category": "editorial_lead",
+    "domain": "civic_plain_language",
+    "canon_id": "15_high_contrast_civic_gov_wcag_aaa",
+    "en_slop_before": "Digital transformation in government starts with putting citizens first.",
+    "en_canon_after": "Rewriting a four-page municipal housing-subsidy instruction from 38-word passive statutory clauses into eight numbered verb-led steps cut walk-in counter inquiries by 52% in one quarter.",
+    "ru_slop_before": "Цифровая трансформация госуслуг начинается с заботы об удобстве каждого гражданина.",
+    "ru_canon_after": "Перевод четырёхстраничной памятки о жилищной субсидии с канцелярских причастных оборотов по 38 слов на восемь глагольных шагов сократил очередь очных обращений в МФЦ на 52% за квартал.",
+    "anti_slop_rule": "Prove plain-language impact with sentence word length and counter-visit reduction.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_013",
+    "category": "editorial_lead",
+    "domain": "bauhaus_stage",
+    "canon_id": "13_bauhaus_geometric_poster",
+    "en_slop_before": "The Bauhaus school changed modern design forever with its bold vision.",
+    "en_canon_after": "In Dessau's 1926 workshop wing, Herbert Bayer banished capital letters from studio syllabi on the grounds that printing two alphabets doubled typesetting case weight without adding a single phoneme.",
+    "ru_slop_before": "Школа Баухаус навсегда изменила облик современного дизайна благодаря смелому видению.",
+    "ru_canon_after": "В дессауских мастерских 1926 года Герберт Байер убрал прописные литеры из учебных бланков, доказав, что содержание двух касс удваивает расход свинца без добавления ни одной новой фонемы.",
+    "anti_slop_rule": "Cite specific designer, year, physical typesetting constraint, and linguistic argument.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_014",
+    "category": "editorial_lead",
+    "domain": "coffee_postharvest",
+    "canon_id": "28_craft_roastery_packaging",
+    "en_slop_before": "Great coffee begins its journey high in the misty mountain farms.",
+    "en_canon_after": "Submerging depulped Caturra cherry in sealed 200-liter HDPE tanks at 18 C extends lactic mucilage breakdown to 48 hours without letting acetic bacteria sour the parchment.",
+    "ru_slop_before": "Путь великолепного кофе начинается высоко на туманных горных плантациях.",
+    "ru_canon_after": "Погружение депульпированной ягоды Катурры в герметичные 200-литровые ёмкости при 18 C растягивает молочнокислую ферментацию клейковины до 48 часов, не давая уксусным бактериям окислить зерно.",
+    "anti_slop_rule": "Replace 'misty mountain journey' with fermentation vessel, Celsius control, and lactic vs acetic chemistry.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_015",
+    "category": "editorial_lead",
+    "domain": "geodesy_elevation",
+    "canon_id": "24_cartographic_field_expedition",
+    "en_slop_before": "Maps have guided explorers for centuries, and today's digital maps are smarter than ever.",
+    "en_canon_after": "Sea level at Kronstadt and sea level at Amsterdam differ from the WGS84 mathematical ellipsoid by locally varying gravity undulations of up to 29 meters, which is why raw GNSS heights flood storm drains if treated as orthometric elevation.",
+    "ru_slop_before": "Карты веками вели первооткрывателей, а современные цифровые атласы стали умнее, чем когда-либо.",
+    "ru_canon_after": "Балтийская система высот от Кронштадтского футштока расходится с математическим эллипсоидом WGS84 на величину гравитационной волны геоида до 29 метров, поэтому сырые спутниковые отметки разворачивают уклон ливневой канализации вспять.",
+    "anti_slop_rule": "Open with geoid undulation physics (29 m) and engineering failure consequence.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_016",
+    "category": "editorial_lead",
+    "domain": "moe_routing_physics",
+    "canon_id": "25_academic_journal_monograph",
+    "en_slop_before": "Mixture-of-Experts models are revolutionizing artificial intelligence scalability.",
+    "en_canon_after": "Activating 10 routed experts out of 512 per token cuts FLOPs per forward pass by 28x, yet leaves all 512 expert weight tensors contending for PCIe and DRAM capacity unless inactive domain tails are pruned offline.",
+    "ru_slop_before": "Архитектура разреженных экспертов совершает настоящую революцию в масштабировании нейросетей.",
+    "ru_canon_after": "Активация 10 маршрутизируемых экспертов из 512 на каждый токен снижает число операций в 28 раз, однако все 512 матриц весов продолжают занимать объём ОЗУ и шину PCIe без офлайн-отсечения неиспользуемых ветвей.",
+    "anti_slop_rule": "Contrast FLOP savings (28x) with static DRAM residency bottleneck.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_017",
+    "category": "editorial_lead",
+    "domain": "bento_power_bus",
+    "canon_id": "18_bento_hardware_showcase",
+    "en_slop_before": "Modern data centers require innovative rack designs for peak performance.",
+    "en_canon_after": "Delivering 36 kW down a server rack at 12 volts DC requires 3,000 amperes of copper busbar current and loses quadruple the resistive I2R heat of a 48-volt blind-mate backplane.",
+    "ru_slop_before": "Современные дата-центры требуют инновационной конструкции стоек для максимальной отдачи.",
+    "ru_canon_after": "Передача 36 кВт по серверной стойке на напряжении 12 В постоянного тока требует тока 3000 А в медной шине и даёт вчетверо больше омических потерь I2R, чем слепая стыковка на 48 В.",
+    "anti_slop_rule": "Lead with Ohm/Joule heating math (36 kW, 3,000 A, 4x I2R loss).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_018",
+    "category": "editorial_lead",
+    "domain": "orderbook_queue",
+    "canon_id": "19_quant_analytics_dense_terminal",
+    "en_slop_before": "High-frequency financial markets move in the blink of an eye.",
+    "en_canon_after": "On price-time priority matching engines, arriving 4 microseconds behind the top-of-book quote reload shifts fill probability on passive 1-tick maker orders from 64% to 11% due to adverse selection.",
+    "ru_slop_before": "Современные финансовые рынки меняются буквально за доли мгновения.",
+    "ru_canon_after": "В биржевом ядре с приоритетом цены и времени опоздание на 4 микросекунды к обновлению лучшей котировки роняет вероятность исполнения пассивной лимитной заявки без неблагоприятного отбора с 64% до 11%.",
+    "anti_slop_rule": "Replace 'blink of an eye' with 4 microseconds and exact adverse-selection fill probabilities.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_019",
+    "category": "editorial_lead",
+    "domain": "biennale_pavilion",
+    "canon_id": "14_kinetic_cultural_exhibition",
+    "en_slop_before": "This landmark exhibition invites visitors on an unforgettable journey through space.",
+    "en_canon_after": "Fourteen dry-stacked limestone arches span Hall B without mortar, held in compression solely by a 1.8-ton tensioned steel tie-rod anchored to two reversible cast-iron floor shoes.",
+    "ru_slop_before": "Эта знаковая выставка приглашает зрителей в незабываемое путешествие сквозь пространство.",
+    "ru_canon_after": "Четырнадцать арок из сухой кладки известняка перекрывают Павильон Б без капли раствора, работая на чистое сжатие за счёт стальной затяжки усилием 1,8 тонны на двух съёмных башмаках.",
+    "anti_slop_rule": "Ban 'unforgettable journey'; describe the physical structural installation directly.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_020",
+    "category": "editorial_lead",
+    "domain": "membrane_breathability",
+    "canon_id": "26_ecommerce_lookbook_grid",
+    "en_slop_before": "Stay dry and comfortable in any weather with our ultimate rain shell.",
+    "en_canon_after": "Microporous ePTFE membranes block wind-driven rain droplets above 100 micrometers while electrospun polyurethane nanofibers vent sweat vapor via continuous air permeability of 0.8 CFM before condensation wets out your base layer.",
+    "ru_slop_before": "Оставайтесь в сухости и комфорте в любую непогоду с нашей универсальной штормовкой.",
+    "ru_canon_after": "Электропряденая полиуретановая мембрана удерживает капли ветрового дождя крупнее 100 мкм и одновременно пропускает 0,8 куб. фута воздуха в минуту, отводя пар до образования конденсата на термобелье.",
+    "anti_slop_rule": "Contrast droplet micrometer size with continuous CFM air permeability.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "ed_021",
+    "category": "editorial_lead",
+    "domain": "rams_switch_feel",
+    "canon_id": "07_industrial_functional_instrument",
+    "en_slop_before": "Great industrial design combines beauty and functionality in every detail.",
+    "en_canon_after": "A phosphor-bronze snap dome calibrated to 2.6 Newtons of actuation force and 0.45 millimeters of travel tells a gloved technician's thumb that a relay circuit closed without glancing away from the oscilloscope.",
+    "ru_slop_before": "Выдающийся промышленный дизайн гармонично сочетает красоту и функциональность в каждой детали.",
+    "ru_canon_after": "Купольный контакт из фосфористой бронзы с усилием срабатывания 2,6 Н и ходом 0,45 мм сообщает пальцу инженера в перчатке о замыкании реле без отрыва взгляда от экрана осциллографа.",
+    "anti_slop_rule": "Replace 'beauty and functionality' with Newtons, travel mm, and eyes-free operator ergonomics.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_001",
+    "category": "objection_reframe",
+    "domain": "vendor_lockin",
+    "canon_id": "02_neo_brutalism_tactile",
+    "en_slop_before": "Don't worry about lock-in; we believe in open ecosystems and customer freedom.",
+    "en_canon_after": "Zero proprietary storage format: every replica is a standard `.sqlite3` file readable by upstream `sqlite3` CLI, Python `sqlite3`, or DuckDB even if you uninstall our SDK tomorrow.",
+    "ru_slop_before": "Не беспокойтесь о привязке к вендору, ведь мы верим в открытые экосистемы.",
+    "ru_canon_after": "Никаких закрытых форматов хранения: каждая реплика представляет собой штатный файл `.sqlite3`, который открывается стандартной утилитой `sqlite3`, Python или DuckDB даже после полного удаления нашего SDK.",
+    "anti_slop_rule": "Prove exit freedom by naming the exact upstream open file format and standard CLI readers.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_002",
+    "category": "objection_reframe",
+    "domain": "ebpf_kernel_safety",
+    "canon_id": "03_dark_precision_saas_linear",
+    "en_slop_before": "Our agent is completely safe and will never crash your production servers.",
+    "en_canon_after": "Unlike out-of-tree kernel modules (`insmod`), eBPF bytecode cannot dereference arbitrary pointers or loop infinitely: the in-kernel Linux verifier mathematically proves bounded termination and read-only memory safety before JIT load.",
+    "ru_slop_before": "Наш агент абсолютно безопасен и никогда не вызовет сбоев на ваших боевых серверах.",
+    "ru_canon_after": "В отличие от загружаемых модулей ядра `insmod`, байткод eBPF не может разыменовать произвольный указатель или уйти в бесконечный цикл: верификатор ядра Linux математически доказывает конечность исполнения до JIT-компиляции.",
+    "anti_slop_rule": "Contrast `insmod` crash surface against the Linux kernel eBPF verifier's static guarantees.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_003",
+    "category": "objection_reframe",
+    "domain": "migration_effort",
+    "canon_id": "08_fintech_institutional_ledger",
+    "en_slop_before": "Switching providers is quick and painless with our dedicated onboarding team.",
+    "en_canon_after": "Keep your existing ERP export scripts unchanged: our SFTP/API bridge ingests standard ISO 20022 `pain.001.001.03` XML and legacy CSV payout batches in parallel with your incumbent bank during a 2-week shadow reconciliation run.",
+    "ru_slop_before": "Переход на нашу платформу пройдёт быстро и безболезненно при поддержке команды внедрения.",
+    "ru_canon_after": "Переписывать выгрузку из учётной системы не нужно: шлюз принимает штатные реестры ISO 20022 `pain.001.001.03` и файлы `1С` параллельно текущему банку в течение двухнедельной теневой сверки.",
+    "anti_slop_rule": "Show schema compatibility (`pain.001.001.03` / 1C) and parallel shadow-run migration.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_004",
+    "category": "objection_reframe",
+    "domain": "onprem_data_residency",
+    "canon_id": "01_swiss_international_typographic",
+    "en_slop_before": "We take enterprise data sovereignty seriously across all regions.",
+    "en_canon_after": "Deploy the entire control plane and ClickHouse storage engine inside your own VPC or bare-metal perimeter via a single Helm chart; zero telemetry, license pings, or crash dumps ever cross your egress firewall.",
+    "ru_slop_before": "Мы со всей серьёзностью относимся к цифровому суверенитету корпоративных данных.",
+    "ru_canon_after": "Панель управления и хранилище ClickHouse разворачиваются целиком на ваших серверах одним Helm-чартом: ни метрики, ни проверки лицензий, ни дампы ошибок никогда не покидают ваш межсетевой экран.",
+    "anti_slop_rule": "Guarantee zero outbound packets across the customer's egress firewall.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_005",
+    "category": "objection_reframe",
+    "domain": "pricing_overage_fear",
+    "canon_id": "09_monospace_cli_devtools",
+    "en_slop_before": "Predictable pricing means no nasty billing surprises at month-end.",
+    "en_canon_after": "Configure a hard monthly spend cap in USD/RUB per project: if traffic spikes during a logging loop, dynamic tail-sampling drops healthy HTTP 200 spans first while retaining 100% of 5xx errors at $0 unapproved overage.",
+    "ru_slop_before": "Предсказуемая тарификация гарантирует отсутствие неприятных сюрпризов в конце месяца.",
+    "ru_canon_after": "Задайте жёсткий денежный потолок на проект в рублях: при всплеске логов хвостовое сэмплирование отбросит штатные ответы HTTP 200, сохранив 100% ошибок 5xx и 0 ₽ несогласованных переплат.",
+    "anti_slop_rule": "Explain graceful degradation under hard spend caps (drop 200s, keep 100% 5xx, $0 overage).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_006",
+    "category": "objection_reframe",
+    "domain": "timber_humidity",
+    "canon_id": "05_nordic_architectural_minimal",
+    "en_slop_before": "Our wood panels are durable and built to withstand changing indoor climates.",
+    "en_canon_after": "Cross-laminated rotary-peeled birch cores kiln-stabilized to 7.5% moisture content keep seasonal dimensional movement below +/-0.4 mm per meter across 20% to 70% relative indoor humidity.",
+    "ru_slop_before": "Наши деревянные панели долговечны и устойчивы к перепадам микроклимата в помещении.",
+    "ru_canon_after": "Перекрёстно-клеёное основание из лущёного берёзового шпона камерной сушки 7,5% удерживает сезонную поводку в пределах +/-0,4 мм на погонный метр при колебаниях влажности воздуха от 20% до 70%.",
+    "anti_slop_rule": "Answer warping objections with kiln moisture %, +/-mm/m tolerance, and RH corridor.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_007",
+    "category": "objection_reframe",
+    "domain": "vanilla_no_tailwind",
+    "canon_id": "01_swiss_international_typographic",
+    "en_slop_before": "Modern CSS is clean and maintainable without heavy third-party frameworks.",
+    "en_canon_after": "Native CSS custom properties (`oklch()`), `subgrid`, `@container`, and `clamp()` ship in 6 KB of zero-build stylesheet with zero Node dependency vulnerabilities and instant browser parse.",
+    "ru_slop_before": "Современный чистый CSS легко поддерживать без громоздких сторонних фреймворков.",
+    "ru_canon_after": "Нативные переменные `oklch()`, `subgrid`, `@container` и `clamp()` укладываются в 6 КБ таблицы стилей без этапа сборки, уязвимостей в `node_modules` и сетевых блокировок.",
+    "anti_slop_rule": "Cite exact native CSS primitives, KB footprint, and zero `node_modules` attack surface.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_008",
+    "category": "objection_reframe",
+    "domain": "offline_local_llm",
+    "canon_id": "27_cybersecurity_zero_trust_ops",
+    "en_slop_before": "Local AI keeps your proprietary source code private and secure.",
+    "en_canon_after": "Binding `llama-server` strictly to `127.0.0.1` inside an unprivileged namespace without WAN routes ensures proprietary schematics, contracts, and source diffs never leave your NVMe drive.",
+    "ru_slop_before": "Локальный ИИ надёжно защищает ваш проприетарный исходный код от утечек.",
+    "ru_canon_after": "Привязка `llama-server` строго к петлевому интерфейсу `127.0.0.1` в изолированном пространстве имён без внешних маршрутов гарантирует, что чертежи, договоры и код не покинут локальный NVMe-накопитель.",
+    "anti_slop_rule": "Specify `127.0.0.1` socket binding + network namespace isolation.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_009",
+    "category": "objection_reframe",
+    "domain": "clinical_false_positives",
+    "canon_id": "12_clinical_biotech_cleanroom",
+    "en_slop_before": "Every test result is double-checked for maximum clinical confidence.",
+    "en_canon_after": "Every reportable pathogenic SNV or indel flagged by NGS is orthogonally confirmed by bidirectional capillary Sanger sequencing from the primary tube before clinician sign-out.",
+    "ru_slop_before": "Каждый результат анализа проходит двойную проверку для максимальной точности диагноза.",
+    "ru_canon_after": "Каждый клинически значимый патогенный вариант после NGS проходит ортогональное подтверждение двунаправленным секвенированием по Сэнгеру из первичной пробирки до подписи врача-генетика.",
+    "anti_slop_rule": "Name the exact orthogonal assay (bidirectional Sanger from primary tube).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_010",
+    "category": "objection_reframe",
+    "domain": "lfp_winter_cold",
+    "canon_id": "17_sustainable_climate_botanical",
+    "en_slop_before": "Our battery containers work reliably even in harsh northern winters.",
+    "en_canon_after": "Insulated R-18 walls and closed-loop glycol plate heaters hold cell cores at +18 C during -38 C ambient blizzards while drawing less than 1.6% of stored daily energy.",
+    "ru_slop_before": "Наши контейнерные накопители надёжно работают даже в суровые северные зимы.",
+    "ru_canon_after": "Теплоизоляция корпуса R-18 и контур гликолевого подогрева пластин удерживают ядро ячеек при +18 C в мороз -38 C, расходуя на собственный обогрев менее 1,6% суточного запаса энергии.",
+    "anti_slop_rule": "Give insulation rating, core temp vs -38 C ambient, and parasitic heating %.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_011",
+    "category": "objection_reframe",
+    "domain": "industrial_legacy_plc",
+    "canon_id": "07_industrial_functional_instrument",
+    "en_slop_before": "Works seamlessly with older factory equipment without costly upgrades.",
+    "en_canon_after": "Galvanically isolated RS-485 ports (2.5 kVrms) read 1990s Siemens S7-300 and Fanuc serial controllers passively in listen-only tap mode without writing a single register back to safety-certified PLC logic.",
+    "ru_slop_before": "Легко подключается к старому заводскому оборудованию без дорогой модернизации.",
+    "ru_canon_after": "Гальванически развязанные порты RS-485 (2,5 кВ) снимают регистры со стойки Siemens S7-300 и ЧПУ Fanuc в режиме пассивного прослушивания без права записи в аттестованную логику ПЛК.",
+    "anti_slop_rule": "Address PLC engineer's #1 fear: galvanic isolation kV + hardware/protocol read-only tap guarantee.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_012",
+    "category": "objection_reframe",
+    "domain": "dsp_latency_live",
+    "canon_id": "23_audio_dsp_modular_rack",
+    "en_slop_before": "Linear-phase processing usually adds latency, but our plugin handles both tracking and mastering.",
+    "en_canon_after": "One click switches the filter topology between 4,096-tap linear-phase mastering (42.7 ms exact host-compensated delay) and minimum-phase live tracking (0 samples added latency) with matched gain curves.",
+    "ru_slop_before": "Наш плагин одинаково отлично подходит как для записи без задержки, так и для мастеринга.",
+    "ru_canon_after": "Одна кнопка переключает топологию между линейно-фазовым мастерингом на 4096 отводов (компенсируемая задержка 42,7 мс) и минимально-фазовым трекингом с нулевой задержкой 0 сэмплов при сохранении АЧХ.",
+    "anti_slop_rule": "State exact FIR tap count, ms delay in mastering mode, and 0-sample tracking mode.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_013",
+    "category": "objection_reframe",
+    "domain": "server_spare_parts",
+    "canon_id": "18_bento_hardware_showcase",
+    "en_slop_before": "Easy maintenance keeps your IT team productive and stress-free.",
+    "en_canon_after": "Every sled component carries a QR link to its public repair manual, Torx T15 fastener map, and FRU spare part SKU stocked for 7 years with no technician certification paywall.",
+    "ru_slop_before": "Простое сервисное обслуживание экономит время ваших системных администраторов.",
+    "ru_canon_after": "На каждом узле нанесён код со ссылкой на открытое руководство по ремонту, карту крепежа Torx T15 и каталожный номер запчасти FRU со складским резервом на 7 лет без платной сертификации.",
+    "anti_slop_rule": "Specify fastener standard (Torx T15), 7-year FRU spares guarantee, and open manuals.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_014",
+    "category": "objection_reframe",
+    "domain": "editorial_paywall_trust",
+    "canon_id": "04_editorial_broadsheet_serif",
+    "en_slop_before": "Cancel your subscription anytime with no hassle.",
+    "en_canon_after": "Cancel in two clicks inside Account -> Billing with zero retention phone calls; you retain full archive export (EPUB + HTML) for every issue published during your paid term.",
+    "ru_slop_before": "Вы можете отменить подписку в любой момент без лишних сложностей.",
+    "ru_canon_after": "Подписка отменяется в два клика в разделе «Оплата» без звонков менеджеров, а все вышедшие за оплаченный период выпуски остаются у вас в форматах EPUB и HTML.",
+    "anti_slop_rule": "Ban dark-pattern retention calls and confirm permanent EPUB+HTML ownership of paid issues.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_015",
+    "category": "objection_reframe",
+    "domain": "legal_conflict_speed",
+    "canon_id": "22_legal_advisory_chancery",
+    "en_slop_before": "Boutique law firms move faster than big slow corporate firms.",
+    "en_canon_after": "Because we decline retainer panels for commercial clearing banks, corporate conflict clearance completes in under 4 hours instead of stalling 10 days on lender waivers.",
+    "ru_slop_before": "Бутиковая юридическая практика работает гораздо оперативнее громоздких корпораций.",
+    "ru_canon_after": "Поскольку практика не состоит на абонентском обслуживании расчётных госбанков, проверка конфликта интересов занимает до 4 часов вместо десятидневного ожидания согласий кредиторов.",
+    "anti_slop_rule": "Explain the structural conflict-of-interest reason why clearance takes 4 hours vs 10 days.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_016",
+    "category": "objection_reframe",
+    "domain": "decaf_specialty",
+    "canon_id": "28_craft_roastery_packaging",
+    "en_slop_before": "Our decaf tastes just as amazing as regular specialty coffee!",
+    "en_canon_after": "Popayan ethyl-acetate sugarcane decaffeination removes 99.7% of caffeine using fermented local cane esters at 70 C rather than methylene chloride solvents, preserving malic red-apple acidity at cupping score 86.5.",
+    "ru_slop_before": "Наш декофеинизированный кофе по вкусу ничем не уступает обычному спешелти-зерну!",
+    "ru_canon_after": "Декофеинизация этилацетатом сахарного тростника в Попаяне при 70 C удаляет 99,7% кофеина без хлористого метилена, сохраняя яблочную кислотность лота с оценкой 86,5 балла SCA.",
+    "anti_slop_rule": "Name extraction solvent (sugarcane ethyl acetate vs methylene chloride), % removed, and SCA cupping score.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_017",
+    "category": "objection_reframe",
+    "domain": "civic_offline_fallback",
+    "canon_id": "15_high_contrast_civic_gov_wcag_aaa",
+    "en_slop_before": "Citizens who prefer offline channels are always supported too.",
+    "en_canon_after": "Applicants without digital ID can print the pre-filled A4 form with 2D DataMatrix barcode and submit it at any of 42 municipal service desks without re-typing a single field.",
+    "ru_slop_before": "Для граждан, предпочитающих личный визит, также предусмотрены удобные способы подачи.",
+    "ru_canon_after": "Заявители без электронной подписи могут распечатать заполненный бланк А4 с двумерным кодом DataMatrix и сдать его в любом из 42 окон МФЦ без повторного ручного ввода анкеты.",
+    "anti_slop_rule": "Provide concrete hybrid paper-barcode bridge + desk count.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_018",
+    "category": "objection_reframe",
+    "domain": "quant_survivorship_bias",
+    "canon_id": "19_quant_analytics_dense_terminal",
+    "en_slop_before": "Backtest your strategies accurately on clean institutional datasets.",
+    "en_canon_after": "Universe snapshots retain every delisted, bankrupt, halted, and merged ticker at exact point-in-time constituent dates, eliminating survivorship and look-ahead bias from historical backtests.",
+    "ru_slop_before": "Тестируйте торговые стратегии с высокой точностью на выверенных исторических данных.",
+    "ru_canon_after": "Исторические срезы индексов сохраняют все делистингованные, обанкротившиеся и поглощённые бумаги на точную дату вхождения, полностью исключая ошибку выжившего и заглядывание в будущее.",
+    "anti_slop_rule": "Explicitly address delisted/bankrupt point-in-time constituents (survivorship bias).",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_019",
+    "category": "objection_reframe",
+    "domain": "apparel_pfas_free",
+    "canon_id": "26_ecommerce_lookbook_grid",
+    "en_slop_before": "Eco-friendly waterproofing still performs great in heavy storms.",
+    "en_canon_after": "While C0 fluorocarbon-free DWR sheds oil stains less aggressively than legacy C8 PFAS, pairing high-density 40D warp-knit face fabric with regular 30 C wash/heat reactivation holds ISO 4920 spray rating 4 after 30 washes.",
+    "ru_slop_before": "Экологичная водоотталкивающая пропитка отлично защищает даже в сильный ливень.",
+    "ru_canon_after": "Бесфторовая пропитка C0 DWR уступает старым фторуглеродам C8 по защите от масел, но в паре с плотным плетением 40D и тёплой сушкой после стирки удерживает 4 класс водоотталкивания по ISO 4920 после 30 стирок.",
+    "anti_slop_rule": "Acknowledge the real physical tradeoff (oil resistance) honestly, then show ISO 4920 wash test proof.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_020",
+    "category": "objection_reframe",
+    "domain": "lidar_rain_fog",
+    "canon_id": "24_cartographic_field_expedition",
+    "en_slop_before": "Fly missions confidently in challenging weather conditions.",
+    "en_canon_after": "905 nm laser pulses scatter inside dense advection fog (<400 m visibility); pre-flight mission software flags cloud-base ceilings automatically and filters atmospheric backscatter via dual-return range gating.",
+    "ru_slop_before": "Выполняйте аэросъёмку уверенно даже в сложных метеорологических условиях.",
+    "ru_canon_after": "Лазерный импульс 905 нм рассеивается в плотном тумане при видимости ниже 400 м, поэтому планировщик полётов заранее блокирует вылет под низкой облачностью и отсекает аэрозольную засветку стробированием дальности.",
+    "anti_slop_rule": "State exact optical physics limit (<400 m fog at 905 nm) and range-gate mitigation.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  },
+  {
+    "id": "obj_021",
+    "category": "objection_reframe",
+    "domain": "titanium_scratch_hardness",
+    "canon_id": "16_luxury_horology_atelier_dark",
+    "en_slop_before": "Titanium cases are super strong and lightweight on the wrist.",
+    "en_canon_after": "Uncoated Grade-5 Ti-6Al-4V scuffs at 340 HV under desk clasps, so every case band undergoes carbon-diffusion surface hardening to 1,100 Vickers (5x 316L stainless steel) while weighing 42 grams.",
+    "ru_slop_before": "Титановый корпус сочетает невероятную прочность и невесомость на запястье.",
+    "ru_canon_after": "Необработанный титан Ti-6Al-4V царапается о застёжки при твёрдости 340 HV, поэтому боковина корпуса проходит диффузионное упрочнение до 1100 единиц Виккерса (впятеро твёрже стали 316L) при массе 42 грамма.",
+    "anti_slop_rule": "Acknowledge raw titanium's scuffing weakness (340 HV) and prove hardening to 1,100 HV.",
+    "provenance": {
+      "source": "SmartLLM v2 Curated EN/RU Domain Copy Bank (TZ §4)",
+      "curated_date": "2026-11-15",
+      "license": "CC0-1.0 / Internal RAG Canon",
+      "rag_only": true
+    }
+  }
+]

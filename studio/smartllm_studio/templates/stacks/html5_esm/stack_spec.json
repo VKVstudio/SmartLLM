@@ -1,0 +1,6 @@
+{
+  "id": "html5_esm",
+  "name": "Zero-Build Semantic HTML5 + OKLCH CSS + Native ESM",
+  "runtime_kb": 0,
+  "notes": "Native <dialog>, Popover, Anchor Positioning, offline-first."
+}

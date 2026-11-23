@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 12_quiet_luxury_minimal (Quiet Luxury / Architectural Atelier) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.972 0.004 242);
+  --surface: oklch(0.995 0.002 242);
+  --surface-elevated: oklch(0.942 0.006 242);
+  --border: oklch(0.865 0.006 242);
+  --border-control: oklch(0.555 0.012 242);
+  --text: oklch(0.165 0.008 248);
+  --text-muted: oklch(0.440 0.010 245);
+  --accent: oklch(0.320 0.052 168);
+  --accent-ink: oklch(0.985 0.003 240);
+  --accent-2: oklch(0.460 0.016 248);
+  --accent-3: oklch(0.440 0.010 245);
+  --shadow: none;
+  --font-heading: 'Cormorant Garamond Variable', 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Wix Madefor Text Variable', 'Wix Madefor Text', system-ui, sans-serif;
+  --font-mono: 'Wix Madefor Text Variable', 'Wix Madefor Text', system-ui, sans-serif;
+  --radius: 0px;
+  --radius-card: 0px;
+  --radius-button: 0px;
+  --radius-input: 0px;
+  --radius-badge: 0px;
+  --border-w: 0px;
+  --container-max: 1280px;
+  --h1-clamp: clamp(2.375rem, 1.583rem + 3.52vw, 4.75rem);
+  --h2-clamp: clamp(1.75rem, 1.292rem + 2.04vw, 3.125rem);
+  --h1-lh: 1.08;
+  --h1-ls: -0.02em;
+  --h1-weight: 400;
+  --heading-transform: none;
+  --heading-tracking: -0.02em;
+  --body-leading: 1.75;
+  --small-ls: 0.06em;
+  --pad-section: clamp(64px, 5vw, 120px);
+  --grid-gap: clamp(16px, 2vw, 32px);
+  --card-pad: clamp(20px, 2.2vw, 32px);
+  --input-h-desk: 46px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 44px;
+  --cta-h-mob: 48px;
+  --motion-dur: 500ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.135 0.006 250);
+  --surface: oklch(0.178 0.007 250);
+  --surface-elevated: oklch(0.225 0.009 250);
+  --border: oklch(0.325 0.010 248);
+  --border-control: oklch(0.555 0.012 248);
+  --text: oklch(0.945 0.005 240);
+  --text-muted: oklch(0.725 0.009 244);
+  --accent: oklch(0.855 0.010 240);
+  --accent-ink: oklch(0.135 0.006 250);
+  --accent-2: oklch(0.720 0.072 168);
+  --accent-3: oklch(0.725 0.009 244);
+  --shadow: none;
+}

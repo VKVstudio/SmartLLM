@@ -1,0 +1,6 @@
+{
+  "id": "nextjs",
+  "name": "Next.js 16.4.6 Active LTS + React 19.3.1 App Router",
+  "runtime_kb": 42,
+  "notes": "src/proxy.ts Node runtime only (replaces middleware.ts); src/lib/dal.ts import 'server-only'; isolate tenant keys outside 'use cache'."
+}

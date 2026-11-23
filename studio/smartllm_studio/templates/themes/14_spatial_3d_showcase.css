@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 14_spatial_3d_showcase (Spatial Hardware & 3D Stage) — default dark */
+:root, [data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.128 0.014 255);
+  --surface: oklch(0.176 0.017 255);
+  --surface-elevated: oklch(0.226 0.020 255);
+  --border: oklch(0.330 0.024 250);
+  --border-control: oklch(0.560 0.026 250);
+  --text: oklch(0.952 0.008 240);
+  --text-muted: oklch(0.738 0.018 245);
+  --accent: oklch(0.780 0.125 212);
+  --accent-ink: oklch(0.130 0.016 255);
+  --accent-2: oklch(0.785 0.138 76);
+  --accent-3: oklch(0.738 0.018 245);
+  --shadow: inset 0 1px 0 rgba(165,220,245,0.22), 0 24px 48px -12px rgba(0,4,12,0.72);
+  --font-heading: 'Tektur Variable', 'Tektur', system-ui, sans-serif;
+  --font-sans: 'Geologica Variable', 'Geologica', system-ui, sans-serif;
+  --font-mono: 'Martian Mono Variable', 'Martian Mono', monospace;
+  --radius: 16px;
+  --radius-card: 16px;
+  --radius-button: 10px;
+  --radius-input: 10px;
+  --radius-badge: 6px;
+  --border-w: 1px;
+  --container-max: 1312px;
+  --h1-clamp: clamp(1.875rem, 1.292rem + 2.59vw, 3.625rem);
+  --h2-clamp: clamp(1.5rem, 1.208rem + 1.3vw, 2.375rem);
+  --h1-lh: 1.08;
+  --h1-ls: -0.02em;
+  --h1-weight: 700;
+  --heading-transform: none;
+  --heading-tracking: -0.02em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(52px, 5vw, 96px);
+  --grid-gap: clamp(14px, 2vw, 22px);
+  --card-pad: clamp(18px, 2.2vw, 26px);
+  --input-h-desk: 46px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 44px;
+  --cta-h-mob: 48px;
+  --motion-dur: 340ms;
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.965 0.006 246);
+  --surface: oklch(0.994 0.002 246);
+  --surface-elevated: oklch(0.932 0.010 246);
+  --border: oklch(0.820 0.014 246);
+  --border-control: oklch(0.545 0.018 246);
+  --text: oklch(0.165 0.018 252);
+  --text-muted: oklch(0.440 0.018 248);
+  --accent: oklch(0.475 0.108 244);
+  --accent-ink: oklch(0.990 0.002 245);
+  --accent-2: oklch(0.505 0.112 58);
+  --accent-3: oklch(0.440 0.018 248);
+  --shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 16px 36px -10px rgba(9,20,38,0.10);
+}

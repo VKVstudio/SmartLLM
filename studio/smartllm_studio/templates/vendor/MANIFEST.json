@@ -1,0 +1,1786 @@
+{
+  "schema_version": "2026.11.2",
+  "verified_date": "2026-11-22",
+  "total_bytes": 7461284,
+  "fonts_count": 30,
+  "js_libs_count": 4,
+  "fonts": [
+    {
+      "id": "manrope",
+      "kind": "font",
+      "pkg": "@fontsource-variable/manrope",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Manrope",
+      "css_name": "'Manrope Variable', 'Manrope'",
+      "woff2_files": [
+        "manrope-cyrillic-wght-normal.woff2",
+        "manrope-latin-ext-wght-normal.woff2",
+        "manrope-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/manrope/LICENSE",
+          "bytes": 4383,
+          "sha256": "d826ab6583b12c26807d8716a545bdbbb672df04f48608a364ba9efdbe501c30"
+        },
+        {
+          "relpath": "fonts/manrope/manrope-cyrillic-wght-normal.woff2",
+          "bytes": 14500,
+          "sha256": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914"
+        },
+        {
+          "relpath": "fonts/manrope/manrope-latin-ext-wght-normal.woff2",
+          "bytes": 15120,
+          "sha256": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb"
+        },
+        {
+          "relpath": "fonts/manrope/manrope-latin-wght-normal.woff2",
+          "bytes": 24836,
+          "sha256": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972"
+        },
+        {
+          "relpath": "fonts/manrope/font.css",
+          "bytes": 1160,
+          "sha256": "1cedd99d713c4146b9a5d3303030a75319b00b28401bb5c74479b75fda998380"
+        }
+      ]
+    },
+    {
+      "id": "inter",
+      "kind": "font",
+      "pkg": "@fontsource-variable/inter",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Inter",
+      "css_name": "'Inter Variable', 'Inter'",
+      "woff2_files": [
+        "inter-cyrillic-wght-italic.woff2",
+        "inter-cyrillic-wght-normal.woff2",
+        "inter-latin-ext-wght-italic.woff2",
+        "inter-latin-ext-wght-normal.woff2",
+        "inter-latin-wght-italic.woff2",
+        "inter-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/inter/LICENSE",
+          "bytes": 4477,
+          "sha256": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345"
+        },
+        {
+          "relpath": "fonts/inter/inter-cyrillic-wght-normal.woff2",
+          "bytes": 18748,
+          "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075"
+        },
+        {
+          "relpath": "fonts/inter/inter-latin-ext-wght-normal.woff2",
+          "bytes": 85068,
+          "sha256": "34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956"
+        },
+        {
+          "relpath": "fonts/inter/inter-latin-wght-normal.woff2",
+          "bytes": 48256,
+          "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+        },
+        {
+          "relpath": "fonts/inter/inter-cyrillic-wght-italic.woff2",
+          "bytes": 19980,
+          "sha256": "47d42151dff6d13f1c2b9a1f278290f625593c1f01c89612ee4ae7f063167f7a"
+        },
+        {
+          "relpath": "fonts/inter/inter-latin-ext-wght-italic.woff2",
+          "bytes": 91900,
+          "sha256": "71254244ccb1ec21e14db3480fef6f6826d1136dc4aca1c7d3ca7ce31294fcce"
+        },
+        {
+          "relpath": "fonts/inter/inter-latin-wght-italic.woff2",
+          "bytes": 51832,
+          "sha256": "7291b5970da2237441273c03b424a504b70b18f09791473fab99687dcc314720"
+        },
+        {
+          "relpath": "fonts/inter/font.css",
+          "bytes": 2273,
+          "sha256": "7ced209b80d10ba0e3d5ad22308618fc931e4e951fc08a35e58d9e2a4cb9c9f6"
+        }
+      ]
+    },
+    {
+      "id": "golos_text",
+      "kind": "font",
+      "pkg": "@fontsource-variable/golos-text",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Golos Text",
+      "css_name": "'Golos Text Variable', 'Golos Text'",
+      "woff2_files": [
+        "golos-text-cyrillic-wght-normal.woff2",
+        "golos-text-latin-ext-wght-normal.woff2",
+        "golos-text-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/golos_text/LICENSE",
+          "bytes": 4392,
+          "sha256": "54dcae300688bccf111e43c818a6ee2261d10fc8d7eb5b9c9aa2a1e9b03189c9"
+        },
+        {
+          "relpath": "fonts/golos_text/golos-text-cyrillic-wght-normal.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        {
+          "relpath": "fonts/golos_text/golos-text-latin-ext-wght-normal.woff2",
+          "bytes": 19180,
+          "sha256": "05befabe4813f41238ce6ea4f5ecd6b758591e9ef2f303a9932bff68ba66dc66"
+        },
+        {
+          "relpath": "fonts/golos_text/golos-text-latin-wght-normal.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        {
+          "relpath": "fonts/golos_text/font.css",
+          "bytes": 1196,
+          "sha256": "4b06e40259b4ff5bd98dbb7aa0049de524ba3d59a1b375d150c8441999bb3b2b"
+        }
+      ]
+    },
+    {
+      "id": "ibm_plex_sans",
+      "kind": "font",
+      "pkg": "@fontsource-variable/ibm-plex-sans",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "IBM Plex Sans",
+      "css_name": "'IBM Plex Sans Variable', 'IBM Plex Sans'",
+      "woff2_files": [
+        "ibm-plex-sans-cyrillic-wdth-normal.woff2",
+        "ibm-plex-sans-cyrillic-wght-italic.woff2",
+        "ibm-plex-sans-cyrillic-wght-normal.woff2",
+        "ibm-plex-sans-latin-ext-wdth-normal.woff2",
+        "ibm-plex-sans-latin-ext-wght-italic.woff2",
+        "ibm-plex-sans-latin-ext-wght-normal.woff2",
+        "ibm-plex-sans-latin-wdth-normal.woff2",
+        "ibm-plex-sans-latin-wght-italic.woff2",
+        "ibm-plex-sans-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/ibm_plex_sans/LICENSE",
+          "bytes": 4429,
+          "sha256": "d0283623ef57e722fd0eb688a8041589670c608ab780cd3612d06ba6f153d3fd"
+        },
+        {
+          "relpath": "fonts/ibm_plex_sans/ibm-plex-sans-cyrillic-wght-normal.woff2",
+          "bytes": 29512,
+          "sha256": "9409ee21811f0f5272b7e1d828fe8838005b0573481ef906e7e55b63f6610ab0"
+        },
+        {
+          "relpath": "fonts/ibm_plex_sans/ibm-plex-sans-latin-ext-wght-normal.woff2",
+          "bytes": 30964,
+          "sha256": "d160e20920ae4d6556518d352d3af27a74e9b0de3d8fe17b1c1044fc75aa2f81"
+        },
+        {
+          "relpath": "fonts/ibm_plex_sans/ibm-plex-sans-latin-wght-normal.woff2",
+          "bytes": 45712,
+          "sha256": "e2291e842cf5af167122a22881a740c7f2dda7716f1e8cd76680264f4a859470"
+        },
+        {
+          "relpath": "fonts/ibm_plex_sans/ibm-plex-sans-cyrillic-wght-italic.woff2",
+          "bytes": 32632,
+          "sha256": "e71db60f3419842ad61305fcb22100fc0ea34f6aaa98d1f028de948751f08d88"
+        },
+        {
+          "relpath": "fonts/ibm_plex_sans/ibm-plex-sans-latin-ext-wght-italic.woff2",
+          "bytes": 33900,
+          "sha256": "bf44b77cc751203b2f0ce95c048a9d8f984313f84b58106c7c4410ca50314016"
+        },
+        {
+          "relpath": "fonts/ibm_plex_sans/ibm-plex-sans-latin-wght-italic.woff2",
+          "bytes": 50184,
+          "sha256": "4363757d2695c7633f98472855849f7c30528eba869d7968ee35b58c87cf14c1"
+        },
+        {
+          "relpath": "fonts/ibm_plex_sans/ibm-plex-sans-cyrillic-wdth-normal.woff2",
+          "bytes": 46012,
+          "sha256": "d0c0257292881fee5bffd2671c380772c22e94f78e1e4bd9ad840aa0fcdef5f0"
+        },
+        {
+          "relpath": "fonts/ibm_plex_sans/ibm-plex-sans-latin-ext-wdth-normal.woff2",
+          "bytes": 46744,
+          "sha256": "d43e5954a3549d82ea11577d0aa403fe00cb334aaefae6b58bc6ba0542c146d2"
+        },
+        {
+          "relpath": "fonts/ibm_plex_sans/ibm-plex-sans-latin-wdth-normal.woff2",
+          "bytes": 65488,
+          "sha256": "1e875856600a34cb44a406a7deef0e3f9ae70e6f636e0f37fbca2248dec2dca4"
+        },
+        {
+          "relpath": "fonts/ibm_plex_sans/font.css",
+          "bytes": 3776,
+          "sha256": "0675033dbf42ed61ae7c13f2a7e8e80cd4891193af45b082ddae7e75b61be002"
+        }
+      ]
+    },
+    {
+      "id": "ibm_plex_mono",
+      "kind": "font",
+      "pkg": "@fontsource/ibm-plex-mono",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "IBM Plex Mono",
+      "css_name": "'IBM Plex Mono'",
+      "woff2_files": [
+        "ibm-plex-mono-cyrillic-400-italic.woff2",
+        "ibm-plex-mono-cyrillic-400-normal.woff2",
+        "ibm-plex-mono-cyrillic-500-italic.woff2",
+        "ibm-plex-mono-cyrillic-500-normal.woff2",
+        "ibm-plex-mono-cyrillic-600-italic.woff2",
+        "ibm-plex-mono-cyrillic-600-normal.woff2",
+        "ibm-plex-mono-latin-400-italic.woff2",
+        "ibm-plex-mono-latin-400-normal.woff2",
+        "ibm-plex-mono-latin-500-italic.woff2",
+        "ibm-plex-mono-latin-500-normal.woff2",
+        "ibm-plex-mono-latin-600-italic.woff2",
+        "ibm-plex-mono-latin-600-normal.woff2",
+        "ibm-plex-mono-latin-ext-400-italic.woff2",
+        "ibm-plex-mono-latin-ext-400-normal.woff2",
+        "ibm-plex-mono-latin-ext-500-italic.woff2",
+        "ibm-plex-mono-latin-ext-500-normal.woff2",
+        "ibm-plex-mono-latin-ext-600-italic.woff2",
+        "ibm-plex-mono-latin-ext-600-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/ibm_plex_mono/LICENSE",
+          "bytes": 5299,
+          "sha256": "23b0a9d0c6d3f140a0b77e483c5cfa6bba574325ef5cb189ed9f2fec4884533f"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-cyrillic-400-normal.woff2",
+          "bytes": 8356,
+          "sha256": "7635422bd10ddbbcb0e0caa1154b928298f5c8319b8c00b30978d4395f4783ce"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-latin-ext-400-normal.woff2",
+          "bytes": 13348,
+          "sha256": "6bc0f226a5b7884a8170e3f62c63d7675609d4631bdc5931b5cdab81821f00eb"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-latin-400-normal.woff2",
+          "bytes": 14708,
+          "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-cyrillic-400-italic.woff2",
+          "bytes": 10404,
+          "sha256": "4aded3f2f2a7d27d9430ca6f6ef9dc7d7efa861a61891a5f67758d467da9ed14"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-latin-ext-400-italic.woff2",
+          "bytes": 14524,
+          "sha256": "1b07eee6df7d26b31864581c2365131d384077605e0b63ae67c4a0a64363a6de"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-latin-400-italic.woff2",
+          "bytes": 16448,
+          "sha256": "0840095faae86403735a8c04014b72cb29e7923646b222b360b7e8252932e4e3"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-cyrillic-500-normal.woff2",
+          "bytes": 8460,
+          "sha256": "1d89462e86cb8e87e7e9d6f6635605bd7c3081baca6caaecee84916bf7b60edc"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-latin-ext-500-normal.woff2",
+          "bytes": 13432,
+          "sha256": "6bb06407c97584b0867a959e05e8874693bfeb8c317de190811c51598f2d99ea"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-latin-500-normal.woff2",
+          "bytes": 14888,
+          "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-cyrillic-500-italic.woff2",
+          "bytes": 10668,
+          "sha256": "52243493496143dd07224d8a6cda80107d91e57b2abb83924f31052f834948d2"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-latin-ext-500-italic.woff2",
+          "bytes": 14676,
+          "sha256": "57216564e5a42dde14048f03e32caa40c97d9b2b440be1aa2ea87ff324fbc95e"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-latin-500-italic.woff2",
+          "bytes": 16484,
+          "sha256": "528cc360f6e6f5210526a33b6ed8f2c37084bd0c73b918f25a55f48b40c4ac52"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-cyrillic-600-normal.woff2",
+          "bytes": 9352,
+          "sha256": "2b05a8695c7f9f4abd7178b279646a3b005a8ce57546bef6fd145f25d131e0aa"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-latin-ext-600-normal.woff2",
+          "bytes": 14328,
+          "sha256": "32057cf50dd14bdb21a2c93766c4a2c43e4abe688ea3922df3203cac7751a98b"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-latin-600-normal.woff2",
+          "bytes": 15620,
+          "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-cyrillic-600-italic.woff2",
+          "bytes": 11472,
+          "sha256": "20811c3ee42d0e1d4cb1f6e4554a38720c9bd5fda2a85acb03636560d6e63a70"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-latin-ext-600-italic.woff2",
+          "bytes": 15460,
+          "sha256": "979f73fb848c600282d2c2e48e6dc67eeb02d47b520c9fa48b0af65fbef09da4"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/ibm-plex-mono-latin-600-italic.woff2",
+          "bytes": 17356,
+          "sha256": "42a8ca72a19c5ee1612ac3e35f52d08f34a09856c9466dc87a21101ad230ed6b"
+        },
+        {
+          "relpath": "fonts/ibm_plex_mono/font.css",
+          "bytes": 7127,
+          "sha256": "91643b268fbe167e056c21c45b8b95c0aa06daf490901f017a04cf2ee626b08b"
+        }
+      ]
+    },
+    {
+      "id": "source_serif_4",
+      "kind": "font",
+      "pkg": "@fontsource-variable/source-serif-4",
+      "version": "5.3.1",
+      "license": "SIL OFL-1.1",
+      "family": "Source Serif 4",
+      "css_name": "'Source Serif 4 Variable', 'Source Serif 4'",
+      "woff2_files": [
+        "source-serif-4-cyrillic-wght-italic.woff2",
+        "source-serif-4-cyrillic-wght-normal.woff2",
+        "source-serif-4-latin-ext-wght-italic.woff2",
+        "source-serif-4-latin-ext-wght-normal.woff2",
+        "source-serif-4-latin-wght-italic.woff2",
+        "source-serif-4-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/source_serif_4/LICENSE",
+          "bytes": 4314,
+          "sha256": "18aabf190848725e2576eefb5c29ba06aac1029d02132252a7f312eac2e50cf3"
+        },
+        {
+          "relpath": "fonts/source_serif_4/source-serif-4-cyrillic-wght-normal.woff2",
+          "bytes": 36508,
+          "sha256": "a81082707b85203d7f2ae33833f7ae0bf832db167c8710f92f805a9808fb051a"
+        },
+        {
+          "relpath": "fonts/source_serif_4/source-serif-4-latin-ext-wght-normal.woff2",
+          "bytes": 42212,
+          "sha256": "d10ccbbd0dc4ebae2938958dc1f622a53460fe297e9c958564742dd684309c3f"
+        },
+        {
+          "relpath": "fonts/source_serif_4/source-serif-4-latin-wght-normal.woff2",
+          "bytes": 50936,
+          "sha256": "382475f38242c52d42a3e5ff8dc69b5d73f10d0d21e4550b5fe232984688779a"
+        },
+        {
+          "relpath": "fonts/source_serif_4/source-serif-4-cyrillic-wght-italic.woff2",
+          "bytes": 34972,
+          "sha256": "62faaf044db101ae07f9be3f23424892fa9c792d8d4eadcde3b7a8cd6d27909d"
+        },
+        {
+          "relpath": "fonts/source_serif_4/source-serif-4-latin-ext-wght-italic.woff2",
+          "bytes": 44420,
+          "sha256": "14e38c2d6a4ea6effcddde38f0262c03af252cbf82dbc68037f2d6c9112f2097"
+        },
+        {
+          "relpath": "fonts/source_serif_4/source-serif-4-latin-wght-italic.woff2",
+          "bytes": 51576,
+          "sha256": "b4f56ddc9873487f1c9a3ad5bbce31982fe89b951f57e4604f62b4c8a540fb19"
+        },
+        {
+          "relpath": "fonts/source_serif_4/font.css",
+          "bytes": 2489,
+          "sha256": "4d843e780be73405dfb0305cbe9a84cb45e1498f9b79447f4dd1577a497f1831"
+        }
+      ]
+    },
+    {
+      "id": "source_sans_3",
+      "kind": "font",
+      "pkg": "@fontsource-variable/source-sans-3",
+      "version": "5.3.1",
+      "license": "SIL OFL-1.1",
+      "family": "Source Sans 3",
+      "css_name": "'Source Sans 3 Variable', 'Source Sans 3'",
+      "woff2_files": [
+        "source-sans-3-cyrillic-wght-italic.woff2",
+        "source-sans-3-cyrillic-wght-normal.woff2",
+        "source-sans-3-latin-ext-wght-italic.woff2",
+        "source-sans-3-latin-ext-wght-normal.woff2",
+        "source-sans-3-latin-wght-italic.woff2",
+        "source-sans-3-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/source_sans_3/LICENSE",
+          "bytes": 4314,
+          "sha256": "18aabf190848725e2576eefb5c29ba06aac1029d02132252a7f312eac2e50cf3"
+        },
+        {
+          "relpath": "fonts/source_sans_3/source-sans-3-cyrillic-wght-normal.woff2",
+          "bytes": 18496,
+          "sha256": "b6b721e08d0324b9e743858e8260463085d4c5e1e684f036f9d4a8ca6c62996f"
+        },
+        {
+          "relpath": "fonts/source_sans_3/source-sans-3-latin-ext-wght-normal.woff2",
+          "bytes": 60088,
+          "sha256": "a85a7459bdb3cdc1136751e151a506bae653fc29ada3ca86237477df6f1b59e6"
+        },
+        {
+          "relpath": "fonts/source_sans_3/source-sans-3-latin-wght-normal.woff2",
+          "bytes": 28872,
+          "sha256": "19143dca075972bc84e3fd9eab7416dd40cc565dccb2435a044bdfabe060c7d5"
+        },
+        {
+          "relpath": "fonts/source_sans_3/source-sans-3-cyrillic-wght-italic.woff2",
+          "bytes": 18724,
+          "sha256": "747ba5266ef049efc6d67eaa99058a81efa134ec00483c246ed388ef288186d2"
+        },
+        {
+          "relpath": "fonts/source_sans_3/source-sans-3-latin-ext-wght-italic.woff2",
+          "bytes": 59496,
+          "sha256": "6fe10a66ec416f77a26309b645471d032ad8175063bb605b886e9b7e57efaaa8"
+        },
+        {
+          "relpath": "fonts/source_sans_3/source-sans-3-latin-wght-italic.woff2",
+          "bytes": 28460,
+          "sha256": "5fbc14d56cea35e60596c72ca969b349443c6a536f74e11748eed8b3a396e61d"
+        },
+        {
+          "relpath": "fonts/source_sans_3/font.css",
+          "bytes": 2465,
+          "sha256": "6aadeacf2fa8da4a555190019f2dbd65abf86bf003414506ed7f3cfbccf1ee0d"
+        }
+      ]
+    },
+    {
+      "id": "source_code_pro",
+      "kind": "font",
+      "pkg": "@fontsource-variable/source-code-pro",
+      "version": "5.3.1",
+      "license": "SIL OFL-1.1",
+      "family": "Source Code Pro",
+      "css_name": "'Source Code Pro Variable', 'Source Code Pro'",
+      "woff2_files": [
+        "source-code-pro-cyrillic-wght-italic.woff2",
+        "source-code-pro-cyrillic-wght-normal.woff2",
+        "source-code-pro-latin-ext-wght-italic.woff2",
+        "source-code-pro-latin-ext-wght-normal.woff2",
+        "source-code-pro-latin-wght-italic.woff2",
+        "source-code-pro-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/source_code_pro/LICENSE",
+          "bytes": 4314,
+          "sha256": "18aabf190848725e2576eefb5c29ba06aac1029d02132252a7f312eac2e50cf3"
+        },
+        {
+          "relpath": "fonts/source_code_pro/source-code-pro-cyrillic-wght-normal.woff2",
+          "bytes": 14180,
+          "sha256": "fd7699ecbd3ce9ae5db900abc491150d176e8b1530aee9a9268cb3023658a5b3"
+        },
+        {
+          "relpath": "fonts/source_code_pro/source-code-pro-latin-ext-wght-normal.woff2",
+          "bytes": 33568,
+          "sha256": "ab316ee7e4a28a149fe9f74a3e9173c3d14a11bb7d4df898dd2fe10da7b7fe24"
+        },
+        {
+          "relpath": "fonts/source_code_pro/source-code-pro-latin-wght-normal.woff2",
+          "bytes": 22044,
+          "sha256": "8b774aaa5137a38ef40f4ac9d36db9a5eee152b2f66589dfdc82ff007fc87135"
+        },
+        {
+          "relpath": "fonts/source_code_pro/source-code-pro-cyrillic-wght-italic.woff2",
+          "bytes": 2384,
+          "sha256": "9d5a510257df6c4b14f63b979c89af8be75c828edf1311a69eb945c63f986344"
+        },
+        {
+          "relpath": "fonts/source_code_pro/source-code-pro-latin-ext-wght-italic.woff2",
+          "bytes": 34012,
+          "sha256": "da6214a7b9f9eca88a7ae3b7b6fec00db41741774d8a38e6a899bd8e85968411"
+        },
+        {
+          "relpath": "fonts/source_code_pro/source-code-pro-latin-wght-italic.woff2",
+          "bytes": 22448,
+          "sha256": "97f01332aeda642a2f298030203dd4dd72802c0288ab2705d33daf691278e563"
+        },
+        {
+          "relpath": "fonts/source_code_pro/font.css",
+          "bytes": 2513,
+          "sha256": "8679d05a01dff2d99994bcc8ad6d19329310ff7de70f6131ae0a3c7717445d49"
+        }
+      ]
+    },
+    {
+      "id": "geist",
+      "kind": "font",
+      "pkg": "@fontsource-variable/geist",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Geist",
+      "css_name": "'Geist Variable', 'Geist'",
+      "woff2_files": [
+        "geist-cyrillic-wght-italic.woff2",
+        "geist-cyrillic-wght-normal.woff2",
+        "geist-latin-ext-wght-italic.woff2",
+        "geist-latin-ext-wght-normal.woff2",
+        "geist-latin-wght-italic.woff2",
+        "geist-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/geist/LICENSE",
+          "bytes": 4486,
+          "sha256": "71609cbb5c78b5870d712eab73a31d76622635c6ed034ab5cee3b9ecbda8685f"
+        },
+        {
+          "relpath": "fonts/geist/geist-cyrillic-wght-normal.woff2",
+          "bytes": 15084,
+          "sha256": "6894439694946a589d157ece003086960a6a4013d74a813dab7602efdb3d8c09"
+        },
+        {
+          "relpath": "fonts/geist/geist-latin-ext-wght-normal.woff2",
+          "bytes": 16512,
+          "sha256": "824f485b5d26e2f2da3c2b236132ece1bc8e4e43373452950bb0e40548b4313f"
+        },
+        {
+          "relpath": "fonts/geist/geist-latin-wght-normal.woff2",
+          "bytes": 29400,
+          "sha256": "19f9c92546aa300c312235e3125af1b81394d8db9a4bc4a425cd5b641d2d54e1"
+        },
+        {
+          "relpath": "fonts/geist/geist-cyrillic-wght-italic.woff2",
+          "bytes": 15960,
+          "sha256": "a7684bfc9a77331f2a59560c61b2a6ecf11482570b3a6d61bf869dca1c91c530"
+        },
+        {
+          "relpath": "fonts/geist/geist-latin-ext-wght-italic.woff2",
+          "bytes": 17892,
+          "sha256": "56dc9ac98e3fc45e7ee487d03ee205b35858c672f2e15053eabbb119c0bc1e74"
+        },
+        {
+          "relpath": "fonts/geist/geist-latin-wght-italic.woff2",
+          "bytes": 31008,
+          "sha256": "9b10496762af92659f3b05d2b084b0c8f962c3ecdf637aa764e3b7fd17f5acaf"
+        },
+        {
+          "relpath": "fonts/geist/font.css",
+          "bytes": 2273,
+          "sha256": "72940d937db5ec1086e94244452753ccf4b8c88718ced6cadcfafa4f4a37a81b"
+        }
+      ]
+    },
+    {
+      "id": "geist_mono",
+      "kind": "font",
+      "pkg": "@fontsource-variable/geist-mono",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Geist Mono",
+      "css_name": "'Geist Mono Variable', 'Geist Mono'",
+      "woff2_files": [
+        "geist-mono-cyrillic-wght-italic.woff2",
+        "geist-mono-cyrillic-wght-normal.woff2",
+        "geist-mono-latin-ext-wght-italic.woff2",
+        "geist-mono-latin-ext-wght-normal.woff2",
+        "geist-mono-latin-wght-italic.woff2",
+        "geist-mono-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/geist_mono/LICENSE",
+          "bytes": 4498,
+          "sha256": "cc815ed4fc045f0e991abb10395b7932bd028c6a067deb13316d6002105074e6"
+        },
+        {
+          "relpath": "fonts/geist_mono/geist-mono-cyrillic-wght-normal.woff2",
+          "bytes": 12940,
+          "sha256": "4866787fc952dbdbd591d6923d67bc21c2d894b93f34ab69d0cdf25d47bfb2df"
+        },
+        {
+          "relpath": "fonts/geist_mono/geist-mono-latin-ext-wght-normal.woff2",
+          "bytes": 14696,
+          "sha256": "1a189eb997c3e2ece68373e387afaec9e8617424186c4b1ab3cff7c54ba6223b"
+        },
+        {
+          "relpath": "fonts/geist_mono/geist-mono-latin-wght-normal.woff2",
+          "bytes": 23128,
+          "sha256": "684ad5b531f81d43c1e8c7038262d5db7cdc1f68006e04d6c7769efa8d33c8cc"
+        },
+        {
+          "relpath": "fonts/geist_mono/geist-mono-cyrillic-wght-italic.woff2",
+          "bytes": 14116,
+          "sha256": "0bed200c47f591ab28726d1a9c1d3b53a4423713c13f5b37b108258ef22eafb1"
+        },
+        {
+          "relpath": "fonts/geist_mono/geist-mono-latin-ext-wght-italic.woff2",
+          "bytes": 16440,
+          "sha256": "cde10355ce14bb325e89af19c7609fac1fe90ea741f03a278cb3a11b02fe7f1a"
+        },
+        {
+          "relpath": "fonts/geist_mono/geist-mono-latin-wght-italic.woff2",
+          "bytes": 25516,
+          "sha256": "7842d88c32207514dd03ddb9abc6c84b032d6fef58af1177e0b23f6554c80c75"
+        },
+        {
+          "relpath": "fonts/geist_mono/font.css",
+          "bytes": 2393,
+          "sha256": "aef786aa57fd2dec2766810ce160b78241da3cf3b55052e62d5cad340ea35ecc"
+        }
+      ]
+    },
+    {
+      "id": "tektur",
+      "kind": "font",
+      "pkg": "@fontsource-variable/tektur",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Tektur",
+      "css_name": "'Tektur Variable', 'Tektur'",
+      "woff2_files": [
+        "tektur-cyrillic-wdth-normal.woff2",
+        "tektur-cyrillic-wght-normal.woff2",
+        "tektur-latin-ext-wdth-normal.woff2",
+        "tektur-latin-ext-wght-normal.woff2",
+        "tektur-latin-wdth-normal.woff2",
+        "tektur-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/tektur/LICENSE",
+          "bytes": 4383,
+          "sha256": "865c2067daf0c957ed41ee040168088a5253be10df167549defcb775d0bbd0c3"
+        },
+        {
+          "relpath": "fonts/tektur/tektur-cyrillic-wght-normal.woff2",
+          "bytes": 8664,
+          "sha256": "717684b09fd7c875416b30e168f51256ebc7cf811c908218fae6182069e41f01"
+        },
+        {
+          "relpath": "fonts/tektur/tektur-latin-ext-wght-normal.woff2",
+          "bytes": 14704,
+          "sha256": "a6d4d0a825ef9ea09774cf487ca0a6181c6d4b33aeb4d3708d52d6c98526fbd8"
+        },
+        {
+          "relpath": "fonts/tektur/tektur-latin-wght-normal.woff2",
+          "bytes": 12148,
+          "sha256": "2c4e3f0723427b12e30b10fd233c362244963124ecbdd3a3cba40dcf78c3f22e"
+        },
+        {
+          "relpath": "fonts/tektur/tektur-cyrillic-wdth-normal.woff2",
+          "bytes": 14056,
+          "sha256": "231c3c1b2e5e03234fa859f6172974227dfca2aec82320446995b6e37409ca84"
+        },
+        {
+          "relpath": "fonts/tektur/tektur-latin-ext-wdth-normal.woff2",
+          "bytes": 22320,
+          "sha256": "1c99d1742b06ac8d25753af21e775df5ff5b1af936b64a86a58f4ad8c75ac34a"
+        },
+        {
+          "relpath": "fonts/tektur/tektur-latin-wdth-normal.woff2",
+          "bytes": 19196,
+          "sha256": "19d3beb395906c32f206c82d01580e993d257a8872277e254b97c6ca96a64dc1"
+        },
+        {
+          "relpath": "fonts/tektur/font.css",
+          "bytes": 2375,
+          "sha256": "2bae73dc585bf67896ac6abee950fe67932b257b6858699b38c26bfeb6ed0fba"
+        }
+      ]
+    },
+    {
+      "id": "commissioner",
+      "kind": "font",
+      "pkg": "@fontsource-variable/commissioner",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Commissioner",
+      "css_name": "'Commissioner Variable', 'Commissioner'",
+      "woff2_files": [
+        "commissioner-cyrillic-wght-normal.woff2",
+        "commissioner-latin-ext-wght-normal.woff2",
+        "commissioner-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/commissioner/LICENSE",
+          "bytes": 4385,
+          "sha256": "f4bab37ac72f638eeaec7a38cf8f5cc4e91299d763e6befc38e224044730ed8a"
+        },
+        {
+          "relpath": "fonts/commissioner/commissioner-cyrillic-wght-normal.woff2",
+          "bytes": 26188,
+          "sha256": "1cb81390574ac797658ecabb9d6c50648b01506909c9b0c0c315fbe89f83a689"
+        },
+        {
+          "relpath": "fonts/commissioner/commissioner-latin-ext-wght-normal.woff2",
+          "bytes": 30988,
+          "sha256": "bd6c9bcd8fddfa16facc4398d075d0dfdf1286fc08334b94e8ea0c94beb1e0ff"
+        },
+        {
+          "relpath": "fonts/commissioner/commissioner-latin-wght-normal.woff2",
+          "bytes": 36700,
+          "sha256": "e3d539b926881fbb3592788297eee24d6d179c1c06dbad36805fc722775247ce"
+        },
+        {
+          "relpath": "fonts/commissioner/font.css",
+          "bytes": 1220,
+          "sha256": "8d920a4aa72c9894c5694c7c4fc581b363fac9345cc25f097e6d0abff8bda764"
+        }
+      ]
+    },
+    {
+      "id": "jetbrains_mono",
+      "kind": "font",
+      "pkg": "@fontsource-variable/jetbrains-mono",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "JetBrains Mono",
+      "css_name": "'JetBrains Mono Variable', 'JetBrains Mono'",
+      "woff2_files": [
+        "jetbrains-mono-cyrillic-wght-italic.woff2",
+        "jetbrains-mono-cyrillic-wght-normal.woff2",
+        "jetbrains-mono-latin-ext-wght-italic.woff2",
+        "jetbrains-mono-latin-ext-wght-normal.woff2",
+        "jetbrains-mono-latin-wght-italic.woff2",
+        "jetbrains-mono-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/jetbrains_mono/LICENSE",
+          "bytes": 4524,
+          "sha256": "403581b69dac5cff4079205e01c6b467e56af449ecbd7247693ddb1baafa005b"
+        },
+        {
+          "relpath": "fonts/jetbrains_mono/jetbrains-mono-cyrillic-wght-normal.woff2",
+          "bytes": 12108,
+          "sha256": "d274604c40757f98f07df623a8b8fb5194508a6fa4f5413a7a107f09e3b7452a"
+        },
+        {
+          "relpath": "fonts/jetbrains_mono/jetbrains-mono-latin-ext-wght-normal.woff2",
+          "bytes": 15196,
+          "sha256": "79bfdab9ba467e26eea4122e6f2567e188dd8a09a8c730d501fc487c4ab99c6e"
+        },
+        {
+          "relpath": "fonts/jetbrains_mono/jetbrains-mono-latin-wght-normal.woff2",
+          "bytes": 40404,
+          "sha256": "18be452724bfdc236c074ca94a249a7f41a86752c7d04ab258ce9ed5651f6a7e"
+        },
+        {
+          "relpath": "fonts/jetbrains_mono/jetbrains-mono-cyrillic-wght-italic.woff2",
+          "bytes": 13352,
+          "sha256": "8df3ca627bd8e1cb0e5414f7429fe7a2cf82732b0fc43f2d05bc2c471b64fcfc"
+        },
+        {
+          "relpath": "fonts/jetbrains_mono/jetbrains-mono-latin-ext-wght-italic.woff2",
+          "bytes": 16520,
+          "sha256": "60652c78382d7e5021ce4c3ed8985fc41d8f3d1b1a3bedcec2a44ed8979fe5eb"
+        },
+        {
+          "relpath": "fonts/jetbrains_mono/jetbrains-mono-latin-wght-italic.woff2",
+          "bytes": 42964,
+          "sha256": "a8afa085e9ca5e53434e2ee918ba6b65c7dd4dda56509976b36591478c99d62e"
+        },
+        {
+          "relpath": "fonts/jetbrains_mono/font.css",
+          "bytes": 2489,
+          "sha256": "7c953f1ca96e27fbfa04313e4257490c06f9c56bf88b9a932242aabc9c15915b"
+        }
+      ]
+    },
+    {
+      "id": "unbounded",
+      "kind": "font",
+      "pkg": "@fontsource-variable/unbounded",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Unbounded",
+      "css_name": "'Unbounded Variable', 'Unbounded'",
+      "woff2_files": [
+        "unbounded-cyrillic-wght-normal.woff2",
+        "unbounded-latin-ext-wght-normal.woff2",
+        "unbounded-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/unbounded/LICENSE",
+          "bytes": 4390,
+          "sha256": "48a780bc857729859e54d1e691b05792894a26634edc1c4b5dbeabffe6941758"
+        },
+        {
+          "relpath": "fonts/unbounded/unbounded-cyrillic-wght-normal.woff2",
+          "bytes": 31424,
+          "sha256": "e30bf6a6063b6a47232bbd657e24c7cf4fdaf76fc2c50d92d9ee63e2ad2087cf"
+        },
+        {
+          "relpath": "fonts/unbounded/unbounded-latin-ext-wght-normal.woff2",
+          "bytes": 118348,
+          "sha256": "845e1c9fe2e9a7bfbedfeb447fbeba4bc1b5ecd6246277910ccdaad35a7a532c"
+        },
+        {
+          "relpath": "fonts/unbounded/unbounded-latin-wght-normal.woff2",
+          "bytes": 50904,
+          "sha256": "22f9b928aa3928a896340422b54d690fbb5875c30eae4c106f029c61f2289fd6"
+        },
+        {
+          "relpath": "fonts/unbounded/font.css",
+          "bytes": 1184,
+          "sha256": "ecb1ffeee3ad54a975b01db82b84f85472a412c446c2d27a2c9b9d150230e452"
+        }
+      ]
+    },
+    {
+      "id": "martian_mono",
+      "kind": "font",
+      "pkg": "@fontsource-variable/martian-mono",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Martian Mono",
+      "css_name": "'Martian Mono Variable', 'Martian Mono'",
+      "woff2_files": [
+        "martian-mono-cyrillic-wdth-normal.woff2",
+        "martian-mono-cyrillic-wght-normal.woff2",
+        "martian-mono-latin-ext-wdth-normal.woff2",
+        "martian-mono-latin-ext-wght-normal.woff2",
+        "martian-mono-latin-wdth-normal.woff2",
+        "martian-mono-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/martian_mono/LICENSE",
+          "bytes": 4389,
+          "sha256": "bd7d799f6a67b704f9546422ee83d69b4dc5e4ae289d5eabc22581251dd7150a"
+        },
+        {
+          "relpath": "fonts/martian_mono/martian-mono-cyrillic-wght-normal.woff2",
+          "bytes": 10560,
+          "sha256": "2d30189f145a92ec118dc73194c7d813f218db9ec084444f6c071d419ce6b529"
+        },
+        {
+          "relpath": "fonts/martian_mono/martian-mono-latin-ext-wght-normal.woff2",
+          "bytes": 15908,
+          "sha256": "c26a87eedc388afebc0c6331d99b248196ea64a883322fc519831278ffd169d5"
+        },
+        {
+          "relpath": "fonts/martian_mono/martian-mono-latin-wght-normal.woff2",
+          "bytes": 23556,
+          "sha256": "d0be3a78a854bcea53a9dc26b6620ba322eaa515ccbd92bb4b6ec20a3c91b291"
+        },
+        {
+          "relpath": "fonts/martian_mono/martian-mono-cyrillic-wdth-normal.woff2",
+          "bytes": 17200,
+          "sha256": "827d9868a49cc5c27acf71f9467a3c5b060bdc1120ff2194452d3966a077103b"
+        },
+        {
+          "relpath": "fonts/martian_mono/martian-mono-latin-ext-wdth-normal.woff2",
+          "bytes": 24660,
+          "sha256": "21fce7e290a2395b70fb1569e1b2ef65b3a2c0a121f28203e23dd9b17d120ed4"
+        },
+        {
+          "relpath": "fonts/martian_mono/martian-mono-latin-wdth-normal.woff2",
+          "bytes": 38492,
+          "sha256": "f9c1655c2c9d1ed5bb8b301a57d1169a1123ffef1a588dc50a7a487810f7d732"
+        },
+        {
+          "relpath": "fonts/martian_mono/font.css",
+          "bytes": 2525,
+          "sha256": "0ab3b7d1d82c6601f5b626be47ce55066d94ae744ccbfa6425fd7b5ae30f7c2c"
+        }
+      ]
+    },
+    {
+      "id": "alumni_sans",
+      "kind": "font",
+      "pkg": "@fontsource-variable/alumni-sans",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Alumni Sans",
+      "css_name": "'Alumni Sans Variable', 'Alumni Sans'",
+      "woff2_files": [
+        "alumni-sans-cyrillic-wght-italic.woff2",
+        "alumni-sans-cyrillic-wght-normal.woff2",
+        "alumni-sans-latin-ext-wght-italic.woff2",
+        "alumni-sans-latin-ext-wght-normal.woff2",
+        "alumni-sans-latin-wght-italic.woff2",
+        "alumni-sans-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/alumni_sans/LICENSE",
+          "bytes": 4505,
+          "sha256": "0091179f4d5e0a5b41eaf840a57d3ef5a76240e62871deed754192db13860469"
+        },
+        {
+          "relpath": "fonts/alumni_sans/alumni-sans-cyrillic-wght-normal.woff2",
+          "bytes": 11792,
+          "sha256": "79758662da8f8d52bca682e7b4834f6f16bf47d8e339cd821d55a350bd851f9a"
+        },
+        {
+          "relpath": "fonts/alumni_sans/alumni-sans-latin-ext-wght-normal.woff2",
+          "bytes": 18892,
+          "sha256": "1d84fd8caed56f7acd48ea7af48b06c608421fcb15f18e64977b5ec3fba414ba"
+        },
+        {
+          "relpath": "fonts/alumni_sans/alumni-sans-latin-wght-normal.woff2",
+          "bytes": 22236,
+          "sha256": "49015c322cbd9ee7fbfbdb25295a57a5ba4b35e6f9c92c6d42fd570267e45c36"
+        },
+        {
+          "relpath": "fonts/alumni_sans/alumni-sans-cyrillic-wght-italic.woff2",
+          "bytes": 12916,
+          "sha256": "fa69c9760050453a8c839939424f90c25d9d54be8914058498a2234931f20fea"
+        },
+        {
+          "relpath": "fonts/alumni_sans/alumni-sans-latin-ext-wght-italic.woff2",
+          "bytes": 19956,
+          "sha256": "6dc212778d048f3083f79ca21420a1004a7f6dd27d5ae22484755cd08fcdb8c3"
+        },
+        {
+          "relpath": "fonts/alumni_sans/alumni-sans-latin-wght-italic.woff2",
+          "bytes": 23880,
+          "sha256": "5164f7384b20e45a949fc71a8540e58c176d509c3412589a44cf7285d6653ffc"
+        },
+        {
+          "relpath": "fonts/alumni_sans/font.css",
+          "bytes": 2417,
+          "sha256": "a57ed6d232786f838ebeb3fb29270870947bbb0b1e541a4a16a05bdf21944a87"
+        }
+      ]
+    },
+    {
+      "id": "pt_mono",
+      "kind": "font",
+      "pkg": "@fontsource/pt-mono",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "PT Mono",
+      "css_name": "'PT Mono'",
+      "woff2_files": [
+        "pt-mono-cyrillic-400-normal.woff2",
+        "pt-mono-latin-400-normal.woff2",
+        "pt-mono-latin-ext-400-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/pt_mono/LICENSE",
+          "bytes": 4370,
+          "sha256": "df14159157b0f6d728e2186a19ed31bec4fd30d1e8be87647b6e1e0a30cb265f"
+        },
+        {
+          "relpath": "fonts/pt_mono/pt-mono-cyrillic-400-normal.woff2",
+          "bytes": 15356,
+          "sha256": "798d60261c091fa0735d73a9c10c819d27b27cbbcfdcdf6b8ba94e0d41a7d99f"
+        },
+        {
+          "relpath": "fonts/pt_mono/pt-mono-latin-ext-400-normal.woff2",
+          "bytes": 16072,
+          "sha256": "b5e539036e0fedbb1bc408355993f36d264132b96008a5152f05b1f858d9120e"
+        },
+        {
+          "relpath": "fonts/pt_mono/pt-mono-latin-400-normal.woff2",
+          "bytes": 27436,
+          "sha256": "b4e2aee32a6162b66a40f6fc7ac09962b0385e467ca8b143d92a091b16eaff6d"
+        },
+        {
+          "relpath": "fonts/pt_mono/font.css",
+          "bytes": 1115,
+          "sha256": "f83906da52b3a335185e511a5445b8668c78a86c3b588ee7afb6e0f41bea0028"
+        }
+      ]
+    },
+    {
+      "id": "wix_madefor_display",
+      "kind": "font",
+      "pkg": "@fontsource-variable/wix-madefor-display",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Wix Madefor Display",
+      "css_name": "'Wix Madefor Display Variable', 'Wix Madefor Display'",
+      "woff2_files": [
+        "wix-madefor-display-cyrillic-wght-normal.woff2",
+        "wix-madefor-display-latin-ext-wght-normal.woff2",
+        "wix-madefor-display-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/wix_madefor_display/LICENSE",
+          "bytes": 4386,
+          "sha256": "d36354965f1cd37fecd85338773287a4969a6f065478d9a92244400d606c2bad"
+        },
+        {
+          "relpath": "fonts/wix_madefor_display/wix-madefor-display-cyrillic-wght-normal.woff2",
+          "bytes": 13816,
+          "sha256": "34c9d48261f9e10a150d240bc0c81c3dfb4838795e59d6b66e34eb78471605ed"
+        },
+        {
+          "relpath": "fonts/wix_madefor_display/wix-madefor-display-latin-ext-wght-normal.woff2",
+          "bytes": 12464,
+          "sha256": "910481ea54d71c83e72ccb179e116ee47063ce6a92022444e9dd1cd2d66dca03"
+        },
+        {
+          "relpath": "fonts/wix_madefor_display/wix-madefor-display-latin-wght-normal.woff2",
+          "bytes": 20168,
+          "sha256": "19bf2f2f1eaa10b2a047a8a1e624a1e12008ab5e3c50ad199ac968f8324f5f4d"
+        },
+        {
+          "relpath": "fonts/wix_madefor_display/font.css",
+          "bytes": 1304,
+          "sha256": "f18c01e7c6abffe5cbb718faa0474c471c814e88a1cd3b29e7c283582a04b499"
+        }
+      ]
+    },
+    {
+      "id": "wix_madefor_text",
+      "kind": "font",
+      "pkg": "@fontsource-variable/wix-madefor-text",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Wix Madefor Text",
+      "css_name": "'Wix Madefor Text Variable', 'Wix Madefor Text'",
+      "woff2_files": [
+        "wix-madefor-text-cyrillic-wght-italic.woff2",
+        "wix-madefor-text-cyrillic-wght-normal.woff2",
+        "wix-madefor-text-latin-ext-wght-italic.woff2",
+        "wix-madefor-text-latin-ext-wght-normal.woff2",
+        "wix-madefor-text-latin-wght-italic.woff2",
+        "wix-madefor-text-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/wix_madefor_text/LICENSE",
+          "bytes": 5644,
+          "sha256": "ed8d911198369bc4da998f5c12d6c5b6b5a6ceceb89d9c5064b18624622896ff"
+        },
+        {
+          "relpath": "fonts/wix_madefor_text/wix-madefor-text-cyrillic-wght-normal.woff2",
+          "bytes": 14096,
+          "sha256": "db1a17ef71f7ab174e889c18dd0afe070eb95731ded5d447a15063c9c2a60932"
+        },
+        {
+          "relpath": "fonts/wix_madefor_text/wix-madefor-text-latin-ext-wght-normal.woff2",
+          "bytes": 12728,
+          "sha256": "3b75cd0aa0856655b4623ab658a9725de2b774e5c98ae89ffa10f8fb2cc0aec9"
+        },
+        {
+          "relpath": "fonts/wix_madefor_text/wix-madefor-text-latin-wght-normal.woff2",
+          "bytes": 20244,
+          "sha256": "cbd90a79e04d153fd521d90b08e9962628e3139313af330bd898001fe5b36e1a"
+        },
+        {
+          "relpath": "fonts/wix_madefor_text/wix-madefor-text-cyrillic-wght-italic.woff2",
+          "bytes": 916,
+          "sha256": "587c8fe1dea05f1dccffdab5d3f40d41a34760c1ce2757c6c4003f53e190545a"
+        },
+        {
+          "relpath": "fonts/wix_madefor_text/wix-madefor-text-latin-ext-wght-italic.woff2",
+          "bytes": 12016,
+          "sha256": "0f18cc275b98ed88dc15aea792ffc5d5a29566e75a3ecebac50d1a6c2b3a107b"
+        },
+        {
+          "relpath": "fonts/wix_madefor_text/wix-madefor-text-latin-wght-italic.woff2",
+          "bytes": 21364,
+          "sha256": "9e24955c2990af1fdf1a4d0b0f828beafe6128ce408a70fc5cce3e78456be331"
+        },
+        {
+          "relpath": "fonts/wix_madefor_text/font.css",
+          "bytes": 2537,
+          "sha256": "1c6d6374a591df8e1e0aa71e03521b71cb260013e389aedd2a6007c50eae4ead"
+        }
+      ]
+    },
+    {
+      "id": "onest",
+      "kind": "font",
+      "pkg": "@fontsource-variable/onest",
+      "version": "5.3.1",
+      "license": "SIL OFL-1.1",
+      "family": "Onest",
+      "css_name": "'Onest Variable', 'Onest'",
+      "woff2_files": [
+        "onest-cyrillic-wght-normal.woff2",
+        "onest-latin-ext-wght-normal.woff2",
+        "onest-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/onest/LICENSE",
+          "bytes": 4378,
+          "sha256": "a2a09da98a3d0d1ec79fc2d6deeac748b20a8153e26699552e7b59b5a40b63a3"
+        },
+        {
+          "relpath": "fonts/onest/onest-cyrillic-wght-normal.woff2",
+          "bytes": 15860,
+          "sha256": "68e5e01d6265bd68967746d4f5a9d18d0e6cbb5d15583c7082d6384ab1229b27"
+        },
+        {
+          "relpath": "fonts/onest/onest-latin-ext-wght-normal.woff2",
+          "bytes": 28452,
+          "sha256": "14e7d3079b75860e2ab50efc6c318c398fdb46ede9b56e625f12ae70a3c5d9a4"
+        },
+        {
+          "relpath": "fonts/onest/onest-latin-wght-normal.woff2",
+          "bytes": 33760,
+          "sha256": "052df74533250c2e0ca0c4bdd32de594e107d99c1648e63820ef9c6142067828"
+        },
+        {
+          "relpath": "fonts/onest/font.css",
+          "bytes": 1136,
+          "sha256": "63812ba0a0dacb40593f466f8176de83d91465f140084df6601b5abdd7a8520b"
+        }
+      ]
+    },
+    {
+      "id": "geologica",
+      "kind": "font",
+      "pkg": "@fontsource-variable/geologica",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Geologica",
+      "css_name": "'Geologica Variable', 'Geologica'",
+      "woff2_files": [
+        "geologica-cyrillic-wght-normal.woff2",
+        "geologica-latin-ext-wght-normal.woff2",
+        "geologica-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/geologica/LICENSE",
+          "bytes": 4390,
+          "sha256": "1ed2ffe9ee7048846f4bc5b28bf655113fd7d53e7717bf251dd68130af73016c"
+        },
+        {
+          "relpath": "fonts/geologica/geologica-cyrillic-wght-normal.woff2",
+          "bytes": 16428,
+          "sha256": "a7dc739efa0c2d4066164b40b15276440978d8efb6003b5f10a6b9c3e5c1cd30"
+        },
+        {
+          "relpath": "fonts/geologica/geologica-latin-ext-wght-normal.woff2",
+          "bytes": 22404,
+          "sha256": "85ea5e8563c66d7fc38c97e7fabf398643c719e76ce058704b3690317d6d0993"
+        },
+        {
+          "relpath": "fonts/geologica/geologica-latin-wght-normal.woff2",
+          "bytes": 24944,
+          "sha256": "b14f1edee95a57f8782d505232e54584c80c673acbd25a0e7c6366332977b47d"
+        },
+        {
+          "relpath": "fonts/geologica/font.css",
+          "bytes": 1184,
+          "sha256": "a84a975ec940d3c3fe04d94c94245d3e5705278c27e3ef5c669a5febfdae6266"
+        }
+      ]
+    },
+    {
+      "id": "fira_code",
+      "kind": "font",
+      "pkg": "@fontsource-variable/fira-code",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Fira Code",
+      "css_name": "'Fira Code Variable', 'Fira Code'",
+      "woff2_files": [
+        "fira-code-cyrillic-wght-normal.woff2",
+        "fira-code-latin-ext-wght-normal.woff2",
+        "fira-code-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/fira_code/LICENSE",
+          "bytes": 4389,
+          "sha256": "126cd7bf732b86f42885f1fbf682e6aeea456672c7fdb99f2d557ec44e468a28"
+        },
+        {
+          "relpath": "fonts/fira_code/fira-code-cyrillic-wght-normal.woff2",
+          "bytes": 11980,
+          "sha256": "b0ea81e7827ccb1e8258b911e632b694e898fe15665fab3ed0d12bc565288a34"
+        },
+        {
+          "relpath": "fonts/fira_code/fira-code-latin-ext-wght-normal.woff2",
+          "bytes": 13272,
+          "sha256": "801677342d1191c5e964719bbcb5834f5da3c39a00e1e1501f450b1379fcc116"
+        },
+        {
+          "relpath": "fonts/fira_code/fira-code-latin-wght-normal.woff2",
+          "bytes": 36276,
+          "sha256": "771bf4b79a97fc005d12866168bd39d868a9dd3d5903008fe8b796723c8a56f4"
+        },
+        {
+          "relpath": "fonts/fira_code/font.css",
+          "bytes": 1184,
+          "sha256": "6393b88ae0e003ff30d3051a828bef8015594e174ce39fbe6477933dd8ceed26"
+        }
+      ]
+    },
+    {
+      "id": "jura",
+      "kind": "font",
+      "pkg": "@fontsource-variable/jura",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Jura",
+      "css_name": "'Jura Variable', 'Jura'",
+      "woff2_files": [
+        "jura-cyrillic-wght-normal.woff2",
+        "jura-latin-ext-wght-normal.woff2",
+        "jura-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/jura/LICENSE",
+          "bytes": 4378,
+          "sha256": "0d5db8c052b693936cbc18c1411060c34cc4d8209b98fb13baca93e267778651"
+        },
+        {
+          "relpath": "fonts/jura/jura-cyrillic-wght-normal.woff2",
+          "bytes": 13212,
+          "sha256": "288dbc9f897b39e56a62d1d4b4c0a24919659cb92fbe410f4032901a887c9f9f"
+        },
+        {
+          "relpath": "fonts/jura/jura-latin-ext-wght-normal.woff2",
+          "bytes": 24472,
+          "sha256": "8364bcb0173c1f3f4981c1a40766112ed8ee59c1ebd2c3d62638557f59b63527"
+        },
+        {
+          "relpath": "fonts/jura/jura-latin-wght-normal.woff2",
+          "bytes": 24276,
+          "sha256": "99a4b2d414e1d6ee78a883c7513d5dd9da4254f2a094c76170b81f07b1620d79"
+        },
+        {
+          "relpath": "fonts/jura/font.css",
+          "bytes": 1124,
+          "sha256": "505e054928536fa5574bb66957b101d7da3f1b11f00fa32b19bf295b3565f755"
+        }
+      ]
+    },
+    {
+      "id": "rubik",
+      "kind": "font",
+      "pkg": "@fontsource-variable/rubik",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Rubik",
+      "css_name": "'Rubik Variable', 'Rubik'",
+      "woff2_files": [
+        "rubik-cyrillic-wght-italic.woff2",
+        "rubik-cyrillic-wght-normal.woff2",
+        "rubik-latin-ext-wght-italic.woff2",
+        "rubik-latin-ext-wght-normal.woff2",
+        "rubik-latin-wght-italic.woff2",
+        "rubik-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/rubik/LICENSE",
+          "bytes": 4486,
+          "sha256": "46a250495a963b0b84f2736c0185d0e3af8df9d23427bd425b92a8ece020283c"
+        },
+        {
+          "relpath": "fonts/rubik/rubik-cyrillic-wght-normal.woff2",
+          "bytes": 15112,
+          "sha256": "bdb2b33ab916e9e7b42edb61f8aea5f5dd83ad773d6ee4e9b55665daf8954ce8"
+        },
+        {
+          "relpath": "fonts/rubik/rubik-latin-ext-wght-normal.woff2",
+          "bytes": 19400,
+          "sha256": "09472f217ad1ebb61a7669cf532f9f2f80685e07652ee862fde9a79665aef479"
+        },
+        {
+          "relpath": "fonts/rubik/rubik-latin-wght-normal.woff2",
+          "bytes": 35348,
+          "sha256": "691cd1d9b4c0cdf31a1dcf04259c86f92c85e69f6622abab7964d81e36890691"
+        },
+        {
+          "relpath": "fonts/rubik/rubik-cyrillic-wght-italic.woff2",
+          "bytes": 16488,
+          "sha256": "e9f7ede725761fea79102f5256a581eb4693dbaff21e61db15974eec2dfb226a"
+        },
+        {
+          "relpath": "fonts/rubik/rubik-latin-ext-wght-italic.woff2",
+          "bytes": 21152,
+          "sha256": "51999fc7e45d93d8d34d3c0f1c32e58f85ae6e69d8dfb700771062e5c3945e49"
+        },
+        {
+          "relpath": "fonts/rubik/rubik-latin-wght-italic.woff2",
+          "bytes": 36616,
+          "sha256": "4d9f552c4b0a7f02f231e56198d80aed8550bdfb7e7541260b2b20455b14fb88"
+        },
+        {
+          "relpath": "fonts/rubik/font.css",
+          "bytes": 2273,
+          "sha256": "abdf726cc2fc54b67a2ad744dbf14df8fc97f276f3e8c7d00faa9ba5b2aaf3ef"
+        }
+      ]
+    },
+    {
+      "id": "nunito",
+      "kind": "font",
+      "pkg": "@fontsource-variable/nunito",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Nunito",
+      "css_name": "'Nunito Variable', 'Nunito'",
+      "woff2_files": [
+        "nunito-cyrillic-wght-italic.woff2",
+        "nunito-cyrillic-wght-normal.woff2",
+        "nunito-latin-ext-wght-italic.woff2",
+        "nunito-latin-ext-wght-normal.woff2",
+        "nunito-latin-wght-italic.woff2",
+        "nunito-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/nunito/LICENSE",
+          "bytes": 4491,
+          "sha256": "40991bfa02ac620aae16dc527f3c47765a25e43f270d4c301ee6ab663a8d9015"
+        },
+        {
+          "relpath": "fonts/nunito/nunito-cyrillic-wght-normal.woff2",
+          "bytes": 20776,
+          "sha256": "63b14e3ef0966785438b8947380dfbcad178cbd3c6a5ed2172672ca0d8b839ac"
+        },
+        {
+          "relpath": "fonts/nunito/nunito-latin-ext-wght-normal.woff2",
+          "bytes": 35588,
+          "sha256": "2c8d792869818ecb253a46bc3c63c7013df7aac2f69291c3c85e5cdc94160960"
+        },
+        {
+          "relpath": "fonts/nunito/nunito-latin-wght-normal.woff2",
+          "bytes": 39128,
+          "sha256": "ba344451eab25b217a165363b1982048a5e5830a0daf36577973955a04cac793"
+        },
+        {
+          "relpath": "fonts/nunito/nunito-cyrillic-wght-italic.woff2",
+          "bytes": 22896,
+          "sha256": "2c394b5d3bc6aa00dd6917458909e85191dcd675026459fdddde520bf5ee3bf7"
+        },
+        {
+          "relpath": "fonts/nunito/nunito-latin-ext-wght-italic.woff2",
+          "bytes": 39072,
+          "sha256": "1bb48a49c837d76a727223515b78eb2a14eaab783563be84b0718f338c56c846"
+        },
+        {
+          "relpath": "fonts/nunito/nunito-latin-wght-italic.woff2",
+          "bytes": 41760,
+          "sha256": "6cfcc3786d5ba3b5c3a41797f95272e57f4290ccbd283a4bfd0033a3d857e64c"
+        },
+        {
+          "relpath": "fonts/nunito/font.css",
+          "bytes": 2303,
+          "sha256": "d4594700cc0d64ea2f1fef90e5aa2fd230a0ed7a64520628e998c22587087cd9"
+        }
+      ]
+    },
+    {
+      "id": "cormorant_garamond",
+      "kind": "font",
+      "pkg": "@fontsource-variable/cormorant-garamond",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Cormorant Garamond",
+      "css_name": "'Cormorant Garamond Variable', 'Cormorant Garamond'",
+      "woff2_files": [
+        "cormorant-garamond-cyrillic-wght-italic.woff2",
+        "cormorant-garamond-cyrillic-wght-normal.woff2",
+        "cormorant-garamond-latin-ext-wght-italic.woff2",
+        "cormorant-garamond-latin-ext-wght-normal.woff2",
+        "cormorant-garamond-latin-wght-italic.woff2",
+        "cormorant-garamond-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/cormorant_garamond/LICENSE",
+          "bytes": 4504,
+          "sha256": "732f37009943e7f4378cf37113c9bcc4716af002a8583511aa91ed5d37683e73"
+        },
+        {
+          "relpath": "fonts/cormorant_garamond/cormorant-garamond-cyrillic-wght-normal.woff2",
+          "bytes": 21168,
+          "sha256": "017fab69b4be8ffc08ca312823327989ade6dc3d948f0afa125e12ec2e5e7ca1"
+        },
+        {
+          "relpath": "fonts/cormorant_garamond/cormorant-garamond-latin-ext-wght-normal.woff2",
+          "bytes": 33736,
+          "sha256": "cfa9a397d86f66c5c51775a2500a712d5f632a04f0c5eca6930dfaf612d4566d"
+        },
+        {
+          "relpath": "fonts/cormorant_garamond/cormorant-garamond-latin-wght-normal.woff2",
+          "bytes": 37640,
+          "sha256": "d80df8ff5aecd299a61549f9e29ab1ed0b9b05f4ea71d50fe978e07d5240b235"
+        },
+        {
+          "relpath": "fonts/cormorant_garamond/cormorant-garamond-cyrillic-wght-italic.woff2",
+          "bytes": 21300,
+          "sha256": "cb13c04533ee98c94e49a053b9f4d39bf616fd7ba6360d71aead92a78dc571f7"
+        },
+        {
+          "relpath": "fonts/cormorant_garamond/cormorant-garamond-latin-ext-wght-italic.woff2",
+          "bytes": 34392,
+          "sha256": "cd5bf126b2c84ab41b254a6a9a1ffb5c326a0f9f82c22fb4704daa31c9aaa415"
+        },
+        {
+          "relpath": "fonts/cormorant_garamond/cormorant-garamond-latin-wght-italic.woff2",
+          "bytes": 39260,
+          "sha256": "6f2f5c3b1abc3d0bb035a927f66a90ca873f94fc31c4966c8d024142c2036e55"
+        },
+        {
+          "relpath": "fonts/cormorant_garamond/font.css",
+          "bytes": 2585,
+          "sha256": "fef81c2737c0d2296ffe52c732b21cdeb10d223cea7c5de02912615ccb3459aa"
+        }
+      ]
+    },
+    {
+      "id": "literata",
+      "kind": "font",
+      "pkg": "@fontsource-variable/literata",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Literata",
+      "css_name": "'Literata Variable', 'Literata'",
+      "woff2_files": [
+        "literata-cyrillic-wght-italic.woff2",
+        "literata-cyrillic-wght-normal.woff2",
+        "literata-latin-ext-wght-italic.woff2",
+        "literata-latin-ext-wght-normal.woff2",
+        "literata-latin-wght-italic.woff2",
+        "literata-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/literata/LICENSE",
+          "bytes": 4506,
+          "sha256": "9895ebc015226accf416b758ac1ca02a2fb4f83a89d316791ef697c3dc0852aa"
+        },
+        {
+          "relpath": "fonts/literata/literata-cyrillic-wght-normal.woff2",
+          "bytes": 28068,
+          "sha256": "df20f1a8ca3c15497861c6dbf36c0c59507ee351301527ec89543747067ad4d7"
+        },
+        {
+          "relpath": "fonts/literata/literata-latin-ext-wght-normal.woff2",
+          "bytes": 42656,
+          "sha256": "46792f7cd10b28fb512161caeaaa11b049feb2221ccaa72bb4d4ccc286199155"
+        },
+        {
+          "relpath": "fonts/literata/literata-latin-wght-normal.woff2",
+          "bytes": 52496,
+          "sha256": "9adbeac5b167fe5ad6c49d9e29aa0c76e2f1bb3b46bf4ebf12a9eca7d3525384"
+        },
+        {
+          "relpath": "fonts/literata/literata-cyrillic-wght-italic.woff2",
+          "bytes": 29264,
+          "sha256": "62e8c9a48487878d0027e5946773f029f28ec6be99f1f20eb26b6aa401395c29"
+        },
+        {
+          "relpath": "fonts/literata/literata-latin-ext-wght-italic.woff2",
+          "bytes": 43256,
+          "sha256": "ba0e6a12e2f0a1f5d455c23c47068b71f9898c571dcb92dab385294ebdae3e74"
+        },
+        {
+          "relpath": "fonts/literata/literata-latin-wght-italic.woff2",
+          "bytes": 53728,
+          "sha256": "ab198d6616c7cc966f26a4a5b28a3977dc47439640f09d9b3361226bd465c404"
+        },
+        {
+          "relpath": "fonts/literata/font.css",
+          "bytes": 2345,
+          "sha256": "bed9232fcbb8eb334461a411c61ea2a74e3122b5be91355e91b2dd80a025aece"
+        }
+      ]
+    },
+    {
+      "id": "mulish",
+      "kind": "font",
+      "pkg": "@fontsource-variable/mulish",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Mulish",
+      "css_name": "'Mulish Variable', 'Mulish'",
+      "woff2_files": [
+        "mulish-cyrillic-wght-italic.woff2",
+        "mulish-cyrillic-wght-normal.woff2",
+        "mulish-latin-ext-wght-italic.woff2",
+        "mulish-latin-ext-wght-normal.woff2",
+        "mulish-latin-wght-italic.woff2",
+        "mulish-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/mulish/LICENSE",
+          "bytes": 4491,
+          "sha256": "e8c2c25954b4ff44e44ad6b2d900d0b3936a593a4579e8d65b2788aac7ebf8ca"
+        },
+        {
+          "relpath": "fonts/mulish/mulish-cyrillic-wght-normal.woff2",
+          "bytes": 15948,
+          "sha256": "270a9552cb39c2aa23054f70bf8c770bc1a9c2d6e0df2841bad89f6597bcd483"
+        },
+        {
+          "relpath": "fonts/mulish/mulish-latin-ext-wght-normal.woff2",
+          "bytes": 26820,
+          "sha256": "e1ccc8579a0437969464ba8bb1bb5e423306fa16746521d1f05040243b9a7a58"
+        },
+        {
+          "relpath": "fonts/mulish/mulish-latin-wght-normal.woff2",
+          "bytes": 29968,
+          "sha256": "8d1d33d6beea5a722b8f336d79c61c07405949457e37b5e65454c72dc10aba1a"
+        },
+        {
+          "relpath": "fonts/mulish/mulish-cyrillic-wght-italic.woff2",
+          "bytes": 16896,
+          "sha256": "c960e23b0bacf5debcde95e42e1774105d2dafc05dd3ac8ca5f8d7e7ce69a99f"
+        },
+        {
+          "relpath": "fonts/mulish/mulish-latin-ext-wght-italic.woff2",
+          "bytes": 29612,
+          "sha256": "081c49fccb3da90bee5f39c9b97cc40c8d52e13291c0c78d573a6def6a8f5402"
+        },
+        {
+          "relpath": "fonts/mulish/mulish-latin-wght-italic.woff2",
+          "bytes": 32264,
+          "sha256": "7380fb751bd9cbd89824588ddeb25a83395eb850e16eb24936c24c7de2ff4d2e"
+        },
+        {
+          "relpath": "fonts/mulish/font.css",
+          "bytes": 2303,
+          "sha256": "22737905158b9c39510b2b5d3cb63b79b7db75c386fa51a00a5c87154a528795"
+        }
+      ]
+    },
+    {
+      "id": "vollkorn",
+      "kind": "font",
+      "pkg": "@fontsource-variable/vollkorn",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Vollkorn",
+      "css_name": "'Vollkorn Variable', 'Vollkorn'",
+      "woff2_files": [
+        "vollkorn-cyrillic-wght-italic.woff2",
+        "vollkorn-cyrillic-wght-normal.woff2",
+        "vollkorn-latin-ext-wght-italic.woff2",
+        "vollkorn-latin-ext-wght-normal.woff2",
+        "vollkorn-latin-wght-italic.woff2",
+        "vollkorn-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/vollkorn/LICENSE",
+          "bytes": 4517,
+          "sha256": "811216cf167432058346171e124416e3d4aa6ab8b2b87d5a0b949ee8dfa40731"
+        },
+        {
+          "relpath": "fonts/vollkorn/vollkorn-cyrillic-wght-normal.woff2",
+          "bytes": 28016,
+          "sha256": "0a30dfec06879aabe5edaa29e9feb425557f108eb234eb8937da48f23067643d"
+        },
+        {
+          "relpath": "fonts/vollkorn/vollkorn-latin-ext-wght-normal.woff2",
+          "bytes": 37620,
+          "sha256": "fd562f72811cac53a5bf14f86732e952a3f5cfd3c61896b7b809e164978fd7dd"
+        },
+        {
+          "relpath": "fonts/vollkorn/vollkorn-latin-wght-normal.woff2",
+          "bytes": 46356,
+          "sha256": "3d9ff812bd542e52bb7f0c204f3a21152e22aead4572ff09722c1b38f30d7567"
+        },
+        {
+          "relpath": "fonts/vollkorn/vollkorn-cyrillic-wght-italic.woff2",
+          "bytes": 27204,
+          "sha256": "7a764339aeea7b10f8def07604771923722ee2d7a70be08ecdce3b52780c8add"
+        },
+        {
+          "relpath": "fonts/vollkorn/vollkorn-latin-ext-wght-italic.woff2",
+          "bytes": 41256,
+          "sha256": "5aff1d5511c936c03f1dbd2db0400e0d075b99a4417dcc2c5b11ca6fe8009325"
+        },
+        {
+          "relpath": "fonts/vollkorn/vollkorn-latin-wght-italic.woff2",
+          "bytes": 47528,
+          "sha256": "2b21f0fe01d929e246f513850bb1e2658eb77d9ab80c68a53a460725d66a5059"
+        },
+        {
+          "relpath": "fonts/vollkorn/font.css",
+          "bytes": 2345,
+          "sha256": "9d2e3a5a7d225809ed6b0f232706cd81fc801a1527d5ade84aa46ef938c46560"
+        }
+      ]
+    },
+    {
+      "id": "shantell_sans",
+      "kind": "font",
+      "pkg": "@fontsource-variable/shantell-sans",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1",
+      "family": "Shantell Sans",
+      "css_name": "'Shantell Sans Variable', 'Shantell Sans'",
+      "woff2_files": [
+        "shantell-sans-cyrillic-wght-italic.woff2",
+        "shantell-sans-cyrillic-wght-normal.woff2",
+        "shantell-sans-latin-ext-wght-italic.woff2",
+        "shantell-sans-latin-ext-wght-normal.woff2",
+        "shantell-sans-latin-wght-italic.woff2",
+        "shantell-sans-latin-wght-normal.woff2"
+      ],
+      "files": [
+        {
+          "relpath": "fonts/shantell_sans/LICENSE",
+          "bytes": 4536,
+          "sha256": "cde8ad5bfbaa0f4b916daff2b107d45dd7a84706c627fd3f669f6cc2af563843"
+        },
+        {
+          "relpath": "fonts/shantell_sans/shantell-sans-cyrillic-wght-normal.woff2",
+          "bytes": 58676,
+          "sha256": "8d4fcae6f8af2fc468dc359089387d4e1096a398217f7b91aa6127e8a2f40794"
+        },
+        {
+          "relpath": "fonts/shantell_sans/shantell-sans-latin-ext-wght-normal.woff2",
+          "bytes": 37192,
+          "sha256": "3b0ecff7fe287e170571e7cdce06da4099bed00e3fba7209a3840a280ffa79e4"
+        },
+        {
+          "relpath": "fonts/shantell_sans/shantell-sans-latin-wght-normal.woff2",
+          "bytes": 79292,
+          "sha256": "f15631aba9746668ad895821c72db5825759fe0bddaa4da1e7ea33d0dc2d5477"
+        },
+        {
+          "relpath": "fonts/shantell_sans/shantell-sans-cyrillic-wght-italic.woff2",
+          "bytes": 60160,
+          "sha256": "21b7bfe26f0a881b84b242da03d084e1bd49876087a43a2e94a2906e8c57cd41"
+        },
+        {
+          "relpath": "fonts/shantell_sans/shantell-sans-latin-ext-wght-italic.woff2",
+          "bytes": 39904,
+          "sha256": "f9337ece6e7944c7c9fb7b7ef03b7f655e651739a70175937b0c2e995b4ef2cb"
+        },
+        {
+          "relpath": "fonts/shantell_sans/shantell-sans-latin-wght-italic.woff2",
+          "bytes": 82000,
+          "sha256": "0fcdc355c37aff725b1cd969ae83691e02927a371cc94a28f2f16b62d1f722c9"
+        },
+        {
+          "relpath": "fonts/shantell_sans/font.css",
+          "bytes": 2465,
+          "sha256": "bee5c971f4ec788deb14647f6d6796e3bdb09e0f70bed222e52c132b7a974f6b"
+        }
+      ]
+    }
+  ],
+  "js_libs": [
+    {
+      "id": "motion",
+      "kind": "js",
+      "pkg": "motion",
+      "version": "14.14.0",
+      "license": "MIT",
+      "repo": "https://github.com/motiondivision/motion",
+      "files": [
+        {
+          "relpath": "js/motion/LICENSE.md",
+          "bytes": 1100,
+          "sha256": "1bf0dc3f7727723e5a032ed12164a47cf92c05204cb1a3485f123c24e2833ed1"
+        },
+        {
+          "relpath": "js/motion/motion.js",
+          "bytes": 191561,
+          "sha256": "521cfef8910fdd997463ea9881d4b790e017331e3d2f79c02adfc4d5fe1f2cae"
+        }
+      ]
+    },
+    {
+      "id": "animejs",
+      "kind": "js",
+      "pkg": "animejs",
+      "version": "4.5.0",
+      "license": "MIT",
+      "repo": "https://github.com/juliangarnier/anime",
+      "files": [
+        {
+          "relpath": "js/animejs/LICENSE.md",
+          "bytes": 1075,
+          "sha256": "3f3e835a9952cfc2a6ca836fb95b3257c981f24fa3ef51249055acb09931897b"
+        },
+        {
+          "relpath": "js/animejs/anime.esm.min.js",
+          "bytes": 118678,
+          "sha256": "a19015a1a92d52025a2fb6703b6d67eadd1cc2aeaf880770e96e04cf6aa07be1"
+        },
+        {
+          "relpath": "js/animejs/anime.umd.min.js",
+          "bytes": 118043,
+          "sha256": "8d5b3a58a1f64023a04a4cedeef135a2263b18da04b35177ac13438a0bad033b"
+        }
+      ]
+    },
+    {
+      "id": "lenis",
+      "kind": "js",
+      "pkg": "lenis",
+      "version": "1.3.27",
+      "license": "MIT",
+      "repo": "https://github.com/darkroomengineering/lenis",
+      "files": [
+        {
+          "relpath": "js/lenis/LICENSE",
+          "bytes": 1088,
+          "sha256": "7d1896b31f2eed9f286b05faca067c4e35b2f109ae7c4ed5105220e2d2820228"
+        },
+        {
+          "relpath": "js/lenis/lenis.mjs",
+          "bytes": 33274,
+          "sha256": "4cdb25138c7233e7419f630d9536adb41d71fa51906c059f0a27a1268ddedacc"
+        },
+        {
+          "relpath": "js/lenis/lenis.min.js",
+          "bytes": 18815,
+          "sha256": "80f53e77f1c13e379fc246d2b5e299188e20bcb2b2fe7ebb13e8e8c7563a6da7"
+        }
+      ]
+    },
+    {
+      "id": "three",
+      "kind": "js",
+      "pkg": "three",
+      "version": "0.187.0",
+      "license": "MIT",
+      "repo": "https://github.com/mrdoob/three.js",
+      "files": [
+        {
+          "relpath": "js/three/LICENSE",
+          "bytes": 1081,
+          "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+        },
+        {
+          "relpath": "js/three/three.module.js",
+          "bytes": 658900,
+          "sha256": "104f56145899722094556490d787aae0617cc2fc3382f31df02d724ea1aee341"
+        },
+        {
+          "relpath": "js/three/three.core.js",
+          "bytes": 1474799,
+          "sha256": "613e370f76638fdef83926642bf256dc9615684922de1ce1f63a8583e5d78578"
+        }
+      ]
+    }
+  ]
+}

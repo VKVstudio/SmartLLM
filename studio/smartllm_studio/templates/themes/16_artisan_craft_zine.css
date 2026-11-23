@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 16_artisan_craft_zine (Artisan Craft & Tactile Zine) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.970 0.005 244);
+  --surface: oklch(0.994 0.002 244);
+  --surface-elevated: oklch(0.936 0.010 246);
+  --border: oklch(0.280 0.032 256);
+  --border-control: oklch(0.320 0.032 256);
+  --text: oklch(0.195 0.028 256);
+  --text-muted: oklch(0.435 0.024 252);
+  --accent: oklch(0.495 0.155 34);
+  --accent-ink: oklch(0.990 0.002 40);
+  --accent-2: oklch(0.400 0.115 258);
+  --accent-3: oklch(0.435 0.024 252);
+  --shadow: 4px 4px 0 oklch(0.280 0.032 256 / 0.85);
+  --font-heading: 'Vollkorn Variable', 'Vollkorn', Georgia, serif;
+  --font-sans: 'Source Sans 3 Variable', 'Source Sans 3', system-ui, sans-serif;
+  --font-mono: 'PT Mono', monospace;
+  --radius: 6px;
+  --radius-card: 6px;
+  --radius-button: 4px;
+  --radius-input: 4px;
+  --radius-badge: 3px;
+  --border-w: 2px;
+  --container-max: 1312px;
+  --h1-clamp: clamp(2.25rem, 1.708rem + 2.41vw, 3.875rem);
+  --h2-clamp: clamp(1.625rem, 1.333rem + 1.3vw, 2.5rem);
+  --h1-lh: 1.1;
+  --h1-ls: -0.02em;
+  --h1-weight: 700;
+  --heading-transform: none;
+  --heading-tracking: -0.02em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(52px, 5vw, 96px);
+  --grid-gap: clamp(16px, 2vw, 24px);
+  --card-pad: clamp(18px, 2.2vw, 26px);
+  --input-h-desk: 46px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 44px;
+  --cta-h-mob: 48px;
+  --motion-dur: 260ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.155 0.024 258);
+  --surface: oklch(0.206 0.026 258);
+  --surface-elevated: oklch(0.258 0.028 258);
+  --border: oklch(0.440 0.032 254);
+  --border-control: oklch(0.590 0.032 254);
+  --text: oklch(0.952 0.008 242);
+  --text-muted: oklch(0.750 0.018 248);
+  --accent: oklch(0.725 0.148 38);
+  --accent-ink: oklch(0.150 0.026 258);
+  --accent-2: oklch(0.760 0.095 232);
+  --accent-3: oklch(0.750 0.018 248);
+  --shadow: 4px 4px 0 oklch(0.520 0.040 250 / 0.70);
+}

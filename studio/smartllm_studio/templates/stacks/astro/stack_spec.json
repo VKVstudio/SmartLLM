@@ -1,0 +1,6 @@
+{
+  "id": "astro",
+  "name": "Astro 7.4.13 Islands + Content Layer (Zod v4)",
+  "runtime_kb": 0,
+  "notes": "strict HTML Rust compiler; NO <ClientRouter /> when security.csp: true; actions/index.ts + content.config.ts."
+}

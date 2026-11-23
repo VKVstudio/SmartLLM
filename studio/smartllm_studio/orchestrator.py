@@ -18,6 +18,7 @@ from .adapters import get_rag_selector
 from .catalog import AI_CRAWLERS_DEFAULT
 from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT
 from .engines.llm import _PageCacheTrimmer
+from .kb_loader import harden_zimage_prompt, palette_to_material_summary
 from .os_compat import get_log_dir, is_cpu_test_mode, subprocess_kwargs
 from .pages import (
     AVAILABLE_BLOCKS,
@@ -99,7 +100,7 @@ LOGO_FINISHERS = [
     "clever negative-space mark, one continuous silhouette, flat two-color vector, solid neutral backdrop, crisp edges",
     "geometric abstraction built from circles and diagonal cuts, flat three-color vector, solid neutral backdrop, precise alignment",
     "circular badge seal, bold monoline ring, flat two-color vector, solid neutral backdrop, symmetrical composition",
-    "bold flat silhouette with confident mass, high-contrast two-color vector, solid neutral backdrop, no outline",
+    "bold flat silhouette with confident mass, high-contrast two-color vector, solid neutral backdrop, sharp borderless edges",
     "fine contour line art, one uniform stroke weight, flat two-color vector, solid neutral backdrop, elegant negative space",
 ]
 LOGO_NEGATIVE = (
@@ -164,46 +165,38 @@ _LOGO_LITERAL_STOPWORDS_RE = re.compile(
 _LOGO_FALLBACK_SPECS = [
     (
         "Pictogram",
-        "Flat geometric vector pictogram of twin arched bridge spans crowned by a sunlit amber keystone, flat terracotta brick (#B84A39) and deep charcoal (#1F242D) on a warm cream paper (#F6F2E9) solid backdrop",
+        "Flat geometric vector pictogram of twin arched bridge spans crowned by a sunlit amber keystone, flat terracotta brick and deep charcoal matte on a warm cream paper solid backdrop",
     ),
     (
         "Negative Space",
-        "Clever negative-space silhouette emblem carving an ascending folded prism inside a solid stepped gateway form, warm champagne gold (#D6A85A) on a deep obsidian matte (#12151C) solid backdrop",
+        "Clever negative-space silhouette emblem carving an ascending folded prism inside a solid stepped gateway form, warm champagne gold on a deep obsidian matte solid backdrop",
     ),
     (
         "Geometric Abstraction",
-        "Constructivist Bauhaus geometric abstraction built from three overlapping precision circles and a sharp 45-degree diagonal light beam, Prussian blue (#1D3557) and burnt copper (#D97736) on a soft stone-ivory (#EDF0EA) solid backdrop",
+        "Constructivist Bauhaus geometric abstraction built from three overlapping precision circles and a sharp 45-degree diagonal light beam, deep Prussian blue and burnt copper on a soft stone-ivory solid backdrop",
     ),
     (
         "Circular Seal",
-        "Symmetrical circular heritage crest formed by a crisp heavy ring enclosing a stylized Nordic spruce leaf and horizon arc, deep forest pine (#1E4635) and burnished brass (#C89D54) on a warm alabaster (#FAF7F0) solid backdrop",
+        "Symmetrical circular heritage crest formed by a crisp heavy ring enclosing a stylized Nordic spruce leaf and horizon arc, deep forest pine and burnished brass on a warm alabaster solid backdrop",
     ),
     (
         "Bold Silhouette",
-        "Confident monolithic sculptural silhouette formed from two interlocking tilted stone slabs framing a diamond spark, crisp ivory (#F8F9FA) and amber gold (#E59F3C) on a midnight slate (#101A2B) solid backdrop",
+        "Confident monolithic sculptural silhouette formed from two interlocking tilted stone slabs framing a diamond spark, crisp alabaster ivory and amber gold on a midnight slate solid backdrop",
     ),
     (
         "Line Art",
-        "Uniform monoline continuous-stroke infinity knot twisted around a Gothic pointed arch diamond, deep crimson vermilion (#C2412D) and graphite (#23272E) on a light parchment (#F4F1EA) solid backdrop",
+        "Uniform monoline continuous-stroke infinity knot twisted around a Gothic pointed arch diamond, deep crimson vermilion and warm graphite on a light parchment solid backdrop",
     ),
 ]
 
 
 def _strip_brand_tokens_for_logo(text: str, brand_name: str, logo_prompt: str = "") -> str:
-    """Prevent literal brand names, surnames, or 'no text' negations from making Z-Image render plain letters."""
-    out = " ".join(str(text or "").split())
-    forbidden: list[str] = []
-    if brand_name:
-        forbidden.append(brand_name.strip())
-        for tok in re.findall(r"[A-Za-zА-Яа-яЁё0-9]{2,}", brand_name):
-            forbidden.append(tok)
-    for phrase in sorted(set(x for x in forbidden if len(x) >= 2), key=len, reverse=True):
-        out = re.sub(rf"(?<![A-Za-z0-9]){re.escape(phrase)}(?![A-Za-z0-9])", "", out, flags=re.I)
+    """Sanitize logo prompt via Z-Image KB hardening while protecting visual material words."""
+    out = harden_zimage_prompt(str(text or ""), brand=brand_name)
     out = _LOGO_LITERAL_STOPWORDS_RE.sub("", out)
     out = re.sub(r"\s*['\"]\s*['\"]\s*", " ", out)
     out = re.sub(r"\s*,\s*(?:,\s*)+", ", ", out)
-    out = re.sub(r"\s+", " ", out).strip(" ,.;:-")
-    return out
+    return re.sub(r"\s+", " ", out).strip(" ,.;:-")
 
 
 def _default_logo_base_prompt(brand_name: str, description: str, logo_prompt: str, lang: str) -> str:
@@ -251,7 +244,7 @@ def _expand_logo_prompt_with_llm(
     target_lang = "Russian" if str(lang).lower().startswith("ru") else "English"
     sys_msg = (
         "You are an acclaimed Senior Brand Identity Director (Pentagram / Chermayeff & Geismar / Saul Bass studio). "
-        "Create SIX genuinely different flat vector graphic symbol concepts for Z-Image-Turbo (8 NFEs, CFG off). "
+        "Create SIX genuinely different flat vector graphic symbol concepts for Z-Image-Turbo (8 NFEs, --cfg-scale 1.0 positive-only). "
         "Z-Image-Turbo renders whatever words appear inside the prompt and ignores negatives, so describe ONLY pure visual forms "
         "and NEVER mention the words 'text', 'letter', 'initial', 'word', 'font', 'typography', or the client's literal name. "
         "Return ONLY valid JSON."
@@ -1335,6 +1328,12 @@ class ProjectOrchestrator:
                     merged["output_dir"] = _clean_path_str(payload["output_dir"])
                 if payload.get("canon_id"):
                     merged["canon_id"] = str(payload["canon_id"])
+                if payload.get("polarity") in ("light", "dark", "auto"):
+                    merged["polarity"] = str(payload["polarity"])
+                if payload.get("stack"):
+                    merged["stack"] = str(payload["stack"])
+                if payload.get("motion"):
+                    merged["motion"] = str(payload["motion"])
             else:
                 saved_def = self.state.load_project("default")
                 merged = {**saved_def, **payload}

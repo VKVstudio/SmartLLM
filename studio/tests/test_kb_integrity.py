@@ -293,8 +293,9 @@ def test_gate_5_cross_references(idx: dict, canon_files: list[Path]) -> None:
     aliases = json.loads((KB_ROOT / "styles" / "legacy_aliases.json").read_text(encoding="utf-8"))
     cids_set = set(cids)
     for oc in old_cards:
-        assert oc["id"] in aliases, f"Old canon ID {oc['id']} missing from legacy_canon_aliases"
-        assert aliases[oc["id"]] in cids_set, f"Alias target invalid for {oc['id']}"
+        assert (oc["id"] in cids_set) or (oc["id"] in aliases), f"Canon ID {oc['id']} missing from KB / legacy_canon_aliases"
+        target_cid = oc["id"] if oc["id"] in cids_set else aliases[oc["id"]]
+        assert target_cid in cids_set, f"Target canon invalid for {oc['id']}"
         for leg in oc.get("legacy_ids") or []:
             assert leg in aliases and aliases[leg] in cids_set, f"Legacy ID {leg} missing/invalid"
 

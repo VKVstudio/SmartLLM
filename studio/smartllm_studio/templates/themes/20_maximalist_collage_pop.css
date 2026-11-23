@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 20_maximalist_collage_pop (Curated Maximalism & Pop Editorial) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.976 0.008 98);
+  --surface: oklch(0.946 0.028 98);
+  --surface-elevated: oklch(0.996 0.002 98);
+  --border: oklch(0.150 0.014 265);
+  --border-control: oklch(0.150 0.014 265);
+  --text: oklch(0.145 0.014 265);
+  --text-muted: oklch(0.415 0.018 265);
+  --accent: oklch(0.455 0.202 264);
+  --accent-ink: oklch(0.992 0.002 260);
+  --accent-2: oklch(0.515 0.195 22);
+  --accent-3: oklch(0.415 0.018 265);
+  --shadow: 5px 5px 0 oklch(0.515 0.195 22);
+  --font-heading: 'Rubik Variable', 'Rubik', system-ui, sans-serif;
+  --font-sans: 'Nunito Variable', 'Nunito', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', monospace;
+  --radius: 18px;
+  --radius-card: 18px;
+  --radius-button: 9999px;
+  --radius-input: 12px;
+  --radius-badge: 9999px;
+  --border-w: 2px;
+  --container-max: 1312px;
+  --h1-clamp: clamp(2rem, 1.458rem + 2.41vw, 3.625rem);
+  --h2-clamp: clamp(1.5rem, 1.208rem + 1.3vw, 2.375rem);
+  --h1-lh: 1.06;
+  --h1-ls: -0.03em;
+  --h1-weight: 800;
+  --heading-transform: none;
+  --heading-tracking: -0.03em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(50px, 5vw, 92px);
+  --grid-gap: clamp(16px, 2vw, 24px);
+  --card-pad: clamp(18px, 2.2vw, 26px);
+  --input-h-desk: 48px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 48px;
+  --cta-h-mob: 48px;
+  --motion-dur: 280ms;
+  --motion-ease: cubic-bezier(0.34, 1.38, 0.64, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.148 0.030 268);
+  --surface: oklch(0.205 0.036 266);
+  --surface-elevated: oklch(0.262 0.040 264);
+  --border: oklch(0.840 0.020 96);
+  --border-control: oklch(0.840 0.020 96);
+  --text: oklch(0.968 0.008 96);
+  --text-muted: oklch(0.775 0.022 258);
+  --accent: oklch(0.865 0.162 94);
+  --accent-ink: oklch(0.148 0.030 268);
+  --accent-2: oklch(0.715 0.168 24);
+  --accent-3: oklch(0.775 0.022 258);
+  --shadow: 5px 5px 0 oklch(0.715 0.168 24);
+}

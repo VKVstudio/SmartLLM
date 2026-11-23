@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 11_soft_clay_playful (Tactile Clay & Playful Product) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.962 0.010 228);
+  --surface: oklch(0.992 0.004 228);
+  --surface-elevated: oklch(0.935 0.016 228);
+  --border: oklch(0.820 0.022 228);
+  --border-control: oklch(0.555 0.026 232);
+  --text: oklch(0.210 0.032 252);
+  --text-muted: oklch(0.455 0.026 246);
+  --accent: oklch(0.535 0.185 28);
+  --accent-ink: oklch(0.992 0.002 30);
+  --accent-2: oklch(0.470 0.092 165);
+  --accent-3: oklch(0.455 0.026 246);
+  --shadow: inset 0 3px 6px rgba(255,255,255,0.92), inset 0 -5px 10px rgba(145,175,196,0.28), 0 14px 28px -6px rgba(24,52,78,0.12);
+  --font-heading: 'Rubik Variable', 'Rubik', system-ui, sans-serif;
+  --font-sans: 'Nunito Variable', 'Nunito', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', monospace;
+  --radius: 28px;
+  --radius-card: 28px;
+  --radius-button: 9999px;
+  --radius-input: 18px;
+  --radius-badge: 9999px;
+  --border-w: 1px;
+  --container-max: 1312px;
+  --h1-clamp: clamp(2.125rem, 1.625rem + 2.22vw, 3.625rem);
+  --h2-clamp: clamp(1.5rem, 1.208rem + 1.3vw, 2.375rem);
+  --h1-lh: 1.08;
+  --h1-ls: -0.025em;
+  --h1-weight: 700;
+  --heading-transform: none;
+  --heading-tracking: -0.025em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(52px, 5vw, 96px);
+  --grid-gap: clamp(16px, 2vw, 24px);
+  --card-pad: clamp(20px, 2.2vw, 28px);
+  --input-h-desk: 48px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 48px;
+  --cta-h-mob: 48px;
+  --motion-dur: 320ms;
+  --motion-ease: cubic-bezier(0.34, 1.45, 0.64, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.175 0.032 258);
+  --surface: oklch(0.228 0.036 258);
+  --surface-elevated: oklch(0.278 0.040 258);
+  --border: oklch(0.380 0.042 258);
+  --border-control: oklch(0.575 0.035 250);
+  --text: oklch(0.960 0.010 235);
+  --text-muted: oklch(0.765 0.024 242);
+  --accent: oklch(0.745 0.140 34);
+  --accent-ink: oklch(0.160 0.030 258);
+  --accent-2: oklch(0.775 0.128 165);
+  --accent-3: oklch(0.765 0.024 242);
+  --shadow: inset 0 2px 5px rgba(180,210,255,0.16), inset 0 -6px 12px rgba(3,7,15,0.62), 0 18px 34px -8px rgba(2,6,14,0.58);
+}

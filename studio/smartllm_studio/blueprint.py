@@ -17,9 +17,17 @@ from . import __version__
 from .adapters import get_rag_selector
 from .catalog import AI_CRAWLERS_DEFAULT
 from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT, discover_studio_paths
+from .kb_loader import compute_real_scorecard, route_block_variants
 from .pages import DEFAULT_PAGE_SLUGS, build_default_company, build_routes_from_pages, default_page_blocks, read_png_dimensions
 from .rag import make_synthetic_png
 from .sanitizer import ingest_brand_logo
+from .templates_engine import (
+    build_canon_theme_css,
+    bundle_vendor_assets_for_canon,
+    emit_stack_scaffold,
+    normalize_stack_id,
+    write_page_model_json,
+)
 
 
 def sha256_csp(content: str) -> str:
@@ -67,14 +75,15 @@ def default_project_draft(project_id: str = "default", repo_root: Path | None = 
         "revision": 1,
         "name": "Quartz-Field Atelier",
         "audience": "Principal systems engineers & industrial architects",
-        "goal": "High-craft Astro 5 Islands landing page with GSAP 3 ScrollTrigger choreography and zero-swap telemetry.",
+        "goal": "High-craft Astro 7.4 Islands landing page with CSS Scroll-Driven choreography and zero-swap telemetry.",
         "tone_formality": 75,
         "tone_energy": 65,
         "languages": "en+ru",
         "canon_id": "01_bento_grid",
-        "compare_canon_id": "13_generative_ai_adaptive",
+        "polarity": "auto",
+        "compare_canon_id": "18_devtool_command_ui",
         "stack": "astro",
-        "motion": "gsap_scrolltrigger",
+        "motion": "css_scroll_driven",
         "output_dir": str(projects_root / safe_id),
         "site_type": "multi",
         "selected_pages": list(DEFAULT_PAGE_SLUGS),
@@ -179,14 +188,17 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
     rag = selector.select(brief=brief, lang="ru" if lang_pref == "ru" else ("en" if lang_pref == "en" else "auto"), explicit_canon_id=explicit_canon)
     resolved_lang = "ru" if lang_pref == "ru" else rag["lang"]
     card = rag["canon_card"]
-    pal = card["palette"]
+    req_pol = str(payload.get("polarity") or "auto").strip().lower()
+    default_pol = str(card.get("default_polarity") or "light").strip().lower()
+    resolved_polarity = req_pol if req_pol in ("light", "dark") else (default_pol if default_pol in ("light", "dark") else "light")
+    pal = (card.get("palettes") or {}).get(resolved_polarity) or card["palette"]
     fonts = card["fonts"]
 
     project_name = str(payload.get("name") or payload.get("project_name") or ("Кварц-Ателье" if resolved_lang == "ru" else "Quartz-Field Atelier")).strip()
     seo_cfg = dict(payload.get("seo") or {})
     base_url = str(seo_cfg.get("base_url") or payload.get("base_url") or "https://smartllm-studio.example.org").rstrip("/")
-    stack = str(payload.get("stack") or "astro")
-    motion = str(payload.get("motion") or "gsap_scrolltrigger")
+    stack = normalize_stack_id(str(payload.get("stack") or "astro"))
+    motion = str(payload.get("motion") or "css_scroll_driven")
     raw_routes = payload.get("routes")
     if not raw_routes and payload.get("selected_pages"):
         routes = build_routes_from_pages(
@@ -219,24 +231,23 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
     assets_dir = project_dir / "assets"
     assets_dir.mkdir(parents=True, exist_ok=True)
 
+    logo_src_key = "selected_logo_path" if payload.get("selected_logo_path") else ("logo_path" if payload.get("logo_path") else "")
     if payload.get("logo_bytes_b64") and payload.get("logo_filename"):
         logo_meta = ingest_brand_logo(str(payload["logo_filename"]), base64.b64decode(str(payload["logo_bytes_b64"])), assets_dir)
-    elif payload.get("selected_logo_path"):
-        lp = Path(str(payload["selected_logo_path"])).resolve()
+    elif logo_src_key:
+        lp = Path(str(payload[logo_src_key])).resolve()
         allowed_roots = (
             (root / "eval" / "studio_projects").resolve(),
             (root / "studio_projects").resolve(),
             STUDIO_ROOT.resolve(),
             project_dir.parent.resolve(),
+            project_dir.resolve(),
         )
         if lp.exists() and lp.is_file() and any(lp.is_relative_to(r) for r in allowed_roots):
             logo_meta = ingest_brand_logo(lp.name, lp.read_bytes(), assets_dir)
         else:
             default_svg = (STUDIO_ROOT / "assets" / "smartllm-logo.svg").read_bytes()
             logo_meta = ingest_brand_logo("smartllm-logo.svg", default_svg, assets_dir)
-    elif payload.get("logo_path") and Path(str(payload["logo_path"])).exists():
-        lp = Path(str(payload["logo_path"]))
-        logo_meta = ingest_brand_logo(lp.name, lp.read_bytes(), assets_dir)
     elif (assets_dir / "brand-logo.png").exists():
         logo_meta = {
             "logo_relpath": "assets/brand-logo.png",
@@ -291,7 +302,15 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
     ai_crawlers = {**AI_CRAWLERS_DEFAULT, **(payload.get("ai_crawlers") or {})}
 
     dossier = load_canon_dossier(card["id"])
-    css_text = _build_tokens_css(pal, fonts, card.get("layout", {})) + _build_canon_css(card, dossier)
+    vendor_bundle = bundle_vendor_assets_for_canon(card["id"], project_dir, motion)
+    theme_css = build_canon_theme_css(card["id"], default_polarity=resolved_polarity)
+    css_text = (
+        (vendor_bundle["font_css"] + "\n" if vendor_bundle["font_css"] else "")
+        + theme_css
+        + "\n"
+        + _build_tokens_css(pal, fonts, card.get("layout", {}), polarity=resolved_polarity, canon_responsive=card.get("responsive"))
+        + _build_canon_css(card, dossier, polarity=resolved_polarity)
+    )
     style_hash = sha256_csp(css_text)
     bilingual = lang_pref == "en+ru"
     alt_lang = "en" if resolved_lang == "ru" else "ru"
@@ -300,12 +319,13 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
     hash_placeholder = "__SLM_SCRIPT_HASH__"
 
     csp_meta = (
-        f"default-src 'none'; script-src 'self' '{hash_placeholder}'; style-src 'self' '{style_hash}'; "
+        f"default-src 'none'; script-src 'self' '{hash_placeholder}'; style-src 'self' '{style_hash}'; style-src-attr 'none'; "
         f"img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; "
         f"form-action 'self'; object-src 'none'; require-trusted-types-for 'script'"
     )
 
     written_files: list[str] = ["tokens.css", "app.js", "_headers", "robots.txt", "sitemap.xml", "zimage_prompts.json", "project_blueprint.json", logo_meta["logo_relpath"], "assets/hero_primary.png"]
+    written_files.extend(f for f in vendor_bundle["files"] if f not in written_files)
     if seo_cfg.get("llms_txt_enabled", True):
         written_files.append("llms.txt")
 
@@ -325,12 +345,21 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
         fallback_d = (576, 768) if "team_" in img_rel else (1024, 576)
         image_dims[img_rel] = read_png_dimensions(project_dir / img_rel, fallback_d)
     loc_chrome = pipe.get("loc_chrome") if isinstance(pipe.get("loc_chrome"), dict) else {}
+    routed_variants: dict[str, dict[str, str]] = {}
     rendered_docs: list[tuple[dict[str, Any], str]] = []
     for page_idx, route in enumerate(routes):
         route_prompts = page_block_prompts.get(route["slug"]) if isinstance(page_block_prompts.get(route["slug"]), dict) else {}
         if route_prompts:
             route["block_prompts"] = dict(route_prompts)
         page_meta = pipe_pages.get(route["slug"]) if isinstance(pipe_pages.get(route["slug"]), dict) else {}
+        vmap = route_block_variants(
+            card["id"],
+            list(route.get("bricks") or []),
+            preferred=(page_meta.get("variants") if isinstance(page_meta.get("variants"), dict) else None),
+            page_idx=page_idx,
+        )
+        routed_variants[route["slug"]] = vmap
+        page_meta_eff = {**page_meta, "variants": {**(page_meta.get("variants") or {}), **vmap}}
         gallery_images = gallery_all
         html_doc = _render_route_html(
             route=route,
@@ -357,7 +386,7 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
             company=company,
             asset_rev=asset_rev,
             chrome=chrome,
-            page_meta=page_meta,
+            page_meta=page_meta_eff,
             gallery_images=gallery_images,
             hero_dims=hero_dims,
             dossier=dossier,
@@ -369,6 +398,7 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
             image_dims=image_dims,
             i18n=i18n,
             page_idx=page_idx,
+            polarity=resolved_polarity,
         )
         rendered_docs.append((route, html_doc))
         if route["filename"] not in written_files:
@@ -379,9 +409,11 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
     csp_header = csp_meta.replace(hash_placeholder, script_hash).replace("object-src 'none';", "frame-ancestors 'none'; object-src 'none';")
     (project_dir / "tokens.css").write_text(css_text, encoding="utf-8")
     (project_dir / "app.js").write_text(js_text, encoding="utf-8")
+    rendered_pages: dict[str, str] = {}
     for route, html_doc in rendered_docs:
         html_doc = html_doc.replace(js_placeholder, js_text).replace(hash_placeholder, script_hash)
         (project_dir / route["filename"]).write_text(html_doc, encoding="utf-8")
+        rendered_pages[route["slug"]] = html_doc
     written_files.extend(p for p in page_images.values() if p not in written_files)
     written_files.extend(t for t in team_images if t not in written_files)
 
@@ -391,21 +423,40 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
         dict(payload.get("zimage_direction") or {}), company,
         page_seo={slug: (meta.get("seo") or {}) for slug, meta in pipe_pages.items()},
         visuals=pipe.get("visuals") if isinstance(pipe.get("visuals"), dict) else {},
-        hero_variant=str((((pipe_pages.get("index") or {}).get("variants") or {}).get("hero")) or ""),
+        hero_variant=str((((routed_variants.get("index") or {}).get("hero")) or ((pipe_pages.get("index") or {}).get("variants") or {}).get("hero")) or ""),
     )
-    scaffolds = _write_stack_scaffold_files(project_dir, stack, motion, project_name)
-    written_files.extend(scaffolds)
+    scaffolds = emit_stack_scaffold(project_dir, stack, motion, project_name, card["id"], routes)
+    pm_file = write_page_model_json(
+        project_dir,
+        canon_id=card["id"],
+        polarity=resolved_polarity,
+        stack=stack,
+        motion=motion,
+        routes=routes,
+        block_variants=routed_variants,
+        page_block_prompts=page_block_prompts,
+    )
+    written_files.extend(f for f in [*scaffolds, pm_file] if f not in written_files)
     if (project_dir / "smartllm.md").exists():
         written_files.append("smartllm.md")
     written_files.extend(g for g in (pipe.get("gallery_images") or []) if g not in written_files)
 
-    scorecard = {
-        "csp": {"passed": True, "style_sha256": style_hash, "script_sha256": script_hash, "unsafe_inline": False},
-        "headers": {"passed": True, "hsts": True, "coop_coep_corp": True},
-        "a11y": {"passed": True, "wcag_level": "AAA/AA", "contrast_ratio": card.get("a11y", {}).get("text_bg_contrast_ratio", 14.5), "min_target_px": 28},
-        "seo": {"passed": True, "json_ld_graph": True, "faq_verbatim": True, "hreflang": True, "sitemap": True},
-        "geo": {"passed": True, "facts_count": len(geo_cfg.get("facts", [])), "llms_txt": bool(seo_cfg.get("llms_txt_enabled", True)), "ai_crawlers_configured": len(ai_crawlers)},
-    }
+    scorecard = compute_real_scorecard(
+        project_dir=project_dir,
+        rendered_pages=rendered_pages,
+        css_text=css_text,
+        js_text=js_text,
+        style_hash=style_hash,
+        script_hash=script_hash,
+        card=card,
+        headers_text=(project_dir / "_headers").read_text(encoding="utf-8"),
+        robots_text=(project_dir / "robots.txt").read_text(encoding="utf-8"),
+        sitemap_text=(project_dir / "sitemap.xml").read_text(encoding="utf-8"),
+        llms_enabled=bool(seo_cfg.get("llms_txt_enabled", True)),
+        ai_crawlers=ai_crawlers,
+        geo_cfg=geo_cfg,
+        min_target_px=44,
+    )
 
     blueprint_doc = {
         "schema_version": __version__,
@@ -421,6 +472,8 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
         "motion": motion,
         "canon_id": card["id"],
         "canon_name": card["name"],
+        "polarity": resolved_polarity,
+        "page_model": pm_file,
         "company": company,
         "logo": logo_meta,
         "routes": routes,

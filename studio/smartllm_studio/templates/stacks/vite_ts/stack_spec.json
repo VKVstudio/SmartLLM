@@ -1,0 +1,6 @@
+{
+  "id": "vite_ts",
+  "name": "Vite 8.3.8 (Rolldown) + TS 7.x + Same-Origin BFF",
+  "runtime_kb": 14,
+  "notes": "build.rolldownOptions; TypeScript 7.x Go compiler; same-origin /api/* BFF with Zod 4.6.7 + Sec-Fetch-Site/Origin CSRF check."
+}

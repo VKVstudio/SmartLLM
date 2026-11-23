@@ -117,12 +117,13 @@ class StudioState:
             self._canon_selector = StudioRAGSelector()
         deleted_canon = str(draft.get("canon_id") or "")
         if deleted_canon not in self._canon_selector.canon_cards:
+            from .kb_loader import resolve_canon_id
             resolved = None
             for cid, card in sorted(self._canon_selector.canon_cards.items()):
                 if deleted_canon in (card.get("legacy_ids") or []):
                     resolved = cid
                     break
-            draft["canon_id"] = resolved or "01_bento_grid"
+            draft["canon_id"] = resolved or (resolve_canon_id(deleted_canon) if deleted_canon else "01_bento_grid")
         valid_slugs = set(DEFAULT_PAGE_SLUGS) | {"blog", "team", "faq", "legal"}
         page_map = draft.get("page_blocks") if isinstance(draft.get("page_blocks"), dict) else {}
         valid_slugs |= set(str(k) for k in page_map.keys())

@@ -14,6 +14,7 @@ from pathlib import Path
 import re
 from typing import Any, Callable
 
+from .kb_loader import harden_zimage_prompt, lint_anti_ai_copy, load_stage_context, palette_to_material_summary
 from .pages import BLOCK_MAP, PAGE_MAP, build_default_company, company_block_prompt, infer_gender, page_title, resolve_primary_lang
 
 ReportFn = Callable[[int, int, str, str, str], None]
@@ -55,7 +56,7 @@ LATIN_WHITELIST = {
     "sla", "nvme", "nvlink", "gpu", "cpu", "llm", "lora", "soc", "iso", "api", "cad", "cnc",
 }
 COPY_BATCH_SIZE = 6
-PIPELINE_VERSION = 11
+PIPELINE_VERSION = 12
 
 BLOCK_FORMAT_HINTS_RU = {
     "manifesto": "<Девиз> | <Одно конкретное предложение позиционирования этой страницы>",
@@ -120,23 +121,9 @@ _ZIMAGE_TEXT_TOKEN_RE = re.compile(
 )
 
 
-def _sanitize_zimage_prompt(prompt: str, forbidden_names: list[str] | None = None) -> str:
-    """Strip negative phrasing, text triggers, and person names from positive-only Z-Image prompts."""
-    out = str(prompt or "")
-    for name in (forbidden_names or []):
-        clean_n = _clean(name)
-        if not clean_n or len(clean_n) < 2:
-            continue
-        out = re.sub(re.escape(clean_n), "", out, flags=re.I)
-        for tok in clean_n.split():
-            if len(tok) >= 3:
-                out = re.sub(rf"\b{re.escape(tok)}\b", "", out, flags=re.I)
-    out = _ZIMAGE_NEG_PHRASE_RE.sub("", out)
-    out = _ZIMAGE_TEXT_TOKEN_RE.sub("", out)
-    out = re.sub(r"\s*,\s*(?:,\s*)+", ", ", out)
-    out = re.sub(r"\s+\.\s+", ". ", out)
-    out = re.sub(r"\s+", " ", out).strip(" ,.;:-")
-    return out
+def _sanitize_zimage_prompt(prompt: str, forbidden_names: list[str] | None = None, brand: str = "") -> str:
+    """Strip negative phrasing, hex codes, Cyrillic leakage, and forbidden names while protecting material words."""
+    return harden_zimage_prompt(str(prompt or ""), brand=brand, member_names=forbidden_names)
 
 
 LIST_BLOCKS = {"stats", "process", "team", "pricing", "values", "priorities", "locations", "features", "testimonials", "blog", "gallery", "faq"}
@@ -625,9 +612,20 @@ def _deterministic_checks(
         pairs = [p for p in re.split(r"[|\n]+", faq_txt) if "?" in p]
         if len(pairs) < 2:
             issues.append("FAQ must contain at least 2 'Question? Answer' pairs")
+    ai_blocks: dict[str, list[str]] = {}
+    for bid in blocks:
+        if bid in ("hero", "footer"):
+            continue
+        txt_b = _clean(copy.get(bid))
+        if not txt_b:
+            continue
+        ai_res = lint_anti_ai_copy(txt_b, lang, bid)
+        if not ai_res.get("passed", True):
+            ai_blocks[bid] = list(ai_res.get("hard_hits") or [])
+            issues.append(f"AI cliché / kantselyarit in '{bid}': {', '.join(ai_blocks[bid][:2])}")
     failed: set[str] = set()
     for issue in issues:
-        if "placeholder" in issue or "empty blocks" in issue or "JSON" in issue or "tagline repeated" in issue:
+        if "placeholder" in issue or "empty blocks" in issue or "JSON" in issue or "tagline repeated" in issue or "AI cliché" in issue:
             failed.add("specificity")
         elif "single source of truth" in issue:
             failed.add("brand")
@@ -641,7 +639,7 @@ def _deterministic_checks(
             failed.add("structure")
         elif "SEO" in issue or "FAQ" in issue:
             failed.add("seo")
-    return {"issues": issues, "failed": sorted(failed)}
+    return {"issues": issues, "failed": sorted(failed), "ai_blocks": ai_blocks}
 
 
 class PipelineMemory:
@@ -814,6 +812,8 @@ def run_content_pipeline(
     pages: list[str] = list(merged.get("selected_pages") or ["index"])
     page_blocks: dict[str, list[str]] = merged.get("page_blocks") or {"index": ["hero", "contact", "footer"]}
     out_dir = Path(merged.get("output_dir")).resolve()
+    canon_id = str(canon_card.get("id") or "01_bento_grid")
+    stack_id = str(merged.get("stack") or "html5_esm")
     hints = BLOCK_FORMAT_HINTS_RU if lang == "ru" else BLOCK_FORMAT_HINTS_EN
 
     user_pages_raw = merged.get("page_block_prompts") if isinstance(merged.get("page_block_prompts"), dict) else {}
@@ -885,6 +885,7 @@ def run_content_pipeline(
     if architecture is None:
         memory.mark("architect", "running")
         page_lines = "\n".join(f"- {slug}: {page_title(slug, lang)} — {_page_purpose(slug, lang)}" for slug in pages)
+        arch_kb = load_stage_context("architect", stack=stack_id, canon_id=canon_id)[:1800]
         sys_msg = (
             "You are SmartLLM v2 Chief Web Architect and Task Dispatcher. Plan the global site chrome, "
             "2 distinct gallery visual scenes, and strict non-contradicting page quests grounded in the brand foundation. "
@@ -892,7 +893,8 @@ def run_content_pipeline(
         )
         user_msg = (
             f"Brand: {brand}\nBrief: {brief[:320]}\nLanguage: {target_lang}\n{_canon_slice(canon_card, dossier)}\n"
-            f"Brand foundation (SINGLE SOURCE OF TRUTH):\n{foundation_txt}\n\nPages:\n{page_lines}\n\n"
+            + (f"Architecture & Stack Canon Excerpt:\n{arch_kb}\n\n" if arch_kb else "")
+            + f"Brand foundation (SINGLE SOURCE OF TRUTH):\n{foundation_txt}\n\nPages:\n{page_lines}\n\n"
             f"Write all user-facing values in {target_lang}. Nav labels: 1-2 words, no clichés.\n"
             "Rules:\n"
             "- Every page must have a distinct editorial 'angle', distinct English 'hero_subject', and explicit 'quest' telling copy agents which truth items (capabilities vs pricing vs team vs proof) belong on that page without mixing pricing into features or changing team/stats facts.\n"
@@ -976,6 +978,7 @@ def run_content_pipeline(
         hero_doc = reuse(f"hero:{slug}", hero_rel)
         if hero_doc is None:
             memory.mark(f"hero:{slug}", "running")
+            copy_kb = load_stage_context("copy_marketing", canon_id=canon_id)[:1400]
             user_desc_lines = "\n".join(f"- {bid}: {txt[:220]}" for bid, txt in user_pages.get(slug, {}).items()) or ("(none)" if lang == "en" else "(нет)")
             sys_msg = (
                 f"You are SmartLLM v2 Hero Copywriter & Section Editor. Write a premium {target_lang} hero offer "
@@ -984,7 +987,8 @@ def run_content_pipeline(
             user_msg = (
                 f"Brand: {brand}\nPage: {page_title(slug, lang)} ({slug})\nPurpose: {purpose}\n"
                 f"Editorial angle: {angle or purpose}\n{_canon_slice(canon_card, dossier)}\n"
-                f"Brand foundation:\n{foundation_txt}\n\n"
+                + (f"Conversion & Anti-AI Canon:\n{copy_kb}\n\n" if copy_kb else "")
+                + f"Brand foundation:\n{foundation_txt}\n\n"
                 f"User content descriptions for this page (must be respected):\n{user_desc_lines}\n\n"
                 f"Blocks on this page: {', '.join(blocks)}\n"
                 f"Allowed layout variants per block (pick one per block, vary across pages): {json.dumps({b: (dossier.get('variants') or {}).get(b, ['default']) for b in blocks if b in (dossier.get('variants') or {})}, ensure_ascii=False)}\n\n"
@@ -1158,8 +1162,18 @@ def run_content_pipeline(
         memory.mark("visuals", "running")
         from .orchestrator import ZIMAGE_LOGO_CANON_2026, _default_logo_base_prompt
         imagery = canon_card.get("imagery") or {}
-        pal_cols = ", ".join(str(v) for v in (canon_card.get("palette") or {}).values() if str(v).strip())[:160]
+        pal_cols = palette_to_material_summary(canon_card.get("palette") or {}) or "matte neutral architectural stone, warm alabaster highlight"
         subjects = {slug: _clean((architecture.get("pages") or {}).get(slug, {}).get("hero_subject")) or brief[:100] for slug in pages}
+        subjects_ctx = {
+            slug: {
+                "scene": subjects[slug],
+                "hero_headline": _clean(page_results.get(slug, {}).get("hero", {}).get("headline"))[:110],
+                "hero_subhead": _clean(page_results.get(slug, {}).get("hero", {}).get("subhead"))[:140],
+                "key_features": _clean(page_copy.get(slug, {}).get("features"))[:140],
+            }
+            for slug in pages
+        }
+        vis_kb = load_stage_context("visuals", canon_id=canon_id)[:1800]
         gal_subjs = [_clean(x) for x in (architecture.get("gallery_subjects") or []) if _clean(x)]
         if len(gal_subjs) < 2 or gal_subjs[0].lower() == gal_subjs[1].lower():
             gal_subjs = [
@@ -1169,22 +1183,23 @@ def run_content_pipeline(
         gal_ctx = _clean(page_copy.get("portfolio", {}).get("gallery") or page_copy.get("index", {}).get("gallery") or brief[:160])
         sys_msg = (
             "You are SmartLLM v2 Visual Art Director. Write positive-only production prompts for Z-Image-Turbo "
-            "(8 NFEs, CFG off; it ignores negative phrasing). Return ONLY valid JSON."
+            "(8 NFEs, --cfg-scale 1.0 positive-only; negative phrasing is forbidden). Return ONLY valid JSON."
         )
         user_msg = (
             f"Brand: {brand}\nBrief: {brief[:240]}\n"
-            f"Canon imagery direction: {_sanitize_zimage_prompt(_clean(dossier.get('imagery'))[:200])}\n"
-            f"Canon team portrait direction: {_sanitize_zimage_prompt(_clean(dossier.get('team'))[:160])}\n"
-            f"Canon palette tones: {pal_cols}\n"
-            f"Hero subjects per page: {json.dumps(subjects, ensure_ascii=False)}\n"
+            f"Canon imagery direction: {_sanitize_zimage_prompt(_clean(dossier.get('imagery'))[:200], brand=brand)}\n"
+            f"Canon team portrait direction: {_sanitize_zimage_prompt(_clean(dossier.get('team'))[:160], brand=brand)}\n"
+            f"Canon palette material tones (positive-only, ZERO hex codes): {pal_cols}\n"
+            + (f"Visual Slot Recipes:\n{vis_kb}\n\n" if vis_kb else "")
+            + f"Hero visual contexts matching finalized copy per page: {json.dumps(subjects_ctx, ensure_ascii=False)}\n"
             f"Gallery Scene 1 & Scene 2 (MUST depict TWO DIFFERENT angles/subjects): {json.dumps(gal_subjs[:2], ensure_ascii=False)}\n"
             f"Gallery copy context: {gal_ctx[:180]}\n"
             f"Team visual roles with MANDATORY BIOLOGICAL GENDER MATCH (anonymous, DO NOT include names/titles): {json.dumps(team_roles, ensure_ascii=False)}\n\n"
             "Write prompts IN ENGLISH, 40-75 words each.\n"
             "CRITICAL RULES FOR Z-IMAGE-TURBO:\n"
-            "1. 'brand_logo': follow " + ZIMAGE_LOGO_CANON_2026 + " Design ONE minimalist flat vector emblem uniquely symbolizing THIS company's industry on a solid neutral backdrop, 2-3 crisp geometric colors. NEVER write brand letters, initials, or words.\n"
-            "2. 'heroes' and 'gallery': photorealistic architectural/hardware/environment/product scenes matching each slot — NO close-up faces or human headshots inside wide heroes. 'gallery[0]' MUST clearly differ in framing and subject from 'gallery[1]'.\n"
-            "3. 'team': one distinct vertical 3:4 medium chest-up editorial portrait per slot on a seamless neutral studio backdrop with generous empty headroom above the top of the head so full hair, head, and shoulders sit comfortably inside frame. Each person MUST clearly match their assigned distinct age, hair, glasses/beard/clean-shaven look, attire, and pose from 'team_roles' — NEVER copy or repeat the same appearance description across slots. For EVERY FEMALE slot describe the adult woman's exact look; for EVERY MALE slot describe the adult man's exact look. Never include person names, nameplates, watermarks, or words.\n"
+            "1. 'brand_logo': follow " + ZIMAGE_LOGO_CANON_2026 + " Design ONE minimalist flat vector emblem uniquely symbolizing THIS company's industry on a solid neutral backdrop, 2-3 crisp geometric pigment colors. Never mention brand letters, initials, or words.\n"
+            "2. 'heroes' and 'gallery': photorealistic architectural/hardware/environment/product scenes matching each slot and its finalized hero headline/features copy; single wide scene without portraits. 'gallery[0]' MUST clearly differ in framing and subject from 'gallery[1]'.\n"
+            "3. 'team': one distinct vertical 3:4 medium chest-up editorial portrait per slot on a seamless neutral studio backdrop with generous empty headroom above the top of the head so full hair, head, and shoulders sit comfortably inside frame. Each person MUST clearly match their assigned distinct age, hair, glasses/beard/clean-shaven look, attire, and pose from 'team_roles' without repeating the same appearance across slots. For EVERY FEMALE slot describe the adult woman's exact look; for EVERY MALE slot describe the adult man's exact look. Omit person names, nameplates, watermarks, or words.\n"
             'Return JSON: {"brand_logo": "...", "heroes": {"slug": "..."}, "gallery": ["distinct scene 1", "distinct scene 2"], "team": ["...", ...], "style_suffix": "short positive lighting and lens clause"}'
         )
         raw = _llm_json(state, gpu_ok, sys_msg, user_msg, max_tokens=3200, required_keys=["brand_logo", "heroes", "gallery", "team"])
@@ -1196,15 +1211,15 @@ def run_content_pipeline(
         for slug in pages:
             subj = subjects[slug]
             raw_h = _clean(heroes_raw.get(slug)) or tmpl.replace("{subject}", subj) or f"Editorial architectural photograph of {subj}, crisp directional studio lighting, 35mm lens"
-            heroes[slug] = _sanitize_zimage_prompt(raw_h, member_names)
-        gallery_raw = [_sanitize_zimage_prompt(_clean(x), member_names) for x in (raw.get("gallery") or []) if _clean(x)]
+            heroes[slug] = _sanitize_zimage_prompt(raw_h, member_names, brand=brand)
+        gallery_raw = [_sanitize_zimage_prompt(_clean(x), member_names, brand=brand) for x in (raw.get("gallery") or []) if _clean(x)]
         if len(gallery_raw) < 2 or gallery_raw[0].lower() == gallery_raw[1].lower():
             gallery_raw = [
-                _sanitize_zimage_prompt(f"{gal_subjs[0]}, wide architectural framing, natural directional daylight, 24mm lens, editorial quality", member_names),
-                _sanitize_zimage_prompt(f"{gal_subjs[1]}, tight macro material study, sculpted shadows, 85mm shallow depth of field, studio detail", member_names),
+                _sanitize_zimage_prompt(f"{gal_subjs[0]}, wide architectural framing, natural directional daylight, 24mm lens, editorial quality", member_names, brand=brand),
+                _sanitize_zimage_prompt(f"{gal_subjs[1]}, tight macro material study, sculpted shadows, 85mm shallow depth of field, studio detail", member_names, brand=brand),
             ]
-        team_style = _sanitize_zimage_prompt(_clean(dossier.get("team")) or "clean editorial headshot, soft studio light, seamless neutral backdrop")
-        raw_team_list = [_sanitize_zimage_prompt(_clean(x), member_names) for x in (raw.get("team") or []) if _clean(x)]
+        team_style = _sanitize_zimage_prompt(_clean(dossier.get("team")) or "clean editorial headshot, soft studio light, seamless neutral backdrop", brand=brand)
+        raw_team_list = [_sanitize_zimage_prompt(_clean(x), member_names, brand=brand) for x in (raw.get("team") or []) if _clean(x)]
         team_raw: list[str] = []
         seen_team_tokens: list[set[str]] = []
         for idx, slot in enumerate(team_slots):
@@ -1214,18 +1229,18 @@ def run_content_pipeline(
                 f"Vertical 3:4 medium chest-up studio portrait of a {persona}, generous empty headroom above the top of the head, {team_style}, 85mm shallow depth of field"
             )
             distinct_p = _ensure_distinct_team_portrait(cand_p, gender, persona, team_style, seen_team_tokens)
-            team_raw.append(_sanitize_zimage_prompt(distinct_p, member_names))
+            team_raw.append(_sanitize_zimage_prompt(distinct_p, member_names, brand=brand))
         raw_logo_p = _clean(raw.get("brand_logo") or raw.get("logo"))
         if not raw_logo_p or len(raw_logo_p) < 35:
             raw_logo_p = _default_logo_base_prompt(brand, brief, "", lang)
-        logo_prompt_clean = _sanitize_zimage_prompt(raw_logo_p, member_names + brand_words)
+        logo_prompt_clean = _sanitize_zimage_prompt(raw_logo_p, member_names + brand_words, brand=brand)
         visuals = {
             "logo": logo_prompt_clean or _sanitize_zimage_prompt(_default_logo_base_prompt("", brief, "minimalist geometric vector emblem", "en"), brand_words),
             "heroes": heroes,
             "hero": heroes.get("index") or next(iter(heroes.values()), ""),
             "gallery": gallery_raw[:2],
             "team": team_raw[:4],
-            "style_suffix": _sanitize_zimage_prompt(_clean(raw.get("style_suffix")), member_names),
+            "style_suffix": _sanitize_zimage_prompt(_clean(raw.get("style_suffix")), member_names, brand=brand),
         }
         memory.write_artifact("visuals.json", visuals)
         memory.mark("visuals", "done", "visuals.json", f"logo + {len(heroes)} heroes + {len(visuals['gallery'])} gallery + {len(visuals['team'])} team")
@@ -1356,6 +1371,8 @@ def run_content_pipeline(
                     fixes[bid] = "Rewrite with concrete brand data; remove template placeholders and English field labels."
                 elif bid not in fixes and any(mk in low_b for mk in _EN_BOILERPLATE_LEAKS):
                     fixes[bid] = "Rewrite with concrete brand data in the target language; remove template boilerplate."
+                elif bid not in fixes and bid in (det.get("ai_blocks") or {}):
+                    fixes[bid] = f"Rewrite without AI clichés or kantselyarit ({', '.join(det['ai_blocks'][bid][:2])}); use concrete numbers and active verbs."
             has_placeholder = any(
                 any(mk in str(t).lower() for mk in PLACEHOLDER_MARKERS) or any(mk in str(t).lower() for mk in _EN_BOILERPLATE_LEAKS)
                 for t in pr["copy"].values()

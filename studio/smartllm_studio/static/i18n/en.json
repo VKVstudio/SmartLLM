@@ -143,5 +143,9 @@
   "ph_s5_email": "hello@example.com",
   "lbl_s5_hours": "Working Hours",
   "ph_s5_hours": "Mon–Fri 10:00–19:00",
-  "lbl_s5_render_visuals": "Render Z-Image visuals (per-page heroes, gallery, team portraits)"
+  "lbl_s5_render_visuals": "Render Z-Image visuals (per-page heroes, gallery, team portraits)",
+  "lbl_polarity": "Theme Polarity (Light / Dark)",
+  "btn_pol_auto": "Auto (Canon Default)",
+  "btn_pol_light": "Light Theme",
+  "btn_pol_dark": "Dark Theme"
 }

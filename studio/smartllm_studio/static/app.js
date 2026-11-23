@@ -17,11 +17,43 @@
     selectedBlocks: ["hero", "features", "about", "gallery", "pricing", "faq", "contact"],
     selectedPages: ["index", "about", "services", "portfolio", "pricing", "contact"],
     siteType: "single",
+    polarity: "auto",
+    stageOpen: false,
     blockPrompts: {}
   };
 
   function el(id) {
     return document.getElementById(id);
+  }
+
+  function setStageOpen(open) {
+    store.stageOpen = Boolean(open);
+    var shell = el("atelier-shell");
+    var stg = el("atelier-live-stage");
+    if (shell) shell.setAttribute("data-stage-open", store.stageOpen ? "true" : "false");
+    if (stg) stg.setAttribute("data-drawer-closed", store.stageOpen ? "false" : "true");
+    if (store.stageOpen) {
+      var ifr = el("live-stage-iframe");
+      if (ifr && (!ifr.getAttribute("src") || ifr.getAttribute("src") === "about:blank")) {
+        var pid = (store.draft && store.draft.id) || "default";
+        var rev = (store.draft && store.draft.revision) || 1;
+        ifr.src = "/preview/" + encodeURIComponent(pid) + "/index.html?rev=" + rev;
+      }
+    }
+  }
+
+  function setPolarity(pol) {
+    var next = (pol === "light" || pol === "dark") ? pol : "auto";
+    store.polarity = next;
+    if (store.draft) store.draft.polarity = next;
+    ["auto", "light", "dark"].forEach(function (mode) {
+      var b = el("s3-polarity-" + mode);
+      if (!b) return;
+      var active = mode === next;
+      b.setAttribute("aria-pressed", active ? "true" : "false");
+      b.className = active ? "btn btn-primary" : "btn";
+    });
+    renderCanons();
   }
 
   function syncProjectPathDisplay(pathStr) {
@@ -444,18 +476,30 @@
         btn.type = "button";
         btn.className = "canon-card";
         btn.setAttribute("aria-pressed", store.draft && store.draft.canon_id === c.id ? "true" : "false");
+        var thumb = document.createElement("img");
+        thumb.className = "canon-preview-img";
+        thumb.loading = "lazy";
+        thumb.width = 640;
+        thumb.height = 400;
+        thumb.alt = "";
+        thumb.src = c.preview_image || ("/static/art/canons/" + c.id + ".webp");
+        var head = document.createElement("div");
+        head.className = "canon-card-head";
         var title = document.createElement("strong");
         title.textContent = canonName(c);
+        var activePol = (store.polarity === "light" || store.polarity === "dark") ? store.polarity : (c.default_polarity || "light");
+        var polBadge = document.createElement("span");
+        polBadge.className = "canon-polarity-badge";
+        polBadge.textContent = store.lang === "ru" ? (activePol === "dark" ? "Тёмная" : "Светлая") : (activePol === "dark" ? "Dark" : "Light");
+        head.appendChild(title);
+        head.appendChild(polBadge);
         var desc = document.createElement("span");
         desc.className = "canon-desc";
         desc.textContent = canonDescription(c);
-        var spec = document.createElement("span");
-        spec.className = "canon-specimen";
-        spec.textContent = "Aa Яя 123";
         var dots = document.createElement("div");
         dots.className = "oklch-dots";
-        var pal = c.palette || {};
-        [pal.bg, pal.surface, pal.text, pal.accent, pal.accent_2, pal.accent_3].forEach(function (col) {
+        var pal = (c.palettes && c.palettes[activePol]) || c.palette || {};
+        [pal.bg, pal.surface, pal.text, pal.accent, pal.accent_2, pal.muted || pal.accent_3].forEach(function (col) {
           var d = document.createElement("span");
           d.className = "oklch-dot";
           d.style.background = col || "#c084fc";
@@ -469,9 +513,9 @@
           chip.textContent = tag;
           tags.appendChild(chip);
         });
-        btn.appendChild(title);
+        btn.appendChild(thumb);
+        btn.appendChild(head);
         btn.appendChild(desc);
-        btn.appendChild(spec);
         btn.appendChild(tags);
         btn.appendChild(dots);
         btn.addEventListener("click", function () {
@@ -867,6 +911,7 @@
           output_dir: el("exp-folder-input").value,
           languages: el("exp-lang-select").value,
           canon_id: el("exp-canon-select").value || undefined,
+          polarity: store.polarity,
           render_images: true
         }
       : {
@@ -878,6 +923,7 @@
           goal: el("s2-desc").value,
           selected_logo_path: store.draft ? store.draft.selected_logo_path : undefined,
           canon_id: store.draft ? store.draft.canon_id : "01_bento_grid",
+          polarity: store.polarity,
           site_type: store.siteType,
           selected_pages: activePageSlugs(),
           page_blocks: store.pageBlocks,
@@ -911,6 +957,7 @@
         if (bp.preview_url) {
           var sep = bp.preview_url.indexOf("?") === -1 ? "?" : "&";
           el("live-stage-iframe").src = bp.preview_url + sep + "t=" + Date.now();
+          setStageOpen(true);
         }
         if (bp.project_dir) {
           syncProjectPathDisplay(bp.project_dir);
@@ -1037,9 +1084,7 @@
     el("btn-open-settings").addEventListener("click", function () { el("modal-settings").hidden = false; });
     el("btn-close-settings").addEventListener("click", function () { el("modal-settings").hidden = true; });
     el("btn-toggle-stage-drawer").addEventListener("click", function () {
-      var stg = el("atelier-live-stage");
-      var closed = stg.getAttribute("data-drawer-closed") === "true";
-      stg.setAttribute("data-drawer-closed", closed ? "false" : "true");
+      setStageOpen(!store.stageOpen);
     });
 
     for (var s = 1; s <= 5; s++) {
@@ -1123,6 +1168,10 @@
     // Step 3 controls
     el("s3-canon-search").addEventListener("input", renderCanons);
     el("s3-canon-cat").addEventListener("change", renderCanons);
+    ["auto", "light", "dark"].forEach(function (mode) {
+      var btn = el("s3-polarity-" + mode);
+      if (btn) btn.addEventListener("click", function () { setPolarity(mode); });
+    });
 
     // Step 4 controls
     el("s4-type-single-btn").addEventListener("click", function () {
@@ -1376,7 +1425,8 @@
           document.title = "SmartLLM Studio v" + st.version;
         }
         var initLang = (st && st.settings && st.settings.language) || "ru";
-        renderCanons();
+        setStageOpen(false);
+        setPolarity((store.draft && store.draft.polarity) || "auto");
         syncRouteSelectFromDraft(store.draft);
         translateDOM(initLang);
         if (st && st.paths) {

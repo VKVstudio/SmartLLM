@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 03_editorial_magazine (Editorial Monograph / Broadsheet) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.968 0.010 85);
+  --surface: oklch(0.935 0.013 83);
+  --surface-elevated: oklch(0.988 0.005 85);
+  --border: oklch(0.195 0.008 60);
+  --border-control: oklch(0.320 0.010 60);
+  --text: oklch(0.165 0.008 60);
+  --text-muted: oklch(0.435 0.014 65);
+  --accent: oklch(0.495 0.175 24);
+  --accent-ink: oklch(0.988 0.005 85);
+  --accent-2: oklch(0.420 0.085 245);
+  --accent-3: oklch(0.435 0.014 65);
+  --shadow: none;
+  --font-heading: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, serif;
+  --font-sans: 'Source Sans 3 Variable', 'Source Sans 3', system-ui, sans-serif;
+  --font-mono: 'Source Code Pro Variable', 'Source Code Pro', monospace;
+  --radius: 0px;
+  --radius-card: 0px;
+  --radius-button: 0px;
+  --radius-input: 0px;
+  --radius-badge: 0px;
+  --border-w: 1px;
+  --container-max: 1320px;
+  --h1-clamp: clamp(2.25rem, 1.5rem + 3.33vw, 4.5rem);
+  --h2-clamp: clamp(1.625rem, 1.25rem + 1.67vw, 2.75rem);
+  --h1-lh: 1.02;
+  --h1-ls: -0.025em;
+  --h1-weight: 700;
+  --heading-transform: none;
+  --heading-tracking: -0.025em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(48px, 5vw, 84px);
+  --grid-gap: clamp(16px, 2vw, 24px);
+  --card-pad: clamp(16px, 2.2vw, 24px);
+  --input-h-desk: 44px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 44px;
+  --cta-h-mob: 48px;
+  --motion-dur: 220ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.145 0.008 60);
+  --surface: oklch(0.195 0.010 60);
+  --surface-elevated: oklch(0.242 0.012 60);
+  --border: oklch(0.460 0.014 70);
+  --border-control: oklch(0.580 0.016 70);
+  --text: oklch(0.945 0.012 85);
+  --text-muted: oklch(0.730 0.016 78);
+  --accent: oklch(0.665 0.175 24);
+  --accent-ink: oklch(0.135 0.008 60);
+  --accent-2: oklch(0.720 0.105 245);
+  --accent-3: oklch(0.730 0.016 78);
+  --shadow: none;
+}

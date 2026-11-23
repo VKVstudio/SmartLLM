@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 17_fintech_institutional (Institutional Fintech & Precision Ledger) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.984 0.003 252);
+  --surface: oklch(1.000 0.000 0);
+  --surface-elevated: oklch(0.955 0.007 252);
+  --border: oklch(0.845 0.012 252);
+  --border-control: oklch(0.550 0.020 254);
+  --text: oklch(0.175 0.022 256);
+  --text-muted: oklch(0.445 0.018 254);
+  --accent: oklch(0.455 0.152 258);
+  --accent-ink: oklch(0.992 0.002 255);
+  --accent-2: oklch(0.465 0.092 162);
+  --accent-3: oklch(0.445 0.018 254);
+  --shadow: 0 1px 2px rgba(10,17,26,0.05), 0 8px 20px -10px rgba(10,17,26,0.06);
+  --font-heading: 'Wix Madefor Display Variable', 'Wix Madefor Display', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans Variable', 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --radius: 8px;
+  --radius-card: 8px;
+  --radius-button: 6px;
+  --radius-input: 6px;
+  --radius-badge: 4px;
+  --border-w: 1px;
+  --container-max: 1312px;
+  --h1-clamp: clamp(2rem, 1.583rem + 1.85vw, 3.25rem);
+  --h2-clamp: clamp(1.5rem, 1.292rem + 0.93vw, 2.125rem);
+  --h1-lh: 1.12;
+  --h1-ls: -0.025em;
+  --h1-weight: 700;
+  --heading-transform: none;
+  --heading-tracking: -0.025em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(48px, 5vw, 84px);
+  --grid-gap: clamp(16px, 2vw, 20px);
+  --card-pad: clamp(18px, 2.2vw, 24px);
+  --input-h-desk: 44px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 44px;
+  --cta-h-mob: 48px;
+  --motion-dur: 180ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.138 0.018 256);
+  --surface: oklch(0.184 0.020 256);
+  --surface-elevated: oklch(0.232 0.022 256);
+  --border: oklch(0.335 0.024 256);
+  --border-control: oklch(0.560 0.022 254);
+  --text: oklch(0.955 0.006 248);
+  --text-muted: oklch(0.745 0.016 252);
+  --accent: oklch(0.735 0.132 244);
+  --accent-ink: oklch(0.138 0.020 256);
+  --accent-2: oklch(0.745 0.128 162);
+  --accent-3: oklch(0.745 0.016 252);
+  --shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 12px 24px -10px rgba(0,4,10,0.50);
+}

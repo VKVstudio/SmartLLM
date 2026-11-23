@@ -27,7 +27,7 @@ def resolve_slot_dimensions(slot: str, canon_aspect: str = "16:9", hero_variant:
     if s == "gallery":
         return _ASPECT_DIMS.get(aspect if aspect in ("1:1", "4:3", "16:9") else ("4:3" if aspect in ("4:5", "3:4") else "16:9"), (1024, 576))
     if s == "hero":
-        if str(hero_variant or "split") in ("centered", "overlay"):
+        if str(hero_variant or "split") in ("centered", "overlay", "editorial_poster", "command_stage", "fullbleed_scrim"):
             return (1024, 576)
         return _ASPECT_DIMS.get(aspect, (1024, 576))
     return _ASPECT_DIMS.get(aspect, (1024, 576))

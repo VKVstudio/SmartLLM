@@ -9,9 +9,19 @@ from typing import Any
 import xml.etree.ElementTree as ET
 
 MAX_ASSET_BYTES = 5 * 1024 * 1024
-FORBIDDEN_SVG_TAGS = {"script", "foreignobject", "iframe", "object", "embed", "audio", "video", "canvas"}
-DANGEROUS_URI_RE = re.compile(r"^\s*(javascript:|vbscript:|data:\s*text/html|http://|https://)", re.IGNORECASE)
-DANGEROUS_STYLE_RE = re.compile(r"(expression\s*\(|javascript:|url\s*\(\s*['\"]?\s*(?:javascript:|http://|https://))", re.IGNORECASE)
+FORBIDDEN_SVG_TAGS = {
+    "script", "foreignobject", "iframe", "object", "embed", "audio", "video", "canvas",
+    "animate", "set", "animatetransform", "animatemotion", "animatecolor", "style", "use",
+}
+DANGEROUS_URI_RE = re.compile(
+    r"^\s*(?:javascript:|vbscript:|data:\s*(?:text/html|image/svg\+xml|application/xhtml\+xml)|http://|https://)",
+    re.IGNORECASE,
+)
+DANGEROUS_STYLE_RE = re.compile(
+    r"(expression\s*\(|javascript:|data:\s*image/svg\+xml|url\s*\(\s*['\"]?\s*(?:javascript:|http://|https://|data:\s*image/svg\+xml))",
+    re.IGNORECASE,
+)
+SVG_DOCTYPE_RE = re.compile(r"<!(?:DOCTYPE|ENTITY)\b", re.IGNORECASE)
 HEX_COLOR_RE = re.compile(r"#[0-9a-fA-F]{6}\b")
 DEFAULT_ATELIER_SWATCHES = ["#0b0d12", "#151923", "#c084fc", "#e5b869", "#eceef3", "#4ade80"]
 
@@ -21,11 +31,13 @@ def _local_tag(tag: str) -> str:
 
 
 def sanitize_svg_bytes(raw_bytes: bytes) -> tuple[bytes, list[str]]:
-    """Parse and sanitize an SVG file, stripping <script>, on*, javascript:, and <foreignObject>."""
+    """Parse and sanitize an SVG file, blocking XXE/DOCTYPE and stripping scripts/SMIL/style/use/event handlers."""
     if len(raw_bytes) > MAX_ASSET_BYTES:
         raise ValueError(f"Asset exceeds 5 MB limit ({len(raw_bytes)} B)")
     warnings: list[str] = []
     text = raw_bytes.decode("utf-8", errors="replace").strip()
+    if SVG_DOCTYPE_RE.search(text):
+        raise ValueError("Forbidden SVG DOCTYPE/ENTITY declaration (XXE blocked)")
     try:
         ET.register_namespace("", "http://www.w3.org/2000/svg")
         root = ET.fromstring(text)

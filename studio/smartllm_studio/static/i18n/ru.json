@@ -143,5 +143,9 @@
   "ph_s5_email": "hello@example.ru",
   "lbl_s5_hours": "Часы работы",
   "ph_s5_hours": "Пн–Пт 10:00–19:00",
-  "lbl_s5_render_visuals": "Рендерить визуалы Z-Image (hero каждой страницы, галерея, портреты команды)"
+  "lbl_s5_render_visuals": "Рендерить визуалы Z-Image (hero каждой страницы, галерея, портреты команды)",
+  "lbl_polarity": "Тема оформления (Светлая / Тёмная)",
+  "btn_pol_auto": "Авто (по канону)",
+  "btn_pol_light": "Светлая тема",
+  "btn_pol_dark": "Тёмная тема"
 }

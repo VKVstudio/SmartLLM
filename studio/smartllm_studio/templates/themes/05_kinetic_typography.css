@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 05_kinetic_typography (Kinetic & Variable Typography) — default dark */
+:root, [data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.115 0.004 260);
+  --surface: oklch(0.165 0.006 260);
+  --surface-elevated: oklch(0.215 0.008 260);
+  --border: oklch(0.370 0.008 260);
+  --border-control: oklch(0.570 0.008 260);
+  --text: oklch(0.975 0.003 95);
+  --text-muted: oklch(0.720 0.006 260);
+  --accent: oklch(0.675 0.205 18);
+  --accent-ink: oklch(0.115 0.004 260);
+  --accent-2: oklch(0.875 0.195 126);
+  --accent-3: oklch(0.720 0.006 260);
+  --shadow: none;
+  --font-heading: 'Tektur Variable', 'Tektur', system-ui, sans-serif;
+  --font-sans: 'Commissioner Variable', 'Commissioner', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', monospace;
+  --radius: 2px;
+  --radius-card: 2px;
+  --radius-button: 2px;
+  --radius-input: 2px;
+  --radius-badge: 2px;
+  --border-w: 2px;
+  --container-max: 1360px;
+  --h1-clamp: clamp(1.75rem, 0.75rem + 4.44vw, 4.75rem);
+  --h2-clamp: clamp(1.5rem, 1rem + 2.22vw, 3rem);
+  --h1-lh: 0.96;
+  --h1-ls: -0.03em;
+  --h1-weight: 800;
+  --heading-transform: uppercase;
+  --heading-tracking: -0.03em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(48px, 5vw, 88px);
+  --grid-gap: clamp(12px, 2vw, 20px);
+  --card-pad: clamp(16px, 2.2vw, 26px);
+  --input-h-desk: 44px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 46px;
+  --cta-h-mob: 48px;
+  --motion-dur: 200ms;
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.992 0.002 95);
+  --surface: oklch(0.942 0.004 95);
+  --surface-elevated: oklch(1.000 0.000 0);
+  --border: oklch(0.140 0.004 260);
+  --border-control: oklch(0.140 0.004 260);
+  --text: oklch(0.130 0.004 260);
+  --text-muted: oklch(0.430 0.006 260);
+  --accent: oklch(0.505 0.195 18);
+  --accent-ink: oklch(0.995 0.001 95);
+  --accent-2: oklch(0.470 0.125 248);
+  --accent-3: oklch(0.430 0.006 260);
+  --shadow: none;
+}

@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 02_swiss_international (Swiss International / Neo-Grid) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.996 0.001 95);
+  --surface: oklch(0.952 0.004 95);
+  --surface-elevated: oklch(1.000 0.000 0);
+  --border: oklch(0.180 0.004 95);
+  --border-control: oklch(0.180 0.004 95);
+  --text: oklch(0.135 0.004 95);
+  --text-muted: oklch(0.435 0.005 95);
+  --accent: oklch(0.515 0.195 27);
+  --accent-ink: oklch(0.996 0.001 95);
+  --accent-2: oklch(0.445 0.155 260);
+  --accent-3: oklch(0.435 0.005 95);
+  --shadow: none;
+  --font-heading: 'Golos Text Variable', 'Golos Text', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans Variable', 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --radius: 0px;
+  --radius-card: 0px;
+  --radius-button: 0px;
+  --radius-input: 0px;
+  --radius-badge: 0px;
+  --border-w: 1px;
+  --container-max: 1344px;
+  --h1-clamp: clamp(2.25rem, 1.583rem + 2.96vw, 4.25rem);
+  --h2-clamp: clamp(1.625rem, 1.292rem + 1.48vw, 2.625rem);
+  --h1-lh: 1.02;
+  --h1-ls: -0.035em;
+  --h1-weight: 700;
+  --heading-transform: none;
+  --heading-tracking: -0.035em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(52px, 5vw, 96px);
+  --grid-gap: clamp(16px, 2vw, 24px);
+  --card-pad: clamp(16px, 2.2vw, 24px);
+  --input-h-desk: 44px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 44px;
+  --cta-h-mob: 48px;
+  --motion-dur: 180ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.125 0.004 95);
+  --surface: oklch(0.175 0.005 95);
+  --surface-elevated: oklch(0.220 0.005 95);
+  --border: oklch(0.380 0.006 95);
+  --border-control: oklch(0.560 0.006 95);
+  --text: oklch(0.965 0.004 95);
+  --text-muted: oklch(0.715 0.005 95);
+  --accent: oklch(0.655 0.195 27);
+  --accent-ink: oklch(0.125 0.004 95);
+  --accent-2: oklch(0.695 0.145 255);
+  --accent-3: oklch(0.715 0.005 95);
+  --shadow: none;
+}

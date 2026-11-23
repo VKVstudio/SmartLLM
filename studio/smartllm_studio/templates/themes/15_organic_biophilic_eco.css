@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 15_organic_biophilic_eco (Organic Biophilic & Low-Carbon Web) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.966 0.010 152);
+  --surface: oklch(0.992 0.005 152);
+  --surface-elevated: oklch(0.932 0.016 152);
+  --border: oklch(0.815 0.022 152);
+  --border-control: oklch(0.530 0.028 156);
+  --text: oklch(0.195 0.024 158);
+  --text-muted: oklch(0.440 0.024 158);
+  --accent: oklch(0.405 0.095 152);
+  --accent-ink: oklch(0.988 0.005 150);
+  --accent-2: oklch(0.460 0.068 205);
+  --accent-3: oklch(0.440 0.024 158);
+  --shadow: 0 10px 26px -10px rgba(15,48,28,0.08);
+  --font-heading: 'Geologica Variable', 'Geologica', system-ui, sans-serif;
+  --font-sans: 'Mulish Variable', 'Mulish', system-ui, sans-serif;
+  --font-mono: 'Source Code Pro Variable', 'Source Code Pro', monospace;
+  --radius: 20px;
+  --radius-card: 20px;
+  --radius-button: 9999px;
+  --radius-input: 12px;
+  --radius-badge: 9999px;
+  --border-w: 1px;
+  --container-max: 1312px;
+  --h1-clamp: clamp(2rem, 1.5rem + 2.22vw, 3.5rem);
+  --h2-clamp: clamp(1.5rem, 1.25rem + 1.11vw, 2.25rem);
+  --h1-lh: 1.12;
+  --h1-ls: -0.02em;
+  --h1-weight: 600;
+  --heading-transform: none;
+  --heading-tracking: -0.02em;
+  --body-leading: 1.66;
+  --small-ls: 0.06em;
+  --pad-section: clamp(52px, 5vw, 96px);
+  --grid-gap: clamp(14px, 2vw, 22px);
+  --card-pad: clamp(18px, 2.2vw, 28px);
+  --input-h-desk: 46px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 44px;
+  --cta-h-mob: 48px;
+  --motion-dur: 300ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.148 0.018 158);
+  --surface: oklch(0.196 0.022 158);
+  --surface-elevated: oklch(0.246 0.024 158);
+  --border: oklch(0.345 0.028 158);
+  --border-control: oklch(0.560 0.028 156);
+  --text: oklch(0.948 0.012 148);
+  --text-muted: oklch(0.745 0.020 152);
+  --accent: oklch(0.775 0.115 146);
+  --accent-ink: oklch(0.148 0.020 158);
+  --accent-2: oklch(0.740 0.075 205);
+  --accent-3: oklch(0.745 0.020 152);
+  --shadow: 0 14px 32px -12px rgba(0,8,4,0.52);
+}

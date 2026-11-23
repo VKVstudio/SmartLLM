@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 06_neo_brutalism (Neo-Brutalism / Raw Print) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.965 0.018 96);
+  --surface: oklch(0.996 0.002 96);
+  --surface-elevated: oklch(0.945 0.060 98);
+  --border: oklch(0.130 0.005 90);
+  --border-control: oklch(0.130 0.005 90);
+  --text: oklch(0.130 0.005 90);
+  --text-muted: oklch(0.390 0.010 90);
+  --accent: oklch(0.510 0.205 348);
+  --accent-ink: oklch(0.996 0.002 96);
+  --accent-2: oklch(0.895 0.172 98);
+  --accent-3: oklch(0.390 0.010 90);
+  --shadow: 6px 6px 0 oklch(0.130 0.005 90);
+  --font-heading: 'Unbounded Variable', 'Unbounded', system-ui, sans-serif;
+  --font-sans: 'Golos Text Variable', 'Golos Text', system-ui, sans-serif;
+  --font-mono: 'Martian Mono Variable', 'Martian Mono', monospace;
+  --radius: 0px;
+  --radius-card: 0px;
+  --radius-button: 0px;
+  --radius-input: 0px;
+  --radius-badge: 0px;
+  --border-w: 3px;
+  --container-max: 1312px;
+  --h1-clamp: clamp(1.5rem, 0.875rem + 2.78vw, 3.375rem);
+  --h2-clamp: clamp(1.375rem, 1.083rem + 1.3vw, 2.25rem);
+  --h1-lh: 1.06;
+  --h1-ls: -0.025em;
+  --h1-weight: 800;
+  --heading-transform: uppercase;
+  --heading-tracking: -0.025em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(44px, 5vw, 84px);
+  --grid-gap: clamp(14px, 2vw, 24px);
+  --card-pad: clamp(16px, 2.2vw, 24px);
+  --input-h-desk: 46px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 48px;
+  --cta-h-mob: 50px;
+  --motion-dur: 110ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.115 0.008 280);
+  --surface: oklch(0.175 0.010 280);
+  --surface-elevated: oklch(0.225 0.012 280);
+  --border: oklch(0.930 0.010 96);
+  --border-control: oklch(0.930 0.010 96);
+  --text: oklch(0.965 0.008 96);
+  --text-muted: oklch(0.735 0.010 280);
+  --accent: oklch(0.875 0.200 128);
+  --accent-ink: oklch(0.115 0.008 280);
+  --accent-2: oklch(0.700 0.205 345);
+  --accent-3: oklch(0.735 0.010 280);
+  --shadow: 6px 6px 0 oklch(0.875 0.200 128);
+}

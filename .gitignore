@@ -55,7 +55,7 @@ __pycache__/
 
 # Heavy Models, Weights, Calibration Data & Binaries
 models/
-data/
+/data/
 tools/llama.cpp/
 tools/stable-diffusion.cpp/
 tools/*.exe

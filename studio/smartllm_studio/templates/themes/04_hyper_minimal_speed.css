@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 04_hyper_minimal_speed (Hyper-Minimalist Technical / Speed-First) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.996 0.001 250);
+  --surface: oklch(0.968 0.003 250);
+  --surface-elevated: oklch(1.000 0.000 0);
+  --border: oklch(0.875 0.006 250);
+  --border-control: oklch(0.560 0.010 250);
+  --text: oklch(0.155 0.006 255);
+  --text-muted: oklch(0.455 0.010 255);
+  --accent: oklch(0.495 0.168 256);
+  --accent-ink: oklch(0.998 0.000 250);
+  --accent-2: oklch(0.495 0.115 152);
+  --accent-3: oklch(0.455 0.010 255);
+  --shadow: none;
+  --font-heading: 'Geist Variable', 'Geist', system-ui, sans-serif;
+  --font-sans: 'Geist Variable', 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', 'Geist Mono', monospace;
+  --radius: 0px;
+  --radius-card: 0px;
+  --radius-button: 4px;
+  --radius-input: 4px;
+  --radius-badge: 3px;
+  --border-w: 1px;
+  --container-max: 1120px;
+  --h1-clamp: clamp(1.75rem, 1.5rem + 1.11vw, 2.5rem);
+  --h2-clamp: clamp(1.375rem, 1.25rem + 0.56vw, 1.75rem);
+  --h1-lh: 1.15;
+  --h1-ls: -0.025em;
+  --h1-weight: 600;
+  --heading-transform: none;
+  --heading-tracking: -0.025em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(36px, 5vw, 56px);
+  --grid-gap: clamp(12px, 2vw, 16px);
+  --card-pad: clamp(14px, 2.2vw, 16px);
+  --input-h-desk: 40px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 40px;
+  --cta-h-mob: 48px;
+  --motion-dur: 100ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.125 0.005 260);
+  --surface: oklch(0.168 0.007 260);
+  --surface-elevated: oklch(0.212 0.008 260);
+  --border: oklch(0.295 0.010 260);
+  --border-control: oklch(0.545 0.012 260);
+  --text: oklch(0.955 0.003 255);
+  --text-muted: oklch(0.705 0.008 255);
+  --accent: oklch(0.740 0.125 245);
+  --accent-ink: oklch(0.125 0.006 260);
+  --accent-2: oklch(0.765 0.138 155);
+  --accent-3: oklch(0.705 0.008 255);
+  --shadow: none;
+}

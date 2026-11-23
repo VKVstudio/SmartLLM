@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "2026.11.1",
+  "title": "SmartLLM Studio 4-Layer Page Model (Tab 3 Pro Editor Contract)",
+  "type": "object",
+  "required": ["schema_version", "canon_id", "polarity", "stack", "motion", "pages"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "2026.11.1"},
+    "canon_id": {"type": "string"},
+    "polarity": {"type": "string", "enum": ["light", "dark"]},
+    "stack": {"type": "string", "enum": ["html5_esm", "astro", "sveltekit", "nextjs", "vite_ts"]},
+    "motion": {"type": "string"},
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slug", "filename", "title", "blocks"],
+        "properties": {
+          "slug": {"type": "string"},
+          "filename": {"type": "string"},
+          "title": {"type": "string"},
+          "blocks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "block", "variant", "overrides", "copy", "media"],
+              "properties": {
+                "id": {"type": "string"},
+                "block": {"type": "string"},
+                "variant": {"type": "string"},
+                "overrides": {"type": "object"},
+                "copy": {"type": ["string", "object"]},
+                "media": {"type": "array", "items": {"type": "object"}}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

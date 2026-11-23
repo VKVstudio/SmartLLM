@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 01_bento_grid (Bento Grid) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.962 0.004 255);
+  --surface: oklch(0.996 0.001 255);
+  --surface-elevated: oklch(0.980 0.005 255);
+  --border: oklch(0.865 0.008 255);
+  --border-control: oklch(0.585 0.012 255);
+  --text: oklch(0.185 0.008 255);
+  --text-muted: oklch(0.455 0.012 255);
+  --accent: oklch(0.505 0.175 258);
+  --accent-ink: oklch(0.995 0.001 255);
+  --accent-2: oklch(0.515 0.105 162);
+  --accent-3: oklch(0.455 0.012 255);
+  --shadow: 0 1px 2px oklch(0.22 0.02 255 / 0.05), 0 14px 36px -8px oklch(0.22 0.03 255 / 0.08);
+  --font-heading: 'Manrope Variable', 'Manrope', system-ui, sans-serif;
+  --font-sans: 'Inter Variable', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', monospace;
+  --radius: 24px;
+  --radius-card: 24px;
+  --radius-button: 12px;
+  --radius-input: 12px;
+  --radius-badge: 999px;
+  --border-w: 1px;
+  --container-max: 1312px;
+  --h1-clamp: clamp(2rem, 1.542rem + 2.04vw, 3.375rem);
+  --h2-clamp: clamp(1.5rem, 1.25rem + 1.11vw, 2.25rem);
+  --h1-lh: 1.08;
+  --h1-ls: -0.03em;
+  --h1-weight: 700;
+  --heading-transform: none;
+  --heading-tracking: -0.03em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(48px, 5vw, 88px);
+  --grid-gap: clamp(14px, 2vw, 22px);
+  --card-pad: clamp(18px, 2.2vw, 26px);
+  --input-h-desk: 44px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 44px;
+  --cta-h-mob: 48px;
+  --motion-dur: 220ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.135 0.012 260);
+  --surface: oklch(0.185 0.014 260);
+  --surface-elevated: oklch(0.228 0.016 260);
+  --border: oklch(0.305 0.018 260);
+  --border-control: oklch(0.550 0.020 260);
+  --text: oklch(0.955 0.006 255);
+  --text-muted: oklch(0.715 0.014 255);
+  --accent: oklch(0.715 0.135 252);
+  --accent-ink: oklch(0.135 0.015 260);
+  --accent-2: oklch(0.760 0.130 162);
+  --accent-3: oklch(0.715 0.014 255);
+  --shadow: inset 0 1px 0 oklch(1 0 0 / 0.07), 0 0 0 1px oklch(0.305 0.018 260);
+}

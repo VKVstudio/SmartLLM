@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 import html
 import json
 from pathlib import Path
@@ -9,6 +10,7 @@ import re
 from typing import Any
 
 from . import __version__
+from .kb_loader import resolve_canon_id
 from .pages import resolve_slot_dimensions
 
 STOCK_EN_HEADLINES = {"Deterministic Zero-Swap Edge Telemetry", "Modular Architectural Systems & Studio Craft"}
@@ -25,6 +27,8 @@ UI_STRINGS = {
         "lang_label": "Язык сайта", "skip": "Перейти к основному содержанию", "select": "Выбрать",
         "legal_link": "Правовая информация", "status_nominal": "СТАТУС: АРХИТЕКТУРА И СТИЛЬ ПРОВЕРЕНЫ",
         "status_detail": "СТАТУС: АКТИВЕН РЕЖИМ ДЕТАЛЬНОГО ПРОСМОТРА", "inspect": "Детали архитектуры",
+        "menu": "Меню", "pause_marquee": "Пауза ленты", "prev": "Назад", "next": "Вперёд",
+        "gallery_region": "Галерея проектов", "pricing_region": "Таблица тарифов",
     },
     "en": {
         "footer_nav": "Navigation", "footer_contacts": "Contacts", "rights": "All rights reserved.",
@@ -33,11 +37,14 @@ UI_STRINGS = {
         "lang_label": "Site language", "skip": "Skip to main content", "select": "Select Plan",
         "legal_link": "Legal Information", "status_nominal": "STATUS: VERIFIED STUDIO ARCHITECTURE",
         "status_detail": "STATUS: DETAILED SPECIFICATION VIEW", "inspect": "Inspect Architecture",
+        "menu": "Menu", "pause_marquee": "Pause marquee", "prev": "Previous", "next": "Next",
+        "gallery_region": "Project gallery", "pricing_region": "Pricing comparison table",
     },
 }
 
 
 def load_canon_dossier(canon_id: str) -> dict[str, Any]:
+    cid = resolve_canon_id(canon_id)
     try:
         docs = json.loads((DATA_DIR / "canon_dossiers.json").read_text(encoding="utf-8"))
     except Exception:
@@ -51,8 +58,26 @@ def load_canon_dossier(canon_id: str) -> dict[str, Any]:
         "team": "professional headshot, soft studio light, neutral backdrop",
     }
     d = dict(default)
-    d.update(docs.get(canon_id) or {})
+    d.update(docs.get(cid) or docs.get(canon_id) or {})
     return d
+
+
+def _parse_positive_price(price_raw: str) -> str:
+    """Extract numeric price string strictly > 0; return '' when absent or non-numeric."""
+    cleaned = str(price_raw or "").replace("\u00a0", " ")
+    for m in re.finditer(r"\d[\d\s]*(?:[.,]\d{1,2})?", cleaned):
+        tok = re.sub(r"\s+", "", m.group(0))
+        if tok.count(",") == 1 and tok.count(".") == 0:
+            left, right = tok.split(",", 1)
+            tok = f"{left}.{right}" if len(right) <= 2 else f"{left}{right}"
+        else:
+            tok = tok.replace(",", "")
+        try:
+            if float(tok) > 0:
+                return tok
+        except ValueError:
+            continue
+    return ""
 
 
 _SAFE_PAIR_RE = re.compile(r"\s*—\s*|\s+[–-]\s+|(?<!https)(?<!http)(?<!\d):\s+")
@@ -79,11 +104,29 @@ def _split_user_items(text: str, fallback: list[str], min_items: int = 3) -> lis
     return fallback[:min_items]
 
 
-def _build_tokens_css(pal: dict[str, str], fonts: dict[str, str], layout: dict[str, Any]) -> str:
+def _build_tokens_css(
+    pal: dict[str, Any],
+    fonts: dict[str, str],
+    layout: dict[str, Any],
+    polarity: str = "light",
+    canon_responsive: dict[str, Any] | None = None,
+) -> str:
+    typo = (canon_responsive or {}).get("typography") or {}
+    h1_clamp = str((typo.get("h1") or {}).get("clamp") or "clamp(2rem, 3.6vw, 3.25rem)")
+    h2_clamp = str((typo.get("h2") or {}).get("clamp") or "clamp(1.5rem, 2.5vw, 2.25rem)")
+    radius_card = int(layout.get("radius_px", 8))
+    radius_btn = int(layout.get("radius_button_px", min(radius_card, 12)))
+    radius_in = int(layout.get("radius_input_px", min(radius_card, 10)))
+    radius_badge = int(layout.get("radius_badge_px", 999))
+    default_sh = "0 12px 32px rgba(0,0,0,0.34)" if polarity == "dark" else "0 8px 24px rgba(0,0,0,0.08)"
     return f""":root {{
+  color-scheme: {polarity};
   --bg: {pal.get('bg', 'oklch(0.98 0.002 90)')};
   --surface: {pal.get('surface', 'oklch(0.945 0.003 90)')};
+  --surface-elevated: {pal.get('surface_elevated', pal.get('surface', 'oklch(0.96 0.003 90)'))};
+  --surface-fallback: {pal.get('surface_opaque_fallback', pal.get('surface', 'oklch(0.945 0.003 90)'))};
   --border: {pal.get('border', 'oklch(0.20 0.002 90)')};
+  --border-control: {pal.get('border_control', pal.get('border', 'oklch(0.32 0.005 90)'))};
   --text: {pal.get('text', 'oklch(0.14 0.002 90)')};
   --text-muted: {pal.get('muted', 'oklch(0.42 0.005 90)')};
   --accent: {pal.get('accent', 'oklch(0.54 0.21 28)')};
@@ -93,81 +136,93 @@ def _build_tokens_css(pal: dict[str, str], fonts: dict[str, str], layout: dict[s
   --font-heading: {fonts.get('heading', "'Cormorant Garamond', Georgia, serif")};
   --font-sans: {fonts.get('body', "'Onest', system-ui, sans-serif")};
   --font-mono: {fonts.get('mono', "'JetBrains Mono', monospace")};
-  --radius: {int(layout.get('radius_px', 8))}px;
+  --radius: {radius_card}px;
+  --radius-card: {radius_card}px;
+  --radius-button: {radius_btn}px;
+  --radius-input: {radius_in}px;
+  --radius-badge: {radius_badge}px;
   --pad-section: {layout.get('pad_clamp', 'clamp(2.5rem, 5vw, 5rem)')};
   --border-w: {int(layout.get('border_width_px', 1))}px;
-  --shadow: {layout.get('shadow', 'none')};
+  --shadow: {layout.get('shadow', default_sh)};
   --surface-blur: {int(layout.get('surface_blur_px', 0))}px;
   --heading-transform: {layout.get('heading_transform', 'none')};
   --heading-tracking: {layout.get('heading_tracking', 'normal')};
   --grid-gap: {layout.get('gap_clamp', 'clamp(1.25rem, 2.5vw, 2.5rem)')};
   --body-leading: {layout.get('body_leading', 1.6)};
+  --h1-clamp: {h1_clamp};
+  --h2-clamp: {h2_clamp};
   --bg-image: {layout.get('page_bg_image', 'none')};
 }}
 *, *::before, *::after {{ box-sizing: border-box; }}
 html {{ scroll-padding-top: 4.75rem; font-size: 16px; scroll-behavior: smooth; }}
-body {{ margin: 0; background-color: var(--bg); background-image: var(--bg-image); background-attachment: fixed; color: var(--text); font-family: var(--font-sans); line-height: var(--body-leading); font-variant-numeric: tabular-nums; overflow-x: hidden; }}
-.skip-link {{ position: absolute; left: -9999px; top: 0.5rem; padding: 0.75rem 1rem; background: var(--accent); color: var(--accent-ink); min-height: 28px; min-width: 28px; text-decoration: none; }}
+body {{ margin: 0; background-color: var(--bg); background-image: var(--bg-image); color: var(--text); font-family: var(--font-sans); line-height: var(--body-leading); font-variant-numeric: tabular-nums; overflow-x: clip; }}
+h1, h2, h3, p, li, figcaption, .spec-card, .price-card, .stat-card {{ overflow-wrap: break-word; hyphens: auto; }}
+.skip-link {{ position: absolute; left: -9999px; top: 0.5rem; padding: 0.75rem 1rem; background: var(--accent); color: var(--accent-ink); min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; text-decoration: none; }}
 .skip-link:focus {{ left: 0.75rem; z-index: 100; }}
 .site-header {{ position: sticky; top: 0; z-index: 40; background: var(--bg); border-bottom: var(--border-w) solid var(--border); backdrop-filter: blur(var(--surface-blur)); -webkit-backdrop-filter: blur(var(--surface-blur)); }}
-.container {{ width: 100%; max-width: 82rem; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 3.5rem); }}
-.header-inner {{ display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; min-height: 4.5rem; gap: 1rem; }}
-.brand-link {{ display: inline-flex; align-items: center; gap: 0.75rem; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; min-height: 32px; }}
-.brand-link img {{ width: 36px; height: 36px; display: block; border-radius: var(--radius); object-fit: cover; }}
-.nav-list {{ display: flex; flex-wrap: wrap; gap: 0.75rem; list-style: none; margin: 0; padding: 0; }}
-.nav-list a {{ color: var(--text); text-decoration: none; padding: 0.45rem 0.75rem; min-height: 32px; min-width: 32px; display: inline-flex; align-items: center; border-radius: var(--radius); font-size: 0.9375rem; }}
+.container {{ width: 100%; max-width: var(--container-max, 82rem); margin-inline: auto; padding-inline: clamp(1rem, 4vw, 3.5rem); }}
+.header-inner {{ display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; min-height: 4.5rem; gap: 0.75rem; }}
+.brand-link {{ display: inline-flex; align-items: center; gap: 0.75rem; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; min-height: 44px; min-width: 44px; }}
+.brand-link img {{ width: 36px; height: 36px; display: block; border-radius: var(--radius-badge); object-fit: cover; }}
+.nav-toggle {{ display: none; min-height: 44px; min-width: 44px; }}
+.nav-list {{ display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin: 0; padding: 0; }}
+.nav-list a {{ color: var(--text); text-decoration: none; padding: 0.5rem 0.75rem; min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; border-radius: var(--radius-button); font-size: 0.9375rem; }}
 .nav-list a[aria-current="page"] {{ background: var(--surface); border: 1px solid var(--border); font-weight: 600; }}
-.nav-list a:focus-visible, .btn:focus-visible, input:focus-visible, textarea:focus-visible, .lang-switch button:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 2px; }}
+.nav-list a:focus-visible, .btn:focus-visible, input:focus-visible, textarea:focus-visible, .lang-switch button:focus-visible, .price-table-wrap:focus-visible, .gal-filmstrip .canon-grid:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 2px; }}
 .hero-shell {{ min-height: min(86svh, 800px); display: flex; align-items: center; padding-block: var(--pad-section); border-bottom: 1px solid var(--border); container-type: inline-size; }}
 .canon-grid {{ width: 100%; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--grid-gap); align-items: center; }}
 .section-block .canon-grid {{ align-items: stretch; }}
 .hero-lead {{ grid-column: span 7; min-width: 0; }}
-.hero-figure {{ grid-column: span 5; min-width: 0; margin: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }}
-.hero-figure img, .gallery-card img {{ width: 100%; height: auto; display: block; border-radius: var(--radius); object-fit: cover; }}
+.hero-figure {{ grid-column: span 5; min-width: 0; margin: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 1rem; }}
+.hero-figure img, .gallery-card img {{ width: 100%; height: auto; display: block; border-radius: var(--radius-card); object-fit: cover; }}
 .eyebrow {{ font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted); margin: 0 0 0.75rem 0; letter-spacing: 0.03em; }}
-h1 {{ font-family: var(--font-heading); font-size: clamp(2rem, 3.6vw, 3.25rem); line-height: 1.12; margin: 0 0 1.25rem 0; max-width: 24ch; text-transform: var(--heading-transform); letter-spacing: var(--heading-tracking); }}
-h2 {{ font-family: var(--font-heading); font-size: clamp(1.5rem, 2.5vw, 2.25rem); line-height: 1.18; margin: 0 0 1.25rem 0; text-transform: var(--heading-transform); letter-spacing: var(--heading-tracking); }}
+h1 {{ font-family: var(--font-heading); font-size: var(--h1-clamp); line-height: 1.12; margin: 0 0 1.25rem 0; max-width: 24ch; text-transform: var(--heading-transform); letter-spacing: var(--heading-tracking); text-wrap: balance; }}
+h2 {{ font-family: var(--font-heading); font-size: var(--h2-clamp); line-height: 1.18; margin: 0 0 1.25rem 0; text-transform: var(--heading-transform); letter-spacing: var(--heading-tracking); text-wrap: balance; }}
 h3 {{ font-family: var(--font-heading); font-size: 1.25rem; margin: 0 0 0.5rem 0; letter-spacing: var(--heading-tracking); }}
 .lead-copy {{ font-size: 1.125rem; max-width: 62ch; margin: 0 0 1.5rem 0; }}
 .cta-row {{ display: flex; flex-wrap: wrap; gap: 0.875rem; margin-bottom: 1rem; align-items: center; }}
-.btn {{ display: inline-flex; align-items: center; justify-content: center; min-height: 42px; min-width: 42px; padding: 0.65rem 1.25rem; font-family: var(--font-mono); font-size: 0.875rem; font-weight: 600; border: var(--border-w) solid var(--border); border-radius: var(--radius); cursor: pointer; text-decoration: none; background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow); }}
-.btn-secondary {{ background: var(--surface); color: var(--text); }}
+.btn {{ display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0.65rem 1.25rem; font-family: var(--font-mono); font-size: 0.875rem; font-weight: 600; border: var(--border-w) solid var(--border-control); border-radius: var(--radius-button); cursor: pointer; text-decoration: none; background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow); }}
+.btn-secondary {{ background: var(--surface-elevated); color: var(--text); }}
 .section-block {{ padding-block: var(--pad-section); border-bottom: 1px solid var(--border); container-type: inline-size; }}
-.spec-card, .price-card, .review-card {{ grid-column: span 4; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius); padding: 1.5rem; gap: 0.75rem; min-width: 0; box-shadow: var(--shadow); backdrop-filter: blur(var(--surface-blur)); -webkit-backdrop-filter: blur(var(--surface-blur)); }}
-.stat-card, .team-card, .blog-card {{ grid-column: span 4; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius); padding: 1.5rem; min-width: 0; box-shadow: var(--shadow); backdrop-filter: blur(var(--surface-blur)); -webkit-backdrop-filter: blur(var(--surface-blur)); }}
+.section-block:not(#hero) {{ content-visibility: auto; contain-intrinsic-size: auto 600px; }}
+.spec-card, .price-card, .review-card {{ grid-column: span 4; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 1.5rem; gap: 0.75rem; min-width: 0; box-shadow: var(--shadow); backdrop-filter: blur(var(--surface-blur)); -webkit-backdrop-filter: blur(var(--surface-blur)); }}
+.stat-card, .team-card, .blog-card {{ grid-column: span 4; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 1.5rem; min-width: 0; box-shadow: var(--shadow); backdrop-filter: blur(var(--surface-blur)); -webkit-backdrop-filter: blur(var(--surface-blur)); }}
 .stat-value {{ font-family: var(--font-heading); font-size: clamp(1.9rem, 3vw, 2.6rem); line-height: 1; margin: 0 0 0.5rem 0; color: var(--accent); }}
-.process-step {{ grid-column: span 3; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius); padding: 1.25rem; min-width: 0; box-shadow: var(--shadow); }}
+.process-step {{ grid-column: span 3; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 1.25rem; min-width: 0; box-shadow: var(--shadow); }}
 .process-step .step-index {{ font-family: var(--font-mono); font-size: 0.8125rem; color: var(--accent); margin: 0 0 0.5rem 0; }}
 .team-avatar {{ width: 52px; height: 52px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--accent); color: var(--accent-ink); font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; }}
-.team-photo {{ width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 15%; border-radius: var(--radius); display: block; margin-bottom: 0.75rem; border: 1px solid var(--border); }}
+.team-photo {{ width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 15%; border-radius: var(--radius-card); display: block; margin-bottom: 0.75rem; border: 1px solid var(--border); }}
 .blog-card .blog-meta {{ font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin: 0 0 0.5rem 0; }}
-.cta-banner {{ grid-column: span 12; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius); padding: clamp(1.5rem, 3vw, 2.5rem); box-shadow: var(--shadow); }}
+.cta-banner {{ grid-column: span 12; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: clamp(1.5rem, 3vw, 2.5rem); box-shadow: var(--shadow); }}
 .cta-banner h2 {{ margin: 0; }}
 .legal-copy {{ max-width: 72ch; }}
 .legal-copy p {{ margin: 0 0 1rem 0; }}
 .manifesto {{ max-width: 76ch; }}
 .manifesto-statement {{ font-family: var(--font-heading); font-size: clamp(1.8rem, 3.4vw, 3rem); line-height: 1.15; margin: 0 0 1.25rem 0; letter-spacing: var(--heading-tracking); }}
 .priority-list {{ list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }}
-.priority-item {{ display: flex; align-items: baseline; gap: 0.85rem; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius); padding: 0.9rem 1.1rem; box-shadow: var(--shadow); }}
+.priority-item {{ display: flex; align-items: baseline; gap: 0.85rem; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 0.9rem 1.1rem; box-shadow: var(--shadow); }}
 .priority-index {{ font-family: var(--font-mono); font-size: 0.8125rem; color: var(--accent); }}
-.location-card {{ grid-column: span 4; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); }}
+.location-card {{ grid-column: span 4; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 1.5rem; box-shadow: var(--shadow); }}
 .location-card address {{ font-style: normal; color: var(--text-muted); margin: 0.5rem 0; }}
 .contact-layout {{ display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: clamp(1.5rem, 3vw, 2.5rem); align-items: start; }}
-.contact-details {{ background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); }}
+.contact-details {{ background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 1.5rem; box-shadow: var(--shadow); }}
 .contact-details a {{ color: var(--accent); }}
 .contact-details address {{ font-style: normal; color: var(--text-muted); margin: 0.5rem 0; }}
-.gallery-card {{ grid-column: span 6; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius); padding: 1rem; margin: 0; min-width: 0; box-shadow: var(--shadow); backdrop-filter: blur(var(--surface-blur)); -webkit-backdrop-filter: blur(var(--surface-blur)); }}
+.gallery-card {{ grid-column: span 6; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 1rem; margin: 0; min-width: 0; box-shadow: var(--shadow); backdrop-filter: blur(var(--surface-blur)); -webkit-backdrop-filter: blur(var(--surface-blur)); }}
 .gallery-card figcaption {{ font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.65rem; }}
-.faq-item {{ background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); }}
-.intake-form {{ display: grid; gap: 1rem; max-width: 36rem; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); }}
-.intake-form input, .intake-form textarea {{ width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 1rem; }}
+.carousel-controls {{ display: flex; gap: 0.5rem; margin-bottom: 0.75rem; justify-content: flex-end; }}
+.carousel-btn {{ min-height: 44px; min-width: 44px; padding: 0.45rem 0.9rem; }}
+.faq-item {{ background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 1.25rem 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); }}
+.intake-form {{ display: grid; gap: 1rem; max-width: 36rem; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 1.5rem; box-shadow: var(--shadow); }}
+.intake-form input, .intake-form textarea {{ width: 100%; min-height: 44px; padding: 0.65rem 0.85rem; border: 1px solid var(--border-control); border-radius: var(--radius-input); background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 1rem; }}
+.form-status {{ margin: 0; min-height: 1.25em; font-family: var(--font-mono); font-size: 0.875rem; color: var(--accent); }}
 .hp-trap {{ position: absolute; left: -9999px; opacity: 0; pointer-events: none; }}
 .site-footer {{ padding-block: 2.25rem 1.5rem; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted); border-top: var(--border-w) solid var(--border); }}
 .footer-grid {{ display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr) minmax(0, 1fr); gap: clamp(1.5rem, 3vw, 3rem); padding-bottom: 1.75rem; }}
 .footer-brand p {{ margin: 0.75rem 0 0 0; max-width: 34ch; }}
 .footer-h {{ font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); margin: 0 0 0.75rem 0; }}
 .footer-nav {{ list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }}
-.footer-nav a {{ color: var(--text-muted); text-decoration: none; }}
+.footer-nav a {{ color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; min-height: 36px; }}
 .footer-nav a:hover {{ color: var(--accent); }}
 .footer-contacts p, .footer-contacts address {{ margin: 0 0 0.4rem 0; font-style: normal; }}
 .footer-contacts a {{ color: var(--accent); text-decoration: none; }}
@@ -180,23 +235,33 @@ h3 {{ font-family: var(--font-heading); font-size: 1.25rem; margin: 0 0 0.5rem 0
 .crumbs a {{ color: var(--text-muted); text-decoration: none; }}
 .crumbs a:hover {{ color: var(--accent); }}
 .crumbs [aria-current] {{ color: var(--text); }}
-.lang-switch {{ display: inline-flex; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }}
-.lang-switch button {{ min-height: 32px; min-width: 36px; padding: 0.3rem 0.6rem; background: transparent; color: var(--text-muted); border: 0; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; cursor: pointer; }}
+.lang-switch {{ display: inline-flex; border: 1px solid var(--border-control); border-radius: var(--radius-button); overflow: hidden; }}
+.lang-switch button {{ min-height: 44px; min-width: 44px; padding: 0.3rem 0.65rem; background: transparent; color: var(--text-muted); border: 0; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; cursor: pointer; }}
 .lang-switch button[aria-pressed="true"] {{ background: var(--accent); color: var(--accent-ink); }}
 .scroll-progress {{ position: fixed; top: 0; left: 0; height: 3px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--accent); z-index: 60; pointer-events: none; }}
-.marquee {{ overflow: hidden; border-bottom: 1px solid var(--border); padding-block: 0.65rem; background: var(--surface); }}
+.marquee {{ overflow: hidden; border-bottom: 1px solid var(--border); padding-block: 0.45rem; padding-inline: 0.75rem; background: var(--surface); display: flex; align-items: center; gap: 0.75rem; }}
 .marquee-track {{ display: flex; gap: 3rem; width: max-content; animation: slm-marquee 26s linear infinite; }}
+.marquee:hover .marquee-track, .marquee:focus-within .marquee-track, .marquee[data-paused="true"] .marquee-track {{ animation-play-state: paused; }}
+.marquee-toggle {{ min-height: 44px; min-width: 44px; padding: 0.25rem 0.6rem; flex-shrink: 0; z-index: 2; }}
 .marquee-track span {{ font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; text-transform: var(--heading-transform); letter-spacing: var(--heading-tracking); white-space: nowrap; color: var(--text-muted); }}
 @keyframes slm-marquee {{ from {{ transform: translateX(0); }} to {{ transform: translateX(-50%); }} }}
 @media (max-width: 900px) {{ .footer-grid {{ grid-template-columns: 1fr; }} }}
 @container (max-width: 760px) {{ .hero-lead, .hero-figure, .spec-card, .price-card, .review-card, .gallery-card, .stat-card, .team-card, .blog-card, .process-step {{ grid-column: span 12; }} }}
 @media (max-width: 900px) {{ .hero-lead, .hero-figure, .spec-card, .price-card, .review-card, .gallery-card, .stat-card, .team-card, .blog-card, .process-step, .location-card {{ grid-column: span 12; }} .contact-layout, .priority-list {{ grid-template-columns: 1fr; }} }}
+@media (max-width: 767px) {{
+  .header-inner {{ min-height: 3.75rem; }}
+  .nav-toggle {{ display: inline-flex; }}
+  .site-header nav {{ width: 100%; order: 4; }}
+  .nav-list[data-open="false"] {{ display: none; }}
+  .nav-list[data-open="true"] {{ display: flex; flex-direction: column; width: 100%; padding-bottom: 0.5rem; }}
+  .btn, .intake-form input, .intake-form textarea {{ min-height: 48px; }}
+}}
 @media (prefers-reduced-motion: reduce) {{ *, *::before, *::after {{ transition: none !important; animation: none !important; }} html {{ scroll-behavior: auto; }} }}
 @media print {{ [data-reveal] {{ opacity: 1 !important; transform: none !important; clip-path: none !important; }} .scroll-progress, .marquee {{ display: none; }} }}
 """
 
 
-def _build_canon_css(card: dict[str, Any], d: dict[str, Any]) -> str:
+def _build_canon_css(card: dict[str, Any], d: dict[str, Any], polarity: str = "light") -> str:
     motion = d.get("motion") or {}
     micro = d.get("micro") or {}
     surface = str(d.get("surface") or "clean")
@@ -219,11 +284,11 @@ def _build_canon_css(card: dict[str, Any], d: dict[str, Any]) -> str:
     cards = ".spec-card, .price-card, .review-card, .stat-card, .team-card, .blog-card, .gallery-card, .location-card, .process-step, .priority-item, .faq-item"
     hover_css = ""
     if hover == "lift":
-        hover_css = f"{cards} {{ transition: transform {press_ms}ms {ease}, box-shadow {press_ms}ms {ease}; }} @media (hover: hover) {{ {cards}:hover {{ transform: translateY(-3px); box-shadow: 0 14px 34px rgba(0,0,0,0.16); }} }}"
+        hover_css = f"{cards} {{ transition: transform {press_ms}ms {ease}, box-shadow {press_ms}ms {ease}, border-color {press_ms}ms {ease}; }} @media (hover: hover) {{ {cards}:hover {{ transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--accent); }} }}"
     elif hover == "invert":
         hover_css = f"{cards} {{ transition: background-color {max(press_ms, 100)}ms {ease}, color {max(press_ms, 100)}ms {ease}; }} @media (hover: hover) {{ {cards}:hover {{ background: var(--accent); color: var(--accent-ink); }} {cards}:hover h3, {cards}:hover p, {cards}:hover .eyebrow, {cards}:hover .stat-value, {cards}:hover .step-index, {cards}:hover .blog-meta {{ color: inherit; }} }}"
     elif hover == "glow":
-        hover_css = f"{cards} {{ transition: box-shadow {press_ms}ms {ease}, transform {press_ms}ms {ease}; }} @media (hover: hover) {{ {cards}:hover {{ box-shadow: 0 0 0 1px var(--accent), 0 10px 34px rgba(0,0,0,0.22); transform: translateY(-2px); }} }}"
+        hover_css = f"{cards} {{ transition: box-shadow {press_ms}ms {ease}, transform {press_ms}ms {ease}; }} @media (hover: hover) {{ {cards}:hover {{ box-shadow: 0 0 0 1px var(--accent), var(--shadow); transform: translateY(-2px); }} }}"
     elif hover == "underline":
         hover_css = f"{cards} {{ transition: border-color {press_ms}ms {ease}; }} @media (hover: hover) {{ {cards}:hover {{ border-color: var(--accent); }} }}"
     if surface == "brutal":
@@ -235,13 +300,16 @@ def _build_canon_css(card: dict[str, Any], d: dict[str, Any]) -> str:
         op = "0.05" if surface == "grain" else "0.035"
         surface_css = f"""body::after {{ content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 5; opacity: {op}; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"); }}"""
     elif surface == "glass":
-        surface_css = f"""{cards} {{ backdrop-filter: blur(14px) saturate(1.35); -webkit-backdrop-filter: blur(14px) saturate(1.35); border-color: rgba(255,255,255,0.22); position: relative; }}
-{cards}::before {{ content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); border-radius: inherit; pointer-events: none; }}"""
+        surface_css = f"""{cards} {{ background: color-mix(in oklab, var(--surface) 78%, transparent); backdrop-filter: blur(20px) saturate(1.35); -webkit-backdrop-filter: blur(20px) saturate(1.35); border-color: var(--border); position: relative; }}
+{cards}::before {{ content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent); border-radius: inherit; pointer-events: none; }}
+[data-solid-ui="true"] {cards} {{ backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--surface-fallback, var(--surface)); }}
+@media (prefers-reduced-transparency: reduce) {{ {cards} {{ backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--surface-fallback, var(--surface)); }} }}
+@supports not (backdrop-filter: blur(1px)) {{ {cards} {{ backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--surface-fallback, var(--surface)); }} }}"""
     elif surface == "mesh":
         surface_css = """body::before { content: ""; position: fixed; inset: -12%; z-index: -1; pointer-events: none; background: radial-gradient(42% 46% at 22% 28%, var(--accent-2), transparent 70%), radial-gradient(38% 42% at 78% 68%, var(--accent-3), transparent 72%); opacity: 0.14; animation: slm-drift 14s ease-in-out infinite alternate; }
 @keyframes slm-drift { from { transform: translate3d(-2%, -1%, 0) scale(1); } to { transform: translate3d(2%, 2%, 0) scale(1.06); } }"""
     elif surface == "clay":
-        surface_css = f"""{cards} {{ box-shadow: inset 0 2px 6px rgba(255,255,255,0.28), inset 0 -6px 12px rgba(0,0,0,0.12), 0 12px 26px rgba(0,0,0,0.14); }}"""
+        surface_css = f"""{cards} {{ box-shadow: inset 0 2px 6px rgba(255,255,255,0.28), inset 0 -6px 12px rgba(0,0,0,0.12), var(--shadow); }}"""
     elif surface == "tactile":
         surface_css = f""".btn {{ background-image: linear-gradient(135deg, rgba(255,255,255,0.32), transparent 55%); }}
 .btn:active {{ box-shadow: inset 0 3px 8px rgba(0,0,0,0.28); }}
@@ -265,12 +333,12 @@ def _build_canon_css(card: dict[str, Any], d: dict[str, Any]) -> str:
 .hero-centered .hero-lead { grid-column: auto; max-width: 56rem; display: flex; flex-direction: column; align-items: center; }
 .hero-centered h1 { max-width: 22ch; }
 .hero-centered .hero-figure { grid-column: auto; width: 100%; max-width: 62rem; margin-top: 2rem; }
+.hero-bento .hero-figure { padding: 1.25rem; }
 .hero-overlay { position: relative; }
 .hero-overlay .hero-figure { position: absolute; inset: 0; grid-column: auto; border: 0; padding: 0; border-radius: 0; background: none; }
-.hero-overlay .hero-figure img { width: 100%; height: 100%; object-fit: cover; opacity: 0.32; border-radius: 0; }
-.hero-overlay .hero-lead { position: relative; grid-column: span 12; max-width: 46rem; }
-.hero-overlay::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg) 8%, transparent 70%); pointer-events: none; }
-.hero-overlay .hero-lead { z-index: 1; }
+.hero-overlay .hero-figure img { width: 100%; height: 100%; object-fit: cover; opacity: 0.34; border-radius: 0; }
+.hero-overlay .hero-lead { position: relative; grid-column: span 12; max-width: 46rem; z-index: 2; }
+.hero-overlay::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, color-mix(in oklab, var(--bg) 92%, transparent) 0%, color-mix(in oklab, var(--bg) 72%, transparent) 52%, transparent 100%); pointer-events: none; z-index: 1; }
 .feat-asym .spec-card:first-child { grid-column: span 8; }
 .feat-asym .canon-grid[data-count="3"] .spec-card:first-child { grid-column: span 6; }
 .feat-asym .canon-grid[data-count="3"] .spec-card:nth-child(n+2) { grid-column: span 3; }
@@ -282,6 +350,7 @@ def _build_canon_css(card: dict[str, Any], d: dict[str, Any]) -> str:
 .feat-bento .canon-grid[data-count="3"] .spec-card { grid-column: span 4; }
 .feat-bento .canon-grid[data-count="4"] .spec-card:nth-child(1), .feat-bento .canon-grid[data-count="4"] .spec-card:nth-child(4) { grid-column: span 7; }
 .feat-bento .canon-grid[data-count="4"] .spec-card:nth-child(2), .feat-bento .canon-grid[data-count="4"] .spec-card:nth-child(3) { grid-column: span 5; }
+.feat-matrix .spec-card { border-radius: var(--radius-card); }
 .gal-mosaic .gallery-card:first-child { grid-column: span 7; grid-row: span 2; }
 .gal-mosaic .gallery-card:nth-child(n+2) { grid-column: span 5; }
 .gal-mosaic .canon-grid[data-count="2"] .gallery-card, .gal-mosaic .canon-grid[data-count="4"] .gallery-card { grid-column: span 6; grid-row: auto; }
@@ -289,12 +358,12 @@ def _build_canon_css(card: dict[str, Any], d: dict[str, Any]) -> str:
 .gal-mosaic .canon-grid[data-count="2"] .gallery-card:first-child img, .gal-mosaic .canon-grid[data-count="4"] .gallery-card:first-child img { height: auto; }
 .gal-filmstrip .canon-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 1rem; padding-bottom: 0.75rem; }
 .gal-filmstrip .gallery-card { min-width: min(340px, 82vw); scroll-snap-align: start; grid-column: auto; }
-.stat-band .canon-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.stat-band .canon-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 165px), 1fr)); }
 .stat-band .stat-card { grid-column: auto !important; background: none; border: 0; box-shadow: none; padding: 0; backdrop-filter: none; }
 .stat-band .stat-value { font-size: clamp(2.2rem, 4vw, 3.4rem); }
 .review-quotes .review-card { grid-column: span 12 !important; background: none; border: 0; box-shadow: none; border-left: 3px solid var(--accent); border-radius: 0; padding: 0.25rem 0 0.25rem 1.5rem; backdrop-filter: none; }
 .review-quotes .review-card p:first-child { font-family: var(--font-heading); font-size: clamp(1.2rem, 2vw, 1.6rem); line-height: 1.35; }
-.price-table-wrap { grid-column: span 12; overflow-x: auto; border: var(--border-w) solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.price-table-wrap { grid-column: span 12; overflow-x: auto; border: var(--border-w) solid var(--border); border-radius: var(--radius-card); box-shadow: var(--shadow); }
 .price-table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; background: var(--surface); }
 .price-table th, .price-table td { border: 1px solid var(--border); padding: 0.85rem 1rem; text-align: left; vertical-align: top; }
 .price-table th { font-family: var(--font-heading); font-size: 1.05rem; background: var(--bg); }
@@ -304,11 +373,12 @@ def _build_canon_css(card: dict[str, Any], d: dict[str, Any]) -> str:
 .timeline li { position: relative; padding: 0 0 1.5rem 0.75rem; }
 .timeline li::before { content: ""; position: absolute; left: -1.75rem; top: 0.35rem; width: 0.9rem; height: 0.9rem; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
 .timeline .step-index { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); margin: 0 0 0.25rem 0; }
-@media (max-width: 900px) { .stat-band .canon-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .canon-grid[data-count] > *, .feat-asym .spec-card, .feat-bento .spec-card, .gal-mosaic .gallery-card { grid-column: span 12 !important; grid-row: auto !important; } }
+@media (max-width: 900px) { .canon-grid[data-count] > *, .feat-asym .spec-card, .feat-bento .spec-card, .gal-mosaic .gallery-card { grid-column: span 12 !important; grid-row: auto !important; } }
+@media (max-width: 767px) { .hero-overlay .hero-figure { position: relative; inset: auto; margin-bottom: 1rem; } .hero-overlay .hero-figure img { opacity: 1; height: auto; } .hero-overlay::after { display: none; } }
 """
     return f""":root {{ --reveal-dur: {dur}ms; --reveal-ease: {ease}; --reveal-stagger: {stagger}ms; --press-scale: {press}; }}
-.js [data-reveal] {{ opacity: 0; transform: {reveal_from}; {clip_extra} transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease), clip-path var(--reveal-dur) var(--reveal-ease); transition-delay: var(--rd, 0ms); }}
-.js [data-reveal].is-revealed {{ opacity: 1; transform: none; {clip_done} }}
+.js .section-block [data-reveal] {{ opacity: 0; transform: {reveal_from}; {clip_extra} transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease), clip-path var(--reveal-dur) var(--reveal-ease); transition-delay: var(--rd, 0ms); }}
+.js .section-block [data-reveal].is-revealed {{ opacity: 1; transform: none; {clip_done} }}
 {hover_css}
 {press_css}
 {surface_css}
@@ -372,8 +442,36 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
     }});
     if (saved && saved !== PRIMARY) applyLang(saved);
   }}
+  var navToggle = document.getElementById("mobile-nav-toggle");
+  var navList = document.getElementById("primary-nav-list");
+  if (navToggle && navList) {{
+    navToggle.addEventListener("click", function () {{
+      var expanded = navToggle.getAttribute("aria-expanded") === "true";
+      navToggle.setAttribute("aria-expanded", expanded ? "false" : "true");
+      navList.setAttribute("data-open", expanded ? "false" : "true");
+    }});
+  }}
+  var mqToggle = document.querySelector(".marquee-toggle");
+  if (mqToggle) {{
+    mqToggle.addEventListener("click", function () {{
+      var wrap = mqToggle.closest(".marquee");
+      if (!wrap) return;
+      var paused = wrap.getAttribute("data-paused") === "true";
+      wrap.setAttribute("data-paused", paused ? "false" : "true");
+      mqToggle.setAttribute("aria-pressed", paused ? "false" : "true");
+    }});
+  }}
+  document.querySelectorAll(".carousel-btn[data-dir]").forEach(function (cbtn) {{
+    cbtn.addEventListener("click", function () {{
+      var sec = cbtn.closest(".section-block");
+      var grid = sec ? sec.querySelector(".canon-grid") : null;
+      if (!grid) return;
+      var dir = parseInt(cbtn.getAttribute("data-dir") || "1", 10) || 1;
+      grid.scrollBy({{ left: dir * 340, behavior: reduced ? "auto" : "smooth" }});
+    }});
+  }});
   if (!reduced) {{
-    var revealEls = document.querySelectorAll("[data-reveal]");
+    var revealEls = document.querySelectorAll(".section-block [data-reveal]");
     if ("IntersectionObserver" in window && revealEls.length) {{
       var groups = {{}};
       revealEls.forEach(function (el) {{
@@ -414,22 +512,15 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
     var trap = form.querySelector(".hp-trap input, input.hp-trap");
     if (trap && trap.value) return;
     var btn = form.querySelector("button[type=submit]");
-    if (!btn) return;
-    var old = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = {json.dumps(ui["form_ok"], ensure_ascii=False)};
-    btn.setAttribute("aria-live", "polite");
-    window.setTimeout(function () {{ btn.disabled = false; btn.textContent = old; form.reset(); }}, 4000);
+    var status = form.querySelector(".form-status");
+    if (btn) btn.disabled = true;
+    if (status) status.textContent = {json.dumps(ui["form_ok"], ensure_ascii=False)};
+    window.setTimeout(function () {{
+      if (btn) btn.disabled = false;
+      if (status) status.textContent = "";
+      form.reset();
+    }}, 4000);
   }});
-  var calcBtn = document.getElementById("node-calc-btn");
-  var calcOut = document.getElementById("node-calc-output");
-  if (calcBtn && calcOut) {{
-    calcBtn.addEventListener("click", function () {{
-      var active = calcBtn.getAttribute("aria-pressed") === "true";
-      calcBtn.setAttribute("aria-pressed", active ? "false" : "true");
-      calcOut.textContent = active ? {json.dumps(ui["status_nominal"], ensure_ascii=False)} : {json.dumps(ui["status_detail"], ensure_ascii=False)};
-    }});
-  }}
 }})();
 """
 
@@ -504,6 +595,7 @@ def _render_route_html(
     image_dims: dict[str, tuple[int, int]] | None = None,
     i18n: dict[str, dict[str, str]] | None = None,
     page_idx: int = 0,
+    polarity: str = "light",
 ) -> str:
     d = dossier or load_canon_dossier(card.get("id", ""))
     ctx: dict[str, Any] = {"bilingual": bilingual, "lang": lang, "alt_lang": alt_lang, "i18n": i18n if i18n is not None else {}}
@@ -585,7 +677,11 @@ def _render_route_html(
     if c_email:
         org_node["email"] = c_email
     if c_address:
-        org_node["address"] = {"@type": "PostalAddress", "streetAddress": c_address, "addressLocality": c_cities[0] if c_cities else "", "addressCountry": "RU" if lang == "ru" else "DE"}
+        addr_obj: dict[str, Any] = {"@type": "PostalAddress", "streetAddress": c_address, "addressLocality": c_cities[0] if c_cities else ""}
+        c_country = str(company_cfg.get("country") or ("RU" if lang == "ru" else "")).strip()
+        if c_country:
+            addr_obj["addressCountry"] = c_country
+        org_node["address"] = addr_obj
     if c_cities:
         org_node["areaServed"] = c_cities
     if c_hours:
@@ -598,20 +694,40 @@ def _render_route_html(
         org_node,
         {"@type": "WebSite", "@id": f"{base_url}/#website", "url": f"{base_url}/", "name": project_name, "publisher": {"@id": f"{base_url}/#org"}, "inLanguage": lang},
         {"@type": "WebPage", "@id": f"{page_url}#webpage", "url": page_url, "name": page_title, "isPartOf": {"@id": f"{base_url}/#website"}, "description": meta_desc, "dateModified": str(geo_cfg.get("last_updated") or "2026-11-16")},
-        {"@type": "BreadcrumbList", "@id": f"{page_url}#breadcrumbs", "itemListElement": [{"@type": "ListItem", "position": 1, "name": project_name, "item": f"{base_url}/"}, {"@type": "ListItem", "position": 2, "name": route["title"], "item": page_url}]},
     ]
+    if slug != "index":
+        graph_nodes.append(
+            {"@type": "BreadcrumbList", "@id": f"{page_url}#breadcrumbs", "itemListElement": [{"@type": "ListItem", "position": 1, "name": project_name, "item": f"{base_url}/"}, {"@type": "ListItem", "position": 2, "name": route["title"], "item": page_url}]}
+        )
     if (c_phone or c_address) and route["slug"] in ("index", "contact"):
         graph_nodes.append({"@type": "LocalBusiness", "@id": f"{page_url}#localbusiness", "name": project_name, "url": page_url, "telephone": c_phone, "email": c_email, "address": {"@type": "PostalAddress", "streetAddress": c_address, "addressLocality": c_cities[0] if c_cities else ""}, "areaServed": c_cities, "openingHours": c_hours})
-    if "pricing" in bricks or "features" in bricks:
-        graph_nodes.append({"@type": "Product", "@id": f"{base_url}/#product", "name": project_name, "description": brief[:155], "brand": {"@id": f"{base_url}/#org"}})
     catalog = [pr for pr in (company_cfg.get("products") or []) if isinstance(pr, dict) and str(pr.get("name") or "").strip()]
     if catalog and ("pricing" in bricks or "features" in bricks):
         offers = []
+        services = []
         for pr in catalog[:6]:
             price_raw = str(pr.get("price") or "")
-            digits = re.sub(r"[^\d.]", "", price_raw.replace(" ", "").replace(",", ""))
-            offers.append({"@type": "Offer", "name": str(pr.get("name")), "description": str(pr.get("scope") or ""), "price": digits or "0", "priceCurrency": "RUB" if ("₽" in price_raw or "руб" in price_raw.lower()) else ("EUR" if "€" in price_raw else "USD"), "availability": "https://schema.org/InStock"})
-        graph_nodes.append({"@type": "Product", "@id": f"{base_url}/#catalog", "name": f"{project_name} — catalog", "brand": {"@id": f"{base_url}/#org"}, "offers": offers})
+            pos_price = _parse_positive_price(price_raw)
+            if pos_price:
+                offers.append({
+                    "@type": "Offer",
+                    "name": str(pr.get("name")),
+                    "description": str(pr.get("scope") or ""),
+                    "price": pos_price,
+                    "priceCurrency": "RUB" if ("₽" in price_raw or "руб" in price_raw.lower()) else ("EUR" if "€" in price_raw else "USD"),
+                    "availability": "https://schema.org/InStock",
+                })
+            else:
+                services.append({
+                    "@type": "Service",
+                    "name": str(pr.get("name")),
+                    "description": str(pr.get("scope") or brief[:155]),
+                    "provider": {"@id": f"{base_url}/#org"},
+                })
+        if offers:
+            graph_nodes.append({"@type": "Product", "@id": f"{base_url}/#catalog", "name": f"{project_name} — catalog", "brand": {"@id": f"{base_url}/#org"}, "offers": offers})
+        elif services:
+            graph_nodes.extend(services)
     if "faq" in bricks and active_faqs:
         graph_nodes.append({"@type": "FAQPage", "@id": f"{page_url}#faq", "mainEntity": [{"@type": "Question", "name": f["q"], "acceptedAnswer": {"@type": "Answer", "text": f["a"]}} for f in active_faqs]})
     json_ld_graph = {"@context": "https://schema.org", "@graph": graph_nodes}
@@ -627,13 +743,8 @@ def _render_route_html(
         nav_items.append(f'          <li><a href="{r["filename"]}"{cur}{at}>{tx}</a></li>')
     nav_links = "\n".join(nav_items)
 
-    hreflang_block = (
-        f'  <link rel="alternate" hreflang="en" href="{html.escape(base_url + "/en/", quote=True)}">\n'
-        f'  <link rel="alternate" hreflang="ru" href="{html.escape(base_url + "/ru/", quote=True)}">\n'
-        f'  <link rel="alternate" hreflang="x-default" href="{html.escape(base_url + "/", quote=True)}">\n'
-        if bilingual
-        else ""
-    )
+    # Single-URL JS-switched bilingual pages must not emit hreflang links to non-existent /en/ or /ru/ folders
+    hreflang_block = ""
     lang_switch = ""
     if bilingual:
         lx, la = _t(ctx, "chrome:lang_label", ui["lang_label"], ui_alt["lang_label"])
@@ -663,14 +774,26 @@ def _render_route_html(
 
     hero_rel = (page_images or {}).get(slug) or "assets/hero_primary.png"
     route_dims = (image_dims or {}).get(hero_rel) or ((1024, 576) if (page_images or {}).get(slug) else hero_dims)
+    hero_alt_meta = str(seo_pm.get("hero_alt") or "").strip() or f"{project_name} — {route['title']}"
     hero_variant = _variant(pm, d, "hero", page_idx)
-    hero_cls = {"centered": " hero-centered", "overlay": " hero-overlay"}.get(hero_variant, "")
+    hero_cls = {
+        "centered": " hero-centered",
+        "editorial_poster": " hero-centered",
+        "command_stage": " hero-centered",
+        "overlay": " hero-overlay",
+        "fullbleed_scrim": " hero-overlay",
+        "bento_showcase": " hero-bento",
+    }.get(hero_variant, "")
     marquee_html = ""
     if d.get("motion", {}).get("marquee"):
         mq_base = str(company_cfg.get("tagline") or project_name)
         mq = f"{mq_base} · {project_name} · "
         mtx, mat = _t(ctx, "chrome:marquee", mq, _loc_get(loc_chrome, "marquee") or mq)
-        marquee_html = f'    <div class="marquee" aria-hidden="true"><div class="marquee-track"><span{mat}>{mtx}</span><span{mat}>{mtx}</span></div></div>\n'
+        marquee_html = (
+            f'    <div class="marquee" data-paused="false">'
+            f'<button class="btn btn-secondary marquee-toggle" type="button" aria-pressed="false" aria-label="{html.escape(ui["pause_marquee"], quote=True)}">❚❚</button>'
+            f'<div class="marquee-track" aria-hidden="true"><span{mat}>{mtx}</span><span{mat}>{mtx}</span></div></div>\n'
+        )
 
     def h2_for(block_id: str, default: str) -> tuple[str, str]:
         custom = str(headings_pm.get(block_id) or "").strip() or default
@@ -681,7 +804,7 @@ def _render_route_html(
             eyebrow_txt = str(hero_pm.get("eyebrow") or "").strip() or f"{card['name']} · {project_name.upper()}"
             cta_primary = str(hero_pm.get("cta_label") or "").strip() or ("Оставить заявку" if lang == "ru" else "Start a Project")
             cta_secondary = str(hero_pm.get("cta_secondary") or "").strip()
-            hero_alt = str(seo_pm.get("hero_alt") or "").strip() or f"{project_name} visual"
+            hero_alt = hero_alt_meta
             contact_route = next((r for r in all_routes if r.get("slug") == "contact"), None)
             primary_href = "#contact" if "contact" in bricks else (contact_route["filename"] if contact_route else "#contact")
             if cta_secondary:
@@ -689,10 +812,8 @@ def _render_route_html(
                 sec_href = sec_route["filename"] if sec_route else "#contact"
                 stx, sat = _t(ctx, f"{slug}:hero:cta2", cta_secondary, _loc_get(loc, "hero", "cta_secondary"))
                 secondary_html = f'<a class="btn btn-secondary" href="{html.escape(sec_href, quote=True)}"{sat}>{stx}</a>'
-                status_html = ""
             else:
-                secondary_html = f'<button class="btn btn-secondary" id="node-calc-btn" type="button" aria-pressed="false">{html.escape(ui["inspect"])}</button>'
-                status_html = f'<p class="eyebrow" id="node-calc-output" aria-live="polite">{html.escape(ui["status_nominal"])}</p>'
+                secondary_html = ""
             etx, eat = _t(ctx, f"{slug}:hero:eyebrow", eyebrow_txt, _loc_get(loc, "hero", "eyebrow"))
             htx, hat = _t(ctx, f"{slug}:hero:h1", h1_text, _loc_get(loc, "hero", "headline"))
             ltx, lat = _t(ctx, f"{slug}:hero:lead", lead_copy, _loc_get(loc, "hero", "subhead"))
@@ -701,7 +822,7 @@ def _render_route_html(
             sections_html.append(
                 f"""    <section class="hero-shell{hero_cls}" id="hero">
       <div class="container canon-grid">
-        <div class="hero-lead" data-reveal>
+        <div class="hero-lead">
           <p class="eyebrow"{eat}>{etx}</p>
           <h1{hat}>{htx}</h1>
           <p class="lead-copy"{lat}>{ltx}</p>
@@ -709,10 +830,9 @@ def _render_route_html(
             <a class="btn" href="{html.escape(primary_href, quote=True)}"{cta1}>{ctx1}</a>
             {secondary_html}
           </div>
-          {status_html}
         </div>
-        <figure class="hero-figure" data-reveal>
-          <img src="{html.escape(hero_rel, quote=True)}?v={asset_rev}" width="{route_dims[0]}" height="{route_dims[1]}" alt="{altx}"{altat.replace('data-i18n=', 'data-i18n-alt=')}>
+        <figure class="hero-figure">
+          <img src="{html.escape(hero_rel, quote=True)}?v={asset_rev}" width="{route_dims[0]}" height="{route_dims[1]}" alt="{altx}"{altat.replace('data-i18n=', 'data-i18n-alt=')} fetchpriority="high" loading="eager" decoding="sync">
         </figure>
       </div>
     </section>"""
@@ -827,7 +947,14 @@ def _render_route_html(
             f_items = _split_user_items(bp_map.get("features", ""), f_default, min_items=3)
             loc_f = _loc_items(loc, "features")
             fv = _variant(pm, d, "features", page_idx)
-            f_cls = {"asym": " feat-asym", "bento": " feat-bento"}.get(fv, "")
+            f_cls = {
+                "asym": " feat-asym",
+                "editorial_rows": " feat-asym",
+                "sticky_narrative": " feat-asym",
+                "bento": " feat-bento",
+                "bento_asymmetric": " feat-bento",
+                "hairline_matrix": " feat-matrix",
+            }.get(fv, "")
             cards = []
             for i, item in enumerate(f_items[:6]):
                 itx, iat = _t(ctx, f"{slug}:features:item:{i}", item, loc_f[i] if i < len(loc_f) else "")
@@ -876,7 +1003,7 @@ def _render_route_html(
             st_items = _split_user_items(bp_map.get("stats", ""), st_default, min_items=3)
             loc_st = _loc_items(loc, "stats")
             sv = _variant(pm, d, "stats", page_idx)
-            s_cls = " stat-band" if sv == "band" else ""
+            s_cls = " stat-band" if sv in ("band", "kpi_band", "ledger_strip") else ""
             st_cards = []
             for idx, item in enumerate(st_items[:4]):
                 value, label = _split_pair(item, "Показатель" if lang == "ru" else "Metric")
@@ -901,7 +1028,7 @@ def _render_route_html(
             loc_pr = _loc_items(loc, "process")
             pv = _variant(pm, d, "process", page_idx)
             htx, hat = h2_for("process", "Как мы работаем" if lang == "ru" else "How We Work")
-            if pv == "timeline":
+            if pv in ("timeline", "vertical_timeline"):
                 lis = []
                 for idx, item in enumerate(pr_items[:5]):
                     step_name, step_desc = _split_pair(item, item)
@@ -1002,7 +1129,7 @@ def _render_route_html(
             gal_items = _split_user_items(bp_map.get("gallery", ""), [lead_copy, c_fallbacks[0]], min_items=2)
             loc_gal = _loc_items(loc, "gallery")
             gv = _variant(pm, d, "gallery", page_idx)
-            g_cls = {"mosaic": " gal-mosaic", "filmstrip": " gal-filmstrip"}.get(gv, "")
+            g_cls = {"mosaic": " gal-mosaic", "bento_mosaic": " gal-mosaic", "filmstrip": " gal-filmstrip", "horizontal_filmstrip": " gal-filmstrip"}.get(gv, "")
             gal_imgs = [str(x) for x in (gallery_images or [])]
             if gal_imgs:
                 gal_cards = []
@@ -1023,19 +1150,28 @@ def _render_route_html(
                 c0tx, c0at = _t(ctx, f"{slug}:gallery:cap:0", gal_items[0], loc_gal[0] if loc_gal else "")
                 c1tx, c1at = _t(ctx, f"{slug}:gallery:cap:1", gal_items[1] if len(gal_items) > 1 else project_name, loc_gal[1] if len(loc_gal) > 1 else "")
                 gal_grid = f"""          <figure class="gallery-card" data-reveal>
-            <img src="{html.escape(hero_rel, quote=True)}?v={asset_rev}" width="{route_dims[0]}" height="{route_dims[1]}" alt="{c0tx}"{c0at.replace('data-i18n=', 'data-i18n-alt=')}>
+            <img src="{html.escape(hero_rel, quote=True)}?v={asset_rev}" width="{route_dims[0]}" height="{route_dims[1]}" alt="{c0tx}"{c0at.replace('data-i18n=', 'data-i18n-alt=')} loading="lazy">
             <figcaption{c0at}>{c0tx}</figcaption>
           </figure>
           <figure class="gallery-card" data-reveal>
-            <img src="{html.escape(logo_relpath, quote=True)}?v={asset_rev}" width="512" height="512" alt="{html.escape(project_name)} brand mark">
+            <img src="{html.escape(logo_relpath, quote=True)}?v={asset_rev}" width="512" height="512" alt="{html.escape(project_name)} brand mark" loading="lazy">
             <figcaption{c1at}>{c1tx}</figcaption>
           </figure>"""
             htx, hat = h2_for("gallery", "Визуальная галерея и проекты" if lang == "ru" else "Visual Portfolio & Showcase")
+            gal_controls = (
+                f'        <div class="carousel-controls">'
+                f'<button class="btn btn-secondary carousel-btn" type="button" data-dir="-1" aria-label="{html.escape(ui["prev"], quote=True)}">←</button>'
+                f'<button class="btn btn-secondary carousel-btn" type="button" data-dir="1" aria-label="{html.escape(ui["next"], quote=True)}">→</button>'
+                f'</div>\n'
+                if g_cls == " gal-filmstrip"
+                else ""
+            )
+            gal_region_attr = f' tabindex="0" role="region" aria-label="{html.escape(ui["gallery_region"], quote=True)}"' if g_cls == " gal-filmstrip" else ""
             sections_html.append(
                 f"""    <section class="section-block{g_cls}" id="gallery">
       <div class="container">
         <h2{hat}>{htx}</h2>
-        <div class="canon-grid" data-count="{len(gal_cards) if gal_imgs else 2}">
+{gal_controls}        <div class="canon-grid" data-count="{len(gal_cards) if gal_imgs else 2}"{gal_region_attr}>
 {gal_grid}
         </div>
       </div>
@@ -1062,7 +1198,7 @@ def _render_route_html(
             _price_curr_re = re.compile(
                 r"(?:(?:\$|€|£)\s*\d[\d\s.,]*(?:\s*/\s*[A-Za-zА-Яа-яЁё.]+)?|\d[\d\s.,]*\s*(?:₽|руб\.?|р\.|USD|EUR|GBP|₸|USDT)(?:\s*/\s*[A-Za-zА-Яа-яЁё.]+)?)"
             )
-            if pv == "table":
+            if pv in ("table", "spec_comparison_table"):
                 head = "".join(f'<th scope="col"{_t(ctx, f"{slug}:pricing:name:{i}", n, ln)[1]}>{_t(ctx, f"{slug}:pricing:name:{i}", n, ln)[0]}</th>' for i, (n, _, ln, _) in enumerate(parsed))
                 scope = "".join(f'<td{_t(ctx, f"{slug}:pricing:scope:{i}", s, ls)[1]}>{_t(ctx, f"{slug}:pricing:scope:{i}", s, ls)[0]}</td>' for i, (_, s, _, ls) in enumerate(parsed))
                 prices = []
@@ -1074,7 +1210,7 @@ def _render_route_html(
                     ptx, pat = _t(ctx, f"{slug}:pricing:price:{i}", price, loc_price)
                     prices.append(f"<td{pat}>{ptx}</td>")
                 sel = "".join(f'<td><a class="btn btn-secondary" href="#contact">{html.escape(ui["select"])}</a></td>' for _ in parsed)
-                body = f"""        <div class="price-table-wrap" data-reveal>
+                body = f"""        <div class="price-table-wrap" tabindex="0" role="region" aria-label="{html.escape(ui["pricing_region"], quote=True)}" data-reveal>
           <table class="price-table">
             <thead><tr><th scope="col">{"Параметр" if lang == "ru" else "Tier"}</th>{head}</tr></thead>
             <tbody>
@@ -1112,7 +1248,7 @@ def _render_route_html(
             t_items = _split_user_items(bp_map.get("testimonials", ""), c_fallbacks, min_items=3)
             loc_t = _loc_items(loc, "testimonials")
             tv = _variant(pm, d, "testimonials", page_idx)
-            t_cls = " review-quotes" if tv == "quotes" else ""
+            t_cls = " review-quotes" if tv in ("quotes", "editorial_pullquotes") else ""
             t_cards = []
             for i, item in enumerate(t_items[:4]):
                 itx, iat = _t(ctx, f"{slug}:testimonials:item:{i}", item, loc_t[i] if i < len(loc_t) else "")
@@ -1200,6 +1336,7 @@ def _render_route_html(
             <label class="hp-trap" for="hp-company" aria-hidden="true">Company</label>
             <input class="hp-trap" id="hp-company" name="company_hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
             <button class="btn" type="submit"{fsat}>{fsx}</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
         <aside class="contact-details" data-reveal>
@@ -1216,7 +1353,7 @@ def _render_route_html(
         sections_html.append(
             f"""    <section class="hero-shell" id="hero">
       <div class="container canon-grid">
-        <div class="hero-lead" data-reveal><h1{hat}>{htx}</h1><p class="lead-copy"{lat}>{ltx}</p></div>
+        <div class="hero-lead"><h1{hat}>{htx}</h1><p class="lead-copy"{lat}>{ltx}</p></div>
       </div>
     </section>"""
         )
@@ -1254,7 +1391,7 @@ def _render_route_html(
     skipx, skipat = _t(ctx, "chrome:skip", ui["skip"], ui_alt["skip"])
 
     return f"""<!DOCTYPE html>
-<html lang="{lang}">
+<html lang="{lang}" data-theme="{polarity}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1267,7 +1404,12 @@ def _render_route_html(
   <meta property="og:title" content="{html.escape(page_title, quote=True)}">
   <meta property="og:description" content="{html.escape(meta_desc, quote=True)}">
   <meta property="og:url" content="{html.escape(page_url, quote=True)}">
+  <meta property="og:image" content="{html.escape(base_url + '/' + hero_rel, quote=True)}">
+  <meta property="og:image:width" content="{route_dims[0]}">
+  <meta property="og:image:height" content="{route_dims[1]}">
+  <meta property="og:image:alt" content="{html.escape(hero_alt_meta, quote=True)}">
   <meta property="og:locale" content="{"ru_RU" if lang == "ru" else "en_US"}">
+  <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">{safe_json_ld}</script>
   <style>{css_text}</style>
 </head>
@@ -1280,8 +1422,9 @@ def _render_route_html(
         <img src="{html.escape(logo_relpath, quote=True)}?v={asset_rev}" width="36" height="36" alt="{html.escape(project_name)} logo">
         <span>{html.escape(project_name)}</span>
       </a>
+      <button class="btn btn-secondary nav-toggle" id="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav-list">{html.escape(ui["menu"])}</button>
       <nav aria-label="Primary">
-        <ul class="nav-list">
+        <ul class="nav-list" id="primary-nav-list" data-open="false">
 {nav_links}
         </ul>
       </nav>
@@ -1353,7 +1496,7 @@ def _write_seo_and_security_files(
         f"  Referrer-Policy: strict-origin-when-cross-origin\n"
         f"  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()\n"
         f"  Cross-Origin-Opener-Policy: same-origin\n"
-        f"  Cross-Origin-Embedder-Policy: require-corp\n"
+        f"  Cross-Origin-Embedder-Policy: credentialless\n"
         f"  Cross-Origin-Resource-Policy: same-origin\n"
     )
     (project_dir / "_headers").write_text(headers_txt, encoding="utf-8")
@@ -1388,7 +1531,8 @@ def _write_seo_and_security_files(
     robots_txt = "\n".join(bot_blocks) + f"\nUser-agent: *\nAllow: /\nSitemap: {base_url}/sitemap.xml\n"
     (project_dir / "robots.txt").write_text(robots_txt, encoding="utf-8")
 
-    urls_xml = "\n".join(f"  <url><loc>{html.escape(base_url + r['path'])}</loc><changefreq>weekly</changefreq></url>" for r in routes)
+    today_iso = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    urls_xml = "\n".join(f"  <url><loc>{html.escape(base_url + r['path'])}</loc><lastmod>{today_iso}</lastmod></url>" for r in routes)
     sitemap_xml = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls_xml}\n</urlset>\n'
     (project_dir / "sitemap.xml").write_text(sitemap_xml, encoding="utf-8")
 
@@ -1408,7 +1552,7 @@ def _write_seo_and_security_files(
     default_hero_var = hero_variant or str(((dossier.get("variants") or {}).get("hero") or ["split"])[0])
     hw, hh = resolve_slot_dimensions("hero", aspect_ratio, default_hero_var)
     gw, gh = resolve_slot_dimensions("gallery", aspect_ratio)
-    hero_ar = "16:9" if default_hero_var in ("centered", "overlay") else aspect_ratio
+    hero_ar = "16:9" if default_hero_var in ("centered", "overlay", "editorial_poster", "command_stage", "fullbleed_scrim") else aspect_ratio
     gal_ar = aspect_ratio if aspect_ratio in ("1:1", "4:3", "16:9") else ("4:3" if aspect_ratio in ("4:5", "3:4") else "16:9")
     prompt_list = [
         {"id": "hero_primary", "slot": "hero_primary", "canon_id": card["id"], "aspect_ratio": hero_ar, "width": hw, "height": hh, "steps": 8, "cfg_scale": 1.0, "seed": 42, "prompt": prompt_body, "output_relpath": "assets/hero_primary.png"}

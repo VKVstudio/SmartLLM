@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 07_avant_garde_poster (Avant-Garde Constructivist / Poster) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.945 0.022 86);
+  --surface: oklch(0.905 0.025 84);
+  --surface-elevated: oklch(0.975 0.012 86);
+  --border: oklch(0.150 0.008 60);
+  --border-control: oklch(0.150 0.008 60);
+  --text: oklch(0.150 0.008 60);
+  --text-muted: oklch(0.410 0.014 70);
+  --accent: oklch(0.505 0.195 26);
+  --accent-ink: oklch(0.980 0.008 86);
+  --accent-2: oklch(0.535 0.110 78);
+  --accent-3: oklch(0.410 0.014 70);
+  --shadow: none;
+  --font-heading: 'Alumni Sans Variable', 'Alumni Sans', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans Variable', 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'PT Mono', monospace;
+  --radius: 0px;
+  --radius-card: 0px;
+  --radius-button: 0px;
+  --radius-input: 0px;
+  --radius-badge: 0px;
+  --border-w: 4px;
+  --container-max: 1344px;
+  --h1-clamp: clamp(2.75rem, 1.583rem + 5.19vw, 6.25rem);
+  --h2-clamp: clamp(1.875rem, 1.333rem + 2.41vw, 3.5rem);
+  --h1-lh: 0.9;
+  --h1-ls: -0.015em;
+  --h1-weight: 800;
+  --heading-transform: uppercase;
+  --heading-tracking: -0.015em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(48px, 5vw, 88px);
+  --grid-gap: clamp(12px, 2vw, 20px);
+  --card-pad: clamp(16px, 2.2vw, 24px);
+  --input-h-desk: 44px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 46px;
+  --cta-h-mob: 48px;
+  --motion-dur: 180ms;
+  --motion-ease: cubic-bezier(0.7, 0, 0.2, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.135 0.008 55);
+  --surface: oklch(0.185 0.010 55);
+  --surface-elevated: oklch(0.235 0.012 55);
+  --border: oklch(0.720 0.022 84);
+  --border-control: oklch(0.720 0.022 84);
+  --text: oklch(0.945 0.020 86);
+  --text-muted: oklch(0.725 0.022 82);
+  --accent: oklch(0.640 0.200 26);
+  --accent-ink: oklch(0.135 0.008 55);
+  --accent-2: oklch(0.780 0.140 84);
+  --accent-3: oklch(0.725 0.022 82);
+  --shadow: none;
+}

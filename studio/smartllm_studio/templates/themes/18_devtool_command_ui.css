@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 18_devtool_command_ui (DevTool / Command Terminal UI) — default dark */
+:root, [data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.118 0.004 260);
+  --surface: oklch(0.162 0.006 260);
+  --surface-elevated: oklch(0.212 0.008 260);
+  --border: oklch(0.295 0.010 260);
+  --border-control: oklch(0.545 0.012 260);
+  --text: oklch(0.958 0.004 260);
+  --text-muted: oklch(0.735 0.008 260);
+  --accent: oklch(0.768 0.142 164);
+  --accent-ink: oklch(0.118 0.006 260);
+  --accent-2: oklch(0.728 0.140 245);
+  --accent-3: oklch(0.735 0.008 260);
+  --shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 0 0 1px rgba(255,255,255,0.04);
+  --font-heading: 'Geist Variable', 'Geist', system-ui, sans-serif;
+  --font-sans: 'Geist Variable', 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', 'Geist Mono', monospace;
+  --radius: 10px;
+  --radius-card: 10px;
+  --radius-button: 8px;
+  --radius-input: 8px;
+  --radius-badge: 6px;
+  --border-w: 1px;
+  --container-max: 1312px;
+  --h1-clamp: clamp(2rem, 1.5rem + 2.22vw, 3.5rem);
+  --h2-clamp: clamp(1.5rem, 1.25rem + 1.11vw, 2.25rem);
+  --h1-lh: 1.08;
+  --h1-ls: -0.035em;
+  --h1-weight: 600;
+  --heading-transform: none;
+  --heading-tracking: -0.035em;
+  --body-leading: 1.6;
+  --small-ls: 0.06em;
+  --pad-section: clamp(48px, 5vw, 88px);
+  --grid-gap: clamp(16px, 2vw, 20px);
+  --card-pad: clamp(18px, 2.2vw, 24px);
+  --input-h-desk: 44px;
+  --input-h-mob: 48px;
+  --cta-h-desk: 44px;
+  --cta-h-mob: 48px;
+  --motion-dur: 160ms;
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.990 0.002 260);
+  --surface: oklch(0.960 0.004 260);
+  --surface-elevated: oklch(1.000 0.000 0);
+  --border: oklch(0.855 0.008 260);
+  --border-control: oklch(0.555 0.010 260);
+  --text: oklch(0.155 0.006 260);
+  --text-muted: oklch(0.445 0.008 260);
+  --accent: oklch(0.450 0.088 165);
+  --accent-ink: oklch(0.992 0.002 165);
+  --accent-2: oklch(0.485 0.145 255);
+  --accent-3: oklch(0.445 0.008 260);
+  --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
+}

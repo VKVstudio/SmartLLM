@@ -1,0 +1,2072 @@
+{
+  "01_bento_grid": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 40,
+      "duration_ms": 220,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "lift",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "translateY(-2px) + shadow expand (light) or border brighten (dark)"
+    },
+    "surface": "clean",
+    "variants": {
+      "hero": [
+        "bento_showcase",
+        "asymmetric_split"
+      ],
+      "manifesto": [
+        "editorial_band",
+        "ruled_thesis"
+      ],
+      "values": [
+        "accent_bento",
+        "tactile_cards"
+      ],
+      "priorities": [
+        "indexed_matrix",
+        "horizontal_ribbon"
+      ],
+      "locations": [
+        "city_cards",
+        "split_hub_list"
+      ],
+      "features": [
+        "bento_asymmetric",
+        "tactile_cards",
+        "hairline_matrix"
+      ],
+      "about": [
+        "architectural_grid",
+        "story_metrics_split"
+      ],
+      "stats": [
+        "asymmetric_spotlight",
+        "metric_cards",
+        "kpi_band"
+      ],
+      "gallery": [
+        "bento_mosaic",
+        "editorial_grid"
+      ],
+      "pricing": [
+        "tier_cards_featured",
+        "modular_toggle_cards",
+        "spec_comparison_table"
+      ],
+      "testimonials": [
+        "featured_spotlight",
+        "verified_cards"
+      ],
+      "process": [
+        "numbered_steps_grid",
+        "horizontal_stepper"
+      ],
+      "team": [
+        "portrait_grid_3x4",
+        "editorial_directory"
+      ],
+      "blog": [
+        "featured_plus_grid",
+        "card_deck"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "structured_cards",
+        "document_column"
+      ],
+      "cta": [
+        "split_action_band",
+        "centered_monolith"
+      ],
+      "contact": [
+        "split_form_details",
+        "centered_concierge"
+      ],
+      "footer": [
+        "multi_column_grid",
+        "compact_colophon"
+      ]
+    },
+    "design_code": "matte-precision",
+    "block_rules": "One dominant 7-col anchor tile per viewport | One isolated concept per cell | Reserve accent for primary metric or CTA",
+    "imagery": "Clean modular industrial product flat-lay of {subject} arranged in disciplined compartments on honed cool off-white limestone, crisp directional north-window softbox shadows, single restrained cobalt anodized detail, 50mm studio lens, completely blank unmarked surfaces",
+    "team": "Vertical 3:4 medium chest-up studio portrait in smart minimalist attire, softbox key light, seamless neutral cool-grey (light) or charcoal (dark) backdrop, 85mm lens, generous empty headroom"
+  },
+  "02_swiss_international": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 20,
+      "duration_ms": 180,
+      "ease": "cubic-bezier(0.2, 0, 0, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "invert",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "invert",
+      "card_hover": "border-color -> var(--accent) + sliding 1px rule underline (0 Y-lift)"
+    },
+    "surface": "clean",
+    "variants": {
+      "hero": [
+        "asymmetric_split",
+        "editorial_poster"
+      ],
+      "manifesto": [
+        "ruled_thesis",
+        "monument_statement"
+      ],
+      "values": [
+        "numbered_pillars",
+        "editorial_rows"
+      ],
+      "priorities": [
+        "indexed_matrix",
+        "ledger_checklist"
+      ],
+      "locations": [
+        "directory_ledger",
+        "city_cards"
+      ],
+      "features": [
+        "hairline_matrix",
+        "editorial_rows",
+        "sticky_narrative"
+      ],
+      "about": [
+        "architectural_grid",
+        "monograph_column"
+      ],
+      "stats": [
+        "kpi_band",
+        "ledger_strip"
+      ],
+      "gallery": [
+        "editorial_grid",
+        "bento_mosaic"
+      ],
+      "pricing": [
+        "spec_comparison_table",
+        "split_value_anchor"
+      ],
+      "testimonials": [
+        "editorial_pullquotes",
+        "verified_cards"
+      ],
+      "process": [
+        "ledger_rows",
+        "numbered_steps_grid"
+      ],
+      "team": [
+        "minimal_roster",
+        "editorial_directory"
+      ],
+      "blog": [
+        "editorial_index",
+        "card_deck"
+      ],
+      "faq": [
+        "two_column_qa_grid",
+        "sticky_split_accordion"
+      ],
+      "legal": [
+        "sticky_toc_clauses",
+        "document_column"
+      ],
+      "cta": [
+        "split_action_band",
+        "inline_command_bar"
+      ],
+      "contact": [
+        "ledger_intake",
+        "split_form_details"
+      ],
+      "footer": [
+        "multi_column_grid",
+        "compact_colophon"
+      ]
+    },
+    "design_code": "exposed-hairline-grid + edge-to-edge 1px/2px rules",
+    "block_rules": "Flush-left 4/8 asymmetry | Expose collapsed 1px black grid lines | Use tabular 01/02/03 section indices",
+    "imagery": "Stark Swiss modernist architectural study of {subject} in concrete and brushed steel on crisp white alabaster plaster, razor-sharp geometric morning shadow, signal-red focal detail, vast negative space, 50mm lens, clean unmarked surfaces",
+    "team": "Vertical 3:4 austere monochrome studio portrait in minimal dark tailored clothing, crisp even softbox lighting, seamless pure white (light) or obsidian (dark) wall, 85mm lens, generous empty headroom"
+  },
+  "03_editorial_magazine": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 30,
+      "duration_ms": 220,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "scroll": "progress",
+      "marquee": true,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "underline",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "crisp editorial underline draw + image scale(1.025) inside overflow:hidden plate"
+    },
+    "surface": "paper",
+    "variants": {
+      "hero": [
+        "editorial_poster",
+        "asymmetric_split"
+      ],
+      "manifesto": [
+        "monument_statement",
+        "ruled_thesis"
+      ],
+      "values": [
+        "editorial_rows",
+        "numbered_pillars"
+      ],
+      "priorities": [
+        "indexed_matrix",
+        "ledger_checklist"
+      ],
+      "locations": [
+        "directory_ledger",
+        "split_hub_list"
+      ],
+      "features": [
+        "hairline_matrix",
+        "editorial_rows",
+        "sticky_narrative"
+      ],
+      "about": [
+        "monograph_column",
+        "story_metrics_split"
+      ],
+      "stats": [
+        "kpi_band",
+        "ledger_strip"
+      ],
+      "gallery": [
+        "collage_stagger",
+        "editorial_grid",
+        "horizontal_filmstrip"
+      ],
+      "pricing": [
+        "spec_comparison_table",
+        "split_value_anchor"
+      ],
+      "testimonials": [
+        "editorial_pullquotes",
+        "featured_spotlight"
+      ],
+      "process": [
+        "vertical_timeline",
+        "ledger_rows"
+      ],
+      "team": [
+        "editorial_directory",
+        "spotlight_leadership"
+      ],
+      "blog": [
+        "editorial_index",
+        "featured_plus_grid"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "sticky_toc_clauses",
+        "document_column"
+      ],
+      "cta": [
+        "split_action_band",
+        "centered_monolith"
+      ],
+      "contact": [
+        "ledger_intake",
+        "split_form_details"
+      ],
+      "footer": [
+        "editorial_monogram",
+        "multi_column_grid"
+      ]
+    },
+    "design_code": "broadsheet-ink-rules (2px double masthead + 1px column dividers)",
+    "block_rules": "Use bold 700-800 Source Serif 4 headlines + italic emphasis (lh>=1.1) | Expose 2px top rules & 1px vertical column dividers | Use mono datelines & spec tables",
+    "imagery": "Editorial broadsheet architectural photography of {subject} on archival bone-ivory paper tone, dramatic natural daylight chiaroscuro, crisp stone and dark walnut textures with subtle vermilion editorial accent, 35mm Leica film look, unmarked surfaces",
+    "team": "Vertical 3:4 documentary magazine portrait in crisp tailored attire, dramatic soft side light, seamless warm newsprint-grey (light) or dark espresso (dark) backdrop, 85mm lens, generous empty headroom"
+  },
+  "04_hyper_minimal_speed": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 0,
+      "duration_ms": 100,
+      "ease": "cubic-bezier(0.2, 0, 0, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "underline",
+      "press_scale": 0.98,
+      "press_ms": 100,
+      "link": "underline",
+      "card_hover": "text/border tint shift ONLY (zero transform)"
+    },
+    "surface": "clean",
+    "variants": {
+      "hero": [
+        "asymmetric_split",
+        "command_stage"
+      ],
+      "manifesto": [
+        "ruled_thesis",
+        "monument_statement"
+      ],
+      "values": [
+        "editorial_rows",
+        "numbered_pillars"
+      ],
+      "priorities": [
+        "ledger_checklist",
+        "indexed_matrix"
+      ],
+      "locations": [
+        "directory_ledger",
+        "city_cards"
+      ],
+      "features": [
+        "editorial_rows",
+        "hairline_matrix"
+      ],
+      "about": [
+        "monograph_column",
+        "story_metrics_split"
+      ],
+      "stats": [
+        "ledger_strip",
+        "kpi_band"
+      ],
+      "gallery": [
+        "editorial_grid",
+        "horizontal_filmstrip"
+      ],
+      "pricing": [
+        "spec_comparison_table",
+        "split_value_anchor"
+      ],
+      "testimonials": [
+        "editorial_pullquotes",
+        "verified_cards"
+      ],
+      "process": [
+        "ledger_rows",
+        "vertical_timeline"
+      ],
+      "team": [
+        "minimal_roster",
+        "editorial_directory"
+      ],
+      "blog": [
+        "editorial_index",
+        "card_deck"
+      ],
+      "faq": [
+        "single_column_accordion",
+        "two_column_qa_grid"
+      ],
+      "legal": [
+        "document_column",
+        "sticky_toc_clauses"
+      ],
+      "cta": [
+        "inline_command_bar",
+        "split_action_band"
+      ],
+      "contact": [
+        "ledger_intake",
+        "split_form_details"
+      ],
+      "footer": [
+        "compact_colophon",
+        "multi_column_grid"
+      ]
+    },
+    "design_code": "borderless-reading-spine (zero boxed cards; 1px horizontal dividers only)",
+    "block_rules": "Render a borderless 68ch reading spine with faint horizontal dividers | Keep above-the-fold payload ultra-lean | Format all benchmarks in tabular-nums",
+    "imagery": "Minimalist technical studio photograph of a single precision matte-black anodized aluminum instrument resting on a crisp white cyclorama, clinical even softbox illumination, crisp geometry, 50mm lens, clean blank unmarked surface",
+    "team": "Vertical 3:4 crisp minimal portrait in plain dark knitwear, flat even studio illumination, seamless off-white (light) or dark slate (dark) wall, 85mm lens, generous empty headroom"
+  },
+  "05_kinetic_typography": {
+    "default_polarity": "dark",
+    "motion": {
+      "reveal": "clip",
+      "stagger_ms": 30,
+      "duration_ms": 200,
+      "ease": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "scroll": "progress",
+      "marquee": true,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "invert",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "invert",
+      "card_hover": "flood inversion (bg->accent, ink->accent-ink)"
+    },
+    "surface": "kinetic",
+    "variants": {
+      "hero": [
+        "editorial_poster",
+        "fullbleed_scrim"
+      ],
+      "manifesto": [
+        "monument_statement",
+        "editorial_band"
+      ],
+      "values": [
+        "editorial_rows",
+        "numbered_pillars"
+      ],
+      "priorities": [
+        "horizontal_ribbon",
+        "indexed_matrix"
+      ],
+      "locations": [
+        "directory_ledger",
+        "city_cards"
+      ],
+      "features": [
+        "editorial_rows",
+        "bento_asymmetric",
+        "sticky_narrative"
+      ],
+      "about": [
+        "monograph_column",
+        "milestone_chronicle"
+      ],
+      "stats": [
+        "kpi_band",
+        "asymmetric_spotlight"
+      ],
+      "gallery": [
+        "horizontal_filmstrip",
+        "bento_mosaic"
+      ],
+      "pricing": [
+        "spec_comparison_table",
+        "split_value_anchor"
+      ],
+      "testimonials": [
+        "editorial_pullquotes",
+        "featured_spotlight"
+      ],
+      "process": [
+        "ledger_rows",
+        "vertical_timeline"
+      ],
+      "team": [
+        "minimal_roster",
+        "editorial_directory"
+      ],
+      "blog": [
+        "editorial_index",
+        "featured_plus_grid"
+      ],
+      "faq": [
+        "single_column_accordion",
+        "sticky_split_accordion"
+      ],
+      "legal": [
+        "document_column",
+        "sticky_toc_clauses"
+      ],
+      "cta": [
+        "centered_monolith",
+        "split_action_band"
+      ],
+      "contact": [
+        "split_form_details",
+        "ledger_intake"
+      ],
+      "footer": [
+        "editorial_monogram",
+        "multi_column_grid"
+      ]
+    },
+    "design_code": "exhibition-stage + Tektur wdth/wght kinetic emphasis",
+    "block_rules": "Let display headline claim 55% of hero fold | Narrow Tektur wdth at 360px for long Russian words | Provide explicit Pause control on marquee",
+    "imagery": "High-contrast monochromatic exhibition photograph of {subject} sliced by razor diagonal studio light beams across brushed titanium and matte carbon concrete with one vivid crimson highlight, 50mm lens, clean blank surfaces",
+    "team": "Vertical 3:4 high-contrast studio portrait with crisp directional side light against seamless matte obsidian (dark) or gallery white (light) backdrop, 85mm lens, generous empty headroom"
+  },
+  "06_neo_brutalism": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 20,
+      "duration_ms": 110,
+      "ease": "cubic-bezier(0.2, 0, 0, 1)",
+      "scroll": "progress",
+      "marquee": true,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "invert",
+      "press_scale": 1.0,
+      "press_ms": 110,
+      "link": "invert",
+      "card_hover": "mechanical lift translate(-2px,-2px) + offset shadow 8px 8px 0"
+    },
+    "surface": "brutal",
+    "variants": {
+      "hero": [
+        "editorial_poster",
+        "bento_showcase"
+      ],
+      "manifesto": [
+        "editorial_band",
+        "monument_statement"
+      ],
+      "values": [
+        "accent_bento",
+        "tactile_cards"
+      ],
+      "priorities": [
+        "horizontal_ribbon",
+        "indexed_matrix"
+      ],
+      "locations": [
+        "city_cards",
+        "directory_ledger"
+      ],
+      "features": [
+        "bento_asymmetric",
+        "tactile_cards",
+        "editorial_rows"
+      ],
+      "about": [
+        "architectural_grid",
+        "milestone_chronicle"
+      ],
+      "stats": [
+        "metric_cards",
+        "kpi_band"
+      ],
+      "gallery": [
+        "editorial_grid",
+        "bento_mosaic"
+      ],
+      "pricing": [
+        "tier_cards_featured",
+        "spec_comparison_table"
+      ],
+      "testimonials": [
+        "editorial_pullquotes",
+        "verified_cards"
+      ],
+      "process": [
+        "numbered_steps_grid",
+        "ledger_rows"
+      ],
+      "team": [
+        "portrait_grid_3x4",
+        "editorial_directory"
+      ],
+      "blog": [
+        "featured_plus_grid",
+        "card_deck"
+      ],
+      "faq": [
+        "single_column_accordion",
+        "two_column_qa_grid"
+      ],
+      "legal": [
+        "structured_cards",
+        "document_column"
+      ],
+      "cta": [
+        "centered_monolith",
+        "split_action_band"
+      ],
+      "contact": [
+        "split_form_details",
+        "ledger_intake"
+      ],
+      "footer": [
+        "editorial_monogram",
+        "multi_column_grid"
+      ]
+    },
+    "design_code": "hard-offset-ink-stamp (0deg tilt, 0px blur)",
+    "block_rules": "Keep 0deg orthogonal 0px cards with 3px solid ink borders | Use accent_2 volt yellow strictly as fill behind dark text | Place focus-visible outline 4px outside border",
+    "imagery": "Raw direct-flash studio still life of poured concrete cubes and solid magenta acrylic slabs on warm cream newsprint surface, crisp sharp hard shadows, 35mm lens, completely blank unmarked surfaces",
+    "team": "Vertical 3:4 punchy direct-flash studio portrait in crisp modern attire, seamless off-white (light) or pitch-dark (dark) backdrop, 50mm lens, generous empty headroom"
+  },
+  "07_avant_garde_poster": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "clip",
+      "stagger_ms": 25,
+      "duration_ms": 180,
+      "ease": "cubic-bezier(0.7, 0, 0.2, 1)",
+      "scroll": "progress",
+      "marquee": true,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "invert",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "invert",
+      "card_hover": "instant Constructivist ink inversion (surface->text, text->bg)"
+    },
+    "surface": "clean",
+    "variants": {
+      "hero": [
+        "editorial_poster",
+        "fullbleed_scrim",
+        "asymmetric_split"
+      ],
+      "manifesto": [
+        "editorial_band",
+        "monument_statement"
+      ],
+      "values": [
+        "numbered_pillars",
+        "editorial_rows"
+      ],
+      "priorities": [
+        "indexed_matrix",
+        "ledger_checklist"
+      ],
+      "locations": [
+        "directory_ledger",
+        "city_cards"
+      ],
+      "features": [
+        "bento_asymmetric",
+        "editorial_rows"
+      ],
+      "about": [
+        "architectural_grid",
+        "story_metrics_split"
+      ],
+      "stats": [
+        "kpi_band",
+        "metric_cards"
+      ],
+      "gallery": [
+        "bento_mosaic",
+        "horizontal_filmstrip"
+      ],
+      "pricing": [
+        "spec_comparison_table",
+        "tier_cards_featured"
+      ],
+      "testimonials": [
+        "editorial_pullquotes",
+        "featured_spotlight"
+      ],
+      "process": [
+        "vertical_timeline",
+        "numbered_steps_grid"
+      ],
+      "team": [
+        "portrait_grid_3x4",
+        "minimal_roster"
+      ],
+      "blog": [
+        "editorial_index",
+        "featured_plus_grid"
+      ],
+      "faq": [
+        "single_column_accordion",
+        "two_column_qa_grid"
+      ],
+      "legal": [
+        "sticky_toc_clauses",
+        "document_column"
+      ],
+      "cta": [
+        "centered_monolith",
+        "split_action_band"
+      ],
+      "contact": [
+        "split_form_details",
+        "ledger_intake"
+      ],
+      "footer": [
+        "multi_column_grid",
+        "compact_colophon"
+      ]
+    },
+    "design_code": "constructivist-4px-top-rules (open-sided columns, 0 drop shadows, square timeline nodes)",
+    "block_rules": "Use open-sided columns with 4px solid top bars (no 4-sided shadow boxes) | Tower condensed uppercase Alumni Sans headlines cleanly | Break grid at most once via inverted manifesto/CTA band",
+    "imagery": "Constructivist photomontage-inspired architectural photography on warm archival kraft-cream stone, stark soot-black diagonal steel truss shadows, one geometric scarlet industrial cylinder, 35mm film grain, completely unmarked surfaces",
+    "team": "Vertical 3:4 high-contrast duotone studio portrait, dramatic angular key light, seamless kraft-grey (light) or soot-black (dark) backdrop, 50mm lens, generous empty headroom"
+  },
+  "08_liquid_glass": {
+    "default_polarity": "dark",
+    "motion": {
+      "reveal": "scale",
+      "stagger_ms": 45,
+      "duration_ms": 280,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "glow",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "translateY(-2px) + top specular rim opacity brighten (NEVER animate blur px)"
+    },
+    "surface": "glass",
+    "variants": {
+      "hero": [
+        "fullbleed_scrim",
+        "bento_showcase",
+        "asymmetric_split"
+      ],
+      "manifesto": [
+        "editorial_band",
+        "monument_statement"
+      ],
+      "values": [
+        "tactile_cards",
+        "accent_bento"
+      ],
+      "priorities": [
+        "indexed_matrix",
+        "ledger_checklist"
+      ],
+      "locations": [
+        "city_cards",
+        "split_hub_list"
+      ],
+      "features": [
+        "bento_asymmetric",
+        "tactile_cards"
+      ],
+      "about": [
+        "story_metrics_split",
+        "architectural_grid"
+      ],
+      "stats": [
+        "metric_cards",
+        "asymmetric_spotlight"
+      ],
+      "gallery": [
+        "cinematic_spotlight",
+        "bento_mosaic"
+      ],
+      "pricing": [
+        "tier_cards_featured",
+        "modular_toggle_cards"
+      ],
+      "testimonials": [
+        "verified_cards",
+        "featured_spotlight"
+      ],
+      "process": [
+        "horizontal_stepper",
+        "numbered_steps_grid"
+      ],
+      "team": [
+        "portrait_grid_3x4",
+        "spotlight_leadership"
+      ],
+      "blog": [
+        "featured_plus_grid",
+        "card_deck"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "document_column",
+        "structured_cards"
+      ],
+      "cta": [
+        "centered_monolith",
+        "split_action_band"
+      ],
+      "contact": [
+        "split_form_details",
+        "centered_concierge"
+      ],
+      "footer": [
+        "multi_column_grid",
+        "compact_colophon"
+      ]
+    },
+    "design_code": "backdrop-filter: blur(20px) saturate(1.5) (12px mobile) + 1px top specular rim ::before + fixed body::before aura + triple solid fallback (prefers-reduced-transparency, @supports, [data-solid-ui])",
+    "block_rules": "Cap depth to 3 planes and use body::before for aura gradients | Ship prefers-reduced-transparency + [data-solid-ui] fallback (Safari gap) | Keep dark frosted card alpha >= 0.72",
+    "imagery": "Macro optical studio still life of {subject} refracted behind thick beveled frosted sapphire glass panels, soft cyan-silver caustic reflections over deep midnight cobalt slate, 85mm macro lens, completely blank unmarked glass surfaces",
+    "team": "Vertical 3:4 editorial studio portrait with cool rim light, modern minimalist attire, seamless dark cobalt-slate (dark) or cool pearl-grey (light) backdrop, 85mm lens, generous empty headroom"
+  },
+  "09_aurora_obsidian_mesh": {
+    "default_polarity": "dark",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 40,
+      "duration_ms": 280,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "glow",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "card rim lights to var(--accent) + translateY(-2px)"
+    },
+    "surface": "mesh",
+    "variants": {
+      "hero": [
+        "fullbleed_scrim",
+        "asymmetric_split",
+        "bento_showcase"
+      ],
+      "manifesto": [
+        "editorial_band",
+        "monument_statement"
+      ],
+      "values": [
+        "tactile_cards",
+        "accent_bento"
+      ],
+      "priorities": [
+        "indexed_matrix",
+        "ledger_checklist"
+      ],
+      "locations": [
+        "city_cards",
+        "split_hub_list"
+      ],
+      "features": [
+        "bento_asymmetric",
+        "tactile_cards"
+      ],
+      "about": [
+        "story_metrics_split",
+        "architectural_grid"
+      ],
+      "stats": [
+        "kpi_band",
+        "metric_cards"
+      ],
+      "gallery": [
+        "cinematic_spotlight",
+        "bento_mosaic"
+      ],
+      "pricing": [
+        "tier_cards_featured",
+        "modular_toggle_cards"
+      ],
+      "testimonials": [
+        "featured_spotlight",
+        "verified_cards"
+      ],
+      "process": [
+        "horizontal_stepper",
+        "numbered_steps_grid"
+      ],
+      "team": [
+        "portrait_grid_3x4",
+        "editorial_directory"
+      ],
+      "blog": [
+        "featured_plus_grid",
+        "card_deck"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "document_column",
+        "structured_cards"
+      ],
+      "cta": [
+        "centered_monolith",
+        "split_action_band"
+      ],
+      "contact": [
+        "split_form_details",
+        "centered_concierge"
+      ],
+      "footer": [
+        "multi_column_grid",
+        "compact_colophon"
+      ]
+    },
+    "design_code": "fixed body::before radial aurora mesh (opacity <= 0.24, composited transform drift) + 100% opaque matte cards (0 backdrop-filter, separates from 08)",
+    "block_rules": "Keep aura strictly on fixed body::before behind 100% opaque matte cards | Clamp Unbounded H1 floor to 26px at 360px | Animate mesh via transform: translate3d() only",
+    "imagery": "Sculpted dark smoked obsidian glass ribbons framing {subject} and catching subtle refracted aurora violet and glacier cyan light beams in a dark studio void, 85mm lens, clean blank surfaces",
+    "team": "Vertical 3:4 studio portrait lit by subtle cool violet-cyan rim light against seamless matte obsidian-charcoal (dark) or pearl-white (light) backdrop, 85mm lens, generous empty headroom"
+  },
+  "10_industrial_tactile": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 30,
+      "duration_ms": 170,
+      "ease": "cubic-bezier(0.34, 1.45, 0.64, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "lift",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "keycap micro-lift translateY(-1px) + specular edge sharpen"
+    },
+    "surface": "tactile",
+    "variants": {
+      "hero": [
+        "command_stage",
+        "asymmetric_split"
+      ],
+      "manifesto": [
+        "ruled_thesis",
+        "editorial_band"
+      ],
+      "values": [
+        "tactile_cards",
+        "numbered_pillars"
+      ],
+      "priorities": [
+        "indexed_matrix",
+        "ledger_checklist"
+      ],
+      "locations": [
+        "split_hub_list",
+        "directory_ledger"
+      ],
+      "features": [
+        "bento_asymmetric",
+        "hairline_matrix",
+        "tactile_cards"
+      ],
+      "about": [
+        "architectural_grid",
+        "milestone_chronicle"
+      ],
+      "stats": [
+        "ledger_strip",
+        "metric_cards"
+      ],
+      "gallery": [
+        "editorial_grid",
+        "bento_mosaic"
+      ],
+      "pricing": [
+        "modular_toggle_cards",
+        "spec_comparison_table"
+      ],
+      "testimonials": [
+        "verified_cards",
+        "featured_spotlight"
+      ],
+      "process": [
+        "horizontal_stepper",
+        "numbered_steps_grid"
+      ],
+      "team": [
+        "portrait_grid_3x4",
+        "editorial_directory"
+      ],
+      "blog": [
+        "card_deck",
+        "editorial_index"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "two_column_qa_grid"
+      ],
+      "legal": [
+        "sticky_toc_clauses",
+        "document_column"
+      ],
+      "cta": [
+        "inline_command_bar",
+        "split_action_band"
+      ],
+      "contact": [
+        "ledger_intake",
+        "split_form_details"
+      ],
+      "footer": [
+        "multi_column_grid",
+        "compact_colophon"
+      ]
+    },
+    "design_code": "anodized-machined-bevel + recessed input well + precision chassis seams",
+    "block_rules": "Use recessed inset shadows on inputs vs raised bevels on keycap CTAs | Use crisp 11px mono telemetry markers (CH-01, SPEC) | Keep 6-10px machined corners",
+    "imagery": "Macro studio product study of {subject} featuring bead-blasted warm aluminum chassis, tactile matte ceramic switches, knurled rotary dials, and signal-orange mechanical toggle, overhead softbox light, 90mm macro lens, clean unmarked hardware",
+    "team": "Vertical 3:4 warm studio portrait in textured knitwear, soft window daylight, seamless warm light stone (light) or dark titanium-slate (dark) backdrop, 85mm lens, generous empty headroom"
+  },
+  "11_soft_clay_playful": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "scale",
+      "stagger_ms": 50,
+      "duration_ms": 320,
+      "ease": "cubic-bezier(0.34, 1.45, 0.64, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "lift",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "buoyant lift translateY(-4px) scale(1.015)"
+    },
+    "surface": "clay",
+    "variants": {
+      "hero": [
+        "bento_showcase",
+        "asymmetric_split"
+      ],
+      "manifesto": [
+        "editorial_band",
+        "monument_statement"
+      ],
+      "values": [
+        "tactile_cards",
+        "accent_bento"
+      ],
+      "priorities": [
+        "indexed_matrix",
+        "ledger_checklist"
+      ],
+      "locations": [
+        "city_cards",
+        "split_hub_list"
+      ],
+      "features": [
+        "tactile_cards",
+        "bento_asymmetric"
+      ],
+      "about": [
+        "story_metrics_split",
+        "milestone_chronicle"
+      ],
+      "stats": [
+        "metric_cards",
+        "asymmetric_spotlight"
+      ],
+      "gallery": [
+        "bento_mosaic",
+        "editorial_grid"
+      ],
+      "pricing": [
+        "tier_cards_featured",
+        "modular_toggle_cards"
+      ],
+      "testimonials": [
+        "verified_cards",
+        "horizontal_carousel"
+      ],
+      "process": [
+        "horizontal_stepper",
+        "numbered_steps_grid"
+      ],
+      "team": [
+        "portrait_grid_3x4",
+        "spotlight_leadership"
+      ],
+      "blog": [
+        "card_deck",
+        "featured_plus_grid"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "structured_cards",
+        "document_column"
+      ],
+      "cta": [
+        "centered_monolith",
+        "split_action_band"
+      ],
+      "contact": [
+        "centered_concierge",
+        "split_form_details"
+      ],
+      "footer": [
+        "multi_column_grid",
+        "compact_colophon"
+      ]
+    },
+    "design_code": "clay-double-bevel (outer ambient lift + top-inner specular highlight + bottom-inner compression)",
+    "block_rules": "Keep rounded 28px clay bevels + 9999px pill CTAs | Use crisp border_control on clay inputs | Celebrate milestones concisely without dark-pattern streaks",
+    "imagery": "Isometric tactile miniature studio scene of {subject} built from smooth matte-clay and frosted ceramic geometric forms in coral-terracotta and mint accents on pale sky-chalk stage, wraparound daylight softbox, 50mm macro lens, completely blank smooth surfaces",
+    "team": "Vertical 3:4 warm friendly studio portrait in smart-casual knitwear, soft wraparound lighting, seamless pale ice-blue (light) or deep navy-slate (dark) backdrop, 85mm lens, generous empty headroom"
+  },
+  "12_quiet_luxury_minimal": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 60,
+      "duration_ms": 500,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "underline",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "ultra-slow opacity 0.78 + subtle inner-plate scale(1.02) (zero Y-jump)"
+    },
+    "surface": "clean",
+    "variants": {
+      "hero": [
+        "asymmetric_split",
+        "editorial_poster"
+      ],
+      "manifesto": [
+        "monument_statement",
+        "ruled_thesis"
+      ],
+      "values": [
+        "numbered_pillars",
+        "editorial_rows"
+      ],
+      "priorities": [
+        "ledger_checklist",
+        "indexed_matrix"
+      ],
+      "locations": [
+        "split_hub_list",
+        "directory_ledger"
+      ],
+      "features": [
+        "sticky_narrative",
+        "editorial_rows"
+      ],
+      "about": [
+        "monograph_column",
+        "story_metrics_split"
+      ],
+      "stats": [
+        "kpi_band",
+        "asymmetric_spotlight"
+      ],
+      "gallery": [
+        "editorial_grid",
+        "cinematic_spotlight"
+      ],
+      "pricing": [
+        "split_value_anchor",
+        "modular_toggle_cards"
+      ],
+      "testimonials": [
+        "editorial_pullquotes",
+        "featured_spotlight"
+      ],
+      "process": [
+        "vertical_timeline",
+        "ledger_rows"
+      ],
+      "team": [
+        "minimal_roster",
+        "spotlight_leadership"
+      ],
+      "blog": [
+        "editorial_index",
+        "featured_plus_grid"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "sticky_toc_clauses",
+        "document_column"
+      ],
+      "cta": [
+        "split_action_band",
+        "centered_monolith"
+      ],
+      "contact": [
+        "split_form_details",
+        "ledger_intake"
+      ],
+      "footer": [
+        "editorial_monogram",
+        "multi_column_grid"
+      ]
+    },
+    "design_code": "borderless-cold-luxury-tonal (border: 0 on cards; separation strictly via surface tonal contrast & 2x negative space; tracked uppercase sans 0.14em instead of monospace)",
+    "block_rules": "Restrict Cormorant Garamond strictly to light/regular 300-400 >= 24px | Separate cards via borderless tonal surfaces and 2x whitespace | Use Cold Luxury Platinum/Chrome/Deep Pine-Slate tones",
+    "imagery": "Cold-luxury architectural gallery still life of {subject} crafted in brushed stainless steel, cool pale limestone, and dark pine glass on a platinum plinth, soft north-window daylight, vast quiet negative space, 50mm lens, clean unmarked surfaces",
+    "team": "Vertical 3:4 restrained low-saturation editorial portrait in tailored black or charcoal wool, soft north-window key light, seamless cool platinum-grey (light) or obsidian (dark) backdrop, 85mm lens, generous empty headroom"
+  },
+  "13_cinematic_documentary": {
+    "default_polarity": "dark",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 65,
+      "duration_ms": 460,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": true
+    },
+    "micro": {
+      "hover": "underline",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "inner-frame Ken Burns scale(1.035) + caption brighten"
+    },
+    "surface": "grain",
+    "variants": {
+      "hero": [
+        "fullbleed_scrim",
+        "editorial_poster",
+        "asymmetric_split"
+      ],
+      "manifesto": [
+        "monument_statement",
+        "editorial_band"
+      ],
+      "values": [
+        "editorial_rows",
+        "numbered_pillars"
+      ],
+      "priorities": [
+        "indexed_matrix",
+        "ledger_checklist"
+      ],
+      "locations": [
+        "split_hub_list",
+        "directory_ledger"
+      ],
+      "features": [
+        "sticky_narrative",
+        "editorial_rows",
+        "bento_asymmetric"
+      ],
+      "about": [
+        "milestone_chronicle",
+        "monograph_column"
+      ],
+      "stats": [
+        "kpi_band",
+        "asymmetric_spotlight"
+      ],
+      "gallery": [
+        "cinematic_spotlight",
+        "horizontal_filmstrip",
+        "bento_mosaic"
+      ],
+      "pricing": [
+        "split_value_anchor",
+        "modular_toggle_cards"
+      ],
+      "testimonials": [
+        "editorial_pullquotes",
+        "featured_spotlight"
+      ],
+      "process": [
+        "vertical_timeline",
+        "ledger_rows"
+      ],
+      "team": [
+        "spotlight_leadership",
+        "minimal_roster"
+      ],
+      "blog": [
+        "featured_plus_grid",
+        "editorial_index"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "document_column",
+        "sticky_toc_clauses"
+      ],
+      "cta": [
+        "centered_monolith",
+        "split_action_band"
+      ],
+      "contact": [
+        "split_form_details",
+        "centered_concierge"
+      ],
+      "footer": [
+        "editorial_monogram",
+        "multi_column_grid"
+      ]
+    },
+    "design_code": "35mm-darkroom-grain (desktop subtle texture, skipped on mobile) + directional vignette scrim + film contact-sheet rules",
+    "block_rules": "Keep Literata italic accents warm and documentary | Provide accessible Prev/Next buttons on filmstrip gallery | Stack fullbleed scrim cleanly on mobile <768px",
+    "imagery": "Cinematic widescreen 35mm documentary still of {subject} inside a darkroom-lit architectural space, single warm practical tungsten lamp carving deep selenium-charcoal shadows, authentic organic film grain, anamorphic depth, clean blank surfaces",
+    "team": "Vertical 3:4 authentic environmental portrait in workshop space, warm side key light, shallow depth of field, seamless dark espresso-charcoal (dark) or baryta grey (light) wall, 50mm lens, generous empty headroom"
+  },
+  "14_spatial_3d_showcase": {
+    "default_polarity": "dark",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 45,
+      "duration_ms": 340,
+      "ease": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": true
+    },
+    "micro": {
+      "hover": "glow",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "perspective(1200px) rotateX(2deg) rotateY(-2deg) translateY(-3px)"
+    },
+    "surface": "clean",
+    "variants": {
+      "hero": [
+        "command_stage",
+        "fullbleed_scrim",
+        "asymmetric_split"
+      ],
+      "manifesto": [
+        "ruled_thesis",
+        "editorial_band"
+      ],
+      "values": [
+        "accent_bento",
+        "tactile_cards"
+      ],
+      "priorities": [
+        "indexed_matrix",
+        "ledger_checklist"
+      ],
+      "locations": [
+        "split_hub_list",
+        "city_cards"
+      ],
+      "features": [
+        "bento_asymmetric",
+        "hairline_matrix",
+        "tactile_cards"
+      ],
+      "about": [
+        "architectural_grid",
+        "story_metrics_split"
+      ],
+      "stats": [
+        "asymmetric_spotlight",
+        "ledger_strip",
+        "metric_cards"
+      ],
+      "gallery": [
+        "cinematic_spotlight",
+        "bento_mosaic",
+        "horizontal_filmstrip"
+      ],
+      "pricing": [
+        "tier_cards_featured",
+        "spec_comparison_table"
+      ],
+      "testimonials": [
+        "featured_spotlight",
+        "verified_cards"
+      ],
+      "process": [
+        "horizontal_stepper",
+        "numbered_steps_grid"
+      ],
+      "team": [
+        "portrait_grid_3x4",
+        "editorial_directory"
+      ],
+      "blog": [
+        "featured_plus_grid",
+        "card_deck"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "sticky_toc_clauses",
+        "document_column"
+      ],
+      "cta": [
+        "split_action_band",
+        "inline_command_bar"
+      ],
+      "contact": [
+        "split_form_details",
+        "ledger_intake"
+      ],
+      "footer": [
+        "multi_column_grid",
+        "compact_colophon"
+      ]
+    },
+    "design_code": "specular-stage-rim + subtle coordinate grid + CSS perspective / optional lazy MIT Three.js w/ Z-Image fallback",
+    "block_rules": "Ship crisp static Z-Image stage by default; lazy-load Three.js (<=1 canvas) only if enabled | Keep coordinate labels crisp in Martian Mono",
+    "imagery": "Studio HDRI physically-based industrial hardware sculpture of {subject} suspended inside a pitch-dark titanium cyclorama, razor-sharp glacial cyan specular rim light and warm amber indicator detail, 50mm lens, clean unmarked hardware",
+    "team": "Vertical 3:4 clean technical studio portrait in dark minimalist attire, crisp cool specular rim highlight, seamless dark charcoal-slate (dark) or light grey (light) backdrop, 85mm lens, generous empty headroom"
+  },
+  "15_organic_biophilic_eco": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 45,
+      "duration_ms": 300,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "underline",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "translateY(-2px) + botanical border darken"
+    },
+    "surface": "clean",
+    "variants": {
+      "hero": [
+        "asymmetric_split",
+        "bento_showcase"
+      ],
+      "manifesto": [
+        "monument_statement",
+        "editorial_band"
+      ],
+      "values": [
+        "numbered_pillars",
+        "tactile_cards"
+      ],
+      "priorities": [
+        "ledger_checklist",
+        "indexed_matrix"
+      ],
+      "locations": [
+        "city_cards",
+        "split_hub_list"
+      ],
+      "features": [
+        "tactile_cards",
+        "sticky_narrative",
+        "editorial_rows"
+      ],
+      "about": [
+        "story_metrics_split",
+        "milestone_chronicle"
+      ],
+      "stats": [
+        "kpi_band",
+        "metric_cards"
+      ],
+      "gallery": [
+        "editorial_grid",
+        "bento_mosaic"
+      ],
+      "pricing": [
+        "modular_toggle_cards",
+        "split_value_anchor"
+      ],
+      "testimonials": [
+        "editorial_pullquotes",
+        "verified_cards"
+      ],
+      "process": [
+        "vertical_timeline",
+        "numbered_steps_grid"
+      ],
+      "team": [
+        "portrait_grid_3x4",
+        "editorial_directory"
+      ],
+      "blog": [
+        "card_deck",
+        "featured_plus_grid"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "document_column",
+        "structured_cards"
+      ],
+      "cta": [
+        "split_action_band",
+        "centered_monolith"
+      ],
+      "contact": [
+        "split_form_details",
+        "centered_concierge"
+      ],
+      "footer": [
+        "multi_column_grid",
+        "compact_colophon"
+      ]
+    },
+    "design_code": "low-carbon-mineral (zero backdrop-filter, zero SVG noise filters, <=400KB page budget)",
+    "block_rules": "Keep total page weight <= 400KB (low-carbon mineral aesthetic) | Pair Geologica humanist sans with Mulish body | Use smooth 20px pebble cards and clear impact telemetry",
+    "imagery": "Natural overcast daylight editorial photograph of {subject} beside pale Nordic ash timber, cool river slate, celadon ceramic, and deep pine botanical leaves on pale sage mineral stone, 50mm lens, clean blank unmarked surfaces",
+    "team": "Vertical 3:4 natural overcast daylight portrait in organic linen knitwear, calm authentic expression, seamless pale sage-mist (light) or deep forest-slate (dark) wall, 50mm lens, generous empty headroom"
+  },
+  "16_artisan_craft_zine": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 55,
+      "duration_ms": 260,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "lift",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "letterpress translate(-2px,-2px) + shadow 6px 6px 0"
+    },
+    "surface": "paper",
+    "variants": {
+      "hero": [
+        "asymmetric_split",
+        "editorial_poster"
+      ],
+      "manifesto": [
+        "monument_statement",
+        "ruled_thesis"
+      ],
+      "values": [
+        "tactile_cards",
+        "editorial_rows"
+      ],
+      "priorities": [
+        "indexed_matrix",
+        "ledger_checklist"
+      ],
+      "locations": [
+        "city_cards",
+        "split_hub_list"
+      ],
+      "features": [
+        "bento_asymmetric",
+        "tactile_cards",
+        "sticky_narrative"
+      ],
+      "about": [
+        "milestone_chronicle",
+        "story_metrics_split"
+      ],
+      "stats": [
+        "metric_cards",
+        "kpi_band"
+      ],
+      "gallery": [
+        "collage_stagger",
+        "editorial_grid",
+        "bento_mosaic"
+      ],
+      "pricing": [
+        "modular_toggle_cards",
+        "split_value_anchor"
+      ],
+      "testimonials": [
+        "editorial_pullquotes",
+        "verified_cards"
+      ],
+      "process": [
+        "vertical_timeline",
+        "numbered_steps_grid"
+      ],
+      "team": [
+        "spotlight_leadership",
+        "editorial_directory"
+      ],
+      "blog": [
+        "featured_plus_grid",
+        "editorial_index"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "structured_cards",
+        "document_column"
+      ],
+      "cta": [
+        "centered_monolith",
+        "split_action_band"
+      ],
+      "contact": [
+        "split_form_details",
+        "centered_concierge"
+      ],
+      "footer": [
+        "editorial_monogram",
+        "multi_column_grid"
+      ]
+    },
+    "design_code": "risograph-cotton-stock (4px 4px 0 indigo ink offset + optional dashed zine interior rules)",
+    "block_rules": "Use Terracotta + Cool Cotton-Slate + Indigo risograph palette | Combine Vollkorn editorial headings with tactile 2px borders | Use Shantell Sans sparingly for hand-stamped margin annotations",
+    "imagery": "Tactile risograph printshop and workshop composition of {subject} with unglazed terracotta stoneware, Prussian indigo ink tools, and cool slate-tinted cotton paper under morning window raking light, 50mm lens, clean blank paper",
+    "team": "Vertical 3:4 authentic craft workshop portrait in indigo canvas apron, directional natural window light, seamless cool slate plaster (light) or deep indigo wall (dark), 50mm lens, generous empty headroom"
+  },
+  "17_fintech_institutional": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 25,
+      "duration_ms": 180,
+      "ease": "cubic-bezier(0.2, 0, 0, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "underline",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "border-color -> var(--accent) + crisp shadow deepen"
+    },
+    "surface": "clean",
+    "variants": {
+      "hero": [
+        "asymmetric_split",
+        "command_stage"
+      ],
+      "manifesto": [
+        "ruled_thesis",
+        "editorial_band"
+      ],
+      "values": [
+        "numbered_pillars",
+        "editorial_rows"
+      ],
+      "priorities": [
+        "ledger_checklist",
+        "indexed_matrix"
+      ],
+      "locations": [
+        "directory_ledger",
+        "split_hub_list"
+      ],
+      "features": [
+        "hairline_matrix",
+        "editorial_rows",
+        "tactile_cards"
+      ],
+      "about": [
+        "architectural_grid",
+        "story_metrics_split"
+      ],
+      "stats": [
+        "ledger_strip",
+        "kpi_band",
+        "metric_cards"
+      ],
+      "gallery": [
+        "editorial_grid",
+        "cinematic_spotlight"
+      ],
+      "pricing": [
+        "spec_comparison_table",
+        "tier_cards_featured",
+        "split_value_anchor"
+      ],
+      "testimonials": [
+        "verified_cards",
+        "featured_spotlight"
+      ],
+      "process": [
+        "ledger_rows",
+        "horizontal_stepper"
+      ],
+      "team": [
+        "editorial_directory",
+        "portrait_grid_3x4"
+      ],
+      "blog": [
+        "editorial_index",
+        "card_deck"
+      ],
+      "faq": [
+        "two_column_qa_grid",
+        "sticky_split_accordion"
+      ],
+      "legal": [
+        "sticky_toc_clauses",
+        "document_column"
+      ],
+      "cta": [
+        "split_action_band",
+        "inline_command_bar"
+      ],
+      "contact": [
+        "ledger_intake",
+        "split_form_details"
+      ],
+      "footer": [
+        "multi_column_grid",
+        "compact_colophon"
+      ]
+    },
+    "design_code": "precision-elevated-ledger (8px crisp white cards + multi-stop elevation + tabular-nums + alternating zebra table rows)",
+    "block_rules": "Enforce tabular-nums across all pricing, metrics, and comparison tables | Pair Deep Navy + Trust Emerald verification cues | Stack tables cleanly or enable tabindex=0 + sticky col 1 on <768px",
+    "imagery": "Architectural Swiss-bank editorial photograph of {subject}, precision brushed architectural glass, cool white granite, and subtle midnight navy steel geometry under crisp daylight, 50mm tilt-shift lens, clean blank surfaces",
+    "team": "Vertical 3:4 executive institutional studio portrait in tailored navy or charcoal business attire, balanced even softbox lighting, seamless cool alabaster-slate (light) or deep navy-charcoal (dark) backdrop, 85mm lens, generous empty headroom"
+  },
+  "18_devtool_command_ui": {
+    "default_polarity": "dark",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 25,
+      "duration_ms": 160,
+      "ease": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "glow",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "border-color -> var(--accent) + top rim brighten (0 Y-bounce)"
+    },
+    "surface": "clean",
+    "variants": {
+      "hero": [
+        "command_stage",
+        "asymmetric_split"
+      ],
+      "manifesto": [
+        "ruled_thesis",
+        "editorial_band"
+      ],
+      "values": [
+        "editorial_rows",
+        "numbered_pillars"
+      ],
+      "priorities": [
+        "indexed_matrix",
+        "ledger_checklist"
+      ],
+      "locations": [
+        "directory_ledger",
+        "city_cards"
+      ],
+      "features": [
+        "hairline_matrix",
+        "bento_asymmetric",
+        "editorial_rows"
+      ],
+      "about": [
+        "architectural_grid",
+        "monograph_column"
+      ],
+      "stats": [
+        "ledger_strip",
+        "kpi_band"
+      ],
+      "gallery": [
+        "bento_mosaic",
+        "editorial_grid"
+      ],
+      "pricing": [
+        "tier_cards_featured",
+        "spec_comparison_table"
+      ],
+      "testimonials": [
+        "verified_cards",
+        "featured_spotlight"
+      ],
+      "process": [
+        "horizontal_stepper",
+        "ledger_rows"
+      ],
+      "team": [
+        "editorial_directory",
+        "minimal_roster"
+      ],
+      "blog": [
+        "editorial_index",
+        "card_deck"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "sticky_toc_clauses",
+        "document_column"
+      ],
+      "cta": [
+        "inline_command_bar",
+        "split_action_band"
+      ],
+      "contact": [
+        "ledger_intake",
+        "split_form_details"
+      ],
+      "footer": [
+        "compact_colophon",
+        "multi_column_grid"
+      ]
+    },
+    "design_code": "command-hairline-zinc (flat dark carbon, subtle 24px dot-grid, <kbd> shortcut chips, 0 blur, 0 purple aurora)",
+    "block_rules": "Keep flat dark zinc surfaces with Terminal Emerald accents | Use semantic <kbd> shortcut chips and hairline matrix grids | Keep all copy & commands crisp and technical",
+    "imagery": "Precision carbon-black hardware macro study of {subject} featuring matte graphite heatsink fins, smoked optical silicon, and a single calibrated emerald status beam on deep obsidian, 85mm lens, clean blank surfaces",
+    "team": "Vertical 3:4 crisp minimal studio portrait in understated black/grey attire, tight directional key light, seamless matte zinc-black (dark) or light grey (light) cyclorama, 85mm lens, generous empty headroom"
+  },
+  "19_calm_human_accessible": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 0,
+      "duration_ms": 180,
+      "ease": "cubic-bezier(0.25, 0.1, 0.25, 1)",
+      "scroll": "none",
+      "marquee": false,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "underline",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "underline",
+      "card_hover": "border darken to var(--accent) + focus ring preview (0 transform)"
+    },
+    "surface": "clean",
+    "variants": {
+      "hero": [
+        "asymmetric_split",
+        "editorial_poster"
+      ],
+      "manifesto": [
+        "editorial_band",
+        "monument_statement"
+      ],
+      "values": [
+        "tactile_cards",
+        "numbered_pillars"
+      ],
+      "priorities": [
+        "ledger_checklist",
+        "indexed_matrix"
+      ],
+      "locations": [
+        "city_cards",
+        "directory_ledger"
+      ],
+      "features": [
+        "tactile_cards",
+        "editorial_rows"
+      ],
+      "about": [
+        "story_metrics_split",
+        "monograph_column"
+      ],
+      "stats": [
+        "metric_cards",
+        "kpi_band"
+      ],
+      "gallery": [
+        "editorial_grid",
+        "cinematic_spotlight"
+      ],
+      "pricing": [
+        "modular_toggle_cards",
+        "spec_comparison_table"
+      ],
+      "testimonials": [
+        "verified_cards",
+        "editorial_pullquotes"
+      ],
+      "process": [
+        "numbered_steps_grid",
+        "vertical_timeline"
+      ],
+      "team": [
+        "editorial_directory",
+        "portrait_grid_3x4"
+      ],
+      "blog": [
+        "card_deck",
+        "editorial_index"
+      ],
+      "faq": [
+        "two_column_qa_grid",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "sticky_toc_clauses",
+        "document_column"
+      ],
+      "cta": [
+        "split_action_band",
+        "centered_monolith"
+      ],
+      "contact": [
+        "centered_concierge",
+        "split_form_details"
+      ],
+      "footer": [
+        "multi_column_grid",
+        "compact_colophon"
+      ]
+    },
+    "design_code": "wcag-aaa-civic-clarity (>=14:1 text, >=7:1 muted & accent, 48px targets, 3px focus ring, always-underlined inline links)",
+    "block_rules": "Maintain strict WCAG 2.2 AAA across every color pair and 48px+ targets | Always underline inline links and pair icons with status text | Use always-open two-column Q&A or clear <details>",
+    "imagery": "Calm glare-free daylight architectural interior photograph of {subject}, pale Nordic birch wood, soft sea-glass teal ceramic accents, and warm porcelain surfaces with open airy clarity, 50mm lens, clean blank unmarked walls",
+    "team": "Vertical 3:4 warm trustworthy studio headshot with welcoming natural smile, glare-free softbox daylight, seamless pale porcelain-grey (light) or calm slate-navy (dark) backdrop, 85mm lens, generous empty headroom"
+  },
+  "20_maximalist_collage_pop": {
+    "default_polarity": "light",
+    "motion": {
+      "reveal": "rise",
+      "stagger_ms": 40,
+      "duration_ms": 280,
+      "ease": "cubic-bezier(0.34, 1.38, 0.64, 1)",
+      "scroll": "progress",
+      "marquee": true,
+      "parallax": false
+    },
+    "micro": {
+      "hover": "invert",
+      "press_scale": 0.98,
+      "press_ms": 140,
+      "link": "invert",
+      "card_hover": "straighten tilt to 0deg + translate(-3px,-3px) + colored shadow 8px 8px 0"
+    },
+    "surface": "clean",
+    "variants": {
+      "hero": [
+        "bento_showcase",
+        "editorial_poster",
+        "fullbleed_scrim"
+      ],
+      "manifesto": [
+        "editorial_band",
+        "monument_statement"
+      ],
+      "values": [
+        "accent_bento",
+        "tactile_cards"
+      ],
+      "priorities": [
+        "horizontal_ribbon",
+        "indexed_matrix"
+      ],
+      "locations": [
+        "city_cards",
+        "split_hub_list"
+      ],
+      "features": [
+        "bento_asymmetric",
+        "tactile_cards",
+        "sticky_narrative"
+      ],
+      "about": [
+        "architectural_grid",
+        "milestone_chronicle"
+      ],
+      "stats": [
+        "asymmetric_spotlight",
+        "metric_cards"
+      ],
+      "gallery": [
+        "collage_stagger",
+        "bento_mosaic",
+        "horizontal_filmstrip"
+      ],
+      "pricing": [
+        "tier_cards_featured",
+        "modular_toggle_cards"
+      ],
+      "testimonials": [
+        "featured_spotlight",
+        "horizontal_carousel",
+        "editorial_pullquotes"
+      ],
+      "process": [
+        "numbered_steps_grid",
+        "horizontal_stepper"
+      ],
+      "team": [
+        "portrait_grid_3x4",
+        "spotlight_leadership"
+      ],
+      "blog": [
+        "featured_plus_grid",
+        "card_deck"
+      ],
+      "faq": [
+        "sticky_split_accordion",
+        "single_column_accordion"
+      ],
+      "legal": [
+        "structured_cards",
+        "document_column"
+      ],
+      "cta": [
+        "centered_monolith",
+        "split_action_band"
+      ],
+      "contact": [
+        "split_form_details",
+        "centered_concierge"
+      ],
+      "footer": [
+        "editorial_monogram",
+        "multi_column_grid"
+      ]
+    },
+    "design_code": "poster-color-blocking (heterogeneous 18px cards + 9999px pill stickers, colored 5px 5px 0 var(--accent-2) offset shadow, subtle alternating collage tilts straightened on hover & reduced-motion)",
+    "block_rules": "Use colored accent-2 offset shadows and heterogeneous card+pill radii | Lock overall page polarity even while alternating surface color blocks | Straighten subtle card tilts cleanly under prefers-reduced-motion",
+    "imagery": "Editorial pop-art studio still life of {subject} arranged as bold geometric color blocks in ultramarine cobalt, vermilion red, and pale canary ceramic props under crisp directional sunlight, 50mm lens, clean blank unmarked objects",
+    "team": "Vertical 3:4 punchy creative editorial studio headshot in bold solid-color styling, crisp directional studio strobe light, seamless cobalt (light) or deep indigo (dark) backdrop, 85mm lens, generous empty headroom"
+  }
+}

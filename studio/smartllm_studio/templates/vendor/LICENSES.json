@@ -1,0 +1,280 @@
+{
+  "policy": {
+    "offline_self_hosted_only": true,
+    "allowed_js_licenses": [
+      "MIT",
+      "Apache-2.0"
+    ],
+    "allowed_font_licenses": [
+      "SIL OFL-1.1"
+    ],
+    "mandatory_subsets": [
+      "latin",
+      "cyrillic"
+    ],
+    "mandatory_glyphs": [
+      "А-Я",
+      "а-я",
+      "Ёё",
+      "₽",
+      "№",
+      "«»"
+    ],
+    "reduced_motion_mandatory": true
+  },
+  "approved_fonts": [
+    {
+      "id": "manrope",
+      "family": "Manrope",
+      "pkg": "@fontsource-variable/manrope",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "inter",
+      "family": "Inter",
+      "pkg": "@fontsource-variable/inter",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "golos_text",
+      "family": "Golos Text",
+      "pkg": "@fontsource-variable/golos-text",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "ibm_plex_sans",
+      "family": "IBM Plex Sans",
+      "pkg": "@fontsource-variable/ibm-plex-sans",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "ibm_plex_mono",
+      "family": "IBM Plex Mono",
+      "pkg": "@fontsource/ibm-plex-mono",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "source_serif_4",
+      "family": "Source Serif 4",
+      "pkg": "@fontsource-variable/source-serif-4",
+      "version": "5.3.1",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "source_sans_3",
+      "family": "Source Sans 3",
+      "pkg": "@fontsource-variable/source-sans-3",
+      "version": "5.3.1",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "source_code_pro",
+      "family": "Source Code Pro",
+      "pkg": "@fontsource-variable/source-code-pro",
+      "version": "5.3.1",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "geist",
+      "family": "Geist",
+      "pkg": "@fontsource-variable/geist",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "geist_mono",
+      "family": "Geist Mono",
+      "pkg": "@fontsource-variable/geist-mono",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "tektur",
+      "family": "Tektur",
+      "pkg": "@fontsource-variable/tektur",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "commissioner",
+      "family": "Commissioner",
+      "pkg": "@fontsource-variable/commissioner",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "jetbrains_mono",
+      "family": "JetBrains Mono",
+      "pkg": "@fontsource-variable/jetbrains-mono",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "unbounded",
+      "family": "Unbounded",
+      "pkg": "@fontsource-variable/unbounded",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "martian_mono",
+      "family": "Martian Mono",
+      "pkg": "@fontsource-variable/martian-mono",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "alumni_sans",
+      "family": "Alumni Sans",
+      "pkg": "@fontsource-variable/alumni-sans",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "pt_mono",
+      "family": "PT Mono",
+      "pkg": "@fontsource/pt-mono",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "wix_madefor_display",
+      "family": "Wix Madefor Display",
+      "pkg": "@fontsource-variable/wix-madefor-display",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "wix_madefor_text",
+      "family": "Wix Madefor Text",
+      "pkg": "@fontsource-variable/wix-madefor-text",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "onest",
+      "family": "Onest",
+      "pkg": "@fontsource-variable/onest",
+      "version": "5.3.1",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "geologica",
+      "family": "Geologica",
+      "pkg": "@fontsource-variable/geologica",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "fira_code",
+      "family": "Fira Code",
+      "pkg": "@fontsource-variable/fira-code",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "jura",
+      "family": "Jura",
+      "pkg": "@fontsource-variable/jura",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "rubik",
+      "family": "Rubik",
+      "pkg": "@fontsource-variable/rubik",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "nunito",
+      "family": "Nunito",
+      "pkg": "@fontsource-variable/nunito",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "cormorant_garamond",
+      "family": "Cormorant Garamond",
+      "pkg": "@fontsource-variable/cormorant-garamond",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "literata",
+      "family": "Literata",
+      "pkg": "@fontsource-variable/literata",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "mulish",
+      "family": "Mulish",
+      "pkg": "@fontsource-variable/mulish",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "vollkorn",
+      "family": "Vollkorn",
+      "pkg": "@fontsource-variable/vollkorn",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    },
+    {
+      "id": "shantell_sans",
+      "family": "Shantell Sans",
+      "pkg": "@fontsource-variable/shantell-sans",
+      "version": "5.3.0",
+      "license": "SIL OFL-1.1"
+    }
+  ],
+  "approved_js": [
+    {
+      "id": "motion",
+      "pkg": "motion",
+      "version": "14.14.0",
+      "license": "MIT",
+      "repo": "https://github.com/motiondivision/motion"
+    },
+    {
+      "id": "animejs",
+      "pkg": "animejs",
+      "version": "4.5.0",
+      "license": "MIT",
+      "repo": "https://github.com/juliangarnier/anime"
+    },
+    {
+      "id": "lenis",
+      "pkg": "lenis",
+      "version": "1.3.27",
+      "license": "MIT",
+      "repo": "https://github.com/darkroomengineering/lenis"
+    },
+    {
+      "id": "three",
+      "pkg": "three",
+      "version": "0.187.0",
+      "license": "MIT",
+      "repo": "https://github.com/mrdoob/three.js"
+    }
+  ],
+  "excluded_libraries": [
+    {
+      "id": "gsap",
+      "license": "GSAP Standard 'No Charge' License (Webflow, Inc.)",
+      "builder_bundling_safe": false,
+      "verbatim_license_clauses": {
+        "Prohibited Uses": "any implementation and/or use of GSAP Products in tools that allow users to build visual animations without code that encourages, induces, or materially assists in creating a solution that competes with Webflow's visual animation building capabilities.",
+        "Competitive Products": "any software, tool, or service that enables users to create, edit, or manage animations through a visual interface or builder similar to Webflow.",
+        "Section III": "Users are explicitly restricted from using any GSAP Products for any Prohibited Uses without prior written consent or reverse engineering them to create Competitive Products."
+      },
+      "rule": "NEVER bundle GSAP inside SmartLLM Studio or shipped runtime templates; document as optional user npm dependency only."
+    }
+  ]
+}

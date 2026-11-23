@@ -1,0 +1,6 @@
+{
+  "id": "sveltekit",
+  "name": "SvelteKit 3.4.0 + Svelte 5.59.1 Runes",
+  "runtime_kb": 18,
+  "notes": "svelte.config.js REMOVED (use vite.config.ts); $lib REMOVED (use package.json #imports #lib/* with explicit extensions); csrf.trustedOrigins."
+}

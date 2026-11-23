@@ -104,6 +104,11 @@ class StudioRAGSelector:
                     selected_cid = cid
                     break
         if not selected_cid and explicit_canon_id:
+            from ..kb_loader import resolve_canon_id
+            kb_cid = resolve_canon_id(explicit_canon_id)
+            if kb_cid in self.canon_cards and explicit_canon_id != "":
+                selected_cid = kb_cid
+        if not selected_cid and explicit_canon_id:
             matches = [cid for cid in self.canon_cards if cid.startswith(explicit_canon_id)]
             if matches:
                 selected_cid = sorted(matches)[0]

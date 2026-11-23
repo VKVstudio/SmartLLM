@@ -11,17 +11,19 @@ from .config import STUDIO_ROOT
 DATA_DIR = STUDIO_ROOT / "smartllm_studio" / "data"
 
 STACK_CATALOG: list[dict[str, Any]] = [
-    {"id": "astro", "name_en": "Astro 5 Islands + Content Collections (Zod)", "name_ru": "Astro 5 Острова + Коллекции контента (Zod)", "checklist_id": "STACK-ASTRO-01"},
-    {"id": "html5", "name_en": "Semantic HTML5 + OKLCH CSS + ES Module", "name_ru": "Семантический HTML5 + OKLCH CSS + ES-модуль", "checklist_id": "STACK-VITE-TS-01"},
-    {"id": "vite_ts", "name_en": "Vite + Strict TypeScript 6.0 Bundle", "name_ru": "Vite + Строгий бандл TypeScript 6.0", "checklist_id": "STACK-VITE-TS-01"},
-    {"id": "nextjs", "name_en": "Next.js App Router (RSC + Suspense + Zod)", "name_ru": "Next.js App Router (RSC + Suspense + Zod)", "checklist_id": "STACK-NEXT-01"},
-    {"id": "sveltekit", "name_en": "SvelteKit (+page.server.ts + Progressive Enhance)", "name_ru": "SvelteKit (+page.server.ts + Прогрессивные формы)", "checklist_id": "STACK-SVELTE-01"},
+    {"id": "astro", "name_en": "Astro 7.4 Islands + Content Layer (Zod v4)", "name_ru": "Astro 7.4 Острова + Content Layer (Zod v4)", "checklist_id": "STACK-ASTRO-01"},
+    {"id": "html5_esm", "name_en": "Zero-Build Semantic HTML5 + OKLCH CSS + Native ESM", "name_ru": "Семантический HTML5 + OKLCH CSS + Native ESM", "checklist_id": "STACK-VITE-TS-01"},
+    {"id": "vite_ts", "name_en": "Vite 8.3 (Rolldown) + TypeScript 7 + Same-Origin BFF", "name_ru": "Vite 8.3 (Rolldown) + TypeScript 7 + Same-Origin BFF", "checklist_id": "STACK-VITE-TS-01"},
+    {"id": "nextjs", "name_en": "Next.js 16.4 LTS (App Router + proxy.ts + React 19.3)", "name_ru": "Next.js 16.4 LTS (App Router + proxy.ts + React 19.3)", "checklist_id": "STACK-NEXT-01"},
+    {"id": "sveltekit", "name_en": "SvelteKit 3.4 + Svelte 5.59 Runes (#lib/* + csrf.trustedOrigins)", "name_ru": "SvelteKit 3.4 + Svelte 5.59 Runes (#lib/* + csrf.trustedOrigins)", "checklist_id": "STACK-SVELTE-01"},
 ]
 
 MOTION_CATALOG: list[dict[str, Any]] = [
-    {"id": "gsap_scrolltrigger", "name_en": "GSAP 3 + ScrollTrigger (batch, scrub, pin, CLS=0.00)", "name_ru": "GSAP 3 + ScrollTrigger (пакет, скраб, пин, CLS=0.00)"},
-    {"id": "gsap_flip", "name_en": "GSAP 3 + Flip Layout Choreography", "name_ru": "GSAP 3 + Flip хореография раскладки"},
-    {"id": "compositor_css", "name_en": "60fps GPU Compositor Transitions", "name_ru": "60fps переходы композитора GPU"},
+    {"id": "css_scroll_driven", "name_en": "Native CSS Scroll-Driven Animations (0 KB JS, CLS=0.00)", "name_ru": "Нативные CSS Scroll-Driven анимации (0 КБ JS, CLS=0.00)"},
+    {"id": "motion", "name_en": "Motion 14.14 Core (MIT — animate, scroll, spring)", "name_ru": "Motion 14.14 Core (MIT — animate, scroll, spring)"},
+    {"id": "animejs", "name_en": "Anime.js 4.5 Timeline & Stagger (MIT)", "name_ru": "Anime.js 4.5 таймлайны и стэггеры (MIT)"},
+    {"id": "lenis", "name_en": "Lenis 1.3 Smooth Scroll (MIT)", "name_ru": "Lenis 1.3 плавный скролл (MIT)"},
+    {"id": "three", "name_en": "Three.js 0.187 Lazy 3D Stage (MIT)", "name_ru": "Three.js 0.187 ленивая 3D-сцена (MIT)"},
     {"id": "reduced_motion_instant", "name_en": "Zero-Motion Instant Settled Layout", "name_ru": "Мгновенная статика без анимаций"},
 ]
 
@@ -59,6 +61,7 @@ AI_CRAWLERS_DEFAULT: dict[str, bool] = {
     "GPTBot": False,
     "OAI-SearchBot": True,
     "ClaudeBot": False,
+    "Claude-SearchBot": True,
     "PerplexityBot": True,
     "Google-Extended": False,
     "Applebot-Extended": False,
@@ -79,11 +82,15 @@ def load_studio_catalog(repo_root: Path | None = None) -> dict[str, Any]:
             "category": c.get("category", "general"),
             "description_en": c.get("description_en", ""),
             "description_ru": c.get("description_ru", ""),
+            "preview_image": c.get("preview_image", ""),
+            "default_polarity": c.get("default_polarity", "light"),
             "best_for": c.get("best_for", []),
             "search_terms": c.get("search_terms", []),
             "palette": c.get("palette", {}),
+            "palettes": c.get("palettes", {}),
             "fonts": c.get("fonts", {}),
             "layout": c.get("layout", {}),
+            "responsive": c.get("responsive", {}),
             "a11y": c.get("a11y", {}),
             "imagery": c.get("imagery", {}),
             "rules": c.get("rules", {}),

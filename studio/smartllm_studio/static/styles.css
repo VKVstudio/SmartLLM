@@ -195,6 +195,12 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   grid-template-columns: 264px minmax(480px, 1fr) minmax(420px, 44%);
   overflow: hidden;
 }
+.atelier-shell[data-stage-open="false"] {
+  grid-template-columns: 264px minmax(480px, 1fr);
+}
+.atelier-shell[data-stage-open="false"] .atelier-stage {
+  display: none;
+}
 
 /* Left Navigator (264 px) */
 .atelier-nav {
@@ -377,9 +383,25 @@ textarea { min-height: 76px; resize: vertical; }
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--sp-3);
-  max-height: 430px;
+  max-height: 520px;
   overflow-y: auto;
   padding: 2px;
+}
+.polarity-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.canon-preview-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--hairline);
+  display: block;
+  margin-bottom: 4px;
+  background: var(--bg);
 }
 .canon-card {
   background: var(--s2);
@@ -395,6 +417,21 @@ textarea { min-height: 76px; resize: vertical; }
 .canon-card[aria-pressed="true"] {
   border-color: var(--violet);
   background: var(--s3);
+}
+.canon-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.canon-polarity-badge {
+  font-family: var(--font-code);
+  font-size: 10px;
+  color: var(--text-2);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 1px 6px;
+  flex-shrink: 0;
 }
 .canon-desc {
   font-size: 12px;

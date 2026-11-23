@@ -61,7 +61,7 @@
   </header>
 
   <!-- 2. THREE-PANE SHELL -->
-  <div class="atelier-shell">
+  <div class="atelier-shell" id="atelier-shell" data-stage-open="false">
     <!-- Left Navigator: 5 Steps + Live Orchestrator Queue -->
     <aside class="atelier-nav" aria-label="Constructor Navigation">
       <div>
@@ -284,6 +284,15 @@
             </div>
             <p class="sub-lead" style="margin:0 0 10px 0; font-size:12px;" data-i18n="s3_palette_note">Палитры — канон-согласованные токены (NN/g, MDN, Tailwind, WCAG), а не единственный официальный HEX-набор стиля.</p>
 
+            <div class="field" style="margin-bottom:10px;">
+              <label data-i18n="lbl_polarity">Тема оформления (Светлая / Тёмная)</label>
+              <div class="polarity-switcher" role="group" aria-label="Theme Polarity">
+                <button class="btn btn-primary" id="s3-polarity-auto" data-polarity="auto" aria-pressed="true" type="button" data-i18n="btn_pol_auto">Авто (по канону)</button>
+                <button class="btn" id="s3-polarity-light" data-polarity="light" aria-pressed="false" type="button" data-i18n="btn_pol_light">Светлая тема</button>
+                <button class="btn" id="s3-polarity-dark" data-polarity="dark" aria-pressed="false" type="button" data-i18n="btn_pol_dark">Тёмная тема</button>
+              </div>
+            </div>
+
             <div id="s3-canon-gallery" class="canon-gallery-grid"></div>
 
             <div class="step-footer-nav">
@@ -435,7 +444,7 @@
     </main>
 
     <!-- 3. PERSISTENT RIGHT LIVE STAGE -->
-    <aside class="atelier-stage" id="atelier-live-stage" aria-label="Live Stage">
+    <aside class="atelier-stage" id="atelier-live-stage" data-drawer-closed="true" aria-label="Live Stage">
       <div class="stage-toolbar">
         <div style="display:flex; align-items:center; gap:6px;">
           <button class="btn stage-vp-btn" id="vp-btn-1440" data-vp="100%" type="button">1440</button>
@@ -455,7 +464,7 @@
       </div>
 
       <div class="stage-viewport-wrap">
-        <iframe class="stage-iframe" id="live-stage-iframe" title="Live Stage Preview" src="/preview/default/index.html?rev=1"></iframe>
+        <iframe class="stage-iframe" id="live-stage-iframe" title="Live Stage Preview" src="about:blank"></iframe>
         <div class="stage-audit-overlay" id="stage-audit-overlay" hidden>
           <div data-i18n="audit_csp_ok">CSP: SHA-256 ПРОВЕРЕНО</div>
           <div>SEO / AEO / GEO: JSON-LD @graph + llms.txt + robots.txt</div>

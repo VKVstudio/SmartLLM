@@ -1,0 +1,59 @@
+/* SmartLLM Layer 3 Theme: 19_calm_human_accessible (Calm Humanist & Trust-First WCAG AAA) — default light */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.985 0.004 215);
+  --surface: oklch(1.000 0.000 0);
+  --surface-elevated: oklch(0.952 0.008 215);
+  --border: oklch(0.540 0.016 218);
+  --border-control: oklch(0.450 0.018 218);
+  --text: oklch(0.155 0.015 222);
+  --text-muted: oklch(0.355 0.016 220);
+  --accent: oklch(0.355 0.056 212);
+  --accent-ink: oklch(1.000 0.000 0);
+  --accent-2: oklch(0.395 0.088 56);
+  --accent-3: oklch(0.355 0.016 220);
+  --shadow: 0 2px 8px rgba(6,14,17,0.06);
+  --font-heading: 'Golos Text Variable', 'Golos Text', system-ui, sans-serif;
+  --font-sans: 'Source Sans 3 Variable', 'Source Sans 3', system-ui, sans-serif;
+  --font-mono: 'Fira Code Variable', 'Fira Code', monospace;
+  --radius: 12px;
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --radius-input: 8px;
+  --radius-badge: 6px;
+  --border-w: 2px;
+  --container-max: 1312px;
+  --h1-clamp: clamp(2rem, 1.625rem + 1.67vw, 3.125rem);
+  --h2-clamp: clamp(1.5rem, 1.292rem + 0.93vw, 2.125rem);
+  --h1-lh: 1.18;
+  --h1-ls: -0.015em;
+  --h1-weight: 700;
+  --heading-transform: none;
+  --heading-tracking: -0.015em;
+  --body-leading: 1.7;
+  --small-ls: 0.06em;
+  --pad-section: clamp(52px, 5vw, 88px);
+  --grid-gap: clamp(16px, 2vw, 24px);
+  --card-pad: clamp(20px, 2.2vw, 28px);
+  --input-h-desk: 48px;
+  --input-h-mob: 52px;
+  --cta-h-desk: 48px;
+  --cta-h-mob: 52px;
+  --motion-dur: 180ms;
+  --motion-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.155 0.014 225);
+  --surface: oklch(0.205 0.016 225);
+  --surface-elevated: oklch(0.255 0.018 225);
+  --border: oklch(0.560 0.020 220);
+  --border-control: oklch(0.600 0.020 220);
+  --text: oklch(0.962 0.005 212);
+  --text-muted: oklch(0.810 0.012 216);
+  --accent: oklch(0.820 0.090 204);
+  --accent-ink: oklch(0.145 0.016 225);
+  --accent-2: oklch(0.835 0.118 78);
+  --accent-3: oklch(0.810 0.012 216);
+  --shadow: none;
+}
