@@ -14,7 +14,7 @@ from pathlib import Path
 import re
 from typing import Any, Callable
 
-from .kb_loader import harden_zimage_prompt, lint_anti_ai_copy, load_stage_context, palette_to_material_summary
+from .kb_loader import harden_zimage_prompt, lint_anti_ai_copy, load_canon_kb, load_stage_context, palette_to_material_summary
 from .pages import BLOCK_MAP, PAGE_MAP, build_default_company, company_block_prompt, infer_gender, page_title, resolve_primary_lang
 
 ReportFn = Callable[[int, int, str, str, str], None]
@@ -56,7 +56,7 @@ LATIN_WHITELIST = {
     "sla", "nvme", "nvlink", "gpu", "cpu", "llm", "lora", "soc", "iso", "api", "cad", "cnc",
 }
 COPY_BATCH_SIZE = 6
-PIPELINE_VERSION = 12
+PIPELINE_VERSION = 13
 
 BLOCK_FORMAT_HINTS_RU = {
     "manifesto": "<Девиз> | <Одно конкретное предложение позиционирования этой страницы>",
@@ -1058,7 +1058,12 @@ def run_content_pipeline(
                     "Use exact metrics from foundation for 'stats' — never contradict founding year or KPIs between pages. "
                     "Never include HTML form field labels ('Company Name', 'Enter your...') inside 'contact'. Never output bare 'Принцип' / 'Principle' in 'values'. "
                     "Never prefix items with English field labels like address:, hours:, phone:. Every block value must be a plain string, never nested JSON. "
-                    "Do not truncate or use placeholders.\n"
+                    + (
+                        "Avoid passive Russian kantselyarit ('осуществляется', 'производится', 'является ключевым фактором', 'оказываем услуги по'); use active concrete verbs ('монтируем', 'вырезаем', 'доставляем'). "
+                        if lang == "ru"
+                        else ""
+                    )
+                    + "Do not truncate or use placeholders.\n"
                     f'Return one JSON object with exactly these keys: {json.dumps(batch)}'
                 )
                 raw = _llm_json(state, gpu_ok, sys_msg, user_msg, max_tokens=3072, required_keys=batch)
@@ -1162,7 +1167,15 @@ def run_content_pipeline(
         memory.mark("visuals", "running")
         from .orchestrator import ZIMAGE_LOGO_CANON_2026, _default_logo_base_prompt
         imagery = canon_card.get("imagery") or {}
-        pal_cols = palette_to_material_summary(canon_card.get("palette") or {}) or "matte neutral architectural stone, warm alabaster highlight"
+        req_pol = str(merged.get("polarity") or "auto").strip().lower()
+        def_pol = str(canon_card.get("default_polarity") or "light").strip().lower()
+        active_pol = req_pol if req_pol in ("light", "dark") else (def_pol if def_pol in ("light", "dark") else "light")
+        canon_kb = load_canon_kb(canon_id)
+        zdir_map = canon_kb.get("zimage_direction") if isinstance(canon_kb.get("zimage_direction"), dict) else {}
+        zdir_pol = _clean(zdir_map.get(active_pol) or zdir_map.get("light") or dossier.get("imagery"))
+        active_pal = (canon_card.get("palettes") or {}).get(active_pol) or canon_card.get("palette") or {}
+        scene_surface_tones = palette_to_material_summary(active_pal, keys=("bg", "surface")) or "matte architectural stone, clean studio neutral surface"
+        logo_palette_tones = palette_to_material_summary(active_pal) or "deep charcoal matte, warm alabaster, terracotta brick"
         subjects = {slug: _clean((architecture.get("pages") or {}).get(slug, {}).get("hero_subject")) or brief[:100] for slug in pages}
         subjects_ctx = {
             slug: {
@@ -1186,10 +1199,11 @@ def run_content_pipeline(
             "(8 NFEs, --cfg-scale 1.0 positive-only; negative phrasing is forbidden). Return ONLY valid JSON."
         )
         user_msg = (
-            f"Brand: {brand}\nBrief: {brief[:240]}\n"
-            f"Canon imagery direction: {_sanitize_zimage_prompt(_clean(dossier.get('imagery'))[:200], brand=brand)}\n"
-            f"Canon team portrait direction: {_sanitize_zimage_prompt(_clean(dossier.get('team'))[:160], brand=brand)}\n"
-            f"Canon palette material tones (positive-only, ZERO hex codes): {pal_cols}\n"
+            f"Brand: {brand}\nBrief: {brief[:240]}\nActive polarity: {active_pol}\n"
+            f"Canon imagery direction ({active_pol}): {_sanitize_zimage_prompt(zdir_pol[:240], brand=brand)}\n"
+            f"Canon team portrait direction: {_sanitize_zimage_prompt(_clean(zdir_map.get('team_portrait') or dossier.get('team'))[:180], brand=brand)}\n"
+            f"Architectural photography neutral environment tones: {scene_surface_tones}\n"
+            f"Brand logo pigment colors: {logo_palette_tones}\n"
             + (f"Visual Slot Recipes:\n{vis_kb}\n\n" if vis_kb else "")
             + f"Hero visual contexts matching finalized copy per page: {json.dumps(subjects_ctx, ensure_ascii=False)}\n"
             f"Gallery Scene 1 & Scene 2 (MUST depict TWO DIFFERENT angles/subjects): {json.dumps(gal_subjs[:2], ensure_ascii=False)}\n"
@@ -1197,10 +1211,11 @@ def run_content_pipeline(
             f"Team visual roles with MANDATORY BIOLOGICAL GENDER MATCH (anonymous, DO NOT include names/titles): {json.dumps(team_roles, ensure_ascii=False)}\n\n"
             "Write prompts IN ENGLISH, 40-75 words each.\n"
             "CRITICAL RULES FOR Z-IMAGE-TURBO:\n"
-            "1. 'brand_logo': follow " + ZIMAGE_LOGO_CANON_2026 + " Design ONE minimalist flat vector emblem uniquely symbolizing THIS company's industry on a solid neutral backdrop, 2-3 crisp geometric pigment colors. Never mention brand letters, initials, or words.\n"
-            "2. 'heroes' and 'gallery': photorealistic architectural/hardware/environment/product scenes matching each slot and its finalized hero headline/features copy; single wide scene without portraits. 'gallery[0]' MUST clearly differ in framing and subject from 'gallery[1]'.\n"
+            "1. 'brand_logo': follow " + ZIMAGE_LOGO_CANON_2026 + " Design ONE minimalist flat vector emblem uniquely symbolizing THIS company's industry on a solid neutral backdrop, 2-3 crisp geometric pigment colors from logo palette. Never mention brand letters, initials, or words.\n"
+            "2. 'heroes' and 'gallery': photorealistic architectural/hardware/environment/product scenes matching each slot and its finalized hero headline/features copy using authentic real-world material tones (NEVER paint real concrete/stone/buildings neon UI accent colors); single wide scene without portraits. 'gallery[0]' MUST clearly differ in framing and subject from 'gallery[1]'.\n"
             "3. 'team': one distinct vertical 3:4 medium chest-up editorial portrait per slot on a seamless neutral studio backdrop with generous empty headroom above the top of the head so full hair, head, and shoulders sit comfortably inside frame. Each person MUST clearly match their assigned distinct age, hair, glasses/beard/clean-shaven look, attire, and pose from 'team_roles' without repeating the same appearance across slots. For EVERY FEMALE slot describe the adult woman's exact look; for EVERY MALE slot describe the adult man's exact look. Omit person names, nameplates, watermarks, or words.\n"
-            'Return JSON: {"brand_logo": "...", "heroes": {"slug": "..."}, "gallery": ["distinct scene 1", "distinct scene 2"], "team": ["...", ...], "style_suffix": "short positive lighting and lens clause"}'
+            "Keep 'style_suffix' <= 10 words and NEVER repeat lens/lighting terms already inside hero/gallery prompts.\n"
+            'Return JSON: {"brand_logo": "...", "heroes": {"slug": "..."}, "gallery": ["distinct scene 1", "distinct scene 2"], "team": ["...", ...], "style_suffix": "short positive lighting mood clause"}'
         )
         raw = _llm_json(state, gpu_ok, sys_msg, user_msg, max_tokens=3200, required_keys=["brand_logo", "heroes", "gallery", "team"])
         if raw:
@@ -1385,11 +1400,13 @@ def run_content_pipeline(
             applied_fixes: list[str] = []
             if fixable and gpu_ok:
                 report(stage_idx, pct + 1, f"Ревизия «{page_title(slug, lang)}»: точечные правки {len(fixable)} блоков...", f"Review '{page_title(slug, lang)}': targeted fixes for {len(fixable)} blocks...", f"review fixes {slug}")
+                cur_blocks = "\n".join(f"- {b} (current): {pr['copy'].get(b, '')[:1400]}" for b in fixable)
                 fmt_lines = "\n".join(f"- {b}: {fixes[b]}" for b in fixable)
                 sys_msg = f"You are SmartLLM v2 Expert Copywriter. Rewrite exactly the requested blocks in {target_lang} following the reviewer instructions. Return ONLY valid JSON."
                 user_msg = (
                     f"Brand: {brand}\nPage: {page_title(slug, lang)}\nHero: {_clean(eff_hero.get('headline'))}\n"
                     f"Brand foundation (SINGLE TRUTH — keep exact products/prices, team names, stats, contacts):\n{foundation_txt}\n\n"
+                    f"Current blocks to edit (keep exact question counts, tier counts, and facts):\n{cur_blocks}\n\n"
                     f"Reviewer instructions:\n{fmt_lines}\n"
                     "The format examples are templates: use concrete brand data, never copy them literally. Never include URLs in team/features/stats. "
                     f"Keep complete tier counts and ' | ' item format. Return one JSON object with keys: {json.dumps(fixable)}"

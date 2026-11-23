@@ -1505,13 +1505,13 @@ class ProjectOrchestrator:
                     heroes = visuals.get("heroes") or {"index": visuals.get("hero") or ""}
                     batch_items = []
                     def _join_prompt_suffix(base_p: str, suf: str) -> str:
-                        clean_b = str(base_p or "").strip()
+                        clean_b = harden_zimage_prompt(str(base_p or "").strip(), brand=str(merged.get("name") or ""), member_names=team_names)
                         clean_s = str(suf or "").strip()
-                        if not clean_s:
+                        if not clean_s or re.search(r"(?i)\b(?:\d{2,3}mm|lens|softbox|daylight|shadows)\b", clean_b):
                             return clean_b
                         if clean_s[:32].lower() in clean_b.lower():
                             return clean_b
-                        return f"{clean_b} {clean_s}".strip()
+                        return harden_zimage_prompt(f"{clean_b}, {clean_s}", brand=str(merged.get("name") or ""), member_names=team_names)
 
                     for p_idx, h_slug in enumerate(merged.get("selected_pages") or ["index"]):
                         raw_hp = str(heroes.get(h_slug) or heroes.get("index") or f"Editorial photograph of {brief_for_llm[:140]}, crisp directional lighting, 35mm lens")

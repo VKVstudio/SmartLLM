@@ -145,10 +145,13 @@ def oklch_to_material_phrase(color_str: str) -> str:
     return str(lut["hue_sectors_deg"][-1][band])
 
 
-def palette_to_material_summary(palette: dict[str, Any]) -> str:
-    """Convert bg/surface/accent/accent_2 OKLCH tokens into Z-Image material prose."""
+def palette_to_material_summary(
+    palette: dict[str, Any],
+    keys: tuple[str, ...] = ("bg", "surface", "accent", "accent_2"),
+) -> str:
+    """Convert selected OKLCH palette tokens into Z-Image material prose."""
     parts: list[str] = []
-    for k in ("bg", "surface", "accent", "accent_2"):
+    for k in keys:
         val = palette.get(k)
         if isinstance(val, str) and val.strip():
             desc = oklch_to_material_phrase(val)
@@ -179,9 +182,11 @@ def harden_zimage_prompt(prompt: str, brand: str = "", member_names: list[str] |
                 out = re.sub(rf"(?<!\w){re.escape(tok)}(?!\w)", "", out, flags=re.I)
     out = re.sub(spec["hex_color_regex"], "", out)
     out = re.sub(spec["cyrillic_run_regex"], "", out)
+    out = re.sub(r"(?i)\b(?:text|words?|letters?|logos?|watermarks?|captions?|clutter|beige|people|humans?)-free\b", "", out)
     out = re.sub(spec["neg_clause_regex"], "", out)
     for rule in spec["text_replace_map"]:
         out = re.sub(rule["pattern"], rule["replace"], out)
+    out = re.sub(r"(?:^|(?<=\s))-[a-z]+\b", "", out, flags=re.I)
     out = re.sub(r"(?i)\b(?:with|without|featuring|and|or|of)\s*(?=[,.;]|$)", "", out)
     out = re.sub(r"\s*,\s*(?:,\s*)+", ", ", out)
     out = re.sub(r"\s+([,.;:])", r"\1", out)

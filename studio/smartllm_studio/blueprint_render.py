@@ -155,16 +155,16 @@ def _build_tokens_css(
 }}
 *, *::before, *::after {{ box-sizing: border-box; }}
 html {{ scroll-padding-top: 4.75rem; font-size: 16px; scroll-behavior: smooth; }}
-body {{ margin: 0; background-color: var(--bg); background-image: var(--bg-image); color: var(--text); font-family: var(--font-sans); line-height: var(--body-leading); font-variant-numeric: tabular-nums; overflow-x: clip; }}
+body {{ margin: 0; background-color: var(--bg); background-image: var(--bg-image); color: var(--text); font-family: var(--font-sans); line-height: var(--body-leading); font-variant-numeric: tabular-nums; max-width: 100%; overflow-x: clip; }}
+main, .hero-shell, .section-block, .price-table-wrap {{ min-width: 0; max-width: 100%; }}
 h1, h2, h3, p, li, figcaption, .spec-card, .price-card, .stat-card {{ overflow-wrap: break-word; hyphens: auto; }}
 .skip-link {{ position: absolute; left: -9999px; top: 0.5rem; padding: 0.75rem 1rem; background: var(--accent); color: var(--accent-ink); min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; text-decoration: none; }}
 .skip-link:focus {{ left: 0.75rem; z-index: 100; }}
 .site-header {{ position: sticky; top: 0; z-index: 40; background: var(--bg); border-bottom: var(--border-w) solid var(--border); backdrop-filter: blur(var(--surface-blur)); -webkit-backdrop-filter: blur(var(--surface-blur)); }}
-.container {{ width: 100%; max-width: var(--container-max, 82rem); margin-inline: auto; padding-inline: clamp(1rem, 4vw, 3.5rem); }}
+.container {{ width: 100%; max-width: min(100%, var(--container-max, 82rem)); min-width: 0; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 3.5rem); }}
 .header-inner {{ display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; min-height: 4.5rem; gap: 0.75rem; }}
 .brand-link {{ display: inline-flex; align-items: center; gap: 0.75rem; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; min-height: 44px; min-width: 44px; }}
 .brand-link img {{ width: 36px; height: 36px; display: block; border-radius: var(--radius-badge); object-fit: cover; }}
-.nav-toggle {{ display: none; min-height: 44px; min-width: 44px; }}
 .nav-list {{ display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin: 0; padding: 0; }}
 .nav-list a {{ color: var(--text); text-decoration: none; padding: 0.5rem 0.75rem; min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; border-radius: var(--radius-button); font-size: 0.9375rem; }}
 .nav-list a[aria-current="page"] {{ background: var(--surface); border: 1px solid var(--border); font-weight: 600; }}
@@ -183,6 +183,7 @@ h3 {{ font-family: var(--font-heading); font-size: 1.25rem; margin: 0 0 0.5rem 0
 .cta-row {{ display: flex; flex-wrap: wrap; gap: 0.875rem; margin-bottom: 1rem; align-items: center; }}
 .btn {{ display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0.65rem 1.25rem; font-family: var(--font-mono); font-size: 0.875rem; font-weight: 600; border: var(--border-w) solid var(--border-control); border-radius: var(--radius-button); cursor: pointer; text-decoration: none; background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow); }}
 .btn-secondary {{ background: var(--surface-elevated); color: var(--text); }}
+.btn.nav-toggle {{ display: none; min-height: 44px; min-width: 44px; }}
 .section-block {{ padding-block: var(--pad-section); border-bottom: 1px solid var(--border); container-type: inline-size; }}
 .section-block:not(#hero) {{ content-visibility: auto; contain-intrinsic-size: auto 600px; }}
 .spec-card, .price-card, .review-card {{ grid-column: span 4; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-card); padding: 1.5rem; gap: 0.75rem; min-width: 0; box-shadow: var(--shadow); backdrop-filter: blur(var(--surface-blur)); -webkit-backdrop-filter: blur(var(--surface-blur)); }}
@@ -250,7 +251,7 @@ h3 {{ font-family: var(--font-heading); font-size: 1.25rem; margin: 0 0 0.5rem 0
 @media (max-width: 900px) {{ .hero-lead, .hero-figure, .spec-card, .price-card, .review-card, .gallery-card, .stat-card, .team-card, .blog-card, .process-step, .location-card {{ grid-column: span 12; }} .contact-layout, .priority-list {{ grid-template-columns: 1fr; }} }}
 @media (max-width: 767px) {{
   .header-inner {{ min-height: 3.75rem; }}
-  .nav-toggle {{ display: inline-flex; }}
+  .btn.nav-toggle {{ display: inline-flex; }}
   .site-header nav {{ width: 100%; order: 4; }}
   .nav-list[data-open="false"] {{ display: none; }}
   .nav-list[data-open="true"] {{ display: flex; flex-direction: column; width: 100%; padding-bottom: 0.5rem; }}
@@ -282,27 +283,28 @@ def _build_canon_css(card: dict[str, Any], d: dict[str, Any], polarity: str = "l
     clip_extra = "clip-path: inset(0 0 12% 0);" if reveal == "clip" else ""
     clip_done = "clip-path: inset(0 0 0 0);" if reveal == "clip" else ""
     cards = ".spec-card, .price-card, .review-card, .stat-card, .team-card, .blog-card, .gallery-card, .location-card, .process-step, .priority-item, .faq-item"
+    cards_is = f":is({cards})"
     hover_css = ""
     if hover == "lift":
-        hover_css = f"{cards} {{ transition: transform {press_ms}ms {ease}, box-shadow {press_ms}ms {ease}, border-color {press_ms}ms {ease}; }} @media (hover: hover) {{ {cards}:hover {{ transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--accent); }} }}"
+        hover_css = f"{cards} {{ transition: transform {press_ms}ms {ease}, box-shadow {press_ms}ms {ease}, border-color {press_ms}ms {ease}; }} @media (hover: hover) {{ {cards_is}:hover {{ transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--accent); }} }}"
     elif hover == "invert":
-        hover_css = f"{cards} {{ transition: background-color {max(press_ms, 100)}ms {ease}, color {max(press_ms, 100)}ms {ease}; }} @media (hover: hover) {{ {cards}:hover {{ background: var(--accent); color: var(--accent-ink); }} {cards}:hover h3, {cards}:hover p, {cards}:hover .eyebrow, {cards}:hover .stat-value, {cards}:hover .step-index, {cards}:hover .blog-meta {{ color: inherit; }} }}"
+        hover_css = f"{cards} {{ transition: background-color {max(press_ms, 100)}ms {ease}, color {max(press_ms, 100)}ms {ease}; }} @media (hover: hover) {{ {cards_is}:hover {{ background: var(--accent); color: var(--accent-ink); }} {cards_is}:hover :is(h3, p, .eyebrow, .stat-value, .step-index, .blog-meta) {{ color: inherit; }} }}"
     elif hover == "glow":
-        hover_css = f"{cards} {{ transition: box-shadow {press_ms}ms {ease}, transform {press_ms}ms {ease}; }} @media (hover: hover) {{ {cards}:hover {{ box-shadow: 0 0 0 1px var(--accent), var(--shadow); transform: translateY(-2px); }} }}"
+        hover_css = f"{cards} {{ transition: box-shadow {press_ms}ms {ease}, transform {press_ms}ms {ease}; }} @media (hover: hover) {{ {cards_is}:hover {{ box-shadow: 0 0 0 1px var(--accent), var(--shadow); transform: translateY(-2px); }} }}"
     elif hover == "underline":
-        hover_css = f"{cards} {{ transition: border-color {press_ms}ms {ease}; }} @media (hover: hover) {{ {cards}:hover {{ border-color: var(--accent); }} }}"
+        hover_css = f"{cards} {{ transition: border-color {press_ms}ms {ease}; }} @media (hover: hover) {{ {cards_is}:hover {{ border-color: var(--accent); }} }}"
     if surface == "brutal":
-        press_css = f".btn:active, {cards}:active {{ transform: translate(4px, 4px); box-shadow: none; }}"
+        press_css = f".btn:active, {cards_is}:active {{ transform: translate(4px, 4px); box-shadow: none; }}"
     else:
-        press_css = f".btn:active, {cards}:active {{ transform: scale({press}); }}"
+        press_css = f".btn:active, {cards_is}:active {{ transform: scale({press}); }}"
     surface_css = ""
     if surface in ("grain", "paper"):
         op = "0.05" if surface == "grain" else "0.035"
         surface_css = f"""body::after {{ content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 5; opacity: {op}; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"); }}"""
     elif surface == "glass":
         surface_css = f"""{cards} {{ background: color-mix(in oklab, var(--surface) 78%, transparent); backdrop-filter: blur(20px) saturate(1.35); -webkit-backdrop-filter: blur(20px) saturate(1.35); border-color: var(--border); position: relative; }}
-{cards}::before {{ content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent); border-radius: inherit; pointer-events: none; }}
-[data-solid-ui="true"] {cards} {{ backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--surface-fallback, var(--surface)); }}
+{cards_is}::before {{ content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent); border-radius: inherit; pointer-events: none; }}
+[data-solid-ui="true"] {cards_is} {{ backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--surface-fallback, var(--surface)); }}
 @media (prefers-reduced-transparency: reduce) {{ {cards} {{ backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--surface-fallback, var(--surface)); }} }}
 @supports not (backdrop-filter: blur(1px)) {{ {cards} {{ backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--surface-fallback, var(--surface)); }} }}"""
     elif surface == "mesh":
@@ -314,7 +316,7 @@ def _build_canon_css(card: dict[str, Any], d: dict[str, Any], polarity: str = "l
         surface_css = f""".btn {{ background-image: linear-gradient(135deg, rgba(255,255,255,0.32), transparent 55%); }}
 .btn:active {{ box-shadow: inset 0 3px 8px rgba(0,0,0,0.28); }}
 {cards} {{ transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow {press_ms}ms {ease}; }}
-@media (hover: hover) {{ {cards}:hover {{ transform: scale(1.015); }} }}"""
+@media (hover: hover) {{ {cards_is}:hover {{ transform: scale(1.015); }} }}"""
     elif surface == "brutal":
         surface_css = f"""{cards} {{ border: 3px solid var(--text); box-shadow: 6px 6px 0 var(--border); }}
 .btn {{ border: 3px solid var(--text); box-shadow: 5px 5px 0 var(--border); }}"""
@@ -397,7 +399,6 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
     return f"""(function () {{
   "use strict";
   var root = document.documentElement;
-  root.classList.add("js");
   root.setAttribute("data-stack", "{stack}");
   root.setAttribute("data-motion", "{motion}");
   var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -471,8 +472,8 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
     }});
   }});
   if (!reduced) {{
-    var revealEls = document.querySelectorAll(".section-block [data-reveal]");
-    if ("IntersectionObserver" in window && revealEls.length) {{
+    var revealEls = Array.prototype.slice.call(document.querySelectorAll(".section-block [data-reveal]"));
+    if (revealEls.length) {{
       var groups = {{}};
       revealEls.forEach(function (el) {{
         var sec = el.closest("section") || root;
@@ -480,14 +481,56 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
         groups[key] = groups[key] || 0;
         el.style.setProperty("--rd", (groups[key]++ * {stagger}) + "ms");
       }});
-      var io = new IntersectionObserver(function (entries) {{
-        entries.forEach(function (en) {{
-          if (en.isIntersecting) {{ en.target.classList.add("is-revealed"); io.unobserve(en.target); }}
+      var io = null;
+      var cleanupReveal = function () {{
+        window.removeEventListener("scroll", revealVisible);
+        window.removeEventListener("resize", revealVisible);
+      }};
+      var revealVisible = function () {{
+        var vh = window.innerHeight || root.clientHeight || 900;
+        var remaining = 0;
+        for (var idx = 0; idx < revealEls.length; idx++) {{
+          var el = revealEls[idx];
+          if (el.classList.contains("is-revealed")) continue;
+          if (el.getBoundingClientRect().top <= vh + 160) {{
+            el.classList.add("is-revealed");
+            if (io) io.unobserve(el);
+          }} else {{
+            remaining++;
+          }}
+        }}
+        if (remaining === 0) cleanupReveal();
+      }};
+      if ("IntersectionObserver" in window) {{
+        revealVisible();
+        root.classList.add("js");
+        io = new IntersectionObserver(function (entries) {{
+          entries.forEach(function (en) {{
+            if (en.isIntersecting) {{
+              en.target.classList.add("is-revealed");
+              io.unobserve(en.target);
+            }}
+          }});
+        }}, {{ threshold: 0.01, rootMargin: "0px 0px 80px 0px" }});
+        var pendingReveal = 0;
+        revealEls.forEach(function (el) {{
+          if (!el.classList.contains("is-revealed")) {{
+            io.observe(el);
+            pendingReveal++;
+          }}
         }});
-      }}, {{ threshold: 0.05, rootMargin: "0px 0px -4% 0px" }});
-      revealEls.forEach(function (el) {{ io.observe(el); }});
+        if (pendingReveal > 0) {{
+          window.requestAnimationFrame(revealVisible);
+          window.setTimeout(revealVisible, 450);
+          window.addEventListener("scroll", revealVisible, {{ passive: true }});
+          window.addEventListener("resize", revealVisible, {{ passive: true }});
+        }}
+      }} else {{
+        revealEls.forEach(function (el) {{ el.classList.add("is-revealed"); }});
+        root.classList.add("js");
+      }}
     }} else {{
-      revealEls.forEach(function (el) {{ el.classList.add("is-revealed"); }});
+      root.classList.add("js");
     }}
     var bar = document.querySelector(".scroll-progress");
     var heroImg = document.querySelector(".hero-figure img");
@@ -505,6 +548,7 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
     {"window.addEventListener(\"scroll\", onScroll, { passive: true }); onScroll();" if (progress or parallax) else ""}
   }} else {{
     document.querySelectorAll("[data-reveal]").forEach(function (el) {{ el.classList.add("is-revealed"); }});
+    root.classList.add("js");
   }}
   var form = document.querySelector(".intake-form");
   if (form) form.addEventListener("submit", function (ev) {{

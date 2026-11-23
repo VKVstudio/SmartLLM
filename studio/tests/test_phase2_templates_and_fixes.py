@@ -273,6 +273,10 @@ def run_all_tests() -> dict[str, object]:
                     assert "@supports not (backdrop-filter: blur(1px))" in css_txt
                 # Bug #11
                 assert "background-attachment: fixed" not in css_txt and "overflow-x: clip;" in css_txt
+                assert "html { scroll-padding-top: 4.75rem; font-size: 16px; scroll-behavior: smooth; }" in css_txt
+                assert ":is(.spec-card," in css_txt
+                assert ".faq-item:hover" not in css_txt and ".faq-item:active" not in css_txt and ".faq-item::before" not in css_txt
+                assert '[data-solid-ui="true"] .spec-card,' not in css_txt
                 # Bug #12
                 assert "node-calc-btn" not in idx_html
                 assert 'class="form-status" role="status" aria-live="polite"' in idx_html
@@ -283,6 +287,7 @@ def run_all_tests() -> dict[str, object]:
 
         # 8. Bug #6 Proof: compute_real_scorecard fails when CSP / SEO / A11y broken
         sample_dir = td_p / "build_01_bento_grid_light"
+        sample_js_txt = (sample_dir / "app.js").read_text(encoding="utf-8")
         bad_sc = compute_real_scorecard(
             project_dir=sample_dir,
             rendered_pages={"index": "<html><body><h1>A</h1><h1>B</h1>\"price\": \"0\"</body></html>"},
@@ -321,6 +326,18 @@ def run_all_tests() -> dict[str, object]:
     draft = default_project_draft("demo", repo_root=REPO_ROOT)
     assert draft["motion"] == "css_scroll_driven" and draft["compare_canon_id"] == "18_devtool_command_ui"
     assert str(draft["goal"]).startswith("High-craft Astro")
+
+    # 12. Live-QA visual & review regressions (desktop nav-toggle cascade, -free artifact, neutral scene tones, review current text)
+    p_clean_free = harden_zimage_prompt("Architectural concrete wall, text-free, logo-free, 50mm lens")
+    assert "-free" not in p_clean_free.lower(), p_clean_free
+    neutral_dark = palette_to_material_summary(canon_cards[0]["palettes"]["dark"], keys=("bg", "surface"))
+    assert neutral_dark and "violet" not in neutral_dark.lower() and "emerald" not in neutral_dark.lower(), neutral_dark
+    pipe_src = (PKG_ROOT / "pipeline.py").read_text(encoding="utf-8")
+    assert "(current):" in pipe_src and "keys=(\"bg\", \"surface\")" in pipe_src
+    assert ".btn.nav-toggle { display: none;" in css_txt and css_txt.index(".btn.nav-toggle { display: none;") > css_txt.index(".btn {")
+    assert "main, .hero-shell, .section-block, .price-table-wrap { min-width: 0; max-width: 100%; }" in css_txt
+    assert "revealVisible" in sample_js_txt and "setTimeout(revealVisible" in sample_js_txt
+    assert sample_js_txt.index("revealVisible();") < sample_js_txt.index('root.classList.add("js");')
 
     results["status"] = "ALL_PHASE2_GATES_PASSED"
     return results
