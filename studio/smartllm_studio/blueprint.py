@@ -25,6 +25,7 @@ from .templates_engine import (
     build_canon_theme_css,
     bundle_vendor_assets_for_canon,
     emit_stack_scaffold,
+    normalize_motion_id,
     normalize_stack_id,
     write_page_model_json,
 )
@@ -198,7 +199,7 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
     seo_cfg = dict(payload.get("seo") or {})
     base_url = str(seo_cfg.get("base_url") or payload.get("base_url") or "https://smartllm-studio.example.org").rstrip("/")
     stack = normalize_stack_id(str(payload.get("stack") or "astro"))
-    motion = str(payload.get("motion") or "css_scroll_driven")
+    motion = normalize_motion_id(str(payload.get("motion") or "css_scroll_driven"))
     raw_routes = payload.get("routes")
     if not raw_routes and payload.get("selected_pages"):
         routes = build_routes_from_pages(
@@ -399,12 +400,13 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
             i18n=i18n,
             page_idx=page_idx,
             polarity=resolved_polarity,
+            vendor_scripts=vendor_bundle.get("js_relpaths") or [],
         )
         rendered_docs.append((route, html_doc))
         if route["filename"] not in written_files:
             written_files.insert(0, route["filename"])
 
-    js_text = _build_motion_and_ui_js(stack=stack, motion=motion, lang=resolved_lang, d=dossier, i18n=i18n, bilingual=bilingual)
+    js_text = _build_motion_and_ui_js(stack=stack, motion=motion, lang=resolved_lang, d=dossier, i18n=i18n, bilingual=bilingual, canon_id=card["id"])
     script_hash = sha256_csp(js_text)
     csp_header = csp_meta.replace(hash_placeholder, script_hash).replace("object-src 'none';", "frame-ancestors 'none'; object-src 'none';")
     (project_dir / "tokens.css").write_text(css_text, encoding="utf-8")

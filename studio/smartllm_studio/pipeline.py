@@ -56,7 +56,16 @@ LATIN_WHITELIST = {
     "sla", "nvme", "nvlink", "gpu", "cpu", "llm", "lora", "soc", "iso", "api", "cad", "cnc",
 }
 COPY_BATCH_SIZE = 6
-PIPELINE_VERSION = 14
+PIPELINE_VERSION = 15
+
+_LUMINOUS_DOMAIN_RE = re.compile(
+    r"(?i)(?:свет\w*|освещен\w*|светильн\w*|абажур\w*|ламп\w*|люстр\w*|подсветк\w*|неон\w*|"
+    r"light(?:ing)?|luminair\w*|illuminat\w*|chandelier\w*|sconce\w*|lamp\w*|neon)"
+)
+
+
+def _is_luminous_domain(brand: str, brief: str) -> bool:
+    return bool(_LUMINOUS_DOMAIN_RE.search(f"{brand} {brief}"))
 
 BLOCK_FORMAT_HINTS_RU = {
     "manifesto": "<Девиз> | <Одно конкретное предложение позиционирования этой страницы>",
@@ -291,7 +300,13 @@ def _sync_page_copy_to_foundation(
         year_conflict = bool(founded and any(m.group(0) != founded and m.group(0).startswith(("199", "200", "201", "202")) for m in re.finditer(r"\b(?:19|20)\d{2}\b", cur_s)))
         if canon_s and (len(items_s) < 3 or year_conflict or len(items_s) < len(company.get("stats") or [])):
             out["stats"] = canon_s
-    # 5. Values — repair bare "— Принцип" / "— Principle" placeholders
+    # 5. Values — repair bare "— Принцип" / "— Principle" placeholders and translate leaked English labels in RU
+    if "values" in out and lang == "ru" and _clean(out.get("values")):
+        cur_v_ru = _clean(out.get("values"))
+        cur_v_ru = re.sub(r"(?i)(?:^|\|\s*)Product\s*[—–:-]", lambda m: ("| " if "|" in m.group(0) else "") + "Продукт —", cur_v_ru)
+        cur_v_ru = re.sub(r"(?i)(?:^|\|\s*)Team\s*[—–:-]", lambda m: ("| " if "|" in m.group(0) else "") + "Команда —", cur_v_ru)
+        cur_v_ru = re.sub(r"(?i)(?:^|\|\s*)Clients\s*[—–:-]", lambda m: ("| " if "|" in m.group(0) else "") + "Клиенты —", cur_v_ru)
+        out["values"] = _clean(cur_v_ru)
     if "values" in out and "values" not in user_owned:
         cur_v = _clean(out.get("values"))
         if re.search(r"[—–:-]\s*(?:Принцип|Principle)\s*(?:\||$)", cur_v, re.I):
@@ -306,6 +321,13 @@ def _sync_page_copy_to_foundation(
             canon_c = company_block_prompt(company, "contact", lang)
             if canon_c:
                 out["contact"] = canon_c
+    # 7. Subpage manifesto — prevent verbatim repetition of global homepage tagline | positioning
+    if "manifesto" in out and slug not in ("index", "about"):
+        global_mf = " | ".join(x for x in (_clean(company.get("tagline")), _clean(company.get("positioning"))) if x)
+        if global_mf and _clean(out.get("manifesto")) == global_mf:
+            sub_purpose = _page_purpose(slug, lang) or page_title(slug, lang)
+            tline = _clean(company.get("tagline")) or page_title(slug, lang)
+            out["manifesto"] = f"{tline} | {page_title(slug, lang)}: {sub_purpose}"
     return out
 
 
@@ -834,11 +856,12 @@ def run_content_pipeline(
                 um[bid] = txt
         user_pages[slug] = um
 
+    user_logo_prompt = _clean(merged.get("logo_prompt"))
     fingerprint = hashlib.sha256(json.dumps({
         "name": brand, "brief": brief, "lang": lang, "canon": merged.get("canon_id"),
         "pages": pages, "page_blocks": page_blocks, "user_pages": user_pages,
         "company": merged.get("company") or {}, "mode": mode, "render_images": render_images,
-        "pipeline_version": PIPELINE_VERSION,
+        "logo_prompt": user_logo_prompt, "pipeline_version": PIPELINE_VERSION,
     }, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
 
     memory = PipelineMemory(out_dir, {
@@ -862,17 +885,28 @@ def run_content_pipeline(
     report(stage_idx, 6, "Инициализация системной памяти проекта (smartllm.md)...", "Initializing project system memory (smartllm.md)...", "orchestrator: memory init")
 
     fallback_company = build_default_company(brand, brief, lang)
-    user_company = merged.get("company") if isinstance(merged.get("company"), dict) else {}
+    raw_user_company = merged.get("company") if isinstance(merged.get("company"), dict) else {}
+    user_company = {k: v for k, v in raw_user_company.items() if k != "_source"}
+    has_autofill_truth = (
+        mode != "auto"
+        and raw_user_company.get("_source") == "autofill"
+        and len([p for p in (user_company.get("products") or []) if isinstance(p, dict) and p.get("name")]) >= 2
+        and len([s for s in (user_company.get("stats") or []) if isinstance(s, dict) and s.get("value")]) >= 2
+        and len([t for t in (user_company.get("team") or []) if isinstance(t, dict) and t.get("name")]) >= 2
+    )
     company = reuse("foundation", "foundation.json")
     if company is None:
         memory.mark("foundation", "running")
         company = dict(fallback_company)
-        llm_company = _generate_company_with_llm(state, brand, brief, lang) if gpu_ok else {}
-        if llm_company:
-            company.update(llm_company)
-            agents_run += 1
-        if mode != "auto" and user_company:
+        if has_autofill_truth:
             company.update({k: v for k, v in user_company.items() if v not in (None, "", [], {})})
+        else:
+            llm_company = _generate_company_with_llm(state, brand, brief, lang) if gpu_ok else {}
+            if llm_company:
+                company.update(llm_company)
+                agents_run += 1
+            if mode != "auto" and user_company:
+                company.update({k: v for k, v in user_company.items() if v not in (None, "", [], {})})
         memory.write_artifact("foundation.json", company)
         memory.mark("foundation", "done", "foundation.json", "brand foundation + contacts")
     else:
@@ -889,6 +923,20 @@ def run_content_pipeline(
         memory.mark("architect", "running")
         page_lines = "\n".join(f"- {slug}: {page_title(slug, lang)} — {_page_purpose(slug, lang)}" for slug in pages)
         arch_kb = load_stage_context("architect", stack=stack_id, canon_id=canon_id)[:1800]
+        luminous_domain = _is_luminous_domain(brand, brief)
+        arch_pages_tmpl = {
+            s: {
+                "angle": "one-sentence editorial angle",
+                "quest": "strict subagent assignment for this page citing exact truth scope",
+                "hero_subject": f"concrete physical 4-8 word subject in English for {s} page",
+            }
+            for s in pages
+        }
+        domain_arch_note = (
+            "\n- This company is in architectural LIGHTING / ILLUMINATION: EVERY 'hero_subject' and 'gallery_subjects' entry MUST name specific switched-on luminous fixtures, architectural light coves, glowing pendant/linear luminaires, or glowing light beams against architectural interiors (never generic empty unlit rooms or open magazines)."
+            if luminous_domain
+            else ""
+        )
         sys_msg = (
             "You are SmartLLM v2 Chief Web Architect and Task Dispatcher. Plan the global site chrome, "
             "2 distinct gallery visual scenes, and strict non-contradicting page quests grounded in the brand foundation. "
@@ -901,15 +949,18 @@ def run_content_pipeline(
             f"Write all user-facing values in {target_lang}. Nav labels: 1-2 words, no clichés.\n"
             "Rules:\n"
             "- Every page must have a distinct editorial 'angle', distinct English 'hero_subject', and explicit 'quest' telling copy agents which truth items (capabilities vs pricing vs team vs proof) belong on that page without mixing pricing into features or changing team/stats facts.\n"
-            "- 'hero_subject': physical scene rooted 100% in this company's real work in English — NEVER include font names (Tektur, Inter, etc.), CSS/layout words (typography, poster, stage, variable-width, display), or negative phrases (no portraits). Each page MUST depict a DIFFERENT real scene and camera angle: 'index' = flagship completed installation/result, 'about' = client studio/workshop/atelier interior, 'portfolio' = finished client installation in real architectural space, 'services' = live installation/craft execution, 'pricing' = packaged flagship system/solution showcase, 'team' = wide candid collaborative studio table scene with blueprints and material samples.\n"
-            "- 'gallery_subjects': 2 CLEARLY DIFFERENT physical scene descriptions in English (Scene 1 wide flagship project/environment, Scene 2 close-up material/engineering detail).\n"
+            "- 'hero_subject': CONCRETE physical scene rooted 100% in this company's real work in English — NEVER include abstract meta labels ('Client', 'Finished client', 'Expertise materials', 'insights', 'solution', 'showcase', 'magazine', 'book', 'article'), font names, CSS/layout words (typography, poster, stage, variable-width, display), or negative phrases (no portraits). Each page MUST name tangible physical fixtures, materials, equipment, or active workspace objects: e.g. 'index' = flagship completed installation, 'about' = working atelier workbench with physical material samples and prototypes, 'portfolio' = completed architectural interior with flagship work installed, 'services' = precision commissioning & fabrication detail, 'pricing' = flagship modular hardware configuration display, 'blog' = architectural material library & prototype desk (NOT books/pages), 'team' = wide candid collaborative studio table scene with prototypes and blueprints."
+            + domain_arch_note
+            + "\n- 'gallery_subjects': 2 CLEARLY DIFFERENT concrete physical scene descriptions in English (Scene 1 wide flagship project/environment, Scene 2 close-up material/engineering detail).\n"
             "Return JSON:\n"
-            '{"nav_labels": {"slug": "label"}, "footer_text": "one-line colophon with brand promise", '
-            '"header_cta": "short header action label", '
-            '"gallery_subjects": ["English scene 1 (wide architectural/product view)", "English scene 2 (distinct close-up craft/engineering scene)"], '
-            '"pages": {"slug": {"angle": "one-sentence editorial angle", "quest": "strict subagent assignment for this page citing exact truth scope", '
-            '"hero_subject": "physical scene subject for the hero photograph, in English"}}, '
-            '"motion_note": "one sentence scroll choreography note"}'
+            + json.dumps({
+                "nav_labels": {s: "label" for s in pages},
+                "footer_text": "one-line colophon with brand promise",
+                "header_cta": "short header action label",
+                "gallery_subjects": ["English scene 1 (wide architectural/product view)", "English scene 2 (distinct close-up craft/engineering scene)"],
+                "pages": arch_pages_tmpl,
+                "motion_note": "one sentence scroll choreography note",
+            }, ensure_ascii=False)
         )
         raw = _llm_json(state, gpu_ok, sys_msg, user_msg, max_tokens=2400, required_keys=["nav_labels", "footer_text", "pages"])
         if raw:
@@ -1176,16 +1227,46 @@ def run_content_pipeline(
         canon_kb = load_canon_kb(canon_id)
         zdir_map = canon_kb.get("zimage_direction") if isinstance(canon_kb.get("zimage_direction"), dict) else {}
         pol_mod = (recipes.get("theme_polarity_modifiers") or {}).get(active_pol) or {}
+        canonical_meta_clean_re = re.compile(r"(?i)\b(?:expertise|insights?|showcase|solutions?|materials? and light|finished client|client studio)\b")
+        luminous_domain = _is_luminous_domain(brand, brief)
         pol_lighting = _clean(pol_mod.get("lighting_clause")) or (
             "Low-key sculpted studio lighting with controlled dark shadows"
             if active_pol == "dark"
             else "Bright diffused natural architectural daylight with clean contact shadows"
         )
+        if luminous_domain:
+            pol_lighting = (
+                "Shaded twilight architectural interior bathed in warm 2700K-3000K artificial light from switched-on linear LED coves, backlit recessed channels, and glowing glass sculptural luminaires casting soft graduated pools across matte surfaces"
+            )
+            fallback_light = pol_lighting
+        else:
+            fallback_light = (
+                "low-key sculpted architectural studio lighting with dark atmospheric falloff"
+                if active_pol == "dark"
+                else "bright diffused natural architectural daylight with clean soft contact shadows"
+            )
         canon_lighting_mood = _clean((recipes.get("canon_art_direction_overrides") or {}).get(canon_id)) or _clean(dossier.get("imagery"))
         active_pal = (canon_card.get("palettes") or {}).get(active_pol) or canon_card.get("palette") or {}
         scene_surface_tones = palette_to_material_summary(active_pal, keys=("bg", "surface")) or "matte architectural stone, clean studio neutral surface"
         logo_palette_tones = palette_to_material_summary(active_pal) or "deep charcoal matte, warm alabaster, terracotta brick"
-        subjects = {slug: _clean((architecture.get("pages") or {}).get(slug, {}).get("hero_subject")) or brief[:100] for slug in pages}
+        subjects = {}
+        for slug in pages:
+            raw_subj = _clean((architecture.get("pages") or {}).get(slug, {}).get("hero_subject"))
+            if not raw_subj or (canonical_meta_clean_re.search(raw_subj) and len(raw_subj.split()) <= 6):
+                hl_fallback = _clean(page_results.get(slug, {}).get("hero", {}).get("headline"))
+                if luminous_domain:
+                    raw_subj = {
+                        "index": "custom illuminated architectural luminaire installation with glowing warm glass diffusers and recessed linear LED coves in a sculptural concrete lobby",
+                        "about": "bespoke lighting atelier workbench with switched-on linear LED prototypes, blown glass shades, and brushed brass optics under warm dramatic key light",
+                        "portfolio": "architectural gallery residence illuminated at dusk by concealed linear wall washes and glowing suspended geometric glass chandeliers",
+                        "services": "architectural lighting commissioning scene showing glowing recessed ceiling slot diffusers, warm wall grazing beams, and anodized luminaire housings",
+                        "pricing": "modular precision luminaire hardware family displayed powered-on with warm 3000K optical beams across dark slate and alabaster stone plinths",
+                        "blog": "architectural optical material samples bench with illuminated acrylic light guides, frosted glass diffusers, and warm anodized luminaire profiles",
+                        "faq": "warm illuminated acoustic and architectural ceiling baffle installation with integrated linear LED channels glowing softly at twilight",
+                    }.get(slug, f"bespoke architectural lighting installation for {brand} with glowing warm luminaires and sculpted light beams")
+                else:
+                    raw_subj = hl_fallback or brief[:100]
+            subjects[slug] = raw_subj
         subjects_ctx = {
             slug: {
                 "scene": subjects[slug],
@@ -1198,54 +1279,88 @@ def run_content_pipeline(
         vis_kb = load_stage_context("visuals", canon_id=canon_id)[:1800]
         gal_subjs = [_clean(x) for x in (architecture.get("gallery_subjects") or []) if _clean(x)]
         if len(gal_subjs) < 2 or gal_subjs[0].lower() == gal_subjs[1].lower():
-            gal_subjs = [
-                f"Wide architectural project showcase for {brand}: {brief[:100]}",
-                f"Macro detail photograph of signature materials and craft precision for {brand}",
-            ]
+            if luminous_domain:
+                gal_subjs = [
+                    "Wide architectural interior illuminated at twilight by custom suspended glowing linear and ring luminaires, warm 2700K wall grazers, and backlit plaster niches",
+                    "Close-up macro photograph of a powered-on hand-finished brass and frosted opaline glass luminaire emitter casting a crisp warm amber light halo",
+                ]
+            else:
+                gal_subjs = [
+                    f"Wide architectural project showcase for {brand}: {brief[:100]}",
+                    f"Close-up editorial photograph of tactile materials and craft precision for {brand}",
+                ]
         gal_ctx = _clean(page_copy.get("portfolio", {}).get("gallery") or page_copy.get("index", {}).get("gallery") or brief[:160])
+        heroes_schema = {s: f"<45-70 word photorealistic English Z-Image prompt strictly matching the {s} scene>" for s in pages}
+        logo_rule = (
+            f"1. 'brand_logo': follow {ZIMAGE_LOGO_CANON_2026} STRICTLY DEPICT THIS USER LOGO BRIEF: \"{user_logo_prompt}\" — keep the exact colors and geometric loop/shape requested by the user on a clean solid neutral backdrop. Never mention letters, initials, or words."
+            if user_logo_prompt
+            else f"1. 'brand_logo': follow {ZIMAGE_LOGO_CANON_2026} Design ONE minimalist flat vector emblem uniquely symbolizing THIS company's industry on a solid neutral backdrop, 2-3 crisp geometric pigment colors from logo palette. Never mention brand letters, initials, or words."
+        )
+        domain_vis_rule = (
+            " DOMAIN OVERRIDE — ARTIFICIAL LIGHTING PRIMARY: This studio designs and installs architectural lighting. EVERY hero AND BOTH gallery scenes MUST visibly show SWITCHED-ON luminous fixtures, glowing linear LED slots, illuminated architectural niches/ceilings, glowing opaline glass shades, and sculpted warm light pools in a controlled shaded/twilight interior (NEVER washed-out sunlit daytime rooms, NEVER unlit wooden ropes, NEVER open magazines/books). Bright sunny rooms erase artificial lighting contrast!"
+            if luminous_domain
+            else ""
+        )
         sys_msg = (
             "You are SmartLLM v2 Visual Art Director. Write positive-only production prompts for Z-Image-Turbo "
             "(8 NFEs, --cfg-scale 1.0 positive-only; negative phrasing is forbidden). Return ONLY valid JSON."
         )
         user_msg = (
             f"Brand: {brand}\nBrief: {brief[:240]}\nActive polarity: {active_pol}\n"
-            f"Canon photographic lighting & mood ({active_pol}): {_sanitize_zimage_prompt(canon_lighting_mood[:240], brand=brand)}\n"
-            f"Polarity lighting discipline ({active_pol}): {pol_lighting[:180]}\n"
+            + (f"Explicit User Logo Brief: {user_logo_prompt}\n" if user_logo_prompt else "")
+            + f"Canon photographic lighting & mood ({active_pol}): {_sanitize_zimage_prompt(canon_lighting_mood[:240], brand=brand)}\n"
+            f"Domain & Scene Lighting Discipline: {pol_lighting[:220]}\n"
             f"Canon team portrait direction: {_sanitize_zimage_prompt(_clean(zdir_map.get('team_portrait') or dossier.get('team'))[:180], brand=brand)}\n"
             f"Architectural photography neutral environment tones: {scene_surface_tones}\n"
             f"Brand logo pigment colors: {logo_palette_tones}\n"
             + (f"Visual Slot Recipes:\n{vis_kb}\n\n" if vis_kb else "")
-            + f"Hero visual contexts matching finalized copy per page: {json.dumps(subjects_ctx, ensure_ascii=False)}\n"
+            + f"Hero visual contexts matching finalized copy per page (ALL {len(pages)} keys REQUIRED): {json.dumps(subjects_ctx, ensure_ascii=False)}\n"
             f"Gallery Scene 1 & Scene 2 (MUST depict TWO DIFFERENT angles/subjects): {json.dumps(gal_subjs[:2], ensure_ascii=False)}\n"
             f"Gallery copy context: {gal_ctx[:180]}\n"
             f"Team visual roles with MANDATORY BIOLOGICAL GENDER MATCH (anonymous, DO NOT include names/titles): {json.dumps(team_roles, ensure_ascii=False)}\n\n"
             "Write prompts IN ENGLISH, 40-75 words each.\n"
             "CRITICAL RULES FOR Z-IMAGE-TURBO:\n"
-            "1. 'brand_logo': follow " + ZIMAGE_LOGO_CANON_2026 + " Design ONE minimalist flat vector emblem uniquely symbolizing THIS company's industry on a solid neutral backdrop, 2-3 crisp geometric pigment colors from logo palette. Never mention brand letters, initials, or words.\n"
-            "2. 'heroes' and 'gallery': photorealistic scenes belonging 100% to this client's actual business and finalized hero headline/features copy using authentic real-world materials — NEVER inject unrelated titanium beams, red triangles, lab rigs, camera lenses, or botanical twigs, and NEVER repeat the same sentence across pages or append ', depicting ...'. 'gallery[0]' MUST clearly differ in framing and subject from 'gallery[1]'. For optical, lighting, or glass close-ups, describe natural macro framing and shallow depth of field instead of writing camera-lens focal lengths (like '50mm lens' or '90mm lens').\n"
+            f"{logo_rule}\n"
+            f"2. 'heroes' (MUST include ALL keys {json.dumps(pages)}) and 'gallery': photorealistic scenes belonging 100% to this client's actual business and finalized hero headline/features copy using authentic real-world materials — NEVER inject unrelated titanium beams, red triangles, lab rigs, camera lenses, books, magazines, or botanical twigs, and NEVER repeat the same sentence across pages or append ', depicting ...'.{domain_vis_rule} 'gallery[0]' MUST clearly differ in framing and subject from 'gallery[1]'. For optical, lighting, or glass close-ups, describe natural macro framing and shallow depth of field instead of writing camera-lens focal lengths (like '50mm lens' or '90mm lens').\n"
             "3. 'team': one distinct vertical 3:4 medium chest-up editorial portrait per slot on a seamless neutral studio backdrop with generous empty headroom above the top of the head so full hair, head, and shoulders sit comfortably inside frame. Each person MUST clearly match their assigned distinct age, hair, glasses/beard/clean-shaven look, attire, and pose from 'team_roles' without repeating the same appearance across slots. For EVERY FEMALE slot describe the adult woman's exact look; for EVERY MALE slot describe the adult man's exact look. Omit person names, nameplates, watermarks, or words.\n"
             "Keep 'style_suffix' <= 10 words and NEVER repeat lens/lighting terms already inside hero/gallery prompts.\n"
-            'Return JSON: {"brand_logo": "...", "heroes": {"slug": "..."}, "gallery": ["distinct scene 1", "distinct scene 2"], "team": ["...", ...], "style_suffix": "short positive lighting mood clause"}'
+            "Return ONLY valid JSON with exact keys:\n"
+            + json.dumps({
+                "brand_logo": "<45-70 word flat vector logo symbol prompt>",
+                "heroes": heroes_schema,
+                "gallery": ["<distinct wide architectural/product scene>", "<distinct close-up macro/craft detail scene>"],
+                "team": ["<distinct 3:4 studio portrait prompt>" for _ in team_roles],
+                "style_suffix": "<short positive lighting mood clause>",
+            }, ensure_ascii=False)
         )
-        raw = _llm_json(state, gpu_ok, sys_msg, user_msg, max_tokens=3200, required_keys=["brand_logo", "heroes", "gallery", "team"])
+        raw = _llm_json(state, gpu_ok, sys_msg, user_msg, max_tokens=3600, required_keys=["brand_logo", "heroes", "gallery", "team"])
         if raw:
             agents_run += 1
-        heroes_raw = raw.get("heroes") or {}
+        raw_heroes_val = raw.get("heroes")
+        heroes_dict: dict[str, Any] = {}
+        if isinstance(raw_heroes_val, dict):
+            heroes_dict = {str(k).strip().lower(): v for k, v in raw_heroes_val.items()}
+        elif isinstance(raw_heroes_val, list):
+            for idx_s, s_val in enumerate(raw_heroes_val):
+                if idx_s < len(pages):
+                    heroes_dict[pages[idx_s]] = s_val
         heroes = {}
-        fallback_light = (
-            "low-key sculpted architectural studio lighting with dark atmospheric falloff"
-            if active_pol == "dark"
-            else "bright diffused natural architectural daylight with clean soft contact shadows"
-        )
         for slug in pages:
             subj = subjects[slug]
-            raw_h = _clean(heroes_raw.get(slug)) or f"Editorial architectural photograph of {subj}, {fallback_light}, natural real-world materials, clean unmarked surfaces"
+            cand_h = heroes_dict.get(slug.lower())
+            if isinstance(cand_h, dict):
+                cand_h = cand_h.get("prompt") or cand_h.get("scene") or cand_h.get("text") or ""
+            raw_h = _clean(cand_h) or (
+                f"Photorealistic architectural scene of {subj}, {fallback_light}, authentic real-world materials, crisp optical detail, clean unmarked surfaces"
+            )
             heroes[slug] = _sanitize_zimage_prompt(raw_h, member_names, brand=brand)
         gallery_raw = [_sanitize_zimage_prompt(_clean(x), member_names, brand=brand) for x in (raw.get("gallery") or []) if _clean(x)]
         if len(gallery_raw) < 2 or gallery_raw[0].lower() == gallery_raw[1].lower():
+            g0_light = fallback_light if luminous_domain else "natural directional daylight, wide 24mm framing"
+            g1_light = "warm luminous glow with soft shadow contrast, shallow depth of field macro framing" if luminous_domain else "sculpted shadows, 85mm shallow depth of field"
             gallery_raw = [
-                _sanitize_zimage_prompt(f"{gal_subjs[0]}, wide architectural framing, natural directional daylight, 24mm lens, editorial quality", member_names, brand=brand),
-                _sanitize_zimage_prompt(f"{gal_subjs[1]}, tight macro material study, sculpted shadows, 85mm shallow depth of field, studio detail", member_names, brand=brand),
+                _sanitize_zimage_prompt(f"{gal_subjs[0]}, wide architectural framing, {g0_light}, editorial quality", member_names, brand=brand),
+                _sanitize_zimage_prompt(f"{gal_subjs[1]}, tight macro material study, {g1_light}, studio detail", member_names, brand=brand),
             ]
         team_style = _sanitize_zimage_prompt(_clean(dossier.get("team")) or "clean editorial headshot, soft studio light, seamless neutral backdrop", brand=brand)
         raw_team_list = [_sanitize_zimage_prompt(_clean(x), member_names, brand=brand) for x in (raw.get("team") or []) if _clean(x)]
@@ -1261,7 +1376,7 @@ def run_content_pipeline(
             team_raw.append(_sanitize_zimage_prompt(distinct_p, member_names, brand=brand))
         raw_logo_p = _clean(raw.get("brand_logo") or raw.get("logo"))
         if not raw_logo_p or len(raw_logo_p) < 35:
-            raw_logo_p = _default_logo_base_prompt(brand, brief, "", lang)
+            raw_logo_p = _default_logo_base_prompt(brand, brief, user_logo_prompt, lang)
         logo_prompt_clean = _sanitize_zimage_prompt(raw_logo_p, member_names + brand_words, brand=brand)
         visuals = {
             "logo": logo_prompt_clean or _sanitize_zimage_prompt(_default_logo_base_prompt("", brief, "minimalist geometric vector emblem", "en"), brand_words),

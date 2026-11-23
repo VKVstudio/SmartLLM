@@ -147,5 +147,8 @@
   "lbl_polarity": "Theme Polarity (Light / Dark)",
   "btn_pol_auto": "Auto (Canon Default)",
   "btn_pol_light": "Light Theme",
-  "btn_pol_dark": "Dark Theme"
+  "btn_pol_dark": "Dark Theme",
+  "lbl_motion_engine": "Motion Engine (MIT / Scroll-Driven)",
+  "lbl_motion_hint": "Motion 14 + Lenis or Anime.js deliver GSAP-class scroll choreography and spring staggers under 100% offline MIT licenses.",
+  "lbl_exp_motion": "Landing Motion Engine (MIT / CSS)"
 }

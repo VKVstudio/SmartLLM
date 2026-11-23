@@ -18,6 +18,7 @@
     selectedPages: ["index", "about", "services", "portfolio", "pricing", "contact"],
     siteType: "single",
     polarity: "auto",
+    motion: "motion",
     stageOpen: false,
     blockPrompts: {}
   };
@@ -54,6 +55,50 @@
       b.className = active ? "btn btn-primary" : "btn";
     });
     renderCanons();
+  }
+
+  function normalizeMotionId(val) {
+    var low = String(val || "").trim().toLowerCase();
+    if (!low || low === "gsap" || low === "gsap_scrolltrigger" || low === "gsap-scrolltrigger" || low === "motion") return "motion";
+    if (low === "animejs" || low === "anime") return "animejs";
+    if (low === "lenis" || low === "smooth_scroll") return "lenis";
+    if (low === "three" || low === "threejs") return "three";
+    if (low === "css_scroll_driven" || low === "css") return "css_scroll_driven";
+    if (low === "reduced_motion_instant" || low === "minimal" || low === "none") return "reduced_motion_instant";
+    return "motion";
+  }
+
+  function renderMotionSelects() {
+    var motions = (store.catalog && store.catalog.motions) || [
+      { id: "motion", name_en: "Motion 14 + Lenis (GSAP-class MIT)", name_ru: "Motion 14 + Lenis (уровень GSAP, MIT)" },
+      { id: "animejs", name_en: "Anime.js 4.5 + Lenis Timeline (MIT)", name_ru: "Anime.js 4.5 + Lenis таймлайны (MIT)" },
+      { id: "css_scroll_driven", name_en: "Native CSS Scroll-Driven (0 KB JS)", name_ru: "Нативный CSS Scroll-Driven (0 КБ JS)" },
+      { id: "lenis", name_en: "Lenis Smooth Scroll (MIT)", name_ru: "Lenis плавный скролл (MIT)" },
+      { id: "three", name_en: "Three.js + Lenis Spatial (MIT)", name_ru: "Three.js + Lenis 3D-сцена (MIT)" },
+      { id: "reduced_motion_instant", name_en: "Zero-Motion Instant Layout", name_ru: "Без анимаций (мгновенный рендер)" }
+    ];
+    ["s3-motion-select", "exp-motion-select"].forEach(function (selId) {
+      var sel = el(selId);
+      if (!sel) return;
+      sel.innerHTML = "";
+      motions.forEach(function (m) {
+        var opt = document.createElement("option");
+        opt.value = m.id;
+        opt.textContent = store.lang === "ru" ? (m.name_ru || m.name_en || m.id) : (m.name_en || m.id);
+        sel.appendChild(opt);
+      });
+      sel.value = store.motion;
+    });
+  }
+
+  function setMotion(val) {
+    var norm = normalizeMotionId(val);
+    store.motion = norm;
+    if (store.draft) store.draft.motion = norm;
+    ["s3-motion-select", "exp-motion-select"].forEach(function (selId) {
+      var sel = el(selId);
+      if (sel && sel.value !== norm) sel.value = norm;
+    });
   }
 
   function syncProjectPathDisplay(pathStr) {
@@ -156,6 +201,7 @@
     var ind = el("lang-indicator");
     if (ind) ind.textContent = store.lang === "ru" ? "RU | EN" : "EN | RU";
     renderCanons();
+    renderMotionSelects();
     renderPagesAndBlocksChecklists();
     renderBlockDescriptionInputs();
     if (el("s1-folder-input")) syncProjectPathDisplay(el("s1-folder-input").value);
@@ -577,7 +623,7 @@
   function syncCompanyFromInputs() {
     var val = function (id) { var e = el(id); return e ? e.value.trim() : ""; };
     var splitList = function (raw, sep) { return raw.split(sep).map(function (x) { return x.trim(); }).filter(Boolean); };
-    store.company = {
+    store.company = Object.assign({}, store.company || {}, {
       tagline: val("s5-tagline"),
       positioning: val("s5-positioning"),
       values: splitList(val("s5-values"), /[|\n]+/),
@@ -587,7 +633,7 @@
       phone: val("s5-phone"),
       email: val("s5-email"),
       hours: val("s5-hours")
-    };
+    });
   }
 
   function initializeCompanyState() {
@@ -912,6 +958,7 @@
           languages: el("exp-lang-select").value,
           canon_id: el("exp-canon-select").value || undefined,
           polarity: store.polarity,
+          motion: store.motion,
           render_images: true
         }
       : {
@@ -921,9 +968,11 @@
           name: el("s2-name").value,
           brief: el("s2-desc").value,
           goal: el("s2-desc").value,
+          logo_prompt: el("s2-logo-prompt") ? el("s2-logo-prompt").value.trim() : "",
           selected_logo_path: store.draft ? store.draft.selected_logo_path : undefined,
           canon_id: store.draft ? store.draft.canon_id : "01_bento_grid",
           polarity: store.polarity,
+          motion: store.motion,
           site_type: store.siteType,
           selected_pages: activePageSlugs(),
           page_blocks: store.pageBlocks,
@@ -1115,6 +1164,7 @@
     el("exp-brief-input").addEventListener("input", function () {});
     el("exp-lang-select").addEventListener("change", function () {});
     el("exp-canon-select").addEventListener("change", function () {});
+    if (el("exp-motion-select")) el("exp-motion-select").addEventListener("change", function (ev) { setMotion(ev.target.value); });
     el("exp-generate-btn").addEventListener("click", function () { runOrchestratorBuild("auto"); });
     el("exp-open-folder-btn").addEventListener("click", function () {
       revealProjectFolder(el("exp-folder-input").value || (store.draft && store.draft.output_dir) || "", "exp-status-readout");
@@ -1168,6 +1218,7 @@
     // Step 3 controls
     el("s3-canon-search").addEventListener("input", renderCanons);
     el("s3-canon-cat").addEventListener("change", renderCanons);
+    if (el("s3-motion-select")) el("s3-motion-select").addEventListener("change", function (ev) { setMotion(ev.target.value); });
     ["auto", "light", "dark"].forEach(function (mode) {
       var btn = el("s3-polarity-" + mode);
       if (btn) btn.addEventListener("click", function () { setPolarity(mode); });
@@ -1429,6 +1480,9 @@
           if (draftLang === "ru" || draftLang === "en" || draftLang === "en+ru") {
             el("s1-lang").value = draftLang;
           }
+          if (store.draft.logo_prompt && el("s2-logo-prompt")) {
+            el("s2-logo-prompt").value = String(store.draft.logo_prompt);
+          }
         }
         initializePageState();
         initializeCompanyState();
@@ -1441,6 +1495,11 @@
         var initLang = (st && st.settings && st.settings.language) || "ru";
         setStageOpen(false);
         setPolarity((store.draft && store.draft.polarity) || "auto");
+        var initMotion = (store.draft && store.draft.motion) || "motion";
+        if (store.draft && store.draft.name === "Quartz-Field Atelier" && (store.draft.revision || 1) <= 1 && initMotion === "css_scroll_driven") {
+          initMotion = "motion";
+        }
+        setMotion(initMotion);
         syncRouteSelectFromDraft(store.draft);
         translateDOM(initLang);
         if (st && st.paths) {

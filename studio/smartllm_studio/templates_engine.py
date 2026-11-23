@@ -146,11 +146,29 @@ def materialize_all_themes_and_stack_docs() -> list[str]:
     return written
 
 
+def normalize_motion_id(motion: str) -> str:
+    """Normalize legacy/alias motion presets onto verified offline MIT / native CSS modes."""
+    low = str(motion or "").strip().lower()
+    if low in ("", "gsap", "gsap_scrolltrigger", "gsap-scrolltrigger", "motion+lenis", "motion"):
+        return "motion"
+    if low in ("anime", "animejs", "anime.js", "animejs+lenis"):
+        return "animejs"
+    if low in ("lenis", "smooth", "smooth_scroll"):
+        return "lenis"
+    if low in ("three", "threejs", "spatial_3d"):
+        return "three"
+    if low in ("css", "css_scroll_driven", "css-scroll-driven", "scroll_driven"):
+        return "css_scroll_driven"
+    if low in ("reduced", "reduced_motion", "reduced_motion_instant", "minimal", "none", "static"):
+        return "reduced_motion_instant"
+    return "motion"
+
+
 def bundle_vendor_assets_for_canon(canon_id: str, project_dir: Path, motion_mode: str = "css_scroll_driven") -> dict[str, Any]:
-    """Copy verified SIL OFL-1.1 .woff2 fonts + optional MIT JS motion library into <project>/assets/."""
+    """Copy verified SIL OFL-1.1 .woff2 fonts + optional MIT JS motion libraries into <project>/assets/."""
     manifest_file = VENDOR_DIR / "MANIFEST.json"
     if not manifest_file.exists():
-        return {"font_css": "", "files": [], "js_relpath": ""}
+        return {"font_css": "", "files": [], "js_relpath": "", "js_relpaths": []}
 
     c = load_canon_kb(canon_id)
     pmap = _pkg_font_map()
@@ -177,15 +195,15 @@ def bundle_vendor_assets_for_canon(canon_id: str, project_dir: Path, motion_mode
             # Ensure url('assets/fonts/...') resolves both from root HTML and styles/
             css_parts.append(txt.replace(f"./assets/fonts/{fid}/", f"assets/fonts/{fid}/"))
 
-    js_rel = ""
-    motion_map = {
-        "motion": ("motion", "motion.js"),
-        "animejs": ("animejs", "anime.esm.min.js"),
-        "lenis": ("lenis", "lenis.mjs"),
-        "three": ("three", "three.module.js"),
+    norm_motion = normalize_motion_id(motion_mode) if motion_mode else "css_scroll_driven"
+    motion_bundles: dict[str, list[tuple[str, str]]] = {
+        "motion": [("lenis", "lenis.min.js"), ("motion", "motion.js")],
+        "animejs": [("lenis", "lenis.min.js"), ("animejs", "anime.umd.min.js")],
+        "lenis": [("lenis", "lenis.min.js")],
+        "three": [("lenis", "lenis.min.js"), ("three", "three.module.js")],
     }
-    if motion_mode in motion_map:
-        lib_id, entry = motion_map[motion_mode]
+    js_rels: list[str] = []
+    for lib_id, entry in motion_bundles.get(norm_motion, []):
         src_js_dir = VENDOR_DIR / "js" / lib_id
         if src_js_dir.is_dir():
             dst_js_dir = project_dir / "assets" / "vendor" / lib_id
@@ -193,11 +211,14 @@ def bundle_vendor_assets_for_canon(canon_id: str, project_dir: Path, motion_mode
             for jf in sorted(src_js_dir.iterdir()):
                 if jf.is_file():
                     shutil.copy2(jf, dst_js_dir / jf.name)
-                    rel_files.append(f"assets/vendor/{lib_id}/{jf.name}")
-            if (dst_js_dir / entry).exists():
-                js_rel = f"assets/vendor/{lib_id}/{entry}"
+                    rel_p = f"assets/vendor/{lib_id}/{jf.name}"
+                    if rel_p not in rel_files:
+                        rel_files.append(rel_p)
+            if (dst_js_dir / entry).exists() and lib_id != "three":
+                js_rels.append(f"assets/vendor/{lib_id}/{entry}")
 
-    return {"font_css": "\n".join(css_parts), "files": rel_files, "js_relpath": js_rel}
+    js_rel = js_rels[-1] if js_rels else (f"assets/vendor/three/three.module.js" if norm_motion == "three" else "")
+    return {"font_css": "\n".join(css_parts), "files": rel_files, "js_relpath": js_rel, "js_relpaths": js_rels}
 
 
 def normalize_stack_id(stack: str) -> str:

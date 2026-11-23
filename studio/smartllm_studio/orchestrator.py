@@ -165,29 +165,58 @@ _LOGO_LITERAL_STOPWORDS_RE = re.compile(
 _LOGO_FALLBACK_SPECS = [
     (
         "Pictogram",
-        "Flat geometric vector pictogram of twin arched bridge spans crowned by a sunlit amber keystone, flat terracotta brick and deep charcoal matte on a warm cream paper solid backdrop",
+        "Flat geometric vector pictogram symbolizing the brand craft with crisp interlocking geometry, high-contrast signature pigment and deep charcoal matte on a warm alabaster solid backdrop",
     ),
     (
         "Negative Space",
-        "Clever negative-space silhouette emblem carving an ascending folded prism inside a solid stepped gateway form, warm champagne gold on a deep obsidian matte solid backdrop",
+        "Clever negative-space silhouette emblem carving an inner geometric aperture inside a bold solid block form, rich warm pigment on a deep obsidian matte solid backdrop",
     ),
     (
         "Geometric Abstraction",
-        "Constructivist Bauhaus geometric abstraction built from three overlapping precision circles and a sharp 45-degree diagonal light beam, deep Prussian blue and burnt copper on a soft stone-ivory solid backdrop",
+        "Constructivist Bauhaus geometric abstraction built from precision overlapping closed geometric contours and balanced symmetry, bold signature hue on a soft stone-ivory solid backdrop",
     ),
     (
         "Circular Seal",
-        "Symmetrical circular heritage crest formed by a crisp heavy ring enclosing a stylized Nordic spruce leaf and horizon arc, deep forest pine and burnished brass on a warm alabaster solid backdrop",
+        "Symmetrical enclosed badge emblem framed by a crisp outer ring and inner geometric frame, refined signature accent and charcoal ink on a warm alabaster solid backdrop",
     ),
     (
         "Bold Silhouette",
-        "Confident monolithic sculptural silhouette formed from two interlocking tilted stone slabs framing a diamond spark, crisp alabaster ivory and amber gold on a midnight slate solid backdrop",
+        "Confident monolithic sculptural silhouette formed from solid interlocking planes with razor-sharp vertices, crisp signature accent on a midnight slate solid backdrop",
     ),
     (
         "Line Art",
-        "Uniform monoline continuous-stroke infinity knot twisted around a Gothic pointed arch diamond, deep crimson vermilion and warm graphite on a light parchment solid backdrop",
+        "Uniform monoline continuous-stroke closed-loop geometric knot with clean 90-degree and curved transitions, bold vermilion pigment and warm graphite on a light parchment solid backdrop",
     ),
 ]
+
+_RU_LOGO_CUE_DICT: tuple[tuple[str, str], ...] = (
+    (r"красн\w*|ал\w*|бордов\w*|кармин\w*", "crimson vermilion red"),
+    (r"син\w*|голуб\w*|кобальт\w*", "deep cobalt blue"),
+    (r"зел[её]н\w*|изумруд\w*", "emerald forest green"),
+    (r"ж[её]лт\w*|золот\w*|янтар\w*", "warm amber gold"),
+    (r"оранж\w*|терракот\w*", "signal orange terracotta"),
+    (r"фиолет\w*|пурпур\w*", "royal violet"),
+    (r"ч[её]рн\w*|графит\w*|т[её]мн\w*", "deep matte charcoal obsidian"),
+    (r"бел\w*|светл\w*|крем\w*", "pure ivory white"),
+    (r"четырехуголь\w*|четырёхуголь\w*|квадрат\w*|прямоуголь\w*|ромб\w*", "continuous looped quadrilateral square frame geometry"),
+    (r"закольц\w*|кольц\w*|петл\w*|бесконечн\w*", "seamless closed-loop endless ribbon circuit"),
+    (r"круг\w*|сфер\w*|окружн\w*", "precision circular geometry"),
+    (r"треуголь\w*|пирамид\w*", "sharp triangular facet geometry"),
+    (r"свет\w*|луч\w*|ламп\w*|абажур\w*|люстр\w*", "architectural luminous shade and warm sculpted light beam"),
+    (r"лини\w*|контур\w*|монолин\w*", "uniform monoline continuous stroke"),
+    (r"геометр\w*|минимал\w*", "minimalist Swiss Bauhaus geometry"),
+)
+
+
+def _translate_logo_cues(raw_text: str) -> str:
+    low = str(raw_text or "").lower()
+    translated: list[str] = []
+    for rx, en_phrase in _RU_LOGO_CUE_DICT:
+        if re.search(rx, low) and en_phrase not in translated:
+            translated.append(en_phrase)
+    ascii_tokens = re.findall(r"[A-Za-z0-9-]+", str(raw_text or ""))
+    combined = " ".join(translated + ascii_tokens).strip()
+    return " ".join(combined.split())[:180]
 
 
 def _strip_brand_tokens_for_logo(text: str, brand_name: str, logo_prompt: str = "") -> str:
@@ -200,14 +229,14 @@ def _strip_brand_tokens_for_logo(text: str, brand_name: str, logo_prompt: str = 
 
 
 def _default_logo_base_prompt(brand_name: str, description: str, logo_prompt: str, lang: str) -> str:
-    raw_mood = _strip_brand_tokens_for_logo(logo_prompt or description or "", brand_name)
-    raw_mood = re.sub(r"[^A-Za-z0-9 ,.-]+", " ", raw_mood)
-    mood = " ".join(raw_mood.split())[:160].strip(" ,.-")
+    raw_src = _strip_brand_tokens_for_logo(logo_prompt or description or "", brand_name)
+    mood = _translate_logo_cues(logo_prompt or description or "") or " ".join(re.findall(r"[A-Za-z0-9 ,.-]+", raw_src)).strip(" ,.-")
+    mood = " ".join(mood.split())[:160].strip(" ,.-")
     if not mood:
-        mood = "architectural precision arch, Baltic heritage geometry, minimalist balanced negative space"
+        mood = "architectural precision geometry, minimalist balanced negative space"
     return (
-        f"Flat vector graphic symbol inspired by {mood}: one clean centered pictorial emblem on a solid matte backdrop, "
-        "bold Swiss Bauhaus geometry, two crisp high-contrast colors, pure iconographic silhouette, balanced negative space."
+        f"Flat vector graphic symbol strictly depicting {mood}: one clean centered pictorial emblem on a solid neutral matte backdrop, "
+        "bold Swiss Bauhaus geometry, crisp high-contrast flat pigment colors, pure iconographic silhouette, balanced negative space."
     )
 
 
@@ -219,12 +248,20 @@ def _default_logo_variant_prompts(
 ) -> list[str]:
     """Six structurally & chromatographically distinct symbol-only fallback prompts for Z-Image-Turbo."""
     ctx_words = _strip_brand_tokens_for_logo(f"{logo_prompt} {description}", brand_name)
-    ascii_cue = " ".join(re.findall(r"[A-Za-z0-9-]+", ctx_words))[:90].strip()
-    cue_tail = f" Subtle thematic inspiration: {ascii_cue}." if len(ascii_cue) >= 6 else ""
+    en_cues = _translate_logo_cues(f"{logo_prompt} {ctx_words}")
+    ascii_cue = en_cues or " ".join(re.findall(r"[A-Za-z0-9-]+", ctx_words))[:120].strip()
     out: list[str] = []
-    for _style, lead in _LOGO_FALLBACK_SPECS:
+    for style_name, lead in _LOGO_FALLBACK_SPECS:
+        if ascii_cue:
+            head = (
+                f"{style_name} flat vector emblem strictly depicting {ascii_cue}; {lead}"
+                if logo_prompt.strip()
+                else f"{lead}. Industry inspiration: {ascii_cue}"
+            )
+        else:
+            head = lead
         p = (
-            f"{lead}.{cue_tail} Pure iconographic graphic symbol, sharp anti-aliased vector edges, "
+            f"{head}. Pure iconographic graphic symbol, sharp anti-aliased vector edges, "
             "generous breathing room around the central mark, unmistakable silhouette at 32px, minimalist Swiss design."
         )
         out.append(_strip_brand_tokens_for_logo(p, brand_name, logo_prompt))
@@ -238,33 +275,45 @@ def _expand_logo_prompt_with_llm(
     logo_prompt: str,
     lang: str,
 ) -> tuple[list[str], str]:
-    """Ask SmartLLM-v2 for 6 truly different visual logo concepts in a single structured call."""
+    """Ask SmartLLM-v2 for 6 distinct visual logo concepts honoring explicit user color & geometry."""
     if not (logo_prompt.strip() or description.strip() or brand_name.strip()) or not _can_use_gpu(state):
         return [], "human"
     target_lang = "Russian" if str(lang).lower().startswith("ru") else "English"
+    has_user_brief = bool(logo_prompt.strip())
     sys_msg = (
         "You are an acclaimed Senior Brand Identity Director (Pentagram / Chermayeff & Geismar / Saul Bass studio). "
-        "Create SIX genuinely different flat vector graphic symbol concepts for Z-Image-Turbo (8 NFEs, --cfg-scale 1.0 positive-only). "
+        "Create SIX distinct flat vector graphic symbol concepts for Z-Image-Turbo (8 NFEs, --cfg-scale 1.0 positive-only). "
         "Z-Image-Turbo renders whatever words appear inside the prompt and ignores negatives, so describe ONLY pure visual forms "
         "and NEVER mention the words 'text', 'letter', 'initial', 'word', 'font', 'typography', or the client's literal name. "
         "Return ONLY valid JSON."
     )
+    if has_user_brief:
+        constraint_block = (
+            "MANDATORY USER LOGO BRIEF FIDELITY RULES:\n"
+            f"- The user explicitly requested this visual concept and color: \"{logo_prompt.strip()}\"\n"
+            "- EVERY SINGLE ONE of the 6 prompts MUST faithfully translate and depict the user's exact requested shape, loop/construction, and color(s) (e.g., if the user asks for red and looped square/quadrilateral, ALL 6 variants must feature crimson/vermilion red looped square/quadrilateral geometry in the FIRST 15 WORDS).\n"
+            "- NEVER invent unrelated themes (NO Gothic arches, NO bridges, NO green/blue replacement colors when the user asked for a specific color or shape).\n"
+            "- Achieve diversity across the 6 concepts purely through the 6 distinct graphic execution techniques (01 Pictogram, 02 Negative Space, 03 Geometric Abstraction, 04 Circular/Enclosed Seal, 05 Bold Silhouette, 06 Monoline Continuous Stroke) paired with alternating solid neutral backdrops (warm alabaster, chalk white, matte obsidian charcoal, soft cool stone) so the user's requested color stands out cleanly.\n"
+        )
+    else:
+        constraint_block = (
+            "MANDATORY DIVERSITY RULES:\n"
+            "- Translate ONLY the client's actual industry and brand brief into pure geometric & architectural shapes.\n"
+            "- Each of the 6 prompts MUST explore a distinct graphic metaphor rooted in the business plus a distinct high-contrast flat color palette and solid neutral backdrop (mix alabaster, deep obsidian charcoal with warm brass, terracotta/slate, cobalt/chalk).\n"
+        )
     user_msg = (
         f"Industry / Project brief ({target_lang}): {description or brand_name}\n"
-        f"Visual & Cultural Direction from User ({target_lang}): {logo_prompt or 'timeless architectural brand mark'}\n\n"
-        "Translate any geographic, historical, or cultural mood (such as Koenigsberg red-brick Baltic heritage, Prussian Gothic arches, "
-        "twin-river bridge geometry, amber, architectural rhythm, acoustic waves, craft tools) into PURE VISUAL SHAPES & METAPHORS.\n\n"
-        "Produce EXACTLY 6 completely different graphic concepts matching these 6 styles in order:\n"
-        "01 Pictogram: crisp single recognizable object / architectural symbol\n"
-        "02 Negative Space: clever figure-ground illusion carved out of one bold shape\n"
-        "03 Geometric Abstraction: overlapping Bauhaus circles, arcs, triangles, or angled ribs\n"
-        "04 Circular Seal: symmetrical badge ring enclosing an emblem inside\n"
-        "05 Bold Silhouette: heavy dark sculptural mass on light stone or luminous gold mark on deep obsidian\n"
-        "06 Line Art: continuous uniform-weight monoline geometric emblem\n\n"
-        "MANDATORY DIVERSITY RULES:\n"
-        "- Each of the 6 prompts MUST use a DIFFERENT concrete visual subject and a DIFFERENT color palette + background polarity (mix cream/ivory, deep obsidian/slate with brass, terracotta/navy, emerald/alabaster — NEVER repeat navy-on-white!).\n"
+        f"Explicit User Logo Direction ({target_lang}): {logo_prompt.strip() or '(none — derive directly from industry brief)'}\n\n"
+        "Produce EXACTLY 6 graphic concepts matching these 6 techniques in order:\n"
+        "01 Pictogram: crisp stylized single iconic symbol\n"
+        "02 Negative Space: clever figure-ground illusion carved out of one bold mass\n"
+        "03 Geometric Abstraction: interlocking modular circles, square paths, or angled precision ribs\n"
+        "04 Circular Seal: symmetrical outer badge ring or frame enclosing the central emblem\n"
+        "05 Bold Silhouette: heavy monolithic sculptural shape with razor-sharp contrast against solid backdrop\n"
+        "06 Line Art: continuous uniform-weight closed monoline geometric stroke emblem\n\n"
+        f"{constraint_block}"
         "- Put the physical visual object, geometry, and exact colors in the VERY FIRST 15 WORDS of each prompt.\n"
-        "- NEVER spell out the client brand name, initials, letter shapes (like 'letter K'), or write 'no text'/'without letters'.\n"
+        "- NEVER spell out the client brand name, initials, letter shapes, or write 'no text'/'without letters'.\n"
         f"- Follow this canon: {ZIMAGE_LOGO_CANON_2026}\n"
         "- Length: 55-85 words per prompt in vivid natural English.\n\n"
         'Return JSON: {"concepts": [{"style": "01 Pictogram", "prompt": "..."}, {"style": "02 Negative Space", "prompt": "..."}, '
@@ -737,6 +786,7 @@ def auto_plan_from_prompt(prompt: str, lang_pref: str = "auto", repo_root: Path 
         "languages": resolved_lang,
         "canon_id": card["id"],
         "canon_name": card["name"],
+        "motion": "motion",
         "site_type": "multi" if is_multi else "single",
         "selected_pages": selected_pages,
         "page_blocks": page_blocks,
@@ -949,6 +999,11 @@ def _generate_company_with_llm(
         "contacts, exact products/pricing tiers, core capabilities, verified metrics, workflow steps, and a fixed canonical team roster. "
         "Return ONLY valid JSON."
     )
+    values_example = (
+        '["Продукт — конкретный стандарт качества", "Команда — принцип работы инженеров", "Клиенты — гарантия и прозрачность сроков"]'
+        if str(lang).lower().startswith("ru")
+        else '["Product — concrete quality standard", "Team — engineering ethos", "Clients — delivery commitment"]'
+    )
     user_msg = (
         f"Brand name: {brand_name}\nBrief: {brief}\n\n"
         f"Write all user-facing text in {target_lang}. Be specific, no clichés.\n"
@@ -961,7 +1016,7 @@ def _generate_company_with_llm(
         "{\n"
         '  "tagline": "6-12 word tagline",\n'
         '  "positioning": "1-2 sentence positioning",\n'
-        '  "values": ["Product: concrete standard", "Team: concrete standard", "Clients: concrete standard"],\n'
+        f'  "values": {values_example},\n'
         '  "priorities": ["priority 1", "priority 2", "priority 3", "priority 4"],\n'
         '  "cities": ["city 1", "city 2"],\n'
         '  "address": "street address",\n'
@@ -1063,24 +1118,44 @@ def _generate_page_prompts_with_llm(
     active_pages = [(slug, blks) for slug, blks in active_pages if blks]
     if not active_pages:
         return {}, {"_failed_pages": []}
-    hints = {
-        "manifesto": "Tagline | one positioning sentence",
-        "values": "Product: ... | Team: ... | Clients: ...",
-        "priorities": "Priority | Priority | Priority | Priority",
-        "locations": "City | City | full street address | working hours",
-        "contact": "phone | email | address | working hours",
-        "faq": "Question? Answer | Question? Answer | Question? Answer",
-        "process": "01 Step — outcome | 02 Step — outcome | 03 Step — outcome",
-        "team": "Name — role | Name — role | Name — role",
-        "blog": "Article title — one-line summary | Article title — one-line summary",
-        "stats": "Value — label | Value — label | Value — label",
-        "pricing": "Tier: scope & price | Tier: scope & price | Tier: scope & price",
-        "features": "Feature | Feature | Feature",
-        "testimonials": "Client outcome | Client outcome | Client outcome",
-        "hero": "1-2 sentences",
-        "cta": "one conversion sentence",
-        "legal": "Paragraph | Paragraph | Paragraph",
-    }
+    if str(lang).lower().startswith("ru"):
+        hints = {
+            "manifesto": "<Девиз> | <Одно предложение позиционирования специально под назначение ЭТОЙ страницы>",
+            "values": "Продукт — <конкретный стандарт> | Команда — <принцип работы> | Клиенты — <обязательство>",
+            "priorities": "<Приоритет 1> | <Приоритет 2> | <Приоритет 3> | <Приоритет 4>",
+            "locations": "<Город> — <полный адрес> | ...",
+            "contact": "<телефон> | <email> | <адрес> | <часы работы>",
+            "faq": "<Вопрос?> <Развёрнутый ответ.> | <Вопрос?> <Развёрнутый ответ.>",
+            "process": "01 <Этап> — <результат> | 02 <Этап> — <результат> | 03 <Этап> — <результат> | 04 <Этап> — <результат>",
+            "team": "<Имя Фамилия> — <должность и специализация> | ...",
+            "blog": "<Заголовок экспертной статьи> — <краткая суть вывода> | ...",
+            "stats": "<Число/метрика> — <подпись> | ...",
+            "pricing": "<Тариф> — <состав> — <точная цена с валютой> | ...",
+            "features": "<Направление> — <техническая выгода> | ...",
+            "testimonials": "<Имя Фамилия, роль или объект> — <конкретный отзыв клиента с измеримым результатом> | ...",
+            "hero": "1-2 конкретных предложения оффера этой страницы",
+            "cta": "Одно конверсионное предложение с конкретным следующим шагом",
+            "legal": "<Политика конфиденциальности> | <Условия оказания услуг> | <Реквизиты>",
+        }
+    else:
+        hints = {
+            "manifesto": "<Tagline> | <One positioning sentence tailored specifically to THIS page>",
+            "values": "Product — <standard> | Team — <practice> | Clients — <promise>",
+            "priorities": "Priority | Priority | Priority | Priority",
+            "locations": "City — street address | ...",
+            "contact": "phone | email | address | working hours",
+            "faq": "Question? Answer | Question? Answer | Question? Answer",
+            "process": "01 Step — outcome | 02 Step — outcome | 03 Step — outcome | 04 Step — outcome",
+            "team": "First Last — role | First Last — role | First Last — role",
+            "blog": "Article title — one-line technical takeaway | ...",
+            "stats": "Value — label | Value — label | Value — label",
+            "pricing": "Tier — scope — exact price | Tier — scope — exact price | Tier — scope — exact price",
+            "features": "Capability — concrete benefit | Capability — concrete benefit | Capability — concrete benefit",
+            "testimonials": "Client Name, Role / Project — specific measurable review quote | ...",
+            "hero": "1-2 concrete offer sentences tailored to this page",
+            "cta": "one clear conversion sentence",
+            "legal": "Privacy paragraph | Terms paragraph | Legal details paragraph",
+        }
     sys_msg = (
         "You are SmartLLM v2 Web Copywriter. Write page-specific website copy for every requested key. "
         "Return ONLY valid JSON."
@@ -1109,12 +1184,22 @@ def _generate_page_prompts_with_llm(
             if slug == "index"
             else ""
         )
+        subpage_rule = (
+            " For this subpage, write 'manifesto' second sentence tailored to THIS page's specific role rather than repeating the homepage tagline verbatim."
+            if slug not in ("index", "about")
+            else ""
+        )
+        ru_rule = (
+            " Use ONLY Russian labels 'Продукт — ... | Команда — ... | Клиенты — ...' in 'values' (never English Product:/Team:/Clients:). For 'testimonials', write real attributed quotes 'Имя, должность/проект — конкретный измеримый отзыв'."
+            if str(lang).lower().startswith("ru")
+            else " For 'testimonials', write real attributed quotes 'Client Name, Role — concrete measurable outcome'."
+        )
         user_msg = (
             f"Brand name: {brand_name}\nBrief: {brief}\n"
             f"Page: {page_title(slug, lang)} ({slug})\n"
             f"Brand foundation (single source of truth — keep team, products/prices, capabilities, metrics, and contacts 100% consistent across ALL pages): "
             f"{company_json}\n\n"
-            f"Write all values in {target_lang}. Keep each value concise and specific to the '{slug}' page. "
+            f"Write all values in {target_lang}. Keep each value concise and specific to the '{slug}' page.{subpage_rule}{ru_rule} "
             "Use the brand foundation for manifesto, values, priorities, locations, team, pricing, and contact. "
             "Never put pricing tiers into 'features'; put pricing ONLY in 'pricing'. Separate list items with ' | '. Every value MUST be a plain string.\n"
             "Required format per block type:\n"
@@ -1197,7 +1282,7 @@ def autofill_blocks_smart(
         fallback_company = build_default_company(brand_name, brief, norm_lang)
         llm_company = _generate_company_with_llm(state, brand_name, brief, norm_lang)
         if llm_company:
-            company = {**fallback_company, **llm_company}
+            company = {**fallback_company, **llm_company, "_source": "autofill"}
         set_progress(45, "Бренд-основа готова. Генерируем блоки по страницам...", "Brand foundation ready. Generating page-specific blocks...")
         fallback_pages = build_page_block_prompts(brand_name, brief, page_blocks, norm_lang, company)
 
@@ -1376,6 +1461,8 @@ class ProjectOrchestrator:
             if isinstance(payload.get("seo"), dict):
                 seo_keep.update(payload["seo"])
             merged["seo"] = seo_keep
+            from .templates_engine import normalize_motion_id
+            merged["motion"] = normalize_motion_id(str(payload.get("motion") or merged.get("motion") or "motion"))
             if "geo" in payload:
                 merged["geo"] = payload["geo"]
             else:
@@ -1565,7 +1652,7 @@ class ProjectOrchestrator:
                         )
                     tmp_auto_logo = assets_dir / "_auto_brand_logo.png"
                     if not has_custom_logo:
-                        raw_lp = str(visuals.get("logo") or _default_logo_base_prompt(str(merged.get("name") or ""), brief_for_llm, "", norm_lang))
+                        raw_lp = str(visuals.get("logo") or _default_logo_base_prompt(str(merged.get("name") or ""), brief_for_llm, str(merged.get("logo_prompt") or ""), norm_lang))
                         l_clean = _sanitize_zimage_prompt(raw_lp, team_names + [str(merged.get("name") or "")])
                         batch_items.append(
                             {

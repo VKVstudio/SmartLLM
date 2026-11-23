@@ -421,6 +421,81 @@ def run_all_tests() -> dict[str, object]:
             srv_exp.shutdown()
             srv_exp.server_close()
 
+    # 14. v0.0.5-beta Upgrade Regressions: MIT Motion wiring, 20-canon signature CSS, faithful logos, luminous domain, copy truth
+    from smartllm_studio.orchestrator import _default_logo_variant_prompts
+    from smartllm_studio.pipeline import _is_luminous_domain, _sync_page_copy_to_foundation
+    from smartllm_studio.templates_engine import normalize_motion_id
+
+    orch_src = (PKG_ROOT / "orchestrator.py").read_text(encoding="utf-8")
+    assert "Koenigsberg" not in orch_src and "Prussian Gothic" not in orch_src
+    ru_logo_prompts = _default_logo_variant_prompts(
+        "Абажур Labs", "Студия световых решений", "красный логотип закольцован в четырехугольник", "ru"
+    )
+    assert len(ru_logo_prompts) == 6
+    assert all("crimson" in p.lower() and "quadrilateral" in p.lower() for p in ru_logo_prompts), ru_logo_prompts[0]
+
+    assert _is_luminous_domain("Абажур Labs", "Студия световых решений, инсталляции")
+    assert _is_luminous_domain("Lumen Atelier", "Bespoke architectural lighting design")
+    assert not _is_luminous_domain("SoundCraft", "Acoustic timber panels and diffusers")
+
+    assert normalize_motion_id("gsap_scrolltrigger") == "motion"
+    assert normalize_motion_id("animejs") == "animejs"
+    assert normalize_motion_id("css_scroll_driven") == "css_scroll_driven"
+
+    synced_sub = _sync_page_copy_to_foundation(
+        "portfolio",
+        {
+            "values": "Product: Точная сборка | Team: Инженеры | Clients: Прозрачная смета",
+            "manifesto": "Свет как материал | Инженерная светотехника",
+        },
+        {"tagline": "Свет как материал", "positioning": "Инженерная светотехника"},
+        "ru",
+        set(),
+    )
+    assert "Продукт — Точная сборка" in synced_sub["values"] and "Product:" not in synced_sub["values"], synced_sub["values"]
+    assert synced_sub["manifesto"] != "Свет как материал | Инженерная светотехника", synced_sub["manifesto"]
+
+    with tempfile.TemporaryDirectory(prefix="smartllm_motion_v005_") as mtd:
+        mtd_p = Path(mtd)
+        for m_in, expected_scripts in (
+            ("gsap_scrolltrigger", ("assets/vendor/lenis/lenis.min.js", "assets/vendor/motion/motion.js")),
+            ("animejs", ("assets/vendor/lenis/lenis.min.js", "assets/vendor/animejs/anime.umd.min.js")),
+        ):
+            mdir = mtd_p / f"m_{m_in}"
+            bp_m = compile_project_blueprint(
+                {
+                    "id": f"m_{m_in}",
+                    "name": "Абажур Labs",
+                    "brief": "Студия архитектурного освещения",
+                    "languages": "en+ru",
+                    "canon_id": "10_industrial_tactile",
+                    "polarity": "light",
+                    "motion": m_in,
+                    "output_dir": str(mdir),
+                    "site_type": "single",
+                    "selected_blocks": ["hero", "features", "stats", "pricing", "testimonials", "faq", "cta", "contact"],
+                },
+                repo_root=REPO_ROOT,
+            )
+            sc_m = bp_m["audit_scorecard"]
+            assert all(sc_m[k]["passed"] for k in ("csp", "headers", "a11y", "seo", "geo")), (m_in, sc_m)
+            html_m = (mdir / "index.html").read_text(encoding="utf-8")
+            css_m = (mdir / "tokens.css").read_text(encoding="utf-8")
+            assert len(html_m.encode("utf-8")) < 200_000
+            assert 'data-canon="10_industrial_tactile"' in html_m
+            assert "radial-gradient(circle, var(--border-control)" in css_m
+            for rel_s in expected_scripts:
+                assert (mdir / rel_s).exists(), rel_s
+                assert f'<script src="{rel_s}" defer></script>' in html_m
+
+    app_js_src = (PKG_ROOT / "static" / "app.js").read_text(encoding="utf-8")
+    studio_css_src = (PKG_ROOT / "static" / "styles.css").read_text(encoding="utf-8")
+    assert 'id="s3-motion-select"' in index_src and 'id="exp-motion-select"' in index_src
+    assert set(en_i18n) == set(ru_i18n) and "lbl_motion_engine" in en_i18n and "lbl_exp_motion" in ru_i18n
+    assert "Object.assign({}, store.company || {}" in app_js_src
+    assert "logo_prompt:" in app_js_src and "s2-logo-prompt" in app_js_src
+    assert "flex-wrap: wrap;" in studio_css_src and ".canon-card-head strong" in studio_css_src
+
     results["status"] = "ALL_PHASE2_GATES_PASSED"
     return results
 

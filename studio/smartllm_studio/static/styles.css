@@ -420,9 +420,15 @@ textarea { min-height: 76px; resize: vertical; }
 }
 .canon-card-head {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.canon-card-head strong {
+  min-width: 0;
+  flex: 1 1 120px;
+  overflow-wrap: break-word;
 }
 .canon-polarity-badge {
   font-family: var(--font-code);

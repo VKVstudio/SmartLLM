@@ -154,6 +154,9 @@ class StudioState:
                 str(draft.get("brief") or draft.get("goal") or ""),
                 "en" if str(draft.get("languages") or "").lower() == "en" else "ru",
             )
+        from .templates_engine import normalize_motion_id
+        if draft.get("motion"):
+            draft["motion"] = normalize_motion_id(str(draft.get("motion")))
         return draft
 
     def project_dir(self, project_id: str) -> Path:

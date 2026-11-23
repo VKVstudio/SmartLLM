@@ -147,5 +147,8 @@
   "lbl_polarity": "Тема оформления (Светлая / Тёмная)",
   "btn_pol_auto": "Авто (по канону)",
   "btn_pol_light": "Светлая тема",
-  "btn_pol_dark": "Тёмная тема"
+  "btn_pol_dark": "Тёмная тема",
+  "lbl_motion_engine": "Движок анимации (MIT / Scroll-Driven)",
+  "lbl_motion_hint": "Motion 14 + Lenis или Anime.js дают плавный скролл, стэггер и параллакс уровня GSAP полностью офлайн по лицензии MIT.",
+  "lbl_exp_motion": "Движок анимации лендинга (MIT / CSS)"
 }

@@ -262,6 +262,148 @@ h3 {{ font-family: var(--font-heading); font-size: 1.25rem; margin: 0 0 0.5rem 0
 """
 
 
+def _build_canon_signature_css(canon_id: str, polarity: str, d: dict[str, Any]) -> str:
+    """Emit unmistakable architectural UI signatures tailored to each of the 20 design canons."""
+    cid = resolve_canon_id(canon_id)
+    non_faq = ".spec-card, .price-card, .review-card, .stat-card, .team-card, .blog-card, .gallery-card, .location-card, .process-step, .priority-item"
+    nf_is = f":is({non_faq})"
+    if cid == "10_industrial_tactile":
+        return f"""
+.site-header {{ background: var(--surface-elevated); border-bottom: 2px solid var(--border-control); box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 2px 6px rgba(0,0,0,0.08); }}
+.brand-link span {{ display: inline-flex; align-items: center; gap: 0.5rem; }}
+.brand-link span::before {{ content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-2); border: 1px solid var(--border-control); flex-shrink: 0; }}
+.nav-list a {{ background: var(--surface); border: 1px solid var(--border); box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -2px 0 rgba(0,0,0,0.08); font-family: var(--font-mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.04em; }}
+.nav-list a[aria-current="page"] {{ background: var(--bg); border-color: var(--accent); box-shadow: inset 0 2px 5px rgba(0,0,0,0.20); color: var(--text); }}
+.btn {{ background-image: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, transparent 50%, rgba(0,0,0,0.08) 100%); border: 1px solid var(--border-control); box-shadow: inset 0 1px 0 rgba(255,255,255,0.38), inset 0 -3px 0 rgba(0,0,0,0.26), 0 3px 8px -2px rgba(0,0,0,0.16); text-transform: uppercase; letter-spacing: 0.04em; transition: transform 140ms cubic-bezier(0.34, 1.45, 0.64, 1), box-shadow 140ms ease; }}
+@media (hover: hover) {{ .btn:hover {{ transform: translateY(-1px); }} }}
+.btn:active {{ transform: translateY(2px); box-shadow: inset 0 2px 5px rgba(0,0,0,0.28); }}
+{nf_is} {{ border: 1px solid var(--border); border-top: 2px solid var(--border-control); box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -2px 0 rgba(0,0,0,0.12), var(--shadow); }}
+.hero-figure, .gallery-card {{ background: var(--surface-elevated); border: 1px solid var(--border-control); padding: 0.85rem; box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), inset 0 -2px 0 rgba(0,0,0,0.16), var(--shadow); }}
+.hero-figure img, .gallery-card img {{ border: 2px solid var(--border-control); box-shadow: inset 0 2px 6px rgba(0,0,0,0.22); border-radius: calc(var(--radius-card) - 4px); }}
+.section-block > .container > h2, .contact-layout > div > h2 {{ display: flex; align-items: center; gap: 0.6rem; }}
+.section-block > .container > h2::before, .contact-layout > div > h2::before {{ content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: inset 0 1px 1px rgba(255,255,255,0.45), 0 0 0 2px color-mix(in oklab, var(--accent) 20%, transparent); flex-shrink: 0; }}
+.cta-banner {{ position: relative; overflow: hidden; border: 1px solid var(--border-control); border-top: 3px solid var(--accent); padding-right: clamp(3.75rem, 6.5vw, 6rem); }}
+.cta-banner h2 {{ max-width: 34ch; }}
+.cta-banner::after {{ content: ""; position: absolute; right: 1rem; top: 0.85rem; bottom: 0.85rem; width: 42px; opacity: 0.42; pointer-events: none; background-image: radial-gradient(circle, var(--border-control) 1.35px, transparent 1.6px); background-size: 8px 8px; }}
+.intake-form input, .intake-form textarea {{ background: var(--bg); box-shadow: inset 0 2px 5px rgba(0,0,0,0.14); border: 1px solid var(--border-control); }}
+.site-footer {{ background: var(--surface); border-top: 2px solid var(--border-control); }}
+@media (max-width: 767px) {{ .cta-banner {{ padding-right: clamp(1.5rem, 3vw, 2.5rem); }} .cta-banner::after {{ display: none; }} }}
+"""
+    if cid == "01_bento_grid":
+        return f"""
+.hero-figure, .canon-grid > :first-child {{ background: var(--surface-elevated); }}
+{nf_is} {{ box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), var(--shadow); }}
+.eyebrow {{ display: inline-block; padding: 0.2rem 0.55rem; border-radius: var(--radius-badge); background: color-mix(in oklab, var(--accent) 12%, var(--surface-elevated)); border: 1px solid color-mix(in oklab, var(--accent) 26%, var(--border)); color: var(--text); }}
+"""
+    if cid == "02_swiss_international":
+        return f"""
+{nf_is}, .faq-item, .hero-figure, .btn, .intake-form, .intake-form input, .intake-form textarea, .price-table-wrap, .cta-banner, .contact-details {{ border-radius: 0; box-shadow: none; }}
+.hero-shell, .section-block {{ border-bottom: 2px solid var(--border); }}
+.section-block .container > h2 {{ border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }}
+.spec-card h3, .price-card h3 {{ font-family: var(--font-mono); font-size: 0.9375rem; text-transform: uppercase; letter-spacing: 0.06em; }}
+"""
+    if cid == "03_editorial_magazine":
+        return f"""
+.site-header {{ border-bottom: 3px double var(--border); }}
+{nf_is} {{ border-radius: 0; box-shadow: none; background: transparent; border: 0; border-top: 2px solid var(--text); border-bottom: 1px solid var(--border); padding-inline: 0.5rem; }}
+.manifesto-statement {{ font-style: italic; border-left: 3px solid var(--accent); padding-left: 1.25rem; }}
+"""
+    if cid == "04_hyper_minimal_speed":
+        return f"""
+{nf_is} {{ background: transparent; border: 0; border-top: 1px solid var(--border); border-radius: 0; box-shadow: none; padding-inline: 0; }}
+.hero-figure, .gallery-card {{ background: transparent; border: 0; padding: 0; box-shadow: none; border-radius: 0; }}
+"""
+    if cid == "05_kinetic_typography":
+        return f"""
+.hero-shell h1 {{ font-size: clamp(2.4rem, 5vw, 4.4rem); line-height: 1.02; letter-spacing: -0.03em; }}
+{nf_is}, .hero-figure, .cta-banner {{ border: 2px solid var(--border); box-shadow: none; }}
+.marquee {{ border-block: 2px solid var(--accent); }}
+"""
+    if cid == "06_neo_brutalism":
+        return f"""
+{nf_is}, .hero-figure, .cta-banner, .contact-details, .intake-form {{ border: 3px solid var(--text); box-shadow: 6px 6px 0 var(--border); border-top-width: 6px; }}
+{nf_is}:nth-child(odd) {{ border-top-color: var(--accent); }}
+{nf_is}:nth-child(even) {{ border-top-color: var(--accent-2); }}
+.marquee {{ border-bottom: 3px solid var(--text); background: var(--accent); color: var(--accent-ink); }}
+.marquee-track span {{ color: var(--accent-ink); }}
+"""
+    if cid == "07_avant_garde_poster":
+        return f"""
+{nf_is}, .faq-item, .hero-figure, .btn, .cta-banner {{ border-radius: 0; box-shadow: none; }}
+{nf_is} {{ border: 0; border-top: 4px solid var(--accent); background: var(--surface); }}
+.priority-index {{ display: inline-flex; padding: 0.15rem 0.45rem; background: var(--accent); color: var(--accent-ink); }}
+.timeline li::before {{ border-radius: 0; }}
+"""
+    if cid == "08_liquid_glass":
+        return f"""
+body::before {{ content: ""; position: fixed; inset: -10%; z-index: -1; pointer-events: none; background: radial-gradient(40% 42% at 18% 22%, color-mix(in oklab, var(--accent) 26%, transparent), transparent 70%), radial-gradient(36% 40% at 82% 72%, color-mix(in oklab, var(--accent-2) 22%, transparent), transparent 72%); opacity: 0.72; }}
+.hero-figure, .cta-banner, .contact-details, .intake-form {{ background: color-mix(in oklab, var(--surface) 76%, transparent); backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), var(--shadow); }}
+@media (max-width: 767px) {{ {nf_is}, .hero-figure, .cta-banner {{ backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); }} }}
+"""
+    if cid == "09_aurora_obsidian_mesh":
+        return f"""
+{nf_is}, .hero-figure, .cta-banner {{ backdrop-filter: none; -webkit-backdrop-filter: none; }}
+"""
+    if cid == "11_soft_clay_playful":
+        return f"""
+{nf_is}, .hero-figure, .cta-banner, .contact-details, .intake-form {{ box-shadow: inset 0 2px 8px rgba(255,255,255,0.42), inset 0 -6px 14px rgba(0,0,0,0.14), var(--shadow); }}
+"""
+    if cid == "12_quiet_luxury_minimal":
+        return f"""
+{nf_is} {{ border: 0; box-shadow: none; background: var(--surface); }}
+.eyebrow {{ font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; }}
+.section-block {{ border-bottom-color: color-mix(in oklab, var(--border) 45%, transparent); }}
+"""
+    if cid == "13_cinematic_documentary":
+        frame_bg = "#09090b" if polarity == "dark" else "var(--surface-elevated)"
+        return f"""
+.hero-figure, .gallery-card {{ background: {frame_bg}; border: 1px solid var(--border); padding: 0.65rem; }}
+@media (max-width: 767px) {{ body::after {{ display: none; }} }}
+"""
+    if cid == "14_spatial_3d_showcase":
+        return f"""
+body {{ background-image: linear-gradient(to right, color-mix(in oklab, var(--border) 18%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in oklab, var(--border) 18%, transparent) 1px, transparent 1px); background-size: 48px 48px; }}
+.hero-figure {{ transform: perspective(1200px) rotateY(-1.2deg); box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), var(--shadow); }}
+@media (prefers-reduced-motion: reduce) {{ .hero-figure {{ transform: none; }} }}
+"""
+    if cid == "15_organic_biophilic_eco":
+        return f"""
+{nf_is}, .hero-figure {{ border-radius: 20px 6px 20px 6px; backdrop-filter: none; }}
+"""
+    if cid == "16_artisan_craft_zine":
+        return f"""
+.section-block {{ border-bottom: 1px dashed var(--border); }}
+.site-footer {{ border-top: 1px dashed var(--border); }}
+{nf_is}, .hero-figure {{ box-shadow: 4px 4px 0 var(--border); }}
+"""
+    if cid == "17_fintech_institutional":
+        return f"""
+.price-card, .stat-card, .spec-card {{ border-top: 3px solid var(--accent); box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -6px rgba(0,0,0,0.08); }}
+.price-table tbody tr:nth-child(even) {{ background: color-mix(in oklab, var(--bg) 60%, var(--surface)); }}
+"""
+    if cid == "18_devtool_command_ui":
+        return f"""
+body {{ background-image: radial-gradient(color-mix(in oklab, var(--border) 55%, transparent) 1px, transparent 1px); background-size: 24px 24px; }}
+.eyebrow::before {{ content: "> "; color: var(--accent); }}
+{nf_is}, .intake-form, .contact-details {{ backdrop-filter: none; box-shadow: none; }}
+"""
+    if cid == "19_calm_human_accessible":
+        return f"""
+.btn, .intake-form input, .intake-form textarea {{ min-height: 48px; }}
+.nav-list a:focus-visible, .btn:focus-visible, input:focus-visible, textarea:focus-visible {{ outline: 3px solid var(--accent); outline-offset: 3px; }}
+main a:not(.btn) {{ text-decoration: underline; text-underline-offset: 3px; }}
+"""
+    if cid == "20_maximalist_collage_pop":
+        return f"""
+{nf_is}, .hero-figure, .cta-banner {{ border: 2px solid var(--border); box-shadow: 5px 5px 0 var(--accent-2); }}
+.gallery-card:nth-child(odd), .review-card:nth-child(odd) {{ transform: rotate(-0.6deg); }}
+.gallery-card:nth-child(even), .review-card:nth-child(even) {{ transform: rotate(0.6deg); }}
+@media (hover: hover) {{ :is(.gallery-card, .review-card):hover {{ transform: rotate(0deg) translateY(-3px); }} }}
+@media (prefers-reduced-motion: reduce) {{ .gallery-card, .review-card {{ transform: none !important; }} }}
+"""
+    return ""
+
+
 def _build_canon_css(card: dict[str, Any], d: dict[str, Any], polarity: str = "light") -> str:
     motion = d.get("motion") or {}
     micro = d.get("micro") or {}
@@ -315,8 +457,8 @@ def _build_canon_css(card: dict[str, Any], d: dict[str, Any], polarity: str = "l
     elif surface == "tactile":
         surface_css = f""".btn {{ background-image: linear-gradient(135deg, rgba(255,255,255,0.32), transparent 55%); }}
 .btn:active {{ box-shadow: inset 0 3px 8px rgba(0,0,0,0.28); }}
-{cards} {{ transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow {press_ms}ms {ease}; }}
-@media (hover: hover) {{ {cards_is}:hover {{ transform: scale(1.015); }} }}"""
+{cards} {{ transition: transform 320ms cubic-bezier(0.34, 1.45, 0.64, 1), box-shadow {press_ms}ms {ease}; }}
+@media (hover: hover) {{ {cards_is}:hover {{ transform: translateY(-2px); }} }}"""
     elif surface == "brutal":
         surface_css = f"""{cards} {{ border: 3px solid var(--text); box-shadow: 6px 6px 0 var(--border); }}
 .btn {{ border: 3px solid var(--text); box-shadow: 5px 5px 0 var(--border); }}"""
@@ -327,6 +469,23 @@ def _build_canon_css(card: dict[str, Any], d: dict[str, Any], polarity: str = "l
         link_css = """.nav-list a, .footer-nav a, .crumbs a { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size 180ms ease-out; }
 @media (hover: hover) { .nav-list a:hover, .footer-nav a:hover, .crumbs a:hover { background-size: 100% 1px; } }"""
     variant_css = """
+html.lenis, html.lenis body { height: auto; }
+html.lenis { scroll-behavior: auto; }
+.hero-figure, .gallery-card { overflow: hidden; }
+.gallery-card img { aspect-ratio: 16 / 10; object-fit: cover; }
+.gallery-card img[src*="brand-logo"] { object-fit: contain; padding: 0.75rem; background: var(--surface-elevated); }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes slm-scroll-prog { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes slm-view-zoom { from { transform: scale(1.06); } to { transform: scale(1); } }
+  @keyframes slm-view-lift { from { transform: translateY(18px); opacity: 0.72; } to { transform: translateY(0); opacity: 1; } }
+  @supports (animation-timeline: scroll()) {
+    html[data-motion="css_scroll_driven"] .scroll-progress { animation: slm-scroll-prog linear both; animation-timeline: scroll(root block); }
+  }
+  @supports (animation-timeline: view()) {
+    html[data-motion="css_scroll_driven"] .gallery-card img { animation: slm-view-zoom linear both; animation-timeline: view(); animation-range: entry 0% cover 38%; }
+    html[data-motion="css_scroll_driven"] .cta-banner { animation: slm-view-lift linear both; animation-timeline: view(); animation-range: entry 0% cover 28%; }
+  }
+}
 .canon-grid[data-count="1"] > * { grid-column: span 12; }
 .canon-grid[data-count="2"] > *, .canon-grid[data-count="4"] > * { grid-column: span 6; }
 .canon-grid[data-count="3"] > *, .canon-grid[data-count="6"] > * { grid-column: span 4; }
@@ -352,12 +511,14 @@ def _build_canon_css(card: dict[str, Any], d: dict[str, Any], polarity: str = "l
 .feat-bento .canon-grid[data-count="3"] .spec-card { grid-column: span 4; }
 .feat-bento .canon-grid[data-count="4"] .spec-card:nth-child(1), .feat-bento .canon-grid[data-count="4"] .spec-card:nth-child(4) { grid-column: span 7; }
 .feat-bento .canon-grid[data-count="4"] .spec-card:nth-child(2), .feat-bento .canon-grid[data-count="4"] .spec-card:nth-child(3) { grid-column: span 5; }
+.feat-rows .spec-card { grid-column: span 12 !important; flex-direction: row; flex-wrap: wrap; align-items: baseline; justify-content: space-between; }
 .feat-matrix .spec-card { border-radius: var(--radius-card); }
 .gal-mosaic .gallery-card:first-child { grid-column: span 7; grid-row: span 2; }
 .gal-mosaic .gallery-card:nth-child(n+2) { grid-column: span 5; }
 .gal-mosaic .canon-grid[data-count="2"] .gallery-card, .gal-mosaic .canon-grid[data-count="4"] .gallery-card { grid-column: span 6; grid-row: auto; }
 .gal-mosaic .gallery-card:first-child img { height: 100%; object-fit: cover; }
 .gal-mosaic .canon-grid[data-count="2"] .gallery-card:first-child img, .gal-mosaic .canon-grid[data-count="4"] .gallery-card:first-child img { height: auto; }
+.gal-collage .gallery-card:nth-child(even) { transform: translateY(1rem); }
 .gal-filmstrip .canon-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 1rem; padding-bottom: 0.75rem; }
 .gal-filmstrip .gallery-card { min-width: min(340px, 82vw); scroll-snap-align: start; grid-column: auto; }
 .stat-band .canon-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 165px), 1fr)); }
@@ -375,25 +536,30 @@ def _build_canon_css(card: dict[str, Any], d: dict[str, Any], polarity: str = "l
 .timeline li { position: relative; padding: 0 0 1.5rem 0.75rem; }
 .timeline li::before { content: ""; position: absolute; left: -1.75rem; top: 0.35rem; width: 0.9rem; height: 0.9rem; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
 .timeline .step-index { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); margin: 0 0 0.25rem 0; }
-@media (max-width: 900px) { .canon-grid[data-count] > *, .feat-asym .spec-card, .feat-bento .spec-card, .gal-mosaic .gallery-card { grid-column: span 12 !important; grid-row: auto !important; } }
+@media (max-width: 900px) { .canon-grid[data-count] > *, .feat-asym .spec-card, .feat-bento .spec-card, .gal-mosaic .gallery-card, .gal-collage .gallery-card { grid-column: span 12 !important; grid-row: auto !important; transform: none; } }
 @media (max-width: 767px) { .hero-overlay .hero-figure { position: relative; inset: auto; margin-bottom: 1rem; } .hero-overlay .hero-figure img { opacity: 1; height: auto; } .hero-overlay::after { display: none; } }
 """
+    signature_css = _build_canon_signature_css(str(card.get("id") or ""), polarity, d)
     return f""":root {{ --reveal-dur: {dur}ms; --reveal-ease: {ease}; --reveal-stagger: {stagger}ms; --press-scale: {press}; }}
-.js .section-block [data-reveal] {{ opacity: 0; transform: {reveal_from}; {clip_extra} transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease), clip-path var(--reveal-dur) var(--reveal-ease); transition-delay: var(--rd, 0ms); }}
+.js .section-block [data-reveal] {{ opacity: 0.99; transform: {reveal_from}; {clip_done} transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease), clip-path var(--reveal-dur) var(--reveal-ease); transition-delay: var(--rd, 0ms); }}
 .js .section-block [data-reveal].is-revealed {{ opacity: 1; transform: none; {clip_done} }}
 {hover_css}
 {press_css}
 {surface_css}
 {link_css}
 {variant_css}
+{signature_css}
 """
 
 
-def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any], i18n: dict[str, dict[str, str]], bilingual: bool) -> str:
+def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any], i18n: dict[str, dict[str, str]], bilingual: bool, canon_id: str = "") -> str:
     motion_cfg = d.get("motion") or {}
     stagger = int(motion_cfg.get("stagger_ms", 40))
     parallax = bool(motion_cfg.get("parallax"))
-    progress = str(motion_cfg.get("scroll") or "none") == "progress"
+    cid_eff = resolve_canon_id(canon_id or "") if canon_id else ""
+    tilt_enabled = cid_eff in ("08_liquid_glass", "14_spatial_3d_showcase", "09_aurora_obsidian_mesh", "11_soft_clay_playful", "20_maximalist_collage_pop")
+    magnetic_enabled = motion in ("motion", "animejs") and cid_eff not in ("04_hyper_minimal_speed", "19_calm_human_accessible")
+    hero_parallax = parallax or motion in ("motion", "animejs", "lenis", "three")
     ui = UI_STRINGS.get(lang, UI_STRINGS["en"])
     i18n_json = json.dumps(i18n, ensure_ascii=False).replace("</", "<\\/") if bilingual else "{}"
     return f"""(function () {{
@@ -406,6 +572,11 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
   var I18N = {i18n_json};
   var BILINGUAL = {"true" if bilingual else "false"};
   var PRIMARY = "{lang}";
+  var MOTION_MODE = "{motion}";
+  var STAGGER_MS = {max(25, stagger)};
+  var PARALLAX_ON = {"true" if hero_parallax else "false"};
+  var MAGNETIC_ON = {"true" if magnetic_enabled else "false"};
+  var TILT_ON = {"true" if tilt_enabled else "false"};
   function applyLang(l) {{
     if (!BILINGUAL) return;
     root.lang = l;
@@ -471,7 +642,85 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
       grid.scrollBy({{ left: dir * 340, behavior: reduced ? "auto" : "smooth" }});
     }});
   }});
-  if (!reduced) {{
+  function animateStatCounters() {{
+    if (reduced || MOTION_MODE === "reduced_motion_instant") return;
+    var stats = Array.prototype.slice.call(document.querySelectorAll(".stat-value"));
+    if (!stats.length) return;
+    function runCounter(el) {{
+      if (el.getAttribute("data-counted") === "1") return;
+      el.setAttribute("data-counted", "1");
+      var raw = (el.textContent || "").trim();
+      var m = raw.match(/^([^0-9-]*)(-?[0-9][0-9., ]*)(.*)$/);
+      if (!m || /^[/:-]/.test(m[3]) || (/[-/:.]/.test(m[2]) && !/[.,][0-9]{{1,2}}$/.test(m[2]))) return;
+      var numStr = m[2].replace(/\\s+/g, "").replace(",", ".");
+      var target = parseFloat(numStr);
+      if (!isFinite(target) || target <= 0 || (target >= 1900 && target <= 2100 && !m[3])) return;
+      var decimals = (numStr.split(".")[1] || "").length;
+      var prefix = m[1] || "";
+      var suffix = m[3] || "";
+      var start = null;
+      var dur = 760;
+      function step(ts) {{
+        if (!start) start = ts;
+        var p = Math.min(1, (ts - start) / dur);
+        var eased = 1 - Math.pow(1 - p, 3);
+        var val = (target * eased).toFixed(decimals);
+        if (decimals === 0 && target >= 1000 && m[2].indexOf(" ") !== -1) {{
+          val = val.replace(/\\B(?=(\\d{{3}})+(?!\\d))/g, " ");
+        }}
+        el.textContent = prefix + val + suffix;
+        if (p < 1) window.requestAnimationFrame(step);
+        else el.textContent = raw;
+      }}
+      window.requestAnimationFrame(step);
+    }}
+    if ("IntersectionObserver" in window) {{
+      var so = new IntersectionObserver(function (entries) {{
+        entries.forEach(function (en) {{
+          if (en.isIntersecting) {{
+            runCounter(en.target);
+            so.unobserve(en.target);
+          }}
+        }});
+      }}, {{ threshold: 0.2 }});
+      stats.forEach(function (el) {{
+        var r = el.getBoundingClientRect();
+        if (r.top <= (window.innerHeight || 900)) runCounter(el);
+        else so.observe(el);
+      }});
+    }}
+  }}
+  function setupPointerInteractions() {{
+    if (reduced || !window.matchMedia || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (MAGNETIC_ON) {{
+      document.querySelectorAll(".hero-shell .cta-row .btn, .cta-banner .btn").forEach(function (btn) {{
+        btn.addEventListener("pointermove", function (ev) {{
+          var r = btn.getBoundingClientRect();
+          var dx = ((ev.clientX - r.left) / Math.max(1, r.width) - 0.5) * 10;
+          var dy = ((ev.clientY - r.top) / Math.max(1, r.height) - 0.5) * 7;
+          btn.style.transform = "translate3d(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px,0)";
+        }});
+        btn.addEventListener("pointerleave", function () {{
+          btn.style.transform = "";
+        }});
+      }});
+    }}
+    if (TILT_ON) {{
+      var heroFig = document.querySelector(".hero-shell .hero-figure");
+      if (heroFig) {{
+        heroFig.addEventListener("pointermove", function (ev) {{
+          var r = heroFig.getBoundingClientRect();
+          var rx = ((ev.clientY - r.top) / Math.max(1, r.height) - 0.5) * -4;
+          var ry = ((ev.clientX - r.left) / Math.max(1, r.width) - 0.5) * 5;
+          heroFig.style.transform = "perspective(1100px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg)";
+        }});
+        heroFig.addEventListener("pointerleave", function () {{
+          heroFig.style.transform = "";
+        }});
+      }}
+    }}
+  }}
+  if (!reduced && MOTION_MODE !== "reduced_motion_instant") {{
     var revealEls = Array.prototype.slice.call(document.querySelectorAll(".section-block [data-reveal]"));
     if (revealEls.length) {{
       var groups = {{}};
@@ -541,14 +790,111 @@ def _build_motion_and_ui_js(stack: str, motion: str, lang: str, d: dict[str, Any
       window.requestAnimationFrame(function () {{
         ticking = false;
         var max = root.scrollHeight - window.innerHeight;
-        if (bar) bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ")";
-        {"if (heroImg) { var r = heroImg.getBoundingClientRect(); if (r.bottom > 0 && r.top < window.innerHeight) heroImg.style.transform = \"translateY(\" + (window.scrollY * 0.06).toFixed(1) + \"px)\"; }" if parallax else ""}
+        if (bar && MOTION_MODE !== "css_scroll_driven") bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ")";
+        if (PARALLAX_ON && heroImg) {{
+          var r = heroImg.getBoundingClientRect();
+          if (r.bottom > 0 && r.top < window.innerHeight) heroImg.style.transform = "translateY(" + Math.min(28, window.scrollY * 0.055).toFixed(1) + "px) scale(1.03)";
+        }}
       }});
     }};
-    {"window.addEventListener(\"scroll\", onScroll, { passive: true }); onScroll();" if (progress or parallax) else ""}
+    window.addEventListener("scroll", onScroll, {{ passive: true }});
+    onScroll();
+    animateStatCounters();
+    setupPointerInteractions();
   }} else {{
     document.querySelectorAll("[data-reveal]").forEach(function (el) {{ el.classList.add("is-revealed"); }});
     root.classList.add("js");
+    root.setAttribute("data-motion-active", "reduced");
+  }}
+  function bootVendorMotion() {{
+    if (reduced || MOTION_MODE === "reduced_motion_instant") return;
+    var activeParts = [];
+    if (typeof window.Lenis === "function" && (MOTION_MODE === "motion" || MOTION_MODE === "animejs" || MOTION_MODE === "lenis" || MOTION_MODE === "three")) {{
+      try {{
+        window.__slmLenis = new window.Lenis({{
+          autoRaf: true,
+          lerp: 0.088,
+          wheelMultiplier: 1.0,
+          smoothWheel: true,
+          anchors: true,
+          respectReducedMotion: true
+        }});
+        activeParts.push("lenis");
+      }} catch (err) {{}}
+    }}
+    var M = window.Motion;
+    if (MOTION_MODE === "motion" && M && typeof M.animate === "function") {{
+      activeParts.unshift("motion");
+      try {{
+        var heroNodes = Array.prototype.slice.call(document.querySelectorAll(".hero-shell .eyebrow, .hero-shell h1, .hero-shell .lead-copy, .hero-shell .cta-row"));
+        if (heroNodes.length && typeof M.stagger === "function") {{
+          M.animate(heroNodes, {{ opacity: [0.001, 1], y: [22, 0] }}, {{ duration: 0.56, delay: M.stagger(0.065), ease: [0.22, 1, 0.36, 1] }});
+        }}
+        var hFig = document.querySelector(".hero-shell .hero-figure");
+        if (hFig) {{
+          M.animate(hFig, {{ opacity: [0.001, 1], scale: [0.96, 1] }}, {{ duration: 0.68, ease: [0.16, 1, 0.3, 1] }});
+        }}
+        var barEl = document.querySelector(".scroll-progress");
+        if (barEl && typeof M.scroll === "function") {{
+          M.scroll(function (prog) {{
+            if (typeof prog === "number") barEl.style.transform = "scaleX(" + Math.max(0, Math.min(1, prog)).toFixed(4) + ")";
+          }});
+        }}
+        if (typeof M.inView === "function" && typeof M.stagger === "function") {{
+          document.querySelectorAll(".section-block").forEach(function (sec) {{
+            var cards = Array.prototype.slice.call(sec.querySelectorAll("[data-reveal]"));
+            if (!cards.length) return;
+            M.inView(sec, function () {{
+              cards.forEach(function (c) {{ c.classList.add("is-revealed"); }});
+              M.animate(cards, {{ opacity: [0.001, 1], y: [24, 0] }}, {{ duration: 0.52, delay: M.stagger(Math.max(0.03, STAGGER_MS / 1000)), ease: [0.22, 1, 0.36, 1] }});
+            }}, {{ amount: 0.12 }});
+          }});
+        }}
+        if (PARALLAX_ON) {{
+          document.querySelectorAll(".gallery-card").forEach(function (card) {{
+            var img = card.querySelector("img");
+            if (!img || typeof M.scroll !== "function") return;
+            try {{
+              M.scroll(M.animate(img, {{ y: [-14, 14], scale: [1.06, 1.01] }}, {{ ease: "linear" }}), {{ target: card, offset: ["start end", "end start"] }});
+            }} catch (e1) {{}}
+          }});
+        }}
+      }} catch (err) {{}}
+    }} else if (MOTION_MODE === "animejs" && window.anime && typeof window.anime.animate === "function") {{
+      activeParts.unshift("animejs");
+      try {{
+        var A = window.anime;
+        var aHero = document.querySelectorAll(".hero-shell .eyebrow, .hero-shell h1, .hero-shell .lead-copy, .hero-shell .cta-row, .hero-shell .hero-figure");
+        if (aHero.length && typeof A.createTimeline === "function") {{
+          var tl = A.createTimeline({{ defaults: {{ ease: "outExpo", duration: 640 }} }});
+          tl.add(aHero, {{ opacity: [0.001, 1], translateY: [22, 0], delay: typeof A.stagger === "function" ? A.stagger(65) : 0 }});
+        }} else if (aHero.length) {{
+          A.animate(aHero, {{ opacity: [0.001, 1], translateY: [22, 0], duration: 640, delay: typeof A.stagger === "function" ? A.stagger(65) : 0, ease: "outExpo" }});
+        }}
+        if ("IntersectionObserver" in window) {{
+          var aio = new IntersectionObserver(function (entries) {{
+            entries.forEach(function (en) {{
+              if (!en.isIntersecting) return;
+              var items = en.target.querySelectorAll("[data-reveal]");
+              if (items.length) {{
+                items.forEach(function (it) {{ it.classList.add("is-revealed"); }});
+                A.animate(items, {{ opacity: [0.001, 1], translateY: [24, 0], duration: 540, delay: typeof A.stagger === "function" ? A.stagger(Math.max(30, STAGGER_MS)) : 0, ease: "outExpo" }});
+              }}
+              aio.unobserve(en.target);
+            }});
+          }}, {{ threshold: 0.12 }});
+          document.querySelectorAll(".section-block").forEach(function (sec) {{ aio.observe(sec); }});
+        }}
+      }} catch (err) {{}}
+    }} else if (activeParts.length === 0) {{
+      activeParts.push(MOTION_MODE);
+    }}
+    root.setAttribute("data-motion-active", activeParts.join("+"));
+  }}
+  if (document.readyState === "loading") {{
+    document.addEventListener("DOMContentLoaded", bootVendorMotion, {{ once: true }});
+  }} else {{
+    window.setTimeout(bootVendorMotion, 0);
   }}
   var form = document.querySelector(".intake-form");
   if (form) form.addEventListener("submit", function (ev) {{
@@ -640,6 +986,7 @@ def _render_route_html(
     i18n: dict[str, dict[str, str]] | None = None,
     page_idx: int = 0,
     polarity: str = "light",
+    vendor_scripts: list[str] | None = None,
 ) -> str:
     d = dossier or load_canon_dossier(card.get("id", ""))
     ctx: dict[str, Any] = {"bilingual": bilingual, "lang": lang, "alt_lang": alt_lang, "i18n": i18n if i18n is not None else {}}
@@ -662,16 +1009,23 @@ def _render_route_html(
     is_stock_hl = raw_hl in STOCK_EN_HEADLINES or raw_hl in STOCK_RU_HEADLINES
 
     hero_custom = str(bp_map.get("hero") or "").strip()
+    def _word_trim(txt: str, limit: int) -> str:
+        t = " ".join(str(txt or "").split()).strip()
+        if len(t) <= limit:
+            return t
+        cut = t[:limit].rsplit(" ", 1)[0].rstrip(" ,;:—-")
+        return cut if len(cut) >= 8 else t[:limit].rstrip()
     if route["slug"] == "index":
         if raw_hl and not (is_custom_project and is_stock_hl):
             h1_text = raw_hl
         elif hero_custom:
             first_part = re.split(r"[.!?\n|;]", hero_custom)[0].strip()
-            h1_text = first_part[:78] if len(first_part) >= 8 else f"{project_name}"
+            h1_text = _word_trim(first_part, 78) if len(first_part) >= 8 else f"{project_name}"
         elif seo_cfg.get("title"):
             h1_text = str(seo_cfg["title"])
         else:
-            h1_text = f"{project_name} — {brief[:56]}" if brief else project_name
+            brief_short = _word_trim(brief, 56)
+            h1_text = f"{project_name} — {brief_short}" if brief_short else project_name
         if hero_custom:
             lead_copy = hero_custom
         elif raw_sub and not (is_custom_project and is_stock_hl):
@@ -864,7 +1218,7 @@ def _render_route_html(
             ctx1, cta1 = _t(ctx, f"{slug}:hero:cta1", cta_primary, _loc_get(loc, "hero", "cta_label"))
             altx, altat = _t(ctx, f"{slug}:hero:alt", hero_alt, _loc_get(loc, "seo", "hero_alt"))
             sections_html.append(
-                f"""    <section class="hero-shell{hero_cls}" id="hero">
+                f"""    <section class="hero-shell{hero_cls}" id="hero" data-variant="{html.escape(hero_variant, quote=True)}">
       <div class="container canon-grid">
         <div class="hero-lead">
           <p class="eyebrow"{eat}>{etx}</p>
@@ -993,7 +1347,7 @@ def _render_route_html(
             fv = _variant(pm, d, "features", page_idx)
             f_cls = {
                 "asym": " feat-asym",
-                "editorial_rows": " feat-asym",
+                "editorial_rows": " feat-rows",
                 "sticky_narrative": " feat-asym",
                 "bento": " feat-bento",
                 "bento_asymmetric": " feat-bento",
@@ -1005,7 +1359,7 @@ def _render_route_html(
                 cards.append(f'          <article class="spec-card" data-reveal><h3>0{i+1} / {"НАПРАВЛЕНИЕ" if lang == "ru" else "CAPABILITY"}</h3><p{iat}>{itx}</p></article>')
             htx, hat = h2_for("features", "Преимущества и ключевые направления" if lang == "ru" else "Key Capabilities & Services")
             sections_html.append(
-                f"""    <section class="section-block{f_cls}" id="features">
+                f"""    <section class="section-block{f_cls}" id="features" data-variant="{html.escape(fv, quote=True)}">
       <div class="container">
         <h2{hat}>{htx}</h2>
         <div class="canon-grid" data-count="{len(cards)}">
@@ -1173,7 +1527,7 @@ def _render_route_html(
             gal_items = _split_user_items(bp_map.get("gallery", ""), [lead_copy, c_fallbacks[0]], min_items=2)
             loc_gal = _loc_items(loc, "gallery")
             gv = _variant(pm, d, "gallery", page_idx)
-            g_cls = {"mosaic": " gal-mosaic", "bento_mosaic": " gal-mosaic", "filmstrip": " gal-filmstrip", "horizontal_filmstrip": " gal-filmstrip"}.get(gv, "")
+            g_cls = {"mosaic": " gal-mosaic", "bento_mosaic": " gal-mosaic", "collage_stagger": " gal-collage", "filmstrip": " gal-filmstrip", "horizontal_filmstrip": " gal-filmstrip"}.get(gv, "")
             gal_imgs = [str(x) for x in (gallery_images or [])]
             if gal_imgs:
                 gal_cards = []
@@ -1212,7 +1566,7 @@ def _render_route_html(
             )
             gal_region_attr = f' tabindex="0" role="region" aria-label="{html.escape(ui["gallery_region"], quote=True)}"' if g_cls == " gal-filmstrip" else ""
             sections_html.append(
-                f"""    <section class="section-block{g_cls}" id="gallery">
+                f"""    <section class="section-block{g_cls}" id="gallery" data-variant="{html.escape(gv, quote=True)}">
       <div class="container">
         <h2{hat}>{htx}</h2>
 {gal_controls}        <div class="canon-grid" data-count="{len(gal_cards) if gal_imgs else 2}"{gal_region_attr}>
@@ -1295,11 +1649,19 @@ def _render_route_html(
             t_cls = " review-quotes" if tv in ("quotes", "editorial_pullquotes") else ""
             t_cards = []
             for i, item in enumerate(t_items[:4]):
-                itx, iat = _t(ctx, f"{slug}:testimonials:item:{i}", item, loc_t[i] if i < len(loc_t) else "")
-                t_cards.append(f'          <article class="review-card" data-reveal><p{iat}>“{itx}”</p><p class="eyebrow">{"Кейс #" if lang == "ru" else "Case Study #"}{i+1} · {html.escape(project_name)}</p></article>')
+                author_part, quote_part = _split_pair(item, "")
+                if quote_part and len(quote_part) >= 12:
+                    loc_it = loc_t[i] if i < len(loc_t) else ""
+                    la, lq = _split_pair(loc_it, loc_it) if loc_it else ("", "")
+                    qtx, qat = _t(ctx, f"{slug}:testimonials:quote:{i}", quote_part, lq or loc_it)
+                    atx, aat = _t(ctx, f"{slug}:testimonials:author:{i}", author_part, la or author_part)
+                    t_cards.append(f'          <article class="review-card" data-reveal><p{qat}>“{qtx}”</p><p class="eyebrow"{aat}>{atx}</p></article>')
+                else:
+                    itx, iat = _t(ctx, f"{slug}:testimonials:item:{i}", item, loc_t[i] if i < len(loc_t) else "")
+                    t_cards.append(f'          <article class="review-card" data-reveal><p{iat}>“{itx}”</p><p class="eyebrow">{"Кейс #" if lang == "ru" else "Case Study #"}{i+1} · {html.escape(project_name)}</p></article>')
             htx, hat = h2_for("testimonials", "Отзывы и реализованные кейсы" if lang == "ru" else "Client Outcomes & Case Studies")
             sections_html.append(
-                f"""    <section class="section-block{t_cls}" id="testimonials">
+                f"""    <section class="section-block{t_cls}" id="testimonials" data-variant="{html.escape(tv, quote=True)}">
       <div class="container">
         <h2{hat}>{htx}</h2>
         <div class="canon-grid" data-count="{len(t_cards)}">
@@ -1428,14 +1790,21 @@ def _render_route_html(
         chx, chat = _t(ctx, "chrome:crumb:home", ui["crumb_home"], ui_alt["crumb_home"])
         crx, crat = _t(ctx, f"chrome:crumb:{slug}", route["title"], str(loc_nav.get(slug) or ""))
         crumb_html = f'    <nav class="crumbs container" aria-label="Breadcrumb"><ol><li><a href="index.html"{chat}>{chx}</a></li><li aria-current="page"{crat}>{crx}</li></ol></nav>\n'
-    progress_html = '<div class="scroll-progress" aria-hidden="true"></div>' if str((d.get("motion") or {}).get("scroll") or "") == "progress" else ""
+    progress_html = '<div class="scroll-progress" aria-hidden="true"></div>' if (motion != "reduced_motion_instant" or str((d.get("motion") or {}).get("scroll") or "") == "progress") else ""
     body_sections = "\n".join(sections_html)
     ttx, tat = _t(ctx, f"{slug}:meta:title", page_title, loc_title)
     mdx, mdat = _t(ctx, f"{slug}:meta:desc", meta_desc, loc_desc)
     skipx, skipat = _t(ctx, "chrome:skip", ui["skip"], ui_alt["skip"])
+    vendor_script_tags = "\n".join(
+        f'  <script src="{html.escape(vpath, quote=True)}" defer></script>'
+        for vpath in (vendor_scripts or [])
+        if str(vpath or "").strip()
+    )
+    if vendor_script_tags:
+        vendor_script_tags += "\n"
 
     return f"""<!DOCTYPE html>
-<html lang="{lang}" data-theme="{polarity}">
+<html lang="{lang}" data-theme="{polarity}" data-canon="{html.escape(str(card.get('id') or ''), quote=True)}" data-surface="{html.escape(str(d.get('surface') or 'clean'), quote=True)}" data-motion="{html.escape(str(motion), quote=True)}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1500,7 +1869,7 @@ def _render_route_html(
       <a href="{html.escape(legal_href, quote=True)}"{flat}>{flx}</a>
     </div>
   </footer>
-  <script>{js_text}</script>
+{vendor_script_tags}  <script>{js_text}</script>
 </body>
 </html>
 """

@@ -155,6 +155,11 @@
             </div>
           </div>
 
+          <div class="field">
+            <label for="exp-motion-select" data-i18n="lbl_exp_motion">Движок анимации лендинга (MIT / CSS)</label>
+            <select id="exp-motion-select"></select>
+          </div>
+
           <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
             <button class="btn btn-primary" id="exp-generate-btn" type="button">
               <svg class="icon-24"><use href="#icon-bolt"/></svg>
@@ -284,12 +289,19 @@
             </div>
             <p class="sub-lead" style="margin:0 0 10px 0; font-size:12px;" data-i18n="s3_palette_note">Палитры — канон-согласованные токены (NN/g, MDN, Tailwind, WCAG), а не единственный официальный HEX-набор стиля.</p>
 
-            <div class="field" style="margin-bottom:10px;">
-              <label data-i18n="lbl_polarity">Тема оформления (Светлая / Тёмная)</label>
-              <div class="polarity-switcher" role="group" aria-label="Theme Polarity">
-                <button class="btn btn-primary" id="s3-polarity-auto" data-polarity="auto" aria-pressed="true" type="button" data-i18n="btn_pol_auto">Авто (по канону)</button>
-                <button class="btn" id="s3-polarity-light" data-polarity="light" aria-pressed="false" type="button" data-i18n="btn_pol_light">Светлая тема</button>
-                <button class="btn" id="s3-polarity-dark" data-polarity="dark" aria-pressed="false" type="button" data-i18n="btn_pol_dark">Тёмная тема</button>
+            <div class="form-grid-2" style="margin-bottom:10px;">
+              <div class="field">
+                <label data-i18n="lbl_polarity">Тема оформления (Светлая / Тёмная)</label>
+                <div class="polarity-switcher" role="group" aria-label="Theme Polarity">
+                  <button class="btn btn-primary" id="s3-polarity-auto" data-polarity="auto" aria-pressed="true" type="button" data-i18n="btn_pol_auto">Авто (по канону)</button>
+                  <button class="btn" id="s3-polarity-light" data-polarity="light" aria-pressed="false" type="button" data-i18n="btn_pol_light">Светлая тема</button>
+                  <button class="btn" id="s3-polarity-dark" data-polarity="dark" aria-pressed="false" type="button" data-i18n="btn_pol_dark">Тёмная тема</button>
+                </div>
+              </div>
+              <div class="field">
+                <label for="s3-motion-select" data-i18n="lbl_motion_engine">Движок анимации (MIT / Scroll-Driven)</label>
+                <select id="s3-motion-select"></select>
+                <p class="sub-lead" style="margin:6px 0 0 0; font-size:12px;" data-i18n="lbl_motion_hint">Motion 14 + Lenis или Anime.js создают плавный GSAP-класс скролл-хореографии и стэггер без лицензии GSAP.</p>
               </div>
             </div>
 
