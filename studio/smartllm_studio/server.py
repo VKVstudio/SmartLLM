@@ -187,9 +187,11 @@ class StudioState:
         pdir = self.project_dir(project_id)
         current = self.load_project(project_id)
         current.update(data)
+        current = self._migrate_draft(current)
         current["id"] = project_id
         current["revision"] = int(current.get("revision", 1)) + 1
-        current["output_dir"] = str(_safe_project_dir(data.get("output_dir"), pdir))
+        raw_out = data.get("output_dir") if str(data.get("output_dir") or "").strip() else current.get("output_dir")
+        current["output_dir"] = str(_safe_project_dir(raw_out, pdir))
         (pdir / "project.json").write_text(json.dumps(current, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         return current
 
@@ -257,6 +259,7 @@ def create_studio_server(
             self.send_header("X-Content-Type-Options", "nosniff")
             if is_preview or no_store:
                 self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
+                self.send_header("Pragma", "no-cache")
             if not is_preview:
                 self.send_header("Content-Security-Policy", STUDIO_CSP)
             self.end_headers()
@@ -283,9 +286,11 @@ def create_studio_server(
                 return [p for p in raw.split("/") if p and p not in ("..", ".") and ":" not in p and "\\" not in p]
 
             if path in ("/", "/index.html"):
-                return self._send_file(STATIC_DIR / "index.html", base_dir=STATIC_DIR)
+                return self._send_file(STATIC_DIR / "index.html", base_dir=STATIC_DIR, no_store=True)
             if path.startswith("/static/"):
-                return self._send_file((STATIC_DIR / path[len("/static/") :]).resolve(), base_dir=STATIC_DIR)
+                target_static = (STATIC_DIR / path[len("/static/") :]).resolve()
+                no_store_static = target_static.suffix.lower() in {".html", ".js", ".css", ".json"}
+                return self._send_file(target_static, base_dir=STATIC_DIR, no_store=no_store_static)
             if path.startswith("/assets/"):
                 return self._send_file((ASSETS_DIR / path[len("/assets/") :]).resolve(), base_dir=ASSETS_DIR)
             if path.startswith("/preview/"):

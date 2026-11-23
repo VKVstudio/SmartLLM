@@ -23,8 +23,53 @@
     blockPrompts: {}
   };
 
+  var previewTimer = null;
+  var previewSeq = 0;
+
   function el(id) {
     return document.getElementById(id);
+  }
+
+  function scheduleLivePreviewRefresh(openStage) {
+    if (!store.draft || store.autofillBusy || store.logoBusy) return;
+    if (el("s5-build-btn") && el("s5-build-btn").disabled) return;
+    clearTimeout(previewTimer);
+    previewTimer = setTimeout(function () {
+      var mySeq = ++previewSeq;
+      var pid = (store.draft && store.draft.id) || "default";
+      var outDir = (el("s1-folder-input") && el("s1-folder-input").value.trim()) || (store.draft && store.draft.output_dir) || "";
+      fetch("/api/preview/" + encodeURIComponent(pid), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          canon_id: (store.draft && store.draft.canon_id) || "01_bento_grid",
+          polarity: store.polarity,
+          motion: store.motion,
+          output_dir: outDir
+        })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (bp) {
+          if (mySeq !== previewSeq || !bp || bp.error || !bp.preview_url) return;
+          if (bp.revision && store.draft) store.draft.revision = bp.revision;
+          if (openStage) setStageOpen(true);
+          var ifr = el("live-stage-iframe");
+          if (ifr) {
+            var routeSel = el("stage-route-select");
+            var idx = routeSel ? (parseInt(routeSel.value || "0", 10) || 0) : 0;
+            var routes = (bp.routes && bp.routes.length) ? bp.routes : (store.draft && store.draft.routes);
+            var route = routes && routes[idx];
+            var targetUrl = bp.preview_url;
+            if (route && route.filename && route.filename !== "index.html") {
+              var revNum = bp.revision || (store.draft && store.draft.revision) || 1;
+              targetUrl = "/preview/" + encodeURIComponent(pid) + "/" + route.filename + "?rev=" + revNum;
+            }
+            var sep = targetUrl.indexOf("?") === -1 ? "?" : "&";
+            ifr.src = targetUrl + sep + "t=" + Date.now();
+          }
+        })
+        .catch(function () {});
+    }, 180);
   }
 
   function setStageOpen(open) {
@@ -43,7 +88,7 @@
     }
   }
 
-  function setPolarity(pol) {
+  function setPolarity(pol, fromUser) {
     var next = (pol === "light" || pol === "dark") ? pol : "auto";
     store.polarity = next;
     if (store.draft) store.draft.polarity = next;
@@ -55,6 +100,7 @@
       b.className = active ? "btn btn-primary" : "btn";
     });
     renderCanons();
+    if (fromUser === true) scheduleLivePreviewRefresh(true);
   }
 
   function normalizeMotionId(val) {
@@ -91,7 +137,7 @@
     });
   }
 
-  function setMotion(val) {
+  function setMotion(val, fromUser) {
     var norm = normalizeMotionId(val);
     store.motion = norm;
     if (store.draft) store.draft.motion = norm;
@@ -99,6 +145,7 @@
       var sel = el(selId);
       if (sel && sel.value !== norm) sel.value = norm;
     });
+    if (fromUser === true) scheduleLivePreviewRefresh(true);
   }
 
   function syncProjectPathDisplay(pathStr) {
@@ -567,6 +614,7 @@
         btn.addEventListener("click", function () {
           if (store.draft) store.draft.canon_id = c.id;
           renderCanons();
+          scheduleLivePreviewRefresh(true);
         });
         gal.appendChild(btn);
       });
@@ -1218,10 +1266,10 @@
     // Step 3 controls
     el("s3-canon-search").addEventListener("input", renderCanons);
     el("s3-canon-cat").addEventListener("change", renderCanons);
-    if (el("s3-motion-select")) el("s3-motion-select").addEventListener("change", function (ev) { setMotion(ev.target.value); });
+    if (el("s3-motion-select")) el("s3-motion-select").addEventListener("change", function (ev) { setMotion(ev.target.value, true); });
     ["auto", "light", "dark"].forEach(function (mode) {
       var btn = el("s3-polarity-" + mode);
-      if (btn) btn.addEventListener("click", function () { setPolarity(mode); });
+      if (btn) btn.addEventListener("click", function () { setPolarity(mode, true); });
     });
 
     // Step 4 controls
@@ -1457,8 +1505,8 @@
     bindAllControls();
 
     Promise.all([
-      fetch("/static/i18n/en.json").then(function (r) { return r.json(); }),
-      fetch("/static/i18n/ru.json").then(function (r) { return r.json(); }),
+      fetch("/static/i18n/en.json", { cache: "no-store" }).then(function (r) { return r.json(); }),
+      fetch("/static/i18n/ru.json", { cache: "no-store" }).then(function (r) { return r.json(); }),
       fetch("/api/catalog").then(function (r) { return r.json(); }),
       fetch("/api/projects/default").then(function (r) { return r.json(); }),
       fetch("/api/status").then(function (r) { return r.json(); })
