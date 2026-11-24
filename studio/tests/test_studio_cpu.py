@@ -210,7 +210,11 @@ def _run_all_tests_inner(results: dict[str, object]) -> dict[str, object]:
             cfg_f.unlink()
             # Tier 4: Monorepo
             p_mono = discover_studio_paths()
-            assert p_mono["sources"]["gguf_model_path"] == "monorepo"
+            from smartllm_studio.config import _find_monorepo_root
+            if _find_monorepo_root(STUDIO_ROOT) is not None:
+                assert p_mono["sources"]["gguf_model_path"] == "monorepo"
+            else:  # clean clone / ZIP without models/: falls through to tier 5 (setup wizard)
+                assert p_mono["sources"]["gguf_model_path"] not in ("cli", "env", "user_config", "monorepo")
             # Regression: non-path save_user_settings does NOT write "paths" into config.json
             save_user_settings({"exports_completed": 1})
             saved_cfg = json.loads(cfg_f.read_text(encoding="utf-8"))

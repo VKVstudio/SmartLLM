@@ -3,3 +3,5 @@ studio/bin/* text eol=lf
 *.bat text eol=crlf
 *.vbs text eol=crlf
 *.ps1 text eol=crlf
+# Vendored files are SHA-256 pinned in templates/vendor/MANIFEST.json: never convert line endings
+studio/smartllm_studio/templates/vendor/** -text

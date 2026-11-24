@@ -227,6 +227,8 @@ Not supported yet. The engines are CUDA builds.
 ### Known limitations
 
 - **Generated images are sometimes flawed.** Z-Image can produce anatomy errors (extra hands or fingers, odd poses), and some images do not match their brief: the wrong subject, or a generic stock-like scene. The Qwen vision check catches part of this and re-renders, but it misses some errors (it passed the extra hand in the Glina demo). Review every image with people before you publish.
+- **Image prompts are not optimal yet.** For example, studio lighting gear such as softboxes or light stands can show up inside the frame. Improved image prompting is planned for 0.0.8.
+- **Beta bugs.** This is an early beta, so expect bugs in the UI, the pipeline and the generated sites. Please report them in [Issues](https://github.com/VKVstudio/SmartLLM/issues).
 - Images are PNG only, so mobile Lighthouse performance drops to the mid-70s on image-heavy pages.
 - Bilingual sites use one URL with a JS language switch. There are no separate `/ru/` pages and no `hreflang` yet.
 - The site domain is set in the project file (`seo.base_url`); there is no field for it in the UI yet.
@@ -236,12 +238,19 @@ Not supported yet. The engines are CUDA builds.
 
 ## Roadmap
 
-Everything below is **planned and not implemented yet**:
+Everything below is **planned and not implemented yet**.
+
+### 0.0.8
+
+- **Better image prompting:** no stray studio gear (softboxes, light stands) in frames, and images that match their brief more closely
+- **Fewer anatomy errors:** catch and re-render extra hands and fingers reliably
+- **Bug fixes** for beta issues, including those reported in [Issues](https://github.com/VKVstudio/SmartLLM/issues)
+
+### Later
 
 - **Expert mode (extended constructor):** choose the style of each block, edit image prompts before rendering, fine-tune SEO / GEO / AEO settings per page, and more
 - Dedicated layouts for the remaining 17 canons
 - WebP/AVIF output with responsive `srcset`
-- A more reliable anatomy and subject check in the vision stage
 - Separate `/ru/` pages with `hreflang` for bilingual sites
 - A domain / base URL field in the Studio UI
 
