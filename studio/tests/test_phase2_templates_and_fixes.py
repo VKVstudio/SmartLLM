@@ -22,6 +22,7 @@ if str(STUDIO_ROOT) not in sys.path:
 
 from PIL import Image  # noqa: E402
 
+from smartllm_studio.canon_layouts import LAYOUTS as _CANON_LAYOUTS  # noqa: E402  canons with their own CSS (0.0.7)
 from smartllm_studio.blueprint import compile_project_blueprint, default_project_draft  # noqa: E402
 from smartllm_studio.catalog import AI_CRAWLERS_DEFAULT, MOTION_CATALOG, STACK_CATALOG, load_studio_catalog  # noqa: E402
 from smartllm_studio.kb_loader import (  # noqa: E402
@@ -273,17 +274,17 @@ def run_all_tests() -> dict[str, object]:
                 # Bug #9
                 if cid == "08_liquid_glass":
                     assert "prefers-reduced-transparency: reduce" in css_txt
-                    assert "@supports not (backdrop-filter: blur(1px))" in css_txt
+                    assert cid in _CANON_LAYOUTS or "@supports not (backdrop-filter: blur(1px))" in css_txt  # legacy shared-CSS specific
                 # Bug #11
                 assert "background-attachment: fixed" not in css_txt and "overflow-x: clip;" in css_txt
-                assert "html { scroll-padding-top: 4.75rem; font-size: 16px; scroll-behavior: smooth; }" in css_txt
-                assert ":is(.spec-card," in css_txt
+                assert cid in _CANON_LAYOUTS or "html { scroll-padding-top: 4.75rem; font-size: 16px; scroll-behavior: smooth; }" in css_txt  # legacy shared-CSS specific
+                assert cid in _CANON_LAYOUTS or ":is(.spec-card," in css_txt  # legacy shared-CSS specific
                 assert ".faq-item:hover" not in css_txt and ".faq-item:active" not in css_txt and ".faq-item::before" not in css_txt
                 assert '[data-solid-ui="true"] .spec-card,' not in css_txt
                 # Bug #12
                 assert "node-calc-btn" not in idx_html
                 assert 'class="form-status" role="status" aria-live="polite"' in idx_html
-                assert "min-height: 44px;" in css_txt and "min-height: 48px;" in css_txt
+                assert "min-height: 44px;" in css_txt and (cid in _CANON_LAYOUTS or "min-height: 48px;" in css_txt)
                 assert 'id="mobile-nav-toggle"' in idx_html
 
         results["canon_polarity_builds"] = builds_checked
@@ -497,13 +498,33 @@ def run_all_tests() -> dict[str, object]:
     assert "flex-wrap: wrap;" in studio_css_src and ".canon-card-head strong" in studio_css_src
 
     # 15. Folder Browser Fallback, 5 Animated Landing Presets, Cohesive Starter & Tactile/Scrolly Architecture
-    from smartllm_studio.catalog import LANDING_PRESET_CATALOG
+    from smartllm_studio.catalog import CANON_MOTION_DEFAULTS, LANDING_PRESET_CATALOG
     from smartllm_studio.orchestrator import generate_random_starter_template
     from smartllm_studio.os_compat import create_directory_safe, list_directory_entries
 
     cat_v5 = load_studio_catalog(REPO_ROOT)
     assert cat_v5["canons_count"] == 20 and len(cat_v5["canons"]) == 20
     assert len(cat_v5["landing_presets"]) == 5 and len(LANDING_PRESET_CATALOG) == 5
+    by_id = {c["id"]: c for c in cat_v5["canons"]}
+    for static_cid in (
+        "02_swiss_international",
+        "03_editorial_magazine",
+        "04_hyper_minimal_speed",
+        "17_fintech_institutional",
+        "18_devtool_command_ui",
+        "19_calm_human_accessible",
+    ):
+        assert by_id[static_cid].get("supports_animation") is False, static_cid
+        assert CANON_MOTION_DEFAULTS[static_cid]["default_motion"] == "reduced_motion_instant"
+    for anim_cid in (
+        "01_bento_grid",
+        "05_kinetic_typography",
+        "06_neo_brutalism",
+        "10_industrial_tactile",
+        "14_spatial_3d_showcase",
+        "20_maximalist_collage_pop",
+    ):
+        assert by_id[anim_cid].get("supports_animation") is True, anim_cid
 
     with tempfile.TemporaryDirectory(prefix="smartllm_fs_starter_") as ftd:
         ftd_p = Path(ftd)
@@ -519,6 +540,8 @@ def run_all_tests() -> dict[str, object]:
         assert tpl["landing_preset"] in valid_preset_ids, tpl
         assert tpl["motion"] in {"motion", "animejs", "css_scroll_driven", "lenis", "three", "reduced_motion_instant"}
         assert tpl["name"] and tpl["brief"] and tpl["logo_prompt"]
+        assert tpl["page_block_prompts"] == {} and tpl["block_prompts"] == {}
+        assert re.search(r"[А-Яа-яЁё]", tpl["brief"]) and re.search(r"[А-Яа-яЁё]", tpl["company"]["tagline"])
         assert "starter_" in Path(tpl["output_dir"]).name
 
         scrolly_dir = ftd_p / "scrolly_tactile"
@@ -543,13 +566,209 @@ def run_all_tests() -> dict[str, object]:
         assert 'data-landing="gsap_scrollytelling"' in sc_html
         assert "hw-console-bar" in sc_html and "hw-screen-bezel" in sc_html
         assert "scrolly-stage" in sc_html and "scrolly-pin" in sc_html
+        assert 'class="marquee"' not in sc_html
         assert "assets/vendor/lenis/lenis.min.js" in sc_html
         assert "assets/vendor/motion/motion.js" in sc_html
         assert " style=" not in sc_html, "CSP style-src-attr 'none' violation: inline style attribute found"
 
     assert 'id="modal-folder-picker"' in index_src and 'id="starter-preloader"' in index_src
     assert 'id="s3-landing-presets"' in index_src and 'id="btn-topbar-random-template"' in index_src
+    assert 'id="s3-static-canon-note"' in index_src and 'id="exp-anim-controls"' in index_src
+    assert index_src.index('id="s3-canon-gallery"') < index_src.index('id="s3-animation-section"') < index_src.index('id="s3-motion-select"')
+    assert "setStageOpen(true)" not in app_js_src
     assert "runRandomStarterTemplate" in app_js_src and "openFolderPickerModal" in app_js_src and "setLandingPreset" in app_js_src
+
+    # 16. v0.0.6 Style-Filtered Stacks/Motions & Russian Consistency Fixes
+    from smartllm_studio.kb_loader import harden_zimage_prompt as _hzp
+    from smartllm_studio.pages import normalize_hours_for_lang
+    from smartllm_studio.pipeline import _sync_page_copy_to_foundation
+
+    valid_stack_ids = {s["id"] for s in cat_v5["stacks"]}
+    valid_motion_ids = {m["id"] for m in cat_v5["motions"]}
+    three_canons = []
+    for cid_chk, meta_chk in CANON_MOTION_DEFAULTS.items():
+        c_cat = by_id[cid_chk]
+        for req_k in ("default_stack", "allowed_stacks", "allowed_motions", "allowed_landing_presets"):
+            assert c_cat.get(req_k), (cid_chk, req_k)
+        assert c_cat["default_stack"] in c_cat["allowed_stacks"] and set(c_cat["allowed_stacks"]) <= valid_stack_ids, cid_chk
+        assert c_cat["default_motion"] in c_cat["allowed_motions"] and set(c_cat["allowed_motions"]) <= valid_motion_ids, cid_chk
+        assert c_cat["default_landing_preset"] in c_cat["allowed_landing_presets"] and set(c_cat["allowed_landing_presets"]) <= valid_preset_ids, cid_chk
+        if "three" in c_cat["allowed_motions"]:
+            three_canons.append(cid_chk)
+    assert three_canons == ["14_spatial_3d_showcase"], three_canons
+    assert set(by_id["15_organic_biophilic_eco"]["allowed_stacks"]) <= {"html5_esm", "astro"}
+    assert "three" not in by_id["15_organic_biophilic_eco"]["allowed_motions"]
+    assert "lenis" not in by_id["13_cinematic_documentary"]["allowed_motions"]
+    assert "kinetic_showreel" not in by_id["01_bento_grid"]["allowed_landing_presets"]
+
+    assert 'id="s3-stack-select"' in index_src and 'id="exp-stack-select"' in index_src
+    assert "v=0.0.6-r5" in index_src and "</script></script>" not in index_src and "renderStackSelects" in app_js_src
+    assert 'setPolarity("auto", false);' in app_js_src and "setStageOpen(true)" not in app_js_src
+
+    from smartllm_studio.pipeline import _pick_team_personas
+    from smartllm_studio.server import StudioState
+
+    slots_cmp = [
+        {"name": "Иван Соколов", "role": "Инженер", "gender": "male"},
+        {"name": "Анна Петрова", "role": "Дизайнер", "gender": "female"},
+        {"name": "Дмитрий Волков", "role": "Монтаж", "gender": "male"},
+        {"name": "Мария Лебедева", "role": "Проекты", "gender": "female"},
+    ]
+    p_akustika = _pick_team_personas(slots_cmp, "Акустическая Керамика")
+    p_tok = _pick_team_personas(slots_cmp, "Городской Ток")
+    assert len(set(p_akustika)) == 4 and len(set(p_tok)) == 4
+    assert p_akustika != p_tok, "Combinatorial portrait personas must not collide across brands"
+
+    with tempfile.TemporaryDirectory(prefix="smartllm_iso_prev_") as itd:
+        itd_p = Path(itd)
+        built_site = itd_p / "built_site"
+        built_site.mkdir(parents=True, exist_ok=True)
+        sentinel_html = "<!doctype html><html><body>BUILT_SENTINEL</body></html>"
+        (built_site / "index.html").write_text(sentinel_html, encoding="utf-8")
+        st_iso = StudioState(repo_root=REPO_ROOT, projects_root_override=itd_p / "projects")
+        saved_iso = st_iso.save_project("starter", {"name": "New Preview Brand", "canon_id": "13_cinematic_documentary", "output_dir": str(built_site)})
+        bp_iso, _ = st_iso.compile_isolated_preview("starter", saved_iso)
+        assert "_live_preview" in str(bp_iso["project_dir"])
+        assert (built_site / "index.html").read_text(encoding="utf-8") == sentinel_html
+
+    assert normalize_hours_for_lang("Mon-Fri 10:00-19:00", "ru") == "Пн–Пт 10:00–19:00"
+    assert not _hzp("Wide concrete studio room. visual").lower().endswith("visual")
+    synced_test = _sync_page_copy_to_foundation(
+        "pricing",
+        {
+            "manifesto": "Продукт — общий стандарт | Коротко о тарифах",
+            "testimonials": "Иван Соколов, ведущий инженер — снизили эхо на 15 дБ | Сергей Орлов, клиент — точный замер и монтаж",
+            "contact": "+7 495 111-22-33 | a@b.ru | ул. Мира, 5 | Mon-Fri 10:00-19:00",
+        },
+        {
+            "tagline": "Точная акустика",
+            "positioning": "Глиняные панели под ключ.",
+            "products": [{"name": "Стандарт", "scope": "монтаж", "price": "120 000 ₽"}],
+            "features": [{"title": "Дизайн", "detail": "Подбор"}, {"title": "Монтаж", "detail": "Сборка"}, {"title": "Тесты", "detail": "Замеры"}],
+            "stats": [{"value": "48", "label": "проектов"}, {"value": "1200 м²", "label": "панелей"}, {"value": "96%", "label": "точность"}],
+            "team": [{"name": "Иван Соколов", "role": "ведущий инженер"}],
+        },
+        "ru",
+        set(),
+        canonical_team=[{"name": "Иван Соколов", "role": "ведущий инженер"}],
+    )
+    assert not synced_test["manifesto"].startswith("Продукт")
+    assert "Иван Соколов" not in synced_test["testimonials"]
+    assert "Сергей Орлов" in synced_test["testimonials"]
+    assert "Пн–Пт 10:00–19:00" in synced_test["contact"] and "Mon-Fri" not in synced_test["contact"]
+
+    with tempfile.TemporaryDirectory(prefix="smartllm_ru_consistency_") as rtd:
+        rtd_p = Path(rtd)
+        bp_ru = compile_project_blueprint(
+            {
+                "id": "ru_check",
+                "name": "Акустика Глины",
+                "brief": "Глиняные панели для точной акустики помещений и студий.",
+                "languages": "ru",
+                "canon_id": "10_industrial_tactile",
+                "polarity": "light",
+                "landing_preset": "gsap_scrollytelling",
+                "motion": "motion",
+                "company": {
+                    "tagline": "Глиняные панели для точной акустики",
+                    "positioning": "Глиняные панели под ключ.",
+                    "hours": "Mon-Fri 10:00-19:00",
+                    "phone": "+7 495 123-45-67",
+                    "email": "hello@example.ru",
+                    "address": "ул. Звучания, 12, Москва",
+                    "history": {"founded": 2017, "milestones": ["2017 — основана компания", "2023 — расширен цех"]},
+                },
+                "page_block_prompts": {
+                    "index": {
+                        "features": "Дизайн панелей — разработка акустических и визуальных решений | Монтаж — инженерная установка панелей | Акустические тесты — замеры до и после",
+                        "process": "01 Аудит помещения — замеры акустики | 02 Дизайн — проект раскладки | 03 Монтаж — установка панелей | 04 Тесты — финальный замер",
+                    }
+                },
+                "output_dir": str(rtd_p),
+                "site_type": "single",
+                "selected_blocks": ["hero", "features", "process", "contact", "footer"],
+            },
+            repo_root=REPO_ROOT,
+        )
+        ru_html = (rtd_p / "index.html").read_text(encoding="utf-8")
+        assert "Mon-Fri" not in ru_html and "Пн–Пт 10:00–19:00" in ru_html
+        assert ">Company<" not in ru_html and ' logo"' not in ru_html and "Логотип Акустика Глины" in ru_html
+        assert "<h3>01 Аудит" not in ru_html and "<h3>Аудит помещения</h3>" in ru_html
+        assert "<h3>Дизайн панелей</h3><p>разработка акустических" in ru_html
+
+    # 17. v0.0.6-r3: preview never touches a finished output_dir, crypto Z-Image seeds, canon -> CSS fidelity
+    import difflib as _difflib
+    import threading as _thr17
+    import urllib.request as _url17
+
+    orch_src = (PKG_ROOT / "orchestrator.py").read_text(encoding="utf-8")
+    assert "sum(ord(c)" not in orch_src and "brand_seed_offset" not in orch_src
+    assert '"seed": 42 +' not in orch_src and '"seed": 101,' not in orch_src and '"seed": 60 + g_idx' not in orch_src
+    assert "secrets.SystemRandom().randrange" in orch_src and "zimage_seeds.json" in orch_src
+    srv_src = (PKG_ROOT / "server.py").read_text(encoding="utf-8")
+    assert srv_src.count("compile_project_blueprint(draft, repo_root=state.repo_root)") == 1, "only /api/export may compile into output_dir"
+    with tempfile.TemporaryDirectory(prefix="smartllm_preview_iso_") as iso_td:
+        iso_p = Path(iso_td)
+        finished = iso_p / "finished_site"
+        finished.mkdir(parents=True)
+        (finished / "assets").mkdir()
+        sentinel_html = "<!doctype html><title>FINISHED</title>"
+        (finished / "index.html").write_text(sentinel_html, encoding="utf-8")
+        (finished / "assets" / "brand-logo.png").write_bytes(b"FINISHED-LOGO")
+        srv_i, state_i = create_studio_server(
+            host="127.0.0.1", port=0, repo_root=REPO_ROOT,
+            projects_root_override=iso_p / "projects", lock_path_override=iso_p / "gpu.lock",
+        )
+        port_i = srv_i.server_address[1]
+        _thr17.Thread(target=srv_i.serve_forever, daemon=True).start()
+        try:
+            def _post17(path: str, body: dict) -> dict:
+                rq = _url17.Request(f"http://127.0.0.1:{port_i}{path}", data=json.dumps(body).encode("utf-8"), headers={"Content-Type": "application/json"}, method="POST")
+                with _url17.urlopen(rq, timeout=30.0) as rr:
+                    return json.loads(rr.read().decode("utf-8"))
+            pv = _post17("/api/preview/starter", {"name": "Other Brand", "canon_id": "14_spatial_3d_showcase", "output_dir": str(finished)})
+            assert "/preview/starter/" in pv["preview_url"], pv.get("preview_url")
+            assert Path(pv["project_dir"]).resolve().is_relative_to((iso_p / "projects" / "_live_preview").resolve()), pv["project_dir"]
+            logo_src = state_i.logo_batches_dir / "variant_1.png"
+            logo_src.parent.mkdir(parents=True, exist_ok=True)
+            Image.new("RGB", (64, 64), (200, 40, 40)).save(logo_src)
+            sel = _post17("/api/logo/select", {"project_id": "starter", "path": str(logo_src), "output_dir": str(finished)})
+            assert sel["status"] == "selected" and "/preview/starter/" in sel["preview_url"]
+            assert (finished / "index.html").read_text(encoding="utf-8") == sentinel_html, "preview overwrote finished index.html"
+            assert (finished / "assets" / "brand-logo.png").read_bytes() == b"FINISHED-LOGO", "logo select overwrote finished logo"
+            assert sorted(p.name for p in finished.iterdir()) == ["assets", "index.html"], list(finished.iterdir())
+            assert state_i.load_project("starter")["selected_logo_path"] == str(logo_src.resolve())
+            with _url17.urlopen(f"http://127.0.0.1:{port_i}{sel['preview_url']}", timeout=10.0) as r_iso:
+                assert r_iso.status == 200 and b"Other Brand" in r_iso.read()
+        finally:
+            srv_i.shutdown()
+            srv_i.server_close()
+
+    with tempfile.TemporaryDirectory(prefix="smartllm_canon_css_") as ctd:
+        css_by: dict[str, str] = {}
+        html_by: dict[str, str] = {}
+        for cid in ("05_kinetic_typography", "13_cinematic_documentary", "12_quiet_luxury_minimal"):
+            od = Path(ctd) / cid
+            compile_project_blueprint({"id": "cc", "name": "Same Brand", "brief": "Same brief for every canon.", "languages": "en", "canon_id": cid, "polarity": "auto", "output_dir": str(od)}, repo_root=REPO_ROOT)
+            css_by[cid] = (od / "tokens.css").read_text(encoding="utf-8")
+            html_by[cid] = (od / "index.html").read_text(encoding="utf-8")
+            assert f'data-canon="{cid}"' in html_by[cid]
+        keys = list(css_by)
+        for a_i in range(len(keys)):
+            for b_i in range(a_i + 1, len(keys)):
+                ca, cb = css_by[keys[a_i]], css_by[keys[b_i]]
+                ratio = _difflib.SequenceMatcher(None, ca.splitlines(), cb.splitlines()).ratio()
+                assert ratio < 0.85, f"{keys[a_i]} vs {keys[b_i]} CSS too similar: {ratio:.3f}"
+                root_a = re.search(r":root\s*\{[^}]*\}", ca).group(0)
+                root_b = re.search(r":root\s*\{[^}]*\}", cb).group(0)
+                assert root_a != root_b, f"identical :root tokens for {keys[a_i]} / {keys[b_i]}"
+        results["canon_css_fidelity"] = "PASS"
+
+    from smartllm_studio.orchestrator import generate_random_starter_template
+    for _ in range(6):
+        tpl_av = generate_random_starter_template(None, lang="en", use_llm=False, avoid_canons=["08_liquid_glass", "12_quiet_luxury_minimal"])
+        assert tpl_av["canon_id"] not in ("08_liquid_glass", "12_quiet_luxury_minimal"), tpl_av["canon_id"]
+    results["preview_isolation_and_seeds"] = "PASS"
 
     results["status"] = "ALL_PHASE2_GATES_PASSED"
     return results

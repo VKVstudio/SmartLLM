@@ -195,7 +195,7 @@ PRESET_PAGES: list[dict[str, Any]] = [
         "purpose_ru": "Форма заявки, реквизиты и быстрый ответ.",
         "purpose_en": "Request form, company details and quick response.",
         "default_blocks": ["hero", "locations", "contact", "faq", "footer"],
-        "available_blocks": ["hero", "manifesto", "locations", "contact", "faq", "stats", "footer"],
+        "available_blocks": ["hero", "manifesto", "locations", "contact", "faq", "stats", "cta", "footer"],
     },
     {
         "slug": "legal",
@@ -297,11 +297,39 @@ def build_routes_from_pages(
     return routes
 
 
+def normalize_hours_for_lang(text: str, lang: str = "ru") -> str:
+    """Localize common English weekday/hours tokens when rendering Russian sites."""
+    raw = str(text or "").strip()
+    if not raw or not str(lang or "").lower().startswith("ru"):
+        return raw
+    out = raw
+    for pat, rep in (
+        (r"(?i)\bMon\s*[-–—to]+\s*Fri\b", "Пн–Пт"),
+        (r"(?i)\bMon\s*[-–—to]+\s*Sat\b", "Пн–Сб"),
+        (r"(?i)\bMon\s*[-–—to]+\s*Sun\b", "Пн–Вс"),
+        (r"(?i)\bSat\s*[-–—to]+\s*Sun\b", "Сб–Вс"),
+        (r"(?i)\bDaily\b", "Ежедневно"),
+        (r"(?i)\bMon\b(?=\s*[-–—,:0-9])", "Пн"),
+        (r"(?i)\bTue\b(?=\s*[-–—,:0-9])", "Вт"),
+        (r"(?i)\bWed\b(?=\s*[-–—,:0-9])", "Ср"),
+        (r"(?i)\bThu\b(?=\s*[-–—,:0-9])", "Чт"),
+        (r"(?i)\bFri\b(?=\s*[-–—,:0-9])", "Пт"),
+        (r"(?i)\bSat\b(?=\s*[-–—,:0-9])", "Сб"),
+        (r"(?i)\bSun\b(?=\s*[-–—,:0-9])", "Вс"),
+    ):
+        out = re.sub(pat, rep, out)
+    out = re.sub(r"(?<=\d)-(?=\d{2}:\d{2})", "–", out)
+    return out
+
+
 def build_default_company(brand_name: str, brief: str, lang: str = "ru") -> dict[str, Any]:
     """Generate editable brand foundation and contact details used by blocks, JSON-LD and llms.txt."""
     clean = " ".join((brief or "").strip().split())
     label = (brand_name or ("Проект" if str(lang).startswith("ru") else "Project")).strip()
-    short = clean[:90].rstrip(".,;:") if clean else ("Современная компания" if str(lang).startswith("ru") else "A modern company")
+    if clean:
+        short = (clean[:115].rsplit(" ", 1)[0] if len(clean) > 115 else clean).rstrip(".,;:-— ")
+    else:
+        short = "Современная компания" if str(lang).startswith("ru") else "A modern company"
     slug = "".join(ch.lower() if ch.isalnum() else "-" for ch in label).strip("-") or "studio"
     slug = "-".join(part for part in slug.split("-") if part)[:32]
     if str(lang).startswith("ru"):

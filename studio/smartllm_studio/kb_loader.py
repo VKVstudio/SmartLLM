@@ -202,6 +202,7 @@ def harden_zimage_prompt(prompt: str, brand: str = "", member_names: list[str] |
             out,
             flags=re.I,
         )
+    out = re.sub(r"(?:[.,;]\s*|\s)+\bvisual\b\s*$", "", out, flags=re.I)
     out = re.sub(r"\s*,\s*(?:,\s*)+", ", ", out)
     out = re.sub(r"\s+([,.;:])", r"\1", out)
     cleaned = re.sub(r"\s+", " ", out).strip(" ,.;:-")
@@ -373,3 +374,154 @@ def compute_real_scorecard(
             "ai_crawlers_configured": len(ai_crawlers),
         },
     }
+
+
+# ---------------------------------------------------------------------------
+# canons_v2: router + per-canon spec + always-loaded engineering/UX baselines.
+# Single source of truth: studio/smartllm_studio/kb/styles/canons_v2/.
+# ---------------------------------------------------------------------------
+CANONS_V2_ROOT = KB_ROOT / "styles" / "canons_v2"
+_V2_SECTION_RE = re.compile(r"<!-- section:(\w+) -->\n")
+
+# Which sections each LLM stage needs (spec, engineering baseline, UX baseline).
+V2_STAGE_SECTIONS: dict[str, dict[str, list[str]]] = {
+    "architect": {"spec": ["essence", "structure", "ux_check"], "eng": ["architecture"], "ux": ["navigation", "cta"]},
+    "composition": {"spec": ["essence", "structure", "hero", "blocks", "ux_check"], "eng": [], "ux": ["layout", "cta", "content"]},
+    "hero": {"spec": ["essence", "hero", "typography"], "eng": [], "ux": ["cta", "content"]},
+    "copy": {"spec": ["essence", "blocks"], "eng": [], "ux": ["content", "forms", "cta"]},
+    "seo": {"spec": ["seo"], "eng": ["seo", "aeo_geo"], "ux": []},
+    "visuals": {"spec": ["imagery", "color", "surfaces"], "eng": [], "ux": []},
+    "review": {"spec": ["hard_limits", "ux_check"], "eng": ["hard_limits"], "ux": ["hard_limits", "checklist"]},
+    "localize": {"spec": ["essence"], "eng": [], "ux": ["content"]},
+}
+# ~32K context for the local model: keep the KB slice per stage small (chars ≈ 3.8 × tokens).
+V2_STAGE_CHAR_BUDGET = 22000
+
+
+@lru_cache(maxsize=64)
+def _v2_sections(filename: str) -> dict[str, str]:
+    path = CANONS_V2_ROOT / filename
+    if not path.exists():
+        return {}
+    text = path.read_text(encoding="utf-8")
+    parts = _V2_SECTION_RE.split(text)
+    out: dict[str, str] = {"_header": parts[0].strip()}
+    for i in range(1, len(parts) - 1, 2):
+        out[parts[i]] = parts[i + 1].strip()
+    return out
+
+
+def canons_v2_available() -> bool:
+    return (CANONS_V2_ROOT / "_router.md").exists()
+
+
+def load_canon_router_v2() -> str:
+    """Compact router (<=1.5K tokens) used when the model picks a canon."""
+    p = CANONS_V2_ROOT / "_router.md"
+    return p.read_text(encoding="utf-8").strip() if p.exists() else ""
+
+
+def load_canon_v2_spec_sections(canon_id: str, sections: list[str] | None = None) -> str:
+    cid = resolve_canon_id(canon_id)
+    secs = _v2_sections(f"{cid}.spec.md")
+    if not secs:
+        return ""
+    names = sections or [k for k in secs if k != "_header"]
+    return "\n\n".join(secs[n] for n in names if n in secs)
+
+
+def load_canon_v2_context(stage: str, canon_id: str, max_chars: int = V2_STAGE_CHAR_BUDGET) -> str:
+    """Stage-specific slice: chosen canon spec sections + engineering + UX baselines, char-budgeted."""
+    plan = V2_STAGE_SECTIONS.get(stage)
+    if not plan or not canons_v2_available():
+        return ""
+    cid = resolve_canon_id(canon_id)
+    chunks: list[str] = []
+    spec = load_canon_v2_spec_sections(cid, plan["spec"])
+    if spec:
+        chunks.append(f"### Canon {cid} (style rules; looks win here)\n{spec}")
+    ux = _v2_sections("_ux_baseline.md")
+    ux_txt = "\n\n".join(ux[n] for n in plan["ux"] if n in ux)
+    if ux_txt:
+        chunks.append(f"### UX baseline (always applies; UX wins over style)\n{ux_txt}")
+    eng = _v2_sections("_engineering_baseline.md")
+    eng_txt = "\n\n".join(eng[n] for n in plan["eng"] if n in eng)
+    if eng_txt:
+        chunks.append(f"### Engineering baseline (always applies)\n{eng_txt}")
+    out = "\n\n".join(chunks)
+    if len(out) > max_chars:
+        out = out[:max_chars].rsplit("\n", 1)[0]
+    return out
+
+
+# Bilingual niche synonyms for canons_v2 router 'fits'/'avoid' tags (EN words + RU stems).
+_V2_TAG_SYNONYMS: dict[str, list[str]] = {
+    "saas": ["saas", "subscription software", "b2b software", "сервис по подписке"],
+    "devtools": ["devtool", "developer", "sdk", "разработчик"], "cli": ["cli", "terminal", "command line", "терминал"],
+    "api": ["api"], "infrastructure": ["infrastructure", "devops", "kubernetes", "observability", "инфраструктур"],
+    "cybersecurity": ["security", "cyber", "pentest", "безопасност"], "docs": ["documentation", "docs", "документац"],
+    "hardware": ["hardware", "device", "устройств", "железо"], "dashboard": ["dashboard", "дашборд"],
+    "corporate": ["corporate", "корпоратив"], "architecture": ["architect", "архитект"],
+    "engineering": ["engineering", "инженер"], "consulting": ["consulting", "консалт"],
+    "journalism": ["journal", "newsroom", "журнал", "редакц"], "research": ["research", "исследован"],
+    "publishing": ["publish", "издательств", "книг"], "annual report": ["annual report", "годовой отчет", "годовой отчёт"],
+    "culture": ["culture", "культур"], "exhibition": ["exhibition", "выставк"], "festival": ["festival", "фестивал"],
+    "agency": ["agency", "агентств"], "launch": ["launch", "запуск"], "startup": ["startup", "стартап"],
+    "campaign": ["campaign", "кампани"], "community": ["community", "сообществ"], "event": ["event", "мероприят", "ивент"],
+    "media": ["media", "медиа"], "ai": [" ai ", "artificial intelligence", "llm", "нейросет", "искусственн"],
+    "fintech": ["fintech", "payment", "финтех", "платеж", "платёж"], "cloud": ["cloud", "облак"],
+    "platform": ["platform", "платформ"], "analytics": ["analytics", "аналитик"],
+    "audio": ["audio", "speaker", "аудио", "звук"], "manufacturing": ["manufactur", "factory", "производств", "завод"],
+    "iot": ["iot", "smart home", "умный дом"], "edtech": ["edtech", "online course", "онлайн-курс", "онлайн курс"],
+    "education": ["school", "education", "школ", "обучен", "образован"], "wellness": ["wellness", "yoga", "йог", "велнес"],
+    "app": ["mobile app", "приложен"], "family": ["family", "kids", "семь", "дет"],
+    "luxury": ["luxury", "premium", "люкс", "премиальн"], "atelier": ["atelier", "ателье"],
+    "real_estate": ["real estate", "property", "недвижим"], "hospitality": ["hotel", "hospitality", "отел", "гостиниц"],
+    "film": ["film", "cinema", "кино", "фильм"], "documentary": ["documentary", "документальн"],
+    "gastronomy": ["restaurant", "gastronom", "chef", "ресторан", "гастроном", "шеф"],
+    "storytelling": ["storytelling", "story", "истори"], "3d": ["3d", "3д"], "automotive": ["automotive", "car ", "авто"],
+    "ar": ["augmented reality", "дополненн"], "product": ["product launch", "gadget", "гаджет"],
+    "eco": ["eco", "organic", "эко", "органич"], "sustainability": ["sustainab", "устойчив"],
+    "clinic": ["clinic", "клиник"], "botanical": ["plant", "garden", "florist", "растен", "сад", "флорист"],
+    "artisan": ["artisan", "handmade", "ручн", "ремесл"], "coffee": ["coffee", "roaster", "кофе", "обжар"],
+    "bakery": ["bakery", "bread", "пекарн", "хлеб"], "craft": ["craft", "ceramic", "pottery", "керамик", "мастерск", "гончар"],
+    "design_studio": ["design studio", "дизайн-студ", "студия дизайна"],
+    "legal": ["law firm", "legal", "юрид", "адвокат"], "finance": ["finance", "invest", "accounting", "invoic", "vat", "tax", "финанс", "инвест", "бухгалтер", "налог", "счета"],
+    "enterprise": ["enterprise", "корпорац"], "b2b": ["b2b"], "bank": ["bank", "банк"], "banks": ["bank", "банк"],
+    "healthcare": ["health", "medical", "doctor", "медицин", "здоров", "врач"], "medical": ["medical", "медицин"],
+    "gov": ["government", "municipal", "госуслуг", "муниципал"], "civic": ["civic", "nonprofit", "ngo", "некоммерч", "нко"],
+    "youth": ["youth", "gen z", "молодеж", "молодёж"], "creative": ["creative", "креатив"],
+    "lifestyle": ["lifestyle", "лайфстайл"], "food": ["food", "еда", "кафе", "cafe"], "kids": ["kids", "children", "детск"],
+    "fashion": ["fashion", "мода", "одежд"], "gaming": ["gaming", "game", "игр"],
+}
+
+
+def route_canon_v2(brief: str) -> list[tuple[str, int]]:
+    """Score canons_v2 router 'fits' (+3) / 'avoid' (-3) tags against a brief, EN + RU niche synonyms."""
+    p = CANONS_V2_ROOT / "_router.json"
+    if not p.exists():
+        return []
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    low = f" {(brief or '').lower()} "
+
+    def hit(tag: str) -> bool:
+        t = str(tag).lower()
+        for syn in _V2_TAG_SYNONYMS.get(t) or [t.replace("_", " ")]:
+            syn = syn.strip()
+            # short tags ("ai", "cli", "api", "vat") must match whole words, longer ones are stems
+            if len(syn) <= 4:
+                if re.search(rf"(?<![\w]){re.escape(syn)}(?![\w])", low):
+                    return True
+            elif syn in low:
+                return True
+        return False
+
+    scored = [
+        (str(c.get("id")), sum(3 for t in c.get("fits") or [] if hit(t)) - sum(3 for t in c.get("avoid") or [] if hit(t)))
+        for c in data.get("canons") or []
+    ]
+    scored.sort(key=lambda x: -x[1])
+    return scored

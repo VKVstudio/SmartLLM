@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "smartllm-studio"
-version = "0.0.5-beta"
+version = "0.0.7-beta"
 description = "SmartLLM Studio — Local Offline Multimodal Website, Design & Copywriting Atelier (EN + RU)"
 readme = "README.md"
 requires-python = ">=3.11"

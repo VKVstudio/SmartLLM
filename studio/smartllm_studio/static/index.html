@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SmartLLM Studio</title>
   <link rel="icon" href="/assets/smartllm-logo.svg">
-  <link rel="stylesheet" href="/static/styles.css?v=0.0.5-r3">
+  <link rel="stylesheet" href="/static/styles.css?v=0.0.6-r5">
 </head>
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
@@ -156,7 +156,12 @@
             </div>
           </div>
 
-          <div class="form-grid-2">
+          <div id="exp-stack-wrap" class="field" hidden>
+            <label for="exp-stack-select" data-i18n="lbl_stack_select">Стек генерации (поддерживаемый стилем)</label>
+            <select id="exp-stack-select"></select>
+          </div>
+          <div id="exp-anim-note" class="static-canon-note" data-i18n="msg_exp_anim_auto">Стиль, стек и анимация подберутся автоматически под тему промпта. Выберите конкретный стиль выше, чтобы выбрать стек и движок вручную.</div>
+          <div id="exp-anim-controls" class="form-grid-2" hidden>
             <div class="field">
               <label for="exp-landing-preset" data-i18n="lbl_landing_preset">Формат лендинга (GSAP-класс)</label>
               <select id="exp-landing-preset"></select>
@@ -297,28 +302,39 @@
             </div>
             <p class="sub-lead" style="margin:0 0 10px 0; font-size:12px;" data-i18n="s3_palette_note">Палитры — канон-согласованные токены (NN/g, MDN, Tailwind, WCAG), а не единственный официальный HEX-набор стиля.</p>
 
-            <div class="form-grid-2" style="margin-bottom:10px;">
-              <div class="field">
-                <label data-i18n="lbl_polarity">Тема оформления (Светлая / Тёмная)</label>
-                <div class="polarity-switcher" role="group" aria-label="Theme Polarity">
-                  <button class="btn btn-primary" id="s3-polarity-auto" data-polarity="auto" aria-pressed="true" type="button" data-i18n="btn_pol_auto">Авто (по канону)</button>
-                  <button class="btn" id="s3-polarity-light" data-polarity="light" aria-pressed="false" type="button" data-i18n="btn_pol_light">Светлая тема</button>
-                  <button class="btn" id="s3-polarity-dark" data-polarity="dark" aria-pressed="false" type="button" data-i18n="btn_pol_dark">Тёмная тема</button>
-                </div>
+            <div class="field" style="margin-bottom:10px;">
+              <label data-i18n="lbl_polarity">Тема оформления (Светлая / Тёмная)</label>
+              <div class="polarity-switcher" role="group" aria-label="Theme Polarity">
+                <button class="btn btn-primary" id="s3-polarity-auto" data-polarity="auto" aria-pressed="true" type="button" data-i18n="btn_pol_auto">Авто (по канону)</button>
+                <button class="btn" id="s3-polarity-light" data-polarity="light" aria-pressed="false" type="button" data-i18n="btn_pol_light">Светлая тема</button>
+                <button class="btn" id="s3-polarity-dark" data-polarity="dark" aria-pressed="false" type="button" data-i18n="btn_pol_dark">Тёмная тема</button>
               </div>
-              <div class="field">
-                <label for="s3-motion-select" data-i18n="lbl_motion_engine">Движок анимации (MIT / Scroll-Driven)</label>
-                <select id="s3-motion-select"></select>
-                <p class="sub-lead" style="margin:6px 0 0 0; font-size:12px;" data-i18n="lbl_motion_hint">Motion 14 + Lenis или Anime.js создают плавный GSAP-класс скролл-хореографии и стэггер без лицензии GSAP.</p>
-              </div>
-            </div>
-
-            <div class="field" style="margin-bottom:14px;">
-              <label data-i18n="lbl_landing_presets_heading">Формат анимированного лендинга (GSAP-класс, MIT)</label>
-              <div id="s3-landing-presets" class="landing-preset-grid"></div>
             </div>
 
             <div id="s3-canon-gallery" class="canon-gallery-grid"></div>
+
+            <div id="s3-animation-section" class="s3-animation-section">
+              <div class="s3-anim-head">
+                <strong data-i18n="lbl_s3_anim_section">Стек и анимации для выбранного стиля</strong>
+                <span id="s3-anim-canon-name" class="s3-anim-canon-pill"></span>
+              </div>
+              <div id="s3-stack-wrap" class="field" style="margin-bottom:12px;">
+                <label for="s3-stack-select" data-i18n="lbl_stack_select">Стек генерации (поддерживаемый стилем)</label>
+                <select id="s3-stack-select"></select>
+              </div>
+              <div id="s3-static-canon-note" class="static-canon-note" hidden data-i18n="msg_static_canon_note">Этот стиль — статичный канон без анимаций: фокус на типографике, читаемости и мгновенной загрузке.</div>
+              <div id="s3-anim-controls">
+                <div id="s3-landing-presets-wrap" class="field" style="margin-bottom:12px;">
+                  <label data-i18n="lbl_landing_presets_heading">Формат анимированного лендинга (GSAP-класс, MIT)</label>
+                  <div id="s3-landing-presets" class="landing-preset-grid"></div>
+                </div>
+                <div id="s3-motion-engine-wrap" class="field" style="margin-bottom:0;">
+                  <label for="s3-motion-select" data-i18n="lbl_motion_engine">Движок анимации (MIT / Scroll-Driven)</label>
+                  <select id="s3-motion-select"></select>
+                  <p class="sub-lead" style="margin:6px 0 0 0; font-size:12px;" data-i18n="lbl_motion_hint">Motion 14 + Lenis или Anime.js дают плавный скролл, стэггер и параллакс уровня GSAP полностью офлайн по лицензии MIT.</p>
+                </div>
+              </div>
+            </div>
 
             <div class="step-footer-nav">
               <button class="btn step-prev-btn" id="s3-prev-btn" data-target="2" type="button" data-i18n="btn_step_back">← Назад</button>
@@ -454,6 +470,7 @@
                 </button>
                 <button class="btn" id="s5-export-zip-btn" type="button" data-i18n="btn_export_zip">Скачать архивом .ZIP</button>
                 <button class="btn" id="s5-reveal-folder-btn" type="button" data-i18n="btn_export_reveal">Открыть папку с готовым сайтом</button>
+                <button class="btn" id="s5-open-site-btn" type="button" data-i18n="btn_open_site">Открыть сайт в браузере</button>
               </div>
               <p id="s5-build-status" style="font-family:var(--font-code); font-size:12px; color:var(--ok); margin:8px 0 0 0;" aria-live="polite"></p>
             </div>
@@ -687,6 +704,6 @@
     </div>
   </div>
 
-  <script src="/static/app.js?v=0.0.5-r3"></script>
+  <script src="/static/app.js?v=0.0.6-r5"></script>
 </body>
 </html>

@@ -404,6 +404,9 @@ textarea { min-height: 76px; resize: vertical; }
   background: var(--bg);
 }
 .canon-card {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
   background: var(--s2);
   border: 1px solid var(--hairline);
   border-radius: var(--r-md);
@@ -424,11 +427,18 @@ textarea { min-height: 76px; resize: vertical; }
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 6px;
+  width: 100%;
 }
 .canon-card-head strong {
   min-width: 0;
-  flex: 1 1 120px;
-  overflow-wrap: break-word;
+  flex: 1 1 100%;
+  overflow-wrap: anywhere;
+}
+.canon-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  width: 100%;
 }
 .canon-polarity-badge {
   font-family: var(--font-code);
@@ -438,6 +448,24 @@ textarea { min-height: 76px; resize: vertical; }
   border-radius: 999px;
   padding: 1px 6px;
   flex-shrink: 0;
+}
+.canon-motion-badge {
+  font-family: var(--font-code);
+  font-size: 10px;
+  color: var(--text-2);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 1px 7px;
+  flex-shrink: 0;
+}
+.canon-motion-badge[data-animated="true"] {
+  color: var(--violet);
+  border-color: rgba(192, 132, 252, 0.38);
+  background: rgba(192, 132, 252, 0.08);
+}
+.canon-motion-badge[data-animated="false"] {
+  color: var(--text-2);
+  background: var(--bg);
 }
 .canon-desc {
   font-size: 12px;
@@ -982,6 +1010,46 @@ textarea { min-height: 76px; resize: vertical; }
 }
 
 [hidden] { display: none !important; }
+
+.s3-animation-section {
+  margin-top: 14px;
+  margin-bottom: 12px;
+  padding: 14px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--hairline);
+  background: var(--bg);
+}
+.s3-anim-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.s3-anim-head strong {
+  font-size: 13px;
+  color: var(--text-1);
+}
+.s3-anim-canon-pill {
+  font-family: var(--font-code);
+  font-size: 11px;
+  color: var(--violet);
+  border: 1px solid rgba(192, 132, 252, 0.35);
+  border-radius: 999px;
+  padding: 2px 9px;
+  background: rgba(192, 132, 252, 0.08);
+}
+.static-canon-note {
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border-radius: var(--r-sm);
+  border: 1px dashed var(--hairline);
+  background: var(--s2);
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.5;
+}
 
 .landing-preset-grid {
   display: grid;

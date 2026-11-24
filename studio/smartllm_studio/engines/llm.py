@@ -27,6 +27,23 @@ def _strip_think_and_fences(text: str) -> str:
     return cleaned.strip()
 
 
+def _user_content(text: str, images: list[Path] | None) -> Any:
+    """Plain string, or OpenAI multimodal parts (llama-server --mmproj accepts image_url data URIs)."""
+    if not images:
+        return text
+    import base64
+    import mimetypes
+
+    parts: list[dict[str, Any]] = []
+    for ip in images:
+        ip = Path(ip)
+        mime = mimetypes.guess_type(ip.name)[0] or "image/png"
+        b64 = base64.b64encode(ip.read_bytes()).decode("ascii")
+        parts.append({"type": "image_url", "image_url": {"url": f"data:{mime};base64,{b64}"}})
+    parts.append({"type": "text", "text": text})
+    return parts
+
+
 def _extract_first_json_dict(text: str) -> dict[str, Any]:
     """Extract and parse the first balanced JSON object from model output."""
     cleaned = _strip_think_and_fences(text)
@@ -128,6 +145,7 @@ class LLMEngineClient:
         self.server_bin = server_bin
         self.model_path = model_path
         self.proc: subprocess.Popen[Any] | None = None
+        self.last_finish_reason = ""
         self._trimmer: _PageCacheTrimmer | None = None
         self._log_fh: Any = None
         self.server_log_path: Path = get_log_dir() / "llama-server.log"
@@ -160,6 +178,7 @@ class LLMEngineClient:
                 str(self.server_bin),
                 "-m",
                 str(self.model_path),
+                *self._mmproj_args(),
                 "--host",
                 "127.0.0.1",
                 "--port",
@@ -349,12 +368,42 @@ class LLMEngineClient:
         self.gpu.transition(GPUState.IDLE)
         return {"status": "stopped", "state": self.gpu.state.value}
 
+    def _mmproj_path(self) -> Path | None:
+        """Vision projector next to the GGUF (mmproj*.gguf). Disable with SMARTLLM_NO_MMPROJ=1."""
+        if os.environ.get("SMARTLLM_NO_MMPROJ") == "1" or not self.model_path:
+            return None
+        explicit = os.environ.get("SMARTLLM_MMPROJ_PATH")
+        if explicit and Path(explicit).is_file():
+            return Path(explicit)
+        cands = sorted(Path(self.model_path).parent.glob("mmproj*.gguf"))
+        return cands[0] if cands else None
+
+    def _mmproj_args(self) -> list[str]:
+        mp = self._mmproj_path()
+        return ["--mmproj", str(mp)] if mp else []
+
+    @property
+    def vision_enabled(self) -> bool:
+        return self._mmproj_path() is not None
+
+    def generate_vision_json(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        image_paths: list[Path],
+        max_tokens: int = 1024,
+        temperature: float = 0.2,
+    ) -> dict[str, Any]:
+        """Same as generate_structured_json but sends images (OpenAI image_url data URIs) to the mmproj model."""
+        return self.generate_structured_json(system_prompt, user_prompt, max_tokens=max_tokens, temperature=temperature, images=image_paths)
+
     def generate_structured_json(
         self,
         system_prompt: str,
         user_prompt: str,
         max_tokens: int = 2048,
         temperature: float = 0.4,
+        images: list[Path] | None = None,
     ) -> dict[str, Any]:
         """Auto-start llama-server if needed and return parsed JSON object from /v1/chat/completions."""
         if not self.is_healthy():
@@ -369,7 +418,7 @@ class LLMEngineClient:
             {
                 "messages": [
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt},
+                    {"role": "user", "content": _user_content(user_prompt, images)},
                 ],
                 "stream": False,
                 "max_tokens": eff_max_tokens,
@@ -393,7 +442,8 @@ class LLMEngineClient:
             headers={"Content-Type": "application/json"},
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=300.0) as resp:
+        # ~20 tok/s on the 4080 laptop: allow the full budget plus prompt eval before timing out.
+        with urllib.request.urlopen(req, timeout=max(300.0, eff_max_tokens / 12.0 + 120.0)) as resp:
             raw_body = json.loads(resp.read().decode("utf-8", errors="replace"))
 
         timings = raw_body.get("timings") or {}
@@ -402,6 +452,7 @@ class LLMEngineClient:
 
         choices = raw_body.get("choices") or []
         msg = (choices[0].get("message") or {}) if choices else {}
+        self.last_finish_reason = str((choices[0].get("finish_reason") if choices else "") or "")
         content = str(msg.get("content") or "")
         reasoning = str(msg.get("reasoning_content") or msg.get("reasoning") or "")
         parsed = _extract_first_json_dict(content)

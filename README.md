@@ -1,12 +1,11 @@
 <p align="center">
-  <img src="assets/brand/smartllm-logo.svg" alt="SmartLLM Logo" width="96" height="96">
+  <img src="assets/brand/smartllm-logo.svg" alt="SmartLLM logo" width="96" height="96">
 </p>
 
-<h1 align="center">SmartLLM &amp; SmartLLM Studio <code>v0.0.4-beta</code></h1>
+<h1 align="center">SmartLLM Studio <code>v0.0.7-beta</code></h1>
 
 <p align="center">
-  <b>Local Offline Multimodal Website, Design &amp; Copywriting Combine (EN + RU)</b><br>
-  Zero Cloud Calls · Zero Disk Swap · Deterministic SHA-256 CSP &amp; SEO/GEO Compiler
+  <b>Build multi-page websites with a local AI — offline, free, on your own GPU.</b>
 </p>
 
 <p align="center">
@@ -14,156 +13,232 @@
 </p>
 
 <p align="center">
-  <img src="assets/badges/version.svg" alt="release: v0.0.4-beta">
+  <img src="assets/badges/version.svg" alt="release: v0.0.7-beta">
   <img src="assets/badges/platform.svg" alt="platform: Linux | Windows 11">
-  <img src="assets/badges/offline.svg" alt="runtime: 127.0.0.1 Zero-Swap">
+  <img src="assets/badges/offline.svg" alt="runtime: 127.0.0.1, offline">
   <img src="assets/badges/license.svg" alt="license: Apache-2.0 / FSL-1.1-ALv2">
 </p>
 
 ---
 
-## Live Studio UI & Real Generated Sites
+## Live demos
 
-<p align="center">
-  <img src="studio/assets/screenshots/studio_ui_workspace.png" alt="SmartLLM Studio 3-pane workspace with 20 OKLCH canons, Live Stage, and Telemetry HUD" width="100%">
-  <br><sub><b>SmartLLM Studio</b> (`127.0.0.1:8090`): 5-Step Constructor + Automatic Mode, 20 classical design canons with OKLCH tokens, persistent Live Stage (`1440 / 834 / 390`), and live GPU/RAM telemetry HUD.</sub>
-</p>
+Three real sites made end to end by SmartLLM Studio on one laptop GPU. Each was built from a short brief. The text, sitemap, layout and images all come from the local pipeline. Click a preview to open the live site.
 
 <table>
   <tr>
-    <td align="center" width="50%">
-      <img src="studio/assets/screenshots/showcase_01_aether_en.png" alt="Aether Compute — Automatic Mode EN (Bento Grid)"><br>
-      <sub><b>01 · Aether Compute</b> — Automatic Mode (`EN`) · <code>Bento Grid</code> · 8 pages · Review <b>6.0/6</b> · <a href="studio/examples/01_auto_en_aether_compute.md">Prompt</a></sub>
+    <td align="center" width="33%">
+      <a href="https://vkvstudio.github.io/SmartLLM/ledgerline_en/"><img src="docs/assets/demos/ledgerline_en.jpg" alt="Ledgerline — VAT automation for EU freelancers (live demo)" width="100%"></a><br>
+      <b><a href="https://vkvstudio.github.io/SmartLLM/ledgerline_en/">Ledgerline</a></b><br>
+      <sub>Canon 17 · Fintech Institutional<br>English · 6 pages</sub>
     </td>
-    <td align="center" width="50%">
-      <img src="studio/assets/screenshots/showcase_02_sever_ru.png" alt="Severny Kontur — Automatic Mode RU (Visual Storytelling)"><br>
-      <sub><b>02 · Северный Контур</b> — Automatic Mode (`RU`) · <code>Visual Storytelling</code> · 7 pages · Review <b>6.0/6</b> · <a href="studio/examples/02_auto_ru_sever_arch.md">Prompt</a></sub>
+    <td align="center" width="33%">
+      <a href="https://vkvstudio.github.io/SmartLLM/glina_i_dym_ru/"><img src="docs/assets/demos/glina_i_dym_ru.jpg" alt="Глина и дым — ceramics studio and coffee roastery (live demo)" width="100%"></a><br>
+      <b><a href="https://vkvstudio.github.io/SmartLLM/glina_i_dym_ru/">Глина и дым</a></b><br>
+      <sub>Canon 16 · Artisan Craft Zine<br>Russian · 7 pages</sub>
     </td>
-  </tr>
-  <tr>
-    <td align="center" width="50%">
-      <img src="studio/assets/screenshots/showcase_03_kuro_en.png" alt="Kuro Specialty Roasters — Constructor EN (Micro-Interactions & Tactile UI)"><br>
-      <sub><b>03 · Kuro Specialty Roasters</b> — 5-Step Constructor (`EN`) · <code>Micro-Interactions &amp; Tactile UI</code> · 4 pages · Review <b>6.0/6</b> · <a href="studio/examples/03_ctor_en_kuro_roasters.md">Guide</a></sub>
-    </td>
-    <td align="center" width="50%">
-      <img src="studio/assets/screenshots/showcase_03_kuro_team.png" alt="Z-Image 3:4 Vertical Team Portraits with Headroom"><br>
-      <sub><b>Z-Image 3:4 Portraits (<code>576×768</code>)</b> — Gender-matched prompts with guaranteed vertical headroom and <code>object-position: 50% 15%</code> framing.</sub>
+    <td align="center" width="33%">
+      <a href="https://vkvstudio.github.io/SmartLLM/northern_frame_enru/"><img src="docs/assets/demos/northern_frame_enru.jpg" alt="Northern Frame — Arctic documentary production (live demo)" width="100%"></a><br>
+      <b><a href="https://vkvstudio.github.io/SmartLLM/northern_frame_enru/">Northern Frame</a></b><br>
+      <sub>Canon 13 · Cinematic Documentary<br>English + Russian · 5 pages</sub>
     </td>
   </tr>
 </table>
 
----
-
-## Verified Numbers (`RTX 4080 Laptop 12 GB VRAM` + `32 GiB RAM`)
-
-| Metric | Measured Result | Scope / Source |
-|---|---|---|
-| **Production Checkpoint** | **`55.01 GiB`** (`K=320/512`, `IQ3_XXS + GSQ Q2_0`) | Pruned & healed from `Qwen/Qwen3.8-Flash-Next` (`335.30 GiB` BF16) |
-| **Quantization Accuracy** | **`-65.68%`** `ffn_down_exps` L2 error vs stock `Q2_0` | `931/931` CUDA `test-backend-ops` PASS |
-| **Decode Throughput** | **`21.14 tok/s`** mean (`17.502 tok/s` 20m 32K soak) | `59` EN+RU requests up to `18,777` tok/seq |
-| **Zero-Swap Memory** | **`0 B`** disk swap · **`0 kB`** resident PLE RSS | `26.82 GiB` PLE via direct `O_DIRECT` NVMe `pread`; `max VRAM = 9.12 GiB` |
-| **Web Lighthouse (Suite / Holdout)** | **`100 / 98.2 / 95.6 / 97.6`** · **`100 / 98.8 / 95.2 / 98.0`** | Real Chromium + Lighthouse (`P / A / BP / SEO`, `0` unsafe-inline) |
-| **Strict TypeScript** | **`10/10`** Suite + **`8/8`** Holdout unit tests PASS | Compiled with `tsc --strict` (`0` `any`) |
-| **Studio UI Gate** | **`232/232`** controls bound · LH **`100 / 100`** | `0` console errors, `0` external requests, `54` responsive shots |
+<sub>These demos are beta output and are published as generated. The only exception is one Glina hero image, where an AI anatomy error (an extra hand) was retouched by hand. See <a href="#known-limitations">Known limitations</a>.</sub>
 
 ---
 
-## How the Combine Works
+## Why SmartLLM
 
-```text
-User Prompt (EN / RU / EN+RU)
-  ├─► Automatic Mode (10-stage Sub-Agent Pipeline over disk memory `smartllm.md` + `.smartllm/state.json`)
-  │     foundation (single source of truth) ─► architect (page quests) ─► structure ─► hero ─► copy ─► seo ─► visuals ─► localize ─► review (6/6)
-  ├─► GPU Sequential Handoff (`llama-server` -> 0 MiB VRAM -> `sd-cli` Z-Image-Turbo -> 0 MiB VRAM)
-  │     • 6× Logo Generator (512×512) & auto brand-logo.png
-  │     • Layout-matched heroes/gallery + vertical 3:4 (576×768) gender-locked team portraits
-  └─► Deterministic Compiler (HTML5 + OKLCH `tokens.css` + SHA-256 CSP + JSON-LD `@graph` + `_headers` + `llms.txt` + `sitemap.xml`)
+- **Private:** the brief, your copy and your images never leave your machine. Studio listens on `127.0.0.1` only.
+- **Offline:** once the models are downloaded, no internet connection is needed. There are no cloud APIs and no API keys.
+- **Free:** there are no subscriptions, no credits and no per-site fees. You pay only for your own electricity.
+- **You own the output:** you get plain static HTML/CSS/JS and every image file, so there is no lock-in to a builder or a hosting service. See [`studio/OUTPUTS.md`](studio/OUTPUTS.md).
+- **Your hardware:** it runs on one consumer NVIDIA GPU with 12 GB of VRAM.
+
+---
+
+## How it works
+
+Studio runs an orchestrator that hands each job to a sub-agent in a **fresh session**. Each sub-agent gets only the system prompt and its own inputs, so no long chat history builds up. The steps run in sequence on one GPU, with only one model in VRAM at a time.
+
+```mermaid
+flowchart LR
+    A[Client brief<br/>EN / RU] --> B[Strategist<br/>offer & audience]
+    B --> C[Orchestrator<br/>canon + sitemap]
+    C --> D[Page composer<br/>one fresh session per page]
+    D --> E[Copywriter<br/>section blocks]
+    E --> F[Z-Image-Turbo<br/>hero, gallery, team visuals]
+    F --> G[Qwen vision check<br/>re-render rejects, max 2 rounds]
+    G --> H[Deterministic compiler<br/>HTML, SEO / AEO / GEO, CSP]
+    H --> I[Static multi-page site]
 ```
 
+1. **Plan:** a strategist reads the brief. The orchestrator then picks one of 20 design canons and the sitemap, and a page composer lays out each page. Every plan is validated and re-requested with concrete errors if it fails.
+2. **Write:** section copy is written in the site language (EN, RU or bilingual EN+RU).
+3. **Draw:** Studio unloads `llama-server` and renders the visuals with `sd-cli` running Z-Image-Turbo.
+4. **Check:** the Qwen vision projector checks each image against its brief (subject, style, anatomy). Rejected images are re-rendered, with at most 2 rounds.
+5. **Compile:** a deterministic compiler writes HTML5, OKLCH design tokens, SHA-256 CSP, JSON-LD, `sitemap.xml`, `robots.txt` and `llms.txt`.
+
 ---
 
-## Quickstart Guide
+## Features
 
-### 0. One-Folder Bundle (Any Folder, Any Drive)
+- **20 design canons:** Bento Grid, Swiss International, Editorial Magazine, Neo-Brutalism, Liquid Glass, Cinematic Documentary, Artisan Craft Zine, Fintech Institutional, Devtool Command UI and 11 more ([`kb/styles/canons_v2/`](studio/smartllm_studio/kb/styles/canons_v2/)). Canons 13, 16 and 17 have their own full layouts (header, hero, footer, CSS) as of 0.0.7. The other 17 share a common layout with canon tokens.
+- **Multi-page sites:** the sitemap is decided per brief (for example index, services, pricing, portfolio, FAQ, about and contact), with shared navigation and per-page composition.
+- **SEO / AEO / GEO:** canonical URLs, Open Graph, JSON-LD `@graph`, `sitemap.xml`, `robots.txt` and an `llms.txt` file for AI answer engines.
+- **PageSpeed-minded output:** static files only, no framework runtime and a strict CSP without `unsafe-inline`.
+- **EN / RU:** English, Russian, or a bilingual site with a language switch.
+- **Two modes:** Automatic Mode (brief → site) or the 5-step Constructor.
+- **Publish anywhere:** set the site domain (`seo.base_url`) in the project and the compiler writes the correct canonical and sitemap URLs.
 
-**Requirements:** NVIDIA GPU with `>= 12 GB` VRAM (RTX 20–50 series, driver `>= 525`), `32 GB` RAM recommended, Python 3.11+ (`python3-venv` package on Linux). **Disk:** `~165 GB` free without `--cleanup-parts`; with `--cleanup-parts` peak `~120 GB`, `~85 GB` after install. The installer checks free space BEFORE downloading and aborts with a clear message if there is not enough.
+<p align="center">
+  <img src="studio/assets/screenshots/studio_ui_workspace.png" alt="SmartLLM Studio workspace" width="100%">
+  <br><sub>SmartLLM Studio at <code>127.0.0.1:8090</code>: constructor and Automatic Mode, canon picker, live preview at 1440 / 834 / 390 and GPU/RAM telemetry.</sub>
+</p>
 
-[`setup_bundle.py`](https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.4-beta/setup_bundle.py) (also in [`scripts/release/`](scripts/release/setup_bundle.py); pure stdlib, resumable, SHA-256 verified) downloads EVERYTHING from our GitHub Releases into ONE portable folder — `studio/` + `models/` (55 GiB GGUF reassembled from 30 parts + mmproj) + `models/z-image/` (official Apache-2.0 `Z-Image-Turbo`: DiT + text encoder + VAE) + `bin/` portable CUDA engine binaries (Linux glibc >= 2.35 / Windows 11, no VC++ redist needed). No HuggingFace access required; optional `--zimage-source hf` fetches the same official weights from Comfy-Org upstream.
+### Measured on the three demos
 
-Open a terminal in ANY folder where you want the project to live — the installer creates a `SmartLLM` folder there for you. No specific drive or path is required.
+These figures come from Lighthouse 13 on the live demo pages, run locally in Chrome:
 
-**Linux:**
+| Category | Mobile | Desktop |
+|---|---|---|
+| Performance | 72–76 | 92–100 |
+| Accessibility | 96 | 96 |
+| Best Practices | 100 | 100 |
+| SEO | 100 | 100 |
+
+Mobile performance is limited by full-size PNG images; WebP and `srcset` are on the roadmap.
+
+---
+
+## Quick start
+
+### Requirements
+
+| | Minimum (tested) |
+|---|---|
+| GPU | NVIDIA with **12 GB VRAM** (tested on an RTX 4080 Laptop GPU), recent driver |
+| RAM | **32 GB** |
+| Disk | about **85 GB** after install, plus extra space while downloading. The installer computes the exact peak from the release sizes and aborts before downloading if space is short. |
+| OS | Linux (glibc ≥ 2.35) or Windows 11 |
+| Python | 3.11+ (`python3-venv` on Linux) |
+
+### Option A: One-folder bundle (models + engines + Studio)
+
+[`setup_bundle.py`](scripts/release/setup_bundle.py) uses only the Python standard library, resumes interrupted downloads and verifies SHA-256. It downloads the 55 GiB GGUF model (30 parts, reassembled) with the vision projector, Z-Image-Turbo, portable CUDA engine binaries and Studio into one `SmartLLM` folder:
+
+**Linux**
 ```bash
-cd ~   # or any folder you like
 curl -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.4-beta/setup_bundle.py
 python3 setup_bundle.py --cleanup-parts
 SmartLLM/studio/bin/smartllm-studio
 ```
 
-**Windows 11 (PowerShell):**
+**Windows 11 (PowerShell)**
 ```powershell
-cd $HOME   # or any folder on any drive
 curl.exe -LO https://github.com/VKVstudio/SmartLLM/releases/download/v0.0.4-beta/setup_bundle.py
 python setup_bundle.py --cleanup-parts
 SmartLLM\studio\smartllm-studio.bat
 ```
 
-Then open **http://127.0.0.1:8090**. First run downloads ~85 GB. Everything lives inside the `SmartLLM` folder — if any component is missing, Studio shows a one-click "Download everything automatically" banner.
+Then open **http://127.0.0.1:8090**.
 
-### 1. Launch SmartLLM Studio from Source (`Linux` & `Windows 11`)
+> The bundle currently ships the **v0.0.4-beta** Studio archive. To get the 0.0.7 pipeline (canon layouts, vision check, multi-page planner), also run Studio from source (Option B) and point **Settings** at the bundle's `models/` and `bin/`.
 
-- **Linux (`CachyOS` / Ubuntu / Debian):**
-  ```bash
-  git clone https://github.com/VKVstudio/SmartLLM.git
-  cd SmartLLM/studio
-  ./install.sh
-  ./bin/smartllm-studio
-  ```
-- **Windows 11 (`PowerShell`):**
-  ```powershell
-  git clone https://github.com/VKVstudio/SmartLLM.git
-  cd SmartLLM\studio
-  powershell -ExecutionPolicy Bypass -File .\install.ps1
-  .\smartllm-studio.bat
-  ```
-  Studio starts strictly on loopback **`http://127.0.0.1:8090`**. Standalone pre-packaged archives (`SmartLLM-Studio-v0.0.4-beta-linux.tar.gz` and `.zip`) are also available in [Releases](https://github.com/VKVstudio/SmartLLM/releases).
+### Option B: Studio from source
 
-### 2. Attach Local Weights & Binaries (in **Settings** or CLI)
+**Linux**
+```bash
+git clone https://github.com/VKVstudio/SmartLLM.git
+cd SmartLLM/studio
+./install.sh
+./bin/smartllm-studio
+```
 
-Studio never bundles multi-gigabyte model weights. Inside Studio top bar → **Settings** (or via env/config), point to your local:
-1. **GGUF Model & Vision Projector:** `SmartLLM-v2-K320-V1.gguf` (`55.01 GiB`) + `mmproj-Qwen3.8-Flash-Next-BF16.gguf` (`865.50 MiB`), executed via **`llama-server`** with `--lazy-mode direct --n-cpu-moe 42 --moe-cache-mib 2048 --cache-ram 0 -fa on`.
-   > If downloading the split parts (`SmartLLM-v2-K320-V1.gguf.part01`..`part30`, `< 2 GiB` each) from [Releases](https://github.com/VKVstudio/SmartLLM/releases) alongside `MODEL_SHA256SUMS.txt`, verify and join them bit-for-bit using [`reassemble_model.sh`](scripts/release/reassemble_model.sh) (`bash reassemble_model.sh --cleanup`), [`reassemble_model.ps1`](scripts/release/reassemble_model.ps1), or [`reassemble_model.py`](scripts/release/reassemble_model.py).
-2. **Image Generator (`sd-cli`):** `stable-diffusion.cpp` with the official full-precision `z_image_turbo_bf16.safetensors` + `qwen_3_4b.safetensors` + `ae.safetensors` (Apache-2.0, included in the bundle; `--steps 8 --cfg-scale 1.0 --type q8_0 --clip-on-cpu --vae-tiling`).
+**Windows 11 (PowerShell)**
+```powershell
+git clone https://github.com/VKVstudio/SmartLLM.git
+cd SmartLLM\studio
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+.\smartllm-studio.bat
+```
 
-> Only **one model occupies VRAM at a time** — Studio cleanly stops `llama-server` before starting `sd-cli` and verifies `0 MiB` compute VRAM upon exit.
+In **Settings**, set the paths to:
+- `SmartLLM-v2-K320-V1.gguf` (55 GiB) and `mmproj-Qwen3.8-Flash-Next-BF16.gguf` (866 MB). They are in [release v0.0.1-beta](https://github.com/VKVstudio/SmartLLM/releases/tag/v0.0.1-beta) as split parts. Join them with [`reassemble_model.py`](scripts/release/reassemble_model.py), [`.sh`](scripts/release/reassemble_model.sh) or [`.ps1`](scripts/release/reassemble_model.ps1).
+- `llama-server` and `sd-cli`, plus the Z-Image-Turbo weights (`z_image_turbo_bf16`, `qwen_3_4b`, `ae`). They are in [release v0.0.3-beta](https://github.com/VKVstudio/SmartLLM/releases/tag/v0.0.3-beta).
 
-### 3. Build Your First Site (Ready-Made Examples)
+> **Offline npm cache:** `vendor/npm_offline/` (about 500 MB) is **not** in the git repo. It is only needed for fully offline TypeScript/Lighthouse checks and is distributed as a separate offline download.
 
-Copy-paste ready prompts and step-by-step constructor walkthroughs live in [`studio/examples/`](studio/examples/):
-- **Auto EN:** [`01_auto_en_aether_compute.md`](studio/examples/01_auto_en_aether_compute.md) — Sovereign GPU Cloud (`Bento Grid`, 8 pages)
-- **Auto RU:** [`02_auto_ru_sever_arch.md`](studio/examples/02_auto_ru_sever_arch.md) — Architectural Bureau (`Visual Storytelling`, 7 pages)
-- **5-Step Constructor EN:** [`03_ctor_en_kuro_roasters.md`](studio/examples/03_ctor_en_kuro_roasters.md) — Coffee Roastery (`Micro-Interactions & Tactile UI`, 4 pages)
+### Example briefs
 
-### 4. CLI Combine & Headless Verification
-
-- **1-command CLI combine:** [`./run_combine.sh`](docs/OFFLINE_COMBINE_QUICKSTART.md) (`--brief "..." --out eval/combine_out/demo`)
-- **Offline Studio verification suite (`232` DOM controls + Lighthouse):**
-  ```bash
-  CUDA_VISIBLE_DEVICES="" .venv_linux/bin/python studio/tests/test_studio_cpu.py
-  ```
-- **Architecture & Schemas:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) · [`docs/DATA.md`](docs/DATA.md) · [`eval/suite/`](eval/suite/)
+Ready-to-paste prompts are in [`studio/examples/`](studio/examples/). Architecture notes are in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), and the CLI combine is described in [`docs/OFFLINE_COMBINE_QUICKSTART.md`](docs/OFFLINE_COMBINE_QUICKSTART.md).
 
 ---
 
-## Licensing
+## Hardware
 
-- **Repository pruning, calibration & evaluation scripts:** **[Apache-2.0](LICENSE)**
-- **SmartLLM Studio (`studio/`):** Source-available under **[FSL-1.1-ALv2 → Apache-2.0 after 2 years](studio/LICENSE.md)** ([`TRADEMARKS.md`](studio/TRADEMARKS.md), [`OUTPUTS.md`](studio/OUTPUTS.md) — you own 100% of every website, script, and visual you generate, [`THIRD_PARTY_NOTICES.md`](studio/THIRD_PARTY_NOTICES.md)).
-- **`SmartLLM v2` GGUF weights:** Distributed separately under `qwen-community-1.0`.
-- **Z-Image-Turbo (DiT), Qwen3-4B text encoder, Flux.1 AE VAE:** **Apache-2.0** (byte-identical to `Comfy-Org/Z-Image-Turbo`; re-hosted in our Releases for convenience).
-- **Engine binaries (`llama-server`, `sd-cli`):** MIT forks of `llama.cpp` / `stable-diffusion.cpp` with the SmartLLM v2 runtime (`--lazy-mode direct`, MoE cache, qwen4exp MTP).
+| Machine | VRAM | RAM | LLM decode | Status |
+|---|---|---|---|---|
+| RTX 4080 Laptop GPU | 12 GB | 32 GiB | about 20 tok/s | Used to build all three demos |
 
-Questions, or something here that looks wrong: **hello@vkvstudio.com**.
+Only one model is in VRAM at a time: Studio stops `llama-server` before starting `sd-cli`, and the reverse. Other GPUs have not been measured yet. Reports are welcome.
+
+---
+
+## FAQ
+
+**Does it need the internet?**
+Only to download the models once. Generation runs fully on `127.0.0.1`.
+
+**Can I use the generated sites commercially?**
+Yes. You own what you generate. See [`studio/OUTPUTS.md`](studio/OUTPUTS.md).
+
+**How long does a site take?**
+It depends on the number of pages and images. A 5–7 page site with images takes tens of minutes on the tested laptop, not seconds.
+
+**Can I host the result anywhere?**
+Yes. The output is a folder of static files. The demos above are served straight from GitHub Pages.
+
+**AMD / Apple Silicon?**
+Not supported yet. The engines are CUDA builds.
+
+<a id="known-limitations"></a>
+**Known limitations**
+- The vision check can miss anatomy errors (extra hands or fingers). Review the people in images before you publish.
+- Images are PNG only, so mobile Lighthouse performance is in the 70s.
+- Bilingual sites use one URL with a JS language switch, with no separate `/ru/` pages and no `hreflang` yet.
+- The site domain is set in the project file (`seo.base_url`) and is not in the UI yet.
+
+---
+
+## Roadmap
+
+- Dedicated layouts for the other 17 canons
+- WebP/AVIF output with responsive `srcset`
+- A more reliable anatomy check in the vision stage
+- Separate `/ru/` pages with `hreflang` for bilingual sites
+- A domain / base URL field in the Studio UI
+- An updated one-folder bundle that ships Studio 0.0.7
+
+---
+
+## License
+
+- **Repository scripts (pruning, calibration, evaluation):** [Apache-2.0](LICENSE)
+- **SmartLLM Studio (`studio/`):** [FSL-1.1-ALv2](studio/LICENSE.md), which becomes Apache-2.0 after 2 years. See also [`TRADEMARKS.md`](studio/TRADEMARKS.md), [`OUTPUTS.md`](studio/OUTPUTS.md) and [`THIRD_PARTY_NOTICES.md`](studio/THIRD_PARTY_NOTICES.md).
+- **SmartLLM v2 GGUF weights:** `qwen-community-1.0`, distributed separately in Releases.
+- **Z-Image-Turbo, Qwen3-4B text encoder and AE VAE:** Apache-2.0
+- **Engine binaries (`llama-server`, `sd-cli`):** MIT forks of `llama.cpp` / `stable-diffusion.cpp`
+
+Questions or corrections: **hello@vkvstudio.com**
+
+---
+
+## Кратко по-русски
+
+**SmartLLM Studio** собирает многостраничные сайты локальной нейросетью: офлайн, бесплатно, на вашей видеокарте (NVIDIA, 12 ГБ VRAM, 32 ГБ RAM). Работа идёт так: бриф → стратег → оркестратор (канон и карта сайта) → композиция каждой страницы → тексты → картинки Z-Image → проверка зрением Qwen → статический сайт с SEO/AEO/GEO. В Studio 20 дизайн-канонов, поддерживаются RU, EN и двуязычные сайты. Примеры выше — живые демо на GitHub Pages. Подробная документация на русском: [README.ru.md](README.ru.md).
 
 ---
 

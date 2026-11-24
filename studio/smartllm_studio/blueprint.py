@@ -15,10 +15,10 @@ import zipfile
 
 from . import __version__
 from .adapters import get_rag_selector
-from .catalog import AI_CRAWLERS_DEFAULT
+from .catalog import AI_CRAWLERS_DEFAULT, CANON_MOTION_DEFAULTS
 from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT, discover_studio_paths
 from .kb_loader import compute_real_scorecard, route_block_variants
-from .pages import DEFAULT_PAGE_SLUGS, build_default_company, build_routes_from_pages, default_page_blocks, read_png_dimensions
+from .pages import DEFAULT_PAGE_SLUGS, build_default_company, build_routes_from_pages, default_page_blocks, normalize_hours_for_lang, read_png_dimensions
 from .rag import make_synthetic_png
 from .sanitizer import ingest_brand_logo
 from .templates_engine import (
@@ -199,12 +199,17 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
     project_name = str(payload.get("name") or payload.get("project_name") or ("Кварц-Ателье" if resolved_lang == "ru" else "Quartz-Field Atelier")).strip()
     seo_cfg = dict(payload.get("seo") or {})
     base_url = str(seo_cfg.get("base_url") or payload.get("base_url") or "https://smartllm-studio.example.org").rstrip("/")
-    stack = normalize_stack_id(str(payload.get("stack") or "astro"))
-    motion = normalize_motion_id(str(payload.get("motion") or "css_scroll_driven"))
+    canon_motion = CANON_MOTION_DEFAULTS.get(str(card.get("id") or ""), {})
+    raw_stack = str(payload.get("stack") or "").strip()
+    stack = normalize_stack_id(raw_stack or str(canon_motion.get("default_stack") or "astro"))
+    raw_motion = str(payload.get("motion") or "").strip()
+    motion = normalize_motion_id(raw_motion or str(canon_motion.get("default_motion") or "css_scroll_driven"))
     valid_landings = {"gsap_scrollytelling", "kinetic_showreel", "bento_interactive", "css_scroll_native", "classic_corporate"}
     raw_landing = str(payload.get("landing_preset") or "").strip().lower()
     if raw_landing in valid_landings:
         landing_preset = raw_landing
+    elif str(canon_motion.get("default_landing_preset") or "") in valid_landings:
+        landing_preset = str(canon_motion["default_landing_preset"])
     elif motion == "motion":
         landing_preset = "gsap_scrollytelling"
     elif motion == "animejs":
@@ -323,6 +328,14 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
         + _build_tokens_css(pal, fonts, card.get("layout", {}), polarity=resolved_polarity, canon_responsive=card.get("responsive"))
         + _build_canon_css(card, dossier, polarity=resolved_polarity, motion=motion, landing_preset=landing_preset)
     )
+    from .canon_layouts import apply_layout, canon_layout_css, is_layout_canon
+    if is_layout_canon(card["id"]):
+        # canon-owned layout: fonts + canon vars + canon CSS only (no shared base stylesheet)
+        css_text = canon_layout_css(
+            card["id"],
+            _build_tokens_css(pal, fonts, card.get("layout", {}), polarity=resolved_polarity, canon_responsive=card.get("responsive")),
+            vendor_bundle["font_css"],
+        )
     style_hash = sha256_csp(css_text)
     bilingual = lang_pref == "en+ru"
     alt_lang = "en" if resolved_lang == "ru" else "ru"
@@ -345,6 +358,8 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
     block_prompts = dict(payload.get("block_prompts") or {})
     page_block_prompts = payload.get("page_block_prompts") if isinstance(payload.get("page_block_prompts"), dict) else {}
     company = dict(payload.get("company") or build_default_company(project_name, brief, resolved_lang))
+    if company.get("hours"):
+        company["hours"] = normalize_hours_for_lang(str(company["hours"]), resolved_lang)
     asset_rev = int(payload.get("revision") or 1)
     page_images = {
         r["slug"]: f"assets/hero_{r['slug']}.png"
@@ -414,6 +429,21 @@ def compile_project_blueprint(payload: dict[str, Any], repo_root: Path | None = 
             vendor_scripts=vendor_bundle.get("js_relpaths") or [],
             landing_preset=landing_preset,
         )
+        if is_layout_canon(card["id"]):
+            _nav_lbl = ((chrome or {}).get("nav_labels") or {}) if isinstance((chrome or {}).get("nav_labels"), dict) else {}
+            html_doc = apply_layout(
+                html_doc, card["id"], slug=route["slug"], page_no=page_idx + 1,
+                page_label=str(_nav_lbl.get(route["slug"]) or route.get("title") or route["slug"]),
+                lang=resolved_lang,
+                extras={"topline": str(company.get("tagline") or company.get("positioning") or "")[:90]},
+            )
+        _vis_p = project_dir / ".smartllm" / "memory" / "vision_check.json"
+        if _vis_p.exists():
+            from .vision_stage import apply_vision_alts
+            try:
+                html_doc = apply_vision_alts(html_doc, json.loads(_vis_p.read_text(encoding="utf-8")))
+            except ValueError:
+                pass
         rendered_docs.append((route, html_doc))
         if route["filename"] not in written_files:
             written_files.insert(0, route["filename"])

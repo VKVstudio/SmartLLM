@@ -659,9 +659,11 @@ def reveal_in_file_manager(target_path: Path, dry_run: bool = False) -> bool:
             is_file_target = target_path.exists() and target_path.is_file()
             if not is_file_target:
                 target_path.mkdir(parents=True, exist_ok=True)
-            if not is_interactive_win_desktop():
-                return False
             norm_path = os.path.normpath(str(target_path.resolve()))
+            if not is_interactive_win_desktop():
+                # Shell API opens Explorer in the user's session even when our thread desktop name differs.
+                os.startfile(norm_path)  # type: ignore[attr-defined]
+                return True
             try:
                 existing_hwnds = {h for h, _ in _win_list_explorer_hwnds()}
                 ctypes.windll.user32.AllowSetForegroundWindow(0xFFFFFFFF)  # type: ignore[attr-defined]
@@ -729,3 +731,23 @@ def open_chromeless_window(url: str, dry_run: bool = False) -> str:
                     continue
     webbrowser.open(url)
     return "webbrowser"
+
+
+def open_site_in_browser(site_dir: Path, dry_run: bool = False) -> str:
+    """Open <site_dir>/index.html in the default browser (static sites work from file://). Returns the opened path or ''."""
+    site_dir = Path(site_dir)
+    index = site_dir / "index.html" if site_dir.is_dir() else site_dir
+    if not index.is_file() or index.suffix.lower() != ".html":
+        return ""
+    if dry_run or os.environ.get("SMARTLLM_STUDIO_HEADLESS") == "1":
+        return str(index)
+    try:
+        if is_windows():
+            os.startfile(str(index.resolve()))  # type: ignore[attr-defined]
+        else:
+            import webbrowser
+
+            webbrowser.open(index.resolve().as_uri())
+        return str(index)
+    except Exception:
+        return ""

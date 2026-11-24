@@ -2,7 +2,7 @@
   <img src="assets/brand/smartllm-logo.svg" alt="Логотип SmartLLM" width="96" height="96">
 </p>
 
-<h1 align="center">SmartLLM и SmartLLM Studio <code>v0.0.4-beta</code></h1>
+<h1 align="center">SmartLLM и SmartLLM Studio <code>v0.0.7-beta</code></h1>
 
 <p align="center">
   <b>Локальный офлайн-комбайн для веб-разработки, дизайна и копирайтинга (EN + RU)</b><br>
@@ -14,11 +14,39 @@
 </p>
 
 <p align="center">
-  <img src="assets/badges/version.svg" alt="release: v0.0.4-beta">
+  <img src="assets/badges/version.svg" alt="release: v0.0.7-beta">
   <img src="assets/badges/platform.svg" alt="platform: Linux | Windows 11">
   <img src="assets/badges/offline.svg" alt="runtime: 127.0.0.1 Zero-Swap">
   <img src="assets/badges/license.svg" alt="license: Apache-2.0 / FSL-1.1-ALv2">
 </p>
+
+---
+
+## Живые демо
+
+Три настоящих сайта, собранных SmartLLM Studio целиком на одной ноутбучной видеокарте. Нажмите на превью, чтобы открыть сайт.
+
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <a href="https://vkvstudio.github.io/SmartLLM/ledgerline_en/"><img src="docs/assets/demos/ledgerline_en.jpg" alt="Ledgerline (живое демо)" width="100%"></a><br>
+      <b><a href="https://vkvstudio.github.io/SmartLLM/ledgerline_en/">Ledgerline</a></b><br>
+      <sub>Канон 17 · Fintech Institutional<br>Английский · 6 страниц</sub>
+    </td>
+    <td align="center" width="33%">
+      <a href="https://vkvstudio.github.io/SmartLLM/glina_i_dym_ru/"><img src="docs/assets/demos/glina_i_dym_ru.jpg" alt="Глина и дым (живое демо)" width="100%"></a><br>
+      <b><a href="https://vkvstudio.github.io/SmartLLM/glina_i_dym_ru/">Глина и дым</a></b><br>
+      <sub>Канон 16 · Artisan Craft Zine<br>Русский · 7 страниц</sub>
+    </td>
+    <td align="center" width="33%">
+      <a href="https://vkvstudio.github.io/SmartLLM/northern_frame_enru/"><img src="docs/assets/demos/northern_frame_enru.jpg" alt="Northern Frame (живое демо)" width="100%"></a><br>
+      <b><a href="https://vkvstudio.github.io/SmartLLM/northern_frame_enru/">Northern Frame</a></b><br>
+      <sub>Канон 13 · Cinematic Documentary<br>Английский + русский · 5 страниц</sub>
+    </td>
+  </tr>
+</table>
+
+> Основная и проверенная документация для v0.0.7 находится в [английском README](README.md): там описаны конвейер, требования, команды и ограничения. Разделы ниже написаны для v0.0.4-beta и пока не обновлены. Установщик `setup_bundle.py` по-прежнему ставит Studio v0.0.4; код 0.0.7 запускается из исходников.
 
 ---
 

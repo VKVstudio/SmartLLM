@@ -208,10 +208,13 @@ def bundle_vendor_assets_for_canon(canon_id: str, project_dir: Path, motion_mode
         if src_js_dir.is_dir():
             dst_js_dir = project_dir / "assets" / "vendor" / lib_id
             dst_js_dir.mkdir(parents=True, exist_ok=True)
-            for jf in sorted(src_js_dir.iterdir()):
+            # Copy the WHOLE library folder (three.module.js imports ./three.core.js; addons/ live in subfolders).
+            for jf in sorted(src_js_dir.rglob("*")):
                 if jf.is_file():
-                    shutil.copy2(jf, dst_js_dir / jf.name)
-                    rel_p = f"assets/vendor/{lib_id}/{jf.name}"
+                    rel_in = jf.relative_to(src_js_dir).as_posix()
+                    (dst_js_dir / rel_in).parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(jf, dst_js_dir / rel_in)
+                    rel_p = f"assets/vendor/{lib_id}/{rel_in}"
                     if rel_p not in rel_files:
                         rel_files.append(rel_p)
             if (dst_js_dir / entry).exists() and lib_id != "three":
@@ -296,7 +299,7 @@ def emit_stack_scaffold(
                 "type": "module",
                 "imports": {"#lib/*": "./src/lib/*"},
                 "dependencies": {"@sveltejs/kit": "^3.4.0", "svelte": "^5.59.1", "zod": "^4.6.7"},
-                "devDependencies": {"@sveltejs/adapter-node": "^5.0.0", "vite": "^8.3.8"},
+                "devDependencies": {"@sveltejs/adapter-node": "^6.0.5", "vite": "^8.3.8"},
             }, indent=2) + "\n",
             encoding="utf-8",
         )

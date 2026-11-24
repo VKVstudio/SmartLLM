@@ -18,6 +18,7 @@
     selectedPages: ["index", "about", "services", "portfolio", "pricing", "contact"],
     siteType: "single",
     polarity: "auto",
+    stack: "astro",
     motion: "motion",
     landingPreset: "gsap_scrollytelling",
     stageOpen: false,
@@ -35,6 +36,7 @@
   }
 
   function scheduleLivePreviewRefresh(openStage) {
+    if (!store.stageOpen) return;
     if (!store.draft || store.autofillBusy || store.logoBusy) return;
     if (el("s5-build-site-btn") && el("s5-build-site-btn").disabled) return;
     clearTimeout(previewTimer);
@@ -42,14 +44,26 @@
       var mySeq = ++previewSeq;
       var pid = (store.draft && store.draft.id) || "default";
       var outDir = (el("s1-folder-input") && el("s1-folder-input").value.trim()) || (store.draft && store.draft.output_dir) || "";
+      syncCompanyFromInputs();
       fetch("/api/preview/" + encodeURIComponent(pid), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          name: (el("s2-name") && el("s2-name").value.trim()) || (store.draft && store.draft.name) || "",
+          brief: (el("s2-desc") && el("s2-desc").value.trim()) || (store.draft && store.draft.brief) || "",
+          goal: (el("s2-desc") && el("s2-desc").value.trim()) || (store.draft && store.draft.goal) || "",
+          languages: (el("s1-lang") && el("s1-lang").value) || (store.draft && store.draft.languages) || "ru",
+          logo_prompt: (el("s2-logo-prompt") && el("s2-logo-prompt").value.trim()) || "",
           canon_id: (store.draft && store.draft.canon_id) || "01_bento_grid",
           polarity: store.polarity,
+          stack: store.stack,
           motion: store.motion,
           landing_preset: store.landingPreset,
+          site_type: store.siteType,
+          selected_pages: activePageSlugs(),
+          page_blocks: store.pageBlocks,
+          company: store.company,
+          selected_logo_path: (store.draft && store.draft.selected_logo_path) || "",
           output_dir: outDir
         })
       })
@@ -57,7 +71,6 @@
         .then(function (bp) {
           if (mySeq !== previewSeq || !bp || bp.error || !bp.preview_url) return;
           if (bp.revision && store.draft) store.draft.revision = bp.revision;
-          if (openStage) setStageOpen(true);
           var ifr = el("live-stage-iframe");
           if (ifr) {
             var routeSel = el("stage-route-select");
@@ -90,6 +103,7 @@
         var rev = (store.draft && store.draft.revision) || 1;
         ifr.src = "/preview/" + encodeURIComponent(pid) + "/index.html?rev=" + rev;
       }
+      scheduleLivePreviewRefresh(false);
     }
   }
 
@@ -105,7 +119,64 @@
       b.className = active ? "btn btn-primary" : "btn";
     });
     renderCanons();
-    if (fromUser === true) scheduleLivePreviewRefresh(true);
+    if (fromUser === true) scheduleLivePreviewRefresh(false);
+  }
+
+  function normalizeStackId(val) {
+    var low = String(val || "").trim().toLowerCase();
+    if (low === "html5" || low === "html" || low === "html5_esm") return "html5_esm";
+    if (low === "vite" || low === "vite_ts") return "vite_ts";
+    if (low === "next" || low === "nextjs") return "nextjs";
+    if (low === "svelte" || low === "sveltekit") return "sveltekit";
+    return "astro";
+  }
+
+  function renderStackSelects(allowedIds, targetSelIds) {
+    var allStacks = (store.catalog && store.catalog.stacks) || [
+      { id: "astro", name_en: "Astro 7.4 Islands + Content Layer (Zod v4)", name_ru: "Astro 7.4 Острова + Content Layer (Zod v4)" },
+      { id: "html5_esm", name_en: "Zero-Build Semantic HTML5 + OKLCH CSS + Native ESM", name_ru: "Семантический HTML5 + OKLCH CSS + Native ESM" },
+      { id: "vite_ts", name_en: "Vite 8.3 (Rolldown) + TypeScript 7 + Same-Origin BFF", name_ru: "Vite 8.3 (Rolldown) + TypeScript 7 + Same-Origin BFF" },
+      { id: "nextjs", name_en: "Next.js 16.4 LTS (App Router + proxy.ts + React 19.3)", name_ru: "Next.js 16.4 LTS (App Router + proxy.ts + React 19.3)" },
+      { id: "sveltekit", name_en: "SvelteKit 3.4 + Svelte 5.59 Runes (#lib/* + csrf.trustedOrigins)", name_ru: "SvelteKit 3.4 + Svelte 5.59 Runes (#lib/* + csrf.trustedOrigins)" }
+    ];
+    var stacks = (allowedIds && allowedIds.length)
+      ? allStacks.filter(function (s) { return allowedIds.indexOf(s.id) !== -1; })
+      : allStacks;
+    if (!stacks.length) stacks = allStacks;
+    var validIds = stacks.map(function (s) { return s.id; });
+    if (validIds.indexOf(store.stack) === -1) {
+      store.stack = validIds[0];
+      if (store.draft) store.draft.stack = store.stack;
+    }
+    (targetSelIds || ["s3-stack-select", "exp-stack-select"]).forEach(function (selId) {
+      var sel = el(selId);
+      if (!sel) return;
+      sel.innerHTML = "";
+      stacks.forEach(function (s) {
+        var opt = document.createElement("option");
+        opt.value = s.id;
+        opt.textContent = store.lang === "ru" ? (s.name_ru || s.name_en || s.id) : (s.name_en || s.id);
+        sel.appendChild(opt);
+      });
+      sel.value = store.stack;
+    });
+  }
+
+  function setStack(val, fromUser) {
+    var norm = normalizeStackId(val);
+    store.stack = norm;
+    if (store.draft) store.draft.stack = norm;
+    ["s3-stack-select", "exp-stack-select"].forEach(function (selId) {
+      var sel = el(selId);
+      if (!sel) return;
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === norm) {
+          sel.value = norm;
+          break;
+        }
+      }
+    });
+    if (fromUser === true) scheduleLivePreviewRefresh(false);
   }
 
   function normalizeMotionId(val) {
@@ -119,8 +190,8 @@
     return "motion";
   }
 
-  function renderMotionSelects() {
-    var motions = (store.catalog && store.catalog.motions) || [
+  function renderMotionSelects(allowedIds, targetSelIds) {
+    var allMotions = (store.catalog && store.catalog.motions) || [
       { id: "motion", name_en: "Motion 14 + Lenis (GSAP-class MIT)", name_ru: "Motion 14 + Lenis (уровень GSAP, MIT)" },
       { id: "animejs", name_en: "Anime.js 4.5 + Lenis Timeline (MIT)", name_ru: "Anime.js 4.5 + Lenis таймлайны (MIT)" },
       { id: "css_scroll_driven", name_en: "Native CSS Scroll-Driven (0 KB JS)", name_ru: "Нативный CSS Scroll-Driven (0 КБ JS)" },
@@ -128,7 +199,16 @@
       { id: "three", name_en: "Three.js + Lenis Spatial (MIT)", name_ru: "Three.js + Lenis 3D-сцена (MIT)" },
       { id: "reduced_motion_instant", name_en: "Zero-Motion Instant Layout", name_ru: "Без анимаций (мгновенный рендер)" }
     ];
-    ["s3-motion-select", "exp-motion-select"].forEach(function (selId) {
+    var motions = (allowedIds && allowedIds.length)
+      ? allMotions.filter(function (m) { return allowedIds.indexOf(m.id) !== -1; })
+      : allMotions;
+    if (!motions.length) motions = allMotions;
+    var validIds = motions.map(function (m) { return m.id; });
+    if (validIds.indexOf(store.motion) === -1) {
+      store.motion = validIds[0];
+      if (store.draft) store.draft.motion = store.motion;
+    }
+    (targetSelIds || ["s3-motion-select", "exp-motion-select"]).forEach(function (selId) {
       var sel = el(selId);
       if (!sel) return;
       sel.innerHTML = "";
@@ -148,9 +228,15 @@
     if (store.draft) store.draft.motion = norm;
     ["s3-motion-select", "exp-motion-select"].forEach(function (selId) {
       var sel = el(selId);
-      if (sel && sel.value !== norm) sel.value = norm;
+      if (!sel) return;
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === norm) {
+          sel.value = norm;
+          break;
+        }
+      }
     });
-    if (fromUser === true) scheduleLivePreviewRefresh(true);
+    if (fromUser === true) scheduleLivePreviewRefresh(false);
   }
 
   var LANDING_PRESET_FALLBACKS = [
@@ -167,9 +253,18 @@
       : LANDING_PRESET_FALLBACKS;
   }
 
-  function renderLandingPresets() {
-    var list = getLandingPresetsList();
-    var expSel = el("exp-landing-preset");
+  function renderLandingPresets(allowedIds, targetMode) {
+    var allPresets = getLandingPresetsList();
+    var list = (allowedIds && allowedIds.length)
+      ? allPresets.filter(function (p) { return allowedIds.indexOf(p.id) !== -1; })
+      : allPresets;
+    if (!list.length) list = allPresets;
+    var validIds = list.map(function (p) { return p.id; });
+    if (validIds.indexOf(store.landingPreset) === -1) {
+      store.landingPreset = validIds[0];
+      if (store.draft) store.draft.landing_preset = store.landingPreset;
+    }
+    var expSel = targetMode !== "constructor" ? el("exp-landing-preset") : null;
     if (expSel) {
       expSel.innerHTML = "";
       list.forEach(function (p) {
@@ -180,7 +275,7 @@
       });
       expSel.value = store.landingPreset;
     }
-    var grid = el("s3-landing-presets");
+    var grid = targetMode !== "express" ? el("s3-landing-presets") : null;
     if (!grid) return;
     grid.innerHTML = "";
     list.forEach(function (p) {
@@ -209,8 +304,33 @@
     });
   }
 
+  function findCanonById(cid) {
+    var list = (store.catalog && store.catalog.canons) || [];
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === cid) return list[i];
+    }
+    return null;
+  }
+
+  function activeControlCanon() {
+    if (store.mode === "express") {
+      var expSel = el("exp-canon-select");
+      var cid = expSel ? String(expSel.value || "").trim() : "";
+      return cid ? findCanonById(cid) : null;
+    }
+    return findCanonById(store.draft && store.draft.canon_id);
+  }
+
   function setLandingPreset(presetId, fromUser) {
-    var list = getLandingPresetsList();
+    var curC = activeControlCanon();
+    var allowedPresets = (curC && curC.allowed_landing_presets && curC.allowed_landing_presets.length)
+      ? curC.allowed_landing_presets
+      : null;
+    var allPresets = getLandingPresetsList();
+    var list = allowedPresets
+      ? allPresets.filter(function (p) { return allowedPresets.indexOf(p.id) !== -1; })
+      : allPresets;
+    if (!list.length) list = allPresets;
     var chosen = list[0];
     for (var i = 0; i < list.length; i++) {
       if (list[i].id === presetId) {
@@ -221,10 +341,91 @@
     store.landingPreset = chosen.id;
     if (store.draft) store.draft.landing_preset = chosen.id;
     var expSel = el("exp-landing-preset");
-    if (expSel && expSel.value !== chosen.id) expSel.value = chosen.id;
-    if (chosen.motion) setMotion(chosen.motion, false);
-    renderLandingPresets();
-    if (fromUser === true) scheduleLivePreviewRefresh(true);
+    if (expSel) {
+      for (var j = 0; j < expSel.options.length; j++) {
+        if (expSel.options[j].value === chosen.id) {
+          expSel.value = chosen.id;
+          break;
+        }
+      }
+    }
+    var allowedMotions = (curC && curC.allowed_motions && curC.allowed_motions.length)
+      ? curC.allowed_motions
+      : null;
+    if (chosen.motion && (!allowedMotions || allowedMotions.indexOf(chosen.motion) !== -1)) {
+      setMotion(chosen.motion, false);
+    } else if (allowedMotions && allowedMotions.indexOf(store.motion) === -1) {
+      setMotion((curC && curC.default_motion) || allowedMotions[0], false);
+    }
+    renderLandingPresets(allowedPresets, store.mode === "express" ? "express" : "constructor");
+    if (fromUser === true) scheduleLivePreviewRefresh(false);
+  }
+
+  function syncAnimationControlsForCanon(canonObj, applyDefaults) {
+    var c = canonObj || findCanonById(store.draft && store.draft.canon_id);
+    var pill = el("s3-anim-canon-name");
+    if (pill) pill.textContent = c ? canonName(c) : "";
+    var isAnimated = !c || c.supports_animation !== false;
+    var allowedStacks = (c && c.allowed_stacks && c.allowed_stacks.length) ? c.allowed_stacks : null;
+    var allowedMotions = (c && c.allowed_motions && c.allowed_motions.length) ? c.allowed_motions : null;
+    var allowedPresets = (c && c.allowed_landing_presets && c.allowed_landing_presets.length) ? c.allowed_landing_presets : null;
+    renderStackSelects(allowedStacks, ["s3-stack-select"]);
+    renderMotionSelects(allowedMotions, ["s3-motion-select"]);
+    renderLandingPresets(allowedPresets, "constructor");
+    var animBox = el("s3-anim-controls");
+    var staticNote = el("s3-static-canon-note");
+    if (animBox) animBox.hidden = !isAnimated;
+    if (staticNote) staticNote.hidden = isAnimated;
+    if (c) {
+      var needStack = applyDefaults || (allowedStacks && allowedStacks.indexOf(store.stack) === -1);
+      var needPreset = applyDefaults || (allowedPresets && allowedPresets.indexOf(store.landingPreset) === -1);
+      var needMotion = applyDefaults || (allowedMotions && allowedMotions.indexOf(store.motion) === -1);
+      if (needStack) setStack(c.default_stack || (allowedStacks && allowedStacks[0]) || "astro", false);
+      if (needPreset) setLandingPreset(c.default_landing_preset || (isAnimated ? "gsap_scrollytelling" : "classic_corporate"), false);
+      if (needMotion) setMotion(c.default_motion || (isAnimated ? "motion" : "reduced_motion_instant"), false);
+    }
+  }
+
+  function syncExpressAnimationControls(applyDefaults) {
+    var sel = el("exp-canon-select");
+    var cid = sel ? String(sel.value || "").trim() : "";
+    var stackWrap = el("exp-stack-wrap");
+    var box = el("exp-anim-controls");
+    var note = el("exp-anim-note");
+    var dict = (store.i18n && store.i18n[store.lang]) || {};
+    if (!cid) {
+      if (stackWrap) stackWrap.hidden = true;
+      if (box) box.hidden = true;
+      if (note) {
+        note.hidden = false;
+        note.textContent = dict.msg_exp_anim_auto || "Стиль, стек и анимация подберутся автоматически под тему промпта. Выберите конкретный стиль выше, чтобы выбрать стек и движок вручную.";
+      }
+      return;
+    }
+    var c = findCanonById(cid);
+    var isAnimated = !c || c.supports_animation !== false;
+    var allowedStacks = (c && c.allowed_stacks && c.allowed_stacks.length) ? c.allowed_stacks : null;
+    var allowedMotions = (c && c.allowed_motions && c.allowed_motions.length) ? c.allowed_motions : null;
+    var allowedPresets = (c && c.allowed_landing_presets && c.allowed_landing_presets.length) ? c.allowed_landing_presets : null;
+    renderStackSelects(allowedStacks, ["exp-stack-select"]);
+    renderMotionSelects(allowedMotions, ["exp-motion-select"]);
+    renderLandingPresets(allowedPresets, "express");
+    if (stackWrap) stackWrap.hidden = false;
+    if (box) box.hidden = !isAnimated;
+    if (note) {
+      note.hidden = isAnimated;
+      if (!isAnimated) {
+        note.textContent = dict.msg_exp_anim_static || "Выбранный стиль — статичный канон без анимаций (мгновенная загрузка).";
+      }
+    }
+    if (c) {
+      var needStack = applyDefaults || (allowedStacks && allowedStacks.indexOf(store.stack) === -1);
+      var needPreset = applyDefaults || (allowedPresets && allowedPresets.indexOf(store.landingPreset) === -1);
+      var needMotion = applyDefaults || (allowedMotions && allowedMotions.indexOf(store.motion) === -1);
+      if (needStack) setStack(c.default_stack || (allowedStacks && allowedStacks[0]) || "astro", false);
+      if (needPreset) setLandingPreset(c.default_landing_preset || (isAnimated ? "gsap_scrollytelling" : "classic_corporate"), false);
+      if (needMotion) setMotion(c.default_motion || (isAnimated ? "motion" : "reduced_motion_instant"), false);
+    }
   }
 
   function syncProjectPathDisplay(pathStr) {
@@ -375,18 +576,12 @@
             statusEl.textContent = (store.lang === "ru" ? "Выбрана папка: " : "Selected folder: ") + d.path;
           }
         } else if (d && (d.fallback === "web_picker" || d.interactive_desktop === false)) {
+          // Native dialog unavailable (service/sandbox session): no custom picker, the path field stays editable.
           if (statusEl) {
             statusEl.textContent = store.lang === "ru"
-              ? "Открыт встроенный проводник выбора папки."
-              : "Opened built-in studio folder browser.";
+              ? "Системный диалог недоступен в этой сессии — вставьте путь к папке в поле вручную."
+              : "Native folder dialog is unavailable in this session — paste the folder path into the field.";
           }
-          openFolderPickerModal(initial, "pick", function (pickedPath) {
-            syncProjectPathDisplay(pickedPath);
-            if (store.draft) store.draft.output_dir = pickedPath;
-            if (statusEl) {
-              statusEl.textContent = (store.lang === "ru" ? "Выбрана папка: " : "Selected folder: ") + pickedPath;
-            }
-          });
         } else if (statusEl) {
           statusEl.textContent = store.lang === "ru"
             ? "Выбор папки отменён."
@@ -418,15 +613,8 @@
         } else {
           var browseTarget = (d && d.path) || target;
           if (statusEl) {
-            statusEl.textContent = (store.lang === "ru" ? "Просмотр папки в проводнике студии: " : "Opened folder in studio browser: ") + browseTarget;
+            statusEl.textContent = (store.lang === "ru" ? "Не удалось открыть Проводник. Папка сайта: " : "Could not open the file manager. Site folder: ") + browseTarget;
           }
-          openFolderPickerModal(browseTarget, "browse", function (pickedPath) {
-            syncProjectPathDisplay(pickedPath);
-            if (store.draft) store.draft.output_dir = pickedPath;
-            if (statusEl) {
-              statusEl.textContent = (store.lang === "ru" ? "Выбрана папка: " : "Selected folder: ") + pickedPath;
-            }
-          });
         }
       })
       .catch(function (err) {
@@ -544,18 +732,21 @@
         if (el("s2-logo-prompt")) el("s2-logo-prompt").value = tpl.logo_prompt || "";
 
         setPolarity(tpl.polarity || "auto", false);
+        setStack(tpl.stack || "astro", false);
         setLandingPreset(tpl.landing_preset || "gsap_scrollytelling", false);
         setMotion(tpl.motion || "motion", false);
         renderCanons();
+        syncAnimationControlsForCanon(findCanonById(tpl.canon_id), false);
 
         store.siteType = tpl.site_type === "single" ? "single" : "multi";
         store.selectedPages = (tpl.selected_pages || ["index"]).slice();
         store.pageBlocks = tpl.page_blocks || {};
-        store.pageBlockPrompts = tpl.page_block_prompts || {};
-        store.blockPrompts = tpl.block_prompts || {};
+        store.pageBlockPrompts = {};
+        store.blockPrompts = {};
         store.company = tpl.company || {};
         renderCompanyFields();
         renderPagesAndBlocksChecklists();
+        renderBlockDescriptionInputs();
         syncRouteSelectFromDraft(store.draft);
 
         var sumBox = el("s5-starter-summary");
@@ -580,7 +771,6 @@
         if (data.preview_url && el("live-stage-iframe")) {
           var sep = data.preview_url.indexOf("?") === -1 ? "?" : "&";
           el("live-stage-iframe").src = data.preview_url + sep + "t=" + Date.now();
-          setStageOpen(true);
         }
         setStep(5);
         var sumTarget = el("s5-starter-summary") || el("s5-autofill-btn");
@@ -617,8 +807,8 @@
     var ind = el("lang-indicator");
     if (ind) ind.textContent = store.lang === "ru" ? "RU | EN" : "EN | RU";
     renderCanons();
-    renderMotionSelects();
-    renderLandingPresets();
+    syncAnimationControlsForCanon(findCanonById(store.draft && store.draft.canon_id), false);
+    syncExpressAnimationControls(false);
     renderPagesAndBlocksChecklists();
     renderBlockDescriptionInputs();
     if (el("s1-folder-input")) syncProjectPathDisplay(el("s1-folder-input").value);
@@ -954,8 +1144,19 @@
         var polBadge = document.createElement("span");
         polBadge.className = "canon-polarity-badge";
         polBadge.textContent = store.lang === "ru" ? (activePol === "dark" ? "Тёмная" : "Светлая") : (activePol === "dark" ? "Dark" : "Light");
+        var isAnimatedCanon = c.supports_animation !== false;
+        var motionBadge = document.createElement("span");
+        motionBadge.className = "canon-motion-badge";
+        motionBadge.setAttribute("data-animated", isAnimatedCanon ? "true" : "false");
+        motionBadge.textContent = store.lang === "ru"
+          ? (c.motion_badge_ru || (isAnimatedCanon ? "Анимации" : "Без анимаций"))
+          : (c.motion_badge_en || (isAnimatedCanon ? "Animated" : "Static"));
+        var badges = document.createElement("div");
+        badges.className = "canon-badges";
+        badges.appendChild(polBadge);
+        badges.appendChild(motionBadge);
         head.appendChild(title);
-        head.appendChild(polBadge);
+        head.appendChild(badges);
         var desc = document.createElement("span");
         desc.className = "canon-desc";
         desc.textContent = canonDescription(c);
@@ -983,8 +1184,10 @@
         btn.appendChild(dots);
         btn.addEventListener("click", function () {
           if (store.draft) store.draft.canon_id = c.id;
+          setPolarity("auto", false);
+          syncAnimationControlsForCanon(c, true);
           renderCanons();
-          scheduleLivePreviewRefresh(true);
+          scheduleLivePreviewRefresh(false);
         });
         gal.appendChild(btn);
       });
@@ -1368,16 +1571,18 @@
     setBusy(true);
     var stopPolling = startProgressPolling(statusEl);
 
+    var expCanonId = el("exp-canon-select") ? String(el("exp-canon-select").value || "").trim() : "";
     var payload = isAuto
       ? {
           orchestrator_mode: "auto",
           auto_prompt: el("exp-brief-input").value,
           output_dir: el("exp-folder-input").value,
           languages: el("exp-lang-select").value,
-          canon_id: el("exp-canon-select").value || undefined,
+          canon_id: expCanonId || undefined,
           polarity: store.polarity,
-          motion: store.motion,
-          landing_preset: store.landingPreset,
+          stack: expCanonId ? store.stack : undefined,
+          motion: expCanonId ? store.motion : undefined,
+          landing_preset: expCanonId ? store.landingPreset : undefined,
           render_images: true
         }
       : {
@@ -1391,6 +1596,7 @@
           selected_logo_path: store.draft ? store.draft.selected_logo_path : undefined,
           canon_id: store.draft ? store.draft.canon_id : "01_bento_grid",
           polarity: store.polarity,
+          stack: store.stack,
           motion: store.motion,
           landing_preset: store.landingPreset,
           site_type: store.siteType,
@@ -1426,7 +1632,6 @@
         if (bp.preview_url) {
           var sep = bp.preview_url.indexOf("?") === -1 ? "?" : "&";
           el("live-stage-iframe").src = bp.preview_url + sep + "t=" + Date.now();
-          setStageOpen(true);
         }
         if (bp.project_dir) {
           syncProjectPathDisplay(bp.project_dir);
@@ -1662,9 +1867,10 @@
     });
     el("exp-brief-input").addEventListener("input", function () {});
     el("exp-lang-select").addEventListener("change", function () {});
-    if (el("exp-canon-select")) el("exp-canon-select").addEventListener("change", function () {});
+    if (el("exp-canon-select")) el("exp-canon-select").addEventListener("change", function () { syncExpressAnimationControls(true); });
+    if (el("exp-stack-select")) el("exp-stack-select").addEventListener("change", function (ev) { setStack(ev.target.value, false); });
     if (el("exp-landing-preset")) el("exp-landing-preset").addEventListener("change", function (ev) { setLandingPreset(ev.target.value, false); });
-    if (el("exp-motion-select")) el("exp-motion-select").addEventListener("change", function (ev) { setMotion(ev.target.value); });
+    if (el("exp-motion-select")) el("exp-motion-select").addEventListener("change", function (ev) { setMotion(ev.target.value, false); });
     el("exp-generate-btn").addEventListener("click", function () { runOrchestratorBuild("auto"); });
     el("exp-open-folder-btn").addEventListener("click", function () {
       revealProjectFolder(el("exp-folder-input").value || (store.draft && store.draft.output_dir) || "", "exp-status-readout");
@@ -1718,6 +1924,7 @@
     // Step 3 controls
     el("s3-canon-search").addEventListener("input", renderCanons);
     el("s3-canon-cat").addEventListener("change", renderCanons);
+    if (el("s3-stack-select")) el("s3-stack-select").addEventListener("change", function (ev) { setStack(ev.target.value, true); });
     if (el("s3-motion-select")) el("s3-motion-select").addEventListener("change", function (ev) { setMotion(ev.target.value, true); });
     ["auto", "light", "dark"].forEach(function (mode) {
       var btn = el("s3-polarity-" + mode);
@@ -1822,6 +2029,20 @@
     el("s5-reveal-folder-btn").addEventListener("click", function () {
       revealProjectFolder(el("s1-folder-input").value || (store.draft && store.draft.output_dir) || "", "s5-build-status");
     });
+    if (el("s5-open-site-btn")) {
+      el("s5-open-site-btn").addEventListener("click", function () {
+        var siteDir = el("s1-folder-input").value || (store.draft && store.draft.output_dir) || "";
+        var st = el("s5-build-status");
+        fetch("/api/os/open-site", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ path: siteDir }) })
+          .then(function (r) { return r.json(); })
+          .then(function (d) {
+            if (st) st.textContent = d && d.opened
+              ? (store.lang === "ru" ? "Сайт открыт в браузере: " : "Site opened in browser: ") + d.path
+              : (store.lang === "ru" ? "index.html не найден — сначала соберите сайт: " : "index.html not found — build the site first: ") + siteDir;
+          })
+          .catch(function (err) { if (st) st.textContent = String(err && err.message ? err.message : err); });
+      });
+    }
 
     // Support & PWYW VKVstudio buttons + direct crypto wallet copy controls
     ["pwyw-card-donate-btn", "btn-support-donate"].forEach(function (id) {
@@ -2002,6 +2223,7 @@
         var initLang = (st && st.settings && st.settings.language) || "ru";
         setStageOpen(false);
         setPolarity((store.draft && store.draft.polarity) || "auto");
+        setStack((store.draft && store.draft.stack) || "astro", false);
         setLandingPreset((store.draft && store.draft.landing_preset) || "gsap_scrollytelling", false);
         var initMotion = (store.draft && store.draft.motion) || "motion";
         if (store.draft && store.draft.name === "Quartz-Field Atelier" && (store.draft.revision || 1) <= 1 && initMotion === "css_scroll_driven") {
@@ -2010,6 +2232,8 @@
         setMotion(initMotion);
         syncRouteSelectFromDraft(store.draft);
         translateDOM(initLang);
+        syncAnimationControlsForCanon(findCanonById(store.draft && store.draft.canon_id), false);
+        syncExpressAnimationControls(false);
         if (st && st.paths) {
           var pathSep = String(st.paths.projects_root || "").indexOf("\\") !== -1 ? "\\" : "/";
           var defDir = store.draft.output_dir || (st.paths.projects_root + pathSep + "default");

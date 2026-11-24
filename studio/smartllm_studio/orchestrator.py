@@ -17,7 +17,7 @@ from typing import Any, Callable
 import uuid
 
 from .adapters import get_rag_selector
-from .catalog import AI_CRAWLERS_DEFAULT, LANDING_PRESET_CATALOG
+from .catalog import AI_CRAWLERS_DEFAULT, CANON_MOTION_DEFAULTS, LANDING_PRESET_CATALOG
 from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT
 from .engines.llm import _PageCacheTrimmer
 from .kb_loader import harden_zimage_prompt, palette_to_material_summary
@@ -33,6 +33,7 @@ from .pages import (
     company_block_prompt,
     default_page_blocks,
     infer_gender,
+    normalize_hours_for_lang,
     page_available_blocks,
     page_default_blocks,
     page_title,
@@ -44,6 +45,16 @@ from .rag import detect_language, make_synthetic_png
 
 def _clean(text: Any) -> str:
     return " ".join(str(text or "").split()).strip()
+
+
+def _canon_structure_ctx(canon_id: str, max_chars: int = 3500) -> str:
+    """Canon v2 'structure' + 'blocks' sections for page-composer sub-agents (layout/narrative rules only)."""
+    try:
+        from .kb_loader import load_canon_v2_spec_sections, resolve_canon_id
+
+        return str(load_canon_v2_spec_sections(resolve_canon_id(canon_id), ["structure", "blocks"]) or "")[:max_chars]
+    except Exception:
+        return ""
 
 
 def _can_use_gpu(state: Any | None) -> bool:
@@ -702,74 +713,44 @@ def generate_six_logo_variants_512(
     }
 
 
-def auto_plan_from_prompt(prompt: str, lang_pref: str = "auto", repo_root: Path | None = None) -> dict[str, Any]:
-    """Orchestrator Stage 1: Analyze user prompt and auto-plan style, pages, blocks, and block descriptions."""
+def auto_plan_from_prompt(
+    prompt: str,
+    lang_pref: str = "auto",
+    repo_root: Path | None = None,
+    site_plan: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Orchestrator Stage 1 (auto mode). Structure, canon and pages come from the LLM `site_plan` (site_plan.py).
+
+    Python never decides structure from keywords. Without an LLM (CPU tests / no GPU) a neutral stub is used:
+    the bundled RAG canon card and the catalogue default blocks of a single home page, marked plan_source=no_llm_stub.
+    """
     root = (repo_root or DEFAULT_REPO_ROOT).resolve()
     selector = get_rag_selector(repo_root=root)
     clean_prompt = " ".join((prompt or "").strip().split()) or "Современная цифровая платформа и студия разработки"
     resolved_lang = detect_language(clean_prompt, explicit_lang=lang_pref)
-    rag = selector.select(brief=clean_prompt, lang=resolved_lang)
+    plan_canon = str((site_plan or {}).get("canon_id") or "")
+    rag = selector.select(brief=clean_prompt, lang=resolved_lang, explicit_canon_id=plan_canon or None)
     card = rag["canon_card"]
 
-    # Extract or synthesize brand name from quotes or leading words
-    q_match = re.search(r"[«\"']([^«»\"']{2,36})[»\"']", clean_prompt)
-    if q_match:
-        brand_name = q_match.group(1).strip()
-    else:
+    brand_name = str((site_plan or {}).get("brand_name") or "").strip()
+    if not brand_name:
+        q_match = re.search(r"[«\"']([^«»\"']{2,36})[»\"']", clean_prompt)
+        intro_match = re.match(r"^\s*(?i:we['’]re|we are|this is|мы\s*[—–-]?)\s+([A-ZА-ЯЁ][\w&.-]*(?:\s+[A-ZА-ЯЁ][\w&.-]*){0,2})", clean_prompt)
+        if intro_match and not q_match:
+            q_match = intro_match
         words = [w for w in re.findall(r"[A-Za-zА-Яа-яЁё0-9-]+", clean_prompt) if len(w) > 2]
-        brand_name = " ".join(words[:3]).title() if words else ("Ателье Проектов" if resolved_lang == "ru" else "Atelier Studio")
+        brand_name = q_match.group(1).strip() if q_match else (" ".join(words[:3]).title() if words else ("Ателье Проектов" if resolved_lang == "ru" else "Atelier Studio"))
 
-    lower = clean_prompt.lower()
-    is_multi = any(w in lower for w in ("многостранич", "несколько страниц", "каталог", "портал", "multi-page", "multipage", "pages", "корпоративн"))
+    if site_plan:
+        from .site_plan import plan_to_page_blocks
 
-    # Select page types typical for a corporate multi-page site, then page-specific blocks.
-    selected_pages: list[str] = ["index", "about", "services", "portfolio"]
-    if any(w in lower for w in ("цен", "тариф", "стоимост", "пакет", "купить", "price", "pricing", "tier", "cost", "plan")):
-        selected_pages.append("pricing")
-    if any(w in lower for w in ("блог", "стат", "новост", "материал", "blog", "article", "news", "insight")):
-        selected_pages.append("blog")
-    if any(w in lower for w in ("команд", "эксперт", "специалист", "team", "expert", "people", "specialist", "engineer", "architect")):
-        selected_pages.append("team")
-    if any(w in lower for w in ("вопрос", "faq", "q&a")):
-        selected_pages.append("faq")
-    selected_pages.append("contact")
-    if any(w in lower for w in ("политик", "документ", "условия", "legal", "privacy", "terms")):
-        selected_pages.append("legal")
-    selected_pages = list(dict.fromkeys(selected_pages))
-
-    blocks = ["hero", "features"]
-    if any(w in lower for w in ("показател", "метрик", "статист", "цифр", "sla", "latency", "metric", "stat", "uptime", "%")):
-        blocks.append("stats")
-    if any(w in lower for w in ("галере", "фото", "портфолио", "визуал", "интерьер", "дизайн", "резиденц", "gallery", "portfolio", "photo", "visual")):
-        blocks.append("gallery")
+        selected_pages, page_blocks = plan_to_page_blocks(site_plan)
+        is_multi = len(selected_pages) > 1
     else:
-        blocks.append("about")
-    if any(w in lower for w in ("цен", "тариф", "стоимост", "пакет", "price", "pricing", "tier", "cost", "$", "₽")):
-        blocks.append("pricing")
-    if any(w in lower for w in ("отзыв", "кейс", "клиент", "review", "case", "testimonial")):
-        blocks.append("testimonials")
-    if any(w in lower for w in ("команд", "эксперт", "team", "expert")):
-        blocks.append("team")
-    if any(w in lower for w in ("блог", "стат", "новост", "blog", "article", "news")):
-        blocks.append("blog")
-    if any(w in lower for w in ("этап", "процесс", "process", "step", "timeline")):
-        blocks.append("process")
-    blocks.extend(["faq", "contact", "footer"])
-    dedup_blocks: list[str] = []
-    for b in blocks:
-        if b not in dedup_blocks:
-            dedup_blocks.append(b)
-
-    page_blocks = default_page_blocks(selected_pages)
-    page_blocks["index"] = [b for b in dedup_blocks if b != "footer"]
-    for slug in selected_pages:
-        page_blocks[slug] = [b for b in page_blocks.get(slug, []) if b in page_available_blocks(slug)]
-        if "footer" not in page_blocks[slug]:
-            page_blocks[slug].append("footer")
-    page_blocks = clean_page_blocks(page_blocks, selected_pages)
-    if not is_multi:
         selected_pages = ["index"]
-        page_blocks = clean_page_blocks({"index": [b for b in dedup_blocks if b != "footer"]}, selected_pages)
+        page_blocks = {"index": list(page_default_blocks("index"))}
+        is_multi = False
+    page_blocks = clean_page_blocks(page_blocks, selected_pages)
 
     all_blocks: list[str] = []
     for slug in selected_pages:
@@ -798,6 +779,9 @@ def auto_plan_from_prompt(prompt: str, lang_pref: str = "auto", repo_root: Path 
         "block_prompts": block_prompts,
         "routes": routes,
         "ai_crawlers": dict(AI_CRAWLERS_DEFAULT),
+        "site_plan": site_plan or {},
+        "plan_source": "llm_site_plan" if site_plan else "no_llm_stub",
+        **({"tagline": site_plan["tagline"]} if site_plan and site_plan.get("tagline") else {}),
     }
 
 
@@ -1021,6 +1005,7 @@ def generate_random_starter_template(
     lang: str = "ru",
     use_llm: bool = True,
     exclude_names: list[str] | None = None,
+    avoid_canons: list[str] | None = None,
 ) -> dict[str, Any]:
     """Generate a single cohesive Steps 2->4 starter template (fast single LLM JSON call or instant curated pool)."""
     from .kb_loader import resolve_canon_id
@@ -1048,7 +1033,7 @@ def generate_random_starter_template(
     brief = str(chosen[f"brief_{eff_lang}"]).strip()
     logo_prompt = str(chosen[f"logo_prompt_{eff_lang}"]).strip()
     canon_id = str(chosen["canon_id"])
-    polarity = str(chosen["polarity"]) if chosen.get("polarity") in ("light", "dark", "auto") else "auto"
+    polarity = "auto"
     landing_preset = str(chosen["landing_preset"]) if chosen.get("landing_preset") in valid_presets else "gsap_scrollytelling"
     motion = normalize_motion_id(str(chosen.get("motion") or preset_motion_map.get(landing_preset, "motion")))
     site_type = str(chosen.get("site_type") or "multi")
@@ -1057,7 +1042,21 @@ def generate_random_starter_template(
     source = "curated"
 
     if use_llm and not is_cpu_test_mode() and _can_use_gpu(state):
-        domains = [
+        domains_ru = [
+            "модульные полевые аудиорекордеры и синтезаторы",
+            "архитектурный дневной свет и художественное стекло",
+            "городская спешелти-обжарка кофе и виниловый бар",
+            "аэрокосмическое композитное прототипирование",
+            "ботаническая парфюмерная лаборатория",
+            "независимая студия документального кино 35 мм",
+            "прецизионное часовое бюро",
+            "городская электрическая микромобильность",
+            "независимое издательство арт-книг и ризография",
+            "акустическая архитектурная керамика",
+            "скандинавская архитектура из лиственницы и клееного бруса",
+            "оптические микроскопы и лабораторное оборудование",
+        ]
+        domains_en = [
             "modular industrial audio gear",
             "architectural daylight & glass studio",
             "specialty coffee & vinyl roastery",
@@ -1071,32 +1070,62 @@ def generate_random_starter_template(
             "nordic timber architecture",
             "optical microscope & lab hardware",
         ]
-        nudge = random.choice(domains)
-        target_lang_name = "Russian" if eff_lang == "ru" else "English"
-        sys_msg = (
-            f"You are SmartLLM v2 Creative Director. Invent ONE cohesive, original fictional business in {target_lang_name} "
-            f"(domain hint: {nudge}), match it with the single best canon style and animated landing preset from the allowed IDs, "
-            "and return ONLY valid JSON without markdown."
-        )
+        nudge = random.choice(domains_ru if eff_lang == "ru" else domains_en)
+        if eff_lang == "ru":
+            sys_msg = (
+                "You are SmartLLM v2 Creative Director. Invent ONE cohesive, original fictional company in NATURAL RUSSIAN (Cyrillic ONLY for name, brief, logo_prompt, tagline). "
+                f"(domain hint: {nudge}). Match it with the single best canon style and animated landing preset from the allowed IDs, "
+                "and return ONLY valid JSON without markdown."
+            )
+            example_block = (
+                "{\n"
+                '  "name": "Оригинальное название из 1-3 слов на русском (кириллица)",\n'
+                '  "brief": "Конкретное описание продуктов и услуг на русском языке (60-170 символов)",\n'
+                '  "logo_prompt": "Чёткий визуальный знак и 2 цвета без текста, на русском (45-120 символов)",\n'
+                '  "canon_id": "exact canon_id from list",\n'
+                '  "polarity": "auto",\n'
+                '  "landing_preset": "exact preset id from list",\n'
+                '  "motion": "motion or animejs or css_scroll_driven",\n'
+                '  "site_type": "multi",\n'
+                '  "selected_pages": ["index", "about", "services", "portfolio", "pricing", "contact"],\n'
+                '  "tagline": "Ёмкий девиз на русском языке (4-8 слов)"\n'
+                "}"
+            )
+        else:
+            sys_msg = (
+                "You are SmartLLM v2 Creative Director. Invent ONE cohesive, original fictional business in natural English "
+                f"(domain hint: {nudge}), match it with the single best canon style and animated landing preset from the allowed IDs, "
+                "and return ONLY valid JSON without markdown."
+            )
+            example_block = (
+                "{\n"
+                '  "name": "Original 1-3 word brand name",\n'
+                '  "brief": "Specific 1-2 sentence description of products/services (60-180 chars)",\n'
+                '  "logo_prompt": "Concrete visual icon shape + 2 clean colors, no text (45-120 chars)",\n'
+                '  "canon_id": "exact canon_id from list",\n'
+                '  "polarity": "auto",\n'
+                '  "landing_preset": "exact preset id from list",\n'
+                '  "motion": "motion or animejs or css_scroll_driven",\n'
+                '  "site_type": "multi",\n'
+                '  "selected_pages": ["index", "about", "services", "portfolio", "pricing", "contact"],\n'
+                '  "tagline": "Crisp 4-8 word tagline"\n'
+                "}"
+            )
         avoid_txt = f"Avoid these brand names: {', '.join(sorted(excluded)[:8])}." if excluded else ""
+        try:
+            from .kb_loader import load_canon_router_v2
+
+            router_txt = load_canon_router_v2()[:6000]
+        except Exception:
+            router_txt = ""
         user_msg = (
-            f"Allowed canon_id values: {', '.join(sorted(valid_canons))}\n"
+            (f"Canon router (pick the canon whose 'fits' match the business, respect 'avoid'):\n{router_txt}\n\n" if router_txt else "")
+            + f"Allowed canon_id values: {', '.join(sorted(valid_canons))}\n"
             f"Allowed landing_preset values: {', '.join(sorted(valid_presets))}\n"
             f"Allowed selected_pages slugs: {', '.join(p['slug'] for p in PRESET_PAGES)}\n"
             f"{avoid_txt}\n"
             "Return JSON with exact keys:\n"
-            "{\n"
-            '  "name": "Original 1-3 word brand name",\n'
-            '  "brief": "Specific 1-2 sentence description of products/services (60-180 chars)",\n'
-            '  "logo_prompt": "Concrete visual icon shape + 2 clean colors, no text (45-120 chars)",\n'
-            '  "canon_id": "exact canon_id from list",\n'
-            '  "polarity": "light or dark or auto",\n'
-            '  "landing_preset": "exact preset id from list",\n'
-            '  "motion": "motion or animejs or css_scroll_driven",\n'
-            '  "site_type": "multi",\n'
-            '  "selected_pages": ["index", "about", "services", "portfolio", "pricing", "contact"],\n'
-            '  "tagline": "Crisp 4-8 word tagline"\n'
-            "}"
+            f"{example_block}"
         )
         try:
             raw_obj = state.llm.generate_structured_json(sys_msg, user_msg, max_tokens=512, temperature=0.85)
@@ -1104,16 +1133,15 @@ def generate_random_starter_template(
                 cand_name = _clean(raw_obj.get("name"))
                 cand_brief = _clean(raw_obj.get("brief"))
                 cand_logo = _clean(raw_obj.get("logo_prompt"))
-                if 2 <= len(cand_name) <= 48 and cand_name.lower() not in excluded and len(cand_brief) >= 24 and len(cand_logo) >= 12:
+                lang_ok = (eff_lang != "ru") or bool(re.search(r"[А-Яа-яЁё]", cand_brief))
+                if lang_ok and 2 <= len(cand_name) <= 48 and cand_name.lower() not in excluded and len(cand_brief) >= 24 and len(cand_logo) >= 12:
                     name = cand_name
                     brief = cand_brief[:260]
                     logo_prompt = cand_logo[:240]
                     cand_canon = resolve_canon_id(str(raw_obj.get("canon_id") or ""))
                     if cand_canon in valid_canons:
                         canon_id = cand_canon
-                    cand_pol = str(raw_obj.get("polarity") or "").strip().lower()
-                    if cand_pol in ("light", "dark", "auto"):
-                        polarity = cand_pol
+                    polarity = "auto"
                     cand_preset = str(raw_obj.get("landing_preset") or "").strip().lower()
                     if cand_preset in valid_presets:
                         landing_preset = cand_preset
@@ -1133,11 +1161,30 @@ def generate_random_starter_template(
                                 cand_pages.append("contact")
                             selected_pages = list(dict.fromkeys(cand_pages))[:6]
                     cand_tag = _clean(raw_obj.get("tagline"))
-                    if cand_tag:
+                    if cand_tag and (eff_lang != "ru" or bool(re.search(r"[А-Яа-яЁё]", cand_tag))):
                         tagline = cand_tag[:120]
                     source = "llm"
         except Exception:
             pass
+
+    # Consecutive starters must not collapse onto the same canon (LLM bias made two brands identical).
+    avoid = {resolve_canon_id(str(x)) for x in (avoid_canons or []) if str(x).strip()}
+    if canon_id in avoid:
+        fresh_pool = sorted(c for c in valid_canons if c not in avoid)
+        if fresh_pool:
+            canon_id = random.choice(fresh_pool)
+    canon_meta = CANON_MOTION_DEFAULTS.get(canon_id, {})
+    allowed_presets = list(canon_meta.get("allowed_landing_presets") or [])
+    allowed_motions = list(canon_meta.get("allowed_motions") or [])
+    if canon_meta.get("supports_animation") is False:
+        landing_preset = str(canon_meta.get("default_landing_preset") or "classic_corporate")
+        motion = str(canon_meta.get("default_motion") or "reduced_motion_instant")
+    else:
+        if allowed_presets and landing_preset not in allowed_presets:
+            landing_preset = str(canon_meta.get("default_landing_preset") or allowed_presets[0])
+        if allowed_motions and motion not in allowed_motions:
+            motion = str(canon_meta.get("default_motion") or allowed_motions[0])
+    stack = str(canon_meta.get("default_stack") or "astro")
 
     if site_type == "single":
         selected_pages = ["index"]
@@ -1172,8 +1219,8 @@ def generate_random_starter_template(
     company = build_default_company(name, brief, eff_lang)
     if tagline:
         company["tagline"] = tagline
-    page_block_prompts = build_page_block_prompts(name, brief, page_blocks, eff_lang, company)
-    block_prompts = build_default_block_descriptions(name, brief, all_blocks, eff_lang, company)
+    page_block_prompts: dict[str, dict[str, str]] = {}
+    block_prompts: dict[str, str] = {}
 
     translit_name = "".join(_STARTER_SLUG_TRANSLIT.get(c, c) for c in name.lower())
     safe_slug = re.sub(r"[^a-z0-9_-]+", "_", translit_name).strip("_")[:18] or "project"
@@ -1189,6 +1236,7 @@ def generate_random_starter_template(
         "languages": languages_val,
         "canon_id": canon_id,
         "polarity": polarity,
+        "stack": stack,
         "landing_preset": landing_preset,
         "motion": motion,
         "site_type": site_type,
@@ -1404,10 +1452,11 @@ def _generate_company_with_llm(
         "Return ONLY valid JSON."
     )
     values_example = (
-        '["Продукт — конкретный стандарт качества", "Команда — принцип работы инженеров", "Клиенты — гарантия и прозрачность сроков"]'
+        '["Продукт — <конкретный стандарт качества в вашей сфере>", "Команда — <конкретный принцип работы специалистов>", "Клиенты — <конкретная гарантия сроков и сервиса>"]'
         if str(lang).lower().startswith("ru")
-        else '["Product — concrete quality standard", "Team — engineering ethos", "Clients — delivery commitment"]'
+        else '["Product — <concrete quality standard>", "Team — <engineering ethos>", "Clients — <delivery commitment>"]'
     )
+    hours_example = "Пн–Пт 10:00–19:00" if str(lang).lower().startswith("ru") else "Mon-Fri 10:00-19:00"
     user_msg = (
         f"Brand name: {brand_name}\nBrief: {brief}\n\n"
         f"Write all user-facing text in {target_lang}. Be specific, no clichés.\n"
@@ -1426,7 +1475,7 @@ def _generate_company_with_llm(
         '  "address": "street address",\n'
         '  "phone": "+7 ... or +1 ...",\n'
         '  "email": "hello@brand-domain.tld",\n'
-        '  "hours": "Mon-Fri 10:00-19:00",\n'
+        f'  "hours": "{hours_example}",\n'
         '  "social": ["https://..."],\n'
         '  "products": [{"name": "tier name", "scope": "what is included", "price": "exact price with currency"}],\n'
         '  "features": [{"title": "capability name", "detail": "1 sentence technical benefit without price"}],\n'
@@ -1450,8 +1499,17 @@ def _generate_company_with_llm(
         val = str(raw.get(key) or "").strip()
         if val:
             out[key] = val
+    if out.get("hours"):
+        out["hours"] = normalize_hours_for_lang(str(out["hours"]), lang)
+    generic_values = {
+        "продукт — конкретный стандарт качества",
+        "команда — принцип работы инженеров",
+        "клиенты — гарантия и прозрачность сроков",
+    }
     for key in ("values", "priorities", "cities", "social"):
         vals = _coerce_str_list(raw.get(key))
+        if key == "values" and vals and any(v.strip().lower() in generic_values for v in vals):
+            vals = []
         if vals:
             out[key] = vals
     products = []
@@ -1594,9 +1652,9 @@ def _generate_page_prompts_with_llm(
             else ""
         )
         ru_rule = (
-            " Use ONLY Russian labels 'Продукт — ... | Команда — ... | Клиенты — ...' in 'values' (never English Product:/Team:/Clients:). For 'testimonials', write real attributed quotes 'Имя, должность/проект — конкретный измеримый отзыв'."
+            " Use ONLY Russian labels 'Продукт — ... | Команда — ... | Клиенты — ...' in 'values' (never English Product:/Team:/Clients:). For 'testimonials', quote ONLY external clients/customers/partners (NEVER company's own team members): 'Имя клиента, проект/компания — конкретный измеримый отзыв'."
             if str(lang).lower().startswith("ru")
-            else " For 'testimonials', write real attributed quotes 'Client Name, Role — concrete measurable outcome'."
+            else " For 'testimonials', quote ONLY external clients/customers (NEVER company's own team members): 'Client Name, Role — concrete measurable outcome'."
         )
         user_msg = (
             f"Brand name: {brand_name}\nBrief: {brief}\n"
@@ -1773,6 +1831,35 @@ class ProjectOrchestrator:
             "tasks": [dict(x) for x in tasks],
         }
 
+    def _run_site_plan(self, brief: str, lang_pref: str, constraints: dict[str, Any]) -> dict[str, Any]:
+        """Lead orchestrator session: LLM site_plan with schema validation + retry-with-errors (site_plan.py)."""
+        if not _can_use_gpu(self.state):
+            return {"ok": False, "plan": None, "attempts": [{"attempt": 0, "errors": ["no LLM available (CPU mode)"]}]}
+        from .kb_loader import load_canon_router_v2
+        from .site_plan import run_site_plan
+
+        agent_reports: list[dict[str, Any]] = []
+
+        cards = json.loads((Path(__file__).resolve().parent / "data" / "canon_cards.json").read_text(encoding="utf-8"))
+        valid = sorted(str(c["id"]) for c in cards if c.get("id"))
+        res = run_site_plan(
+            lambda sm, um, mt: self.state.llm.generate_structured_json(sm, um, max_tokens=mt, temperature=0.5),
+            brief, lang_pref, load_canon_router_v2(), valid, constraints,
+            last_finish=lambda: getattr(self.state.llm, "last_finish_reason", ""),
+            canon_context=_canon_structure_ctx,
+            on_report=lambda agent, status, summary, issues: agent_reports.append(
+                {"agent": agent, "status": status, "summary": summary, "issues": list(issues or [])[:4]}
+            ),
+        )
+        if res.get("ok"):
+            res["plan"]["agent_reports"] = agent_reports
+        if res.get("ok") and res.get("notes"):
+            res["plan"]["quality_notes"] = res["notes"]
+        if not res.get("ok"):
+            slim = [{k: v for k, v in x.items() if k != "raw"} for x in res.get("attempts") or []]
+            raise RuntimeError("site_plan: LLM plan failed validation after retries: " + json.dumps(slim, ensure_ascii=False)[:1500])
+        return res
+
     def execute_pipeline(self, payload: dict[str, Any]) -> dict[str, Any]:
         """Run the sequential sub-agent pipeline: disk memory -> isolated agents -> Z-Image -> deterministic compile -> audit."""
         from .blueprint import _safe_project_dir
@@ -1806,8 +1893,29 @@ class ProjectOrchestrator:
             if mode == "auto":
                 raw_prompt = str(payload.get("auto_prompt") or payload.get("brief") or payload.get("goal") or "").strip()
                 lang_pref = str(payload.get("languages") or "auto")
-                planned = auto_plan_from_prompt(raw_prompt, lang_pref=lang_pref, repo_root=self.state.repo_root)
+                auto_constraints = {"canon_id": str(payload.get("canon_id") or "").strip()} if str(payload.get("canon_id") or "").strip() not in ("", "auto") else {}
+                if isinstance(payload.get("site_plan"), dict):
+                    # Re-use a previously produced orchestrator plan (dry-run artifact / tests); Python only validates it.
+                    from .site_plan import validate as _validate_plan
+
+                    _cards = json.loads((Path(__file__).resolve().parent / "data" / "canon_cards.json").read_text(encoding="utf-8"))
+                    _plan, _errs = _validate_plan(payload["site_plan"], sorted(str(c["id"]) for c in _cards if c.get("id")), auto_constraints)
+                    if not _plan:
+                        raise ValueError("site_plan payload failed validation: " + "; ".join(_errs)[:600])
+                    plan_res = {"ok": True, "plan": _plan, "attempts": [{"attempt": 0, "errors": [], "source": "payload"}]}
+                else:
+                    plan_res = self._run_site_plan(raw_prompt, lang_pref, auto_constraints)
+                planned = auto_plan_from_prompt(raw_prompt, lang_pref=lang_pref, repo_root=self.state.repo_root, site_plan=plan_res.get("plan"))
+                planned["site_plan_attempts"] = [{k: v for k, v in a.items() if k != "raw"} for a in plan_res.get("attempts", [])]
                 merged = {**self.state.load_project("default"), **planned}
+                # Auto mode = a fresh brief: never inherit the previous draft's creative decisions.
+                # (explicit neutral values, not pop(): save_project() merges into the stored draft and would resurrect them)
+                for stale_key, neutral in (("logo_prompt", ""), ("hero_zimage_prompt", ""), ("landing_preset", ""), ("polarity", "auto"), ("audience", ""), ("tagline", "")):
+                    if stale_key not in planned and stale_key not in payload:
+                        merged[stale_key] = neutral
+                merged.pop("zimage_run_seed", None)
+                if not payload.get("stack"):
+                    merged["stack"] = str(planned.get("stack") or "html5_esm")
                 for stale_logo_key in ("logo", "selected_logo_path", "logo_bytes_b64", "logo_filename", "logo_path"):
                     if stale_logo_key not in payload:
                         merged.pop(stale_logo_key, None)
@@ -1841,6 +1949,36 @@ class ProjectOrchestrator:
                 if "index" not in sel_pages:
                     sel_pages.insert(0, "index")
                 raw_page_blocks = merged.get("page_blocks") if isinstance(merged.get("page_blocks"), dict) else {}
+                # Constructor mode: what the user explicitly set is a constraint, everything left on "auto"/empty is
+                # decided by the orchestrator LLM (site_plan). Explicit flags: canon_id "auto", pages_auto, blocks_auto.
+                for stale_plan_key in ("site_plan", "plan_source", "site_plan_attempts"):
+                    if stale_plan_key not in payload:
+                        merged.pop(stale_plan_key, None)
+                ctor_constraints: dict[str, Any] = {}
+                cid_set = str(payload.get("canon_id") or "").strip()
+                if cid_set and cid_set != "auto":
+                    ctor_constraints["canon_id"] = cid_set
+                if payload.get("selected_pages") and not payload.get("pages_auto"):
+                    ctor_constraints["pages"] = list(sel_pages)
+                if raw_page_blocks and not payload.get("blocks_auto"):
+                    ctor_constraints["page_blocks"] = {k: list(v) for k, v in raw_page_blocks.items() if v and k in sel_pages}
+                needs_plan = ("canon_id" not in ctor_constraints) or ("pages" not in ctor_constraints) or any(
+                    p not in ctor_constraints.get("page_blocks", {}) for p in ctor_constraints.get("pages", sel_pages)
+                )
+                if needs_plan and _can_use_gpu(self.state):
+                    plan_res = self._run_site_plan(str(merged.get("brief") or merged.get("goal") or ""), lang_pref, ctor_constraints)
+                    if plan_res.get("plan"):
+                        from .site_plan import plan_to_page_blocks
+
+                        plan_pages, plan_blocks = plan_to_page_blocks(plan_res["plan"])
+                        merged["site_plan"] = plan_res["plan"]
+                        merged["plan_source"] = "llm_site_plan+user_constraints"
+                        if "canon_id" not in ctor_constraints:
+                            merged["canon_id"] = plan_res["plan"]["canon_id"]
+                        sel_pages = plan_pages
+                        site_type = "multi" if len(plan_pages) > 1 else "single"
+                        raw_page_blocks = plan_blocks
+                        default_blocks = [b for b in plan_blocks.get("index", default_blocks) if b != "footer"]
                 if site_type == "single":
                     page_blocks = clean_page_blocks({"index": default_blocks}, ["index"])
                 else:
@@ -2006,6 +2144,12 @@ class ProjectOrchestrator:
                             return clean_b
                         return harden_zimage_prompt(f"{clean_b}, {clean_s}", brand=str(merged.get("name") or ""), member_names=team_names)
 
+                    run_seed = secrets.SystemRandom().randrange(1, 2_000_000_000)
+                    merged["zimage_run_seed"] = run_seed
+
+                    def _slot_seed(k: int) -> int:
+                        return (run_seed + k * 7919) % 2_147_483_647
+
                     for p_idx, h_slug in enumerate(merged.get("selected_pages") or ["index"]):
                         raw_hp = str(heroes.get(h_slug) or heroes.get("index") or f"Editorial photograph of {brief_for_llm[:140]}, crisp directional lighting, 35mm lens")
                         h_prompt = _sanitize_zimage_prompt(raw_hp, team_names)
@@ -2021,7 +2165,7 @@ class ProjectOrchestrator:
                                 "height": hh,
                                 "steps": 8,
                                 "cfg_scale": 1.0,
-                                "seed": 42 + len(batch_items),
+                                "seed": _slot_seed(len(batch_items)),
                                 "output_path": str(assets_dir / f"{h_id}.png"),
                             }
                         )
@@ -2036,12 +2180,11 @@ class ProjectOrchestrator:
                                 "height": gh,
                                 "steps": 8,
                                 "cfg_scale": 1.0,
-                                "seed": 60 + g_idx,
+                                "seed": _slot_seed(100 + g_idx),
                                 "output_path": str(assets_dir / f"gallery_{g_idx + 1}.png"),
                             }
                         )
                     tw, th = resolve_slot_dimensions("team")
-                    brand_seed_offset = sum(ord(c) for c in str(merged.get("name") or "s")) % 997
                     for t_idx, t_prompt in enumerate(visuals.get("team") or []):
                         t_clean = _sanitize_zimage_prompt(str(t_prompt), team_names)
                         batch_items.append(
@@ -2052,7 +2195,7 @@ class ProjectOrchestrator:
                                 "height": th,
                                 "steps": 8,
                                 "cfg_scale": 1.0,
-                                "seed": 1703 + t_idx * 977 + brand_seed_offset,
+                                "seed": _slot_seed(200 + t_idx),
                                 "output_path": str(assets_dir / f"team_{t_idx + 1}.png"),
                             }
                         )
@@ -2068,7 +2211,7 @@ class ProjectOrchestrator:
                                 "height": 512,
                                 "steps": 8,
                                 "cfg_scale": 1.0,
-                                "seed": 101,
+                                "seed": _slot_seed(300),
                                 "output_path": str(tmp_auto_logo),
                             }
                         )
@@ -2080,6 +2223,10 @@ class ProjectOrchestrator:
                     manifest_path = out_dir / ".smartllm" / "render_batch.json"
                     manifest_path.parent.mkdir(parents=True, exist_ok=True)
                     manifest_path.write_text(json.dumps(batch_items, indent=2), encoding="utf-8")
+                    (manifest_path.parent / "zimage_seeds.json").write_text(
+                        json.dumps({"run_seed": run_seed, "items": {str(b["id"]): b["seed"] for b in batch_items}}, indent=2),
+                        encoding="utf-8",
+                    )
                     cmd = [
                         str(img_mgr.sd_cli_bin),
                         "--diffusion-model", str(img_mgr.dit_model_path),
@@ -2140,6 +2287,15 @@ class ProjectOrchestrator:
 
             saved_draft = self.state.save_project(str(merged.get("id") or "default"), merged)
             bp = compile_project_blueprint(saved_draft, repo_root=self.state.repo_root)
+            if zimage_rendered and not payload.get("skip_vision"):
+                try:
+                    from .vision_stage import run_vision_stage
+                    self._set_stage(tasks, 3, "4/5: Qwen vision: проверка картинок (сюжет, стиль, анатомия) и перерендер брака...", "4/5: Qwen vision: image check (subject, style, anatomy) + Z-Image re-render of failures...")
+                    vis = run_vision_stage(self.state, out_dir, canon=str(canon_card.get("id") or ""))
+                    mark_external_step(out_dir, "vision", "done", f"{len(vis.get('images') or [])} checked, {len(vis.get('regenerated') or [])} regenerated, failing {vis.get('still_failing')}")
+                    bp = compile_project_blueprint(saved_draft, repo_root=self.state.repo_root)
+                except Exception as exc:  # vision is a quality gate, not a build blocker
+                    mark_external_step(out_dir, "vision", "failed", str(exc)[:300])
             mark_external_step(out_dir, "compile", "done", f"{len(bp['files'])} files, CSP {bp['style_sha256'][:15]}")
             tasks[3]["status"] = "done"
             tasks[3]["detail"] = f"JSON-LD + llms.txt + CSP ({bp['style_sha256'][:15]}...)"

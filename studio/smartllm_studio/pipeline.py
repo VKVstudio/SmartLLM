@@ -12,10 +12,12 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import secrets
 from typing import Any, Callable
 
-from .kb_loader import get_slot_recipes, harden_zimage_prompt, lint_anti_ai_copy, load_canon_kb, load_stage_context, palette_to_material_summary
-from .pages import BLOCK_MAP, PAGE_MAP, build_default_company, company_block_prompt, infer_gender, page_title, resolve_primary_lang
+from .kb_loader import canons_v2_available, get_slot_recipes, harden_zimage_prompt, lint_anti_ai_copy, load_canon_kb, load_canon_v2_context, load_stage_context, palette_to_material_summary
+from .composition import GALLERY_FRAMES, composition_schema_example, deterministic_page_plan, distinct_list, gallery_count, validate_page_plan
+from .pages import BLOCK_MAP, PAGE_MAP, build_default_company, company_block_prompt, infer_gender, normalize_hours_for_lang, page_title, resolve_primary_lang
 
 ReportFn = Callable[[int, int, str, str, str], None]
 
@@ -76,9 +78,9 @@ BLOCK_FORMAT_HINTS_RU = {
     "features": "ровно 4 (или 3) направления/услуги из бренд-основы БЕЗ цен тарифов: <Название направления> — <конкретная техническая выгода> | ...",
     "about": "<Краткая история основания из бренд-основы> | <Подтверждённый факт 1 с цифрой> | <Подтверждённый факт 2>",
     "stats": "ровно 4 (или 3) показателя из бренд-основы: <Значение> — <короткая подпись> | ...",
-    "gallery": "<Короткая подпись до 90 знаков к 1-му визуалу> | <короткая подпись до 90 знаков ко 2-му визуалу>",
+    "gallery": "<Короткая подпись до 90 знаков к 1-му визуалу> | <ко 2-му> | <к 3-му> | … (по одной на каждый снимок галереи)",
     "pricing": "ВСЕ тарифы (3-4) из бренд-основы в формате: <Название тарифа> — <что входит> — <точная цена с валютой> | ...",
-    "testimonials": "3 или 4 измеримых отзыва/кейса: <Имя клиента/компании и город> — <конкретный измеримый результат> | ...",
+    "testimonials": "3 или 4 измеримых отзыва/кейса ОТ ВНЕШНИХ КЛИЕНТОВ (заказчики, владельцы студий, архитекторы — НИКОГДА не используй имена из team): <Имя клиента/компании и роль> — <конкретный измеримый результат> | ...",
     "process": "ровно 4 последовательных этапа под данную отрасль: <01 Название этапа> — <результат для клиента> | ...",
     "team": "ТОЧНО те же 3-4 специалиста из бренд-основы (единый состав для всех страниц, без URL): <Имя Фамилия> — <должность и опыт> | ...",
     "blog": "3 или 4 экспертных материала по теме: <Заголовок статьи> — <одно предложение сути> | ...",
@@ -95,9 +97,9 @@ BLOCK_FORMAT_HINTS_EN = {
     "features": "exact 4 (or 3) capabilities from foundation WITHOUT pricing tiers: <Capability Name> — <specific engineering benefit> | ...",
     "about": "<Concise founding story matching history> | <Verified milestone 1 with numbers> | <Verified milestone 2>",
     "stats": "exact 4 (or 3) metrics from foundation: <Metric Value> — <short label> | ...",
-    "gallery": "<Short caption under 90 chars for scene 1> | <short caption under 90 chars for scene 2>",
+    "gallery": "<Short caption under 90 chars for scene 1> | <scene 2> | <scene 3> | … (one per gallery image)",
     "pricing": "ALL 3-4 tiers from foundation: <Tier Name> — <scope & deliverables> — <exact price with currency> | ...",
-    "testimonials": "3 or 4 measurable client outcomes: <Client Name / Org> — <quantified impact> | ...",
+    "testimonials": "3 or 4 measurable client outcomes FROM EXTERNAL CLIENTS (customers, owners, architects — NEVER quote internal team members): <Client Name / Role> — <quantified impact> | ...",
     "process": "exact 4 domain-specific workflow steps: <01 Step Name> — <deliverable outcome> | ...",
     "team": "EXACT canonical specialists from foundation (identical roster on every page, NO URLs): <First Last> — <role & experience> | ...",
     "blog": "3 or 4 domain insights: <Article Headline> — <concise technical takeaway> | ...",
@@ -313,7 +315,7 @@ def _sync_page_copy_to_foundation(
             canon_v = company_block_prompt(company, "values", lang)
             if canon_v:
                 out["values"] = canon_v
-    # 6. Contact — strip leaked HTML form labels or map URLs
+    # 6. Contact & Locations — strip leaked HTML form labels/map URLs and localize English hours for RU
     if "contact" in out and "contact" not in user_owned:
         cur_c = _clean(out.get("contact"))
         low_c = cur_c.lower()
@@ -321,13 +323,37 @@ def _sync_page_copy_to_foundation(
             canon_c = company_block_prompt(company, "contact", lang)
             if canon_c:
                 out["contact"] = canon_c
-    # 7. Subpage manifesto — prevent verbatim repetition of global homepage tagline | positioning
+    if str(lang).lower().startswith("ru"):
+        for hkey in ("contact", "locations"):
+            if _clean(out.get(hkey)):
+                out[hkey] = normalize_hours_for_lang(_clean(out[hkey]), lang)
+    # 7. Manifesto — prevent company values ('Продукт — ...') from leaking into manifesto & avoid subpage duplication
+    if "manifesto" in out and _clean(out.get("manifesto")):
+        mf_parts = [p.strip() for p in str(out["manifesto"]).split("|")]
+        if mf_parts and re.match(r"(?i)^(?:продукт|команда|клиенты|product|team|clients)\s*[—–:-]", mf_parts[0]):
+            tline_rep = _clean(company.get("tagline"))
+            if tline_rep:
+                mf_parts[0] = tline_rep
+                out["manifesto"] = " | ".join(p for p in mf_parts if p)
     if "manifesto" in out and slug not in ("index", "about"):
         global_mf = " | ".join(x for x in (_clean(company.get("tagline")), _clean(company.get("positioning"))) if x)
         if global_mf and _clean(out.get("manifesto")) == global_mf:
             sub_purpose = _page_purpose(slug, lang) or page_title(slug, lang)
             tline = _clean(company.get("tagline")) or page_title(slug, lang)
             out["manifesto"] = f"{tline} | {page_title(slug, lang)}: {sub_purpose}"
+    # 8. Testimonials — own canonical team specialists must never appear as external reviewers
+    if "testimonials" in out and "testimonials" not in user_owned and team_list and _clean(out.get("testimonials")):
+        team_names = {_clean(m.get("name")).lower() for m in team_list if _clean(m.get("name"))}
+        repaired_t: list[str] = []
+        for t_idx, raw_item in enumerate([x.strip() for x in re.split(r"[|\n]+", str(out["testimonials"])) if x.strip()]):
+            parts_t = [c.strip() for c in _SAFE_PAIR_RE.split(raw_item, maxsplit=1) if c.strip()]
+            if len(parts_t) == 2 and any(tn in parts_t[0].lower() for tn in team_names):
+                label_client = f"Реализованный кейс #{t_idx + 1}" if lang == "ru" else f"Verified Client Case #{t_idx + 1}"
+                repaired_t.append(f"{label_client} — {parts_t[1]}")
+            else:
+                repaired_t.append(raw_item)
+        if repaired_t:
+            out["testimonials"] = " | ".join(repaired_t)
     return out
 
 
@@ -389,20 +415,139 @@ _PORTRAIT_APPEARANCE_MARKERS = re.compile(
 )
 
 
-def _pick_team_personas(team_slots: list[dict[str, Any]], brand: str = "") -> list[str]:
-    """Assign distinct, non-repeating real-world appearance personas aligned with each slot's gender."""
-    offset = sum(ord(ch) for ch in str(brand or "studio"))
+_PORTRAIT_AGES = [27, 29, 31, 34, 37, 40, 43, 46, 49, 52, 55, 58]
+_FEMALE_HAIRS = [
+    "wavy dark chestnut hair framing shoulders",
+    "sleek espresso hair pulled into a low chignon",
+    "warm honey-blonde layered shoulder-length lob",
+    "curly auburn-copper hair with natural volume",
+    "short textured dark pixie haircut",
+    "ash-blonde loose waves past the collar",
+    "sleek silver-gray architectural bob haircut",
+    "braided dark-brown updo with soft loose strands",
+    "straight jet-black hair tucked behind one ear",
+    "caramel-brown hair with soft curtain bangs",
+    "cropped dark brunette wavy bob",
+    "salt-and-pepper wavy collar-length hair",
+    "strawberry-blonde hair tied cleanly back",
+    "voluminous natural dark-brown curls",
+]
+_MALE_HAIRS = [
+    "short dark-brown side-part hair, clean-shaven jaw",
+    "salt-and-pepper wavy hair and neatly trimmed short beard",
+    "thick dark tousled hair with light designer stubble",
+    "silver-gray receding hair, clean-shaven expressive face",
+    "close-cropped chestnut hair with neat short mustache",
+    "combed-back ash-blond hair, clean-shaven face",
+    "curly dark-brown hair with short trimmed goatee",
+    "warm sandy-brown textured crop with light stubble",
+    "neat dark straight crop, clean-shaven relaxed expression",
+    "clean bald head with groomed full dark beard",
+    "wavy charcoal hair with subtle silver temples, clean-shaven",
+    "short auburn-brown hair and neat short stubble",
+    "swept-back dark hair with natural silver streaks",
+    "cropped salt-and-pepper buzz cut, clean-shaven face",
+]
+_EYES_EXPRESSIONS = [
+    "bright hazel eyes, calm confident smile, no glasses",
+    "warm brown eyes, thin tortoiseshell rectangular glasses, approachable look",
+    "grey-green eyes, slim frameless titanium eyewear, thoughtful gaze",
+    "dark brown eyes, poised neutral editorial gaze, no glasses",
+    "warm amber eyes, fine gold-wire round glasses, reassuring slight smile",
+    "slate-blue eyes, matte charcoal rectangular frames, attentive expression",
+    "green eyes, natural warm smile with gentle eye crinkles, no glasses",
+    "deep brown eyes, clear crystal-frame glasses, composed posture",
+    "light hazel eyes, subtle analytical gaze, no glasses",
+    "chestnut-brown eyes, slim matte bronze eyewear, friendly expression",
+    "steel-blue eyes, open confident gaze, no glasses",
+    "warm dark eyes, light tortoiseshell round glasses, relaxed smile",
+]
+_FEMALE_WARDROBES = [
+    "oatmeal merino fine-knit turtleneck",
+    "terracotta structured linen blazer over cream top",
+    "charcoal tailored wool jacket over crisp white collar",
+    "muted sage architectural cotton overshirt",
+    "deep petrol-blue silk blouse",
+    "warm sand cashmere crewneck sweater",
+    "ivory tailored button-down under slate vest",
+    "burgundy fine-knit ribbed cardigan",
+    "deep navy structured blazer over soft ecru shirt",
+    "taupe belted cotton-twill studio jacket",
+    "graphite pleated mock-neck blouse",
+    "warm camel wool sweater with clean seams",
+    "espresso-brown structured linen overshirt",
+    "steel-grey tailored blazer over black knit top",
+]
+_MALE_WARDROBES = [
+    "charcoal merino crewneck under textured blazer",
+    "unbuttoned navy Oxford shirt with herringbone jacket",
+    "terracotta heavy-knit polo shirt",
+    "crisp slate-black architectural shirt without tie",
+    "forest-olive structured overshirt over charcoal tee",
+    "warm sand suede studio jacket over slate shirt",
+    "steel-grey crisp cotton shirt under dark knit vest",
+    "espresso-brown chore coat over off-white tee",
+    "muted cobalt fine-knit sweater",
+    "light stone linen collarless studio shirt",
+    "deep navy flannel overshirt over grey turtleneck",
+    "camel wool overshirt with minimal dark buttons",
+    "graphite tailored blazer over heather crew shirt",
+    "dark indigo Japanese denim studio jacket over cream knit",
+]
+_PORTRAIT_POSES = [
+    "slight three-quarter turn",
+    "front-facing balanced editorial posture",
+    "relaxed slightly angled shoulders",
+    "subtle natural head tilt toward camera",
+    "upright composed studio stance",
+    "gentle three-quarter turn with soft shoulder drop",
+]
+
+
+def _canon_portrait_backdrop(canon_id: str, polarity: str = "light") -> str:
+    cid = str(canon_id or "").lower()
+    pol = str(polarity or "light").lower()
+    if pol == "dark" or any(k in cid for k in ("05_", "08_", "09_", "13_", "14_", "18_")):
+        return "moody obsidian-charcoal seamless studio backdrop, subtle cool edge rim light, editorial shadow falloff"
+    if any(k in cid for k in ("12_", "15_", "16_")):
+        return "warm textured sandstone-linen studio backdrop, natural diffused northern window light, organic soft shadows"
+    if any(k in cid for k in ("06_", "07_", "20_")):
+        return "crisp architectural off-white concrete backdrop, bold directional gallery key light, clean contrast"
+    return "seamless neutral cool pearl-grey studio backdrop, soft diffused editorial studio light"
+
+
+def _pick_team_personas(
+    team_slots: list[dict[str, Any]],
+    brand: str = "",
+    canon_id: str = "",
+    polarity: str = "light",
+) -> list[str]:
+    """Synthesize unique non-repeating appearance personas aligned with each slot's gender."""
+    _ = (brand, canon_id, polarity)
+    rng = secrets.SystemRandom()
+    ages = rng.sample(_PORTRAIT_AGES, k=len(_PORTRAIT_AGES))
+    f_hairs = rng.sample(_FEMALE_HAIRS, k=len(_FEMALE_HAIRS))
+    m_hairs = rng.sample(_MALE_HAIRS, k=len(_MALE_HAIRS))
+    eyes = rng.sample(_EYES_EXPRESSIONS, k=len(_EYES_EXPRESSIONS))
+    f_clothes = rng.sample(_FEMALE_WARDROBES, k=len(_FEMALE_WARDROBES))
+    m_clothes = rng.sample(_MALE_WARDROBES, k=len(_MALE_WARDROBES))
+    poses = rng.sample(_PORTRAIT_POSES, k=len(_PORTRAIT_POSES))
+    picked: list[str] = []
     fem_used = 0
     male_used = 0
-    picked: list[str] = []
-    for slot in team_slots:
+    for idx, slot in enumerate(team_slots):
+        age = ages[idx % len(ages)]
+        eye_expr = eyes[idx % len(eyes)]
+        pose = poses[idx % len(poses)]
         if str(slot.get("gender") or "female") == "female":
-            idx = (offset + fem_used) % len(TEAM_PERSONAS_FEMALE)
-            picked.append(TEAM_PERSONAS_FEMALE[idx])
+            hair = f_hairs[fem_used % len(f_hairs)]
+            wardrobe = f_clothes[fem_used % len(f_clothes)]
+            picked.append(f"{age}-year-old woman with {hair}, {eye_expr}, wearing {wardrobe}, {pose}")
             fem_used += 1
         else:
-            idx = (offset + male_used) % len(TEAM_PERSONAS_MALE)
-            picked.append(TEAM_PERSONAS_MALE[idx])
+            hair = m_hairs[male_used % len(m_hairs)]
+            wardrobe = m_clothes[male_used % len(m_clothes)]
+            picked.append(f"{age}-year-old man with {hair}, {eye_expr}, wearing {wardrobe}, {pose}")
             male_used += 1
     return picked
 
@@ -535,9 +680,9 @@ def _canon_slice(card: dict[str, Any], dossier: dict[str, Any] | None = None) ->
         f"reduced-motion: {_clean(motion.get('reduced_motion_policy'))[:80]}"
     )
     if d.get("design_code"):
-        base += f"\nDesign code: {_clean(d.get('design_code'))[:320]}"
+        base += f"\nDesign code: {_clean(d.get('design_code'))[:1400]}"
     if d.get("block_rules"):
-        base += f"\nBlock layout rules: {_clean(d.get('block_rules'))[:260]}"
+        base += f"\nBlock layout rules: {_clean(d.get('block_rules'))[:1200]}"
     return base
 
 
@@ -740,6 +885,38 @@ class PipelineMemory:
         if detail:
             s["detail"] = detail
         self._flush()
+        if status in ("done", "failed"):
+            self.report(step_id, status, detail, [artifact] if artifact else [])
+
+    def report(self, agent: str, status: str, summary: str, outputs: list[str] | None = None, issues: list[str] | None = None) -> None:
+        """Sub-agent hand-off report: one short line in .smartllm/progress.md + structured row in progress.json.
+        The lead orchestrator reads these reports (never full transcripts) to decide the next dispatch."""
+        try:
+            root = self.mem_dir.parent
+            row = {"at": _now(), "agent": agent, "status": status, "summary": str(summary)[:300],
+                   "outputs": list(outputs or []), "issues": [str(x)[:200] for x in (issues or [])][:6]}
+            pj = root / "progress.json"
+            rows = json.loads(pj.read_text(encoding="utf-8")) if pj.exists() else []
+            rows.append(row)
+            pj.write_text(json.dumps(rows, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+            line = f"- {row['at']} **{agent}** [{status}] {row['summary']}"
+            if row["outputs"]:
+                line += f" → {', '.join(row['outputs'])}"
+            if row["issues"]:
+                line += f" ⚠ {'; '.join(row['issues'])}"
+            with (root / "progress.md").open("a", encoding="utf-8") as fh:
+                fh.write(line + "\n")
+        except Exception:
+            pass
+
+    def reports_digest(self, max_chars: int = 3000) -> str:
+        pj = self.mem_dir.parent / "progress.json"
+        try:
+            rows = json.loads(pj.read_text(encoding="utf-8")) if pj.exists() else []
+        except Exception:
+            rows = []
+        txt = "\n".join(f"{r['agent']} [{r['status']}]: {r['summary']}" + (f" ⚠ {'; '.join(r['issues'])}" if r.get("issues") else "") for r in rows)
+        return txt[-max_chars:]
 
     def _flush(self) -> None:
         self.state["updated_at"] = _now()
@@ -838,6 +1015,7 @@ def run_content_pipeline(
     page_blocks: dict[str, list[str]] = merged.get("page_blocks") or {"index": ["hero", "contact", "footer"]}
     out_dir = Path(merged.get("output_dir")).resolve()
     canon_id = str(canon_card.get("id") or "01_bento_grid")
+    canons_v2_ok = canons_v2_available()
     stack_id = str(merged.get("stack") or "html5_esm")
     hints = BLOCK_FORMAT_HINTS_RU if lang == "ru" else BLOCK_FORMAT_HINTS_EN
 
@@ -870,6 +1048,31 @@ def run_content_pipeline(
         "fingerprint": fingerprint,
     })
     memory.mark("init", "done", detail=f"{len(pages)} pages, canon {canon_card.get('id')}")
+    site_plan = merged.get("site_plan") if isinstance(merged.get("site_plan"), dict) else {}
+    plan_pages_meta = {p.get("slug"): p for p in (site_plan.get("pages") or []) if isinstance(p, dict)}
+    plan_images = [it for it in (site_plan.get("image_plan") or []) if isinstance(it, dict)]
+    for _r in (site_plan.get("agent_reports") or []) if site_plan else []:
+        memory.report(str(_r.get("agent") or "planner"), str(_r.get("status") or "done"), str(_r.get("summary") or ""), [], list(_r.get("issues") or []))
+    if site_plan and isinstance(site_plan.get("strategy"), dict):
+        _st = site_plan["strategy"]
+        memory.write_artifact("strategy.json", _st)
+        if not site_plan.get("agent_reports"):
+            memory.report(
+                "strategist", "done",
+                f"goal {_st.get('goal_type')}, CTA '{_st.get('primary_cta')}', offers: " + ", ".join(o.get("id", "") for o in _st.get("offers") or []),
+                ["memory/strategy.json"],
+                [f"client must supply: {x}" for x in (_st.get("client_must_supply") or [])[:4]],
+            )
+    if site_plan:
+        memory.write_artifact("site_plan.json", site_plan)
+        memory.report(
+            "orchestrator:site_plan", "done",
+            f"{merged.get('plan_source') or 'llm_site_plan'}: canon {site_plan.get('canon_id')}; pages "
+            + ", ".join(f"{p['slug']}({len(p.get('sections') or [])})" for p in site_plan.get("pages") or [])
+            + f"; {len(plan_images)} planned images. {str(site_plan.get('canon_reason') or '')[:120]}",
+            ["memory/site_plan.json"],
+            [f"attempt {x.get('attempt')}: {len(x.get('errors') or [])} validation errors" for x in (merged.get("site_plan_attempts") or []) if x.get("errors")],
+        )
     agents_run = 0
     agents_reused = 0
 
@@ -921,8 +1124,25 @@ def run_content_pipeline(
     architecture = reuse("architect", "architecture.json")
     if architecture is None:
         memory.mark("architect", "running")
-        page_lines = "\n".join(f"- {slug}: {page_title(slug, lang)} — {_page_purpose(slug, lang)}" for slug in pages)
-        arch_kb = load_stage_context("architect", stack=stack_id, canon_id=canon_id)[:1800]
+        page_lines = "\n".join(
+            f"- {slug}: {page_title(slug, lang)} — {_clean((plan_pages_meta.get(slug) or {}).get('purpose')) or _page_purpose(slug, lang)}"
+            + (" | sections: " + "; ".join(f"{x['block']}: {x.get('intent') or ''}" for x in (plan_pages_meta.get(slug) or {}).get("sections") or []) if plan_pages_meta.get(slug) else "")
+            for slug in pages
+        )
+        strat = site_plan.get("strategy") if isinstance(site_plan.get("strategy"), dict) else {}
+        if strat:
+            page_lines += "\nStrategist offers (every page quest must keep its offers; never invent missing facts):\n" + "\n".join(
+                f"- {o.get('id')}: {o.get('name')} — {o.get('detail')}" for o in strat.get("offers") or []
+            )
+            if site_plan.get("client_must_supply"):
+                page_lines += "\nUnknown facts (copy must use neutral placeholders, not invented values): " + "; ".join(site_plan["client_must_supply"][:12])
+        if plan_images:
+            page_lines += "\nOrchestrator image plan (keep these subjects, make them concrete):\n" + "\n".join(
+                f"- {it.get('page')}/{it.get('block')}: {it.get('subject')}" for it in plan_images[:24]
+            )
+        arch_kb = load_stage_context("architect", stack=stack_id, canon_id=canon_id)[:5000]
+        v2_arch = load_canon_v2_context("architect", canon_id)
+        n_gal_arch = gallery_count(canon_id, dossier)
         luminous_domain = _is_luminous_domain(brand, brief)
         arch_pages_tmpl = {
             s: {
@@ -939,25 +1159,26 @@ def run_content_pipeline(
         )
         sys_msg = (
             "You are SmartLLM v2 Chief Web Architect and Task Dispatcher. Plan the global site chrome, "
-            "2 distinct gallery visual scenes, and strict non-contradicting page quests grounded in the brand foundation. "
+            f"{n_gal_arch} distinct gallery visual scenes, and strict non-contradicting page quests grounded in the brand foundation. "
             "Return ONLY valid JSON."
         )
         user_msg = (
-            f"Brand: {brand}\nBrief: {brief[:320]}\nLanguage: {target_lang}\n{_canon_slice(canon_card, dossier)}\n"
+            f"Brand: {brand}\nBrief: {brief[:1200]}\nLanguage: {target_lang}\n{_canon_slice(canon_card, dossier)}\n"
             + (f"Architecture & Stack Canon Excerpt:\n{arch_kb}\n\n" if arch_kb else "")
+            + (f"Canon v2 spec + baselines:\n{v2_arch}\n\n" if v2_arch else "")
             + f"Brand foundation (SINGLE SOURCE OF TRUTH):\n{foundation_txt}\n\nPages:\n{page_lines}\n\n"
             f"Write all user-facing values in {target_lang}. Nav labels: 1-2 words, no clichés.\n"
             "Rules:\n"
             "- Every page must have a distinct editorial 'angle', distinct English 'hero_subject', and explicit 'quest' telling copy agents which truth items (capabilities vs pricing vs team vs proof) belong on that page without mixing pricing into features or changing team/stats facts.\n"
             "- 'hero_subject': CONCRETE physical scene rooted 100% in this company's real work in English — NEVER include abstract meta labels ('Client', 'Finished client', 'Expertise materials', 'insights', 'solution', 'showcase', 'magazine', 'book', 'article'), font names, CSS/layout words (typography, poster, stage, variable-width, display), or negative phrases (no portraits). Each page MUST name tangible physical fixtures, materials, equipment, or active workspace objects: e.g. 'index' = flagship completed installation, 'about' = working atelier workbench with physical material samples and prototypes, 'portfolio' = completed architectural interior with flagship work installed, 'services' = precision commissioning & fabrication detail, 'pricing' = flagship modular hardware configuration display, 'blog' = architectural material library & prototype desk (NOT books/pages), 'team' = wide candid collaborative studio table scene with prototypes and blueprints."
             + domain_arch_note
-            + "\n- 'gallery_subjects': 2 CLEARLY DIFFERENT concrete physical scene descriptions in English (Scene 1 wide flagship project/environment, Scene 2 close-up material/engineering detail).\n"
+            + f"\n- 'gallery_subjects': {n_gal_arch} CLEARLY DIFFERENT concrete physical scene descriptions in English, one per framing: {' / '.join(GALLERY_FRAMES[:n_gal_arch])}.\n"
             "Return JSON:\n"
             + json.dumps({
                 "nav_labels": {s: "label" for s in pages},
                 "footer_text": "one-line colophon with brand promise",
                 "header_cta": "short header action label",
-                "gallery_subjects": ["English scene 1 (wide architectural/product view)", "English scene 2 (distinct close-up craft/engineering scene)"],
+                "gallery_subjects": [f"English scene {i + 1}" for i in range(n_gal_arch)],
                 "pages": arch_pages_tmpl,
                 "motion_note": "one sentence scroll choreography note",
             }, ensure_ascii=False)
@@ -965,18 +1186,16 @@ def run_content_pipeline(
         raw = _llm_json(state, gpu_ok, sys_msg, user_msg, max_tokens=2400, required_keys=["nav_labels", "footer_text", "pages"])
         if raw:
             agents_run += 1
-        gal_subjs = [_clean(x) for x in (raw.get("gallery_subjects") or []) if _clean(x)]
-        if len(gal_subjs) < 2 or gal_subjs[0].lower() == gal_subjs[1].lower():
-            gal_subjs = [
-                f"Wide architectural environment showcasing {brief[:100]} flagship execution",
-                f"Close-up editorial photograph of tactile materials and precision engineering craftsmanship for {brand}",
-            ]
+        gal_subjs = distinct_list(
+            [_clean(x) for x in (raw.get("gallery_subjects") or []) if _clean(x)], n_gal_arch,
+            [f"{fr} for {brand}: {brief[:100]}" for fr in GALLERY_FRAMES],
+        )
         architecture = {
             "nav_labels": {str(k): _clean(v) for k, v in (raw.get("nav_labels") or {}).items() if _clean(v)},
             "footer_text": _clean(raw.get("footer_text")),
             "header_cta": _clean(raw.get("header_cta")),
             "motion_note": _clean(raw.get("motion_note")),
-            "gallery_subjects": gal_subjs[:2],
+            "gallery_subjects": gal_subjs,
             "pages": {},
         }
         for slug in pages:
@@ -988,6 +1207,14 @@ def run_content_pipeline(
             }
         memory.write_artifact("architecture.json", architecture)
         memory.mark("architect", "done", "architecture.json", f"chrome + {len(pages)} page quests")
+    # Orchestrator site_plan decisions win over the architect's defaults: nav labels in the client's vocabulary and
+    # the planned hero scene of every page.
+    plan_nav = {slug: _clean(m.get("nav_label")) for slug, m in plan_pages_meta.items() if _clean(m.get("nav_label"))}
+    if plan_nav:
+        architecture["nav_labels"] = {**(architecture.get("nav_labels") or {}), **plan_nav}
+    for it in plan_images:
+        if it.get("block") == "hero" and it.get("page") in (architecture.get("pages") or {}) and _clean(it.get("subject")):
+            architecture["pages"][it["page"]]["hero_subject"] = _clean(it["subject"])
     chrome = {
         "nav_labels": architecture.get("nav_labels") or {},
         "footer_text": architecture.get("footer_text") or (
@@ -996,6 +1223,64 @@ def run_content_pipeline(
         "header_cta": architecture.get("header_cta"),
         "motion_note": architecture.get("motion_note"),
     }
+
+    # Composition agent: schema-validated section plan (order + layout variant per block) from primitives.
+    report(stage_idx, 12, "Субагент композиции: порядок и раскладка секций под канон...", "Composition agent: section order & layouts for this canon...", "agent 1b/8: composition")
+    composition = reuse("composition", "composition.json")
+    if composition is None:
+        memory.mark("composition", "running")
+        det_plans = {
+            slug: deterministic_page_plan(canon_id, slug, list(page_blocks.get(slug, [])), dossier, p_i, keep_order=bool(plan_pages_meta.get(slug)))
+            for p_i, slug in enumerate(pages)
+        }
+        raw_comp: dict[str, Any] = {}
+        if gpu_ok:
+            v2_comp = load_canon_v2_context("composition", canon_id)
+            comp_pages = {
+                slug: {
+                    "blocks": list(page_blocks.get(slug, [])),
+                    "allowed_variants": {b: (dossier.get("variants") or {}).get(b) for b in page_blocks.get(slug, []) if (dossier.get("variants") or {}).get(b)},
+                    "angle": _clean((architecture.get("pages") or {}).get(slug, {}).get("angle")),
+                    "orchestrator_order_and_intents": [f"{x['block']}: {x.get('intent') or ''}" for x in (plan_pages_meta.get(slug) or {}).get("sections") or []],
+                }
+                for slug in pages
+            }
+            sys_msg = (
+                "You are SmartLLM v2 Composition Director. For each page, choose the ORDER of the given blocks and ONE "
+                "allowed layout variant per block so the page structure expresses this canon and this brief. "
+                "Use only the given block ids and allowed variant ids. Return ONLY valid JSON."
+            )
+            user_msg = (
+                f"Brand: {brand}\nBrief: {brief[:1200]}\nLanguage: {target_lang}\n{_canon_slice(canon_card, dossier)}\n\n"
+                + (f"Canon v2 composition rules:\n{v2_comp}\n\n" if v2_comp else "")
+                + f"Pages (blocks you must order; do not add or remove blocks):\n{json.dumps(comp_pages, ensure_ascii=False)}\n\n"
+                "Rules: hero first; contact/cta/legal/footer stay at the end; when 'orchestrator_order_and_intents' is given keep "
+                "that order unless the canon strictly requires otherwise and pick variants that serve each intent; put the canon's strongest proof early; "
+                "vary variants between pages; give a one-sentence rationale per page.\n"
+                f"Return JSON like: {composition_schema_example(pages)}"
+            )
+            raw_comp = _llm_json(state, gpu_ok, sys_msg, user_msg, max_tokens=2400, required_keys=["pages"])
+            if raw_comp:
+                agents_run += 1
+        composition = {"canon_id": canon_id, "pages": {}}
+        for slug in pages:
+            raw_p = (raw_comp.get("pages") or {}).get(slug) if isinstance(raw_comp.get("pages"), dict) else None
+            composition["pages"][slug] = (
+                validate_page_plan(raw_p, list(page_blocks.get(slug, [])), dossier, det_plans[slug]) if raw_p else det_plans[slug]
+            )
+        memory.write_artifact("composition.json", composition)
+        memory.mark("composition", "done", "composition.json", ", ".join(f"{s}:{p.get('source')}" for s, p in composition["pages"].items()))
+    for slug, plan in (composition.get("pages") or {}).items():
+        if slug in page_blocks and plan.get("order"):
+            page_blocks[slug] = [b for b in plan["order"] if b in page_blocks[slug]] + [b for b in page_blocks[slug] if b not in plan["order"]]
+    merged["page_blocks"] = page_blocks
+    for route in merged.get("routes") or []:
+        r_slug = str(route.get("slug") or "")
+        if r_slug in page_blocks:
+            new_bricks = list(page_blocks[r_slug])
+            if "footer" not in new_bricks and "footer" in (route.get("bricks") or []):
+                new_bricks.append("footer")
+            route["bricks"] = new_bricks
 
     report(stage_idx, 14, "Субагент каркаса: семантические сетки страниц без текстов...", "Structure agent: semantic page skeletons without copy...", "agent 2/7: structure")
     structure: dict[str, Any] = {}
@@ -1032,7 +1317,8 @@ def run_content_pipeline(
         hero_doc = reuse(f"hero:{slug}", hero_rel)
         if hero_doc is None:
             memory.mark(f"hero:{slug}", "running")
-            copy_kb = load_stage_context("copy_marketing", canon_id=canon_id)[:1400]
+            copy_kb = load_stage_context("hero", canon_id=canon_id)[:6000]
+            v2_hero = load_canon_v2_context("hero", canon_id)
             user_desc_lines = "\n".join(f"- {bid}: {txt[:220]}" for bid, txt in user_pages.get(slug, {}).items()) or ("(none)" if lang == "en" else "(нет)")
             sys_msg = (
                 f"You are SmartLLM v2 Hero Copywriter & Section Editor. Write a premium {target_lang} hero offer "
@@ -1042,6 +1328,7 @@ def run_content_pipeline(
                 f"Brand: {brand}\nPage: {page_title(slug, lang)} ({slug})\nPurpose: {purpose}\n"
                 f"Editorial angle: {angle or purpose}\n{_canon_slice(canon_card, dossier)}\n"
                 + (f"Conversion & Anti-AI Canon:\n{copy_kb}\n\n" if copy_kb else "")
+                + (f"Canon v2 + UX rules for the hero:\n{v2_hero}\n\n" if v2_hero else "")
                 + f"Brand foundation:\n{foundation_txt}\n\n"
                 f"User content descriptions for this page (must be respected):\n{user_desc_lines}\n\n"
                 f"Blocks on this page: {', '.join(blocks)}\n"
@@ -1093,6 +1380,7 @@ def run_content_pipeline(
                 memory.mark(step_id, "running")
                 fmt_lines = "\n".join(f"- {bid}: {hints[bid]}" for bid in batch if bid in hints)
                 context_lines = "\n".join(f"- {bid}: {txt[:160]}" for bid, txt in copy.items() if bid not in batch) or "(none)"
+                v2_copy = load_canon_v2_context("copy", canon_id)
                 sys_msg = (
                     f"You are SmartLLM v2 Expert Copywriter. Fill exactly the requested blocks with specific, "
                     f"authentic {target_lang} copy consistent with the hero. Return ONLY valid JSON."
@@ -1103,12 +1391,14 @@ def run_content_pipeline(
                     f"Hero headline: {_clean(hero.get('headline'))}\nHero subhead: {_clean(hero.get('subhead'))}\n"
                     f"Brand foundation (SINGLE SOURCE OF TRUTH — NEVER alter team names, metrics, product prices, or contacts):\n{foundation_txt}\n\n"
                     f"Existing copy on this page (stay consistent, do not repeat verbatim):\n{context_lines}\n\n"
-                    f"Write ONLY these blocks: {', '.join(batch)}\n"
+                    + (f"Canon v2 block & UX copy rules:\n{v2_copy}\n\n" if v2_copy else "")
+                    + f"Write ONLY these blocks: {', '.join(batch)}\n"
                     f"Required format per block:\n{fmt_lines}\n"
                     "Separate list items with ' | '. FAQ must be 'Question? Answer' pairs. "
                     "Card grid balance: for features, values, stats, team, blog, and testimonials, generate EITHER 3 items (3-column row), 4 items (2x2 balanced grid), or 6 items (3x2 grid) — never 5 items. "
                     "Strictly keep pricing tiers in 'pricing' (ALL tiers + exact prices from foundation) and core capabilities in 'features' (WITHOUT prices). "
                     "Use exact canonical 'team' specialists from foundation — same 3-4 people in the exact same order across ALL pages, plain 'Name — Role' text ONLY, ZERO URLs. "
+                    "For 'testimonials', quote ONLY external clients, studio owners, architects or customers — NEVER quote company's own 'team' specialists as reviewers. "
                     "Use exact metrics from foundation for 'stats' — never contradict founding year or KPIs between pages. "
                     "Never include HTML form field labels ('Company Name', 'Enter your...') inside 'contact'. Never output bare 'Принцип' / 'Principle' in 'values'. "
                     "Never prefix items with English field labels like address:, hours:, phone:. Every block value must be a plain string, never nested JSON. "
@@ -1139,7 +1429,9 @@ def run_content_pipeline(
         copy_rel = f"pages/{slug}/copy.json"
         memory.write_artifact(copy_rel, copy)
         page_copy[slug] = copy
-        page_results[slug] = {"hero": hero, "headings": headings, "copy": copy, "blocks": blocks, "variants": hero_doc.get("variants") or {}}
+        comp_vars = dict(((composition.get("pages") or {}).get(slug) or {}).get("variants") or {})
+        comp_vars.update({k: v for k, v in (hero_doc.get("variants") or {}).items() if k not in comp_vars})
+        page_results[slug] = {"hero": hero, "headings": headings, "copy": copy, "blocks": blocks, "variants": comp_vars}
 
     report(stage_idx, 70, "Субагент SEO / AEO / GEO: title, description, alt, факты...", "SEO / AEO / GEO agent: titles, descriptions, alts, facts...", "agent 5/7: seo_geo")
     seo_doc = reuse("seo", "seo.json")
@@ -1154,8 +1446,9 @@ def run_content_pipeline(
             "and verifiable brand facts. Return ONLY valid JSON."
         )
         user_msg = (
-            f"Brand: {brand}\nBrief: {brief[:280]}\nBrand foundation:\n{foundation_txt}\n\n"
-            f"Pages and their hero headlines:\n{digest}\n\n"
+            f"Brand: {brand}\nBrief: {brief[:1200]}\nBrand foundation:\n{foundation_txt}\n\n"
+            + (f"Canon v2 SEO + engineering SEO/AEO/GEO rules:\n{load_canon_v2_context('seo', canon_id)}\n\n" if load_canon_v2_context('seo', canon_id) else "")
+            +             f"Pages and their hero headlines:\n{digest}\n\n"
             f"Rules: title 10-60 chars incl. brand; description 40-155 chars, concrete benefit; "
             f"hero_alt in {target_lang}, describes the hero photograph, no keyword stuffing.\n"
             "geo_facts: 3 plausible editable brand facts (practice years, delivered projects, response time). "
@@ -1276,7 +1569,9 @@ def run_content_pipeline(
             }
             for slug in pages
         }
-        vis_kb = load_stage_context("visuals", canon_id=canon_id)[:1800]
+        vis_kb = load_stage_context("visuals", canon_id=canon_id)[:4000]
+        v2_vis = load_canon_v2_context("visuals", canon_id)
+        n_gal = gallery_count(canon_id, dossier, composition)
         gal_subjs = [_clean(x) for x in (architecture.get("gallery_subjects") or []) if _clean(x)]
         if len(gal_subjs) < 2 or gal_subjs[0].lower() == gal_subjs[1].lower():
             if luminous_domain:
@@ -1289,6 +1584,7 @@ def run_content_pipeline(
                     f"Wide architectural project showcase for {brand}: {brief[:100]}",
                     f"Close-up editorial photograph of tactile materials and craft precision for {brand}",
                 ]
+        gal_subjs = distinct_list(gal_subjs, n_gal, [f"{fr} for {brand}: {brief[:100]}" for fr in GALLERY_FRAMES])
         gal_ctx = _clean(page_copy.get("portfolio", {}).get("gallery") or page_copy.get("index", {}).get("gallery") or brief[:160])
         heroes_schema = {s: f"<45-70 word photorealistic English Z-Image prompt strictly matching the {s} scene>" for s in pages}
         logo_rule = (
@@ -1314,21 +1610,22 @@ def run_content_pipeline(
             f"Architectural photography neutral environment tones: {scene_surface_tones}\n"
             f"Brand logo pigment colors: {logo_palette_tones}\n"
             + (f"Visual Slot Recipes:\n{vis_kb}\n\n" if vis_kb else "")
+            + (f"Canon v2 imagery & colour rules:\n{v2_vis}\n\n" if v2_vis else "")
             + f"Hero visual contexts matching finalized copy per page (ALL {len(pages)} keys REQUIRED): {json.dumps(subjects_ctx, ensure_ascii=False)}\n"
-            f"Gallery Scene 1 & Scene 2 (MUST depict TWO DIFFERENT angles/subjects): {json.dumps(gal_subjs[:2], ensure_ascii=False)}\n"
+            f"Gallery scenes ({n_gal}, EACH a different angle/subject/framing): {json.dumps(gal_subjs[:n_gal], ensure_ascii=False)}\n"
             f"Gallery copy context: {gal_ctx[:180]}\n"
             f"Team visual roles with MANDATORY BIOLOGICAL GENDER MATCH (anonymous, DO NOT include names/titles): {json.dumps(team_roles, ensure_ascii=False)}\n\n"
             "Write prompts IN ENGLISH, 40-75 words each.\n"
             "CRITICAL RULES FOR Z-IMAGE-TURBO:\n"
             f"{logo_rule}\n"
-            f"2. 'heroes' (MUST include ALL keys {json.dumps(pages)}) and 'gallery': photorealistic scenes belonging 100% to this client's actual business and finalized hero headline/features copy using authentic real-world materials — NEVER inject unrelated titanium beams, red triangles, lab rigs, camera lenses, books, magazines, or botanical twigs, and NEVER repeat the same sentence across pages or append ', depicting ...'.{domain_vis_rule} 'gallery[0]' MUST clearly differ in framing and subject from 'gallery[1]'. For optical, lighting, or glass close-ups, describe natural macro framing and shallow depth of field instead of writing camera-lens focal lengths (like '50mm lens' or '90mm lens').\n"
+            f"2. 'heroes' (MUST include ALL keys {json.dumps(pages)}) and 'gallery': photorealistic scenes belonging 100% to this client's actual business and finalized hero headline/features copy using authentic real-world materials — NEVER inject unrelated titanium beams, red triangles, lab rigs, camera lenses, books, magazines, or botanical twigs, and NEVER repeat the same sentence across pages or append ', depicting ...'.{domain_vis_rule} 'gallery' MUST contain exactly {n_gal} prompts, each clearly different in framing and subject. For optical, lighting, or glass close-ups, describe natural macro framing and shallow depth of field instead of writing camera-lens focal lengths (like '50mm lens' or '90mm lens').\n"
             "3. 'team': one distinct vertical 3:4 medium chest-up editorial portrait per slot on a seamless neutral studio backdrop with generous empty headroom above the top of the head so full hair, head, and shoulders sit comfortably inside frame. Each person MUST clearly match their assigned distinct age, hair, glasses/beard/clean-shaven look, attire, and pose from 'team_roles' without repeating the same appearance across slots. For EVERY FEMALE slot describe the adult woman's exact look; for EVERY MALE slot describe the adult man's exact look. Omit person names, nameplates, watermarks, or words.\n"
             "Keep 'style_suffix' <= 10 words and NEVER repeat lens/lighting terms already inside hero/gallery prompts.\n"
             "Return ONLY valid JSON with exact keys:\n"
             + json.dumps({
                 "brand_logo": "<45-70 word flat vector logo symbol prompt>",
                 "heroes": heroes_schema,
-                "gallery": ["<distinct wide architectural/product scene>", "<distinct close-up macro/craft detail scene>"],
+                "gallery": [f"<distinct scene {i + 1}: {GALLERY_FRAMES[i % len(GALLERY_FRAMES)][:40]}>" for i in range(n_gal)],
                 "team": ["<distinct 3:4 studio portrait prompt>" for _ in team_roles],
                 "style_suffix": "<short positive lighting mood clause>",
             }, ensure_ascii=False)
@@ -1362,7 +1659,13 @@ def run_content_pipeline(
                 _sanitize_zimage_prompt(f"{gal_subjs[0]}, wide architectural framing, {g0_light}, editorial quality", member_names, brand=brand),
                 _sanitize_zimage_prompt(f"{gal_subjs[1]}, tight macro material study, {g1_light}, studio detail", member_names, brand=brand),
             ]
-        team_style = _sanitize_zimage_prompt(_clean(dossier.get("team")) or "clean editorial headshot, soft studio light, seamless neutral backdrop", brand=brand)
+        gallery_raw = distinct_list(
+            gallery_raw, n_gal,
+            [_sanitize_zimage_prompt(f"{subj_g}, editorial photograph, {fallback_light}, authentic real-world materials", member_names, brand=brand) for subj_g in gal_subjs],
+        )
+        team_backdrop = _canon_portrait_backdrop(canon_id, active_pol)
+        dossier_team = _clean(dossier.get("team"))
+        team_style = _sanitize_zimage_prompt(f"{team_backdrop}, {dossier_team}" if dossier_team else team_backdrop, brand=brand)
         raw_team_list = [_sanitize_zimage_prompt(_clean(x), member_names, brand=brand) for x in (raw.get("team") or []) if _clean(x)]
         team_raw: list[str] = []
         seen_team_tokens: list[set[str]] = []
@@ -1382,7 +1685,7 @@ def run_content_pipeline(
             "logo": logo_prompt_clean or _sanitize_zimage_prompt(_default_logo_base_prompt("", brief, "minimalist geometric vector emblem", "en"), brand_words),
             "heroes": heroes,
             "hero": heroes.get("index") or next(iter(heroes.values()), ""),
-            "gallery": gallery_raw[:2],
+            "gallery": gallery_raw[:n_gal],
             "team": team_raw[:4],
             "style_suffix": _sanitize_zimage_prompt(_clean(raw.get("style_suffix")), member_names, brand=brand),
         }
@@ -1424,7 +1727,7 @@ def run_content_pipeline(
                     f"{('English' if alt_lang == 'en' else 'Russian')}. Preserve meaning, tone and the ' | ' item separators. "
                     "Keep FAQ 'Question? Answer' structure. Return ONLY valid JSON with exactly the same keys and shape."
                 )
-                user_msg = f"Brand: {brand}\nPage: {slug}\nContent:\n{json.dumps(payload_strings, ensure_ascii=False)[:5200]}"
+                user_msg = f"Brand: {brand}\nPage: {slug}\nContent:\n{json.dumps(payload_strings, ensure_ascii=False)[:16000]}"
                 raw = _llm_json(state, gpu_ok, sys_msg, user_msg, max_tokens=3072, required_keys=["hero", "headings", "copy", "seo"])
                 if raw:
                     agents_run += 1
@@ -1482,9 +1785,12 @@ def run_content_pipeline(
                 )
                 user_review = (
                     f"Brand: {brand}\nPage: {page_title(slug, lang)} ({slug})\nLanguage: {target_lang}\n"
-                    f"Positioning: {_clean(company.get('positioning'))[:240]}\n\n"
+                    f"Positioning: {_clean(company.get('positioning'))[:240]}\n"
+                    + (f"Orchestrator plan for this page: {_clean((plan_pages_meta.get(slug) or {}).get('purpose'))}\n" if plan_pages_meta.get(slug) else "")
+                    + f"\nSub-agent reports so far (short hand-offs, not transcripts):\n{memory.reports_digest(1800) or 'none'}\n\n"
                     "Full page blocks:\n" + "\n".join(digest_lines)[:9000] + "\n\n"
-                    f"Deterministic pre-check issues: {json.dumps(det_issues, ensure_ascii=False) or 'none'}\n"
+                    + (f"Canon hard limits + UX checklist:\n{load_canon_v2_context('review', canon_id, max_chars=7000)}\n\n" if canons_v2_ok else "")
+                    +                     f"Deterministic pre-check issues: {json.dumps(det_issues, ensure_ascii=False) or 'none'}\n"
                     'Return JSON: {"offer": true, "brand": true, "specificity": true, "structure": true, "seo": true, "language": true, '
                     '"issues": ["short issue"], "fixes": {"block_id": "rewrite instruction"}}'
                 )
@@ -1564,6 +1870,8 @@ def run_content_pipeline(
             rv = {"score": score, "max": 6, "criteria": verdict, "issues": issues[:8], "fixed_blocks": applied_fixes}
             memory.write_artifact(rel, rv)
             memory.mark(step_id, "done", rel, f"{score}/6")
+            if issues:
+                memory.report(f"review:{slug}", "issues", f"{score}/6, fixed {len(applied_fixes)} blocks", [rel], issues[:4])
         review[slug] = rv
         page_results[slug]["review"] = rv
 

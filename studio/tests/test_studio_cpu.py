@@ -395,7 +395,7 @@ def _run_all_tests_inner(results: dict[str, object]) -> dict[str, object]:
             projects_root_override=Path(td_cyr) / "projects",
             lock_path_override=Path(td_cyr) / "gpu.lock",
         )
-        cyr_preview_file = state_cyr.project_dir("default") / "доставка.html"
+        cyr_preview_file = state_cyr.preview_dirs.get("default", state_cyr.project_dir("default")) / "доставка.html"
         cyr_preview_file.parent.mkdir(parents=True, exist_ok=True)
         cyr_preview_file.write_text("<!doctype html><title>Доставка</title>", encoding="utf-8")
         thr_cyr = threading.Thread(target=srv_cyr.serve_forever, daemon=True)
@@ -709,6 +709,18 @@ HTTPServer(("127.0.0.1", {mock_llama_port}), H).serve_forever()
                     "output_dir": str(auto_dir),
                     "auto_prompt": "Многостраничный портал бюро промышленного дизайна «Вектор»: каталог услуг, тарифы, портфолио и контакты",
                     "languages": "ru",
+                    # CPU: no LLM, so feed a recorded orchestrator site_plan (Python only validates + renders it).
+                    "site_plan": {
+                        "brand_name": "Вектор",
+                        "canon_id": "02_swiss_international",
+                        "pages": [
+                            {"slug": "index", "sections": [{"block": "hero"}, {"block": "features"}, {"block": "stats"}, {"block": "pricing"}, {"block": "faq"}, {"block": "contact"}]},
+                            {"slug": "services", "sections": [{"block": "hero"}, {"block": "manifesto"}, {"block": "priorities"}, {"block": "process"}, {"block": "pricing"}, {"block": "contact"}]},
+                            {"slug": "portfolio", "sections": ["hero", "gallery", "testimonials", "cta"]},
+                            {"slug": "contact", "sections": ["hero", "locations", "contact", "cta"]},
+                        ],
+                        "image_plan": [{"page": "index", "block": "hero", "subject": "industrial design studio prototype bench"}],
+                    },
                 },
             )
             auto_doc = json.loads(auto_raw.decode("utf-8"))
@@ -725,6 +737,35 @@ HTTPServer(("127.0.0.1", {mock_llama_port}), H).serve_forever()
             title_svc = re.search(r"<title>(.*?)</title>", auto_services).group(1)
             assert title_idx != title_svc, "per-page SEO titles must differ"
             assert "Quartz" not in auto_index and "Dr. Viktor" not in auto_index
+            assert (auto_dir / ".smartllm" / "memory" / "site_plan.json").exists(), "orchestrator plan artifact"
+            assert 'id="cta"' in (auto_dir / "contact.html").read_text(encoding="utf-8"), "closing cta renders on contact page"
+            assert (auto_dir / ".smartllm" / "progress.md").exists() and (auto_dir / ".smartllm" / "progress.json").exists(), "sub-agent report ledger"
+            assert "orchestrator:site_plan" in (auto_dir / ".smartllm" / "progress.md").read_text(encoding="utf-8")
+            from smartllm_studio.site_plan import validate as _vp
+            _bad, _errs = _vp({"canon_id": "zz", "pages": [{"slug": "shop", "sections": []}]}, ["02_swiss_international"], {})
+            assert _bad is None and len(_errs) >= 2, "site_plan validator must reject bad plans"
+            from smartllm_studio.site_plan import validate_strategy as _vs
+            _brief = "Семейная гончарная мастерская и кофейня. Проводим мастер-классы по керамике и варим кофе своей обжарки."
+            _st, _se = _vs({"goal_type": "booking", "offers": [{"id": "workshops", "name": "Мастер-классы", "evidence": "мастер-классы по керамике"}, {"id": "coffee", "name": "Кофе", "evidence": "варим кофе своей обжарки"}]}, _brief)
+            assert _st and not _se
+            _p2, _e2 = _vp({"canon_id": "02_swiss_international", "pages": [{"slug": "index", "sections": [{"block": "hero", "intent": "x", "offers": ["workshops"]}, "features", "cta"]}, {"slug": "contact", "sections": ["hero", "locations", "faq"]}], "image_plan": [{"page": "index", "block": "hero", "subject": "s"}]}, ["02_swiss_international"], {}, _st)
+            _e2s = " | ".join(_e2)
+            assert _p2 is None and "coffee" in _e2s and "lead form" in _e2s and "no hero image" in _e2s and "facts" in _e2s, _e2s
+            # Orchestrated planning with fake sessions: strategist -> sitemap -> page sub-agents (+ per-page retry).
+            from smartllm_studio.site_plan import run_site_plan as _rsp
+            _seq = [
+                {"brand_name": "Глина и дым", "goal_type": "booking", "offers": [{"id": "workshops", "name": "Мастер-классы", "evidence": "мастер-классы по керамике"}, {"id": "coffee", "name": "Кофе", "evidence": "варим кофе своей обжарки"}]},
+                {"canon_id": "02_swiss_international", "pages": [{"slug": "index", "nav_label": "Главная", "offers": ["workshops", "coffee"]}, {"slug": "contact", "nav_label": "Контакты", "offers": []}]},
+                {"sections": [{"block": "hero", "intent": "i1", "offers": ["workshops"]}, {"block": "features", "intent": "i2", "offers": ["coffee"]}, {"block": "cta", "intent": "i3"}], "images": [{"block": "hero", "subject": "s"}]},
+                {"sections": [{"block": "hero", "intent": "c1"}, {"block": "locations", "intent": "c2", "facts": "placeholder"}, {"block": "faq", "intent": "c3"}], "images": [{"block": "hero", "subject": "s"}]},
+                {"sections": [{"block": "hero", "intent": "c1"}, {"block": "contact", "intent": "c2"}, {"block": "cta", "intent": "c3"}], "images": [{"block": "hero", "subject": "s"}]},
+            ]
+            _r = _rsp(lambda a, b, c: _seq.pop(0) if _seq else {}, _brief, "ru", "router", ["02_swiss_international"])
+            assert _r["ok"] and [p["slug"] for p in _r["plan"]["pages"]] == ["index", "contact"], _r["attempts"]
+            assert any(a["session"] == "page:contact" and a["errors"] for a in _r["attempts"]), "contact page retried for lead form"
+            stub_dir = tmp_dir / "auto_stub"
+            code_stub, stub_raw = _http_req(f"{base}/api/orchestrator/run", method="POST", payload={"orchestrator_mode": "auto", "output_dir": str(stub_dir), "auto_prompt": "Кофейня «Зерно» в Казани, нужен сайт", "languages": "ru"})
+            assert code_stub == 200 and (stub_dir / "index.html").exists(), "no-LLM stub path still renders"
 
             # Verify Opus B1-B3 security & packaging gates (DONATE.md, logo path confinement, JSON-LD </script> escape)
             assert (STUDIO_ROOT / "DONATE.md").exists() and (REPO_ROOT / "DONATE.md").exists()

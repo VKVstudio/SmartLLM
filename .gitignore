@@ -99,3 +99,10 @@ eval/suite/results/step8_judge_1_argon.json
 .secrets/
 tokens.env
 bank_docs/
+
+# 0.0.7: generated outputs / offline caches (not source)
+/demos/
+eval/_layout_preview/
+eval/showcase_v2/
+eval/showcase_v2_drafts/
+vendor/npm_offline/

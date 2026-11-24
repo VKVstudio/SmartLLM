@@ -114,6 +114,12 @@ class StudioRAGSelector:
                 selected_cid = sorted(matches)[0]
 
         if not selected_cid:
+            try:
+                from ..kb_loader import route_canon_v2
+
+                router_scores = dict(route_canon_v2(brief))
+            except Exception:
+                router_scores = {}
             scores: list[tuple[float, str]] = []
             for cid, card in sorted(self.canon_cards.items()):
                 blob = " ".join(
@@ -128,6 +134,7 @@ class StudioRAGSelector:
                     ]
                 ).lower()
                 sc = float(len(tokens & self._tokenize(blob))) * 2.5
+                sc += float(router_scores.get(cid, 0))
                 scores.append((sc, cid))
             scores.sort(key=lambda it: (-round(it[0], 4), it[1]))
             selected_cid = scores[0][1]

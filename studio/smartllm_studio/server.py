@@ -8,6 +8,7 @@ import json
 import mimetypes
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
 import threading
@@ -22,7 +23,7 @@ from .catalog import load_studio_catalog
 from .config import DEFAULT_REPO_ROOT, STUDIO_ROOT, discover_studio_paths, load_edition_config, load_user_settings, save_user_settings
 from .engines import GPUEngineController, GPULockBusyError, ImageJobManager, LLMEngineClient, MemoryGuardError
 from .orchestrator import AVAILABLE_BLOCKS, PRESET_PAGES, ProjectOrchestrator, autofill_blocks_smart, build_default_block_descriptions, generate_random_starter_template, generate_six_logo_variants_512
-from .os_compat import create_directory_safe, get_system_telemetry, is_cpu_test_mode, is_interactive_win_desktop, is_linux, list_directory_entries, pick_os_dialog, reveal_in_file_manager, subprocess_kwargs
+from .os_compat import create_directory_safe, get_system_telemetry, is_cpu_test_mode, is_interactive_win_desktop, is_linux, list_directory_entries, open_site_in_browser, pick_os_dialog, reveal_in_file_manager, subprocess_kwargs
 from .pages import DEFAULT_PAGE_SLUGS, build_default_company, clean_page_blocks, default_page_blocks
 from .sanitizer import ingest_brand_logo
 
@@ -189,14 +190,57 @@ class StudioState:
     def save_project(self, project_id: str, data: dict[str, Any]) -> dict[str, Any]:
         pdir = self.project_dir(project_id)
         current = self.load_project(project_id)
+        prev_out = str(current.get("output_dir") or "").strip()
         current.update(data)
         current = self._migrate_draft(current)
         current["id"] = project_id
         current["revision"] = int(current.get("revision", 1)) + 1
         raw_out = data.get("output_dir") if str(data.get("output_dir") or "").strip() else current.get("output_dir")
-        current["output_dir"] = str(_safe_project_dir(raw_out, pdir))
+        next_out = str(_safe_project_dir(raw_out, pdir))
+        current["output_dir"] = next_out
+        if prev_out and prev_out != next_out and not any(data.get(k) for k in ("logo", "selected_logo_path", "logo_bytes_b64", "logo_path")):
+            for stale_logo_key in ("logo", "selected_logo_path", "logo_bytes_b64", "logo_filename", "logo_path"):
+                current.pop(stale_logo_key, None)
         (pdir / "project.json").write_text(json.dumps(current, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         return current
+
+    def compile_isolated_preview(self, project_id: str, draft: dict[str, Any]) -> tuple[dict[str, Any], str]:
+        safe = "".join(c for c in str(project_id or "default") if c.isalnum() or c in ("-", "_")) or "default"
+        preview_dir = (self.projects_root / "_live_preview" / safe).resolve()
+        preview_dir.mkdir(parents=True, exist_ok=True)
+        src_out = str(draft.get("output_dir") or "").strip()
+        src_assets = (Path(src_out).resolve() / "assets") if src_out else None
+        dst_assets = preview_dir / "assets"
+        dst_assets.mkdir(parents=True, exist_ok=True)
+        has_explicit_logo = bool(draft.get("selected_logo_path") or draft.get("logo") or draft.get("logo_bytes_b64") or draft.get("logo_path"))
+        if not has_explicit_logo:
+            for stale_name in ("brand-logo.png", "brand-logo.webp", "brand-logo.svg", "favicon.png", "favicon.svg"):
+                (dst_assets / stale_name).unlink(missing_ok=True)
+        if src_assets and src_assets.is_dir() and src_assets.resolve() != dst_assets.resolve():
+            for asset in src_assets.iterdir():
+                if not asset.is_file():
+                    continue
+                nm = asset.name
+                is_logo_asset = nm.startswith("brand-logo.") or nm.startswith("favicon.")
+                is_vis_asset = nm.startswith(("hero_", "gallery_", "team_")) and asset.suffix.lower() in (".png", ".webp", ".jpg")
+                if (is_logo_asset and has_explicit_logo) or is_vis_asset:
+                    dst_f = dst_assets / nm
+                    if not dst_f.exists() or asset.stat().st_mtime > dst_f.stat().st_mtime:
+                        shutil.copy2(asset, dst_f)
+        preview_payload = {**draft, "output_dir": str(preview_dir)}
+        sel_logo = str(draft.get("selected_logo_path") or draft.get("logo_path") or "").strip()
+        if sel_logo:
+            sel_p = Path(sel_logo).resolve()
+            logo_roots = (self.logo_batches_dir.resolve(), self.projects_root.resolve(), STUDIO_ROOT.resolve())
+            if sel_p.is_file() and any(sel_p.is_relative_to(r) for r in logo_roots) and not sel_p.is_relative_to(preview_dir):
+                staged = preview_dir / "_selected_logo" / sel_p.name
+                staged.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(sel_p, staged)
+                preview_payload["selected_logo_path"] = str(staged)
+                preview_payload.pop("logo_path", None)
+        bp = compile_project_blueprint(preview_payload, repo_root=self.repo_root)
+        prev_url = self.register_preview(project_id, preview_dir, rev=int(draft.get("revision", 1)))
+        return bp, prev_url
 
     def register_preview(self, project_id: str, project_dir: Path, rev: int = 1) -> str:
         safe = "".join(c for c in project_id if c.isalnum() or c in ("-", "_")) or project_dir.name or "default"
@@ -224,8 +268,7 @@ def create_studio_server(
         cli_overrides=cli_overrides,
     )
     # Pre-compile default project so Live Stage has an instant preview ready
-    default_bp = compile_project_blueprint(state.load_project("default"), repo_root=state.repo_root)
-    state.register_preview("default", Path(default_bp["project_dir"]), rev=1)
+    state.compile_isolated_preview("default", state.load_project("default"))
 
     class StudioHandler(BaseHTTPRequestHandler):
         def log_message(self, fmt: str, *args: Any) -> None:
@@ -539,6 +582,10 @@ def create_studio_server(
                     opened = reveal_in_file_manager(target, dry_run=dry_rev)
                     fb_rev = "web_picker" if (not opened and not dry_rev) else ""
                     return self._send_json(200, {"opened": opened, "path": str(target), "fallback": fb_rev})
+                if path == "/api/os/open-site":
+                    site_p = Path(str(body.get("path") or "").strip().strip("`\"'"))
+                    opened_site = open_site_in_browser(site_p, dry_run=bool(body.get("dry_run", False))) if str(site_p) not in ("", ".") else ""
+                    return self._send_json(200, {"opened": bool(opened_site), "path": opened_site or str(site_p)})
                 if path == "/api/fs/mkdir":
                     parent_dir = str(body.get("parent_dir") or state.projects_root)
                     folder_name = str(body.get("name") or "")
@@ -547,14 +594,17 @@ def create_studio_server(
                     req_lang = str(body.get("lang") or "ru").strip() or "ru"
                     req_use_llm = bool(body.get("use_llm", True))
                     excl = [str(x) for x in (body.get("exclude_names") or []) if str(x).strip()]
+                    recent_canons: list[str] = getattr(state, "recent_starter_canons", [])
+                    avoid_c = recent_canons[-3:] + [str(x) for x in (body.get("avoid_canons") or []) if str(x).strip()]
                     tpl: dict[str, Any] | None = None
                     if req_use_llm and not is_cpu_test_mode() and state.try_begin_operation("random_template"):
                         try:
-                            tpl = generate_random_starter_template(state, lang=req_lang, use_llm=True, exclude_names=excl)
+                            tpl = generate_random_starter_template(state, lang=req_lang, use_llm=True, exclude_names=excl, avoid_canons=avoid_c)
                         finally:
                             state.end_operation()
                     if tpl is None:
-                        tpl = generate_random_starter_template(state, lang=req_lang, use_llm=False, exclude_names=excl)
+                        tpl = generate_random_starter_template(state, lang=req_lang, use_llm=False, exclude_names=excl, avoid_canons=avoid_c)
+                    state.recent_starter_canons = (recent_canons + [str(tpl["canon_id"])])[-6:]
                     starter_payload = {
                         "id": "starter",
                         "name": tpl["name"],
@@ -564,6 +614,7 @@ def create_studio_server(
                         "languages": tpl["languages"],
                         "canon_id": tpl["canon_id"],
                         "polarity": tpl["polarity"],
+                        "stack": tpl.get("stack", "astro"),
                         "landing_preset": tpl["landing_preset"],
                         "motion": tpl["motion"],
                         "site_type": tpl["site_type"],
@@ -573,14 +624,19 @@ def create_studio_server(
                         "company": tpl["company"],
                         "output_dir": tpl["output_dir"],
                         "revision": 1,
+                        "logo": None,
+                        "selected_logo_path": "",
+                        "logo_bytes_b64": "",
+                        "logo_path": "",
+                        "logo_filename": "",
                     }
-                    bp_starter = compile_project_blueprint(starter_payload, repo_root=state.repo_root)
-                    prev_starter = state.register_preview("starter", Path(bp_starter["project_dir"]), rev=1)
+                    saved_starter = state.save_project("starter", starter_payload)
+                    _, prev_starter = state.compile_isolated_preview("starter", saved_starter)
                     return self._send_json(200, {
                         "template": tpl,
                         "source": tpl["source"],
                         "preview_url": prev_starter,
-                        "project_dir": bp_starter["project_dir"],
+                        "project_dir": tpl["output_dir"],
                     })
                 if path == "/api/logo/generate":
                     if not begin_operation("logo"):
@@ -612,16 +668,14 @@ def create_studio_server(
                         return self._send_json(403, {"error": "FORBIDDEN_LOGO_PATH"})
                     if not src_p.exists() or not src_p.is_file():
                         return self._send_json(404, {"error": "LOGO_VARIANT_NOT_FOUND"})
+                    # Selection lives in the draft + isolated preview only; output_dir is written by the full build.
                     raw_out_dir = str(body.get("output_dir") or "").strip().strip("`\"'")
-                    pdir = _safe_project_dir(raw_out_dir, state.project_dir(pid_l))
-                    res_logo = ingest_brand_logo(src_p.name, src_p.read_bytes(), pdir / "assets")
-                    if res_logo.get("format") != "svg":
-                        (pdir / "assets" / "brand-logo.svg").unlink(missing_ok=True)
-                        (pdir / "assets" / "favicon.svg").unlink(missing_ok=True)
-                    draft = state.save_project(pid_l, {"logo": res_logo, "selected_logo_path": str(src_p)})
-                    bp = compile_project_blueprint(draft, repo_root=state.repo_root)
-                    prev_url = state.register_preview(pid_l, Path(bp["project_dir"]), rev=draft["revision"])
-                    return self._send_json(200, {"status": "selected", "logo": res_logo, "preview_url": prev_url})
+                    sel_data: dict[str, Any] = {"selected_logo_path": str(src_p), "logo_path": "", "logo_bytes_b64": "", "logo_filename": ""}
+                    if raw_out_dir:
+                        sel_data["output_dir"] = raw_out_dir
+                    draft = state.save_project(pid_l, sel_data)
+                    bp, prev_url = state.compile_isolated_preview(pid_l, draft)
+                    return self._send_json(200, {"status": "selected", "logo": bp.get("logo"), "selected_logo_path": str(src_p), "preview_url": prev_url})
                 if path == "/api/orchestrator/autofill-blocks":
                     if not begin_operation("autofill"):
                         return
@@ -633,6 +687,23 @@ def create_studio_server(
                         p_blocks = body.get("page_blocks") if isinstance(body.get("page_blocks"), dict) else None
                         comp = body.get("company") if isinstance(body.get("company"), dict) else None
                         return self._send_json(200, autofill_blocks_smart(state, bname, brief_t, blks, lang=lng, page_blocks=p_blocks, company=comp))
+                    finally:
+                        state.end_operation()
+                if path == "/api/orchestrator/vision-check":
+                    if not begin_operation("vision"):
+                        return
+                    try:
+                        from .vision_stage import run_vision_stage
+                        out_v = Path(str(body.get("output_dir") or "")).resolve()
+                        dp = Path(str(body.get("draft_path") or (state.projects_root / "default" / "project.json")))
+                        draft_v = json.loads(dp.read_text(encoding="utf-8"))
+                        if Path(str(draft_v.get("output_dir") or "")).resolve() != out_v:
+                            return self._send_json(400, {"error": "draft does not belong to output_dir", "draft_output_dir": draft_v.get("output_dir")})
+                        st_v = out_v / ".smartllm" / "state.json"
+                        canon_v = str(draft_v.get("canon_id") or "")
+                        vis = run_vision_stage(state, out_v, canon=canon_v)
+                        bp_v = compile_project_blueprint(draft_v, repo_root=state.repo_root)
+                        return self._send_json(200, {"vision": vis, "files": len(bp_v.get("files") or []), "project_dir": bp_v.get("project_dir")})
                     finally:
                         state.end_operation()
                 if path == "/api/orchestrator/run":
@@ -648,7 +719,7 @@ def create_studio_server(
                     b64 = str(body.get("data_b64") or "")
                     pid = str(body.get("project_id") or "default")
                     raw_proj_dir = str(body.get("project_dir") or "").strip().strip("`\"'")
-                    pdir = _safe_project_dir(raw_proj_dir, state.project_dir(pid))
+                    pdir = state.project_dir(pid) / "uploaded_logo"
                     res = ingest_brand_logo(fname, base64.b64decode(b64), pdir / "assets")
                     if res.get("format") in ("png", "webp"):
                         (pdir / "assets" / "brand-logo.svg").unlink(missing_ok=True)
@@ -659,16 +730,14 @@ def create_studio_server(
                         (pdir / "assets" / "brand-logo.webp").unlink(missing_ok=True)
                     save_payload: dict[str, Any] = {"logo": res, "selected_logo_path": str(pdir / res["logo_relpath"])}
                     if raw_proj_dir:
-                        save_payload["output_dir"] = str(pdir)
+                        save_payload["output_dir"] = str(_safe_project_dir(raw_proj_dir, state.project_dir(pid)))
                     draft = state.save_project(pid, save_payload)
-                    bp = compile_project_blueprint(draft, repo_root=state.repo_root)
-                    prev_url = state.register_preview(pid, Path(bp["project_dir"]), rev=draft["revision"])
+                    _, prev_url = state.compile_isolated_preview(pid, draft)
                     return self._send_json(200, {"status": "sanitized", "logo": res, "selected_logo_path": draft["selected_logo_path"], "preview_url": prev_url})
                 if path.startswith("/api/preview/"):
                     pid = path.split("/")[3] or "default"
                     draft = state.save_project(pid, body) if body else state.load_project(pid)
-                    bp = compile_project_blueprint(draft, repo_root=state.repo_root)
-                    prev_url = state.register_preview(pid, Path(bp["project_dir"]), rev=draft["revision"])
+                    bp, prev_url = state.compile_isolated_preview(pid, draft)
                     bp["preview_url"] = prev_url
                     return self._send_json(200, bp)
                 if path.startswith("/api/export/"):

@@ -11,7 +11,7 @@ from typing import Any
 
 from . import __version__
 from .kb_loader import resolve_canon_id
-from .pages import resolve_slot_dimensions
+from .pages import normalize_hours_for_lang, resolve_slot_dimensions
 
 STOCK_EN_HEADLINES = {"Deterministic Zero-Swap Edge Telemetry", "Modular Architectural Systems & Studio Craft"}
 STOCK_RU_HEADLINES = {"Детерминированная телеметрия без подкачки", "Модульная архитектура и инженерный дизайн"}
@@ -22,7 +22,7 @@ DATA_DIR = Path(__file__).resolve().parent / "data"
 UI_STRINGS = {
     "ru": {
         "footer_nav": "Навигация", "footer_contacts": "Контакты", "rights": "Все права защищены.",
-        "crumb_home": "Главная", "form_name": "Ваше имя", "form_email": "Email или телефон",
+        "crumb_home": "Главная", "form_name": "Ваше имя", "form_email": "Эл. почта или телефон",
         "form_msg": "Кратко о задаче", "form_send": "Отправить заявку", "form_ok": "Заявка отправлена — мы свяжемся с вами.",
         "lang_label": "Язык сайта", "skip": "Перейти к основному содержанию", "select": "Выбрать",
         "legal_link": "Правовая информация", "status_nominal": "СТАТУС: АРХИТЕКТУРА И СТИЛЬ ПРОВЕРЕНЫ",
@@ -535,6 +535,14 @@ html.lenis { scroll-behavior: auto; }
 .gal-mosaic .gallery-card:first-child img { height: 100%; object-fit: cover; }
 .gal-mosaic .canon-grid[data-count="2"] .gallery-card:first-child img, .gal-mosaic .canon-grid[data-count="4"] .gallery-card:first-child img { height: auto; }
 .gal-collage .gallery-card:nth-child(even) { transform: translateY(1rem); }
+.canon-grid[data-count="5"] > * { grid-column: span 4; }
+.canon-grid[data-count="5"] > *:nth-child(-n+2) { grid-column: span 6; }
+.gal-mosaic .canon-grid[data-count="5"] .gallery-card:nth-child(n+4), .gal-mosaic .canon-grid[data-count="6"] .gallery-card:nth-child(n+4) { grid-column: span 6; }
+.gal-mosaic .canon-grid[data-count="6"] .gallery-card:nth-child(n+4) { grid-column: span 4; }
+.gal-mosaic .canon-grid[data-count="5"] .gallery-card:nth-child(2), .gal-mosaic .canon-grid[data-count="5"] .gallery-card:nth-child(3) { grid-column: span 5; }
+.gal-collage .canon-grid[data-count="5"] .gallery-card:nth-child(3n+1) { grid-column: span 7; }
+.gal-collage .canon-grid[data-count="5"] .gallery-card:nth-child(3n+2) { grid-column: span 5; }
+.gal-collage .canon-grid[data-count="5"] .gallery-card:nth-child(3n) { grid-column: span 12; }
 .gal-filmstrip .canon-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 1rem; padding-bottom: 0.75rem; }
 .gal-filmstrip .gallery-card { min-width: min(340px, 82vw); scroll-snap-align: start; grid-column: auto; }
 .stat-band .canon-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 165px), 1fr)); }
@@ -1149,7 +1157,7 @@ def _render_route_html(
     c_email = str(company_cfg.get("email") or "").strip()
     c_address = str(company_cfg.get("address") or "").strip()
     c_cities = [str(x).strip() for x in (company_cfg.get("cities") or []) if str(x).strip()]
-    c_hours = str(company_cfg.get("hours") or "").strip()
+    c_hours = normalize_hours_for_lang(str(company_cfg.get("hours") or "").strip(), lang)
     c_social = [str(x).strip() for x in (company_cfg.get("social") or []) if str(x).strip()]
     if c_phone:
         org_node["telephone"] = c_phone
@@ -1269,7 +1277,7 @@ def _render_route_html(
         "bento_showcase": " hero-bento",
     }.get(hero_variant, "")
     marquee_html = ""
-    if d.get("motion", {}).get("marquee") or (slug == "index" and landing_preset in ("gsap_scrollytelling", "kinetic_showreel")):
+    if motion != "reduced_motion_instant" and (d.get("motion", {}).get("marquee") or (slug == "index" and landing_preset == "kinetic_showreel")):
         mq_base = str(company_cfg.get("tagline") or project_name)
         mq = f"{mq_base} · {project_name} · "
         mtx, mat = _t(ctx, "chrome:marquee", mq, _loc_get(loc_chrome, "marquee") or mq)
@@ -1462,10 +1470,16 @@ def _render_route_html(
                 first_step_title = ""
                 scrolly_items = f_items[:5]
                 for i, item in enumerate(scrolly_items):
-                    itx, iat = _t(ctx, f"{slug}:features:item:{i}", item, loc_f[i] if i < len(loc_f) else "")
                     s_head, s_body = _split_pair(item, item)
+                    loc_item = loc_f[i] if i < len(loc_f) else ""
                     if s_body == item:
                         s_head = f"{"Глава" if lang == "ru" else "Chapter"} {i + 1:02d}"
+                        body_text = item
+                        loc_body = loc_item
+                    else:
+                        body_text = s_body
+                        _, loc_body = _split_pair(loc_item, loc_item) if loc_item else ("", "")
+                    itx, iat = _t(ctx, f"{slug}:features:item:{i}", body_text, loc_body or loc_item)
                     s_head = _word_trim(s_head, 52)
                     if i == 0:
                         first_step_title = s_head
@@ -1509,17 +1523,28 @@ def _render_route_html(
     </section>"""
                 )
         elif brick == "about":
-            ab_items = _split_user_items(bp_map.get("about", ""), c_fallbacks, min_items=3)
-            loc_ab = _loc_items(loc, "about")
-            abtx, abat = _t(ctx, f"{slug}:about:lead", str(bp_map.get("about") or brief), _loc_get(loc, "copy", "about"))
+            about_raw = str(bp_map.get("about") or brief).strip()
+            abtx, abat = _t(ctx, f"{slug}:about:lead", about_raw, _loc_get(loc, "copy", "about"))
             geo_list = list(geo_cfg.get("facts", [])[:2])
             geo_cards = "\n".join(
                 f'          <article class="spec-card" data-reveal><h3>{"ФАКТ" if lang == "ru" else "VERIFIED FACT"}</h3><p>{html.escape(str(fc.get("claim", "")))}</p></article>'
                 for fc in geo_list
             )
             ab_limit = 2 if len(geo_list) >= 2 else 3
+            if "|" in about_raw or "\n" in about_raw:
+                ab_pool = _split_user_items(about_raw, c_fallbacks, min_items=ab_limit)
+            else:
+                lead_low = " ".join(about_raw.lower().split())
+                milestones_raw = [str(m).strip() for m in ((company_cfg.get("history") or {}).get("milestones") or []) if str(m).strip()]
+                ab_pool = [
+                    cand for cand in [*c_fallbacks, *milestones_raw]
+                    if cand and " ".join(cand.lower().split()).rstrip(" .") not in lead_low
+                ]
+                if len(ab_pool) < ab_limit:
+                    ab_pool = _split_user_items(about_raw, c_fallbacks, min_items=ab_limit)
+            loc_ab = _loc_items(loc, "about")
             ab_cards = []
-            for i, item in enumerate(ab_items[:ab_limit]):
+            for i, item in enumerate(ab_pool[:ab_limit]):
                 itx, iat = _t(ctx, f"{slug}:about:item:{i}", item, loc_ab[i] if i < len(loc_ab) else "")
                 ab_cards.append(f'          <article class="spec-card" data-reveal><h3>0{i+1} / {"О ПРОЕКТЕ" if lang == "ru" else "HIGHLIGHT"}</h3><p{iat}>{itx}</p></article>')
             ab_count = len(ab_cards) + len(geo_list)
@@ -1570,8 +1595,11 @@ def _render_route_html(
                 lis = []
                 for idx, item in enumerate(pr_items[:5]):
                     step_name, step_desc = _split_pair(item, item)
+                    step_name = re.sub(r"^\s*\d{1,2}\s*[\.\)\-–—:]?\s*", "", step_name).strip() or step_name
                     loc_item = loc_pr[idx] if idx < len(loc_pr) else ""
                     loc_n, loc_d = _split_pair(loc_item, "") if loc_item else ("", "")
+                    if loc_n:
+                        loc_n = re.sub(r"^\s*\d{1,2}\s*[\.\)\-–—:]?\s*", "", loc_n).strip() or loc_n
                     ntx, nat = _t(ctx, f"{slug}:process:name:{idx}", step_name, loc_n)
                     dtx, dat = _t(ctx, f"{slug}:process:desc:{idx}", step_desc, loc_d)
                     lis.append(f'          <li data-reveal><p class="step-index">{idx + 1:02d}</p><h3{nat}>{ntx}</h3><p{dat}>{dtx}</p></li>')
@@ -1580,8 +1608,11 @@ def _render_route_html(
                 cards = []
                 for idx, item in enumerate(pr_items[:5]):
                     step_name, step_desc = _split_pair(item, item)
+                    step_name = re.sub(r"^\s*\d{1,2}\s*[\.\)\-–—:]?\s*", "", step_name).strip() or step_name
                     loc_item = loc_pr[idx] if idx < len(loc_pr) else ""
                     loc_n, loc_d = _split_pair(loc_item, "") if loc_item else ("", "")
+                    if loc_n:
+                        loc_n = re.sub(r"^\s*\d{1,2}\s*[\.\)\-–—:]?\s*", "", loc_n).strip() or loc_n
                     ntx, nat = _t(ctx, f"{slug}:process:name:{idx}", step_name, loc_n)
                     dtx, dat = _t(ctx, f"{slug}:process:desc:{idx}", step_desc, loc_d)
                     cards.append(f'          <article class="process-step" data-reveal><p class="step-index">{idx + 1:02d}</p><h3{nat}>{ntx}</h3><p{dat}>{dtx}</p></article>')
@@ -1671,7 +1702,7 @@ def _render_route_html(
             gal_imgs = [str(x) for x in (gallery_images or [])]
             if gal_imgs:
                 gal_cards = []
-                for g_idx, g_rel in enumerate(gal_imgs[:4]):
+                for g_idx, g_rel in enumerate(gal_imgs[:6]):
                     cap = gal_items[g_idx] if g_idx < len(gal_items) else project_name
                     if len(cap) > 140:
                         cap = cap[:140].rsplit(" ", 1)[0].rstrip(" ,;:—-") + "…"
@@ -1879,7 +1910,7 @@ def _render_route_html(
               <label for="lead-msg"{fmat}>{fmx}</label>
               <textarea id="lead-msg" name="message" rows="3"></textarea>
             </div>
-            <label class="hp-trap" for="hp-company" aria-hidden="true">Company</label>
+            <label class="hp-trap" for="hp-company" aria-hidden="true">{"Организация" if lang == "ru" else "Company"}</label>
             <input class="hp-trap" id="hp-company" name="company_hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
             <button class="btn" type="submit"{fsat}>{fsx}</button>
             <p class="form-status" role="status" aria-live="polite"></p>
@@ -1972,7 +2003,7 @@ def _render_route_html(
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand-link" href="index.html">
-        <img src="{html.escape(logo_relpath, quote=True)}?v={asset_rev}" width="36" height="36" alt="{html.escape(project_name)} logo">
+        <img src="{html.escape(logo_relpath, quote=True)}?v={asset_rev}" width="36" height="36" alt="{html.escape((f'Логотип {project_name}' if lang == 'ru' else f'{project_name} logo'), quote=True)}">
         <span>{html.escape(project_name)}</span>
       </a>
       <button class="btn btn-secondary nav-toggle" id="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav-list">{html.escape(ui["menu"])}</button>

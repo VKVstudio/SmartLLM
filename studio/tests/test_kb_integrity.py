@@ -303,6 +303,8 @@ def test_gate_5_cross_references(idx: dict, canon_files: list[Path]) -> None:
     referenced = {"00_INDEX.json", "PHASE2_ROADMAP_AND_AUDIT_DELTAS.md"}
     referenced.update(idx["orchestrator_lookup_tables"]["files"])
     referenced.update(idx["decision_routers"].values())
+    if (idx.get("canons_v2") or {}).get("glob"):
+        referenced.update(p.relative_to(KB_ROOT).as_posix() for p in KB_ROOT.glob(idx["canons_v2"]["glob"]) if p.is_file())
     stacks = ("html5_esm", "astro", "sveltekit", "nextjs", "vite_ts")
     canon_docs = {cf.stem: json.loads(cf.read_text(encoding="utf-8")) for cf in canon_files}
     for stage, refs in idx["stage_loader"].items():
@@ -524,6 +526,13 @@ def test_gate_8_token_budgets(idx: dict, canon_files: list[Path]) -> None:
         toks = _est_tokens(p)
         if toks > max_leaf[0]:
             max_leaf = (toks, str(p.relative_to(KB_ROOT)))
+        if p.relative_to(KB_ROOT).as_posix().startswith("styles/canons_v2/"):
+            if p.name in ("INDEX.md", "_vendor_manifest.md", "_ux_skills_audit.md", "README_SOURCE_OF_TRUTH.md"):
+                continue  # human docs, never loaded into prompts
+            # canons_v2 specs are loaded per section (kb_loader.V2_STAGE_SECTIONS); whole-file cap is looser,
+            # per-stage slice budget is enforced in test_gate_canons_v2_wiring.
+            assert toks <= 4200, f"canons_v2 file {p.relative_to(KB_ROOT)} exceeds 4200 est. tokens: {toks}"
+            continue
         assert toks <= 2000, f"Leaf {p.relative_to(KB_ROOT)} exceeds 2000 est. tokens: {toks}"
     print(f"Token budget check PASS (largest LLM-loadable leaf: {max_leaf[1]} = {max_leaf[0]} est. tokens)")
 
@@ -580,12 +589,39 @@ def test_gate_8_token_budgets(idx: dict, canon_files: list[Path]) -> None:
     print(f"Stage budget check PASS ({combos} combinations, worst: {worst_stage[1]} = {worst_stage[0]} / {stage_limit} est. tokens)")
 
 
+
+def test_gate_canons_v2_wiring() -> None:
+    """canons_v2: every canon has a spec, every stage slice fits budget, composition plans validate."""
+    from smartllm_studio.composition import deterministic_page_plan, gallery_count, validate_page_plan
+    from smartllm_studio.kb_loader import V2_STAGE_CHAR_BUDGET, V2_STAGE_SECTIONS, canons_v2_available, load_canon_v2_context, route_canon_v2
+
+    assert canons_v2_available(), "canons_v2 missing from studio kb"
+    dossiers = json.loads((STUDIO_PKG / "data" / "canon_dossiers.json").read_text(encoding="utf-8"))
+    blocks = ["hero", "features", "about", "stats", "gallery", "pricing", "testimonials", "faq", "contact", "footer"]
+    orders = set()
+    for cid in sorted(dossiers):
+        for stage in V2_STAGE_SECTIONS:
+            ctx = load_canon_v2_context(stage, cid)
+            assert ctx and len(ctx) <= V2_STAGE_CHAR_BUDGET + 200, f"{cid}/{stage} v2 context empty or over budget ({len(ctx)})"
+        plan = deterministic_page_plan(cid, "index", blocks, dossiers[cid], 0)
+        assert plan["order"][0] == "hero" and plan["order"][-1] == "footer" and sorted(plan["order"]) == sorted(blocks)
+        bad = validate_page_plan({"order": ["footer", "zzz", "pricing"], "variants": {"gallery": "nope"}}, blocks, dossiers[cid], plan)
+        assert bad["order"][0] == "hero" and bad["order"][-1] == "footer" and sorted(bad["order"]) == sorted(blocks)
+        assert bad["variants"].get("gallery") != "nope"
+        assert 3 <= gallery_count(cid, dossiers[cid]) <= 6
+        orders.add(tuple(plan["order"]))
+    assert len(orders) >= 4, f"composition fallback too uniform: {len(orders)} distinct orders"
+    assert route_canon_v2("CLI for kubernetes observability, developers")[0][0] == "18_devtool_command_ui"
+    assert route_canon_v2("Мастерская керамики и кофейня, ручная работа")[0][0] == "16_artisan_craft_zine"
+    print("Gate canons_v2 wiring: PASS")
+
 def main() -> None:
     idx, canon_files = test_gate_1_json_and_index_paths()
     test_gate_2_oklch_gamut_and_wcag(canon_files)
     test_gate_3_fonts_and_licenses(canon_files)
     test_gate_4_zimage_positive_only(canon_files)
     test_gate_5_cross_references(idx, canon_files)
+    test_gate_canons_v2_wiring()
     test_gate_6_anti_ai_regexes()
     test_gate_7_zimage_sanitizer()
     test_gate_8_token_budgets(idx, canon_files)
