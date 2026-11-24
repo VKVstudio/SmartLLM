@@ -1,0 +1,316 @@
+{
+  "schema_version": "2026.11.1",
+  "canon_id": "13_cinematic_documentary",
+  "polarity": "dark",
+  "stack": "html5_esm",
+  "motion": "motion",
+  "pages": [
+    {
+      "slug": "index",
+      "filename": "index.html",
+      "title": "Home",
+      "blocks": [
+        {
+          "id": "index_hero_0",
+          "block": "hero",
+          "variant": "fullbleed_scrim",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        },
+        {
+          "id": "index_manifesto_1",
+          "block": "manifesto",
+          "variant": "monument_statement",
+          "overrides": {},
+          "copy": "Arctic documentaries for outdoor brands | We film, edit, and deliver bilingual 4K narratives for outdoor brands — with cold-weather certified crews and full logistics coordination.",
+          "media": []
+        },
+        {
+          "id": "index_features_2",
+          "block": "features",
+          "variant": "editorial_rows",
+          "overrides": {},
+          "copy": "Arctic Logistics Coordination — Manages permits, transport, and crew safety for remote Arctic locations. | Bilingual Scripting — Develops dual-language narratives optimized for international and local audiences. | Cold-Weather Equipment — Utilizes specialized camera and lighting gear rated for sub-zero temperatures. | Post-Production Color Grading — Delivers calibrated color grades for consistent visual identity across platforms.",
+          "media": []
+        },
+        {
+          "id": "index_gallery_3",
+          "block": "gallery",
+          "variant": "horizontal_filmstrip",
+          "overrides": {},
+          "copy": "Kirovsk expedition team setting up base camp at dawn | Murmansk coastline establishing shot with raw 4K footage | Post-production color grading session in the studio",
+          "media": []
+        },
+        {
+          "id": "index_cta_4",
+          "block": "cta",
+          "variant": "centered_monolith",
+          "overrides": {},
+          "copy": "Request a quote to start your 10-day pre-production planning.",
+          "media": []
+        },
+        {
+          "id": "index_contact_5",
+          "block": "contact",
+          "variant": "split_form_details",
+          "overrides": {},
+          "copy": "+7 8152 45-12-88 | hello@northernframe.ru | Lenina Prospekt 45, Murmansk | Mon-Fri 10:00-19:00",
+          "media": []
+        },
+        {
+          "id": "index_footer_6",
+          "block": "footer",
+          "variant": "editorial_monogram",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        }
+      ]
+    },
+    {
+      "slug": "services",
+      "filename": "services.html",
+      "title": "Services",
+      "blocks": [
+        {
+          "id": "services_hero_0",
+          "block": "hero",
+          "variant": "fullbleed_scrim",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        },
+        {
+          "id": "services_features_1",
+          "block": "features",
+          "variant": "bento_asymmetric",
+          "overrides": {},
+          "copy": "Arctic Logistics Coordination — Manages permits, transport, and crew safety for remote Arctic locations. | Bilingual Scripting — Develops dual-language narratives optimized for international and local audiences. | Cold-Weather Equipment — Utilizes specialized camera and lighting gear rated for sub-zero temperatures. | Post-Production Color Grading — Delivers calibrated color grades for consistent visual identity across platforms.",
+          "media": []
+        },
+        {
+          "id": "services_process_2",
+          "block": "process",
+          "variant": "vertical_timeline",
+          "overrides": {},
+          "copy": "01 Pre-Production Planning — Deliverables include a finalized shot list, permit applications, and bilingual script drafts within 10 business days. | 02 Expedition Execution — Crew captures 4K RAW footage on location using cold-rated equipment, with daily backups and safety monitoring. | 03 Post-Production Editing — Editors assemble the narrative structure, apply color grading, and prepare bilingual subtitles for delivery. | 04 Final Delivery — Client receives the final film files, raw footage archive, and a complete project report within the agreed timeline.",
+          "media": []
+        },
+        {
+          "id": "services_faq_3",
+          "block": "faq",
+          "variant": "single_column_accordion",
+          "overrides": {},
+          "copy": "Do you handle all permits for filming in restricted Arctic zones? Yes. We manage all permit applications, coordinate transport, and ensure crew safety compliance for remote locations. | How long does the pre-production phase take? Pre-production planning, including script development and logistics coordination, is completed within 10 business days. | Is the footage available in both English and Russian? Yes. All projects are delivered with bilingual narrative structures, ensuring accessibility for international and local audiences. | What happens if the weather conditions become unsafe during the shoot? We prioritize crew safety above all. If conditions become unsafe, we pause filming and reschedule to ensure the integrity of the project and the safety of the team.",
+          "media": []
+        },
+        {
+          "id": "services_cta_4",
+          "block": "cta",
+          "variant": "split_action_band",
+          "overrides": {},
+          "copy": "Request a quote to start your Arctic documentary project. We respond within 24 hours.",
+          "media": []
+        },
+        {
+          "id": "services_contact_5",
+          "block": "contact",
+          "variant": "centered_concierge",
+          "overrides": {},
+          "copy": "+7 8152 45-12-88 | hello@northernframe.ru | Lenina Prospekt 45, Murmansk | Mon-Fri 10:00-19:00",
+          "media": []
+        },
+        {
+          "id": "services_footer_6",
+          "block": "footer",
+          "variant": "multi_column_grid",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        }
+      ]
+    },
+    {
+      "slug": "portfolio",
+      "filename": "portfolio.html",
+      "title": "Portfolio",
+      "blocks": [
+        {
+          "id": "portfolio_hero_0",
+          "block": "hero",
+          "variant": "editorial_poster",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        },
+        {
+          "id": "portfolio_gallery_1",
+          "block": "gallery",
+          "variant": "cinematic_spotlight",
+          "overrides": {},
+          "copy": "Murmansk Coastline, 2019 | Kirovsk Expedition, 2021 | Norwegian Co-production, 2019 | Arctic Winter Shoot, 2021 | Murmansk Studio Review, 2017 | Kirovsk Logistics Prep, 2021",
+          "media": []
+        },
+        {
+          "id": "portfolio_features_2",
+          "block": "features",
+          "variant": "editorial_rows",
+          "overrides": {},
+          "copy": "Arctic Logistics Coordination — Manages permits, transport, and crew safety for remote Arctic locations. | Bilingual Scripting — Develops dual-language narratives optimized for international and local audiences. | Cold-Weather Equipment — Utilizes specialized camera and lighting gear rated for sub-zero temperatures. | Post-Production Color Grading — Delivers calibrated color grades for consistent visual identity across platforms.",
+          "media": []
+        },
+        {
+          "id": "portfolio_testimonials_3",
+          "block": "testimonials",
+          "variant": "editorial_pullquotes",
+          "overrides": {},
+          "copy": "Nordic Outdoor Gear — Delivered bilingual 4K campaign assets in 10 days, increasing web traffic by 40%. | Murmansk Tourism Board — Co-produced a 4K documentary in 2 languages, resulting in a 25% increase in visitor inquiries. | Kirovsk Ski Resort — Secured a 4K brand film with color-graded deliverables, boosting booking conversions by 15%.",
+          "media": []
+        },
+        {
+          "id": "portfolio_cta_4",
+          "block": "cta",
+          "variant": "split_action_band",
+          "overrides": {},
+          "copy": "Book a 10-day pre-production consultation to plan your next Arctic documentary.",
+          "media": []
+        },
+        {
+          "id": "portfolio_contact_5",
+          "block": "contact",
+          "variant": "split_form_details",
+          "overrides": {},
+          "copy": "+7 8152 45-12-88 | hello@northernframe.ru | Lenina Prospekt 45, Murmansk | Mon-Fri 10:00-19:00",
+          "media": []
+        },
+        {
+          "id": "portfolio_footer_6",
+          "block": "footer",
+          "variant": "editorial_monogram",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        }
+      ]
+    },
+    {
+      "slug": "about",
+      "filename": "about.html",
+      "title": "About",
+      "blocks": [
+        {
+          "id": "about_hero_0",
+          "block": "hero",
+          "variant": "editorial_poster",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        },
+        {
+          "id": "about_team_1",
+          "block": "team",
+          "variant": "spotlight_leadership",
+          "overrides": {},
+          "copy": "Ivan Petrov — Director of Photography specializing in Arctic lighting conditions | Anna Volkova — Producer managing expedition logistics and permits | Dmitry Smirnov — Sound Engineer for on-location audio capture | Elena Kuznetsova — Post-Production Editor for bilingual narrative structure",
+          "media": []
+        },
+        {
+          "id": "about_about_2",
+          "block": "about",
+          "variant": "milestone_chronicle",
+          "overrides": {},
+          "copy": "Founded in Murmansk in 2017, Northern Frame established itself as a specialist in cold-weather documentary production. In 2019, we completed our first international co-production with the Norwegian tourism board, proving our logistical reliability. By 2021, we expanded operations to Kirovsk, ensuring rapid response for projects in the central Arctic.",
+          "media": []
+        },
+        {
+          "id": "about_cta_3",
+          "block": "cta",
+          "variant": "split_action_band",
+          "overrides": {},
+          "copy": "Request a pre-production plan to secure your permits and crew safety within 10 business days.",
+          "media": []
+        },
+        {
+          "id": "about_contact_4",
+          "block": "contact",
+          "variant": "centered_concierge",
+          "overrides": {},
+          "copy": "+7 8152 45-12-88 | hello@northernframe.ru | Lenina Prospekt 45, Murmansk | Mon-Fri 10:00-19:00",
+          "media": []
+        },
+        {
+          "id": "about_footer_5",
+          "block": "footer",
+          "variant": "editorial_monogram",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        }
+      ]
+    },
+    {
+      "slug": "contact",
+      "filename": "contact.html",
+      "title": "Contact",
+      "blocks": [
+        {
+          "id": "contact_hero_0",
+          "block": "hero",
+          "variant": "fullbleed_scrim",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        },
+        {
+          "id": "contact_stats_1",
+          "block": "stats",
+          "variant": "kpi_band",
+          "overrides": {},
+          "copy": "12 — Expeditions filmed in the Arctic | 4K — Native resolution capture | 10 — Business days pre-production turnaround | 2 — Languages delivered per project",
+          "media": []
+        },
+        {
+          "id": "contact_locations_2",
+          "block": "locations",
+          "variant": "directory_ledger",
+          "overrides": {},
+          "copy": "Murmansk — Lenina Prospekt 45 | Kirovsk — Kirovsk office",
+          "media": []
+        },
+        {
+          "id": "contact_faq_3",
+          "block": "faq",
+          "variant": "single_column_accordion",
+          "overrides": {},
+          "copy": "How quickly can we start a project? You get full pre-production planning within 10 business days. | What are the pricing tiers? Expedition Documentary is 1,200,000 RUB, Brand Film is 450,000 RUB, and Short Promo is 150,000 RUB. | Do you handle remote logistics? Yes, we manage permits, transport, and crew safety for remote Arctic locations. | Is the footage bilingual? We deliver dual-language narratives optimized for international and local audiences.",
+          "media": []
+        },
+        {
+          "id": "contact_cta_4",
+          "block": "cta",
+          "variant": "split_action_band",
+          "overrides": {},
+          "copy": "Book a call to secure your slot for the next Arctic season and receive a quote within 10 business days.",
+          "media": []
+        },
+        {
+          "id": "contact_contact_5",
+          "block": "contact",
+          "variant": "split_form_details",
+          "overrides": {},
+          "copy": "+7 8152 45-12-88 | hello@northernframe.ru | Lenina Prospekt 45, Murmansk | Mon-Fri 10:00-19:00",
+          "media": []
+        },
+        {
+          "id": "contact_footer_6",
+          "block": "footer",
+          "variant": "multi_column_grid",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        }
+      ]
+    }
+  ]
+}

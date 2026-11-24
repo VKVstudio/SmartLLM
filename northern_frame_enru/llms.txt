@@ -1,0 +1,31 @@
+# Northern Frame / Северный кадр
+> Northern Frame produces bilingual documentary films and brand narratives in the Arctic, specializing in expedition logistics and authentic storytelling for tourism and outdoor brands.
+
+## Pages & Specifications
+- [Home](https://vkvstudio.github.io/SmartLLM/northern_frame_enru/): Expedition-grade Arctic documentaries for outdoor brands. Bilingual storytelling, 4K capture, and 10-day pre-production turnaround.
+- [Services](https://vkvstudio.github.io/SmartLLM/northern_frame_enru/services.html): Expedition documentaries, brand films, and short promos. Cold-weather certified teams, bilingual scripting, and Arctic logistics coordination.
+- [Portfolio](https://vkvstudio.github.io/SmartLLM/northern_frame_enru/portfolio.html): View our Arctic documentary projects for tourism and outdoor brands. 4K RAW footage, color-graded deliverables, and bilingual narratives.
+- [About](https://vkvstudio.github.io/SmartLLM/northern_frame_enru/about.html): Meet our cold-weather certified cinematographers, producers, and sound engineers. Founded in 2017 in Murmansk with a Kirovsk office.
+- [Contact](https://vkvstudio.github.io/SmartLLM/northern_frame_enru/contact.html): Contact Northern Frame for expedition film quotes. Based in Murmansk, open Mon-Fri 10:00-19:00. Email hello@northernframe.ru.
+
+## Contacts & Locations
+- Phone: +7 8152 45-12-88
+- Email: hello@northernframe.ru
+- Address: Lenina Prospekt 45, Murmansk
+- Hours: Mon-Fri 10:00-19:00
+- Locations: Murmansk, Kirovsk
+
+## Products & Prices (single source of truth)
+- Expedition Documentary: Full production including pre-production, 10-day shoot, post-production, and bilingual delivery — 1,200,000 RUB
+- Brand Film: 3-minute narrative film with scripted interviews and cinematic B-roll — 450,000 RUB
+- Short Promo: 60-second social media cut with licensed music and subtitles — 150,000 RUB
+
+## Brand History
+- Founded: 2017
+- 2017 — Founded in Murmansk
+- 2019 — First international co-production with Norwegian tourism board
+- 2021 — Expanded to Kirovsk office
+
+## Security & Design Canon
+- Canon: `13_cinematic_documentary` (Cinematic Documentary / Darkroom)
+- CSP SHA-256: `sha256-qsmTo+vB8T8aXwNt5scQuojey/goJ8a4dLjr59s/6pE=`, `sha256-oCsGG4C/S3QvmwcLumm8Rq4Xn0J7x+cnosoJNphJtiA=`

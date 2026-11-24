@@ -1,0 +1,96 @@
+{
+  "canon_id": "13_cinematic_documentary",
+  "prompts": [
+    {
+      "id": "hero_primary",
+      "slot": "hero_primary",
+      "canon_id": "13_cinematic_documentary",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 42,
+      "prompt": "Cinematic widescreen 35mm documentary still of a crew filming an expedition team on a frozen Arctic landscape with a large cinema camera. Single warm practical tungsten lamp carving deep selenium-charcoal shadows, authentic organic film grain, anamorphic depth, clean blank surfaces, deep obsidian black and matte graphite charcoal tones warm practical key light, deep atmospheric shadows, authentic organic film grain",
+      "output_relpath": "assets/hero_primary.png"
+    },
+    {
+      "id": "brand_logo",
+      "slot": "brand_logo",
+      "canon_id": "13_cinematic_documentary",
+      "aspect_ratio": "1:1",
+      "width": 512,
+      "height": 512,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 101,
+      "prompt": "Minimalist flat vector emblem symbolizing Arctic documentary filmmaking. A geometric film strip frame with a stylized aurora wave inside, rendered in pale champagne gold and anodized precision cobalt against a solid deep obsidian black backdrop. Clean anti-aliased edges, balanced negative space, strong silhouette at 32px, vector-clean geometry",
+      "output_relpath": "assets/brand-logo.png"
+    },
+    {
+      "id": "gallery_1",
+      "slot": "gallery_1",
+      "canon_id": "13_cinematic_documentary",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 43,
+      "prompt": "Wide establishing view of the flagship expedition documentary in its real environment, showing a frozen Arctic landscape with a cinema camera setup. Deep obsidian black and matte graphite charcoal tones, warm practical key light, authentic organic film grain, clean blank surfaces warm practical key light, deep atmospheric shadows, authentic organic film grain",
+      "output_relpath": "assets/gallery_1.png"
+    },
+    {
+      "id": "gallery_2",
+      "slot": "gallery_2",
+      "canon_id": "13_cinematic_documentary",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 44,
+      "prompt": "Tight macro close-up of cold-weather camera equipment, texture, and craft detail, showing frost-covered lens housing and rugged casing. Shallow depth of field, warm practical key light, authentic organic film grain, clean blank surfaces, deep obsidian black and matte graphite charcoal tones warm practical key light, deep atmospheric shadows, authentic organic film grain",
+      "output_relpath": "assets/gallery_2.png"
+    },
+    {
+      "id": "gallery_3",
+      "slot": "gallery_3",
+      "canon_id": "13_cinematic_documentary",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 45,
+      "prompt": "Candid documentary scene of crew members using equipment in the snow, faces not the focus, showing hands and gear in action. Warm practical key light, authentic organic film grain, clean blank surfaces, deep obsidian black and matte graphite charcoal tones warm practical key light, deep atmospheric shadows, authentic organic film grain",
+      "output_relpath": "assets/gallery_3.png"
+    },
+    {
+      "id": "gallery_4",
+      "slot": "gallery_4",
+      "canon_id": "13_cinematic_documentary",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 46,
+      "prompt": "Clean still life of the product or key object, showing a rugged camera case and accessories on a dark surface. Warm practical key light, authentic organic film grain, clean blank surfaces, deep obsidian black and matte graphite charcoal tones warm practical key light, deep atmospheric shadows, authentic organic film grain",
+      "output_relpath": "assets/gallery_4.png"
+    },
+    {
+      "id": "gallery_5",
+      "slot": "gallery_5",
+      "canon_id": "13_cinematic_documentary",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 47,
+      "prompt": "The same world at a different time of day, showing the Arctic landscape at dusk with faint aurora and camera equipment silhouetted. Warm practical key light, authentic organic film grain, clean blank surfaces, deep obsidian black and matte graphite charcoal tones warm practical key light, deep atmospheric shadows, authentic organic film grain",
+      "output_relpath": "assets/gallery_5.png"
+    }
+  ]
+}

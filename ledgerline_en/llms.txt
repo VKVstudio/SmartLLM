@@ -1,0 +1,33 @@
+# Ledgerline
+> Ledgerline is a Tallinn-based fintech platform that automates VAT compliance, invoicing, and quarterly tax reports for EU freelancers and micro-agencies, eliminating manual accounting errors and ensuring regulatory compliance.
+
+## Pages & Specifications
+- [Home](https://vkvstudio.github.io/SmartLLM/ledgerline_en/): Eliminate manual VAT calculations with Ledgerline. Automate invoicing and EU tax reporting for freelancers. Start your 14-day free trial today.
+- [Services](https://vkvstudio.github.io/SmartLLM/ledgerline_en/services.html): Automate VAT invoicing and quarterly tax reporting with Ledgerline. Ensure EU compliance and zero-error tax filing for freelancers and agencies.
+- [Pricing](https://vkvstudio.github.io/SmartLLM/ledgerline_en/pricing.html): Transparent pricing for automated VAT, invoicing, and tax reporting. Choose Starter, Agency, or Enterprise plans. Start a 14-day free trial.
+- [FAQ](https://vkvstudio.github.io/SmartLLM/ledgerline_en/faq.html): Answers about automated VAT reporting, compliance, and pricing for EU freelancers. Learn how Ledgerline ensures zero-error tax filing.
+- [About](https://vkvstudio.github.io/SmartLLM/ledgerline_en/about.html): Meet the Tallinn-based team behind Ledgerline. We build deterministic data pipelines for zero-error VAT compliance and EU tax reporting.
+- [Contact](https://vkvstudio.github.io/SmartLLM/ledgerline_en/contact.html): Get direct access to EU tax compliance support. Contact Ledgerline in Tallinn for onboarding, compliance checks, and trial assistance.
+
+## Contacts & Locations
+- Phone: +372 44 123 456
+- Email: hello@ledgerline.fi
+- Address: Häme Street 12, Tallinn
+- Hours: Mon-Fri 09:00-18:00
+- Locations: Tallinn
+
+## Products & Prices (single source of truth)
+- Starter: For freelancers with up to 20 monthly transactions. Includes automated VAT calculation, basic invoicing, and single quarterly tax report. — €15/month
+- Agency: For micro-agencies with up to 100 monthly transactions. Includes multi-client invoicing, VAT compliance checks, and detailed quarterly tax reports. — €45/month
+- Enterprise: For agencies with unlimited transactions. Includes API integration, custom VAT logic, and dedicated tax compliance support. — €120/month
+
+## Brand History
+- Founded: 2017
+- 2017 — Founded in Tallinn
+- 2019 — Launched automated VAT engine
+- 2021 — Expanded to EU-wide compliance support
+- 2023 — Introduced 14-day free trial model
+
+## Security & Design Canon
+- Canon: `17_fintech_institutional` (Institutional Fintech & Precision Ledger)
+- CSP SHA-256: `sha256-VXMQyq1uCxcLk99yaaHubBHzl8uKpVY2vbrEO+EeYSU=`, `sha256-PP6EWAfrq+dkUw6CVviE2w42AZhQCW3qPPmoGHOA7vU=`

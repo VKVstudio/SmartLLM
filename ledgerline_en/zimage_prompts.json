@@ -1,0 +1,83 @@
+{
+  "canon_id": "17_fintech_institutional",
+  "prompts": [
+    {
+      "id": "hero_primary",
+      "slot": "hero_primary",
+      "canon_id": "17_fintech_institutional",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 42,
+      "prompt": "Architectural Swiss-bank editorial photograph of a Tallinn office desk with a laptop displaying the luminous abstract glass modules and paper invoices. Precision brushed architectural glass, cool white granite, and subtle midnight navy steel geometry under crisp daylight. Clean blank surfaces, high-key diffused northern daylight, large overhead studio softbox illumination, bright airy architectural luminance, soft clean grounded contact shadows High-key diffused northern daylight, large overhead studio softbox illumination, bright airy architectural luminance, soft clean grounded contact shadows",
+      "output_relpath": "assets/hero_primary.png"
+    },
+    {
+      "id": "brand_logo",
+      "slot": "brand_logo",
+      "canon_id": "17_fintech_institutional",
+      "aspect_ratio": "1:1",
+      "width": 512,
+      "height": 512,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 101,
+      "prompt": "Minimalist flat vector emblem symbolizing automated tax precision. A geometric shield shape composed of clean lines, featuring a central vertical axis representing stability and a horizontal bar for structured data flow. Uses luminous electric violet and deep muted emerald-green accents against a pure warm alabaster white background. Balanced negative space, crisp anti-aliased edges, scalable silhouette, strong geometric identity suitable for fintech branding",
+      "output_relpath": "assets/brand-logo.png"
+    },
+    {
+      "id": "gallery_1",
+      "slot": "gallery_1",
+      "canon_id": "17_fintech_institutional",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 43,
+      "prompt": "Wide establishing view of a Tallinn office desk with a laptop displaying the luminous abstract glass modules and paper invoices. Precision brushed architectural glass, cool white granite, and subtle midnight navy steel geometry under crisp daylight. Clean blank surfaces, high-key diffused northern daylight, large overhead studio softbox illumination, bright airy architectural luminance, soft clean grounded contact shadows High-key diffused northern daylight, large overhead studio softbox illumination, bright airy architectural luminance, soft clean grounded contact shadows",
+      "output_relpath": "assets/gallery_1.png"
+    },
+    {
+      "id": "gallery_2",
+      "slot": "gallery_2",
+      "canon_id": "17_fintech_institutional",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 44,
+      "prompt": "Tight macro close-up of printed quarterly tax report documents with emerald verification stamps on a white desk. Precision brushed architectural glass, cool white granite, and subtle midnight navy steel geometry under crisp daylight. Clean blank surfaces, high-key diffused northern daylight, large overhead studio softbox illumination, bright airy architectural luminance, soft clean grounded contact shadows High-key diffused northern daylight, large overhead studio softbox illumination, bright airy architectural luminance, soft clean grounded contact shadows",
+      "output_relpath": "assets/gallery_2.png"
+    },
+    {
+      "id": "gallery_3",
+      "slot": "gallery_3",
+      "canon_id": "17_fintech_institutional",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 45,
+      "prompt": "Candid documentary scene of a freelancer reviewing VAT calculations on a screen in a bright Tallinn workspace. Precision brushed architectural glass, cool white granite, and subtle midnight navy steel geometry under crisp daylight. Clean blank surfaces, high-key diffused northern daylight, large overhead studio softbox illumination, bright airy architectural luminance, soft clean grounded contact shadows High-key diffused northern daylight, large overhead studio softbox illumination, bright airy architectural luminance, soft clean grounded contact shadows",
+      "output_relpath": "assets/gallery_3.png"
+    },
+    {
+      "id": "gallery_4",
+      "slot": "gallery_4",
+      "canon_id": "17_fintech_institutional",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 46,
+      "prompt": "Clean still life of a server rack with emerald indicator lights and a application interface on a pale slate surface. Precision brushed architectural glass, cool white granite, and subtle midnight navy steel geometry under crisp daylight. Clean blank surfaces, high-key diffused northern daylight, large overhead studio softbox illumination, bright airy architectural luminance, soft clean grounded contact shadows High-key diffused northern daylight, large overhead studio softbox illumination, bright airy architectural luminance, soft clean grounded contact shadows",
+      "output_relpath": "assets/gallery_4.png"
+    }
+  ]
+}

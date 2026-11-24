@@ -1,0 +1,96 @@
+{
+  "canon_id": "16_artisan_craft_zine",
+  "prompts": [
+    {
+      "id": "hero_primary",
+      "slot": "hero_primary",
+      "canon_id": "16_artisan_craft_zine",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 42,
+      "prompt": "Photorealistic workshop scene of a person shaping clay on a wheel while holding a coffee cup, surrounded by terracotta pots and roasted beans. Warm morning window light, tactile clay textures, and clean blank surfaces. High-key diffused daylight, soft shadows, authentic craft atmosphere High-key diffused northern daylight, warm terracotta and indigo accents, clean blank surfaces, soft shadows",
+      "output_relpath": "assets/hero_primary.png"
+    },
+    {
+      "id": "brand_logo",
+      "slot": "brand_logo",
+      "canon_id": "16_artisan_craft_zine",
+      "aspect_ratio": "1:1",
+      "width": 512,
+      "height": 512,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 101,
+      "prompt": "Minimalist flat vector emblem of a stylized clay pot silhouette with a rising smoke spiral, rendered in warm terracotta and deep indigo on a solid alabaster white background. Clean geometric lines, balanced negative space, crisp anti-aliased edges, scalable symbol-only composition",
+      "output_relpath": "assets/brand-logo.png"
+    },
+    {
+      "id": "gallery_1",
+      "slot": "gallery_1",
+      "canon_id": "16_artisan_craft_zine",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 43,
+      "prompt": "Wide establishing view of the flagship ceramic sets and coffee roasting equipment on shelves in the Kazan studio, bathed in high-key diffused northern daylight High-key diffused northern daylight, warm terracotta and indigo accents, clean blank surfaces, soft shadows",
+      "output_relpath": "assets/gallery_1.png"
+    },
+    {
+      "id": "gallery_2",
+      "slot": "gallery_2",
+      "canon_id": "16_artisan_craft_zine",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 44,
+      "prompt": "Tight macro close-up of hand-brushed terracotta glaze textures and matte ceramic surfaces, revealing authentic material grain under soft directional light High-key diffused northern daylight, warm terracotta and indigo accents, clean blank surfaces, soft shadows",
+      "output_relpath": "assets/gallery_2.png"
+    },
+    {
+      "id": "gallery_3",
+      "slot": "gallery_3",
+      "canon_id": "16_artisan_craft_zine",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 45,
+      "prompt": "Candid documentary scene of artisans shaping clay on the wheel and roasting coffee beans, faces not the focus, emphasizing hands and tools in warm workshop light High-key diffused northern daylight, warm terracotta and indigo accents, clean blank surfaces, soft shadows",
+      "output_relpath": "assets/gallery_3.png"
+    },
+    {
+      "id": "gallery_4",
+      "slot": "gallery_4",
+      "canon_id": "16_artisan_craft_zine",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 46,
+      "prompt": "Clean still life of handmade ceramic cups and coffee bags on a cool cotton-slate surface, with soft grounded contact shadows and bright airy luminance High-key diffused northern daylight, warm terracotta and indigo accents, clean blank surfaces, soft shadows",
+      "output_relpath": "assets/gallery_4.png"
+    },
+    {
+      "id": "gallery_5",
+      "slot": "gallery_5",
+      "canon_id": "16_artisan_craft_zine",
+      "aspect_ratio": "16:9",
+      "width": 1024,
+      "height": 576,
+      "steps": 8,
+      "cfg_scale": 1.0,
+      "seed": 47,
+      "prompt": "The studio at golden hour with warm kiln light contrasting the cool cotton paper tones, creating a warm handmade material grain and intimate editorial composition High-key diffused northern daylight, warm terracotta and indigo accents, clean blank surfaces, soft shadows",
+      "output_relpath": "assets/gallery_5.png"
+    }
+  ]
+}

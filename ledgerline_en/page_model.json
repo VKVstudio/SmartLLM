@@ -1,0 +1,339 @@
+{
+  "schema_version": "2026.11.1",
+  "canon_id": "17_fintech_institutional",
+  "polarity": "light",
+  "stack": "html5_esm",
+  "motion": "motion",
+  "pages": [
+    {
+      "slug": "index",
+      "filename": "index.html",
+      "title": "Home",
+      "blocks": [
+        {
+          "id": "index_hero_0",
+          "block": "hero",
+          "variant": "asymmetric_split",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        },
+        {
+          "id": "index_features_1",
+          "block": "features",
+          "variant": "tactile_cards",
+          "overrides": {},
+          "copy": "VAT Automation Engine — Automatically calculates and applies correct VAT rates based on transaction location and service type. | Smart Invoicing — Generates compliant invoices with embedded tax codes and client-specific VAT identifiers. | Quarterly Tax Reports — Produces structured quarterly tax summaries formatted for EU tax authority submission. | Compliance Audit Trail — Maintains a verifiable audit trail of all tax calculations and regulatory changes.",
+          "media": []
+        },
+        {
+          "id": "index_values_2",
+          "block": "values",
+          "variant": "numbered_pillars",
+          "overrides": {},
+          "copy": "Product — Strict adherence to EU VAT directive compliance standards | Team — Engineering ethos focused on deterministic, auditable data pipelines | Clients — Delivery commitment to zero-error tax filing within statutory deadlines",
+          "media": []
+        },
+        {
+          "id": "index_cta_3",
+          "block": "cta",
+          "variant": "split_action_band",
+          "overrides": {},
+          "copy": "Start your 14-day free trial to automate VAT calculations and eliminate manual tax reporting errors.",
+          "media": []
+        },
+        {
+          "id": "index_contact_4",
+          "block": "contact",
+          "variant": "split_form_details",
+          "overrides": {},
+          "copy": "+372 44 123 456 | hello@ledgerline.fi | Häme Street 12, Tallinn | Mon-Fri 09:00-18:00",
+          "media": []
+        },
+        {
+          "id": "index_footer_5",
+          "block": "footer",
+          "variant": "multi_column_grid",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        }
+      ]
+    },
+    {
+      "slug": "services",
+      "filename": "services.html",
+      "title": "Services",
+      "blocks": [
+        {
+          "id": "services_hero_0",
+          "block": "hero",
+          "variant": "command_stage",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        },
+        {
+          "id": "services_features_1",
+          "block": "features",
+          "variant": "editorial_rows",
+          "overrides": {},
+          "copy": "VAT Automation Engine — Automatically calculates and applies correct VAT rates based on transaction location and service type. | Smart Invoicing — Generates compliant invoices with embedded tax codes and client-specific VAT identifiers. | Quarterly Tax Reports — Produces structured quarterly tax summaries formatted for EU tax authority submission. | Compliance Audit Trail — Maintains a verifiable audit trail of all tax calculations and regulatory changes.",
+          "media": []
+        },
+        {
+          "id": "services_process_2",
+          "block": "process",
+          "variant": "horizontal_stepper",
+          "overrides": {},
+          "copy": "01 Transaction Capture — Ingests raw billing data and client identifiers from your daily operations. | 02 VAT Calculation — Applies deterministic logic to compute accurate tax rates per EU directive standards. | 03 Invoice Generation — Issues compliant documents with embedded tax codes and client-specific identifiers. | 04 Quarterly Reporting — Compiles structured summaries formatted for statutory submission to tax authorities.",
+          "media": []
+        },
+        {
+          "id": "services_priorities_3",
+          "block": "priorities",
+          "variant": "ledger_checklist",
+          "overrides": {},
+          "copy": "Automate VAT calculation and reporting logic | Generate compliant invoices with correct tax codes | Produce quarterly tax summaries for EU authorities | Provide 14-day free trial for immediate onboarding",
+          "media": []
+        },
+        {
+          "id": "services_cta_4",
+          "block": "cta",
+          "variant": "inline_command_bar",
+          "overrides": {},
+          "copy": "Start your 14-day free trial to automate VAT calculations and generate compliant quarterly reports.",
+          "media": []
+        },
+        {
+          "id": "services_contact_5",
+          "block": "contact",
+          "variant": "ledger_intake",
+          "overrides": {},
+          "copy": "+372 44 123 456 | hello@ledgerline.fi | Häme Street 12, Tallinn | Mon-Fri 09:00-18:00",
+          "media": []
+        },
+        {
+          "id": "services_footer_6",
+          "block": "footer",
+          "variant": "compact_colophon",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        }
+      ]
+    },
+    {
+      "slug": "pricing",
+      "filename": "pricing.html",
+      "title": "Pricing",
+      "blocks": [
+        {
+          "id": "pricing_hero_0",
+          "block": "hero",
+          "variant": "asymmetric_split",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        },
+        {
+          "id": "pricing_pricing_1",
+          "block": "pricing",
+          "variant": "spec_comparison_table",
+          "overrides": {},
+          "copy": "Starter — For freelancers with up to 20 monthly transactions. Includes automated VAT calculation, basic invoicing, and single quarterly tax report. — €15/month | Agency — For micro-agencies with up to 100 monthly transactions. Includes multi-client invoicing, VAT compliance checks, and detailed quarterly tax reports. — €45/month | Enterprise — For agencies with unlimited transactions. Includes API integration, custom VAT logic, and dedicated tax compliance support. — €120/month",
+          "media": []
+        },
+        {
+          "id": "pricing_values_2",
+          "block": "values",
+          "variant": "editorial_rows",
+          "overrides": {},
+          "copy": "Product — Strict adherence to EU VAT directive compliance standards | Team — Engineering ethos focused on deterministic, auditable data pipelines | Clients — Delivery commitment to zero-error tax filing within statutory deadlines",
+          "media": []
+        },
+        {
+          "id": "pricing_cta_3",
+          "block": "cta",
+          "variant": "split_action_band",
+          "overrides": {},
+          "copy": "Start your 14-day free trial to automate your VAT compliance and invoicing today.",
+          "media": []
+        },
+        {
+          "id": "pricing_contact_4",
+          "block": "contact",
+          "variant": "split_form_details",
+          "overrides": {},
+          "copy": "+372 44 123 456 | hello@ledgerline.fi | Häme Street 12, Tallinn | Mon-Fri 09:00-18:00",
+          "media": []
+        },
+        {
+          "id": "pricing_footer_5",
+          "block": "footer",
+          "variant": "multi_column_grid",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        }
+      ]
+    },
+    {
+      "slug": "faq",
+      "filename": "faq.html",
+      "title": "FAQ",
+      "blocks": [
+        {
+          "id": "faq_hero_0",
+          "block": "hero",
+          "variant": "command_stage",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        },
+        {
+          "id": "faq_faq_1",
+          "block": "faq",
+          "variant": "two_column_qa_grid",
+          "overrides": {},
+          "copy": "Is my data secure? | Your data is processed within deterministic, auditable pipelines that strictly adhere to EU VAT directive compliance standards, ensuring zero manual tax errors. | How does the Compliance Audit Trail work? | The Compliance Audit Trail maintains a verifiable record of all tax calculations and regulatory changes, allowing you to track every transaction for audit purposes. | Can I handle local tax nuances as a micro-agency? | Yes, the platform supports multi-client invoicing and detailed quarterly tax reports tailored for micro-agencies, ensuring regulatory compliance across different jurisdictions. | What happens if I miss a statutory deadline? | You receive compliant invoices and quarterly reports in under 24 hours, with delivery commitments to zero-error tax filing within statutory deadlines. | Still have questions? Talk to a Compliance Engineer",
+          "media": []
+        },
+        {
+          "id": "faq_manifesto_2",
+          "block": "manifesto",
+          "variant": "ruled_thesis",
+          "overrides": {},
+          "copy": "Automated VAT, invoicing and tax reporting for EU freelancers | FAQ: Detailed answers to recurring questions.",
+          "media": []
+        },
+        {
+          "id": "faq_contact_3",
+          "block": "contact",
+          "variant": "ledger_intake",
+          "overrides": {},
+          "copy": "+372 44 123 456 | hello@ledgerline.fi | Häme Street 12, Tallinn | Mon-Fri 09:00-18:00",
+          "media": []
+        },
+        {
+          "id": "faq_footer_4",
+          "block": "footer",
+          "variant": "compact_colophon",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        }
+      ]
+    },
+    {
+      "slug": "about",
+      "filename": "about.html",
+      "title": "About",
+      "blocks": [
+        {
+          "id": "about_hero_0",
+          "block": "hero",
+          "variant": "asymmetric_split",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        },
+        {
+          "id": "about_team_1",
+          "block": "team",
+          "variant": "portrait_grid_3x4",
+          "overrides": {},
+          "copy": "Marek Jansen — Lead Engineer, builds deterministic data pipelines for tax calculation accuracy. | Sofia Rasmussen — Product Manager, designs user workflows for automated invoicing and reporting. | Tomas Lindqvist — Support Lead, ensures client onboarding and compliance support efficiency.",
+          "media": []
+        },
+        {
+          "id": "about_manifesto_2",
+          "block": "manifesto",
+          "variant": "editorial_band",
+          "overrides": {},
+          "copy": "Automated VAT, invoicing and tax reporting for EU freelancers | Ledgerline is a Tallinn-based fintech platform that automates VAT compliance, invoicing, and quarterly tax reports for EU freelancers and micro-agencies, eliminating manual accounting errors and ensuring regulatory compliance.",
+          "media": []
+        },
+        {
+          "id": "about_values_3",
+          "block": "values",
+          "variant": "numbered_pillars",
+          "overrides": {},
+          "copy": "Product — Strict adherence to EU VAT directive compliance standards | Team — Engineering ethos focused on deterministic, auditable data pipelines | Clients — Delivery commitment to zero-error tax filing within statutory deadlines",
+          "media": []
+        },
+        {
+          "id": "about_cta_4",
+          "block": "cta",
+          "variant": "split_action_band",
+          "overrides": {},
+          "copy": "Start your 14-day free trial to automate VAT compliance and eliminate manual tax errors.",
+          "media": []
+        },
+        {
+          "id": "about_contact_5",
+          "block": "contact",
+          "variant": "split_form_details",
+          "overrides": {},
+          "copy": "+372 44 123 456 | hello@ledgerline.fi | Häme Street 12, Tallinn | Mon-Fri 09:00-18:00",
+          "media": []
+        },
+        {
+          "id": "about_footer_6",
+          "block": "footer",
+          "variant": "multi_column_grid",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        }
+      ]
+    },
+    {
+      "slug": "contact",
+      "filename": "contact.html",
+      "title": "Contact",
+      "blocks": [
+        {
+          "id": "contact_hero_0",
+          "block": "hero",
+          "variant": "command_stage",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        },
+        {
+          "id": "contact_locations_1",
+          "block": "locations",
+          "variant": "directory_ledger",
+          "overrides": {},
+          "copy": "Tallinn — Häme Street 12",
+          "media": []
+        },
+        {
+          "id": "contact_cta_2",
+          "block": "cta",
+          "variant": "inline_command_bar",
+          "overrides": {},
+          "copy": "Send your VAT query to hello@ledgerline.fi for a response within 2 hours during business hours",
+          "media": []
+        },
+        {
+          "id": "contact_contact_3",
+          "block": "contact",
+          "variant": "ledger_intake",
+          "overrides": {},
+          "copy": "+372 44 123 456 | hello@ledgerline.fi | Häme Street 12, Tallinn | Mon-Fri 09:00-18:00",
+          "media": []
+        },
+        {
+          "id": "contact_footer_4",
+          "block": "footer",
+          "variant": "compact_colophon",
+          "overrides": {},
+          "copy": "",
+          "media": []
+        }
+      ]
+    }
+  ]
+}
