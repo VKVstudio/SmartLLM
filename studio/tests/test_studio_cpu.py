@@ -760,9 +760,9 @@ HTTPServer(("127.0.0.1", {mock_llama_port}), H).serve_forever()
             _seq = [
                 {"brand_name": "Глина и дым", "goal_type": "booking", "offers": [{"id": "workshops", "name": "Мастер-классы", "evidence": "мастер-классы по керамике"}, {"id": "coffee", "name": "Кофе", "evidence": "варим кофе своей обжарки"}]},
                 {"canon_id": "02_swiss_international", "pages": [{"slug": "index", "nav_label": "Главная", "offers": ["workshops", "coffee"]}, {"slug": "contact", "nav_label": "Контакты", "offers": []}]},
-                {"sections": [{"block": "hero", "intent": "i1", "offers": ["workshops"]}, {"block": "features", "intent": "i2", "offers": ["coffee"]}, {"block": "cta", "intent": "i3"}], "images": [{"block": "hero", "subject": "s"}]},
-                {"sections": [{"block": "hero", "intent": "c1"}, {"block": "locations", "intent": "c2", "facts": "placeholder"}, {"block": "faq", "intent": "c3"}], "images": [{"block": "hero", "subject": "s"}]},
-                {"sections": [{"block": "hero", "intent": "c1"}, {"block": "contact", "intent": "c2"}, {"block": "cta", "intent": "c3"}], "images": [{"block": "hero", "subject": "s"}]},
+                {"sections": [{"block": "hero", "intent": "Запись на мастер-класс по керамике", "offers": ["workshops"]}, {"block": "features", "intent": "Кофе своей обжарки", "offers": ["coffee"]}, {"block": "cta", "intent": "Записаться на занятие"}], "images": [{"block": "hero", "subject": "s"}]},
+                {"sections": [{"block": "hero", "intent": "Как нас найти"}, {"block": "locations", "intent": "Адрес и часы работы", "facts": "placeholder"}, {"block": "faq", "intent": "Ответы на частые вопросы"}], "images": [{"block": "hero", "subject": "s"}]},
+                {"sections": [{"block": "hero", "intent": "Как с нами связаться"}, {"block": "contact", "intent": "Форма заявки и телефон"}, {"block": "cta", "intent": "Оставить заявку на мастер-класс"}], "images": [{"block": "hero", "subject": "s"}]},
             ]
             _r = _rsp(lambda a, b, c: _seq.pop(0) if _seq else {}, _brief, "ru", "router", ["02_swiss_international"])
             assert _r["ok"] and [p["slug"] for p in _r["plan"]["pages"]] == ["index", "contact"], _r["attempts"]

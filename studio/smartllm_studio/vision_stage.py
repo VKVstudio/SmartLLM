@@ -5,6 +5,10 @@ Called by the orchestrator after Z-Image and by POST /api/orchestrator/vision-ch
 import html, json, re, shutil, subprocess, sys, time, tempfile, secrets
 from pathlib import Path
 from PIL import Image  # noqa: E402
+try:
+    from .os_compat import subprocess_kwargs
+except ImportError:  # executed as a standalone script
+    from smartllm_studio.os_compat import subprocess_kwargs
 
 SYS = ("You are a strict art director checking AI-generated photos for a website. Look carefully at the image. "
        "First count, for EVERY visible person, their hands, arms and fingers, and look at faces. Reply JSON only: "
@@ -78,7 +82,7 @@ def regen(state, site: Path, rows: list[dict], rnd: int) -> list[str]:
            "--type", "q8_0", "--clip-on-cpu", "--vae-tiling", "--sampling-method", "euler", "--flow-shift", "3.0", "--steps", "8",
            "--cfg-scale", "1.0", "-p", items[0]["prompt"], "-o", items[0]["output_path"], "--batch-json", str(man)]
     t0 = time.time()
-    res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=900, check=False)
+    res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=900, check=False, **subprocess_kwargs())
     print(f"REGEN round {rnd}: {len(items)} images rc={res.returncode} {round(time.time()-t0)}s {res.stderr[-300:] if res.returncode else ''}", flush=True)
     return [Path(i["output_path"]).relative_to(site).as_posix() for i in items] if res.returncode == 0 else []
 
