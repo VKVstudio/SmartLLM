@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SmartLLM Studio v0.0.4-beta — Linux Executable Launcher (127.0.0.1 only, portable: any folder / any drive)
+# SmartLLM Studio v0.0.7-beta — Linux Executable Launcher (127.0.0.1 only, portable: any folder / any drive)
 set -euo pipefail
 
 SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || python3 -c 'import os,sys; print(os.path.realpath(sys.argv[1]))' "${BASH_SOURCE[0]}")"

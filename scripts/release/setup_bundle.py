@@ -3,7 +3,7 @@
 
 Downloads everything a new user needs into ONE portable folder on ANY drive:
 
-    <dest>/studio/   SmartLLM Studio app (GitHub Release archive)
+    <dest>/studio/   SmartLLM Studio app (GitHub Release archive, or the tagged source archive)
     <dest>/models/   SmartLLM-v2-K320-V1.gguf (30 parts -> SHA-256 verified reassembly),
                      mmproj-Qwen3.8-Flash-Next-BF16.gguf,
                      z-image/{diffusion_models,text_encoders,vae}/*.safetensors
@@ -38,7 +38,7 @@ import urllib.request
 import zipfile
 
 DEFAULT_REPO = "VKVstudio/SmartLLM"
-DEFAULT_TAG = "v0.0.4-beta"
+DEFAULT_TAG = "v0.0.7-beta"  # Studio version installed by default (Release asset, else the tagged source archive)
 DEFAULT_MODEL_TAG = "v0.0.1-beta"  # 55 GiB GGUF parts + mmproj live in the first release (reused)
 DEFAULT_ZIMAGE_TAG = "v0.0.3-beta"
 DEFAULT_ENGINES_TAG = "v0.0.3-beta"
@@ -212,22 +212,47 @@ def hf_file_meta() -> dict[str, dict]:
     return meta
 
 
-def step_studio(dest: Path, repo: str, tag: str, cleanup_parts: bool = False) -> None:
+def _url_exists(url: str) -> bool:
+    """Single quick probe (no retries) so a missing Release asset falls back fast."""
+    req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": USER_AGENT})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return 200 <= resp.status < 400
+    except Exception:
+        return False
+
+
+def step_studio(dest: Path, repo: str, tag: str, cleanup_parts: bool = False, ref: str = "") -> None:
+    """Install Studio into <dest>/studio.
+
+    Order: the prebuilt Release asset for ``tag`` if it is published; otherwise the GitHub
+    source archive of the same tag (or of ``ref``, e.g. ``main``), whose ``studio/`` folder is
+    exactly what the Release archive contains. Either way the installed VERSION is logged.
+    """
     studio_dir = dest / "studio"
     if (studio_dir / "smartllm_studio" / "cli.py").exists():
-        _log("[1/4] studio: already present, skip")
+        ver = (studio_dir / "VERSION").read_text(encoding="utf-8").strip() if (studio_dir / "VERSION").exists() else "?"
+        _log(f"[1/4] studio: already present (version {ver}), skip. Delete {studio_dir} to reinstall.")
         return
-    _log("[1/4] studio: downloading app archive")
     win = os.name == "nt"
+    downloads_dir = dest / "_downloads"
     name = f"SmartLLM-Studio-{tag}-windows11.zip" if win else f"SmartLLM-Studio-{tag}-linux.tar.gz"
     url = f"https://github.com/{repo}/releases/download/{tag}/{name}"
-    downloads_dir = dest / "_downloads"
+    source_mode = bool(ref) or not _url_exists(url)
+    if source_mode:
+        kind, val = ("heads", ref) if ref else ("tags", tag)
+        ext = "zip" if win else "tar.gz"
+        name = f"SmartLLM-source-{val.replace('/', '_')}.{ext}"
+        url = f"https://github.com/{repo}/archive/refs/{kind}/{val}.{ext}"
+        _log(f"[1/4] studio: downloading source archive {kind[:-1]} '{val}'")
+    else:
+        _log(f"[1/4] studio: downloading app archive {name}")
     archive = download(url, downloads_dir / name)
     tmp_extract = downloads_dir / "studio_extract"
     if tmp_extract.exists():
         shutil.rmtree(tmp_extract)
     tmp_extract.mkdir(parents=True)
-    if win:
+    if archive.name.endswith(".zip"):
         with zipfile.ZipFile(archive) as zf:
             zf.extractall(tmp_extract)
     else:
@@ -236,13 +261,17 @@ def step_studio(dest: Path, repo: str, tag: str, cleanup_parts: bool = False) ->
     roots = [p for p in tmp_extract.iterdir() if p.is_dir()]
     if len(roots) != 1:
         raise RuntimeError(f"Unexpected archive layout: {roots}")
-    roots[0].replace(studio_dir)
+    src = roots[0] / "studio" if source_mode else roots[0]
+    if not (src / "smartllm_studio" / "cli.py").exists():
+        raise RuntimeError(f"Archive does not contain SmartLLM Studio: {src}")
+    src.replace(studio_dir)
     shutil.rmtree(tmp_extract, ignore_errors=True)
     if cleanup_parts:
         archive.unlink(missing_ok=True)
         if downloads_dir.exists() and not any(downloads_dir.iterdir()):
             downloads_dir.rmdir()
-    _log(f"  OK studio -> {studio_dir}")
+    ver = (studio_dir / "VERSION").read_text(encoding="utf-8").strip() if (studio_dir / "VERSION").exists() else "?"
+    _log(f"  OK studio {ver} -> {studio_dir}")
 
 
 def step_model(dest: Path, repo: str, tag: str, cleanup_parts: bool) -> None:
@@ -461,7 +490,8 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Download the full SmartLLM bundle into ONE portable folder (any drive).")
     parser.add_argument("--dest", type=Path, default=Path("SmartLLM"), help="Target bundle folder (default: ./SmartLLM)")
     parser.add_argument("--repo", default=DEFAULT_REPO)
-    parser.add_argument("--tag", default=DEFAULT_TAG, help="Release tag for Studio app archive")
+    parser.add_argument("--tag", default=DEFAULT_TAG, help="Studio version tag (Release asset if published, else the tagged source archive)")
+    parser.add_argument("--studio-ref", default="", help="Install Studio from a branch source archive instead (e.g. main)")
     parser.add_argument("--model-tag", default=DEFAULT_MODEL_TAG, help="Release tag holding the 55 GiB GGUF parts + mmproj")
     parser.add_argument("--zimage-tag", default=DEFAULT_ZIMAGE_TAG, help="Release tag holding official Z-Image-Turbo weights")
     parser.add_argument("--engines-tag", default=DEFAULT_ENGINES_TAG, help="Release tag holding prebuilt CUDA engine binaries")
@@ -484,7 +514,7 @@ def main(argv: list[str] | None = None) -> int:
     if not _check_free_space(dest, args.skip_model, args.skip_zimage, args.skip_binaries, args.cleanup_parts):
         return 2
     if not args.skip_studio:
-        step_studio(dest, args.repo, args.tag, args.cleanup_parts)
+        step_studio(dest, args.repo, args.tag, args.cleanup_parts, args.studio_ref)
     if not args.skip_model:
         step_model(dest, args.repo, args.model_tag, args.cleanup_parts)
     if not args.skip_zimage:

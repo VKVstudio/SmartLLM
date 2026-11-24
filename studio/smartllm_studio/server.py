@@ -484,12 +484,21 @@ def create_studio_server(
                     if not script.exists():
                         script = state.repo_root / "setup_bundle.py"
                         if not script.exists():
-                            url = f"https://github.com/VKVstudio/SmartLLM/releases/download/v{__version__}/setup_bundle.py"
-                            try:
-                                with urllib.request.urlopen(url, timeout=60) as resp:
-                                    script.write_bytes(resp.read())
-                            except Exception as exc:
-                                return self._send_json(502, {"error": "SETUP_SCRIPT_DOWNLOAD_FAILED", "message": str(exc)[:200]})
+                            urls = (
+                                f"https://github.com/VKVstudio/SmartLLM/releases/download/v{__version__}/setup_bundle.py",
+                                f"https://raw.githubusercontent.com/VKVstudio/SmartLLM/v{__version__}/scripts/release/setup_bundle.py",
+                                "https://raw.githubusercontent.com/VKVstudio/SmartLLM/main/scripts/release/setup_bundle.py",
+                            )
+                            last_err = ""
+                            for url in urls:
+                                try:
+                                    with urllib.request.urlopen(url, timeout=60) as resp:
+                                        script.write_bytes(resp.read())
+                                    break
+                                except Exception as exc:
+                                    last_err = str(exc)[:200]
+                            else:
+                                return self._send_json(502, {"error": "SETUP_SCRIPT_DOWNLOAD_FAILED", "message": last_err})
                     cmd = [sys.executable, str(script), "--dest", str(state.repo_root), "--skip-studio", "--cleanup-parts", "--skip-deps", "--line-progress", *skips]
 
                     def _setup_worker() -> None:

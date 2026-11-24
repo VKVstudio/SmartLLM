@@ -1,5 +1,5 @@
 @echo off
-REM SmartLLM Studio v0.0.4-beta — Windows 11 Launcher (127.0.0.1 only, portable: any folder / any drive)
+REM SmartLLM Studio v0.0.7-beta — Windows 11 Launcher (127.0.0.1 only, portable: any folder / any drive)
 setlocal EnableExtensions
 set "STUDIO_DIR=%~dp0"
 for %%I in ("%STUDIO_DIR%..") do set "REPO_ROOT=%%~fI"
